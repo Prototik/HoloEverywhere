@@ -25,21 +25,22 @@
         android:layout_height="wrap_content"
         android:text="@string/hello_edittext" />
 
-    <!-- Do not forget to copy Roboto font into the asset folder!  -->
-
-    <com.WazaBe.HoloEverywhere.TextViewHolo
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_textview" />
+    <!-- Do not forget to copy Roboto font into the asset folder! -->
 
     <com.WazaBe.HoloEverywhere.ButtonHolo
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_button" />
+        android:onClick="showDialog"
+        android:text="@string/hello_dialog" />
+
+    <com.WazaBe.HoloEverywhere.TextViewHolo
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_textview_roboto" />
 
     <com.WazaBe.HoloEverywhere.EditTextHolo
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_edittext" />
+        android:text="@string/hello_edittext_roboto" />
 
 </LinearLayout>

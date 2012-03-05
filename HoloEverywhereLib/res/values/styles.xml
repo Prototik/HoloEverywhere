@@ -5,6 +5,19 @@
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:buttonStyle">@style/ButtonHoloDark</item>
         <item name="android:editTextStyle">@style/EditTextHoloDark</item>
+        <item name="android:alertDialogStyle">@style/dialogHolo</item>
+    </style>
+
+    <style name="dialogHolo">
+       <item name="android:fullDark">@drawable/dialog_full_holo_dark</item>
+		<item name="android:topDark">@drawable/dialog_top_holo_dark</item>
+		<item name="android:centerDark">@drawable/dialog_middle_holo_dark</item>
+		<item name="android:bottomDark">@drawable/dialog_bottom_holo_dark</item>
+		<item name="android:fullBright">@drawable/dialog_full_holo_dark</item>
+		<item name="android:centerBright">@drawable/dialog_middle_holo_dark</item>
+		<item name="android:bottomBright">@drawable/dialog_bottom_holo_dark</item>
+		<item name="android:bottomMedium">@drawable/dialog_bottom_holo_dark</item>
+		<item name="android:centerMedium">@drawable/dialog_middle_holo_dark</item>
     </style>
 
     <style name="ButtonHoloDark" parent="android:style/Widget.Button">

@@ -3,7 +3,10 @@
 
     <string name="hello_textview">Hello World, HoloText!</string>
     <string name="hello_button">Hello World, HoloButton!</string>
-     <string name="hello_edittext">Hello HoloEditText!</string>
+    <string name="hello_edittext">Hello HoloEditText!</string>
+    <string name="hello_textview_roboto">Hello Roboto Font</string>
+    <string name="hello_edittext_roboto">Hello Roboto Font</string>
+    <string name="hello_dialog">Hello Dialog!</string>
     <string name="app_name">HoloDemo</string>
 
 </resources>
