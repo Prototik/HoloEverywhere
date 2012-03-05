@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello_textview">Hello World, HoloText!</string>
+    <string name="hello_button">Hello World, HoloButton!</string>
+     <string name="hello_edittext">Hello HoloEditText!</string>
+    <string name="app_name">HoloDemo</string>
+
+</resources>

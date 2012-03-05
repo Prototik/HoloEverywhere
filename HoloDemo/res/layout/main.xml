@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.WazaBe.HoloEverywhere.TextViewHolo
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_textview" />
+
+    <com.WazaBe.HoloEverywhere.ButtonHolo
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_button" />
+
+    <com.WazaBe.HoloEverywhere.EditTextHolo
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_edittext" />
+
+    <TextView
+        android:paddingTop="20dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_textview" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_button" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_edittext" />
+
+</LinearLayout>

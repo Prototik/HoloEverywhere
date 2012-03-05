@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.HoloEverywhere" parent="android:Theme.NoTitleBar">
+        <item name="android:windowBackground">@drawable/holobg</item>
+        <item name="android:buttonStyle">@style/holoButton</item>
+         <item name="android:editTextStyle">@style/holoEditText</item>
+    </style>
+
+    <style name="holoButton" parent="android:style/Widget.Button">
+        <item name="android:background">@drawable/button_holo</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    
+        <style name="holoEditText" parent="android:style/Widget.EditText">
+        <item name="android:background">@drawable/edit_text_holo</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+</resources>
