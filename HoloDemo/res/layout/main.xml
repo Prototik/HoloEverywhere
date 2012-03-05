@@ -4,6 +4,29 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <!--
+    The classic Views won't benefit from Roboto font.
+    I am still searching for a way to fix that, but If you want to get the Roboto font, see below!
+    -->
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dip"
+        android:text="@string/hello_textview" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_button" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_edittext" />
+
+    <!-- If you want to benefit from the Holo font, you will have to use these: -->
+
     <com.WazaBe.HoloEverywhere.TextViewHolo
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -15,22 +38,6 @@
         android:text="@string/hello_button" />
 
     <com.WazaBe.HoloEverywhere.EditTextHolo
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_edittext" />
-
-    <TextView
-        android:paddingTop="20dip"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_textview" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_button" />
-
-    <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/hello_edittext" />
