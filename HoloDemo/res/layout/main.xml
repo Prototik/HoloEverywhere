@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="@string/hello_edittext" />
 
-    <!-- If you want to benefit from the Holo font, you will have to use these: -->
+    <!-- Do not forget to copy Roboto font into the asset folder!  -->
 
     <com.WazaBe.HoloEverywhere.TextViewHolo
         android:layout_width="fill_parent"

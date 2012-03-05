@@ -4,7 +4,7 @@ How to install ?
 
 # Git clone in Eclipse
 # Be sure that the library option is checked in HoloEverywhere project and you added the library to your current work.
-# Add: android:theme="@style/Theme.HoloEverywhere" in tour application manifest
+# Add: android:theme="@style/Theme.HoloEverywhereDark" in tour application manifest, you may also want to test Theme.HoloEverywhereLight...
 
 I am not totally familiar with Github, if you are interested in this project, 
 feel free to show me the points I am missing and I will fix them ASAP!

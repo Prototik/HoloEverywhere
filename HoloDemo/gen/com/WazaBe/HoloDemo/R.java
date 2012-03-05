@@ -11,30 +11,37 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int btn_default_disabled_focused_holo_dark=0x7f020000;
-        public static final int btn_default_disabled_holo_dark=0x7f020001;
-        public static final int btn_default_focused_holo_dark=0x7f020002;
-        public static final int btn_default_normal_holo_dark=0x7f020003;
-        public static final int btn_default_pressed_holo_dark=0x7f020004;
-        public static final int button_holo=0x7f020005;
-        public static final int edit_text_holo=0x7f020006;
-        public static final int holobg=0x7f020007;
-        public static final int ic_launcher=0x7f020008;
-        public static final int textfield_activated_holo_dark=0x7f020009;
-        public static final int textfield_bg_activated_holo_dark=0x7f02000a;
-        public static final int textfield_bg_default_holo_dark=0x7f02000b;
-        public static final int textfield_bg_disabled_focused_holo_dark=0x7f02000c;
-        public static final int textfield_bg_disabled_holo_dark=0x7f02000d;
-        public static final int textfield_bg_focused_holo_dark=0x7f02000e;
-        public static final int textfield_default_holo_dark=0x7f02000f;
-        public static final int textfield_disabled_focused_holo_dark=0x7f020010;
-        public static final int textfield_disabled_holo_dark=0x7f020011;
-        public static final int textfield_focused_holo_dark=0x7f020012;
-        public static final int textfield_multiline_activated_holo_dark=0x7f020013;
-        public static final int textfield_multiline_default_holo_dark=0x7f020014;
-        public static final int textfield_multiline_disabled_focused_holo_dark=0x7f020015;
-        public static final int textfield_multiline_disabled_holo_dark=0x7f020016;
-        public static final int textfield_multiline_focused_holo_dark=0x7f020017;
+        public static final int background_holo_dark=0x7f020000;
+        public static final int btn_default_disabled_focused_holo_dark=0x7f020001;
+        public static final int btn_default_disabled_focused_holo_light=0x7f020002;
+        public static final int btn_default_disabled_holo_dark=0x7f020003;
+        public static final int btn_default_disabled_holo_light=0x7f020004;
+        public static final int btn_default_focused_holo_dark=0x7f020005;
+        public static final int btn_default_focused_holo_light=0x7f020006;
+        public static final int btn_default_holo_dark=0x7f020007;
+        public static final int btn_default_holo_light=0x7f020008;
+        public static final int btn_default_normal_holo_dark=0x7f020009;
+        public static final int btn_default_normal_holo_light=0x7f02000a;
+        public static final int btn_default_pressed_holo_dark=0x7f02000b;
+        public static final int btn_default_pressed_holo_light=0x7f02000c;
+        public static final int edit_text_holo_dark=0x7f02000d;
+        public static final int edit_text_holo_light=0x7f02000e;
+        public static final int ic_launcher=0x7f02000f;
+        public static final int textfield_activated_holo_dark=0x7f020010;
+        public static final int textfield_activated_holo_light=0x7f020011;
+        public static final int textfield_bg_activated_holo_dark=0x7f020012;
+        public static final int textfield_bg_default_holo_dark=0x7f020013;
+        public static final int textfield_bg_disabled_focused_holo_dark=0x7f020014;
+        public static final int textfield_bg_disabled_holo_dark=0x7f020015;
+        public static final int textfield_bg_focused_holo_dark=0x7f020016;
+        public static final int textfield_default_holo_dark=0x7f020017;
+        public static final int textfield_default_holo_light=0x7f020018;
+        public static final int textfield_disabled_focused_holo_dark=0x7f020019;
+        public static final int textfield_disabled_focused_holo_light=0x7f02001a;
+        public static final int textfield_disabled_holo_dark=0x7f02001b;
+        public static final int textfield_disabled_holo_light=0x7f02001c;
+        public static final int textfield_focused_holo_dark=0x7f02001d;
+        public static final int textfield_focused_holo_light=0x7f02001e;
     }
     public static final class layout {
         public static final int main=0x7f030000;
@@ -47,8 +54,11 @@ public final class R {
         public static final int hello_textview=0x7f040002;
     }
     public static final class style {
-        public static final int Theme_HoloEverywhere=0x7f050000;
-        public static final int holoButton=0x7f050001;
-        public static final int holoEditText=0x7f050002;
+        public static final int ButtonHoloDark=0x7f050001;
+        public static final int ButtonHoloLight=0x7f050004;
+        public static final int EditTextHoloDark=0x7f050002;
+        public static final int EditTextHoloLight=0x7f050005;
+        public static final int Theme_HoloEverywhereDark=0x7f050000;
+        public static final int Theme_HoloEverywhereLight=0x7f050003;
     }
 }

@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.HoloEverywhere" parent="android:Theme.NoTitleBar">
-        <item name="android:windowBackground">@drawable/holobg</item>
-        <item name="android:buttonStyle">@style/holoButton</item>
-         <item name="android:editTextStyle">@style/holoEditText</item>
+    <style name="Theme.HoloEverywhereDark" parent="android:Theme.NoTitleBar">
+        <item name="android:windowBackground">@drawable/background_holo_dark</item>
+        <item name="android:buttonStyle">@style/ButtonHoloDark</item>
+        <item name="android:editTextStyle">@style/EditTextHoloDark</item>
     </style>
 
-    <style name="holoButton" parent="android:style/Widget.Button">
-        <item name="android:background">@drawable/button_holo</item>
+    <style name="ButtonHoloDark" parent="android:style/Widget.Button">
+        <item name="android:background">@drawable/btn_default_holo_dark</item>
         <item name="android:textColor">#ffffff</item>
     </style>
-    
-        <style name="holoEditText" parent="android:style/Widget.EditText">
-        <item name="android:background">@drawable/edit_text_holo</item>
+
+    <style name="EditTextHoloDark" parent="android:style/Widget.EditText">
+        <item name="android:background">@drawable/edit_text_holo_dark</item>
         <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="Theme.HoloEverywhereLight" parent="android:Theme.Light.NoTitleBar">
+        <item name="android:buttonStyle">@style/ButtonHoloLight</item>
+        <item name="android:editTextStyle">@style/EditTextHoloLight</item>
+    </style>
+
+    <style name="ButtonHoloLight" parent="android:style/Widget.Button">
+        <item name="android:background">@drawable/btn_default_holo_light</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="EditTextHoloLight" parent="android:style/Widget.EditText">
+        <item name="android:background">@drawable/edit_text_holo_light</item>
+        <item name="android:textColor">#000000</item>
     </style>
 
 </resources>
