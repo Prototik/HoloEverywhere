@@ -3,8 +3,15 @@ h2. Bringing Holo Theme to Android 1.X and 2.X
 How to install ?
 
 # Git clone in Eclipse
-# Be sure that the library option is checked in HoloEverywhere project and you added the library to your current work.
-# Add: android:theme="@style/Theme.HoloEverywhereDark" in tour application manifest, you may also want to test Theme.HoloEverywhereLight...
+
+# Add HoloEverywhere to you project library (Properties//Android//Library//Add)
+
+# I strongly recommand you to use the great ActionbarSherlock (www.actionbarsherlock.com)
+I you decide that you don't need ActionbarSherlock, remove the .Sherlock themes in styles.xml
+
+# Add: android:theme="@style/Theme.HoloEverywhereDark" in tour application manifest, you may also want to test Theme.HoloEverywhereLight or adding .Sherlock to create awesome apps.
+
+CONTACT: https://plus.google.com/108315424589085456181/posts
 
 I am not totally familiar with Github, if you are interested in this project, 
 feel free to show me the points I am missing and I will fix them ASAP!
