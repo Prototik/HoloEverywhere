@@ -1,17 +1,17 @@
 package com.WazaBe.HoloDemo;
 
-import android.app.Activity;
+
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
-public class HoloDemoActivity extends Activity {
+public class HoloDemoActivity extends FragmentActivity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getSupportActionBar().setTitle(R.string.app_name);
 		setContentView(R.layout.main);
 
 	}

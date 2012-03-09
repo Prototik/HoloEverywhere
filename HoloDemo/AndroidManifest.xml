@@ -4,13 +4,15 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="4" />
+    <uses-sdk
+        android:minSdkVersion="4"
+        android:targetSdkVersion="11" />
 
     <application
+        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.HoloEverywhereDark"
-         >
+        android:theme="@style/Theme.HoloEverywhereDark.Sherlock" >
         <activity
             android:name=".HoloDemoActivity"
             android:label="@string/app_name" >
