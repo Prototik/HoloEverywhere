@@ -1,10 +1,10 @@
 package com.WazaBe.HoloDemo;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.HoloAlertDialogBuilder;
 
@@ -24,18 +24,37 @@ public class HoloDemoActivity extends FragmentActivity {
 		HoloAlertDialogBuilder builder = new HoloAlertDialogBuilder(this);
 
 		builder.setTitle("Work in Progress").setMessage(R.string.hello_dialog);
-		
-		builder.create().show();
-		
+
 		// BUTTONS ARE NOT SO EASY TO THEME
 		// SEE: http://stackoverflow.com/a/9434511/327402
 
-		// .setPositiveButton(android.R.string.ok, new
-		// DialogInterface.OnClickListener() {
-		// public void onClick(DialogInterface dialog, int id) {
-		//
-		// }
-		// });
-		
+		Boolean buttonDebug = true;
+		if (buttonDebug) {
+			builder.setPositiveButton("Positive",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+
+						}
+					});
+
+			builder.setNegativeButton("Negative",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+
+						}
+					});
+
+			builder.setNeutralButton("Neutral",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+
+						}
+					});
+		}
+
+		AlertDialog alert = builder.create();
+		alert.show();
+
 	}
+	
 }
