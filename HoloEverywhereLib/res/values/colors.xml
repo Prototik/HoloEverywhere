@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- A light Holo shade of blue --><color name="holo_blue_light">#ff33b5e5</color>
+</resources>

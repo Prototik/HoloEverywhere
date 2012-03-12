@@ -5,27 +5,29 @@
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:buttonStyle">@style/ButtonHoloDark</item>
         <item name="android:editTextStyle">@style/EditTextHoloDark</item>
-        <item name="android:alertDialogStyle">@style/dialogHolo</item>
+        <item name="android:alertDialogStyle">@style/dialogHoloDark</item>
     </style>
 
     <style name="Theme.HoloEverywhereLight.Sherlock" parent="Theme.Sherlock.Light">
         <item name="android:buttonStyle">@style/ButtonHoloLight</item>
         <item name="android:editTextStyle">@style/EditTextHoloLight</item>
+        <item name="android:alertDialogStyle">@style/dialogHoloLight</item>
     </style>
 
     <style name="Theme.HoloEverywhereDark" parent="android:Theme.NoTitleBar">
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:buttonStyle">@style/ButtonHoloDark</item>
         <item name="android:editTextStyle">@style/EditTextHoloDark</item>
-        <item name="android:alertDialogStyle">@style/dialogHolo</item>
+        <item name="android:alertDialogStyle">@style/dialogHoloDark</item>
     </style>
 
     <style name="Theme.HoloEverywhereLight" parent="android:Theme.Light.NoTitleBar">
         <item name="android:buttonStyle">@style/ButtonHoloLight</item>
         <item name="android:editTextStyle">@style/EditTextHoloLight</item>
+        <item name="android:alertDialogStyle">@style/dialogHoloLight</item>
     </style>
 
-    <style name="dialogHolo">
+    <style name="dialogHoloDark">
         <item name="android:fullDark">@drawable/dialog_full_holo_dark</item>
         <item name="android:topDark">@drawable/dialog_top_holo_dark</item>
         <item name="android:centerDark">@drawable/dialog_middle_holo_dark</item>
@@ -35,6 +37,19 @@
         <item name="android:bottomBright">@drawable/dialog_bottom_holo_dark</item>
         <item name="android:bottomMedium">@drawable/dialog_bottom_holo_dark</item>
         <item name="android:centerMedium">@drawable/dialog_middle_holo_dark</item>
+    </style>
+
+    <style name="dialogHoloLight">
+
+        <item name="android:fullDark">@drawable/dialog_full_holo_light</item>
+        <item name="android:topDark">@drawable/dialog_top_holo_light</item>
+        <item name="android:centerDark">@drawable/dialog_middle_holo_light</item>
+        <item name="android:bottomDark">@drawable/dialog_bottom_holo_light</item>
+        <item name="android:fullBright">@drawable/dialog_full_holo_light</item>
+        <item name="android:centerBright">@drawable/dialog_middle_holo_light</item>
+        <item name="android:bottomBright">@drawable/dialog_bottom_holo_light</item>
+        <item name="android:bottomMedium">@drawable/dialog_bottom_holo_light</item>
+        <item name="android:centerMedium">@drawable/dialog_middle_holo_light</item>
     </style>
 
     <style name="ButtonHoloDark" parent="android:style/Widget.Button">
@@ -49,7 +64,7 @@
 
     <style name="ButtonHoloLight" parent="android:style/Widget.Button">
         <item name="android:background">@drawable/btn_default_holo_light</item>
-        <item name="android:textColor">#ffffff</item>
+        <item name="android:textColor">#000000</item>
     </style>
 
     <style name="EditTextHoloLight" parent="android:style/Widget.EditText">

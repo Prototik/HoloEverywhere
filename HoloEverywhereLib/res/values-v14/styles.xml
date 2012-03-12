@@ -9,4 +9,8 @@
         <item name="android:windowNoTitle">false</item>
     </style>
 
+    <style name="Theme.HoloEverywhereDark.Sherlock" parent="Theme.Sherlock"></style>
+
+    <style name="Theme.HoloEverywhereLight.Sherlock" parent="Theme.Sherlock.Light"></style>
+
 </resources>
