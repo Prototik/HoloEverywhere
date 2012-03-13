@@ -1,21 +1,22 @@
 package com.WazaBe.HoloDemo;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 
 import com.WazaBe.HoloEverywhere.HoloAlertDialogBuilder;
+import com.actionbarsherlock.app.SherlockActivity;
 
-//If you plan to use ActionBarSherlock, you'll have to extend SherlockActivity
-//public class HoloDemoActivity extends SherlockActivity {
-public class HoloDemoActivity extends Activity {
+public class ActionBarHoloDemoActivity extends SherlockActivity {
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		getSupportActionBar().setTitle(R.string.app_name);
+
 		setContentView(R.layout.main);
 
 	}

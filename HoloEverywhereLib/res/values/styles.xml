@@ -5,29 +5,30 @@
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:buttonStyle">@style/ButtonHoloDark</item>
         <item name="android:editTextStyle">@style/EditTextHoloDark</item>
-        <item name="android:alertDialogStyle">@style/dialogHoloDark</item>
+        <item name="android:alertDialogStyle">@style/alertDialogHoloDark</item>
     </style>
 
     <style name="Theme.HoloEverywhereLight.Sherlock" parent="Theme.Sherlock.Light">
         <item name="android:buttonStyle">@style/ButtonHoloLight</item>
         <item name="android:editTextStyle">@style/EditTextHoloLight</item>
-        <item name="android:alertDialogStyle">@style/dialogHoloLight</item>
+        <item name="android:alertDialogStyle">@style/alertDialogHoloLight</item>
     </style>
 
     <style name="Theme.HoloEverywhereDark" parent="android:Theme.NoTitleBar">
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:buttonStyle">@style/ButtonHoloDark</item>
         <item name="android:editTextStyle">@style/EditTextHoloDark</item>
-        <item name="android:alertDialogStyle">@style/dialogHoloDark</item>
+        <item name="android:alertDialogStyle">@style/alertDialogHoloDark</item>
+        <item name="android:dialogTheme">@style/dialogHoloDark</item>
     </style>
 
     <style name="Theme.HoloEverywhereLight" parent="android:Theme.Light.NoTitleBar">
         <item name="android:buttonStyle">@style/ButtonHoloLight</item>
         <item name="android:editTextStyle">@style/EditTextHoloLight</item>
-        <item name="android:alertDialogStyle">@style/dialogHoloLight</item>
+        <item name="android:alertDialogStyle">@style/alertDialogHoloLight</item>
     </style>
 
-    <style name="dialogHoloDark">
+    <style name="alertDialogHoloDark">
         <item name="android:fullDark">@drawable/dialog_full_holo_dark</item>
         <item name="android:topDark">@drawable/dialog_top_holo_dark</item>
         <item name="android:centerDark">@drawable/dialog_middle_holo_dark</item>
@@ -39,8 +40,7 @@
         <item name="android:centerMedium">@drawable/dialog_middle_holo_dark</item>
     </style>
 
-    <style name="dialogHoloLight">
-
+    <style name="alertDialogHoloLight">
         <item name="android:fullDark">@drawable/dialog_full_holo_light</item>
         <item name="android:topDark">@drawable/dialog_top_holo_light</item>
         <item name="android:centerDark">@drawable/dialog_middle_holo_light</item>
@@ -70,6 +70,57 @@
     <style name="EditTextHoloLight" parent="android:style/Widget.EditText">
         <item name="android:background">@drawable/edit_text_holo_light</item>
         <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="dialogHoloDark" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@drawable/dialog_full_holo_dark</item>
+    </style>
+
+    <style name="dialogHoloLight" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@drawable/dialog_full_holo_light</item>
+    </style>
+
+    <style name="Widget.Holo.ProgressBar" parent="android:Widget.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/progress_medium_holo</item>
+        <item name="android:animationResolution">33</item>
+    </style>
+
+    <style name="Widget.Holo.ProgressBar.Horizontal" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_holo</item>
+        <item name="android:minHeight">16dip</item>
+        <item name="android:maxHeight">16dip</item>
+    </style>
+
+    <style name="Widget.Holo.ProgressBar.Small" parent="android:Widget.ProgressBar.Small">
+        <item name="android:indeterminateDrawable">@drawable/progress_small_holo</item>
+        <item name="android:animationResolution">33</item>
+    </style>
+
+    <style name="Widget.Holo.ProgressBar.Small.Title"></style>
+
+    <style name="Widget.Holo.ProgressBar.Large" parent="android:Widget.ProgressBar.Large">
+        <item name="android:indeterminateDrawable">@drawable/progress_large_holo</item>
+        <item name="android:animationResolution">33</item>
+    </style>
+
+    <style name="Widget.Holo.ProgressBar.Inverse"></style>
+
+    <style name="Widget.Holo.ProgressBar.Small.Inverse"></style>
+
+    <style name="Widget.Holo.ProgressBar.Large.Inverse"></style>
+
+    <style name="Widget.Holo.SeekBar" parent="android:Widget.SeekBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/scrubber_progress_horizontal_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/scrubber_progress_horizontal_holo_dark</item>
+        <item name="android:minHeight">13dip</item>
+        <item name="android:maxHeight">13dip</item>
+        <item name="android:thumb">@drawable/scrubber_control_selector_holo</item>
+        <item name="android:thumbOffset">16dip</item>
+        <item name="android:focusable">true</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
     </style>
 
 </resources>

@@ -18,15 +18,30 @@ public class HoloAlertDialogBuilder extends AlertDialog.Builder {
 		super(context);
 		mContext = context;
 
-		View customTitle = View.inflate(mContext, R.layout.alert_dialog_holo,
-				null);
-		mTitle = (TextView) customTitle.findViewById(R.id.alertTitle);
-		mIcon = (ImageView) customTitle.findViewById(R.id.icon);
-		//setCustomTitle(customTitle);
-		// View customMessage = View.inflate(mContext,
-		// R.layout.alert_dialog_message, null);
-		mMessage = (TextView) customTitle.findViewById(R.id.message);
-		setView(customTitle);
+		// Using the full layout give me a strange top divider in Donut and
+		// Eclair in when using setView. Using second idea breaks custom View.
+		Boolean useFullLayout = true;
+
+		if (useFullLayout) {
+			View customTitle = View.inflate(mContext,
+					R.layout.alert_dialog_title, null);
+			mTitle = (TextView) customTitle.findViewById(R.id.alertTitle);
+			mIcon = (ImageView) customTitle.findViewById(R.id.icon);
+			setCustomTitle(customTitle);
+			
+			View customMessage = View.inflate(mContext,
+					R.layout.alert_dialog_message, null);
+			mMessage = (TextView) customMessage.findViewById(R.id.message);
+			setView(customMessage);
+		} else {
+			View customView = View.inflate(mContext,
+					R.layout.alert_dialog_holo, null);
+			mTitle = (TextView) customView.findViewById(R.id.alertTitle);
+			mIcon = (ImageView) customView.findViewById(R.id.icon);
+			mMessage = (TextView) customView.findViewById(R.id.message);
+			setView(customView);
+		}
+
 	}
 
 	@Override
