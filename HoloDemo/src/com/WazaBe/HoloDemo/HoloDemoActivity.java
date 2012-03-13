@@ -8,8 +8,6 @@ import android.view.View;
 
 import com.WazaBe.HoloEverywhere.HoloAlertDialogBuilder;
 
-//If you plan to use ActionBarSherlock, you'll have to extend SherlockActivity
-//public class HoloDemoActivity extends SherlockActivity {
 public class HoloDemoActivity extends Activity {
 
 	/** Called when the activity is first created. */
@@ -24,7 +22,8 @@ public class HoloDemoActivity extends Activity {
 
 		HoloAlertDialogBuilder builder = new HoloAlertDialogBuilder(this);
 
-		builder.setTitle("Work in Progress").setMessage(R.string.hello_dialog).setIcon(R.drawable.ic_launcher);
+		builder.setTitle("Work in Progress").setMessage(R.string.hello_dialog)
+				.setIcon(R.drawable.ic_launcher);
 
 		// BUTTONS ARE NOT SO EASY TO THEME
 		// SEE: http://stackoverflow.com/a/9434511/327402
@@ -59,11 +58,7 @@ public class HoloDemoActivity extends Activity {
 	}
 
 	public void showDialog(View v) {
-
-		//DialogHolo myDialog = new DialogHolo(this,R.style.dialogHoloLight);
-		//myDialog.setTitle("Dialog");
-		//myDialog.show();
-
+		Utils.showDialog(this);
 	}
 
 }

@@ -16,7 +16,6 @@ public class ActionBarHoloDemoActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 
 		getSupportActionBar().setTitle(R.string.app_name);
-
 		setContentView(R.layout.main);
 
 	}
@@ -25,7 +24,8 @@ public class ActionBarHoloDemoActivity extends SherlockActivity {
 
 		HoloAlertDialogBuilder builder = new HoloAlertDialogBuilder(this);
 
-		builder.setTitle("Work in Progress").setMessage(R.string.hello_dialog).setIcon(R.drawable.ic_launcher);
+		builder.setTitle("Work in Progress").setMessage(R.string.hello_dialog)
+				.setIcon(R.drawable.ic_launcher);
 
 		// BUTTONS ARE NOT SO EASY TO THEME
 		// SEE: http://stackoverflow.com/a/9434511/327402
@@ -61,10 +61,7 @@ public class ActionBarHoloDemoActivity extends SherlockActivity {
 
 	public void showDialog(View v) {
 
-		//DialogHolo myDialog = new DialogHolo(this,R.style.dialogHoloLight);
-		//myDialog.setTitle("Dialog");
-		//myDialog.show();
+		Utils.showDialog(this);
 
 	}
-
 }

@@ -2,87 +2,106 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     android:orientation="vertical" >
 
-    <!--
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <!--
     The classic Views won't benefit from Roboto font.
     I am still searching for a way to fix that, but If you want to get the Roboto font, see below!
-    -->
+            -->
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dip"
-        android:text="Contact on Google Plus: +Waza_be" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Contact on Google Plus: +Waza_be" />
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_edittext" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hello_edittext" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="showDialog"
+                android:text="@string/hello_button"
+                android:visibility="gone" />
+
+            <!-- Do not forget to copy Roboto font into the asset folder! -->
+
+            <com.WazaBe.HoloEverywhere.ButtonHolo
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="showAlertDialog"
+                android:text="@string/hello_dialog" />
+
+            <com.WazaBe.HoloEverywhere.TextViewHolo
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hello_textview_roboto" />
+
+            <com.WazaBe.HoloEverywhere.EditTextHolo
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hello_edittext_roboto" />
+
+            <SeekBar
+                style="@style/Widget.Holo.SeekBar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:progress="75" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <ProgressBar
+                    style="@style/Widget.Holo.ProgressBar.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ProgressBar
+                    style="@style/Widget.Holo.ProgressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ProgressBar
+                    style="@style/Widget.Holo.ProgressBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <ProgressBar
+                style="@style/Widget.Holo.ProgressBar.Horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:progress="25" />
+
+            <ProgressBar
+                style="@style/Widget.Holo.ProgressBar.Horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:progress="25" />
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:onClick="showDialog"
-        android:text="@string/hello_button"
-        android:visibility="gone" />
-
-    <!-- Do not forget to copy Roboto font into the asset folder! -->
-
-    <com.WazaBe.HoloEverywhere.ButtonHolo
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:onClick="showAlertDialog"
-        android:text="@string/hello_dialog" />
-
-    <com.WazaBe.HoloEverywhere.TextViewHolo
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_textview_roboto" />
-
-    <com.WazaBe.HoloEverywhere.EditTextHolo
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_edittext_roboto" />
-
-    <SeekBar
-        style="@style/Widget.Holo.SeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:progress="75" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <ProgressBar
-            style="@style/Widget.Holo.ProgressBar.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ProgressBar
-            style="@style/Widget.Holo.ProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ProgressBar
-            style="@style/Widget.Holo.ProgressBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <ProgressBar
-        style="@style/Widget.Holo.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:progress="25" />
-
-    <ProgressBar
-        style="@style/Widget.Holo.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:progress="25" />
+        android:text="Links" />
 
 </LinearLayout>
