@@ -24,6 +24,7 @@
     </style>
 
     <style name="Theme.HoloEverywhereLight" parent="android:Theme.Light.NoTitleBar">
+        <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:buttonStyle">@style/ButtonHoloLight</item>
         <item name="android:editTextStyle">@style/EditTextHoloLight</item>
         <item name="android:alertDialogStyle">@style/alertDialogHoloLight</item>
