@@ -7,7 +7,7 @@ How to install ?
 * Add HoloEverywhere to you project library (Properties//Android//Library//Add)
 
 * I strongly recommand you to use the great ActionbarSherlock (www.actionbarsherlock.com)
-I you decide that you don't need ActionbarSherlock, remove the .Sherlock themes in styles.xml
+If you decide that you don't need ActionbarSherlock, remove the .Sherlock themes in styles.xml
 
 * Add: android:theme="@style/Theme.HoloEverywhereDark" in tour application manifest, you may also want to test Theme.HoloEverywhereLight or adding .Sherlock to create awesome apps.
 
