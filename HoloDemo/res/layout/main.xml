@@ -95,6 +95,32 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:progress="25" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <com.WazaBe.HoloEverywhere.RadioButtonHolo
+                    android:id="@+id/radio0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="RadioButton" />
+
+                <com.WazaBe.HoloEverywhere.RadioButtonHolo
+                    android:id="@+id/radio1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RadioButton" />
+
+                <com.WazaBe.HoloEverywhere.RadioButtonHolo
+                    android:id="@+id/radio2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RadioButton"/>
+            </RadioGroup>
+
         </LinearLayout>
     </ScrollView>
 
