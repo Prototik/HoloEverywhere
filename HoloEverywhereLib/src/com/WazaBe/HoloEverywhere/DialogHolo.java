@@ -3,7 +3,6 @@ package com.WazaBe.HoloEverywhere;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class DialogHolo extends Dialog {
