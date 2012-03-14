@@ -11,8 +11,7 @@
     <application
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/Theme.HoloEverywhereDark" >
+        android:label="@string/app_name" >
 
         <!--
         Light Theme:  
@@ -29,6 +28,7 @@
 
         <activity
             android:name=".HoloDemoActivity"
+            android:theme="@style/Theme.HoloEverywhereDark"
             android:label="@string/app_name"
             android:enabled="@bool/displaySimpleActivity" >
             <intent-filter>

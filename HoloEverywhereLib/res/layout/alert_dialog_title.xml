@@ -53,20 +53,9 @@ enabled.
     <View
         android:id="@+id/titleDivider"
         android:layout_width="match_parent"
-        android:layout_height="2dip"
+        android:layout_height="1dip"
         android:background="@color/holo_blue_light" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:foreground="?android:attr/windowContentOverlay"
-        android:orientation="vertical" >
 
-        <FrameLayout
-            android:id="@android:id/content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
 
 </LinearLayout>

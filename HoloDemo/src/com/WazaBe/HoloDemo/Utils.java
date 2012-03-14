@@ -11,6 +11,9 @@ import com.WazaBe.HoloEverywhere.HoloAlertDialogBuilder;
 
 public class Utils {
 
+	public final static int THEME_DARK=0;
+	public final static int THEME_LIGHT=1;
+	private static int sTheme;
 
 	public static void showDialog(final Activity c) {
 
@@ -48,6 +51,40 @@ public class Utils {
 
 		dialog.show();
 
+	}
+
+
+	public static void changeToTheme (Activity a,int theme){
+		sTheme=theme;
+		a.finish();
+		a.startActivity(new Intent(a,a.getClass()));
+		
+	}
+	
+	public static void onActivityCreateSetTheme(Activity a){
+		switch (sTheme){
+		default:
+		case THEME_DARK:
+			a.setTheme(R.style.Theme_HoloEverywhereDark);
+			break;
+		case THEME_LIGHT:
+			a.setTheme(R.style.Theme_HoloEverywhereLight);
+			break;
+		}
+		
+	}
+	
+	public static void onActivityCreateSetSherlockTheme(Activity a){
+		switch (sTheme){
+		default:
+		case THEME_DARK:
+			a.setTheme(R.style.Theme_HoloEverywhereDark_Sherlock);
+			break;
+		case THEME_LIGHT:
+			a.setTheme(R.style.Theme_HoloEverywhereLight_Sherlock);
+			break;
+		}
+		
 	}
 
 }

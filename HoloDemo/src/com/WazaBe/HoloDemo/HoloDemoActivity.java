@@ -13,7 +13,9 @@ public class HoloDemoActivity extends Activity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		Utils.onActivityCreateSetTheme(this);
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.main);
 
 	}
@@ -59,6 +61,14 @@ public class HoloDemoActivity extends Activity {
 
 	public void showDialog(View v) {
 		Utils.showDialog(this);
+	}
+
+	public void setDarkTheme(View v) {
+		Utils.changeToTheme(this,Utils.THEME_DARK);
+	}
+
+	public void setLightTheme(View v) {
+		Utils.changeToTheme(this,Utils.THEME_LIGHT);
 	}
 
 }
