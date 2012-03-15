@@ -143,6 +143,18 @@
                     android:text="RadioButton with Roboto" />
             </RadioGroup>
 
+            <com.WazaBe.HoloEverywhere.TextViewHolo
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Hello Spinner" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:prompt="@string/spinner_prompt" />
+
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
