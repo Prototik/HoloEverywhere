@@ -14,6 +14,7 @@
 		<item name="android:progressBarStyleSmall">@style/ProgressBarHolo.Small</item>
 		<item name="android:progressBarStyleLarge">@style/ProgressBarHolo.Large</item>
 		<item name="android:progressBarStyleHorizontal">@style/ProgressBarHolo.Horizontal</item>
+		<item name="android:listViewStyle">@style/ListViewStyle</item>
 
 
 	</style>
@@ -31,6 +32,7 @@
 		<item name="android:progressBarStyleSmall">@style/ProgressBarHolo.Small</item>
 		<item name="android:progressBarStyleLarge">@style/ProgressBarHolo.Large</item>
 		<item name="android:progressBarStyleHorizontal">@style/ProgressBarHolo.Horizontal</item>
+		<item name="android:listViewStyle">@style/ListViewStyle</item>
 	</style>
 
 	<style name="Theme.HoloEverywhereDark" parent="android:Theme.NoTitleBar">
@@ -46,6 +48,7 @@
 		<item name="android:progressBarStyleSmall">@style/ProgressBarHolo.Small</item>
 		<item name="android:progressBarStyleLarge">@style/ProgressBarHolo.Large</item>
 		<item name="android:progressBarStyleHorizontal">@style/ProgressBarHolo.Horizontal</item>
+		<item name="android:listViewStyle">@style/ListViewStyle</item>
 	</style>
 
 	<style name="Theme.HoloEverywhereLight" parent="android:Theme.Light.NoTitleBar">
@@ -61,6 +64,7 @@
 		<item name="android:progressBarStyleSmall">@style/ProgressBarHolo.Small</item>
 		<item name="android:progressBarStyleLarge">@style/ProgressBarHolo.Large</item>
 		<item name="android:progressBarStyleHorizontal">@style/ProgressBarHolo.Horizontal</item>
+		<item name="android:listViewStyle">@style/ListViewStyle</item>
 	</style>
 
 	<style name="AlertDialogHoloDark">
@@ -174,7 +178,8 @@
 		<item name="android:animationResolution">33</item>
 	</style>
 
-
-
+	<style name="ListViewStyle" parent="android:Widget.ListView">
+	    <item name="android:cacheColorHint">#00000000</item>
+	</style>
 
 </resources>
