@@ -68,25 +68,30 @@
                 android:orientation="horizontal" >
 
                 <ProgressBar
+                    style="@style/ProgressBarHolo.Large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <ProgressBar
+                    style="@style/ProgressBarHolo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <ProgressBar
+                    style="@style/ProgressBarHolo.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
             <ProgressBar
+                style="@style/ProgressBarHolo.Horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
                 android:progress="25" />
 
             <ProgressBar
+                style="@style/ProgressBarHolo.Horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:progress="25" />

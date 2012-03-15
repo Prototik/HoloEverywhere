@@ -9,10 +9,10 @@
 		<item name="android:radioButtonStyle">@style/RadioHoloDark</item>
 		<item name="android:checkboxStyle">@style/CheckBoxHoloDark</item>
 		<item name="android:seekBarStyle">@style/SeekBarHolo</item>
-		<item name="android:progressBarStyle">style/ProgressBarHolo</item>
-		<item name="android:progressBarStyleSmall">style/ProgressBarHolo.Small</item>
-		<item name="android:progressBarStyleLarge">style/ProgressBarHolo.Large</item>
-		<item name="android:progressBarStyleHorizontal">style/ProgressBarHolo.Horizontal</item>
+		<item name="android:progressBarStyle">@style/ProgressBarHolo</item>
+		<item name="android:progressBarStyleSmall">@style/ProgressBarHolo.Small</item>
+		<item name="android:progressBarStyleLarge">@style/ProgressBarHolo.Large</item>
+		<item name="android:progressBarStyleHorizontal">@style/ProgressBarHolo.Horizontal</item>
 
 
 	</style>
@@ -25,10 +25,10 @@
 		<item name="android:radioButtonStyle">@style/RadioHoloLight</item>
 		<item name="android:checkboxStyle">@style/CheckBoxHoloLight</item>
 		<item name="android:seekBarStyle">@style/SeekBarHolo</item>
-		<item name="android:progressBarStyle">style/ProgressBarHolo</item>
-		<item name="android:progressBarStyleSmall">style/ProgressBarHolo.Small</item>
-		<item name="android:progressBarStyleLarge">style/ProgressBarHolo.Large</item>
-		<item name="android:progressBarStyleHorizontal">style/ProgressBarHolo.Horizontal</item>
+		<item name="android:progressBarStyle">@style/ProgressBarHolo</item>
+		<item name="android:progressBarStyleSmall">@style/ProgressBarHolo.Small</item>
+		<item name="android:progressBarStyleLarge">@style/ProgressBarHolo.Large</item>
+		<item name="android:progressBarStyleHorizontal">@style/ProgressBarHolo.Horizontal</item>
 	</style>
 
 	<style name="Theme.HoloEverywhereDark" parent="android:Theme.NoTitleBar">
@@ -39,10 +39,10 @@
 		<item name="android:radioButtonStyle">@style/RadioHoloDark</item>
 		<item name="android:checkboxStyle">@style/CheckBoxHoloDark</item>
 		<item name="android:seekBarStyle">@style/SeekBarHolo</item>
-		<item name="android:progressBarStyle">style/ProgressBarHolo</item>
-		<item name="android:progressBarStyleSmall">style/ProgressBarHolo.Small</item>
-		<item name="android:progressBarStyleLarge">style/ProgressBarHolo.Large</item>
-		<item name="android:progressBarStyleHorizontal">style/ProgressBarHolo.Horizontal</item>
+		<item name="android:progressBarStyle">@style/ProgressBarHolo</item>
+		<item name="android:progressBarStyleSmall">@style/ProgressBarHolo.Small</item>
+		<item name="android:progressBarStyleLarge">@style/ProgressBarHolo.Large</item>
+		<item name="android:progressBarStyleHorizontal">@style/ProgressBarHolo.Horizontal</item>
 	</style>
 
 	<style name="Theme.HoloEverywhereLight" parent="android:Theme.Light.NoTitleBar">
@@ -53,10 +53,10 @@
 		<item name="android:radioButtonStyle">@style/RadioHoloLight</item>
 		<item name="android:checkboxStyle">@style/CheckBoxHoloLight</item>
 		<item name="android:seekBarStyle">@style/SeekBarHolo</item>
-		<item name="android:progressBarStyle">style/ProgressBarHolo</item>
-		<item name="android:progressBarStyleSmall">style/ProgressBarHolo.Small</item>
-		<item name="android:progressBarStyleLarge">style/ProgressBarHolo.Large</item>
-		<item name="android:progressBarStyleHorizontal">style/ProgressBarHolo.Horizontal</item>
+		<item name="android:progressBarStyle">@style/ProgressBarHolo</item>
+		<item name="android:progressBarStyleSmall">@style/ProgressBarHolo.Small</item>
+		<item name="android:progressBarStyleLarge">@style/ProgressBarHolo.Large</item>
+		<item name="android:progressBarStyleHorizontal">@style/ProgressBarHolo.Horizontal</item>
 	</style>
 
 	<style name="AlertDialogHoloDark">
