@@ -3,6 +3,7 @@
 
 	<style name="Theme.HoloEverywhereDark.Sherlock" parent="Theme.Sherlock">
 		<item name="android:windowBackground">@drawable/background_holo_dark</item>
+		<item name="android:listViewStyle">@style/ListViewStyle</item>
 		<item name="android:buttonStyle">@style/ButtonHoloDark</item>
 		<item name="android:imageButtonStyle">@style/ButtonHoloDark</item>
 		<item name="android:editTextStyle">@style/EditTextHoloDark</item>
@@ -23,6 +24,7 @@
 
 	<style name="Theme.HoloEverywhereLight.Sherlock" parent="Theme.Sherlock.Light">
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
+		<item name="android:listViewStyle">@style/ListViewStyle</item>
 		<item name="android:buttonStyle">@style/ButtonHoloLight</item>
 		<item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
 		<item name="android:editTextStyle">@style/EditTextHoloLight</item>
@@ -41,6 +43,7 @@
 
 	<style name="Theme.HoloEverywhereDark" parent="android:Theme.NoTitleBar">
 		<item name="android:windowBackground">@drawable/background_holo_dark</item>
+		<item name="android:listViewStyle">@style/ListViewStyle</item>
 		<item name="android:buttonStyle">@style/ButtonHoloDark</item>
 		<item name="android:imageButtonStyle">@style/ButtonHoloDark</item>
 		<item name="android:editTextStyle">@style/EditTextHoloDark</item>
@@ -60,6 +63,7 @@
 
 	<style name="Theme.HoloEverywhereLight" parent="android:Theme.Light.NoTitleBar">
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
+		<item name="android:listViewStyle">@style/ListViewStyle</item>
 		<item name="android:buttonStyle">@style/ButtonHoloLight</item>
 		<item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
 		<item name="android:editTextStyle">@style/EditTextHoloLight</item>
@@ -74,6 +78,10 @@
 		<item name="android:spinnerStyle">@style/SpinnerLight</item>
 		<item name="android:spinnerItemStyle">@style/SpinnerItemLight</item>
 		<item name="android:spinnerDropDownItemStyle">@style/DropDownItemLight</item>
+	</style>
+
+	<style name="ListViewStyle" parent="android:Widget.ListView">
+		<item name="android:cacheColorHint">#00000000</item>
 	</style>
 
 	<style name="AlertDialogHoloDark">
