@@ -4,6 +4,7 @@
 	<style name="Theme.HoloEverywhereDark.Sherlock" parent="Theme.Sherlock">
 		<item name="android:windowBackground">@drawable/background_holo_dark</item>
 		<item name="android:buttonStyle">@style/ButtonHoloDark</item>
+		<item name="android:imageButtonStyle">@style/ButtonHoloDark</item>
 		<item name="android:editTextStyle">@style/EditTextHoloDark</item>
 		<item name="android:alertDialogStyle">@style/AlertDialogHoloDark</item>
 		<item name="android:radioButtonStyle">@style/RadioHoloDark</item>
@@ -20,6 +21,7 @@
 	<style name="Theme.HoloEverywhereLight.Sherlock" parent="Theme.Sherlock.Light">
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
 		<item name="android:buttonStyle">@style/ButtonHoloLight</item>
+		<item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
 		<item name="android:editTextStyle">@style/EditTextHoloLight</item>
 		<item name="android:alertDialogStyle">@style/AlertDialogHoloLight</item>
 		<item name="android:radioButtonStyle">@style/RadioHoloLight</item>
@@ -34,6 +36,7 @@
 	<style name="Theme.HoloEverywhereDark" parent="android:Theme.NoTitleBar">
 		<item name="android:windowBackground">@drawable/background_holo_dark</item>
 		<item name="android:buttonStyle">@style/ButtonHoloDark</item>
+		<item name="android:imageButtonStyle">@style/ButtonHoloDark</item>
 		<item name="android:editTextStyle">@style/EditTextHoloDark</item>
 		<item name="android:alertDialogStyle">@style/AlertDialogHoloDark</item>
 		<item name="android:radioButtonStyle">@style/RadioHoloDark</item>
@@ -48,6 +51,7 @@
 	<style name="Theme.HoloEverywhereLight" parent="android:Theme.Light.NoTitleBar">
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
 		<item name="android:buttonStyle">@style/ButtonHoloLight</item>
+		<item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
 		<item name="android:editTextStyle">@style/EditTextHoloLight</item>
 		<item name="android:alertDialogStyle">@style/AlertDialogHoloLight</item>
 		<item name="android:radioButtonStyle">@style/RadioHoloLight</item>
