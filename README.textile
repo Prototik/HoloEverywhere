@@ -1,5 +1,4 @@
-h2. Bringing Holo Theme to Android 1.X and 2.X
-
+h2. Bringing Holo Theme to Android 1.6 and above.
 How to install ?
 
 * Git clone in Eclipse
