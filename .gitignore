@@ -1,3 +1,4 @@
+*.DS_Store
 HoloEverywhereLib/bin/*
 HoloEverywhereLib/gen/*
 HoloDemo/bin/*
