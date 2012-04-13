@@ -19,7 +19,7 @@
             android:padding="10dip"
             android:src="@drawable/gplus" />
 
-        <TextView
+        <com.WazaBe.HoloEverywhere.TextViewHolo
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -42,7 +42,7 @@
             android:padding="10dip"
             android:src="@drawable/github" />
 
-        <TextView
+        <com.WazaBe.HoloEverywhere.TextViewHolo
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
