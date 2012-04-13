@@ -22,6 +22,28 @@
 				font, see below!
             -->
 
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <com.WazaBe.HoloEverywhere.ButtonHolo
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dip"
+                    android:layout_weight="1"
+                    android:onClick="setDarkTheme"
+                    android:text="Holo Dark" />
+
+                <com.WazaBe.HoloEverywhere.ButtonHolo
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dip"
+                    android:layout_weight="1"
+                    android:onClick="setLightTheme"
+                    android:text="Holo Light" />
+            </LinearLayout>
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -96,28 +118,6 @@
                 android:layout_height="wrap_content"
                 android:progress="25" />
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <com.WazaBe.HoloEverywhere.ButtonHolo
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="6dip"
-                    android:layout_weight="1"
-                    android:onClick="setDarkTheme"
-                    android:text="Holo Dark" />
-
-                <com.WazaBe.HoloEverywhere.ButtonHolo
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="6dip"
-                    android:layout_weight="1"
-                    android:onClick="setLightTheme"
-                    android:text="Holo Light" />
-            </LinearLayout>
-
             <RadioGroup
                 android:id="@+id/radioGroup2"
                 android:layout_width="wrap_content"
@@ -165,22 +165,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CheckBox with Roboto" />
-
-            <CheckedTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="CheckedTextView without Roboto" />
-
-            <com.WazaBe.HoloEverywhere.CheckedTextViewHolo
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="CheckedTextView  with Roboto" />
         </LinearLayout>
     </ScrollView>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:choiceMode="multipleChoice"
+        android:drawSelectorOnTop="false" />
 
     <Button
         android:layout_width="fill_parent"

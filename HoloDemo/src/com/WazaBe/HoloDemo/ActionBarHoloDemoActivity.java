@@ -11,9 +11,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.HoloAlertDialogBuilder;
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockListActivity;
 
-public class ActionBarHoloDemoActivity extends SherlockActivity {
+public class ActionBarHoloDemoActivity extends SherlockListActivity {
 
 	/** Called when the activity is first created. */
 	@Override
@@ -48,6 +48,10 @@ public class ActionBarHoloDemoActivity extends SherlockActivity {
 		adapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		s.setAdapter(adapter);
+		
+	    setListAdapter(new ArrayAdapter<String>(this,
+                R.layout.custom_checkedtextview_holo_dark,
+                HoloDemoActivity.itemsCheckedTextView));
 
 	}
 
