@@ -16,3 +16,13 @@ I am not totally familiar with Github, if you are interested in this project,
 feel free to show me the points I am missing and I will fix them ASAP!
 
 !https://github.com/ChristopheVersieux/HoloEverywhere/raw/master/screen1.png(Screenshot)!
+
+/*
+ * ----------------------------------------------------------------------------------------------------
+ * "THE BEER-WARE LICENSE":
+ * As long as you retain this notice you can do whatever you want with this stuff. 
+ * If we meet some day, and you think this stuff is worth it, you can buy me a beer in return 
+ * I also accept Paypal donations to christophe.versieux@gmail.com 
+ * (you may offer me multiple beers as they are very cheap in Belgium)
+ * ----------------------------------------------------------------------------------------------------
+ */
