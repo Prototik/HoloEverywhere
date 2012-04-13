@@ -159,12 +159,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="CheckBox" />
+                android:text="CheckBox without Roboto" />
 
             <com.WazaBe.HoloEverywhere.CheckBoxHolo
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CheckBox with Roboto" />
+
+            <CheckedTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="CheckedTextView without Roboto" />
+
+            <com.WazaBe.HoloEverywhere.CheckedTextViewHolo
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="CheckedTextView  with Roboto" />
         </LinearLayout>
     </ScrollView>
 
