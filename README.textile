@@ -8,7 +8,7 @@ How to install ?
 * I strongly recommand you to use the great ActionbarSherlock (www.actionbarsherlock.com)
 If you decide that you don't need ActionbarSherlock, remove the .Sherlock themes in styles.xml
 
-* Add: android:theme="@style/Theme.HoloEverywhereDark" in tour application manifest, you may also want to test Theme.HoloEverywhereLight or adding .Sherlock to create awesome apps.
+* Add: android:theme="@style/Theme.HoloEverywhereDark" in your application manifest, you may also want to test Theme.HoloEverywhereLight or adding .Sherlock to create awesome apps.
 
 CONTACT: https://plus.google.com/108315424589085456181/posts
 
