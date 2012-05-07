@@ -97,6 +97,10 @@ public class ActionBarHoloDemoActivity extends SherlockListActivity {
 	public void showDialog(View v) {
 		Utils.showDialog(this);
 	}
+	
+	public void setClassicTheme(View v) {
+		Utils.changeToTheme(this, Utils.THEME_CLASSIC);
+	}
 
 	public void setDarkTheme(View v) {
 		Utils.changeToTheme(this, Utils.THEME_DARK);

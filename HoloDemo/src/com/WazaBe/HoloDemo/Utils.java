@@ -10,9 +10,11 @@ import android.widget.LinearLayout;
 import com.WazaBe.HoloEverywhere.HoloAlertDialogBuilder;
 
 public class Utils {
-
+	
+	public final static int THEME_CLASSIC=-1;
 	public final static int THEME_DARK=0;
 	public final static int THEME_LIGHT=1;
+	
 	private static int sTheme;
 
 	public static void showDialog(final Activity c) {
@@ -64,6 +66,9 @@ public class Utils {
 	public static void onActivityCreateSetTheme(Activity a){
 		switch (sTheme){
 		default:
+		case THEME_CLASSIC:
+			a.setTheme(android.R.style.Theme_Black_NoTitleBar);
+			break;
 		case THEME_DARK:
 			a.setTheme(R.style.Theme_HoloEverywhereDark);
 			break;
@@ -77,6 +82,9 @@ public class Utils {
 	public static void onActivityCreateSetSherlockTheme(Activity a){
 		switch (sTheme){
 		default:
+		case THEME_CLASSIC:
+			a.setTheme(R.style.Theme_HoloEverywhereDefault_Sherlock);
+			break;
 		case THEME_DARK:
 			a.setTheme(R.style.Theme_HoloEverywhereDark_Sherlock);
 			break;

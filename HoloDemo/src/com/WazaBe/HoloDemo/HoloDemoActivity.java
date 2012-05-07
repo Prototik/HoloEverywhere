@@ -14,7 +14,9 @@ import android.widget.TextView;
 import com.WazaBe.HoloEverywhere.HoloAlertDialogBuilder;
 
 public class HoloDemoActivity extends ListActivity {
-	  static final String[] itemsCheckedTextView={"List: CheckedTextView", "List: Other CheckedTextView"};
+	static final String[] itemsCheckedTextView = { "List: CheckedTextView",
+			"List: Other CheckedTextView" };
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -48,11 +50,11 @@ public class HoloDemoActivity extends ListActivity {
 			}
 		};
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		s.setAdapter(adapter);
-		
-	    setListAdapter(new ArrayAdapter<String>(this,
-                R.layout.custom_checkedtextview_holo_dark,
-                itemsCheckedTextView));
+		if (s != null)
+			s.setAdapter(adapter);
+
+		setListAdapter(new ArrayAdapter<String>(this,
+				R.layout.custom_checkedtextview_holo_dark, itemsCheckedTextView));
 
 	}
 
@@ -97,6 +99,10 @@ public class HoloDemoActivity extends ListActivity {
 
 	public void showDialog(View v) {
 		Utils.showDialog(this);
+	}
+
+	public void setClassicTheme(View v) {
+		Utils.changeToTheme(this, Utils.THEME_CLASSIC);
 	}
 
 	public void setDarkTheme(View v) {
