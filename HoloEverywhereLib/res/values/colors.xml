@@ -25,6 +25,19 @@
     
     <color name="bright_foreground_dark_inverse">@color/bright_foreground_light</color>
     
+    
+    <color name="dim_foreground_holo_dark">#bebebe</color>
+    <color name="dim_foreground_holo_light">#323232</color>
+    
+    <color name="dim_foreground_dark_inverse">#323232</color>
+    
+    
+    <color name="dim_foreground_dark">#bebebe</color>
+    
+    
+    <color name="dim_foreground_disabled_holo_dark">#80bebebe</color>
+    <color name="dim_foreground_disabled_holo_light">#80323232</color>
+    
     <color name="highlighted_text_holo_dark">#6633b5e5</color>
     <color name="highlighted_text_holo_light">#6633b5e5</color>
     
