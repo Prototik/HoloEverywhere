@@ -20,6 +20,9 @@
 		<item name="android:spinnerStyle">@style/SpinnerDark</item>
 		<item name="android:spinnerItemStyle">@style/SpinnerItemDark</item>
 		<item name="android:spinnerDropDownItemStyle">@style/DropDownItemDark</item>
+		
+		<item name="android:textAppearance">@style/TextAppearanceHoloDark</item>
+        <item name="android:textAppearanceInverse">@style/TextAppearanceHoloDark.Inverse</item>
 
 		<item name="android:textColorPrimary">@color/primary_text_holo_dark</item>
         <item name="android:textColorSecondary">@color/secondary_text_holo_dark</item>
@@ -57,6 +60,27 @@
 		<item name="android:spinnerStyle">@style/SpinnerLight</item>
 		<item name="android:spinnerItemStyle">@style/SpinnerItemLight</item>
 		<item name="android:spinnerDropDownItemStyle">@style/DropDownItemLight</item>
+		
+		<item name="android:textAppearance">@style/TextAppearanceHoloLight</item>
+        <item name="android:textAppearanceInverse">@style/TextAppearanceHoloLight.Inverse</item>
+		
+		<item name="android:textColorPrimary">@color/primary_text_holo_light</item>
+        <item name="android:textColorSecondary">@color/secondary_text_holo_light</item>
+        <item name="android:textColorTertiary">@color/tertiary_text_holo_light</item>
+        <item name="android:textColorPrimaryInverse">@color/primary_text_holo_dark</item>
+        <item name="android:textColorSecondaryInverse">@color/secondary_text_holo_dark</item>
+        <item name="android:textColorTertiaryInverse">@color/tertiary_text_holo_dark</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/primary_text_disable_only_holo_light</item>
+        <item name="android:textColorPrimaryInverseDisableOnly">@color/primary_text_disable_only_holo_dark</item>
+        <item name="android:textColorPrimaryNoDisable">@color/primary_text_nodisable_holo_light</item>
+        <item name="android:textColorSecondaryNoDisable">@color/secondary_text_nodisable_holo_light</item>
+        <item name="android:textColorPrimaryInverseNoDisable">@color/primary_text_nodisable_holo_dark</item>
+        <item name="android:textColorSecondaryInverseNoDisable">@color/secondary_text_nodisable_holo_dark</item>
+        <item name="android:textColorHint">@color/hint_foreground_holo_light</item>
+        <item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
+        <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
+        <item name="android:textColorLink">@color/holo_blue_light</item>
+		
 	</style>
 
 	<style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock" parent="Theme.Sherlock.Light.DarkActionBar">
@@ -97,6 +121,9 @@
 		<item name="android:spinnerItemStyle">@style/SpinnerItemDark</item>
 		<item name="android:spinnerDropDownItemStyle">@style/DropDownItemDark</item>
 		
+		<item name="android:textAppearance">@style/TextAppearanceHoloDark</item>
+        <item name="android:textAppearanceInverse">@style/TextAppearanceHoloDark.Inverse</item>
+
 		<item name="android:textColorPrimary">@color/primary_text_holo_dark</item>
         <item name="android:textColorSecondary">@color/secondary_text_holo_dark</item>
         <item name="android:textColorTertiary">@color/tertiary_text_holo_dark</item>
@@ -133,6 +160,27 @@
 		<item name="android:spinnerStyle">@style/SpinnerLight</item>
 		<item name="android:spinnerItemStyle">@style/SpinnerItemLight</item>
 		<item name="android:spinnerDropDownItemStyle">@style/DropDownItemLight</item>
+		
+		<item name="android:textAppearance">@style/TextAppearanceHoloLight</item>
+        <item name="android:textAppearanceInverse">@style/TextAppearanceHoloLight.Inverse</item>
+		
+		<item name="android:textColorPrimary">@color/primary_text_holo_light</item>
+        <item name="android:textColorSecondary">@color/secondary_text_holo_light</item>
+        <item name="android:textColorTertiary">@color/tertiary_text_holo_light</item>
+        <item name="android:textColorPrimaryInverse">@color/primary_text_holo_dark</item>
+        <item name="android:textColorSecondaryInverse">@color/secondary_text_holo_dark</item>
+        <item name="android:textColorTertiaryInverse">@color/tertiary_text_holo_dark</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/primary_text_disable_only_holo_light</item>
+        <item name="android:textColorPrimaryInverseDisableOnly">@color/primary_text_disable_only_holo_dark</item>
+        <item name="android:textColorPrimaryNoDisable">@color/primary_text_nodisable_holo_light</item>
+        <item name="android:textColorSecondaryNoDisable">@color/secondary_text_nodisable_holo_light</item>
+        <item name="android:textColorPrimaryInverseNoDisable">@color/primary_text_nodisable_holo_dark</item>
+        <item name="android:textColorSecondaryInverseNoDisable">@color/secondary_text_nodisable_holo_dark</item>
+        <item name="android:textColorHint">@color/hint_foreground_holo_light</item>
+        <item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
+        <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
+        <item name="android:textColorLink">@color/holo_blue_light</item>
+		
 	</style>
 
 	<style name="ListViewStyle" parent="android:Widget.ListView">
@@ -320,6 +368,40 @@
     </style>
 
     <style name="TextAppearanceHoloDark.Small.Inverse">
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:textColorHint">?android:attr/textColorHintInverse</item>
+    </style>
+    
+    <!-- Holo Light -->
+    
+    <style name="TextAppearanceHoloLight" parent="TextAppearanceHoloDark">
+    </style>
+
+    <style name="TextAppearanceHoloLight.Inverse">
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:textColorHint">?android:attr/textColorHintInverse</item>
+    </style>
+    
+    <style name="TextAppearanceHoloLight.Large" parent="TextAppearanceHoloDark.Large">
+    </style>
+
+    <style name="TextAppearanceHoloLight.Medium" parent="TextAppearanceHoloDark.Medium">
+    </style>
+
+    <style name="TextAppearanceHoloLight.Small" parent="TextAppearanceHoloDark.Small">
+    </style>
+ 
+   <style name="TextAppearanceHoloLight.Large.Inverse">
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:textColorHint">?android:attr/textColorHintInverse</item>
+    </style>
+
+    <style name="TextAppearanceHoloLight.Medium.Inverse">
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:textColorHint">?android:attr/textColorHintInverse</item>
+    </style>
+
+    <style name="TextAppearanceHoloLight.Small.Inverse">
         <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
         <item name="android:textColorHint">?android:attr/textColorHintInverse</item>
     </style>
