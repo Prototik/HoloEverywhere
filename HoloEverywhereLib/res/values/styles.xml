@@ -23,6 +23,12 @@
 		
 		<item name="android:textAppearance">@style/TextAppearanceHoloDark</item>
         <item name="android:textAppearanceInverse">@style/TextAppearanceHoloDark.Inverse</item>
+        <item name="android:textAppearanceLarge">@style/TextAppearanceHoloDark.Large</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearanceHoloDark.Medium</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearanceHoloDark.Small</item>
+        <item name="android:textAppearanceLargeInverse">@style/TextAppearanceHoloDark.Large.Inverse</item>
+        <item name="android:textAppearanceMediumInverse">@style/TextAppearanceHoloDark.Medium.Inverse</item>
+        <item name="android:textAppearanceSmallInverse">@style/TextAppearanceHoloDark.Small.Inverse</item>
 
 		<item name="android:textColorPrimary">@color/primary_text_holo_dark</item>
         <item name="android:textColorSecondary">@color/secondary_text_holo_dark</item>
@@ -63,6 +69,12 @@
 		
 		<item name="android:textAppearance">@style/TextAppearanceHoloLight</item>
         <item name="android:textAppearanceInverse">@style/TextAppearanceHoloLight.Inverse</item>
+        <item name="android:textAppearanceLarge">@style/TextAppearanceHoloLight.Large</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearanceHoloLight.Medium</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearanceHoloLight.Small</item>
+        <item name="android:textAppearanceLargeInverse">@style/TextAppearanceHoloLight.Large.Inverse</item>
+        <item name="android:textAppearanceMediumInverse">@style/TextAppearanceHoloLight.Medium.Inverse</item>
+        <item name="android:textAppearanceSmallInverse">@style/TextAppearanceHoloLight.Small.Inverse</item>
 		
 		<item name="android:textColorPrimary">@color/primary_text_holo_light</item>
         <item name="android:textColorSecondary">@color/secondary_text_holo_light</item>
@@ -123,6 +135,12 @@
 		
 		<item name="android:textAppearance">@style/TextAppearanceHoloDark</item>
         <item name="android:textAppearanceInverse">@style/TextAppearanceHoloDark.Inverse</item>
+        <item name="android:textAppearanceLarge">@style/TextAppearanceHoloDark.Large</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearanceHoloDark.Medium</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearanceHoloDark.Small</item>
+        <item name="android:textAppearanceLargeInverse">@style/TextAppearanceHoloDark.Large.Inverse</item>
+        <item name="android:textAppearanceMediumInverse">@style/TextAppearanceHoloDark.Medium.Inverse</item>
+        <item name="android:textAppearanceSmallInverse">@style/TextAppearanceHoloDark.Small.Inverse</item>
 
 		<item name="android:textColorPrimary">@color/primary_text_holo_dark</item>
         <item name="android:textColorSecondary">@color/secondary_text_holo_dark</item>
@@ -163,6 +181,12 @@
 		
 		<item name="android:textAppearance">@style/TextAppearanceHoloLight</item>
         <item name="android:textAppearanceInverse">@style/TextAppearanceHoloLight.Inverse</item>
+        <item name="android:textAppearanceLarge">@style/TextAppearanceHoloLight.Large</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearanceHoloLight.Medium</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearanceHoloLight.Small</item>
+        <item name="android:textAppearanceLargeInverse">@style/TextAppearanceHoloLight.Large.Inverse</item>
+        <item name="android:textAppearanceMediumInverse">@style/TextAppearanceHoloLight.Medium.Inverse</item>
+        <item name="android:textAppearanceSmallInverse">@style/TextAppearanceHoloLight.Small.Inverse</item>
 		
 		<item name="android:textColorPrimary">@color/primary_text_holo_light</item>
         <item name="android:textColorSecondary">@color/secondary_text_holo_light</item>
