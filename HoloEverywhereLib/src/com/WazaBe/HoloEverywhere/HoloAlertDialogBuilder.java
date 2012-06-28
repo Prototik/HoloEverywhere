@@ -10,9 +10,9 @@ import android.widget.TextView;
 public class HoloAlertDialogBuilder extends AlertDialog.Builder {
 
 	private final Context mContext;
-	private TextView mTitle;
 	private ImageView mIcon;
 	private TextView mMessage;
+	private TextView mTitle;
 
 	public HoloAlertDialogBuilder(Context context) {
 		super(context);
@@ -26,45 +26,31 @@ public class HoloAlertDialogBuilder extends AlertDialog.Builder {
 			View customTitle = View.inflate(mContext,
 					R.layout.alert_dialog_title, null);
 			mTitle = (TextView) customTitle.findViewById(R.id.alertTitle);
+			FontLoader.loadFont(mTitle, "Roboto-Regular.ttf");
 			mIcon = (ImageView) customTitle.findViewById(R.id.icon);
 			setCustomTitle(customTitle);
-			
+
 			View customMessage = View.inflate(mContext,
 					R.layout.alert_dialog_message, null);
 			mMessage = (TextView) customMessage.findViewById(R.id.message);
+			FontLoader.loadFont(mMessage, "Roboto-Regular.ttf");
 			setView(customMessage);
 		} else {
 			View customView = View.inflate(mContext,
 					R.layout.alert_dialog_holo, null);
 			mTitle = (TextView) customView.findViewById(R.id.alertTitle);
+			FontLoader.loadFont(mTitle, "Roboto-Regular.ttf");
 			mIcon = (ImageView) customView.findViewById(R.id.icon);
 			mMessage = (TextView) customView.findViewById(R.id.message);
+			FontLoader.loadFont(mMessage, "Roboto-Regular.ttf");
 			setView(customView);
 		}
 
 	}
 
 	@Override
-	public HoloAlertDialogBuilder setTitle(int textResId) {
-		mTitle.setText(textResId);
-		return this;
-	}
-
-	@Override
-	public HoloAlertDialogBuilder setTitle(CharSequence text) {
-		mTitle.setText(text);
-		return this;
-	}
-
-	@Override
-	public HoloAlertDialogBuilder setMessage(int textResId) {
-		mMessage.setText(textResId);
-		return this;
-	}
-
-	@Override
-	public HoloAlertDialogBuilder setMessage(CharSequence text) {
-		mMessage.setText(text);
+	public HoloAlertDialogBuilder setIcon(Drawable icon) {
+		mIcon.setImageDrawable(icon);
 		return this;
 	}
 
@@ -75,8 +61,26 @@ public class HoloAlertDialogBuilder extends AlertDialog.Builder {
 	}
 
 	@Override
-	public HoloAlertDialogBuilder setIcon(Drawable icon) {
-		mIcon.setImageDrawable(icon);
+	public HoloAlertDialogBuilder setMessage(CharSequence text) {
+		mMessage.setText(text);
+		return this;
+	}
+
+	@Override
+	public HoloAlertDialogBuilder setMessage(int textResId) {
+		mMessage.setText(textResId);
+		return this;
+	}
+
+	@Override
+	public HoloAlertDialogBuilder setTitle(CharSequence text) {
+		mTitle.setText(text);
+		return this;
+	}
+
+	@Override
+	public HoloAlertDialogBuilder setTitle(int textResId) {
+		mTitle.setText(textResId);
 		return this;
 	}
 
