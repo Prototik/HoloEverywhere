@@ -8,16 +8,26 @@ import android.widget.Toast;
 
 public class HoloToast extends Toast {
 
-	public HoloToast(Context context) {
-		super(context);
+	public static HoloToast makeText(Context context, CharSequence s,
+			int duration) {
+		HoloToast toast = new HoloToast(context);
+		toast.setDuration(duration);
+		TextView view = new TextView(context);
+		view.setText(s);
+		view.setTextColor(0xFFDADADA);
+		toast.setView(view);
+		return toast;
+	}
+
+	public static HoloToast makeText(Context context, int resId, int duration) {
+		return HoloToast.makeText(context,
+				context.getResources().getString(resId), duration);
 	}
 
 	private View view;
 
-	@Override
-	public void setView(View view) {
-		(this.view = view).setBackgroundResource(R.drawable.toast_frame);
-		super.setView(view);
+	public HoloToast(Context context) {
+		super(context);
 	}
 
 	@Override
@@ -33,20 +43,10 @@ public class HoloToast extends Toast {
 		}
 	}
 
-	public static HoloToast makeText(Context context, CharSequence s,
-			int duration) {
-		HoloToast toast = new HoloToast(context);
-		toast.setDuration(duration);
-		TextView view = new TextView(context);
-		view.setText(s);
-		view.setTextColor(0xFFDADADA);
-		toast.setView(view);
-		return toast;
-	}
-
-	public static HoloToast makeText(Context context, int resId, int duration) {
-		return makeText(context, context.getResources().getString(resId),
-				duration);
+	@Override
+	public void setView(View view) {
+		(this.view = view).setBackgroundResource(R.drawable.toast_frame);
+		super.setView(view);
 	}
 
 }
