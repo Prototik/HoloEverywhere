@@ -29,6 +29,8 @@
         <item name="android:textAppearanceLargeInverse">@style/TextAppearanceHoloDark.Large.Inverse</item>
         <item name="android:textAppearanceMediumInverse">@style/TextAppearanceHoloDark.Medium.Inverse</item>
         <item name="android:textAppearanceSmallInverse">@style/TextAppearanceHoloDark.Small.Inverse</item>
+        
+        <item name="android:textAppearanceButton">@style/TextAppearanceHoloDark.Widget.Button</item>
 
 		<item name="android:textColorPrimary">@color/primary_text_holo_dark</item>
         <item name="android:textColorSecondary">@color/secondary_text_holo_dark</item>
@@ -75,6 +77,8 @@
         <item name="android:textAppearanceLargeInverse">@style/TextAppearanceHoloLight.Large.Inverse</item>
         <item name="android:textAppearanceMediumInverse">@style/TextAppearanceHoloLight.Medium.Inverse</item>
         <item name="android:textAppearanceSmallInverse">@style/TextAppearanceHoloLight.Small.Inverse</item>
+        
+        <item name="android:textAppearanceButton">@style/TextAppearanceHoloLight.Widget.Button</item>
 		
 		<item name="android:textColorPrimary">@color/primary_text_holo_light</item>
         <item name="android:textColorSecondary">@color/secondary_text_holo_light</item>
@@ -141,6 +145,8 @@
         <item name="android:textAppearanceLargeInverse">@style/TextAppearanceHoloDark.Large.Inverse</item>
         <item name="android:textAppearanceMediumInverse">@style/TextAppearanceHoloDark.Medium.Inverse</item>
         <item name="android:textAppearanceSmallInverse">@style/TextAppearanceHoloDark.Small.Inverse</item>
+        
+        <item name="android:textAppearanceButton">@style/TextAppearanceHoloDark.Widget.Button</item>
 
 		<item name="android:textColorPrimary">@color/primary_text_holo_dark</item>
         <item name="android:textColorSecondary">@color/secondary_text_holo_dark</item>
@@ -187,6 +193,8 @@
         <item name="android:textAppearanceLargeInverse">@style/TextAppearanceHoloLight.Large.Inverse</item>
         <item name="android:textAppearanceMediumInverse">@style/TextAppearanceHoloLight.Medium.Inverse</item>
         <item name="android:textAppearanceSmallInverse">@style/TextAppearanceHoloLight.Small.Inverse</item>
+        
+        <item name="android:textAppearanceButton">@style/TextAppearanceHoloLight.Widget.Button</item>
 		
 		<item name="android:textColorPrimary">@color/primary_text_holo_light</item>
         <item name="android:textColorSecondary">@color/secondary_text_holo_light</item>
@@ -253,14 +261,12 @@
 
 	<style name="EditTextHoloDark" parent="android:style/Widget.EditText">
 		<item name="android:background">@drawable/edit_text_holo_dark</item>
-		<item name="android:textColor">@color/bright_foreground_light</item>
-		<item name="android:textColorHint">@color/hint_foreground_holo_light</item>
+		<item name="android:textAppearance">?android:attr/textAppearanceMediumInverse</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
 	</style>
 
-	<style name="EditTextHoloLight" parent="android:style/Widget.EditText">
+	<style name="EditTextHoloLight" parent="@style/EditTextHoloDark">
 		<item name="android:background">@drawable/edit_text_holo_light</item>
-		<item name="android:textColor">@color/bright_foreground_dark</item>
-		<item name="android:textColorHint">@color/hint_foreground_holo_dark</item>
 	</style>
 
 	<style name="DialogHoloDark" parent="android:style/Theme.Dialog">
@@ -293,10 +299,8 @@
 
 	<style name="SeekBarHolo" parent="android:Widget.SeekBar">
 		<item name="android:indeterminateOnly">false</item>
-		<item name="android:progressDrawable">@drawable/scrubber_progress_horizontal_holo_dark
-		</item>
-		<item name="android:indeterminateDrawable">@drawable/scrubber_progress_horizontal_holo_dark
-		</item>
+		<item name="android:progressDrawable">@drawable/scrubber_progress_horizontal_holo_dark</item>
+		<item name="android:indeterminateDrawable">@drawable/scrubber_progress_horizontal_holo_dark</item>
 		<item name="android:minHeight">13dip</item>
 		<item name="android:maxHeight">13dip</item>
 		<item name="android:thumb">@drawable/scrubber_control_selector_holo</item>
@@ -404,9 +408,26 @@
         <item name="android:textColorHint">?android:attr/textColorHintInverse</item>
     </style>
     
+    <style name="TextAppearanceHoloDark.Widget">
+    </style>
+    
+    <style name="TextAppearanceHoloDark.Widget.Button" parent="@style/TextAppearanceHoloDark.Small.Inverse">
+        <item name="android:textColor">@color/primary_text_light_nodisable</item>
+    </style>
+    
+    <style name="TextAppearanceHoloDark.Widget.TextView">
+        <item name="android:textColor">?android:attr/textColorPrimaryDisableOnly</item>
+        <item name="android:textColorHint">?android:attr/textColorHint</item>
+    </style>
+    
+    <style name="TextAppearanceHoloDark.Widget.EditText">
+        <item name="android:textColor">@color/bright_foreground_light</item>
+        <item name="android:textColorHint">@color/hint_foreground_holo_light</item>
+    </style>
+    
     <!-- Holo Light -->
     
-    <style name="TextAppearanceHoloLight" parent="TextAppearanceHoloDark">
+    <style name="TextAppearanceHoloLight" parent="@style/TextAppearanceHoloDark">
     </style>
 
     <style name="TextAppearanceHoloLight.Inverse">
@@ -414,13 +435,13 @@
         <item name="android:textColorHint">?android:attr/textColorHintInverse</item>
     </style>
     
-    <style name="TextAppearanceHoloLight.Large" parent="TextAppearanceHoloDark.Large">
+    <style name="TextAppearanceHoloLight.Large" parent="@style/TextAppearanceHoloDark.Large">
     </style>
 
-    <style name="TextAppearanceHoloLight.Medium" parent="TextAppearanceHoloDark.Medium">
+    <style name="TextAppearanceHoloLight.Medium" parent="@style/TextAppearanceHoloDark.Medium">
     </style>
 
-    <style name="TextAppearanceHoloLight.Small" parent="TextAppearanceHoloDark.Small">
+    <style name="TextAppearanceHoloLight.Small" parent="@style/TextAppearanceHoloDark.Small">
     </style>
  
    <style name="TextAppearanceHoloLight.Large.Inverse">
@@ -436,6 +457,22 @@
     <style name="TextAppearanceHoloLight.Small.Inverse">
         <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
         <item name="android:textColorHint">?android:attr/textColorHintInverse</item>
+    </style>
+    
+    <style name="TextAppearanceHoloLight.Widget">
+    </style>
+    
+    <style name="TextAppearanceHoloLight.Widget.Button" parent="@style/TextAppearanceHoloDark.Widget.Button">
+    </style>
+    
+    <style name="TextAppearanceHoloLight.Widget.TextView">
+        <item name="android:textColor">?android:attr/textColorPrimaryDisableOnly</item>
+        <item name="android:textColorHint">?android:attr/textColorHint</item>
+    </style>
+    
+    <style name="TextAppearanceHoloLight.Widget.EditText">
+        <item name="android:textColor">@color/bright_foreground_dark</item>
+        <item name="android:textColorHint">@color/hint_foreground_holo_dark</item>
     </style>
 
 </resources>
