@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
                 
-               <com.WazaBe.HoloEverywhere.ButtonHolo
+               <Button
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_margin="6dip"
@@ -76,6 +76,12 @@
                 android:layout_height="wrap_content"
                 android:onClick="showAlertDialog"
                 android:text="@string/hello_dialog" />
+            
+             <com.WazaBe.HoloEverywhere.ButtonHolo
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="showToast"
+                android:text="@string/hello_toast" />
 
             <com.WazaBe.HoloEverywhere.TextViewHolo
                 android:layout_width="fill_parent"

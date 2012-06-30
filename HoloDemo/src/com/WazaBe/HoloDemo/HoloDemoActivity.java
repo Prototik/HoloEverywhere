@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.WazaBe.HoloEverywhere.HoloAlertDialogBuilder;
+import com.WazaBe.HoloEverywhere.HoloToast;
 
 public class HoloDemoActivity extends ListActivity {
 	static final String[] itemsCheckedTextView = { "List: CheckedTextView",
@@ -99,6 +101,10 @@ public class HoloDemoActivity extends ListActivity {
 
 	public void showDialog(View v) {
 		Utils.showDialog(this);
+	}
+	
+	public void showToast(View v) {
+		HoloToast.makeText(this,R.string.hello_toast,Toast.LENGTH_LONG).show();
 	}
 
 	public void setClassicTheme(View v) {

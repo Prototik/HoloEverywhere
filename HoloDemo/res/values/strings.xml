@@ -7,6 +7,7 @@
     <string name="hello_textview_roboto">Hello Roboto Font</string>
     <string name="hello_edittext_roboto">Hello Roboto Font</string>
     <string name="hello_dialog">Hello Dialog!</string>
+     <string name="hello_toast">Hello Toast.</string>
     <string name="spinner_prompt">This is a Spinner!</string>
     <string name="app_name">HoloDemo</string>
 
