@@ -11,14 +11,7 @@ public class DialogHolo extends Dialog {
 	private TextView mTitle;
 
 	public DialogHolo(Context context) {
-		super(context);
-		mContext = context;
-
-		View customView = View.inflate(mContext, R.layout.alert_dialog_holo,
-				null);
-		mTitle = (TextView) customView.findViewById(R.id.alertTitle);
-		setContentView(customView);
-
+		this(context, 0);
 	}
 
 	public DialogHolo(Context context, int theme) {
@@ -27,18 +20,18 @@ public class DialogHolo extends Dialog {
 		View customView = View.inflate(mContext, R.layout.alert_dialog_holo,
 				null);
 		mTitle = (TextView) customView.findViewById(R.id.alertTitle);
+		FontLoader.loadFont(mTitle, "Roboto-Regular.ttf");
 		setContentView(customView);
-
-	}
-
-	@Override
-	public void setTitle(int textResId) {
-		mTitle.setText(textResId);
 	}
 
 	@Override
 	public void setTitle(CharSequence text) {
 		mTitle.setText(text);
+	}
+
+	@Override
+	public void setTitle(int textResId) {
+		mTitle.setText(textResId);
 	}
 
 }
