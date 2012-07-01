@@ -2,29 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_root"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:orientation="vertical" >
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/gplus"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal" >
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:background="@drawable/about_item_bg"
+        android:gravity="center"
+        android:orientation="vertical" >
 
         <ImageView
             android:layout_width="60dip"
             android:layout_height="60dip"
+            android:contentDescription="@string/app_name"
             android:padding="10dip"
             android:src="@drawable/gplus" />
 
-        <com.WazaBe.HoloEverywhere.TextViewHolo
+        <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:padding="10dip"
-            android:text="Google Plus"
+            android:text="@string/contact_gplus"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -32,22 +36,26 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/github"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal" >
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:background="@drawable/about_item_bg"
+        android:gravity="center"
+        android:orientation="vertical" >
 
         <ImageView
             android:layout_width="60dip"
             android:layout_height="60dip"
+            android:contentDescription="@string/app_name"
             android:padding="10dip"
             android:src="@drawable/github" />
 
-        <com.WazaBe.HoloEverywhere.TextViewHolo
+        <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:padding="10dip"
-            android:text="Fork me on Github"
+            android:text="@string/contact_github"
             android:textStyle="bold" />
     </LinearLayout>
 

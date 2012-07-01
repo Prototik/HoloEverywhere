@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello_textview">Hello World, HoloText!</string>
     <string name="hello_button">Hello World, HoloButton!</string>
     <string name="hello_edittext">Hello HoloEditText!</string>
-    <string name="hello_textview_roboto">Hello Roboto Font</string>
-    <string name="hello_edittext_roboto">Hello Roboto Font</string>
     <string name="hello_dialog">Hello Dialog!</string>
-     <string name="hello_toast">Hello Toast.</string>
+    <string name="hello_toast">Hello Toast!</string>
+    <string name="hello_spinner">Hello Spinner!</string>
     <string name="spinner_prompt">This is a Spinner!</string>
     <string name="app_name">HoloDemo</string>
+    <string name="contact_gplus">Google Plus</string>
+    <string name="contact_github">Fork me on Github</string>
+    <string name="links">Links</string>
+    <string name="classic">Classic</string>
+    <string name="holo_dark">Holo Dark</string>
+    <string name="holo_light">Holo Light</string>
+    <string name="checkbox_1">Checkbox number one</string>
+    <string name="checkbox_2">Checkbox number two</string>
+    <string name="radiobutton">RadioButton</string>
 
 </resources>
