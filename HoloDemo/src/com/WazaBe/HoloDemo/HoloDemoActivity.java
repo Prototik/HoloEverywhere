@@ -1,21 +1,20 @@
 package com.WazaBe.HoloDemo;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.HoloAlertDialogBuilder;
 import com.WazaBe.HoloEverywhere.HoloToast;
+import com.WazaBe.HoloEverywhere.app.HoloListActivity;
 
-public class HoloDemoActivity extends ListActivity {
+public class HoloDemoActivity extends HoloListActivity {
 	static final String[] itemsCheckedTextView = { "List: CheckedTextView",
 			"List: Other CheckedTextView" };
 
@@ -32,32 +31,39 @@ public class HoloDemoActivity extends ListActivity {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, items) {
 
-			public View getView(int position, View convertView, ViewGroup parent) {
-				View v = super.getView(position, convertView, parent);
-
-				Typeface externalFont = Typeface.createFromAsset(getAssets(),
-						"Roboto-Regular.ttf");
-				((TextView) v).setTypeface(externalFont);
-				return v;
-			}
-
+			@Override
 			public View getDropDownView(int position, View convertView,
 					ViewGroup parent) {
-				View v = super.getDropDownView(position, convertView, parent);
+				return FontLoader.loadFont(super.getDropDownView(position,
+						convertView, parent));
+			}
 
-				Typeface externalFont = Typeface.createFromAsset(getAssets(),
-						"Roboto-Regular.ttf");
-				((TextView) v).setTypeface(externalFont);
-				return v;
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				return FontLoader.loadFont(super.getView(position, convertView,
+						parent));
 			}
 		};
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		if (s != null)
+		if (s != null) {
 			s.setAdapter(adapter);
+		}
 
 		setListAdapter(new ArrayAdapter<String>(this,
 				R.layout.custom_checkedtextview_holo_dark, itemsCheckedTextView));
 
+	}
+
+	public void setClassicTheme(View v) {
+		Utils.changeToTheme(this, Utils.THEME_CLASSIC);
+	}
+
+	public void setDarkTheme(View v) {
+		Utils.changeToTheme(this, Utils.THEME_DARK);
+	}
+
+	public void setLightTheme(View v) {
+		Utils.changeToTheme(this, Utils.THEME_LIGHT);
 	}
 
 	public void showAlertDialog(View v) {
@@ -70,10 +76,11 @@ public class HoloDemoActivity extends ListActivity {
 		// BUTTONS ARE NOT SO EASY TO THEME
 		// SEE: http://stackoverflow.com/a/9434511/327402
 
-		Boolean buttonDebug = false;
+		Boolean buttonDebug = true;
 		if (buttonDebug) {
 			builder.setPositiveButton("Positive",
 					new DialogInterface.OnClickListener() {
+						@Override
 						public void onClick(DialogInterface dialog, int id) {
 
 						}
@@ -81,6 +88,7 @@ public class HoloDemoActivity extends ListActivity {
 
 			builder.setNegativeButton("Negative",
 					new DialogInterface.OnClickListener() {
+						@Override
 						public void onClick(DialogInterface dialog, int id) {
 
 						}
@@ -88,6 +96,7 @@ public class HoloDemoActivity extends ListActivity {
 
 			builder.setNeutralButton("Neutral",
 					new DialogInterface.OnClickListener() {
+						@Override
 						public void onClick(DialogInterface dialog, int id) {
 
 						}
@@ -102,21 +111,10 @@ public class HoloDemoActivity extends ListActivity {
 	public void showDialog(View v) {
 		Utils.showDialog(this);
 	}
-	
+
 	public void showToast(View v) {
-		HoloToast.makeText(this,R.string.hello_toast,Toast.LENGTH_LONG).show();
-	}
-
-	public void setClassicTheme(View v) {
-		Utils.changeToTheme(this, Utils.THEME_CLASSIC);
-	}
-
-	public void setDarkTheme(View v) {
-		Utils.changeToTheme(this, Utils.THEME_DARK);
-	}
-
-	public void setLightTheme(View v) {
-		Utils.changeToTheme(this, Utils.THEME_LIGHT);
+		HoloToast.makeText(this, R.string.hello_toast, Toast.LENGTH_LONG)
+				.show();
 	}
 
 }
