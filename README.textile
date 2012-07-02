@@ -17,6 +17,7 @@ feel free to show me the points I am missing and I will fix them ASAP!
 
 !https://github.com/ChristopheVersieux/HoloEverywhere/raw/master/screen1.png(Screenshot 1)!
 !https://github.com/ChristopheVersieux/HoloEverywhere/raw/master/screen2.png(Screenshot 2)!
+!https://github.com/ChristopheVersieux/HoloEverywhere/raw/master/screen2.png(Screenshot 3)!
 
 /*
  * ----------------------------------------------------------------------------------------------------
