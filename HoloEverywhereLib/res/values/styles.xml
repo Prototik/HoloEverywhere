@@ -400,20 +400,27 @@
 
 	<style name="ButtonHoloDark" parent="android:style/Widget.Button">
 		<item name="android:background">@drawable/btn_default_holo_dark</item>
-		<item name="android:textColor">#ffffff</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textColor">@color/primary_text_holo_dark</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
 	</style>
 
 	<style name="ButtonHoloLight" parent="android:style/Widget.Button">
 		<item name="android:background">@drawable/btn_default_holo_light</item>
-		<item name="android:textColor">#000000</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMediumInverse</item>
+        <item name="android:textColor">@color/primary_text_holo_light</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
 	</style>
 
 	<style name="EditTextHoloDark" parent="android:style/Widget.EditText">
 		<item name="android:background">@drawable/edit_text_holo_dark</item>
-		<item name="android:textColor">#ffffff</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMediumInverse</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
 	</style>
 
-	<style name="EditTextHoloLight" parent="android:style/Widget.EditText">
+	<style name="EditTextHoloLight" parent="@style/EditTextHoloDark">
 		<item name="android:background">@drawable/edit_text_holo_light</item>
 		<item name="android:textColor">#000000</item>
 	</style>
