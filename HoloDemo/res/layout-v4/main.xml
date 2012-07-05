@@ -85,7 +85,13 @@
             <com.WazaBe.HoloEverywhere.EditTextHolo
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/hello_edittext_roboto" />
+                android:text="@string/hello_edittext_roboto"
+                android:hint="@string/hello_edittext_roboto" />
+            
+            <com.WazaBe.HoloEverywhere.EditTextHolo
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hello_edittext_roboto" />
 
             <SeekBar
                 android:layout_width="fill_parent"

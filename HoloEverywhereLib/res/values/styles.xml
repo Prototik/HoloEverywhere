@@ -417,6 +417,7 @@
 	<style name="EditTextHoloDark" parent="android:style/Widget.EditText">
 		<item name="android:background">@drawable/edit_text_holo_dark</item>
         <item name="android:textAppearance">@style/TextAppearanceHoloDark.Widget.EditText</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
 	</style>
 
 	<style name="EditTextHoloLight" parent="@style/EditTextHoloDark">
