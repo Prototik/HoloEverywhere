@@ -20,7 +20,7 @@ public class DialogHolo extends Dialog {
 		View customView = View.inflate(mContext, R.layout.alert_dialog_holo,
 				null);
 		mTitle = (TextView) customView.findViewById(R.id.alertTitle);
-		FontLoader.loadFont(mTitle, FontLoader.ROBOTO);
+		FontLoader.loadFont(mTitle, FontLoader.ROBOTO_REGULAR);
 		setContentView(customView);
 	}
 

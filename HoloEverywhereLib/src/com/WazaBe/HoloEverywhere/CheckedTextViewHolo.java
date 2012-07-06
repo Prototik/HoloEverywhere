@@ -16,7 +16,7 @@ public class CheckedTextViewHolo extends CheckedTextView {
 
 	public CheckedTextViewHolo(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		FontLoader.loadFont(this, FontLoader.ROBOTO);
+		FontLoader.loadFont(this, FontLoader.ROBOTO_REGULAR);
 	}
 
 }

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public final class FontLoader {
 	
-	public static final String ROBOTO = "Roboto-Regular.ttf";
+	public static final String ROBOTO_REGULAR = "Roboto-Regular.ttf";
 	
 	private static final Map<String, Typeface> fontMap = new HashMap<String, Typeface>();	
 
