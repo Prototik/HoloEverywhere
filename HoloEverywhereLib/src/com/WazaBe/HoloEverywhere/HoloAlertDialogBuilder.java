@@ -26,23 +26,23 @@ public class HoloAlertDialogBuilder extends AlertDialog.Builder {
 			View customTitle = View.inflate(mContext,
 					R.layout.alert_dialog_title, null);
 			mTitle = (TextView) customTitle.findViewById(R.id.alertTitle);
-			FontLoader.loadFont(mTitle, "Roboto-Regular.ttf");
+			FontLoader.loadFont(mTitle, FontLoader.ROBOTO);
 			mIcon = (ImageView) customTitle.findViewById(R.id.icon);
 			setCustomTitle(customTitle);
 
 			View customMessage = View.inflate(mContext,
 					R.layout.alert_dialog_message, null);
 			mMessage = (TextView) customMessage.findViewById(R.id.message);
-			FontLoader.loadFont(mMessage, "Roboto-Regular.ttf");
+			FontLoader.loadFont(mMessage, FontLoader.ROBOTO);
 			setView(customMessage);
 		} else {
 			View customView = View.inflate(mContext,
 					R.layout.alert_dialog_holo, null);
 			mTitle = (TextView) customView.findViewById(R.id.alertTitle);
-			FontLoader.loadFont(mTitle, "Roboto-Regular.ttf");
+			FontLoader.loadFont(mTitle, FontLoader.ROBOTO);
 			mIcon = (ImageView) customView.findViewById(R.id.icon);
 			mMessage = (TextView) customView.findViewById(R.id.message);
-			FontLoader.loadFont(mMessage, "Roboto-Regular.ttf");
+			FontLoader.loadFont(mMessage, FontLoader.ROBOTO);
 			setView(customView);
 		}
 

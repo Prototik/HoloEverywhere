@@ -16,7 +16,7 @@ public class EditTextHolo extends EditText {
 
 	public EditTextHolo(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		FontLoader.loadFont(this, "Roboto-Regular.ttf");
+		FontLoader.loadFont(this, FontLoader.ROBOTO);
 	}
 
 }
