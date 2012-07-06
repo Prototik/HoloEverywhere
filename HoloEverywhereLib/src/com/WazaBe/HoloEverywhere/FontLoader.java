@@ -3,29 +3,38 @@ package com.WazaBe.HoloEverywhere;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.util.Log;
 import android.widget.TextView;
 
 public final class FontLoader {
-	private static final Map<String, Typeface> fontMap = new HashMap<String, Typeface>();
+	
+	public static final String ROBOTO_REGULAR = "Roboto-Regular.ttf";
+	
+	private static final Map<String, Typeface> fontMap = new HashMap<String, Typeface>();	
 
 	public static void loadFont(TextView view, String font) {
-		if (Build.VERSION.SDK_INT >= 14 || view == null) {
+		if (Build.VERSION.SDK_INT >= 14 || view == null || view.getContext() == null) {
 			return;
 		}
-		font = font.intern();
+		Typeface typeface = loadTypeface(view.getContext(), font);
+		if (typeface != null) {
+			view.setTypeface(typeface);
+		}
+	}
+	
+	private static Typeface loadTypeface(Context ctx, String font) {
 		if (!FontLoader.fontMap.containsKey(font)) {
-			FontLoader.fontMap.put(font, Typeface.createFromAsset(view
-					.getContext().getAssets(), font));
+			try {
+				Typeface typeface = Typeface.createFromAsset(ctx.getAssets(), font);
+				FontLoader.fontMap.put(font, typeface);
+			} catch (Exception e) {
+				Log.w("FontLoader", "Error loading font " + font + " from assets. Error: " + e.getMessage());
+			}
 		}
-		Typeface typeface = FontLoader.fontMap.get(font);
-		if (typeface == null) {
-			Log.v("FontLoader", "Font " + font + " not found in assets");
-			return;
-		}
-		view.setTypeface(typeface);
+		return FontLoader.fontMap.get(font);
 	}
 
 	private FontLoader() {
