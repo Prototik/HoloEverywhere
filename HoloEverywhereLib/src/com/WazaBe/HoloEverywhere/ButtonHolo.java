@@ -12,12 +12,12 @@ public class ButtonHolo extends Button {
 
 	public ButtonHolo(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		FontLoader.loadFont(this, "Roboto-Regular.ttf");
+		FontLoader.loadFont(this, FontLoader.ROBOTO_REGULAR);
 	}
 
 	public ButtonHolo(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		FontLoader.loadFont(this, "Roboto-Regular.ttf");
+		FontLoader.loadFont(this, FontLoader.ROBOTO_REGULAR);
 	}
 
 }
