@@ -13,4 +13,10 @@
 
     <style name="Theme.HoloEverywhereLight.Sherlock" parent="Theme.Sherlock.Light"></style>
 
+    <style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock" parent="Theme.Sherlock.Light.DarkActionBar" />
+
+    <style name="Theme.HoloEverywhereDark.Sherlock.ForceOverflow" parent="Theme.Sherlock.ForceOverflow" />
+
+    <style name="Theme.HoloEverywhereLight.Sherlock.ForceOverflow" parent="Theme.Sherlock.Light.ForceOverflow" />
+
 </resources>
