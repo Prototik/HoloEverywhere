@@ -1,5 +1,6 @@
 package com.WazaBe.HoloEverywhere;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RadioButton;
@@ -7,16 +8,24 @@ import android.widget.RadioButton;
 public class RadioButtonHolo extends RadioButton {
 
 	public RadioButtonHolo(Context context) {
-		this(context, null, 0);
+		super(context);
 	}
 
 	public RadioButtonHolo(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
+		super(context, attrs);
 	}
 
 	public RadioButtonHolo(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		FontLoader.loadFont(this, FontLoader.ROBOTO_REGULAR);
 	}
-
+	
+	@Override
+	@TargetApi(3)
+	protected void onFinishInflate() {
+		super.onFinishInflate();
+		if(!isInEditMode()) {
+			FontLoader.loadFont(this, FontLoader.ROBOTO_REGULAR);
+		}
+	}
+	
 }
