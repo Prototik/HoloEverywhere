@@ -169,6 +169,11 @@
                 android:drawSelectorOnTop="true"
                 android:prompt="@string/spinner_prompt" />
 
+             <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true" />
+
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
