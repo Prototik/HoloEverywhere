@@ -7,6 +7,7 @@
 		<item name="android:windowBackground">@drawable/background_holo_dark</item>
 		<item name="android:listViewStyle">@style/ListViewStyle</item>
 		<item name="android:buttonStyle">@style/ButtonHoloDark</item>
+		<item name="android:buttonStyleToggle">@style/ButtonToggleHoloDark</item>
 		<item name="android:imageButtonStyle">@style/ButtonHoloDark</item>
 		<item name="android:editTextStyle">@style/EditTextHoloDark</item>
 		<item name="android:alertDialogStyle">@style/AlertDialogHoloDark</item>
@@ -27,6 +28,7 @@
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
 		<item name="android:listViewStyle">@style/ListViewStyle</item>
 		<item name="android:buttonStyle">@style/ButtonHoloLight</item>
+		<item name="android:buttonStyleToggle">@style/ButtonToggleHoloLight</item>
 		<item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
 		<item name="android:editTextStyle">@style/EditTextHoloLight</item>
 		<item name="android:alertDialogStyle">@style/AlertDialogHoloLight</item>
@@ -47,6 +49,7 @@
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
 		<item name="android:listViewStyle">@style/ListViewStyle</item>
 		<item name="android:buttonStyle">@style/ButtonHoloLight</item>
+		<item name="android:buttonStyleToggle">@style/ButtonToggleHoloLight</item>
 		<item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
 		<item name="android:editTextStyle">@style/EditTextHoloLight</item>
 		<item name="android:alertDialogStyle">@style/AlertDialogHoloLight</item>
@@ -67,6 +70,7 @@
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:listViewStyle">@style/ListViewStyle</item>
         <item name="android:buttonStyle">@style/ButtonHoloDark</item>
+        <item name="android:buttonStyleToggle">@style/ButtonToggleHoloDark</item>
         <item name="android:imageButtonStyle">@style/ButtonHoloDark</item>
         <item name="android:editTextStyle">@style/EditTextHoloDark</item>
         <item name="android:alertDialogStyle">@style/AlertDialogHoloDark</item>
@@ -87,6 +91,7 @@
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:listViewStyle">@style/ListViewStyle</item>
         <item name="android:buttonStyle">@style/ButtonHoloLight</item>
+        <item name="android:buttonStyleToggle">@style/ButtonToggleHoloLight</item>
         <item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
         <item name="android:editTextStyle">@style/EditTextHoloLight</item>
         <item name="android:alertDialogStyle">@style/AlertDialogHoloLight</item>
@@ -107,6 +112,7 @@
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:listViewStyle">@style/ListViewStyle</item>
         <item name="android:buttonStyle">@style/ButtonHoloLight</item>
+        <item name="android:buttonStyleToggle">@style/ButtonToggleHoloLight</item>
         <item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
         <item name="android:editTextStyle">@style/EditTextHoloLight</item>
         <item name="android:alertDialogStyle">@style/AlertDialogHoloLight</item>
@@ -127,6 +133,7 @@
 		<item name="android:windowBackground">@drawable/background_holo_dark</item>
 		<item name="android:listViewStyle">@style/ListViewStyle</item>
 		<item name="android:buttonStyle">@style/ButtonHoloDark</item>
+		<item name="android:buttonStyleToggle">@style/ButtonToggleHoloDark</item>
 		<item name="android:imageButtonStyle">@style/ButtonHoloDark</item>
 		<item name="android:editTextStyle">@style/EditTextHoloDark</item>
 		<item name="android:alertDialogStyle">@style/AlertDialogHoloDark</item>
@@ -148,6 +155,7 @@
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
 		<item name="android:listViewStyle">@style/ListViewStyle</item>
 		<item name="android:buttonStyle">@style/ButtonHoloLight</item>
+		<item name="android:buttonStyleToggle">@style/ButtonToggleHoloLight</item>
 		<item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
 		<item name="android:editTextStyle">@style/EditTextHoloLight</item>
 		<item name="android:alertDialogStyle">@style/AlertDialogHoloLight</item>
@@ -199,6 +207,16 @@
 
 	<style name="ButtonHoloLight" parent="android:style/Widget.Button">
 		<item name="android:background">@drawable/btn_default_holo_light</item>
+		<item name="android:textColor">#000000</item>
+	</style>
+
+	<style name="ButtonToggleHoloDark" parent="android:style/Widget.Button.Toggle">
+		<item name="android:background">@drawable/btn_toggle_holo_dark</item>
+		<item name="android:textColor">#ffffff</item>
+	</style>
+
+	<style name="ButtonToggleHoloLight" parent="android:style/Widget.Button.Toggle">
+		<item name="android:background">@drawable/btn_toggle_holo_light</item>
 		<item name="android:textColor">#000000</item>
 	</style>
 
