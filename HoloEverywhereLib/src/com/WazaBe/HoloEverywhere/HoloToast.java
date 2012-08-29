@@ -1,13 +1,25 @@
 package com.WazaBe.HoloEverywhere;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+@Deprecated
+/*
+ * Use com.WazaBe.HoloEverywhere.Toast
+ */
 public class HoloToast extends Toast {
+	@Deprecated
+	/*
+	 * Use com.WazaBe.HoloEverywhere.Toast
+	 */
+	public HoloToast(Context context) {
+		super(context);
+	}
 
+	@Deprecated
+	/*
+	 * Use com.WazaBe.HoloEverywhere.Toast.makeText(Context, CharSequence, int)
+	 */
 	public static HoloToast makeText(Context context, CharSequence s,
 			int duration) {
 		HoloToast toast = new HoloToast(context);
@@ -19,34 +31,13 @@ public class HoloToast extends Toast {
 		return toast;
 	}
 
+	@Deprecated
+	/*
+	 * Use com.WazaBe.HoloEverywhere.Toast.makeText(Context, int, int)
+	 */
 	public static HoloToast makeText(Context context, int resId, int duration) {
 		return HoloToast.makeText(context,
 				context.getResources().getString(resId), duration);
-	}
-
-	private View view;
-
-	public HoloToast(Context context) {
-		super(context);
-	}
-
-	@Override
-	public void setText(CharSequence s) {
-		if (view == null) {
-			return;
-		}
-		try {
-			((TextView) view).setText(s);
-		} catch (ClassCastException e) {
-			Log.e("HoloToast",
-					"This HoloToast was not created with HoloToast.makeText", e);
-		}
-	}
-
-	@Override
-	public void setView(View view) {
-		(this.view = view).setBackgroundResource(R.drawable.toast_frame);
-		super.setView(view);
 	}
 
 }
