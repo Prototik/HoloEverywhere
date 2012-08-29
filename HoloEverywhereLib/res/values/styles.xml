@@ -22,6 +22,9 @@
 		<item name="android:spinnerItemStyle">@style/SpinnerItemDark</item>
 		<item name="android:spinnerDropDownItemStyle">@style/DropDownItemDark</item>
 		<item name="android:ratingBarStyle">@style/RatingBarDark</item>
+		<item name="dialogButton">@drawable/dialog_button_dark</item>
+		<item name="dialogButtonBorder">@drawable/dialog_button_border_dark</item>
+		<item name="dialogStyle">@style/Dialog.Dark</item>
 	</style>
 
 	<style name="Theme.HoloEverywhereLight.Sherlock" parent="Theme.Sherlock.Light">
@@ -43,6 +46,9 @@
 		<item name="android:spinnerItemStyle">@style/SpinnerItemLight</item>
 		<item name="android:spinnerDropDownItemStyle">@style/DropDownItemLight</item>
 		<item name="android:ratingBarStyle">@style/RatingBarLight</item>
+		<item name="dialogButton">@drawable/dialog_button_light</item>
+		<item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
+		<item name="dialogStyle">@style/Dialog.Light</item>
 	</style>
 	
 	<style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock" parent="Theme.Sherlock.Light.DarkActionBar">
@@ -64,6 +70,9 @@
 		<item name="android:spinnerItemStyle">@style/SpinnerItemLight</item>
 		<item name="android:spinnerDropDownItemStyle">@style/DropDownItemLight</item>
 		<item name="android:ratingBarStyle">@style/RatingBarLight</item>
+		<item name="dialogButton">@drawable/dialog_button_light</item>
+		<item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
+		<item name="dialogStyle">@style/Dialog.Light</item>
 	</style>
 
 	<style name="Theme.HoloEverywhereDark.Sherlock.ForceOverflow" parent="Theme.Sherlock.ForceOverflow">
@@ -85,6 +94,9 @@
         <item name="android:spinnerItemStyle">@style/SpinnerItemDark</item>
         <item name="android:spinnerDropDownItemStyle">@style/DropDownItemDark</item>
 		<item name="android:ratingBarStyle">@style/RatingBarDark</item>
+		<item name="dialogButton">@drawable/dialog_button_dark</item>
+		<item name="dialogButtonBorder">@drawable/dialog_button_border_dark</item>
+		<item name="dialogStyle">@style/Dialog.Dark</item>
     </style>
 
 	<style name="Theme.HoloEverywhereLight.Sherlock.ForceOverflow" parent="Theme.Sherlock.Light.ForceOverflow">
@@ -106,6 +118,9 @@
         <item name="android:spinnerItemStyle">@style/SpinnerItemLight</item>
         <item name="android:spinnerDropDownItemStyle">@style/DropDownItemLight</item>
 		<item name="android:ratingBarStyle">@style/RatingBarLight</item>
+		<item name="dialogButton">@drawable/dialog_button_light</item>
+		<item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
+		<item name="dialogStyle">@style/Dialog.Light</item>
     </style>
 
 	<style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock.ForceOverflow" parent="Theme.Sherlock.Light.DarkActionBar.ForceOverflow">
@@ -127,6 +142,9 @@
         <item name="android:spinnerItemStyle">@style/SpinnerItemLight</item>
         <item name="android:spinnerDropDownItemStyle">@style/DropDownItemLight</item>
 		<item name="android:ratingBarStyle">@style/RatingBarLight</item>
+		<item name="dialogButton">@drawable/dialog_button_light</item>
+		<item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
+		<item name="dialogStyle">@style/Dialog.Light</item>
     </style>
 
 	<style name="Theme.HoloEverywhereDark" parent="android:Theme.NoTitleBar">
@@ -148,7 +166,9 @@
 		<item name="android:spinnerItemStyle">@style/SpinnerItemDark</item>
 		<item name="android:spinnerDropDownItemStyle">@style/DropDownItemDark</item>
 		<item name="android:ratingBarStyle">@style/RatingBarDark</item>
-
+		<item name="dialogButton">@drawable/dialog_button_dark</item>
+		<item name="dialogButtonBorder">@drawable/dialog_button_border_dark</item>
+		<item name="dialogStyle">@style/Dialog.Dark</item>
 	</style>
 
 	<style name="Theme.HoloEverywhereLight" parent="android:Theme.Light.NoTitleBar">
@@ -170,6 +190,9 @@
 		<item name="android:spinnerItemStyle">@style/SpinnerItemLight</item>
 		<item name="android:spinnerDropDownItemStyle">@style/DropDownItemLight</item>
 		<item name="android:ratingBarStyle">@style/RatingBarLight</item>
+		<item name="dialogButton">@drawable/dialog_button_light</item>
+		<item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
+		<item name="dialogStyle">@style/Dialog.Light</item>
 	</style>
 
 	<style name="ListViewStyle" parent="android:Widget.ListView">
@@ -345,5 +368,21 @@
         <item name="android:progressDrawable">@drawable/ratingbar_full_holo_light</item>
         <item name="android:indeterminateDrawable">@drawable/ratingbar_full_holo_light</item>
     </style>
-
+    
+	<style name="Dialog">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+	
+	<style name="Dialog.Dark" parent="@style/Theme.HoloEverywhereDark.Sherlock">
+		<item name="android:windowBackground">@drawable/abs__dialog_full_holo_dark</item>
+		<item name="dialogButton">@drawable/dialog_button_dark</item>
+		<item name="dialogButtonBorder">@drawable/dialog_button_border_dark</item>
+	</style>
+	
+	<style name="Dialog.Light" parent="@style/Theme.HoloEverywhereLight.Sherlock">
+		<item name="android:windowBackground">@drawable/abs__dialog_full_holo_light</item>
+		<item name="dialogButton">@drawable/dialog_button_light</item>
+		<item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
+	</style>
 </resources>
