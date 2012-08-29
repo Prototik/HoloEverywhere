@@ -26,6 +26,15 @@
 		<item name="dialogButtonBorder">@drawable/dialog_button_border_dark</item>
 		<item name="dialogStyle">@style/Dialog.Dark</item>
 	</style>
+	
+	<style name="Theme.HoloEverywhereDark.Sherlock.NoTitleBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.HoloEverywhereDark.Sherlock.NoTitleBar.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 
 	<style name="Theme.HoloEverywhereLight.Sherlock" parent="Theme.Sherlock.Light">
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
@@ -51,6 +60,15 @@
 		<item name="dialogStyle">@style/Dialog.Light</item>
 	</style>
 	
+	<style name="Theme.HoloEverywhereLight.Sherlock.NoTitleBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.HoloEverywhereLight.Sherlock.NoTitleBar.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+	
 	<style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock" parent="Theme.Sherlock.Light.DarkActionBar">
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
 		<item name="android:listViewStyle">@style/ListViewStyle</item>
@@ -74,6 +92,15 @@
 		<item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
 		<item name="dialogStyle">@style/Dialog.Light</item>
 	</style>
+	
+	<style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock.NoTitleBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock.NoTitleBar.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 
 	<style name="Theme.HoloEverywhereDark.Sherlock.ForceOverflow" parent="Theme.Sherlock.ForceOverflow">
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
@@ -97,6 +124,15 @@
 		<item name="dialogButton">@drawable/dialog_button_dark</item>
 		<item name="dialogButtonBorder">@drawable/dialog_button_border_dark</item>
 		<item name="dialogStyle">@style/Dialog.Dark</item>
+    </style>
+    
+	<style name="Theme.HoloEverywhereDark.Sherlock.ForceOverflow.NoTitleBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.HoloEverywhereDark.Sherlock.ForceOverflow.NoTitleBar.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
 	<style name="Theme.HoloEverywhereLight.Sherlock.ForceOverflow" parent="Theme.Sherlock.Light.ForceOverflow">
@@ -122,6 +158,15 @@
 		<item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
 		<item name="dialogStyle">@style/Dialog.Light</item>
     </style>
+    
+	<style name="Theme.HoloEverywhereLight.Sherlock.ForceOverflow.NoTitleBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.HoloEverywhereLight.Sherlock.ForceOverflow.NoTitleBar.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 
 	<style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock.ForceOverflow" parent="Theme.Sherlock.Light.DarkActionBar.ForceOverflow">
         <item name="android:windowBackground">@drawable/background_holo_light</item>
@@ -145,6 +190,15 @@
 		<item name="dialogButton">@drawable/dialog_button_light</item>
 		<item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
 		<item name="dialogStyle">@style/Dialog.Light</item>
+    </style>
+    
+	<style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock.ForceOverflow.NoTitleBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock.ForceOverflow.NoTitleBar.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
 	<style name="Theme.HoloEverywhereDark" parent="android:Theme.NoTitleBar">
@@ -170,6 +224,15 @@
 		<item name="dialogButtonBorder">@drawable/dialog_button_border_dark</item>
 		<item name="dialogStyle">@style/Dialog.Dark</item>
 	</style>
+	
+	<style name="Theme.HoloEverywhereDark.NoTitleBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.HoloEverywhereDark.NoTitleBar.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 
 	<style name="Theme.HoloEverywhereLight" parent="android:Theme.Light.NoTitleBar">
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
@@ -194,6 +257,15 @@
 		<item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
 		<item name="dialogStyle">@style/Dialog.Light</item>
 	</style>
+	
+	<style name="Theme.HoloEverywhereLight.NoTitleBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.HoloEverywhereLight.NoTitleBar.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 
 	<style name="ListViewStyle" parent="android:Widget.ListView">
 		<item name="android:cacheColorHint">#00000000</item>
