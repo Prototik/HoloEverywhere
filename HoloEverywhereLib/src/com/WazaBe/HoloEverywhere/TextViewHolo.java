@@ -1,20 +1,37 @@
 package com.WazaBe.HoloEverywhere;
 
+import com.WazaBe.HoloEverywhere.FontLoader.HoloFont;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+@Deprecated
+/*
+ * You should use *Activity instead *AnyView*Holo
+ */
 public class TextViewHolo extends TextView {
-
+	@Deprecated
+	/*
+	 * You should use *Activity instead *AnyView*Holo
+	 */
 	public TextViewHolo(Context context) {
 		super(context);
 	}
 
+	@Deprecated
+	/*
+	 * You should use *Activity instead *AnyView*Holo
+	 */
 	public TextViewHolo(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
+	@Deprecated
+	/*
+	 * You should use *Activity instead *AnyView*Holo
+	 */
 	public TextViewHolo(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
@@ -23,9 +40,9 @@ public class TextViewHolo extends TextView {
 	@TargetApi(3)
 	protected void onFinishInflate() {
 		super.onFinishInflate();
-		if(!isInEditMode()) {
-			FontLoader.loadFont(this, FontLoader.ROBOTO_REGULAR);
+		if (!isInEditMode()) {
+			FontLoader.loadFont(this, HoloFont.ROBOTO_REGULAR);
 		}
 	}
-	
+
 }
