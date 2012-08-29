@@ -1,5 +1,7 @@
 package com.WazaBe.HoloEverywhere;
 
+import com.WazaBe.HoloEverywhere.FontLoader.HoloFont;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.util.AttributeSet;
@@ -24,7 +26,7 @@ public class RadioButtonHolo extends RadioButton {
 	protected void onFinishInflate() {
 		super.onFinishInflate();
 		if(!isInEditMode()) {
-			FontLoader.loadFont(this, FontLoader.ROBOTO_REGULAR);
+			FontLoader.loadFont(this, HoloFont.ROBOTO_REGULAR);
 		}
 	}
 	

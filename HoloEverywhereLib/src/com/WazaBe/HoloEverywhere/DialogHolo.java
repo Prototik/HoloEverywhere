@@ -1,5 +1,7 @@
 package com.WazaBe.HoloEverywhere;
 
+import com.WazaBe.HoloEverywhere.FontLoader.HoloFont;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
@@ -20,7 +22,7 @@ public class DialogHolo extends Dialog {
 		View customView = View.inflate(mContext, R.layout.alert_dialog_holo,
 				null);
 		mTitle = (TextView) customView.findViewById(R.id.alertTitle);
-		FontLoader.loadFont(mTitle, FontLoader.ROBOTO_REGULAR);
+		FontLoader.loadFont(customView, HoloFont.ROBOTO_REGULAR);
 		setContentView(customView);
 	}
 

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Button;
 
+import com.WazaBe.HoloEverywhere.FontLoader.HoloFont;
+
 public class ButtonHolo extends Button {
 
 	public ButtonHolo(Context context) {
@@ -24,7 +26,7 @@ public class ButtonHolo extends Button {
 	protected void onFinishInflate() {
 		super.onFinishInflate();
 		if(!isInEditMode()) {
-			FontLoader.loadFont(this, FontLoader.ROBOTO_REGULAR);
+			FontLoader.loadFont(this, HoloFont.ROBOTO_REGULAR);
 		}
 	}
 	
