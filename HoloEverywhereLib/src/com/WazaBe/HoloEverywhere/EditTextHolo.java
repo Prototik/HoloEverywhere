@@ -7,16 +7,31 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
+@Deprecated
+/*
+ * You should use *Activity instead *AnyView*Holo
+ */
 public class EditTextHolo extends EditText {
-
+	@Deprecated
+	/*
+	 * You should use *Activity instead *AnyView*Holo
+	 */
 	public EditTextHolo(Context context) {
 		super(context);
 	}
 
+	@Deprecated
+	/*
+	 * You should use *Activity instead *AnyView*Holo
+	 */
 	public EditTextHolo(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
+	@Deprecated
+	/*
+	 * You should use *Activity instead *AnyView*Holo
+	 */
 	public EditTextHolo(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
@@ -25,7 +40,7 @@ public class EditTextHolo extends EditText {
 	@TargetApi(3)
 	protected void onFinishInflate() {
 		super.onFinishInflate();
-		if(!isInEditMode()) {
+		if (!isInEditMode()) {
 			FontLoader.loadFont(this, HoloFont.ROBOTO_REGULAR);
 		}
 	}

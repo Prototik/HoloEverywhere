@@ -7,16 +7,31 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.CheckBox;
 
+@Deprecated
+/*
+ * You should use *Activity instead *AnyView*Holo
+ */
 public class CheckBoxHolo extends CheckBox {
-
+	@Deprecated
+	/*
+	 * You should use *Activity instead *AnyView*Holo
+	 */
 	public CheckBoxHolo(Context context) {
 		super(context);
 	}
 
+	@Deprecated
+	/*
+	 * You should use *Activity instead *AnyView*Holo
+	 */
 	public CheckBoxHolo(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
+	@Deprecated
+	/*
+	 * You should use *Activity instead *AnyView*Holo
+	 */
 	public CheckBoxHolo(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
@@ -25,9 +40,9 @@ public class CheckBoxHolo extends CheckBox {
 	@TargetApi(3)
 	protected void onFinishInflate() {
 		super.onFinishInflate();
-		if(!isInEditMode()) {
+		if (!isInEditMode()) {
 			FontLoader.loadFont(this, HoloFont.ROBOTO_REGULAR);
 		}
 	}
-	
+
 }
