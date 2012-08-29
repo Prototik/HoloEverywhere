@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+@Deprecated
+/*
+ * Use com.WazaBe.HoloEverywhere.AlertDialog.Builder
+ */
 public class HoloAlertDialogBuilder extends AlertDialog.Builder {
 
 	private final Context mContext;
@@ -14,6 +18,10 @@ public class HoloAlertDialogBuilder extends AlertDialog.Builder {
 	private TextView mMessage;
 	private TextView mTitle;
 
+	@Deprecated
+	/*
+	 * Use com.WazaBe.HoloEverywhere.AlertDialog.Builder
+	 */
 	public HoloAlertDialogBuilder(Context context) {
 		super(context);
 		mContext = context;
