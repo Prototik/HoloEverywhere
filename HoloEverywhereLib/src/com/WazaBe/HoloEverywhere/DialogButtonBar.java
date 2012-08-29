@@ -187,8 +187,8 @@ public class DialogButtonBar extends LinearLayout implements
 			final int height = v.getHeight();
 			final int midy = screenPos[1] + height / 2;
 			final int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
-			HoloToast toast = HoloToast.makeText(context, hint,
-					HoloToast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(context, hint,
+					Toast.LENGTH_SHORT);
 			if (midy < displayFrame.height()) {
 				toast.setGravity(Gravity.TOP | Gravity.RIGHT, screenWidth
 						- screenPos[0] - v.getWidth() / 2, screenPos[1]
