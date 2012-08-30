@@ -2,7 +2,7 @@
 <resources>
   <define name="DarkThemeData">
     <item name="android:windowBackground">@drawable/background_holo_dark</item>
-    <item name="android:listViewStyle">@style/ListViewStyle</item>
+    <item name="android:listViewStyle">@style/ListViewHoloDark</item>
     <item name="android:buttonStyle">@style/ButtonHoloDark</item>
     <item name="android:buttonStyleToggle">@style/ButtonToggleHoloDark</item>
     <item name="android:imageButtonStyle">@style/ButtonHoloDark</item>
@@ -22,10 +22,26 @@
     <item name="dialogButton">@drawable/dialog_button_dark</item>
     <item name="dialogButtonBorder">@drawable/dialog_button_border_dark</item>
     <item name="dialogStyle">@style/Dialog.Dark</item>
+    <item name="android:textColorPrimary">@color/primary_text_holo_dark</item>
+    <item name="android:textColorSecondary">@color/secondary_text_holo_dark</item>
+    <item name="android:textColorTertiary">@color/tertiary_text_holo_dark</item>
+    <item name="android:textColorPrimaryInverse">@color/primary_text_holo_light</item>
+    <item name="android:textColorSecondaryInverse">@color/secondary_text_holo_light</item>
+    <item name="android:textColorTertiaryInverse">@color/tertiary_text_holo_light</item>
+    <item name="android:textColorPrimaryDisableOnly">@color/primary_text_disable_only_holo_dark</item>
+    <item name="android:textColorPrimaryInverseDisableOnly">@color/primary_text_disable_only_holo_light</item>
+    <item name="android:textColorPrimaryNoDisable">@color/primary_text_nodisable_holo_dark</item>
+    <item name="android:textColorSecondaryNoDisable">@color/secondary_text_nodisable_holo_dark</item>
+    <item name="android:textColorPrimaryInverseNoDisable">@color/primary_text_nodisable_holo_light</item>
+    <item name="android:textColorSecondaryInverseNoDisable">@color/secondary_text_nodisable_holo_light</item>
+    <item name="android:textColorHint">@color/hint_foreground_holo_dark</item>
+    <item name="android:textColorHintInverse">@color/hint_foreground_holo_light</item>
+    <item name="android:textColorHighlight">@color/highlighted_text_holo_dark</item>
+    <item name="android:textColorLink">@color/link_text_holo_dark</item>
   </define>
   <define name="LightThemeData">
     <item name="android:windowBackground">@drawable/background_holo_light</item>
-    <item name="android:listViewStyle">@style/ListViewStyle</item>
+    <item name="android:listViewStyle">@style/ListViewHoloLight</item>
     <item name="android:buttonStyle">@style/ButtonHoloLight</item>
     <item name="android:buttonStyleToggle">@style/ButtonToggleHoloLight</item>
     <item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
@@ -45,6 +61,22 @@
     <item name="dialogButton">@drawable/dialog_button_light</item>
     <item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
     <item name="dialogStyle">@style/Dialog.Light</item>
+    <item name="android:textColorPrimary">@color/primary_text_holo_light</item>
+    <item name="android:textColorSecondary">@color/secondary_text_holo_light</item>
+    <item name="android:textColorTertiary">@color/tertiary_text_holo_light</item>
+    <item name="android:textColorPrimaryInverse">@color/primary_text_holo_dark</item>
+    <item name="android:textColorSecondaryInverse">@color/secondary_text_holo_dark</item>
+    <item name="android:textColorTertiaryInverse">@color/tertiary_text_holo_dark</item>
+    <item name="android:textColorPrimaryDisableOnly">@color/primary_text_disable_only_holo_light</item>
+    <item name="android:textColorPrimaryInverseDisableOnly">@color/primary_text_disable_only_holo_dark</item>
+    <item name="android:textColorPrimaryNoDisable">@color/primary_text_nodisable_holo_light</item>
+    <item name="android:textColorSecondaryNoDisable">@color/secondary_text_nodisable_holo_light</item>
+    <item name="android:textColorPrimaryInverseNoDisable">@color/primary_text_nodisable_holo_dark</item>
+    <item name="android:textColorSecondaryInverseNoDisable">@color/secondary_text_nodisable_holo_dark</item>
+    <item name="android:textColorHint">@color/hint_foreground_holo_light</item>
+    <item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
+    <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
+    <item name="android:textColorLink">@color/link_text_holo_light</item>
   </define>
   <define name="NoTitleBar">
     <item name="android:windowNoTitle">true</item>
@@ -126,8 +158,15 @@
   <style name="Theme.HoloEverywhereLight.NoTitleBar.Fullscreen">
     <include name="Fullscreen" />
   </style>
-  <style name="ListViewStyle" parent="android:Widget.ListView">
-    <item name="android:cacheColorHint">#00000000</item>
+  <style name="ListViewHoloDark" parent="android:Widget.ListView">
+    <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
+    <item name="android:cacheColorHint">@drawable/background_cache_hint_selector_holo_dark</item>
+    <item name="android:divider">@drawable/list_divider_holo_dark</item>
+  </style>
+  <style name="ListViewHoloLight" parent="android:Widget.ListView">
+    <item name="android:listSelector">@drawable/list_selector_holo_light</item>
+    <item name="android:cacheColorHint">@drawable/background_cache_hint_selector_holo_light</item>
+    <item name="android:divider">@drawable/list_divider_holo_light</item>
   </style>
   <style name="AlertDialogHoloDark">
     <item name="android:fullDark">@drawable/dialog_full_holo_dark</item>
