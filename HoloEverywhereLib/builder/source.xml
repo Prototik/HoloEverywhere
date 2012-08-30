@@ -38,6 +38,13 @@
     <item name="android:textColorHintInverse">@color/hint_foreground_holo_light</item>
     <item name="android:textColorHighlight">@color/highlighted_text_holo_dark</item>
     <item name="android:textColorLink">@color/link_text_holo_dark</item>
+    <item name="android:scrollbarFadeDuration">250</item>
+    <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+    <item name="android:scrollbarSize">10dip</item>
+    <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_dark</item>
+    <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_dark</item>
+    <item name="android:scrollbarTrackHorizontal">@null</item>
+    <item name="android:scrollbarTrackVertical">@null</item>
   </define>
   <define name="LightThemeData">
     <item name="android:windowBackground">@drawable/background_holo_light</item>
@@ -77,6 +84,13 @@
     <item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
     <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
     <item name="android:textColorLink">@color/link_text_holo_light</item>
+    <item name="android:scrollbarFadeDuration">250</item>
+    <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+    <item name="android:scrollbarSize">10dip</item>
+    <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
+    <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
+    <item name="android:scrollbarTrackHorizontal">@null</item>
+    <item name="android:scrollbarTrackVertical">@null</item>
   </define>
   <define name="NoTitleBar">
     <item name="android:windowNoTitle">true</item>
