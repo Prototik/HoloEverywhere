@@ -2,7 +2,7 @@
 <resources>
   <define name="DarkThemeData">
     <item name="android:windowBackground">@drawable/background_holo_dark</item>
-    <item name="android:listViewStyle">@style/ListViewStyle</item>
+    <item name="android:listViewStyle">@style/ListViewHoloDark</item>
     <item name="android:buttonStyle">@style/ButtonHoloDark</item>
     <item name="android:buttonStyleToggle">@style/ButtonToggleHoloDark</item>
     <item name="android:imageButtonStyle">@style/ButtonHoloDark</item>
@@ -25,7 +25,7 @@
   </define>
   <define name="LightThemeData">
     <item name="android:windowBackground">@drawable/background_holo_light</item>
-    <item name="android:listViewStyle">@style/ListViewStyle</item>
+    <item name="android:listViewStyle">@style/ListViewHoloLight</item>
     <item name="android:buttonStyle">@style/ButtonHoloLight</item>
     <item name="android:buttonStyleToggle">@style/ButtonToggleHoloLight</item>
     <item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
@@ -126,8 +126,15 @@
   <style name="Theme.HoloEverywhereLight.NoTitleBar.Fullscreen">
     <include name="Fullscreen" />
   </style>
-  <style name="ListViewStyle" parent="android:Widget.ListView">
-    <item name="android:cacheColorHint">#00000000</item>
+  <style name="ListViewHoloDark" parent="android:Widget.ListView">
+    <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
+    <item name="android:cacheColorHint">@drawable/background_cache_hint_selector_holo_dark</item>
+    <item name="android:divider">@drawable/list_divider_holo_dark</item>
+  </style>
+  <style name="ListViewHoloLight" parent="android:Widget.ListView">
+    <item name="android:listSelector">@drawable/list_selector_holo_light</item>
+    <item name="android:cacheColorHint">@drawable/background_cache_hint_selector_holo_light</item>
+    <item name="android:divider">@drawable/list_divider_holo_light</item>
   </style>
   <style name="AlertDialogHoloDark">
     <item name="android:fullDark">@drawable/dialog_full_holo_dark</item>
