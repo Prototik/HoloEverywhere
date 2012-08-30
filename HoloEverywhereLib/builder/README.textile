@@ -18,8 +18,7 @@ h3. Can be an example?
 
 Please:
 Source file:
-```
-<?xml version="1.0" encoding="utf-8"?>
+```xml
 <resources>
   <define name="MyData">
     <item name="android:windowBackground">@drawable/my_background</item>
@@ -36,8 +35,7 @@ Source file:
 </resources>
 ```
 Final file:
-```
-<?xml version="1.0" encoding="utf-8"?>
+```xml
 <resources>
   <style name="MyTheme">
     <item name="android:windowBackground">@drawable/my_background</item>
