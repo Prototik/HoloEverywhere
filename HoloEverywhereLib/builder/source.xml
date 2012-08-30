@@ -99,7 +99,10 @@
     <item name="android:windowFullscreen">true</item>
     <item name="android:windowContentOverlay">@null</item>
   </define>
-  <style name="Theme.HoloEverywhereDefault.Sherlock" parent="Theme.Sherlock" />
+  <style name="Theme.HoloEverywhereDefault.Sherlock" parent="Theme.Sherlock">
+    <item name="dialogButton">@drawable/dialog_button_dark</item>
+    <item name="dialogButtonBorder">@drawable/dialog_button_border_dark</item>
+  </style>
   <style name="Theme.HoloEverywhereDark.Sherlock" parent="Theme.Sherlock">
     <include name="DarkThemeData" />
   </style>

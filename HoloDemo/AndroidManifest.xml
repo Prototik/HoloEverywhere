@@ -1,60 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.WazaBe.HoloDemo"
-    android:versionCode="7"
-    android:versionName="Beta2" >
-
-    <uses-sdk
-        android:minSdkVersion="1"
-        android:targetSdkVersion="11" 
-      />
-
-    <application
-        android:hardwareAccelerated="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
-
-        <!--
-        Dark Theme:  
-        android:theme="@style/Theme.HoloEverywhereDark"
-        -->
-
-
-        <!--
-        Light Theme:  
-        android:theme="@style/Theme.HoloEverywhereLight"
-        -->
-        <!--
-        ActionBarSherlock Dark:
-        android:theme="@style/Theme.HoloEverywhereDark.Sherlock"
-        -->
-        <!--
-        ActionBarSherlock Light:
-        android:theme="@style/Theme.HoloEverywhereLight.Sherlock"
-        -->
-
-        <activity
-            android:name=".HoloDemoActivity"
-            android:enabled="@bool/displaySimpleActivity"
-            android:label="@string/app_name"
-             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ActionBarHoloDemoActivity"
-            android:enabled="@bool/displayActionBarActivity"
-            android:label="@string/app_name"
-             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
-
+	package="com.WazaBe.HoloDemo"
+	android:versionCode="8"
+	android:versionName="1.0 RC1" >
+	<uses-sdk
+		android:minSdkVersion="4"
+		android:targetSdkVersion="16" />
+	<application
+		android:hardwareAccelerated="true"
+		android:icon="@drawable/ic_launcher"
+		android:label="@string/app_name" >
+		<activity
+			android:name=".HoloDemoActivity"
+			android:enabled="@bool/displaySimpleActivity"
+			android:label="@string/app_name" >
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name=".ActionBarHoloDemoActivity"
+			android:enabled="@bool/displayActionBarActivity"
+			android:label="@string/app_name" >
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+	</application>
 </manifest>
