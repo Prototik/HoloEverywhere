@@ -7,12 +7,14 @@ import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 public class AlertDialog extends android.app.AlertDialog {
@@ -355,8 +357,16 @@ public class AlertDialog extends android.app.AlertDialog {
 
 	private void init(boolean useNative) {
 		this.useNative = useNative;
-
 		if (!useNative) {
+			getWindow().setBackgroundDrawableResource(R.drawable.transparent);
+			getWindow().setGravity(Gravity.CENTER);
+			getWindow().setLayout(LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT);
+			WindowManager.LayoutParams params = getWindow().getAttributes();
+			params.dimAmount = 0.4f;
+			params.alpha = 0.982f;
+			getWindow().setAttributes(params);
+			getWindow().addFlags(LayoutParams.FLAG_DIM_BEHIND);
 			buttonsLayout = new DialogButtonBar(getContext());
 			View customTitle = FontLoader.inflate(getContext(),
 					R.layout.alert_dialog_title);
@@ -370,6 +380,7 @@ public class AlertDialog extends android.app.AlertDialog {
 
 	@Override
 	public void setCustomTitle(View customTitleView) {
+		lastCustomTitleView = null;
 		super.setCustomTitle(this.customTitleView = customTitleView);
 	}
 
@@ -385,8 +396,9 @@ public class AlertDialog extends android.app.AlertDialog {
 		b.setText(button.getKey());
 		b.setOnClickListener(new InternalListener(this, button.getValue(),
 				which));
-		LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.MATCH_PARENT);
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.MATCH_PARENT);
 		layoutParams.weight = 1;
 		buttonsLayout.addView(b, layoutParams);
 	}
@@ -455,8 +467,10 @@ public class AlertDialog extends android.app.AlertDialog {
 				lastCustomTitleView = getCustomTitle();
 				setCustomTitle(null);
 			} else {
-				setCustomTitle(lastCustomTitleView);
-				lastCustomTitleView = null;
+				if (lastCustomTitleView != null) {
+					setCustomTitle(lastCustomTitleView);
+					lastCustomTitleView = null;
+				}
 			}
 		}
 	}
@@ -505,9 +519,9 @@ public class AlertDialog extends android.app.AlertDialog {
 						.removeView(buttonsLayout);
 			} catch (Exception e) {
 			}
-			LayoutParams params = new LayoutParams(
-					android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-					android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT);
 			params.setMargins(0, viewSpacingBottom, 0, 0);
 			layout.addView(buttonsLayout, params);
 			super.setView(layout, viewSpacingLeft, viewSpacingTop,

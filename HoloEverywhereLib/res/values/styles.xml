@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <style name="Theme.HoloEverywhereDefault.Sherlock" parent="Theme.Sherlock"/>
+    <style name="Theme.HoloEverywhereDefault.Sherlock" parent="Theme.Sherlock">
+        <item name="dialogButton">@drawable/dialog_button_dark</item>
+        <item name="dialogButtonBorder">@drawable/dialog_button_border_dark</item>
+    </style>
     <style name="Theme.HoloEverywhereDark.Sherlock" parent="Theme.Sherlock">
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:listViewStyle">@style/ListViewHoloDark</item>
@@ -39,6 +42,13 @@
         <item name="android:textColorHintInverse">@color/hint_foreground_holo_light</item>
         <item name="android:textColorHighlight">@color/highlighted_text_holo_dark</item>
         <item name="android:textColorLink">@color/link_text_holo_dark</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_dark</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_dark</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
     </style>
     <style name="Theme.HoloEverywhereDark.Sherlock.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
@@ -85,6 +95,13 @@
         <item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
         <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
         <item name="android:textColorLink">@color/link_text_holo_light</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
     </style>
     <style name="Theme.HoloEverywhereLight.Sherlock.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
@@ -131,6 +148,13 @@
         <item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
         <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
         <item name="android:textColorLink">@color/link_text_holo_light</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
     </style>
     <style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
@@ -177,6 +201,13 @@
         <item name="android:textColorHintInverse">@color/hint_foreground_holo_light</item>
         <item name="android:textColorHighlight">@color/highlighted_text_holo_dark</item>
         <item name="android:textColorLink">@color/link_text_holo_dark</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_dark</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_dark</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
     </style>
     <style name="Theme.HoloEverywhereDark.Sherlock.ForceOverflow.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
@@ -223,6 +254,13 @@
         <item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
         <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
         <item name="android:textColorLink">@color/link_text_holo_light</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
     </style>
     <style name="Theme.HoloEverywhereLight.Sherlock.ForceOverflow.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
@@ -269,6 +307,13 @@
         <item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
         <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
         <item name="android:textColorLink">@color/link_text_holo_light</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
     </style>
     <style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock.ForceOverflow.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
@@ -315,6 +360,13 @@
         <item name="android:textColorHintInverse">@color/hint_foreground_holo_light</item>
         <item name="android:textColorHighlight">@color/highlighted_text_holo_dark</item>
         <item name="android:textColorLink">@color/link_text_holo_dark</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_dark</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_dark</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
     </style>
     <style name="Theme.HoloEverywhereDark.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
@@ -361,6 +413,13 @@
         <item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
         <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
         <item name="android:textColorLink">@color/link_text_holo_light</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
     </style>
     <style name="Theme.HoloEverywhereLight.NoTitleBar">
         <item name="android:windowNoTitle">true</item>

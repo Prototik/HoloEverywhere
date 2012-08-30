@@ -1,54 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_root"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
-
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/gplus"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:layout_width="60dip"
-            android:layout_height="60dip"
-            android:padding="10dip"
-            android:src="@drawable/gplus" />
-
-        <com.WazaBe.HoloEverywhere.TextViewHolo
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="10dip"
-            android:text="Google Plus"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/github"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:layout_width="60dip"
-            android:layout_height="60dip"
-            android:padding="10dip"
-            android:src="@drawable/github" />
-
-        <com.WazaBe.HoloEverywhere.TextViewHolo
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="10dip"
-            android:text="Fork me on Github"
-            android:textStyle="bold" />
-    </LinearLayout>
-
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical" >
+	<TextView
+		android:id="@+id/gplus"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:background="@drawable/about_item_background"
+		android:drawableLeft="@drawable/gplus"
+		android:gravity="center"
+		android:padding="10dip"
+		android:text="Google Plus"
+		android:textSize="20sp"
+		android:textStyle="bold" />
+	<TextView
+		android:id="@+id/github"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:background="@drawable/about_item_background"
+		android:drawableLeft="@drawable/github"
+		android:gravity="center"
+		android:padding="10dip"
+		android:text="Github"
+		android:textSize="20sp"
+		android:textStyle="bold" />
 </LinearLayout>
