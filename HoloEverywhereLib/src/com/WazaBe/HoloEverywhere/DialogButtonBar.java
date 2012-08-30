@@ -1,6 +1,5 @@
 package com.WazaBe.HoloEverywhere;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
@@ -13,8 +12,7 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-public class DialogButtonBar extends LinearLayout implements
-		OnLongClickListener {
+public class DialogButtonBar extends LinearLayout implements OnLongClickListener {
 	public static class LayoutParams extends LinearLayout.LayoutParams {
 		public CharSequence hint = "";
 
@@ -23,7 +21,7 @@ public class DialogButtonBar extends LinearLayout implements
 		}
 
 		public LayoutParams() {
-			this(MATCH_PARENT, WRAP_CONTENT);
+			this(FILL_PARENT, WRAP_CONTENT);
 		}
 
 		public LayoutParams(Context context, AttributeSet attrs) {
@@ -76,11 +74,6 @@ public class DialogButtonBar extends LinearLayout implements
 
 	public DialogButtonBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init();
-	}
-
-	public DialogButtonBar(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
 		init();
 	}
 
@@ -173,8 +166,6 @@ public class DialogButtonBar extends LinearLayout implements
 		super.removeViewsInLayout(start, count);
 	}
 
-	@TargetApi(3)
-	@Override
 	public boolean onLongClick(View v) {
 		LayoutParams p = generateLayoutParams(v.getLayoutParams());
 		String hint = p.hint.toString().trim();
