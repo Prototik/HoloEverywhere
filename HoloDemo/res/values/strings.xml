@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="hello_textview">Hello World, HoloText!</string>
-    <string name="hello_button">Hello World, HoloButton!</string>
-    <string name="hello_edittext">Hello HoloEditText!</string>
-    <string name="hello_textview_roboto">Hello Roboto Font</string>
-    <string name="hello_edittext_roboto">Hello Roboto Font</string>
-    <string name="hello_dialog">Hello Dialog!</string>
-     <string name="hello_toast">Hello Toast.</string>
-    <string name="spinner_prompt">This is a Spinner!</string>
-    <string name="app_name">HoloDemo</string>
-
+	<string name="app_name">HoloDemo</string>
+	<string name="spinner_prompt">Spinner sample</string>
 </resources>
