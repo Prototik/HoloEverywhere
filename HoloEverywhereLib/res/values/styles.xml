@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="Theme.HoloEverywhereDefault.Sherlock" parent="Theme.Sherlock"/>
     
@@ -20,6 +20,13 @@
 		<item name="android:textColorHintInverse">@color/hint_foreground_holo_light</item>
 		<item name="android:textColorHighlight">@color/highlighted_text_holo_dark</item>
 		<item name="android:textColorLink">@color/link_text_holo_dark</item>
+		<item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item> 
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_dark</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_dark</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
 		<item name="android:windowBackground">@drawable/background_holo_dark</item>
 		<item name="android:listViewStyle">@style/ListViewHoloDark</item>
 		<item name="android:buttonStyle">@style/ButtonHoloDark</item>
@@ -69,6 +76,13 @@
 		<item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
 		<item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
 		<item name="android:textColorLink">@color/link_text_holo_light</item>
+		<item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item> 
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_lightk</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
 		<item name="android:listViewStyle">@style/ListViewHoloLight</item>
 		<item name="android:buttonStyle">@style/ButtonHoloLight</item>
@@ -118,6 +132,13 @@
 		<item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
 		<item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
 		<item name="android:textColorLink">@color/link_text_holo_light</item>
+		<item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item> 
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
 		<item name="android:listViewStyle">@style/ListViewHoloLight</item>
 		<item name="android:buttonStyle">@style/ButtonHoloLight</item>
@@ -167,6 +188,13 @@
 		<item name="android:textColorHintInverse">@color/hint_foreground_holo_light</item>
 		<item name="android:textColorHighlight">@color/highlighted_text_holo_dark</item>
 		<item name="android:textColorLink">@color/link_text_holo_dark</item>
+		<item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item> 
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_dark</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_dark</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:listViewStyle">@style/ListViewHoloDark</item>
         <item name="android:buttonStyle">@style/ButtonHoloDark</item>
@@ -216,6 +244,13 @@
 		<item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
 		<item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
 		<item name="android:textColorLink">@color/link_text_holo_light</item>
+		<item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item> 
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:listViewStyle">@style/ListViewHoloLight</item>
         <item name="android:buttonStyle">@style/ButtonHoloLight</item>
@@ -265,6 +300,13 @@
 		<item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
 		<item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
 		<item name="android:textColorLink">@color/link_text_holo_light</item>
+		<item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item> 
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:listViewStyle">@style/ListViewHoloLight</item>
         <item name="android:buttonStyle">@style/ButtonHoloLight</item>
@@ -314,6 +356,13 @@
 		<item name="android:textColorHintInverse">@color/hint_foreground_holo_light</item>
 		<item name="android:textColorHighlight">@color/highlighted_text_holo_dark</item>
 		<item name="android:textColorLink">@color/link_text_holo_dark</item>
+		<item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item> 
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_dark</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_dark</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
 		<item name="android:windowBackground">@drawable/background_holo_dark</item>
 		<item name="android:listViewStyle">@style/ListViewHoloDark</item>
 		<item name="android:buttonStyle">@style/ButtonHoloDark</item>
@@ -363,6 +412,13 @@
 		<item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
 		<item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
 		<item name="android:textColorLink">@color/link_text_holo_light</item>
+		<item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item> 
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
 		<item name="android:listViewStyle">@style/ListViewHoloLight</item>
 		<item name="android:buttonStyle">@style/ButtonHoloLight</item>
