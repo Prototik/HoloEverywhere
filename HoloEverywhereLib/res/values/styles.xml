@@ -5,7 +5,7 @@
     
 	<style name="Theme.HoloEverywhereDark.Sherlock" parent="Theme.Sherlock">
 		<item name="android:windowBackground">@drawable/background_holo_dark</item>
-		<item name="android:listViewStyle">@style/ListViewStyle</item>
+		<item name="android:listViewStyle">@style/ListViewHoloDark</item>
 		<item name="android:buttonStyle">@style/ButtonHoloDark</item>
 		<item name="android:buttonStyleToggle">@style/ButtonToggleHoloDark</item>
 		<item name="android:imageButtonStyle">@style/ButtonHoloDark</item>
@@ -38,7 +38,7 @@
 
 	<style name="Theme.HoloEverywhereLight.Sherlock" parent="Theme.Sherlock.Light">
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
-		<item name="android:listViewStyle">@style/ListViewStyle</item>
+		<item name="android:listViewStyle">@style/ListViewHoloLight</item>
 		<item name="android:buttonStyle">@style/ButtonHoloLight</item>
 		<item name="android:buttonStyleToggle">@style/ButtonToggleHoloLight</item>
 		<item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
@@ -71,7 +71,7 @@
 	
 	<style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock" parent="Theme.Sherlock.Light.DarkActionBar">
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
-		<item name="android:listViewStyle">@style/ListViewStyle</item>
+		<item name="android:listViewStyle">@style/ListViewHoloLight</item>
 		<item name="android:buttonStyle">@style/ButtonHoloLight</item>
 		<item name="android:buttonStyleToggle">@style/ButtonToggleHoloLight</item>
 		<item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
@@ -104,7 +104,7 @@
 
 	<style name="Theme.HoloEverywhereDark.Sherlock.ForceOverflow" parent="Theme.Sherlock.ForceOverflow">
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
-        <item name="android:listViewStyle">@style/ListViewStyle</item>
+        <item name="android:listViewStyle">@style/ListViewHoloDark</item>
         <item name="android:buttonStyle">@style/ButtonHoloDark</item>
         <item name="android:buttonStyleToggle">@style/ButtonToggleHoloDark</item>
         <item name="android:imageButtonStyle">@style/ButtonHoloDark</item>
@@ -137,7 +137,7 @@
 
 	<style name="Theme.HoloEverywhereLight.Sherlock.ForceOverflow" parent="Theme.Sherlock.Light.ForceOverflow">
         <item name="android:windowBackground">@drawable/background_holo_light</item>
-        <item name="android:listViewStyle">@style/ListViewStyle</item>
+        <item name="android:listViewStyle">@style/ListViewHoloLight</item>
         <item name="android:buttonStyle">@style/ButtonHoloLight</item>
         <item name="android:buttonStyleToggle">@style/ButtonToggleHoloLight</item>
         <item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
@@ -170,7 +170,7 @@
 
 	<style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock.ForceOverflow" parent="Theme.Sherlock.Light.DarkActionBar.ForceOverflow">
         <item name="android:windowBackground">@drawable/background_holo_light</item>
-        <item name="android:listViewStyle">@style/ListViewStyle</item>
+        <item name="android:listViewStyle">@style/ListViewHoloLight</item>
         <item name="android:buttonStyle">@style/ButtonHoloLight</item>
         <item name="android:buttonStyleToggle">@style/ButtonToggleHoloLight</item>
         <item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
@@ -203,7 +203,7 @@
 
 	<style name="Theme.HoloEverywhereDark" parent="android:Theme.NoTitleBar">
 		<item name="android:windowBackground">@drawable/background_holo_dark</item>
-		<item name="android:listViewStyle">@style/ListViewStyle</item>
+		<item name="android:listViewStyle">@style/ListViewHoloDark</item>
 		<item name="android:buttonStyle">@style/ButtonHoloDark</item>
 		<item name="android:buttonStyleToggle">@style/ButtonToggleHoloDark</item>
 		<item name="android:imageButtonStyle">@style/ButtonHoloDark</item>
@@ -236,7 +236,7 @@
 
 	<style name="Theme.HoloEverywhereLight" parent="android:Theme.Light.NoTitleBar">
 		<item name="android:windowBackground">@drawable/background_holo_light</item>
-		<item name="android:listViewStyle">@style/ListViewStyle</item>
+		<item name="android:listViewStyle">@style/ListViewHoloLight</item>
 		<item name="android:buttonStyle">@style/ButtonHoloLight</item>
 		<item name="android:buttonStyleToggle">@style/ButtonToggleHoloLight</item>
 		<item name="android:imageButtonStyle">@style/ButtonHoloLight</item>
@@ -267,9 +267,17 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-	<style name="ListViewStyle" parent="android:Widget.ListView">
-		<item name="android:cacheColorHint">#00000000</item>
-	</style>
+    <style name="ListViewHoloDark" parent="android:Widget.ListView">
+        <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
+        <item name="android:cacheColorHint">@drawable/background_cache_hint_selector_holo_dark</item>
+        <item name="android:divider">@drawable/list_divider_holo_dark</item>
+    </style>
+
+    <style name="ListViewHoloLight" parent="android:Widget.ListView">
+        <item name="android:listSelector">@drawable/list_selector_holo_light</item>
+        <item name="android:cacheColorHint">@drawable/background_cache_hint_selector_holo_light</item>
+        <item name="android:divider">@drawable/list_divider_holo_light</item>
+    </style>
 
 	<style name="AlertDialogHoloDark">
 		<item name="android:fullDark">@drawable/dialog_full_holo_dark</item>
