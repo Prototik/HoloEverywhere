@@ -1,11 +1,11 @@
 package com.WazaBe.HoloEverywhere;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -47,6 +47,8 @@ public class DialogButtonBar extends LinearLayout implements
 		}
 	}
 
+	private static final String TAG = "DialogButtonBar";
+
 	@Override
 	public LayoutParams generateLayoutParams(AttributeSet attrs) {
 		return new LayoutParams(getContext(), attrs);
@@ -85,23 +87,21 @@ public class DialogButtonBar extends LinearLayout implements
 	}
 
 	@Override
-	public void addView(View child, int index,
-			android.view.ViewGroup.LayoutParams params) {
+	public void addView(View child, int index, ViewGroup.LayoutParams params) {
 		rebuild = true;
 		super.addView(child, index, params);
 	}
 
 	@Override
 	protected boolean addViewInLayout(View child, int index,
-			android.view.ViewGroup.LayoutParams params,
-			boolean preventRequestLayout) {
+			ViewGroup.LayoutParams params, boolean preventRequestLayout) {
 		rebuild = true;
 		return super
 				.addViewInLayout(child, index, params, preventRequestLayout);
 	}
 
 	private void init() {
-		setOrientation(0);
+		setOrientation(HORIZONTAL);
 		Theme theme = getContext().getTheme();
 		TypedValue value = new TypedValue();
 		theme.resolveAttribute(R.attr.dialogButton, value, true);
@@ -110,8 +110,10 @@ public class DialogButtonBar extends LinearLayout implements
 		dialogButtonBorder = value.resourceId;
 		value = null;
 		if (dialogButton <= 0 || dialogButtonBorder <= 0) {
-			throw new RuntimeException(
-					"You must define dialogButton and dialogButtonBorder in theme for using DialogButtonBar");
+			dialogButton = R.drawable.dialog_button_dark;
+			dialogButtonBorder = R.drawable.dialog_button_border_dark;
+			Log.w(TAG,
+					"You must define dialogButton and dialogButtonBorder in theme. Used default values.");
 		}
 	}
 
@@ -158,7 +160,11 @@ public class DialogButtonBar extends LinearLayout implements
 
 	@Override
 	public void setOrientation(int orientation) {
-		super.setOrientation(HORIZONTAL);
+		if (orientation != HORIZONTAL) {
+			throw new RuntimeException(
+					"DialogButtonBar don't support vertical orientation");
+		}
+		super.setOrientation(orientation);
 	}
 
 	@Override
@@ -173,7 +179,6 @@ public class DialogButtonBar extends LinearLayout implements
 		super.removeViewsInLayout(start, count);
 	}
 
-	@TargetApi(3)
 	@Override
 	public boolean onLongClick(View v) {
 		LayoutParams p = generateLayoutParams(v.getLayoutParams());
@@ -187,8 +192,7 @@ public class DialogButtonBar extends LinearLayout implements
 			final int height = v.getHeight();
 			final int midy = screenPos[1] + height / 2;
 			final int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
-			Toast toast = Toast.makeText(context, hint,
-					Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(context, hint, Toast.LENGTH_SHORT);
 			if (midy < displayFrame.height()) {
 				toast.setGravity(Gravity.TOP | Gravity.RIGHT, screenWidth
 						- screenPos[0] - v.getWidth() / 2, screenPos[1]

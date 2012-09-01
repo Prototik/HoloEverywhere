@@ -1,13 +1,15 @@
-package com.WazaBe.HoloEverywhere.sherlock;
+package com.WazaBe.HoloEverywhere.app;
 
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
-import com.actionbarsherlock.app.SherlockExpandableListActivity;
 
-public abstract class SExpandableListActivity extends
-		SherlockExpandableListActivity {
+@Deprecated
+/*
+ * Use fragments
+ */
+public class TabActivity extends android.app.TabActivity {
 	@Override
 	public void addContentView(View view, LayoutParams params) {
 		super.addContentView(FontLoader.loadFont(view), params);
