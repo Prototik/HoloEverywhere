@@ -26,6 +26,10 @@ public class HoloDemoActivity extends Activity {
 		s.setAdapter(adapter);
 	}
 
+	public void showProgressDialog(View v) {
+		Utils.showProgressDialog(this);
+	}
+
 	public void showAlertDialog(View v) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Work in Progress").setMessage("Dialog")

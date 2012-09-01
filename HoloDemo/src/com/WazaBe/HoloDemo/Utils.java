@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 
 import com.WazaBe.HoloEverywhere.AlertDialog;
 import com.WazaBe.HoloEverywhere.FontLoader;
+import com.WazaBe.HoloEverywhere.ProgressDialog;
 
 public class Utils {
 	public final static int THEME_CLASSIC = -1;
@@ -73,5 +74,13 @@ public class Utils {
 			a.setTheme(R.style.Theme_HoloEverywhereLight_Sherlock);
 			break;
 		}
+	}
+
+	public static void showProgressDialog(Activity activity) {
+		ProgressDialog dialog = new ProgressDialog(activity);
+		dialog.setCancelable(true);
+		dialog.setIndeterminate(true);
+		dialog.setMessage("I can close!");
+		dialog.show();
 	}
 }

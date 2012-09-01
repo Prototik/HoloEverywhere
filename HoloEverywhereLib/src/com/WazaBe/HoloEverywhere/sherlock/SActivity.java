@@ -14,7 +14,7 @@ public abstract class SActivity extends SherlockActivity {
 
 	@Override
 	public void setContentView(int layoutResID) {
-		setContentView(FontLoader.inflate(this, layoutResID));
+		super.setContentView(FontLoader.inflate(this, layoutResID));
 	}
 
 	@Override

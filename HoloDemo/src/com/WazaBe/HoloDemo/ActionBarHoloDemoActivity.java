@@ -39,6 +39,10 @@ public class ActionBarHoloDemoActivity extends SActivity {
 		Utils.showDialog(this);
 	}
 
+	public void showProgressDialog(View v) {
+		Utils.showProgressDialog(this);
+	}
+
 	public void showToast(View v) {
 		Toast.makeText(this, "Toast", Toast.LENGTH_LONG).show();
 	}

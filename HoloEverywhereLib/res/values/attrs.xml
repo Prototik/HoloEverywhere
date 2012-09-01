@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<attr name="dialogButton" format="reference" />
-	<attr name="dialogButtonBorder" format="reference" />
-	<attr name="dialogStyle" format="reference" />
 	<declare-styleable name="DialogButtonBar.LayoutParams">
 		<attr name="android:hint" />
+	</declare-styleable>
+	<declare-styleable name="AlertDialog">
+		<attr name="android:fullDark" />
+		<attr name="android:topDark" />
+		<attr name="android:centerDark" />
+		<attr name="android:bottomDark" />
+		<attr name="android:fullBright" />
+		<attr name="android:topBright" />
+		<attr name="android:centerBright" />
+		<attr name="android:bottomBright" />
+		<attr name="android:bottomMedium" />
+		<attr name="android:centerMedium" />
+		<attr name="android:layout" />
+		<attr name="android:listLayout" />
+		<attr name="android:multiChoiceItemLayout" />
+		<attr name="android:singleChoiceItemLayout" />
+		<attr name="android:listItemLayout" />
+		<attr name="android:progressLayout" />
+		<attr name="android:horizontalProgressLayout" />
+		<attr name="dialogButton" format="reference" />
+		<attr name="dialogButtonBorder" format="reference" />
+		<attr name="dialogStyle" format="reference" />
+		<attr name="dialogAlpha" format="reference|float" />
+		<attr name="dialogDimAmount" format="reference|float" />
+		<attr name="dialogDismissWhenOutside" format="reference|boolean" />
 	</declare-styleable>
 </resources>
