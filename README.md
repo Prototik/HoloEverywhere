@@ -9,7 +9,8 @@ git submodule init --update
 ```
 * Import HoloEverywhere and ActionBarSherlock into Eclipse
 * Add HoloEverywhere project as library into your project (Properties/Android/Library/Add)
-* Add android:theme="@style/Theme.HoloEverywhereDark.Sherlock" in your application manifest, you may also want to use light theme: Theme.HoloEverywhereLight.Sherlock.
+* Add android:theme="@style/Holo.Theme.Sherlock" in your application manifest, you may also want to use light theme: Holo.Theme.Sherlock.Light
+
 CONTACT: https://plus.google.com/108315424589085456181/posts
 
 I am not totally familiar with Github, if you are interested in this project, 
@@ -21,10 +22,8 @@ feel free to show me the points I am missing and I will fix them ASAP!
 ![Screenshot 4](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/screen4.png "Screenshot 4")
 
 
-----------------------------------------------------------------------------------------------------
-"THE BEER-WARE LICENSE":
+##### "THE BEER-WARE LICENSE":
 As long as you retain this notice you can do whatever you want with this stuff. 
 If we meet some day, and you think this stuff is worth it, you can buy me a beer in return 
 I also accept Paypal donations to christophe.versieux@gmail.com 
 (you may offer me multiple beers as they are very cheap in Belgium)
-----------------------------------------------------------------------------------------------------
