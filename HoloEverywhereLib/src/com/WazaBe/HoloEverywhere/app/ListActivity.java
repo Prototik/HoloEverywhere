@@ -13,7 +13,7 @@ public abstract class ListActivity extends android.app.ListActivity {
 
 	@Override
 	public void setContentView(int layoutResID) {
-		setContentView(FontLoader.inflate(this, layoutResID));
+		super.setContentView(FontLoader.inflate(this, layoutResID));
 	}
 
 	@Override

@@ -13,7 +13,7 @@ public abstract class Activity extends android.app.Activity {
 
 	@Override
 	public void setContentView(int layoutResID) {
-		setContentView(FontLoader.inflate(this, layoutResID));
+		super.setContentView(FontLoader.inflate(this, layoutResID));
 	}
 
 	@Override

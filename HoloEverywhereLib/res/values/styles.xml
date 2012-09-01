@@ -448,6 +448,11 @@
         <item name="android:bottomBright">@drawable/dialog_bottom_holo_dark</item>
         <item name="android:bottomMedium">@drawable/dialog_bottom_holo_dark</item>
         <item name="android:centerMedium">@drawable/dialog_middle_holo_dark</item>
+        <item name="dialogButton">@drawable/dialog_button_dark</item>
+        <item name="dialogButtonBorder">@drawable/dialog_button_border_dark</item>
+        <item name="dialogAlpha">0.986</item>
+        <item name="dialogDimAmount">0.4</item>
+        <item name="dialogDismissWhenOutside">true</item>
     </style>
     <style name="AlertDialogHoloLight">
         <item name="android:fullDark">@drawable/dialog_full_holo_light</item>
@@ -459,6 +464,11 @@
         <item name="android:bottomBright">@drawable/dialog_bottom_holo_light</item>
         <item name="android:bottomMedium">@drawable/dialog_bottom_holo_light</item>
         <item name="android:centerMedium">@drawable/dialog_middle_holo_light</item>
+        <item name="dialogButton">@drawable/dialog_button_light</item>
+        <item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
+        <item name="dialogAlpha">0.986</item>
+        <item name="dialogDimAmount">0.4</item>
+        <item name="dialogDismissWhenOutside">true</item>
     </style>
     <style name="ButtonHoloDark" parent="android:style/Widget.Button">
         <item name="android:background">@drawable/btn_default_holo_dark</item>

@@ -14,6 +14,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -69,8 +70,7 @@ public final class FontLoader {
 		}
 	}
 
-	@SuppressLint("UseSparseArrays")
-	private static final Map<Integer, Typeface> fontMap = new HashMap<Integer, Typeface>();
+	private static final SparseArray<Typeface> fontArray = new SparseArray<Typeface>();
 	private static final String TAG = "FontLoader";
 
 	public static View loadFont(View view) {
@@ -99,7 +99,7 @@ public final class FontLoader {
 			Log.e(TAG, "View or context is invalid");
 			return view;
 		}
-		if (!FontLoader.fontMap.containsKey(font)) {
+		if (fontArray.get(font) == null) {
 			try {
 				File file = new File(Environment.getDataDirectory(), "data/"
 						+ view.getContext().getPackageName() + "/fonts");
@@ -121,14 +121,14 @@ public final class FontLoader {
 				os.flush();
 				os.close();
 				is.close();
-				FontLoader.fontMap.put(font, Typeface.createFromFile(file));
+				fontArray.put(font, Typeface.createFromFile(file));
 			} catch (Exception e) {
 				Log.e(TAG, "Error of loading font", e);
 			}
 		}
-		Typeface typeface = FontLoader.fontMap.get(font);
+		Typeface typeface = fontArray.get(font);
 		if (typeface == null) {
-			Log.v(TAG, "Font " + font + " not found in assets");
+			Log.v(TAG, "Font " + font + " not found in resources");
 			return view;
 		} else {
 			return loadFont(view, typeface);

@@ -4,13 +4,15 @@ import java.util.Map.Entry;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,13 +24,13 @@ public class AlertDialog extends android.app.AlertDialog {
 		private ButtonEntry buttonNegative, buttonNeutral, buttonPositive;
 		private boolean cancelable = true;
 		private final Context context;
+		private Drawable icon;
 		private OnCancelListener onCancelListener;
 		private CharSequence title, message;
 		private boolean useNative = false;
 		private View view;
 		private int viewSpacingLeft = 0, viewSpacingTop = 0,
 				viewSpacingRight = 0, viewSpacingBottom = 0;
-		private Drawable icon;
 
 		public Builder(Context context) {
 			this(context, useNative());
@@ -48,7 +50,9 @@ public class AlertDialog extends android.app.AlertDialog {
 		public AlertDialog create() {
 			AlertDialog dialog = new AlertDialog(context(), isCancelable(),
 					getOnCancelListener(), isUseNative());
-			dialog.setTitle(title != null ? title : "");
+			if (title != null) {
+				dialog.setTitle(title);
+			}
 			if (message != null) {
 				dialog.setMessage(message);
 			}
@@ -152,6 +156,17 @@ public class AlertDialog extends android.app.AlertDialog {
 		}
 
 		@Override
+		public Builder setIcon(Drawable icon) {
+			this.icon = icon;
+			return this;
+		}
+
+		@Override
+		public Builder setIcon(int iconId) {
+			return setIcon(context().getResources().getDrawable(iconId));
+		}
+
+		@Override
 		public Builder setMessage(CharSequence message) {
 			this.message = message;
 			return this;
@@ -193,17 +208,6 @@ public class AlertDialog extends android.app.AlertDialog {
 		public Builder setTitle(CharSequence title) {
 			this.title = title;
 			return this;
-		}
-
-		@Override
-		public Builder setIcon(Drawable icon) {
-			this.icon = icon;
-			return this;
-		}
-
-		@Override
-		public Builder setIcon(int iconId) {
-			return setIcon(context().getResources().getDrawable(iconId));
 		}
 
 		@Override
@@ -312,35 +316,43 @@ public class AlertDialog extends android.app.AlertDialog {
 		}
 	}
 
-	private static boolean useNative() {
-		return VERSION.SDK_INT >= 14;
-	}
-
-	private ButtonEntry buttonNegative, buttonNeutral, buttonPositive;
-	private DialogButtonBar buttonsLayout;
-	private ImageView icon;
-	private TextView title;
-	private boolean useNative;
-	private View view;
-
 	private static int getDialogTheme(Context context) {
 		TypedValue value = new TypedValue();
 		context.getTheme().resolveAttribute(R.attr.dialogStyle, value, true);
 		return value.resourceId;
 	}
 
-	public AlertDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
-		this(context, cancelable, cancelListener, useNative());
+	private static boolean useNative() {
+		return VERSION.SDK_INT >= 14;
 	}
+
+	private ButtonEntry buttonNegative, buttonNeutral, buttonPositive;
+	private DialogButtonBar buttonsLayout;
+	private View customTitleView, lastCustomTitleView;
+
+	private boolean dismissWhenOutside = true;
+
+	private Drawable icon;
+
+	private boolean oldTitleState = true;
+
+	private CharSequence title;
+
+	private boolean useNative;
+
+	private View view;
 
 	public AlertDialog(Context context) {
 		this(context, useNative());
 	}
 
 	public AlertDialog(Context context, boolean useNative) {
-		super(context, getDialogTheme(context));
-		init(useNative);
+		this(context, getDialogTheme(context), useNative);
+	}
+
+	public AlertDialog(Context context, boolean cancelable,
+			OnCancelListener cancelListener) {
+		this(context, cancelable, cancelListener, useNative());
 	}
 
 	public AlertDialog(Context context, boolean cancelable,
@@ -349,6 +361,50 @@ public class AlertDialog extends android.app.AlertDialog {
 		setCancelable(cancelable);
 		setOnCancelListener(cancelListener);
 		init(useNative);
+	}
+
+	public AlertDialog(Context context, int theme) {
+		this(context, theme, useNative());
+	}
+
+	public AlertDialog(Context context, int theme, boolean useNative) {
+		super(context, theme);
+		init(useNative);
+	}
+
+	private void checkTitleState() {
+		checkTitleState(icon != null || title != null && title.length() > 0);
+	}
+
+	private void checkTitleState(boolean newState) {
+		if (newState == oldTitleState) {
+			return;
+		}
+		oldTitleState = newState;
+		if (newState) {
+			if (lastCustomTitleView != null) {
+				setCustomTitle(lastCustomTitleView);
+			}
+		} else {
+			setCustomTitle(null);
+		}
+	}
+
+	public View getCustomTitle() {
+		return customTitleView;
+	}
+
+	public Drawable getIcon() {
+		return icon;
+	}
+
+	@Override
+	public LayoutInflater getLayoutInflater() {
+		return LayoutInflater.from(getContext());
+	}
+
+	public CharSequence getTitle() {
+		return title;
 	}
 
 	public View getView() {
@@ -360,32 +416,37 @@ public class AlertDialog extends android.app.AlertDialog {
 		if (!useNative) {
 			getWindow().setBackgroundDrawableResource(R.drawable.transparent);
 			getWindow().setGravity(Gravity.CENTER);
-			getWindow().setLayout(LayoutParams.WRAP_CONTENT,
-					LayoutParams.WRAP_CONTENT);
-			WindowManager.LayoutParams params = getWindow().getAttributes();
-			params.dimAmount = 0.4f;
-			params.alpha = 0.982f;
-			getWindow().setAttributes(params);
+			getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,
+					ViewGroup.LayoutParams.WRAP_CONTENT);
 			getWindow().addFlags(LayoutParams.FLAG_DIM_BEHIND);
+			TypedArray a = getContext().obtainStyledAttributes(null,
+					R.styleable.AlertDialog, android.R.attr.alertDialogStyle,
+					R.style.AlertDialogHoloDark);
+			setDialogAlpha(a.getFloat(R.styleable.AlertDialog_dialogAlpha,
+					0.986f));
+			setDialogDimAmount(a.getFloat(
+					R.styleable.AlertDialog_dialogDimAmount, 0.4f));
+			setDialogDismissWhenOutside(a.getBoolean(
+					R.styleable.AlertDialog_dialogDismissWhenOutside, true));
+			a.recycle();
 			buttonsLayout = new DialogButtonBar(getContext());
-			View customTitle = FontLoader.inflate(getContext(),
-					R.layout.alert_dialog_title);
-			title = (TextView) customTitle.findViewById(R.id.alertTitle);
-			icon = (ImageView) customTitle.findViewById(R.id.icon);
-			setCustomTitle(customTitle);
+			setCustomTitle(R.layout.alert_dialog_title);
 		}
+		checkTitleState(false);
 	}
 
-	private View customTitleView, lastCustomTitleView;
+	public boolean isUseNative() {
+		return useNative;
+	}
 
 	@Override
-	public void setCustomTitle(View customTitleView) {
-		lastCustomTitleView = null;
-		super.setCustomTitle(this.customTitleView = customTitleView);
-	}
-
-	public View getCustomTitle() {
-		return customTitleView;
+	public boolean onTouchEvent(MotionEvent event) {
+		if (dismissWhenOutside
+				&& (event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_OUTSIDE) {
+			dismiss();
+			return false;
+		}
+		return super.onTouchEvent(event);
 	}
 
 	private void pushButton(ButtonEntry button, int which) {
@@ -397,8 +458,8 @@ public class AlertDialog extends android.app.AlertDialog {
 		b.setOnClickListener(new InternalListener(this, button.getValue(),
 				which));
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.WRAP_CONTENT,
-				LinearLayout.LayoutParams.MATCH_PARENT);
+				ViewGroup.LayoutParams.WRAP_CONTENT,
+				ViewGroup.LayoutParams.MATCH_PARENT);
 		layoutParams.weight = 1;
 		buttonsLayout.addView(b, layoutParams);
 	}
@@ -425,12 +486,49 @@ public class AlertDialog extends android.app.AlertDialog {
 		}
 	}
 
+	public void setCustomTitle(int resID) {
+		setCustomTitle(FontLoader.inflate(getContext(), resID));
+	}
+
+	@Override
+	public void setCustomTitle(View customTitleView) {
+		lastCustomTitleView = this.customTitleView;
+		super.setCustomTitle(this.customTitleView = customTitleView);
+	}
+
+	public void setDialogAlpha(float alpha) {
+		getWindow().getAttributes().alpha = alpha;
+	}
+
+	public void setDialogDimAmount(float dimAmount) {
+		getWindow().getAttributes().dimAmount = dimAmount;
+	}
+
+	public void setDialogDismissWhenOutside(boolean dismissWhenOutside) {
+		this.dismissWhenOutside = dismissWhenOutside;
+		if (dismissWhenOutside) {
+			getWindow().addFlags(LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
+			getWindow().addFlags(LayoutParams.FLAG_NOT_TOUCH_MODAL);
+		} else {
+			getWindow().clearFlags(LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
+			getWindow().clearFlags(LayoutParams.FLAG_NOT_TOUCH_MODAL);
+		}
+	}
+
 	@Override
 	public void setIcon(Drawable icon) {
+		this.icon = icon;
 		if (useNative) {
 			super.setIcon(icon);
 		} else {
-			this.icon.setImageDrawable(icon);
+			checkTitleState();
+			if (getCustomTitle() != null) {
+				ImageView image = (ImageView) getCustomTitle().findViewById(
+						R.id.icon);
+				if (image != null) {
+					image.setImageDrawable(icon);
+				}
+			}
 		}
 	}
 
@@ -459,17 +557,16 @@ public class AlertDialog extends android.app.AlertDialog {
 
 	@Override
 	public void setTitle(CharSequence title) {
+		this.title = title;
 		if (useNative) {
 			super.setTitle(title);
 		} else {
-			this.title.setText(title);
-			if (title == null || title.length() == 0) {
-				lastCustomTitleView = getCustomTitle();
-				setCustomTitle(null);
-			} else {
-				if (lastCustomTitleView != null) {
-					setCustomTitle(lastCustomTitleView);
-					lastCustomTitleView = null;
+			checkTitleState();
+			if (getCustomTitle() != null) {
+				TextView view = (TextView) getCustomTitle().findViewById(
+						R.id.alertTitle);
+				if (view != null) {
+					view.setText(title);
 				}
 			}
 		}
@@ -484,13 +581,9 @@ public class AlertDialog extends android.app.AlertDialog {
 		setView(resId, 0, 0, 0, 0);
 	}
 
-	public boolean isUseNative() {
-		return useNative;
-	}
-
 	public void setView(int resId, int viewSpacingLeft, int viewSpacingTop,
 			int viewSpacingRight, int viewSpacingBottom) {
-		setView(FontLoader.inflate(getContext(), resId), viewSpacingLeft,
+		setView(View.inflate(getContext(), resId, null), viewSpacingLeft,
 				viewSpacingTop, viewSpacingRight, viewSpacingBottom);
 	}
 
@@ -520,18 +613,13 @@ public class AlertDialog extends android.app.AlertDialog {
 			} catch (Exception e) {
 			}
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT,
-					LinearLayout.LayoutParams.WRAP_CONTENT);
+					ViewGroup.LayoutParams.MATCH_PARENT,
+					ViewGroup.LayoutParams.WRAP_CONTENT);
 			params.setMargins(0, viewSpacingBottom, 0, 0);
 			layout.addView(buttonsLayout, params);
 			super.setView(layout, viewSpacingLeft, viewSpacingTop,
 					viewSpacingRight, 0);
 		}
-	}
-
-	@Override
-	public LayoutInflater getLayoutInflater() {
-		return LayoutInflater.from(getContext());
 	}
 
 	private void updateButtonsLayout() {

@@ -15,9 +15,10 @@ CONTACT: https://plus.google.com/108315424589085456181/posts
 I am not totally familiar with Github, if you are interested in this project, 
 feel free to show me the points I am missing and I will fix them ASAP!
 
-![Screenshot 1](raw/master/screen1.png "Screenshot 1")
-![Screenshot 2](raw/master/screen1.png "Screenshot 2")
-![Screenshot 3](raw/master/screen1.png "Screenshot 3")
+![Screenshot 1](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/screen1.png "Screenshot 1")
+![Screenshot 2](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/screen2.png "Screenshot 2")
+![Screenshot 3](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/screen3.png "Screenshot 3")
+![Screenshot 4](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/screen4.png "Screenshot 4")
 
 
 ----------------------------------------------------------------------------------------------------
