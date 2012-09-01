@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2007 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.WazaBe.HoloEverywhere;
 
 import java.text.NumberFormat;
@@ -27,32 +11,10 @@ import android.os.Message;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-/**
- * <p>
- * A dialog showing a progress indicator and an optional text message or view.
- * Only a text message or a view can be used at the same time.
- * </p>
- * <p>
- * The dialog can be made cancelable on back key press.
- * </p>
- * <p>
- * The progress range is 0..10000.
- * </p>
- */
 public class ProgressDialog extends AlertDialog {
-
-	/**
-	 * Creates a ProgressDialog with a horizontal progress bar.
-	 */
 	public static final int STYLE_HORIZONTAL = 1;
-
-	/**
-	 * Creates a ProgressDialog with a circular, spinning progress bar. This is
-	 * the default.
-	 */
 	public static final int STYLE_SPINNER = 0;
 
 	public static ProgressDialog show(Context context, CharSequence title,
@@ -86,7 +48,6 @@ public class ProgressDialog extends AlertDialog {
 	private boolean mHasStarted;
 	private int mIncrementBy;
 	private int mIncrementSecondaryBy;
-
 	private boolean mIndeterminate;
 	private Drawable mIndeterminateDrawable;
 	private int mMax;
@@ -96,16 +57,11 @@ public class ProgressDialog extends AlertDialog {
 	private Drawable mProgressDrawable;
 	private TextView mProgressNumber;
 	private String mProgressNumberFormat;
-
 	private TextView mProgressPercent;
 	private NumberFormat mProgressPercentFormat;
-
 	private int mProgressStyle = STYLE_SPINNER;
-
 	private int mProgressVal;
-
 	private int mSecondaryProgressVal;
-
 	private Handler mViewUpdateHandler;
 
 	public ProgressDialog(Context context) {
@@ -185,17 +141,10 @@ public class ProgressDialog extends AlertDialog {
 		TypedArray a = getContext().obtainStyledAttributes(null,
 				R.styleable.AlertDialog, android.R.attr.alertDialogStyle, 0);
 		if (mProgressStyle == STYLE_HORIZONTAL) {
-
-			/*
-			 * Use a separate handler to update the text views as they must be
-			 * updated on the same thread that created them.
-			 */
 			mViewUpdateHandler = new Handler() {
 				@Override
 				public void handleMessage(Message msg) {
 					super.handleMessage(msg);
-
-					/* Update the number and percent */
 					int progress = mProgress.getProgress();
 					int max = mProgress.getMax();
 					if (mProgressNumberFormat != null) {
@@ -339,31 +288,11 @@ public class ProgressDialog extends AlertDialog {
 		}
 	}
 
-	/**
-	 * Change the format of the small text showing current and maximum units of
-	 * progress. The default is "%1d/%2d". Should not be called during the
-	 * number is progressing.
-	 * 
-	 * @param format
-	 *            A string passed to {@link String#format String.format()}; use
-	 *            "%1d" for the current number and "%2d" for the maximum. If
-	 *            null, nothing will be shown.
-	 */
 	public void setProgressNumberFormat(String format) {
 		mProgressNumberFormat = format;
 		onProgressChanged();
 	}
 
-	/**
-	 * Change the format of the small text showing the percentage of progress.
-	 * The default is {@link NumberFormat#getPercentInstance()
-	 * NumberFormat.getPercentageInstnace().} Should not be called during the
-	 * number is progressing.
-	 * 
-	 * @param format
-	 *            An instance of a {@link NumberFormat} to generate the
-	 *            percentage text. If null, nothing will be shown.
-	 */
 	public void setProgressPercentFormat(NumberFormat format) {
 		mProgressPercentFormat = format;
 		onProgressChanged();

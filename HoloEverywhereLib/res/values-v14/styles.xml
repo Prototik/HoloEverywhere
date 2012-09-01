@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="Theme.HoloEverywhereDark" parent="android:Theme.Holo">
-        <item name="android:windowNoTitle">false</item>
-    </style>
-
-    <style name="Theme.HoloEverywhereLight" parent="android:Theme.Holo.Light">
-        <item name="android:windowNoTitle">false</item>
-    </style>
-
-    <style name="Theme.HoloEverywhereDark.Sherlock" parent="Theme.Sherlock"></style>
-
-    <style name="Theme.HoloEverywhereLight.Sherlock" parent="Theme.Sherlock.Light"></style>
-
-    <style name="Theme.HoloEverywhereLight.DarkActionBar.Sherlock" parent="Theme.Sherlock.Light.DarkActionBar" />
-
-    <style name="Theme.HoloEverywhereDark.Sherlock.ForceOverflow" parent="Theme.Sherlock.ForceOverflow" />
-
-    <style name="Theme.HoloEverywhereLight.Sherlock.ForceOverflow" parent="Theme.Sherlock.Light.ForceOverflow" />
-
+	<!-- Black themes -->
+	<style name="Holo.Theme" parent="@android:style/Theme.Holo" />
+	<style name="Holo.Theme.Default.Sherlock" parent="@android:style/Theme.Holo" />
+	<style name="Holo.Theme.Sherlock" parent="@android:style/Theme.Holo" />
+	<style name="Holo.Theme.Sherlock.ForceOverflow" parent="@android:style/Theme.Holo" />
+	<!-- Light themes -->
+	<style name="Holo.Theme.Light" parent="@android:style/Theme.Holo.Light" />
+	<style name="Holo.Theme.Sherlock.Light" parent="@android:style/Theme.Holo.Light" />
+	<style name="Holo.Theme.Sherlock.Light.ForceOverflow" parent="@android:style/Theme.Holo.Light" />
+	<style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="@android:style/Theme.Holo.Light.DarkActionBar" />
+	<style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow" parent="@android:style/Theme.Holo.Light.DarkActionBar" />
 </resources>

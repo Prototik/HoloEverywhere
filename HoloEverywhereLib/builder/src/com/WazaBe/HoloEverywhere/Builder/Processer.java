@@ -51,12 +51,14 @@ public class Processer {
 	private String data;
 
 	private synchronized void rebuild() {
-		data = xml;
+		data = new String(xml);
 		data = DEFINE.matcher(data).replaceAll("");
-		Matcher matcher = INCLUDE.matcher(data);
-		while (matcher.find()) {
-			String replacement = blockMap.get(matcher.group(1));
-			data = data.replace(matcher.group(), replacement);
+		for (int i = 0; i < 3; i++) {
+			Matcher matcher = INCLUDE.matcher(data);
+			while (matcher.find()) {
+				String replacement = blockMap.get(matcher.group(1));
+				data = data.replace(matcher.group(), replacement);
+			}
 		}
 		data = data.replaceAll("\\s{1,}", " ").replace("> <", "><");
 		data = XMLFormatter.format(data);

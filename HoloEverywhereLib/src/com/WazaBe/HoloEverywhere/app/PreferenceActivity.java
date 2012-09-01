@@ -1,9 +1,9 @@
 package com.WazaBe.HoloEverywhere.app;
 
-import com.WazaBe.HoloEverywhere.FontLoader;
-
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+
+import com.WazaBe.HoloEverywhere.FontLoader;
 
 public class PreferenceActivity extends android.preference.PreferenceActivity {
 	@Override
