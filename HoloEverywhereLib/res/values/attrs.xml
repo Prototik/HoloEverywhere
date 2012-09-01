@@ -5,6 +5,8 @@
 	<attr name="dialogStyle" format="reference" />
 	<attr name="dialogAlpha" format="reference|float" />
 	<attr name="dialogDimAmount" format="reference|float" />
+	<!-- 0 - "No". Else "Yes" -->
+	<attr name="dialogDismissWhenOutside" format="reference|float" />
 	<declare-styleable name="DialogButtonBar.LayoutParams">
 		<attr name="android:hint" />
 	</declare-styleable>
