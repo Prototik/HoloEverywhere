@@ -81,10 +81,13 @@ public class DialogButtonBar extends LinearLayout implements
 		init();
 	}
 
-	public DialogButtonBar(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		init();
-	}
+	/*
+	* The Constructor causes a crash on Android 1.6, thanks to ripdajacker for the fix
+	*	public DialogButtonBar(Context context, AttributeSet attrs, int defStyle) {
+	*		super(context, attrs, defStyle);
+	*		init();
+	*	}
+	*/
 
 	@Override
 	public void addView(View child, int index, ViewGroup.LayoutParams params) {
