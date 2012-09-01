@@ -4,6 +4,7 @@ import java.util.Map.Entry;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.util.TypedValue;
@@ -11,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -401,14 +403,6 @@ public class AlertDialog extends android.app.AlertDialog {
 		return LayoutInflater.from(getContext());
 	}
 
-	private float getThemeFloatValue(int attr, float defValue) {
-		TypedValue value = new TypedValue();
-		getContext().getTheme().resolveAttribute(attr, value, true);
-		float f = value.getFloat();
-		value = null;
-		return f == 0f ? defValue : f;
-	}
-
 	public CharSequence getTitle() {
 		return title;
 	}
@@ -422,14 +416,19 @@ public class AlertDialog extends android.app.AlertDialog {
 		if (!useNative) {
 			getWindow().setBackgroundDrawableResource(R.drawable.transparent);
 			getWindow().setGravity(Gravity.CENTER);
-			getWindow().setLayout(
-					android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-					android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+			getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,
+					ViewGroup.LayoutParams.WRAP_CONTENT);
 			getWindow().addFlags(LayoutParams.FLAG_DIM_BEHIND);
-			setDialogAlpha(getThemeFloatValue(R.attr.dialogAlpha, 0.986f));
-			setDialogDimAmount(getThemeFloatValue(R.attr.dialogDimAmount, 0.4f));
-			setDialogDismissWhenOutside(getThemeFloatValue(
-					R.attr.dialogDismissWhenOutside, 1) != 0f);
+			TypedArray a = getContext().obtainStyledAttributes(null,
+					R.styleable.AlertDialog, android.R.attr.alertDialogStyle,
+					R.style.AlertDialogHoloDark);
+			setDialogAlpha(a.getFloat(R.styleable.AlertDialog_dialogAlpha,
+					0.986f));
+			setDialogDimAmount(a.getFloat(
+					R.styleable.AlertDialog_dialogDimAmount, 0.4f));
+			setDialogDismissWhenOutside(a.getBoolean(
+					R.styleable.AlertDialog_dialogDismissWhenOutside, true));
+			a.recycle();
 			buttonsLayout = new DialogButtonBar(getContext());
 			setCustomTitle(R.layout.alert_dialog_title);
 		}
@@ -459,8 +458,8 @@ public class AlertDialog extends android.app.AlertDialog {
 		b.setOnClickListener(new InternalListener(this, button.getValue(),
 				which));
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+				ViewGroup.LayoutParams.WRAP_CONTENT,
+				ViewGroup.LayoutParams.MATCH_PARENT);
 		layoutParams.weight = 1;
 		buttonsLayout.addView(b, layoutParams);
 	}
@@ -614,8 +613,8 @@ public class AlertDialog extends android.app.AlertDialog {
 			} catch (Exception e) {
 			}
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-					android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-					android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+					ViewGroup.LayoutParams.MATCH_PARENT,
+					ViewGroup.LayoutParams.WRAP_CONTENT);
 			params.setMargins(0, viewSpacingBottom, 0, 0);
 			layout.addView(buttonsLayout, params);
 			super.setView(layout, viewSpacingLeft, viewSpacingTop,

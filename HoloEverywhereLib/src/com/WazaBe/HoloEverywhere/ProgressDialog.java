@@ -24,8 +24,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.style.StyleSpan;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -45,53 +45,15 @@ import android.widget.TextView;
 public class ProgressDialog extends AlertDialog {
 
 	/**
-	 * Creates a ProgressDialog with a circular, spinning progress bar. This is
-	 * the default.
-	 */
-	public static final int STYLE_SPINNER = 0;
-
-	/**
 	 * Creates a ProgressDialog with a horizontal progress bar.
 	 */
 	public static final int STYLE_HORIZONTAL = 1;
 
-	private ProgressBar mProgress;
-	private TextView mMessageView;
-
-	private int mProgressStyle = STYLE_SPINNER;
-	private TextView mProgressNumber;
-	private String mProgressNumberFormat;
-	private TextView mProgressPercent;
-	private NumberFormat mProgressPercentFormat;
-
-	private int mMax;
-	private int mProgressVal;
-	private int mSecondaryProgressVal;
-	private int mIncrementBy;
-	private int mIncrementSecondaryBy;
-	private Drawable mProgressDrawable;
-	private Drawable mIndeterminateDrawable;
-	private CharSequence mMessage;
-	private boolean mIndeterminate;
-
-	private boolean mHasStarted;
-	private Handler mViewUpdateHandler;
-
-	public ProgressDialog(Context context) {
-		super(context);
-		initFormats();
-	}
-
-	public ProgressDialog(Context context, int theme) {
-		super(context, theme);
-		initFormats();
-	}
-
-	private void initFormats() {
-		mProgressNumberFormat = "%1d/%2d";
-		mProgressPercentFormat = NumberFormat.getPercentInstance();
-		mProgressPercentFormat.setMaximumFractionDigits(0);
-	}
+	/**
+	 * Creates a ProgressDialog with a circular, spinning progress bar. This is
+	 * the default.
+	 */
+	public static final int STYLE_SPINNER = 0;
 
 	public static ProgressDialog show(Context context, CharSequence title,
 			CharSequence message) {
@@ -119,6 +81,103 @@ public class ProgressDialog extends AlertDialog {
 		dialog.setOnCancelListener(cancelListener);
 		dialog.show();
 		return dialog;
+	}
+
+	private boolean mHasStarted;
+	private int mIncrementBy;
+	private int mIncrementSecondaryBy;
+
+	private boolean mIndeterminate;
+	private Drawable mIndeterminateDrawable;
+	private int mMax;
+	private CharSequence mMessage;
+	private TextView mMessageView;
+	private ProgressBar mProgress;
+	private Drawable mProgressDrawable;
+	private TextView mProgressNumber;
+	private String mProgressNumberFormat;
+
+	private TextView mProgressPercent;
+	private NumberFormat mProgressPercentFormat;
+
+	private int mProgressStyle = STYLE_SPINNER;
+
+	private int mProgressVal;
+
+	private int mSecondaryProgressVal;
+
+	private Handler mViewUpdateHandler;
+
+	public ProgressDialog(Context context) {
+		super(context);
+		initFormats();
+	}
+
+	public ProgressDialog(Context context, boolean useNative) {
+		super(context, useNative);
+		initFormats();
+	}
+
+	public ProgressDialog(Context context, int theme) {
+		super(context, theme);
+		initFormats();
+	}
+
+	public ProgressDialog(Context context, int theme, boolean useNative) {
+		super(context, theme, useNative);
+		initFormats();
+	}
+
+	public int getMax() {
+		if (mProgress != null) {
+			return mProgress.getMax();
+		}
+		return mMax;
+	}
+
+	public int getProgress() {
+		if (mProgress != null) {
+			return mProgress.getProgress();
+		}
+		return mProgressVal;
+	}
+
+	public int getSecondaryProgress() {
+		if (mProgress != null) {
+			return mProgress.getSecondaryProgress();
+		}
+		return mSecondaryProgressVal;
+	}
+
+	public void incrementProgressBy(int diff) {
+		if (mProgress != null) {
+			mProgress.incrementProgressBy(diff);
+			onProgressChanged();
+		} else {
+			mIncrementBy += diff;
+		}
+	}
+
+	public void incrementSecondaryProgressBy(int diff) {
+		if (mProgress != null) {
+			mProgress.incrementSecondaryProgressBy(diff);
+			onProgressChanged();
+		} else {
+			mIncrementSecondaryBy += diff;
+		}
+	}
+
+	private void initFormats() {
+		mProgressNumberFormat = "%1d/%2d";
+		mProgressPercentFormat = NumberFormat.getPercentInstance();
+		mProgressPercentFormat.setMaximumFractionDigits(0);
+	}
+
+	public boolean isIndeterminate() {
+		if (mProgress != null) {
+			return mProgress.isIndeterminate();
+		}
+		return mIndeterminate;
 	}
 
 	@Override
@@ -152,7 +211,7 @@ public class ProgressDialog extends AlertDialog {
 								mProgressPercentFormat.format(percent));
 						tmp.setSpan(new StyleSpan(
 								android.graphics.Typeface.BOLD), 0, tmp
-								.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+								.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 						mProgressPercent.setText(tmp);
 					} else {
 						mProgressPercent.setText("");
@@ -204,6 +263,15 @@ public class ProgressDialog extends AlertDialog {
 		super.onCreate(savedInstanceState);
 	}
 
+	private void onProgressChanged() {
+		if (mProgressStyle == STYLE_HORIZONTAL) {
+			if (mViewUpdateHandler != null
+					&& !mViewUpdateHandler.hasMessages(0)) {
+				mViewUpdateHandler.sendEmptyMessage(0);
+			}
+		}
+	}
+
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -216,77 +284,11 @@ public class ProgressDialog extends AlertDialog {
 		mHasStarted = false;
 	}
 
-	public void setProgress(int value) {
-		if (mHasStarted) {
-			mProgress.setProgress(value);
-			onProgressChanged();
+	public void setIndeterminate(boolean indeterminate) {
+		if (mProgress != null) {
+			mProgress.setIndeterminate(indeterminate);
 		} else {
-			mProgressVal = value;
-		}
-	}
-
-	public void setSecondaryProgress(int secondaryProgress) {
-		if (mProgress != null) {
-			mProgress.setSecondaryProgress(secondaryProgress);
-			onProgressChanged();
-		} else {
-			mSecondaryProgressVal = secondaryProgress;
-		}
-	}
-
-	public int getProgress() {
-		if (mProgress != null) {
-			return mProgress.getProgress();
-		}
-		return mProgressVal;
-	}
-
-	public int getSecondaryProgress() {
-		if (mProgress != null) {
-			return mProgress.getSecondaryProgress();
-		}
-		return mSecondaryProgressVal;
-	}
-
-	public int getMax() {
-		if (mProgress != null) {
-			return mProgress.getMax();
-		}
-		return mMax;
-	}
-
-	public void setMax(int max) {
-		if (mProgress != null) {
-			mProgress.setMax(max);
-			onProgressChanged();
-		} else {
-			mMax = max;
-		}
-	}
-
-	public void incrementProgressBy(int diff) {
-		if (mProgress != null) {
-			mProgress.incrementProgressBy(diff);
-			onProgressChanged();
-		} else {
-			mIncrementBy += diff;
-		}
-	}
-
-	public void incrementSecondaryProgressBy(int diff) {
-		if (mProgress != null) {
-			mProgress.incrementSecondaryProgressBy(diff);
-			onProgressChanged();
-		} else {
-			mIncrementSecondaryBy += diff;
-		}
-	}
-
-	public void setProgressDrawable(Drawable d) {
-		if (mProgress != null) {
-			mProgress.setProgressDrawable(d);
-		} else {
-			mProgressDrawable = d;
+			mIndeterminate = indeterminate;
 		}
 	}
 
@@ -298,19 +300,13 @@ public class ProgressDialog extends AlertDialog {
 		}
 	}
 
-	public void setIndeterminate(boolean indeterminate) {
+	public void setMax(int max) {
 		if (mProgress != null) {
-			mProgress.setIndeterminate(indeterminate);
+			mProgress.setMax(max);
+			onProgressChanged();
 		} else {
-			mIndeterminate = indeterminate;
+			mMax = max;
 		}
-	}
-
-	public boolean isIndeterminate() {
-		if (mProgress != null) {
-			return mProgress.isIndeterminate();
-		}
-		return mIndeterminate;
 	}
 
 	@Override
@@ -326,8 +322,21 @@ public class ProgressDialog extends AlertDialog {
 		}
 	}
 
-	public void setProgressStyle(int style) {
-		mProgressStyle = style;
+	public void setProgress(int value) {
+		if (mHasStarted) {
+			mProgress.setProgress(value);
+			onProgressChanged();
+		} else {
+			mProgressVal = value;
+		}
+	}
+
+	public void setProgressDrawable(Drawable d) {
+		if (mProgress != null) {
+			mProgress.setProgressDrawable(d);
+		} else {
+			mProgressDrawable = d;
+		}
 	}
 
 	/**
@@ -360,12 +369,16 @@ public class ProgressDialog extends AlertDialog {
 		onProgressChanged();
 	}
 
-	private void onProgressChanged() {
-		if (mProgressStyle == STYLE_HORIZONTAL) {
-			if (mViewUpdateHandler != null
-					&& !mViewUpdateHandler.hasMessages(0)) {
-				mViewUpdateHandler.sendEmptyMessage(0);
-			}
+	public void setProgressStyle(int style) {
+		mProgressStyle = style;
+	}
+
+	public void setSecondaryProgress(int secondaryProgress) {
+		if (mProgress != null) {
+			mProgress.setSecondaryProgress(secondaryProgress);
+			onProgressChanged();
+		} else {
+			mSecondaryProgressVal = secondaryProgress;
 		}
 	}
 }
