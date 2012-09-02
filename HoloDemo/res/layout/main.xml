@@ -131,7 +131,7 @@
 			</LinearLayout>
 		</LinearLayout>
 	</ScrollView>
-	<com.WazaBe.HoloEverywhere.DialogButtonBar
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content" >
 		<Button
@@ -152,5 +152,5 @@
 			android:layout_weight="1"
 			android:onClick="setLightTheme"
 			android:text="Holo Light" />
-	</com.WazaBe.HoloEverywhere.DialogButtonBar>
+	</LinearLayout>
 </LinearLayout>
