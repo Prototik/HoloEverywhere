@@ -5,7 +5,7 @@
 	android:baselineAligned="false"
 	android:orientation="horizontal"
 	android:padding="16dip" >
-	<ProgressBar
+	<com.WazaBe.HoloEverywhere.ProgressBar
 		android:id="@+id/progress"
 		style="?android:attr/progressBarStyle"
 		android:layout_width="wrap_content"
