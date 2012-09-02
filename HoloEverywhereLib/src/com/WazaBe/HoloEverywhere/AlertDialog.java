@@ -421,7 +421,7 @@ public class AlertDialog extends android.app.AlertDialog {
 			getWindow().addFlags(LayoutParams.FLAG_DIM_BEHIND);
 			TypedArray a = getContext().obtainStyledAttributes(null,
 					R.styleable.AlertDialog, android.R.attr.alertDialogStyle,
-					R.style.AlertDialogHoloDark);
+					R.style.Holo_AlertDialog);
 			setDialogAlpha(a.getFloat(R.styleable.AlertDialog_dialogAlpha,
 					0.986f));
 			setDialogDimAmount(a.getFloat(

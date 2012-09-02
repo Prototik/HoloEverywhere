@@ -10,14 +10,6 @@ import android.widget.TextView;
 public class HoloToast extends Toast {
 	@Deprecated
 	/*
-	 * Use com.WazaBe.HoloEverywhere.Toast
-	 */
-	public HoloToast(Context context) {
-		super(context);
-	}
-
-	@Deprecated
-	/*
 	 * Use com.WazaBe.HoloEverywhere.Toast.makeText(Context, CharSequence, int)
 	 */
 	public static HoloToast makeText(Context context, CharSequence s,
@@ -38,6 +30,14 @@ public class HoloToast extends Toast {
 	public static HoloToast makeText(Context context, int resId, int duration) {
 		return HoloToast.makeText(context,
 				context.getResources().getString(resId), duration);
+	}
+
+	@Deprecated
+	/*
+	 * Use com.WazaBe.HoloEverywhere.Toast
+	 */
+	public HoloToast(Context context) {
+		super(context);
 	}
 
 }

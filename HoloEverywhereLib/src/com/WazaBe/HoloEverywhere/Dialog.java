@@ -1,10 +1,10 @@
 package com.WazaBe.HoloEverywhere;
 
-import com.WazaBe.HoloEverywhere.FontLoader.HoloFont;
-
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
+
+import com.WazaBe.HoloEverywhere.FontLoader.HoloFont;
 
 public class Dialog extends android.app.Dialog {
 

@@ -50,13 +50,13 @@ public class Utils {
 		switch (sTheme) {
 		default:
 		case THEME_CLASSIC:
-			a.setTheme(R.style.Theme_HoloEverywhereDefault_Sherlock);
+			a.setTheme(android.R.style.Theme_Black);
 			break;
 		case THEME_DARK:
-			a.setTheme(R.style.Theme_HoloEverywhereDark);
+			a.setTheme(R.style.Holo_Theme);
 			break;
 		case THEME_LIGHT:
-			a.setTheme(R.style.Theme_HoloEverywhereLight);
+			a.setTheme(R.style.Holo_Theme_Light);
 			break;
 		}
 	}
@@ -65,13 +65,13 @@ public class Utils {
 		switch (sTheme) {
 		default:
 		case THEME_CLASSIC:
-			a.setTheme(R.style.Theme_HoloEverywhereDefault_Sherlock);
+			a.setTheme(R.style.Holo_Theme_Default_Sherlock);
 			break;
 		case THEME_DARK:
-			a.setTheme(R.style.Theme_HoloEverywhereDark_Sherlock);
+			a.setTheme(R.style.Holo_Theme_Sherlock);
 			break;
 		case THEME_LIGHT:
-			a.setTheme(R.style.Theme_HoloEverywhereLight_Sherlock);
+			a.setTheme(R.style.Holo_Theme_Sherlock_Light);
 			break;
 		}
 	}

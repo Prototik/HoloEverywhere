@@ -48,7 +48,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="EditText" />
-			<ProgressBar
+			<com.WazaBe.HoloEverywhere.ProgressBar
 				style="?android:progressBarStyleHorizontal"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:progress="75" />
-			<ProgressBar
+			<com.WazaBe.HoloEverywhere.ProgressBar
 				style="?android:progressBarStyleHorizontal"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -71,16 +71,16 @@
 				android:layout_height="wrap_content"
 				android:gravity="center"
 				android:orientation="horizontal" >
-				<ProgressBar
-					style="@style/ProgressBarHolo.Large"
+				<com.WazaBe.HoloEverywhere.ProgressBar
+					style="?android:attr/progressBarStyleLarge"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content" />
-				<ProgressBar
-					style="@style/ProgressBarHolo"
+				<com.WazaBe.HoloEverywhere.ProgressBar
+					style="?android:attr/progressBarStyle"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content" />
-				<ProgressBar
-					style="@style/ProgressBarHolo.Small"
+				<com.WazaBe.HoloEverywhere.ProgressBar
+					style="?android:attr/progressBarStyleSmall"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content" />
 			</LinearLayout>
