@@ -178,10 +178,22 @@ public class AlertDialog extends android.app.AlertDialog {
 		}
 
 		@Override
+		public Builder setNegativeButton(int resId,
+				OnClickListener listener) {
+			return setNegativeButton(context().getText(resId), listener);
+		}
+
+		@Override
 		public Builder setNegativeButton(CharSequence text,
 				OnClickListener listener) {
 			buttonNegative = new ButtonEntry(text, listener);
 			return this;
+		}
+
+		@Override
+		public Builder setNeutralButton(int resId,
+				OnClickListener listener) {
+			return setNeutralButton(context().getText(resId), listener);
 		}
 
 		@Override
@@ -195,6 +207,12 @@ public class AlertDialog extends android.app.AlertDialog {
 		public Builder setOnCancelListener(OnCancelListener onCancelListener) {
 			this.onCancelListener = onCancelListener;
 			return this;
+		}
+
+		@Override
+		public Builder setPositiveButton(int resId,
+				OnClickListener listener) {
+			return setPositiveButton(context().getText(resId), listener);
 		}
 
 		@Override
