@@ -3,7 +3,7 @@
     <style name="Holo"/>
     <style name="Holo.ListView" parent="@android:style/Widget.ListView">
         <item name="android:divider">?android:attr/listDivider</item>
-        <item name="android:listSelector">?android:attr/listChoiceBackgroundIndicator</item>
+        <item name="android:listSelector">@android:drawable/list_selector_background</item>
         <item name="android:cacheColorHint">@drawable/background_cache_hint_selector_holo_dark</item>
     </style>
     <style name="Holo.ListView.Light">
