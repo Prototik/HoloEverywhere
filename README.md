@@ -5,7 +5,7 @@ Bringing Holo Theme from Android 4.0 to 1.6 and above.
 ```
 git clone git://github.com/ChristopheVersieux/HoloEverywhere.git
 cd HoloEverywhere
-git submodule init --update
+git submodule update --init
 ```
 * Import HoloEverywhere and ActionBarSherlock into Eclipse
 * Add HoloEverywhere project as library into your project (Properties/Android/Library/Add)
