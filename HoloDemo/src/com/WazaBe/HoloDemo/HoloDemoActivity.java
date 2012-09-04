@@ -33,7 +33,7 @@ public class HoloDemoActivity extends Activity {
 	public void showAlertDialog(View v) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Work in Progress").setMessage("Dialog")
-				.setIcon(R.drawable.ic_launcher);
+				.setIcon(R.drawable.icon);
 		builder.setPositiveButton("Positive", null);
 		builder.setNegativeButton("Negative", null);
 		builder.setNeutralButton("Neutral", null);
@@ -58,6 +58,10 @@ public class HoloDemoActivity extends Activity {
 
 	public void setLightTheme(View v) {
 		Utils.changeToTheme(this, Utils.THEME_LIGHT);
+	}
+
+	public void showPreferences(View v) {
+		Utils.showPreferences(this, false);
 	}
 
 }

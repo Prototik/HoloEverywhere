@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical" >
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="0px"
+		android:layout_weight="1"
+		android:orientation="horizontal" >
+		<LinearLayout
+			android:id="@+id/headers"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical" >
+			<ListView
+				android:id="@android:id/list"
+				style="?attr/preferenceFragmentStyle"
+				android:layout_width="match_parent"
+				android:layout_height="0px"
+				android:layout_weight="1"
+				android:cacheColorHint="@android:color/transparent"
+				android:drawSelectorOnTop="false"
+				android:listPreferredItemHeight="48dp"
+				android:scrollbarAlwaysDrawVerticalTrack="true"
+				android:scrollbarStyle="@integer/preference_fragment_scrollbarStyle" />
+			<FrameLayout
+				android:id="@+id/list_footer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="0" />
+		</LinearLayout>
+	</LinearLayout>
+	<RelativeLayout
+		android:id="@+id/button_bar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="0"
+		android:visibility="gone" >
+		<Button
+			android:id="@+id/back_button"
+			android:layout_width="150dip"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_margin="5dip"
+			android:text="@string/back_button_label" />
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:orientation="horizontal" >
+			<Button
+				android:id="@+id/skip_button"
+				android:layout_width="150dip"
+				android:layout_height="wrap_content"
+				android:layout_margin="5dip"
+				android:text="@string/skip_button_label"
+				android:visibility="gone" />
+			<Button
+				android:id="@+id/next_button"
+				android:layout_width="150dip"
+				android:layout_height="wrap_content"
+				android:layout_margin="5dip"
+				android:text="@string/next_button_label" />
+		</LinearLayout>
+	</RelativeLayout>
+</LinearLayout>

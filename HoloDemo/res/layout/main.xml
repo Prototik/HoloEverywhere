@@ -25,6 +25,12 @@
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:layout_weight="1"
+					android:onClick="showPreferences"
+					android:text="Preferences" />
+				<Button
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
 					android:onClick="showDialog"
 					android:text="Links" />
 			</LinearLayout>
@@ -119,7 +125,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content" >
 				<ToggleButton
-					android:layout_width="50dp"
+					android:layout_width="80dp"
 					android:layout_height="match_parent" />
 				<Spinner
 					android:id="@+id/spinner"
@@ -145,12 +151,12 @@
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
 			android:onClick="setDarkTheme"
-			android:text="Holo Dark" />
+			android:text="Dark" />
 		<Button
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
 			android:onClick="setLightTheme"
-			android:text="Holo Light" />
+			android:text="Light" />
 	</LinearLayout>
 </LinearLayout>

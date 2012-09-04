@@ -83,4 +83,10 @@ public class Utils {
 		dialog.setMessage("I can close!");
 		dialog.show();
 	}
+
+	public static void showPreferences(Activity activity, boolean abs) {
+		activity.startActivity(new Intent(activity,
+				abs ? ActionBarHoloPreferenceActivity.class
+						: HoloPreferenceActivity.class));
+	}
 }

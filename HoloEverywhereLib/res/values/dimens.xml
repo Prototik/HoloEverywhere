@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="preference_screen_header_vertical_padding">0dp</dimen>
+	<dimen name="preference_screen_header_padding_side">16dip</dimen>
+	<integer name="preference_screen_header_scrollbarStyle">0x02000000</integer> <!-- outsideOverlay -->
+	<integer name="preference_fragment_scrollbarStyle">0x02000000</integer> <!-- outsideOverlay -->
+	<dimen name="preference_item_padding_side">8dip</dimen>
+	<dimen name="preference_item_padding_inner">8dip</dimen>
+	<dimen name="preference_child_padding_side">16dip</dimen>
+	<dimen name="preference_icon_minWidth">0dp</dimen>
+	<dimen name="preference_screen_side_margin">0dp</dimen>
+	<dimen name="preference_screen_side_margin_negative">0dp</dimen>
+	<dimen name="preference_screen_top_margin">0dp</dimen>
+	<dimen name="preference_screen_bottom_margin">0dp</dimen>
+	<dimen name="preference_widget_width">48dp</dimen>
+	<dimen name="preference_fragment_padding_bottom">0dp</dimen>
+	<dimen name="preference_fragment_padding_side">16dp</dimen>
+	<integer name="preferences_left_pane_weight">4</integer>
+	<integer name="preferences_right_pane_weight">6</integer>
+	<dimen name="preference_breadcrumb_paddingLeft">0dp</dimen>
+	<dimen name="preference_breadcrumb_paddingRight">0dp</dimen>
+	<dimen name="alert_dialog_title_height">64dip</dimen>
+	<dimen name="alert_dialog_button_bar_height">48dip</dimen>
+</resources>

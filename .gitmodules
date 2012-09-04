@@ -1,3 +1,6 @@
 [submodule "contrib/ActionBarSherlock"]
 	path = contrib/ActionBarSherlock
 	url = https://github.com/JakeWharton/ActionBarSherlock.git
+[submodule "contrib/KFramework-SW"]
+	path = contrib/KFramework-SW
+	url = git://github.com/Prototik/KFramework-SW.git

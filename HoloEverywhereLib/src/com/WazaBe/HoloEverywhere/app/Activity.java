@@ -4,8 +4,10 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
+import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
+import com.WazaBe.HoloEverywhere.util.BaseSharedPreferences;
 
-public abstract class Activity extends android.app.Activity {
+public abstract class Activity extends android.support.v4.app.FragmentActivity {
 	@Override
 	public void addContentView(View view, LayoutParams params) {
 		super.addContentView(FontLoader.loadFont(view), params);
@@ -24,5 +26,9 @@ public abstract class Activity extends android.app.Activity {
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		super.setContentView(FontLoader.loadFont(view), params);
+	}
+
+	public SharedPreferences getSupportSharedPreferences(String name, int mode) {
+		return new BaseSharedPreferences(getSharedPreferences(name, mode));
 	}
 }

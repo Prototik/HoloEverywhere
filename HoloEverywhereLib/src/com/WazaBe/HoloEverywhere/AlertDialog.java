@@ -2,9 +2,11 @@ package com.WazaBe.HoloEverywhere;
 
 import java.util.Map.Entry;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.util.TypedValue;
@@ -14,21 +16,75 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager.LayoutParams;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class AlertDialog extends android.app.AlertDialog {
+	@SuppressLint("NewApi")
 	public static class Builder extends android.app.AlertDialog.Builder {
+		private static class InternalListListener implements
+				OnItemClickListener, OnItemSelectedListener {
+
+			private final Builder builder;
+			private OnClickListener listener;
+			private OnMultiChoiceClickListener multiListener;
+
+			public InternalListListener(OnClickListener listener,
+					Builder builder) {
+				this.listener = listener;
+				this.builder = builder;
+			}
+
+			public InternalListListener(
+					OnMultiChoiceClickListener multiListener, Builder builder) {
+				this.multiListener = multiListener;
+				this.builder = builder;
+			}
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view,
+					int position, long id) {
+				if (listener != null) {
+					listener.onClick(builder.getLastDialog(), position);
+				}
+			}
+
+			@Override
+			public void onItemSelected(AdapterView<?> adapterView, View view,
+					int position, long id) {
+				if (multiListener != null) {
+					multiListener
+							.onClick(builder.getLastDialog(), position,
+									((AbsListView) adapterView)
+											.isItemChecked(position));
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+
+			}
+		}
+
 		private ButtonEntry buttonNegative, buttonNeutral, buttonPositive;
 		private boolean cancelable = true;
 		private final Context context;
 		private Drawable icon;
+		private AlertDialog lastDialog;
 		private OnCancelListener onCancelListener;
 		private CharSequence title, message;
 		private boolean useNative = false;
+
 		private View view;
+
 		private int viewSpacingLeft = 0, viewSpacingTop = 0,
 				viewSpacingRight = 0, viewSpacingBottom = 0;
 
@@ -79,7 +135,15 @@ public class AlertDialog extends android.app.AlertDialog {
 						getViewSpacingTop(), getViewSpacingRight(),
 						getViewSpacingBottom());
 			}
-			return dialog;
+			return lastDialog = dialog;
+		}
+
+		public AlertDialog getLastDialog() {
+			return lastDialog;
+		}
+
+		public LayoutInflater getLayoutInflater() {
+			return LayoutInflater.from(context);
 		}
 
 		public CharSequence getMessage() {
@@ -167,6 +231,50 @@ public class AlertDialog extends android.app.AlertDialog {
 		}
 
 		@Override
+		public Builder setItems(CharSequence[] items, OnClickListener listener) {
+			return setItems(new ArrayAdapter<CharSequence>(context(),
+					android.R.layout.simple_list_item_1, items), -1, listener,
+					AbsListView.CHOICE_MODE_NONE);
+		}
+
+		@Override
+		public Builder setItems(int itemsId, OnClickListener listener) {
+			return setItems(ArrayAdapter.createFromResource(context(), itemsId,
+					android.R.layout.simple_list_item_1), -1, listener,
+					AbsListView.CHOICE_MODE_NONE);
+		}
+
+		public Builder setItems(ListAdapter adapter, boolean[] checkedItems,
+				OnMultiChoiceClickListener listener) {
+			ListView list = new ListView(context());
+			list.setAdapter(adapter);
+			if (listener != null) {
+				list.setOnItemSelectedListener(new InternalListListener(
+						listener, this));
+			}
+			for (int i = 0; i < checkedItems.length; i++) {
+				list.setItemChecked(i, checkedItems[i]);
+			}
+			list.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+			return setView(list);
+		}
+
+		public Builder setItems(ListAdapter adapter, int checkedItem,
+				OnClickListener listener, int choiceMode) {
+			ListView list = new ListView(context());
+			list.setAdapter(adapter);
+			if (listener != null) {
+				list.setOnItemClickListener(new InternalListListener(listener,
+						this));
+			}
+			if (checkedItem >= 0) {
+				list.setSelection(checkedItem);
+			}
+			list.setChoiceMode(choiceMode);
+			return setView(list);
+		}
+
+		@Override
 		public Builder setMessage(CharSequence message) {
 			this.message = message;
 			return this;
@@ -175,6 +283,32 @@ public class AlertDialog extends android.app.AlertDialog {
 		@Override
 		public Builder setMessage(int messageId) {
 			return setMessage(context().getText(messageId));
+		}
+
+		@Override
+		public Builder setMultiChoiceItems(CharSequence[] items,
+				boolean[] checkedItems, OnMultiChoiceClickListener listener) {
+			return setItems(new ArrayAdapter<CharSequence>(context(),
+					android.R.layout.simple_list_item_multiple_choice, items),
+					checkedItems, listener);
+		}
+
+		@Override
+		public Builder setMultiChoiceItems(Cursor cursor,
+				String isCheckedColumn, String labelColumn,
+				OnMultiChoiceClickListener listener) {
+			throw new RuntimeException(
+					"setMultiChoiceItems with Cursor temporary not supported");
+
+		}
+
+		@Override
+		public Builder setMultiChoiceItems(int itemsId, boolean[] checkedItems,
+				OnMultiChoiceClickListener listener) {
+			return setItems(
+					ArrayAdapter.createFromResource(context(),
+							android.R.layout.simple_list_item_multiple_choice,
+							itemsId), checkedItems, listener);
 		}
 
 		@Override
@@ -202,6 +336,37 @@ public class AlertDialog extends android.app.AlertDialog {
 				OnClickListener listener) {
 			buttonPositive = new ButtonEntry(text, listener);
 			return this;
+		}
+
+		@Override
+		public Builder setSingleChoiceItems(CharSequence[] items,
+				int checkedItem, OnClickListener listener) {
+			return setSingleChoiceItems(new ArrayAdapter<CharSequence>(
+					context(), android.R.layout.simple_list_item_single_choice,
+					items), checkedItem, listener);
+		}
+
+		@Override
+		public Builder setSingleChoiceItems(Cursor cursor, int checkedItem,
+				String labelColumn, OnClickListener listener) {
+			throw new RuntimeException(
+					"setSingleChoiceItems with Cursor temporary not supported");
+		}
+
+		@Override
+		public Builder setSingleChoiceItems(int itemsId, int checkedItem,
+				OnClickListener listener) {
+			return setSingleChoiceItems(ArrayAdapter.createFromResource(
+					context(), itemsId,
+					android.R.layout.simple_list_item_single_choice),
+					checkedItem, listener);
+		}
+
+		@Override
+		public Builder setSingleChoiceItems(ListAdapter adapter,
+				int checkedItem, OnClickListener listener) {
+			return setItems(adapter, checkedItem, listener,
+					AbsListView.CHOICE_MODE_SINGLE);
 		}
 
 		@Override

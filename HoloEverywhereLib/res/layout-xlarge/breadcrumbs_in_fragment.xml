@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginLeft="@dimen/preference_fragment_padding_side"
+	android:layout_marginRight="@dimen/preference_fragment_padding_side"
+	android:orientation="vertical" >
+	<com.WazaBe.HoloEverywhere.app.FragmentBreadCrumbs
+		android:id="@+id/title"
+		android:layout_width="match_parent"
+		android:layout_height="72dip"
+		android:gravity="center_vertical|left"
+		android:paddingBottom="8dip"
+		android:paddingTop="16dip" />
+	<ImageView
+		android:layout_width="match_parent"
+		android:layout_height="1dip"
+		android:src="#404040" />
+</LinearLayout>

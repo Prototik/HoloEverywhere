@@ -2,37 +2,54 @@ package com.WazaBe.HoloEverywhere;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
-import com.WazaBe.HoloEverywhere.FontLoader.HoloFont;
-
 public class Dialog extends android.app.Dialog {
-
-	private final Context mContext;
-	private TextView mTitle;
-
 	public Dialog(Context context) {
-		this(context, 0);
+		super(context);
 	}
 
 	public Dialog(Context context, int theme) {
 		super(context, theme);
-		mContext = context;
-		View customView = View.inflate(mContext, R.layout.alert_dialog_holo,
-				null);
-		mTitle = (TextView) customView.findViewById(R.id.alertTitle);
-		FontLoader.loadFont(customView, HoloFont.ROBOTO_REGULAR);
-		setContentView(customView);
 	}
 
 	@Override
 	public void setTitle(CharSequence text) {
-		mTitle.setText(text);
+		super.setTitle(text);
+		if (contentView != null) {
+			TextView title = (TextView) contentView
+					.findViewById(R.id.alertTitle);
+			if (title != null) {
+				title.setText(text);
+			}
+		}
 	}
 
 	@Override
-	public void setTitle(int textResId) {
-		mTitle.setText(textResId);
+	public void setContentView(int layoutResID) {
+		super.setContentView(contentView = FontLoader.inflate(getContext(),
+				layoutResID));
 	}
 
+	@Override
+	public void setContentView(View view) {
+		super.setContentView(contentView = FontLoader.loadFont(view));
+	}
+
+	private View contentView;
+
+	public View getContentView() {
+		return contentView;
+	}
+
+	@Override
+	public void setContentView(View view, LayoutParams params) {
+		super.setContentView(contentView = FontLoader.loadFont(view), params);
+	}
+
+	@Override
+	public void addContentView(View view, LayoutParams params) {
+		super.addContentView(FontLoader.loadFont(view), params);
+	}
 }

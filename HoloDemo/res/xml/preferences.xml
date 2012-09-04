@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:holo="http://schemas.android.com/apk/res-auto"
+	xmlns:android="http://schemas.android.com/apk/res/android" >
+	<Preference
+		holo:icon="@drawable/prefs_icon"
+		holo:selectable="false"
+		holo:summary="Preference Demo"
+		holo:title="HoloEverywhere" />
+	<PreferenceCategory holo:title="Base" >
+		<EditTextPreference
+			holo:dialogIcon="@drawable/icon"
+			holo:dialogTitle="Enter message:"
+			holo:summary="Tap me!"
+			holo:title="EditText" />
+		<CheckBoxPreference
+			holo:defaultValue="false"
+			holo:summaryOff="I not checked ;("
+			holo:summaryOn="I checked! :)"
+			holo:title="CheckBox" />
+		<RingtonePreference
+			holo:summary="I love music!"
+			holo:title="Ringtone" />
+		<SwitchPreference
+			holo:summaryOff="Noooooo! ;("
+			holo:summaryOn="Yes, man! :)"
+			holo:switchTextOff="OFF"
+			holo:switchTextOn="ON"
+			holo:title="Switch" />
+	</PreferenceCategory>
+	<PreferenceCategory holo:title="Hidden (in the past)" >
+		<SeekBarPreference
+			holo:max="100"
+			holo:title="SeekBar" />
+		<SeekBarDialogPreference
+			holo:max="100"
+			holo:title="SeekBarDialog" />
+	</PreferenceCategory>
+</PreferenceScreen>

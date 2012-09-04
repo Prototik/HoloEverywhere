@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical" >
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="0px"
+		android:layout_weight="1"
+		android:orientation="horizontal" >
+		<LinearLayout
+			android:id="@+id/headers"
+			android:layout_width="0px"
+			android:layout_height="match_parent"
+			android:layout_marginLeft="@dimen/preference_screen_side_margin"
+			android:layout_marginRight="@dimen/preference_screen_side_margin_negative"
+			android:layout_weight="@integer/preferences_left_pane_weight"
+			android:orientation="vertical" >
+			<ListView
+				android:id="@android:id/list"
+				android:layout_width="match_parent"
+				android:layout_height="0px"
+				android:layout_weight="1"
+				android:cacheColorHint="@android:color/transparent"
+				android:clipToPadding="false"
+				android:drawSelectorOnTop="false"
+				android:listPreferredItemHeight="48dp"
+				android:paddingBottom="@dimen/preference_screen_header_vertical_padding"
+				android:paddingLeft="@dimen/preference_screen_header_padding_side"
+				android:paddingRight="@dimen/preference_screen_header_padding_side"
+				android:paddingTop="@dimen/preference_screen_header_vertical_padding"
+				android:scrollbarAlwaysDrawVerticalTrack="true"
+				android:scrollbarStyle="@integer/preference_screen_header_scrollbarStyle" />
+			<FrameLayout
+				android:id="@+id/list_footer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="0" />
+		</LinearLayout>
+		<LinearLayout
+			android:id="@+id/prefs_frame"
+			style="?preferencePanelStyle"
+			android:layout_width="0px"
+			android:layout_height="match_parent"
+			android:layout_weight="@integer/preferences_right_pane_weight"
+			android:orientation="vertical"
+			android:visibility="gone" >
+			<include layout="@layout/breadcrumbs_in_fragment" />
+			<com.WazaBe.HoloEverywhere.preference.PreferenceFrameLayout
+				android:id="@+id/prefs"
+				android:layout_width="match_parent"
+				android:layout_height="0dip"
+				android:layout_weight="1" />
+		</LinearLayout>
+	</LinearLayout>
+	<RelativeLayout
+		android:id="@+id/button_bar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="0"
+		android:visibility="gone" >
+		<Button
+			android:id="@+id/back_button"
+			android:layout_width="150dip"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_margin="5dip"
+			android:text="@string/back_button_label" />
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:orientation="horizontal" >
+			<Button
+				android:id="@+id/skip_button"
+				android:layout_width="150dip"
+				android:layout_height="wrap_content"
+				android:layout_margin="5dip"
+				android:text="@string/skip_button_label"
+				android:visibility="gone" />
+			<Button
+				android:id="@+id/next_button"
+				android:layout_width="150dip"
+				android:layout_height="wrap_content"
+				android:layout_margin="5dip"
+				android:text="@string/next_button_label" />
+		</LinearLayout>
+	</RelativeLayout>
+</LinearLayout>

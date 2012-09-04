@@ -2,5 +2,7 @@
 <lint>
     <issue id="HandlerLeak">
         <ignore path="src/com/WazaBe/HoloEverywhere/ProgressDialog.java" />
+        <ignore path="src/com/WazaBe/HoloEverywhere/preference/PreferenceActivity.java" />
+        <ignore path="src/com/WazaBe/HoloEverywhere/preference/PreferenceFragment.java" />
     </issue>
 </lint>

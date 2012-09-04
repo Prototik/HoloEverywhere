@@ -4,6 +4,8 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
+import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
+import com.WazaBe.HoloEverywhere.util.BaseSharedPreferences;
 
 @Deprecated
 /*
@@ -28,5 +30,9 @@ public class TabActivity extends android.app.TabActivity {
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		super.setContentView(FontLoader.loadFont(view), params);
+	}
+
+	public SharedPreferences getSupportSharedPreferences(String name, int mode) {
+		return new BaseSharedPreferences(getSharedPreferences(name, mode));
 	}
 }

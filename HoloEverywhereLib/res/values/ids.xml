@@ -2,4 +2,5 @@
 <resources>
 	<item name="progress" type="id"/>
 	<item name="secondaryProgress" type="id"/>
+	<item name="edit" type="id"/>
 </resources>
