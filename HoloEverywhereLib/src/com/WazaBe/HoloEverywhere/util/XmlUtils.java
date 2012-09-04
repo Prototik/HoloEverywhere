@@ -1,9 +1,5 @@
 package com.WazaBe.HoloEverywhere.util;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlSerializer;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -15,49 +11,53 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
+
 import android.util.Xml;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class XmlUtils {
 
-	public static void skipCurrentTag(XmlPullParser parser)
-			throws XmlPullParserException, IOException {
-		int outerDepth = parser.getDepth();
+	public static final void beginDocument(XmlPullParser parser,
+			String firstElementName) throws XmlPullParserException, IOException {
 		int type;
-		while ((type = parser.next()) != XmlPullParser.END_DOCUMENT
-				&& (type != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
-		}
-	}
-
-	public static final int convertValueToList(CharSequence value,
-			String[] options, int defaultValue) {
-		if (null != value) {
-			for (int i = 0; i < options.length; i++) {
-				if (value.equals(options[i]))
-					return i;
-			}
+		while ((type = parser.next()) != XmlPullParser.START_TAG
+				&& type != XmlPullParser.END_DOCUMENT) {
+			;
 		}
 
-		return defaultValue;
+		if (type != XmlPullParser.START_TAG) {
+			throw new XmlPullParserException("No start tag found");
+		}
+
+		if (!parser.getName().equals(firstElementName)) {
+			throw new XmlPullParserException("Unexpected start tag: found "
+					+ parser.getName() + ", expected " + firstElementName);
+		}
 	}
 
 	public static final boolean convertValueToBoolean(CharSequence value,
 			boolean defaultValue) {
 		boolean result = false;
 
-		if (null == value)
+		if (null == value) {
 			return defaultValue;
+		}
 
-		if (value.equals("1") || value.equals("true") || value.equals("TRUE"))
+		if (value.equals("1") || value.equals("true") || value.equals("TRUE")) {
 			result = true;
+		}
 
 		return result;
 	}
 
 	public static final int convertValueToInt(CharSequence charSeq,
 			int defaultValue) {
-		if (null == charSeq)
+		if (null == charSeq) {
 			return defaultValue;
+		}
 
 		String nm = charSeq.toString();
 
@@ -73,8 +73,9 @@ public class XmlUtils {
 
 		if ('0' == nm.charAt(index)) {
 			// Quick check for a zero by itself
-			if (index == (len - 1))
+			if (index == len - 1) {
 				return 0;
+			}
 
 			char c = nm.charAt(index + 1);
 
@@ -93,12 +94,51 @@ public class XmlUtils {
 		return Integer.parseInt(nm.substring(index), base) * sign;
 	}
 
+	public static final int convertValueToList(CharSequence value,
+			String[] options, int defaultValue) {
+		if (null != value) {
+			for (int i = 0; i < options.length; i++) {
+				if (value.equals(options[i])) {
+					return i;
+				}
+			}
+		}
+
+		return defaultValue;
+	}
+
 	public static final int convertValueToUnsignedInt(String value,
 			int defaultValue) {
-		if (null == value)
+		if (null == value) {
 			return defaultValue;
+		}
 
 		return parseUnsignedIntAttribute(value);
+	}
+
+	public static final void nextElement(XmlPullParser parser)
+			throws XmlPullParserException, IOException {
+		int type;
+		while ((type = parser.next()) != XmlPullParser.START_TAG
+				&& type != XmlPullParser.END_DOCUMENT) {
+			;
+		}
+	}
+
+	public static boolean nextElementWithin(XmlPullParser parser, int outerDepth)
+			throws IOException, XmlPullParserException {
+		for (;;) {
+			int type = parser.next();
+			if (type == XmlPullParser.END_DOCUMENT
+					|| type == XmlPullParser.END_TAG
+					&& parser.getDepth() == outerDepth) {
+				return false;
+			}
+			if (type == XmlPullParser.START_TAG
+					&& parser.getDepth() == outerDepth + 1) {
+				return true;
+			}
+		}
 	}
 
 	public static final int parseUnsignedIntAttribute(CharSequence charSeq) {
@@ -110,8 +150,9 @@ public class XmlUtils {
 
 		if ('0' == value.charAt(index)) {
 			// Quick check for zero by itself
-			if (index == (len - 1))
+			if (index == len - 1) {
 				return 0;
+			}
 
 			char c = value.charAt(index + 1);
 
@@ -130,218 +171,11 @@ public class XmlUtils {
 		return (int) Long.parseLong(value.substring(index), base);
 	}
 
-	public static final void writeMapXml(Map val, OutputStream out)
+	public static final ArrayList readListXml(InputStream in)
 			throws XmlPullParserException, java.io.IOException {
-		XmlSerializer serializer = new FastXmlSerializer();
-		serializer.setOutput(out, "utf-8");
-		serializer.startDocument(null, true);
-		serializer.setFeature(
-				"http://xmlpull.org/v1/doc/features.html#indent-output", true);
-		writeMapXml(val, null, serializer);
-		serializer.endDocument();
-	}
-
-	public static final void writeListXml(List val, OutputStream out)
-			throws XmlPullParserException, java.io.IOException {
-		XmlSerializer serializer = Xml.newSerializer();
-		serializer.setOutput(out, "utf-8");
-		serializer.startDocument(null, true);
-		serializer.setFeature(
-				"http://xmlpull.org/v1/doc/features.html#indent-output", true);
-		writeListXml(val, null, serializer);
-		serializer.endDocument();
-	}
-
-	public static final void writeMapXml(Map val, String name, XmlSerializer out)
-			throws XmlPullParserException, java.io.IOException {
-		if (val == null) {
-			out.startTag(null, "null");
-			out.endTag(null, "null");
-			return;
-		}
-
-		Set s = val.entrySet();
-		Iterator i = s.iterator();
-
-		out.startTag(null, "map");
-		if (name != null) {
-			out.attribute(null, "name", name);
-		}
-
-		while (i.hasNext()) {
-			Map.Entry e = (Map.Entry) i.next();
-			writeValueXml(e.getValue(), (String) e.getKey(), out);
-		}
-
-		out.endTag(null, "map");
-	}
-
-	public static final void writeListXml(List val, String name,
-			XmlSerializer out) throws XmlPullParserException,
-			java.io.IOException {
-		if (val == null) {
-			out.startTag(null, "null");
-			out.endTag(null, "null");
-			return;
-		}
-
-		out.startTag(null, "list");
-		if (name != null) {
-			out.attribute(null, "name", name);
-		}
-
-		int N = val.size();
-		int i = 0;
-		while (i < N) {
-			writeValueXml(val.get(i), null, out);
-			i++;
-		}
-
-		out.endTag(null, "list");
-	}
-
-	public static final void writeSetXml(Set val, String name, XmlSerializer out)
-			throws XmlPullParserException, java.io.IOException {
-		if (val == null) {
-			out.startTag(null, "null");
-			out.endTag(null, "null");
-			return;
-		}
-
-		out.startTag(null, "set");
-		if (name != null) {
-			out.attribute(null, "name", name);
-		}
-
-		for (Object v : val) {
-			writeValueXml(v, null, out);
-		}
-
-		out.endTag(null, "set");
-	}
-
-	public static final void writeByteArrayXml(byte[] val, String name,
-			XmlSerializer out) throws XmlPullParserException,
-			java.io.IOException {
-
-		if (val == null) {
-			out.startTag(null, "null");
-			out.endTag(null, "null");
-			return;
-		}
-
-		out.startTag(null, "byte-array");
-		if (name != null) {
-			out.attribute(null, "name", name);
-		}
-
-		final int N = val.length;
-		out.attribute(null, "num", Integer.toString(N));
-
-		StringBuilder sb = new StringBuilder(val.length * 2);
-		for (int i = 0; i < N; i++) {
-			int b = val[i];
-			int h = b >> 4;
-			sb.append(h >= 10 ? ('a' + h - 10) : ('0' + h));
-			h = b & 0xff;
-			sb.append(h >= 10 ? ('a' + h - 10) : ('0' + h));
-		}
-
-		out.text(sb.toString());
-
-		out.endTag(null, "byte-array");
-	}
-
-	public static final void writeIntArrayXml(int[] val, String name,
-			XmlSerializer out) throws XmlPullParserException,
-			java.io.IOException {
-
-		if (val == null) {
-			out.startTag(null, "null");
-			out.endTag(null, "null");
-			return;
-		}
-
-		out.startTag(null, "int-array");
-		if (name != null) {
-			out.attribute(null, "name", name);
-		}
-
-		final int N = val.length;
-		out.attribute(null, "num", Integer.toString(N));
-
-		for (int i = 0; i < N; i++) {
-			out.startTag(null, "item");
-			out.attribute(null, "value", Integer.toString(val[i]));
-			out.endTag(null, "item");
-		}
-
-		out.endTag(null, "int-array");
-	}
-
-	public static final void writeValueXml(Object v, String name,
-			XmlSerializer out) throws XmlPullParserException,
-			java.io.IOException {
-		String typeStr;
-		if (v == null) {
-			out.startTag(null, "null");
-			if (name != null) {
-				out.attribute(null, "name", name);
-			}
-			out.endTag(null, "null");
-			return;
-		} else if (v instanceof String) {
-			out.startTag(null, "string");
-			if (name != null) {
-				out.attribute(null, "name", name);
-			}
-			out.text(v.toString());
-			out.endTag(null, "string");
-			return;
-		} else if (v instanceof Integer) {
-			typeStr = "int";
-		} else if (v instanceof Long) {
-			typeStr = "long";
-		} else if (v instanceof Float) {
-			typeStr = "float";
-		} else if (v instanceof Double) {
-			typeStr = "double";
-		} else if (v instanceof Boolean) {
-			typeStr = "boolean";
-		} else if (v instanceof byte[]) {
-			writeByteArrayXml((byte[]) v, name, out);
-			return;
-		} else if (v instanceof int[]) {
-			writeIntArrayXml((int[]) v, name, out);
-			return;
-		} else if (v instanceof Map) {
-			writeMapXml((Map) v, name, out);
-			return;
-		} else if (v instanceof List) {
-			writeListXml((List) v, name, out);
-			return;
-		} else if (v instanceof Set) {
-			writeSetXml((Set) v, name, out);
-			return;
-		} else if (v instanceof CharSequence) {
-			out.startTag(null, "string");
-			if (name != null) {
-				out.attribute(null, "name", name);
-			}
-			out.text(v.toString());
-			out.endTag(null, "string");
-			return;
-		} else {
-			throw new RuntimeException("writeValueXml: unable to write value "
-					+ v);
-		}
-
-		out.startTag(null, typeStr);
-		if (name != null) {
-			out.attribute(null, "name", name);
-		}
-		out.attribute(null, "value", v.toString());
-		out.endTag(null, typeStr);
+		XmlPullParser parser = Xml.newPullParser();
+		parser.setInput(in, null);
+		return (ArrayList) readValueXml(parser, new String[1]);
 	}
 
 	public static final HashMap readMapXml(InputStream in)
@@ -351,98 +185,11 @@ public class XmlUtils {
 		return (HashMap) readValueXml(parser, new String[1]);
 	}
 
-	public static final ArrayList readListXml(InputStream in)
-			throws XmlPullParserException, java.io.IOException {
-		XmlPullParser parser = Xml.newPullParser();
-		parser.setInput(in, null);
-		return (ArrayList) readValueXml(parser, new String[1]);
-	}
-
 	public static final HashSet readSetXml(InputStream in)
 			throws XmlPullParserException, java.io.IOException {
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(in, null);
 		return (HashSet) readValueXml(parser, new String[1]);
-	}
-
-	public static final HashMap readThisMapXml(XmlPullParser parser,
-			String endTag, String[] name) throws XmlPullParserException,
-			java.io.IOException {
-		HashMap map = new HashMap();
-
-		int eventType = parser.getEventType();
-		do {
-			if (eventType == XmlPullParser.START_TAG) {
-				Object val = readThisValueXml(parser, name);
-				if (name[0] != null) {
-					map.put(name[0], val);
-				} else {
-					throw new XmlPullParserException(
-							"Map value without name attribute: "
-									+ parser.getName());
-				}
-			} else if (eventType == XmlPullParser.END_TAG) {
-				if (parser.getName().equals(endTag)) {
-					return map;
-				}
-				throw new XmlPullParserException("Expected " + endTag
-						+ " end tag at: " + parser.getName());
-			}
-			eventType = parser.next();
-		} while (eventType != XmlPullParser.END_DOCUMENT);
-
-		throw new XmlPullParserException("Document ended before " + endTag
-				+ " end tag");
-	}
-
-	public static final ArrayList readThisListXml(XmlPullParser parser,
-			String endTag, String[] name) throws XmlPullParserException,
-			java.io.IOException {
-		ArrayList list = new ArrayList();
-
-		int eventType = parser.getEventType();
-		do {
-			if (eventType == XmlPullParser.START_TAG) {
-				Object val = readThisValueXml(parser, name);
-				list.add(val);
-				// System.out.println("Adding to list: " + val);
-			} else if (eventType == XmlPullParser.END_TAG) {
-				if (parser.getName().equals(endTag)) {
-					return list;
-				}
-				throw new XmlPullParserException("Expected " + endTag
-						+ " end tag at: " + parser.getName());
-			}
-			eventType = parser.next();
-		} while (eventType != XmlPullParser.END_DOCUMENT);
-
-		throw new XmlPullParserException("Document ended before " + endTag
-				+ " end tag");
-	}
-
-	public static final HashSet readThisSetXml(XmlPullParser parser,
-			String endTag, String[] name) throws XmlPullParserException,
-			java.io.IOException {
-		HashSet set = new HashSet();
-
-		int eventType = parser.getEventType();
-		do {
-			if (eventType == XmlPullParser.START_TAG) {
-				Object val = readThisValueXml(parser, name);
-				set.add(val);
-				// System.out.println("Adding to set: " + val);
-			} else if (eventType == XmlPullParser.END_TAG) {
-				if (parser.getName().equals(endTag)) {
-					return set;
-				}
-				throw new XmlPullParserException("Expected " + endTag
-						+ " end tag at: " + parser.getName());
-			}
-			eventType = parser.next();
-		} while (eventType != XmlPullParser.END_DOCUMENT);
-
-		throw new XmlPullParserException("Document ended before " + endTag
-				+ " end tag");
 	}
 
 	public static final int[] readThisIntArrayXml(XmlPullParser parser,
@@ -497,23 +244,84 @@ public class XmlUtils {
 				+ " end tag");
 	}
 
-	public static final Object readValueXml(XmlPullParser parser, String[] name)
-			throws XmlPullParserException, java.io.IOException {
+	public static final ArrayList readThisListXml(XmlPullParser parser,
+			String endTag, String[] name) throws XmlPullParserException,
+			java.io.IOException {
+		ArrayList list = new ArrayList();
+
 		int eventType = parser.getEventType();
 		do {
 			if (eventType == XmlPullParser.START_TAG) {
-				return readThisValueXml(parser, name);
+				Object val = readThisValueXml(parser, name);
+				list.add(val);
+				// System.out.println("Adding to list: " + val);
 			} else if (eventType == XmlPullParser.END_TAG) {
-				throw new XmlPullParserException("Unexpected end tag at: "
-						+ parser.getName());
-			} else if (eventType == XmlPullParser.TEXT) {
-				throw new XmlPullParserException("Unexpected text: "
-						+ parser.getText());
+				if (parser.getName().equals(endTag)) {
+					return list;
+				}
+				throw new XmlPullParserException("Expected " + endTag
+						+ " end tag at: " + parser.getName());
 			}
 			eventType = parser.next();
 		} while (eventType != XmlPullParser.END_DOCUMENT);
 
-		throw new XmlPullParserException("Unexpected end of document");
+		throw new XmlPullParserException("Document ended before " + endTag
+				+ " end tag");
+	}
+
+	public static final HashMap readThisMapXml(XmlPullParser parser,
+			String endTag, String[] name) throws XmlPullParserException,
+			java.io.IOException {
+		HashMap map = new HashMap();
+
+		int eventType = parser.getEventType();
+		do {
+			if (eventType == XmlPullParser.START_TAG) {
+				Object val = readThisValueXml(parser, name);
+				if (name[0] != null) {
+					map.put(name[0], val);
+				} else {
+					throw new XmlPullParserException(
+							"Map value without name attribute: "
+									+ parser.getName());
+				}
+			} else if (eventType == XmlPullParser.END_TAG) {
+				if (parser.getName().equals(endTag)) {
+					return map;
+				}
+				throw new XmlPullParserException("Expected " + endTag
+						+ " end tag at: " + parser.getName());
+			}
+			eventType = parser.next();
+		} while (eventType != XmlPullParser.END_DOCUMENT);
+
+		throw new XmlPullParserException("Document ended before " + endTag
+				+ " end tag");
+	}
+
+	public static final HashSet readThisSetXml(XmlPullParser parser,
+			String endTag, String[] name) throws XmlPullParserException,
+			java.io.IOException {
+		HashSet set = new HashSet();
+
+		int eventType = parser.getEventType();
+		do {
+			if (eventType == XmlPullParser.START_TAG) {
+				Object val = readThisValueXml(parser, name);
+				set.add(val);
+				// System.out.println("Adding to set: " + val);
+			} else if (eventType == XmlPullParser.END_TAG) {
+				if (parser.getName().equals(endTag)) {
+					return set;
+				}
+				throw new XmlPullParserException("Expected " + endTag
+						+ " end tag at: " + parser.getName());
+			}
+			eventType = parser.next();
+		} while (eventType != XmlPullParser.END_DOCUMENT);
+
+		throw new XmlPullParserException("Document ended before " + endTag
+				+ " end tag");
 	}
 
 	private static final Object readThisValueXml(XmlPullParser parser,
@@ -603,44 +411,245 @@ public class XmlUtils {
 				+ tagName + ">");
 	}
 
-	public static final void beginDocument(XmlPullParser parser,
-			String firstElementName) throws XmlPullParserException, IOException {
-		int type;
-		while ((type = parser.next()) != XmlPullParser.START_TAG
-				&& type != XmlPullParser.END_DOCUMENT) {
-			;
-		}
+	public static final Object readValueXml(XmlPullParser parser, String[] name)
+			throws XmlPullParserException, java.io.IOException {
+		int eventType = parser.getEventType();
+		do {
+			if (eventType == XmlPullParser.START_TAG) {
+				return readThisValueXml(parser, name);
+			} else if (eventType == XmlPullParser.END_TAG) {
+				throw new XmlPullParserException("Unexpected end tag at: "
+						+ parser.getName());
+			} else if (eventType == XmlPullParser.TEXT) {
+				throw new XmlPullParserException("Unexpected text: "
+						+ parser.getText());
+			}
+			eventType = parser.next();
+		} while (eventType != XmlPullParser.END_DOCUMENT);
 
-		if (type != XmlPullParser.START_TAG) {
-			throw new XmlPullParserException("No start tag found");
-		}
-
-		if (!parser.getName().equals(firstElementName)) {
-			throw new XmlPullParserException("Unexpected start tag: found "
-					+ parser.getName() + ", expected " + firstElementName);
-		}
+		throw new XmlPullParserException("Unexpected end of document");
 	}
 
-	public static final void nextElement(XmlPullParser parser)
+	public static void skipCurrentTag(XmlPullParser parser)
 			throws XmlPullParserException, IOException {
+		int outerDepth = parser.getDepth();
 		int type;
-		while ((type = parser.next()) != XmlPullParser.START_TAG
-				&& type != XmlPullParser.END_DOCUMENT)
-			;
+		while ((type = parser.next()) != XmlPullParser.END_DOCUMENT
+				&& (type != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
+		}
 	}
 
-	public static boolean nextElementWithin(XmlPullParser parser, int outerDepth)
-			throws IOException, XmlPullParserException {
-		for (;;) {
-			int type = parser.next();
-			if (type == XmlPullParser.END_DOCUMENT
-					|| (type == XmlPullParser.END_TAG && parser.getDepth() == outerDepth)) {
-				return false;
-			}
-			if (type == XmlPullParser.START_TAG
-					&& parser.getDepth() == outerDepth + 1) {
-				return true;
-			}
+	public static final void writeByteArrayXml(byte[] val, String name,
+			XmlSerializer out) throws XmlPullParserException,
+			java.io.IOException {
+
+		if (val == null) {
+			out.startTag(null, "null");
+			out.endTag(null, "null");
+			return;
 		}
+
+		out.startTag(null, "byte-array");
+		if (name != null) {
+			out.attribute(null, "name", name);
+		}
+
+		final int N = val.length;
+		out.attribute(null, "num", Integer.toString(N));
+
+		StringBuilder sb = new StringBuilder(val.length * 2);
+		for (int i = 0; i < N; i++) {
+			int b = val[i];
+			int h = b >> 4;
+			sb.append(h >= 10 ? 'a' + h - 10 : '0' + h);
+			h = b & 0xff;
+			sb.append(h >= 10 ? 'a' + h - 10 : '0' + h);
+		}
+
+		out.text(sb.toString());
+
+		out.endTag(null, "byte-array");
+	}
+
+	public static final void writeIntArrayXml(int[] val, String name,
+			XmlSerializer out) throws XmlPullParserException,
+			java.io.IOException {
+
+		if (val == null) {
+			out.startTag(null, "null");
+			out.endTag(null, "null");
+			return;
+		}
+
+		out.startTag(null, "int-array");
+		if (name != null) {
+			out.attribute(null, "name", name);
+		}
+
+		final int N = val.length;
+		out.attribute(null, "num", Integer.toString(N));
+
+		for (int i = 0; i < N; i++) {
+			out.startTag(null, "item");
+			out.attribute(null, "value", Integer.toString(val[i]));
+			out.endTag(null, "item");
+		}
+
+		out.endTag(null, "int-array");
+	}
+
+	public static final void writeListXml(List val, OutputStream out)
+			throws XmlPullParserException, java.io.IOException {
+		XmlSerializer serializer = Xml.newSerializer();
+		serializer.setOutput(out, "utf-8");
+		serializer.startDocument(null, true);
+		serializer.setFeature(
+				"http://xmlpull.org/v1/doc/features.html#indent-output", true);
+		writeListXml(val, null, serializer);
+		serializer.endDocument();
+	}
+
+	public static final void writeListXml(List val, String name,
+			XmlSerializer out) throws XmlPullParserException,
+			java.io.IOException {
+		if (val == null) {
+			out.startTag(null, "null");
+			out.endTag(null, "null");
+			return;
+		}
+
+		out.startTag(null, "list");
+		if (name != null) {
+			out.attribute(null, "name", name);
+		}
+
+		int N = val.size();
+		int i = 0;
+		while (i < N) {
+			writeValueXml(val.get(i), null, out);
+			i++;
+		}
+
+		out.endTag(null, "list");
+	}
+
+	public static final void writeMapXml(Map val, OutputStream out)
+			throws XmlPullParserException, java.io.IOException {
+		XmlSerializer serializer = new FastXmlSerializer();
+		serializer.setOutput(out, "utf-8");
+		serializer.startDocument(null, true);
+		serializer.setFeature(
+				"http://xmlpull.org/v1/doc/features.html#indent-output", true);
+		writeMapXml(val, null, serializer);
+		serializer.endDocument();
+	}
+
+	public static final void writeMapXml(Map val, String name, XmlSerializer out)
+			throws XmlPullParserException, java.io.IOException {
+		if (val == null) {
+			out.startTag(null, "null");
+			out.endTag(null, "null");
+			return;
+		}
+
+		Set s = val.entrySet();
+		Iterator i = s.iterator();
+
+		out.startTag(null, "map");
+		if (name != null) {
+			out.attribute(null, "name", name);
+		}
+
+		while (i.hasNext()) {
+			Map.Entry e = (Map.Entry) i.next();
+			writeValueXml(e.getValue(), (String) e.getKey(), out);
+		}
+
+		out.endTag(null, "map");
+	}
+
+	public static final void writeSetXml(Set val, String name, XmlSerializer out)
+			throws XmlPullParserException, java.io.IOException {
+		if (val == null) {
+			out.startTag(null, "null");
+			out.endTag(null, "null");
+			return;
+		}
+
+		out.startTag(null, "set");
+		if (name != null) {
+			out.attribute(null, "name", name);
+		}
+
+		for (Object v : val) {
+			writeValueXml(v, null, out);
+		}
+
+		out.endTag(null, "set");
+	}
+
+	public static final void writeValueXml(Object v, String name,
+			XmlSerializer out) throws XmlPullParserException,
+			java.io.IOException {
+		String typeStr;
+		if (v == null) {
+			out.startTag(null, "null");
+			if (name != null) {
+				out.attribute(null, "name", name);
+			}
+			out.endTag(null, "null");
+			return;
+		} else if (v instanceof String) {
+			out.startTag(null, "string");
+			if (name != null) {
+				out.attribute(null, "name", name);
+			}
+			out.text(v.toString());
+			out.endTag(null, "string");
+			return;
+		} else if (v instanceof Integer) {
+			typeStr = "int";
+		} else if (v instanceof Long) {
+			typeStr = "long";
+		} else if (v instanceof Float) {
+			typeStr = "float";
+		} else if (v instanceof Double) {
+			typeStr = "double";
+		} else if (v instanceof Boolean) {
+			typeStr = "boolean";
+		} else if (v instanceof byte[]) {
+			writeByteArrayXml((byte[]) v, name, out);
+			return;
+		} else if (v instanceof int[]) {
+			writeIntArrayXml((int[]) v, name, out);
+			return;
+		} else if (v instanceof Map) {
+			writeMapXml((Map) v, name, out);
+			return;
+		} else if (v instanceof List) {
+			writeListXml((List) v, name, out);
+			return;
+		} else if (v instanceof Set) {
+			writeSetXml((Set) v, name, out);
+			return;
+		} else if (v instanceof CharSequence) {
+			out.startTag(null, "string");
+			if (name != null) {
+				out.attribute(null, "name", name);
+			}
+			out.text(v.toString());
+			out.endTag(null, "string");
+			return;
+		} else {
+			throw new RuntimeException("writeValueXml: unable to write value "
+					+ v);
+		}
+
+		out.startTag(null, typeStr);
+		if (name != null) {
+			out.attribute(null, "name", name);
+		}
+		out.attribute(null, "value", v.toString());
+		out.endTag(null, typeStr);
 	}
 }

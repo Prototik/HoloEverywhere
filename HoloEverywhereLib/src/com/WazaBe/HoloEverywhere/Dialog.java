@@ -6,6 +6,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
 public class Dialog extends android.app.Dialog {
+	private View contentView;
+
 	public Dialog(Context context) {
 		super(context);
 	}
@@ -15,15 +17,12 @@ public class Dialog extends android.app.Dialog {
 	}
 
 	@Override
-	public void setTitle(CharSequence text) {
-		super.setTitle(text);
-		if (contentView != null) {
-			TextView title = (TextView) contentView
-					.findViewById(R.id.alertTitle);
-			if (title != null) {
-				title.setText(text);
-			}
-		}
+	public void addContentView(View view, LayoutParams params) {
+		super.addContentView(FontLoader.loadFont(view), params);
+	}
+
+	public View getContentView() {
+		return contentView;
 	}
 
 	@Override
@@ -37,19 +36,20 @@ public class Dialog extends android.app.Dialog {
 		super.setContentView(contentView = FontLoader.loadFont(view));
 	}
 
-	private View contentView;
-
-	public View getContentView() {
-		return contentView;
-	}
-
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		super.setContentView(contentView = FontLoader.loadFont(view), params);
 	}
 
 	@Override
-	public void addContentView(View view, LayoutParams params) {
-		super.addContentView(FontLoader.loadFont(view), params);
+	public void setTitle(CharSequence text) {
+		super.setTitle(text);
+		if (contentView != null) {
+			TextView title = (TextView) contentView
+					.findViewById(R.id.alertTitle);
+			if (title != null) {
+				title.setText(text);
+			}
+		}
 	}
 }

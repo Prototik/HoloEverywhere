@@ -7,6 +7,33 @@ import android.util.AttributeSet;
 import com.actionbarsherlock.internal.nineoldandroids.view.animation.AnimatorProxy;
 
 public class View extends android.view.View {
+	public static int resolveSize(int size, int measureSpec) {
+		return resolveSizeAndState(size, measureSpec, 0) & MEASURED_SIZE_MASK;
+	}
+
+	public static int resolveSizeAndState(int size, int measureSpec,
+			int childMeasuredState) {
+		int result = size;
+		int specMode = MeasureSpec.getMode(measureSpec);
+		int specSize = MeasureSpec.getSize(measureSpec);
+		switch (specMode) {
+		case MeasureSpec.UNSPECIFIED:
+			result = size;
+			break;
+		case MeasureSpec.AT_MOST:
+			if (specSize < size) {
+				result = specSize | MEASURED_STATE_TOO_SMALL;
+			} else {
+				result = size;
+			}
+			break;
+		case MeasureSpec.EXACTLY:
+			result = specSize;
+			break;
+		}
+		return result | childMeasuredState & MEASURED_STATE_MASK;
+	}
+
 	private final AnimatorProxy proxy;
 
 	public View(Context context) {
@@ -22,10 +49,6 @@ public class View extends android.view.View {
 	public View(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		proxy = AnimatorProxy.NEEDS_PROXY ? AnimatorProxy.wrap(this) : null;
-	}
-
-	public static int resolveSize(int size, int measureSpec) {
-		return resolveSizeAndState(size, measureSpec, 0) & MEASURED_SIZE_MASK;
 	}
 
 	@SuppressLint("NewApi")
@@ -53,6 +76,11 @@ public class View extends android.view.View {
 			return proxy.getTranslationY();
 		}
 		return super.getTranslationY();
+	}
+
+	@SuppressLint("NewApi")
+	public void onVisibilityChanged(View changedView, int visibility) {
+		super.onVisibilityChanged(changedView, visibility);
 	}
 
 	@SuppressLint("NewApi")
@@ -92,33 +120,5 @@ public class View extends android.view.View {
 			}
 		}
 		super.setVisibility(visibility);
-	}
-
-	public static int resolveSizeAndState(int size, int measureSpec,
-			int childMeasuredState) {
-		int result = size;
-		int specMode = MeasureSpec.getMode(measureSpec);
-		int specSize = MeasureSpec.getSize(measureSpec);
-		switch (specMode) {
-		case MeasureSpec.UNSPECIFIED:
-			result = size;
-			break;
-		case MeasureSpec.AT_MOST:
-			if (specSize < size) {
-				result = specSize | MEASURED_STATE_TOO_SMALL;
-			} else {
-				result = size;
-			}
-			break;
-		case MeasureSpec.EXACTLY:
-			result = specSize;
-			break;
-		}
-		return result | (childMeasuredState & MEASURED_STATE_MASK);
-	}
-
-	@SuppressLint("NewApi")
-	public void onVisibilityChanged(View changedView, int visibility) {
-		super.onVisibilityChanged(changedView, visibility);
 	}
 }

@@ -11,30 +11,48 @@ import com.WazaBe.HoloEverywhere.R;
 
 public class ListActivity extends Activity {
 	protected ListAdapter mAdapter;
-	protected ListView mList;
-
-	private Handler mHandler = new Handler();
 	private boolean mFinishedStart = false;
 
+	private Handler mHandler = new Handler();
+	protected ListView mList;
+
+	private AdapterView.OnItemClickListener mOnClickListener = new AdapterView.OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View v, int position,
+				long id) {
+			onListItemClick((ListView) parent, v, position, id);
+		}
+	};
+
 	private Runnable mRequestFocus = new Runnable() {
+		@Override
 		public void run() {
 			mList.focusableViewAvailable(mList);
 		}
 	};
 
-	protected void onListItemClick(ListView l, View v, int position, long id) {
+	private void ensureList() {
+		if (mList != null) {
+			return;
+		}
+		setContentView(R.layout.list_content);
 	}
 
-	@Override
-	protected void onRestoreInstanceState(Bundle state) {
+	public ListAdapter getListAdapter() {
+		return mAdapter;
+	}
+
+	public ListView getListView() {
 		ensureList();
-		super.onRestoreInstanceState(state);
+		return mList;
 	}
 
-	@Override
-	protected void onDestroy() {
-		mHandler.removeCallbacks(mRequestFocus);
-		super.onDestroy();
+	public long getSelectedItemId() {
+		return mList.getSelectedItemId();
+	}
+
+	public int getSelectedItemPosition() {
+		return mList.getSelectedItemPosition();
 	}
 
 	@Override
@@ -58,6 +76,21 @@ public class ListActivity extends Activity {
 		mFinishedStart = true;
 	}
 
+	@Override
+	protected void onDestroy() {
+		mHandler.removeCallbacks(mRequestFocus);
+		super.onDestroy();
+	}
+
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle state) {
+		ensureList();
+		super.onRestoreInstanceState(state);
+	}
+
 	public void setListAdapter(ListAdapter adapter) {
 		synchronized (this) {
 			ensureList();
@@ -69,35 +102,4 @@ public class ListActivity extends Activity {
 	public void setSelection(int position) {
 		mList.setSelection(position);
 	}
-
-	public int getSelectedItemPosition() {
-		return mList.getSelectedItemPosition();
-	}
-
-	public long getSelectedItemId() {
-		return mList.getSelectedItemId();
-	}
-
-	public ListView getListView() {
-		ensureList();
-		return mList;
-	}
-
-	public ListAdapter getListAdapter() {
-		return mAdapter;
-	}
-
-	private void ensureList() {
-		if (mList != null) {
-			return;
-		}
-		setContentView(R.layout.list_content);
-	}
-
-	private AdapterView.OnItemClickListener mOnClickListener = new AdapterView.OnItemClickListener() {
-		public void onItemClick(AdapterView<?> parent, View v, int position,
-				long id) {
-			onListItemClick((ListView) parent, v, position, id);
-		}
-	};
 }

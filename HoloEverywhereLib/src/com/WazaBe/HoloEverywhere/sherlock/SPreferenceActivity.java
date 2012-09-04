@@ -18,13 +18,32 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 
 public abstract class SPreferenceActivity extends PreferenceActivity implements
 		OnCreatePanelMenuListener, OnPreparePanelListener,
 		OnMenuItemSelectedListener, OnActionModeStartedListener,
 		OnActionModeFinishedListener {
 	private ActionBarSherlock mSherlock;
+
+	@Override
+	public void addContentView(View view, LayoutParams params) {
+		getSherlock().addContentView(view, params);
+	}
+
+	@Override
+	public void closeOptionsMenu() {
+		if (!getSherlock().dispatchCloseOptionsMenu()) {
+			super.closeOptionsMenu();
+		}
+	}
+
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if (getSherlock().dispatchKeyEvent(event)) {
+			return true;
+		}
+		return super.dispatchKeyEvent(event);
+	}
 
 	protected final ActionBarSherlock getSherlock() {
 		if (mSherlock == null) {
@@ -38,16 +57,21 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 		return getSherlock().getActionBar();
 	}
 
-	public ActionMode startActionMode(ActionMode.Callback callback) {
-		return getSherlock().startActionMode(callback);
+	public MenuInflater getSupportMenuInflater() {
+		return getSherlock().getMenuInflater();
 	}
 
 	@Override
-	public void onActionModeStarted(ActionMode mode) {
+	public void invalidateOptionsMenu() {
+		getSherlock().dispatchInvalidateOptionsMenu();
 	}
 
 	@Override
 	public void onActionModeFinished(ActionMode mode) {
+	}
+
+	@Override
+	public void onActionModeStarted(ActionMode mode) {
 	}
 
 	@Override
@@ -57,21 +81,20 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 	}
 
 	@Override
-	protected void onPostResume() {
-		super.onPostResume();
-		getSherlock().dispatchPostResume();
+	public final boolean onCreateOptionsMenu(android.view.Menu menu) {
+		return getSherlock().dispatchCreateOptionsMenu(menu);
+	}
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		return true;
 	}
 
 	@Override
-	protected void onPause() {
-		getSherlock().dispatchPause();
-		super.onPause();
-	}
-
-	@Override
-	protected void onStop() {
-		getSherlock().dispatchStop();
-		super.onStop();
+	public boolean onCreatePanelMenu(int featureId, Menu menu) {
+		if (featureId == android.view.Window.FEATURE_OPTIONS_PANEL) {
+			return onCreateOptionsMenu(menu);
+		}
+		return false;
 	}
 
 	@Override
@@ -81,15 +104,11 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 	}
 
 	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		getSherlock().dispatchPostCreate(savedInstanceState);
-		super.onPostCreate(savedInstanceState);
-	}
-
-	@Override
-	protected void onTitleChanged(CharSequence title, int color) {
-		getSherlock().dispatchTitleChanged(title, color);
-		super.onTitleChanged(title, color);
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		if (featureId == android.view.Window.FEATURE_OPTIONS_PANEL) {
+			return onOptionsItemSelected(item);
+		}
+		return false;
 	}
 
 	@Override
@@ -101,34 +120,36 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 	}
 
 	@Override
+	public final boolean onOptionsItemSelected(android.view.MenuItem item) {
+		return getSherlock().dispatchOptionsItemSelected(item);
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		return false;
+	}
+
+	@Override
 	public void onPanelClosed(int featureId, android.view.Menu menu) {
 		getSherlock().dispatchPanelClosed(featureId, menu);
 		super.onPanelClosed(featureId, menu);
 	}
 
 	@Override
-	public boolean dispatchKeyEvent(KeyEvent event) {
-		if (getSherlock().dispatchKeyEvent(event)) {
-			return true;
-		}
-		return super.dispatchKeyEvent(event);
-	}
-
-	public MenuInflater getSupportMenuInflater() {
-		return getSherlock().getMenuInflater();
-	}
-
-	public void invalidateOptionsMenu() {
-		getSherlock().dispatchInvalidateOptionsMenu();
-	}
-
-	public void supportInvalidateOptionsMenu() {
-		invalidateOptionsMenu();
+	protected void onPause() {
+		getSherlock().dispatchPause();
+		super.onPause();
 	}
 
 	@Override
-	public final boolean onCreateOptionsMenu(android.view.Menu menu) {
-		return getSherlock().dispatchCreateOptionsMenu(menu);
+	protected void onPostCreate(Bundle savedInstanceState) {
+		getSherlock().dispatchPostCreate(savedInstanceState);
+		super.onPostCreate(savedInstanceState);
+	}
+
+	@Override
+	protected void onPostResume() {
+		super.onPostResume();
+		getSherlock().dispatchPostResume();
 	}
 
 	@Override
@@ -136,9 +157,28 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 		return getSherlock().dispatchPrepareOptionsMenu(menu);
 	}
 
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		return true;
+	}
+
 	@Override
-	public final boolean onOptionsItemSelected(android.view.MenuItem item) {
-		return getSherlock().dispatchOptionsItemSelected(item);
+	public boolean onPreparePanel(int featureId, View view, Menu menu) {
+		if (featureId == android.view.Window.FEATURE_OPTIONS_PANEL) {
+			return onPrepareOptionsMenu(menu);
+		}
+		return false;
+	}
+
+	@Override
+	protected void onStop() {
+		getSherlock().dispatchStop();
+		super.onStop();
+	}
+
+	@Override
+	protected void onTitleChanged(CharSequence title, int color) {
+		getSherlock().dispatchTitleChanged(title, color);
+		super.onTitleChanged(title, color);
 	}
 
 	@Override
@@ -148,52 +188,8 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 		}
 	}
 
-	@Override
-	public void closeOptionsMenu() {
-		if (!getSherlock().dispatchCloseOptionsMenu()) {
-			super.closeOptionsMenu();
-		}
-	}
-
-	@Override
-	public boolean onCreatePanelMenu(int featureId, Menu menu) {
-		if (featureId == Window.FEATURE_OPTIONS_PANEL) {
-			return onCreateOptionsMenu(menu);
-		}
-		return false;
-	}
-
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return true;
-	}
-
-	@Override
-	public boolean onPreparePanel(int featureId, View view, Menu menu) {
-		if (featureId == Window.FEATURE_OPTIONS_PANEL) {
-			return onPrepareOptionsMenu(menu);
-		}
-		return false;
-	}
-
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		return true;
-	}
-
-	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		if (featureId == Window.FEATURE_OPTIONS_PANEL) {
-			return onOptionsItemSelected(item);
-		}
-		return false;
-	}
-
-	public boolean onOptionsItemSelected(MenuItem item) {
-		return false;
-	}
-
-	@Override
-	public void addContentView(View view, LayoutParams params) {
-		getSherlock().addContentView(view, params);
+	public void requestWindowFeature(long featureId) {
+		getSherlock().requestFeature((int) featureId);
 	}
 
 	@Override
@@ -202,17 +198,13 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 	}
 
 	@Override
-	public void setContentView(View view, LayoutParams params) {
-		getSherlock().setContentView(view, params);
-	}
-
-	@Override
 	public void setContentView(View view) {
 		getSherlock().setContentView(view);
 	}
 
-	public void requestWindowFeature(long featureId) {
-		getSherlock().requestFeature((int) featureId);
+	@Override
+	public void setContentView(View view, LayoutParams params) {
+		getSherlock().setContentView(view, params);
 	}
 
 	public void setSupportProgress(int progress) {
@@ -233,5 +225,14 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 
 	public void setSupportSecondaryProgress(int secondaryProgress) {
 		getSherlock().setSecondaryProgress(secondaryProgress);
+	}
+
+	public ActionMode startActionMode(ActionMode.Callback callback) {
+		return getSherlock().startActionMode(callback);
+	}
+
+	@Override
+	public void supportInvalidateOptionsMenu() {
+		invalidateOptionsMenu();
 	}
 }

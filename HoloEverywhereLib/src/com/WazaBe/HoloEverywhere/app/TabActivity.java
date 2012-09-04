@@ -17,6 +17,10 @@ public class TabActivity extends android.app.TabActivity {
 		super.addContentView(FontLoader.loadFont(view), params);
 	}
 
+	public SharedPreferences getSupportSharedPreferences(String name, int mode) {
+		return new BaseSharedPreferences(getSharedPreferences(name, mode));
+	}
+
 	@Override
 	public void setContentView(int layoutResID) {
 		super.setContentView(FontLoader.inflate(this, layoutResID));
@@ -30,9 +34,5 @@ public class TabActivity extends android.app.TabActivity {
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		super.setContentView(FontLoader.loadFont(view), params);
-	}
-
-	public SharedPreferences getSupportSharedPreferences(String name, int mode) {
-		return new BaseSharedPreferences(getSharedPreferences(name, mode));
 	}
 }

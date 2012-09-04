@@ -18,10 +18,81 @@ import android.util.Log;
 import android.util.TypedValue;
 
 public class RotateDrawable extends Drawable {
+	/**
+	 * <p>
+	 * Represents the state of a rotation for a given drawable. The same rotate
+	 * drawable can be invoked with different states to drive several rotations
+	 * at the same time.
+	 * </p>
+	 */
+	final static class RotateState extends Drawable.ConstantState {
+		private boolean mCanConstantState;
+
+		int mChangingConfigurations;
+
+		private boolean mCheckedConstantState;
+		float mCurrentDegrees;
+		Drawable mDrawable;
+		float mFromDegrees;
+
+		float mPivotX;
+		boolean mPivotXRel;
+
+		float mPivotY;
+
+		boolean mPivotYRel;
+		float mToDegrees;
+
+		@SuppressLint("NewApi")
+		public RotateState(RotateState source, RotateDrawable owner,
+				Resources res) {
+			if (source != null) {
+				if (res != null && VERSION.SDK_INT >= 5) {
+					mDrawable = source.mDrawable.getConstantState()
+							.newDrawable(res);
+				} else {
+					mDrawable = source.mDrawable.getConstantState()
+							.newDrawable();
+				}
+				mPivotXRel = source.mPivotXRel;
+				mPivotX = source.mPivotX;
+				mPivotYRel = source.mPivotYRel;
+				mPivotY = source.mPivotY;
+				mFromDegrees = mCurrentDegrees = source.mFromDegrees;
+				mToDegrees = source.mToDegrees;
+				mCanConstantState = mCheckedConstantState = true;
+			}
+		}
+
+		public boolean canConstantState() {
+			if (!mCheckedConstantState) {
+				mCanConstantState = mDrawable.getConstantState() != null;
+				mCheckedConstantState = true;
+			}
+
+			return mCanConstantState;
+		}
+
+		@Override
+		public int getChangingConfigurations() {
+			return mChangingConfigurations;
+		}
+
+		@Override
+		public Drawable newDrawable() {
+			return new RotateDrawable(this, null);
+		}
+
+		@Override
+		public Drawable newDrawable(Resources res) {
+			return new RotateDrawable(this, res);
+		}
+	}
+
 	private static final float MAX_LEVEL = 10000.0f;
+	private boolean mMutated;
 
 	private RotateState mState;
-	private boolean mMutated;
 
 	/**
 	 * <p>
@@ -45,6 +116,7 @@ public class RotateDrawable extends Drawable {
 		mState = new RotateState(rotateState, this, res);
 	}
 
+	@Override
 	public void draw(Canvas canvas) {
 		int saveCount = canvas.save();
 
@@ -55,14 +127,30 @@ public class RotateDrawable extends Drawable {
 
 		final RotateState st = mState;
 
-		float px = st.mPivotXRel ? (w * st.mPivotX) : st.mPivotX;
-		float py = st.mPivotYRel ? (h * st.mPivotY) : st.mPivotY;
+		float px = st.mPivotXRel ? w * st.mPivotX : st.mPivotX;
+		float py = st.mPivotYRel ? h * st.mPivotY : st.mPivotY;
 
 		canvas.rotate(st.mCurrentDegrees, px + bounds.left, py + bounds.top);
 
 		st.mDrawable.draw(canvas);
 
 		canvas.restoreToCount(saveCount);
+	}
+
+	@Override
+	public int getChangingConfigurations() {
+		return super.getChangingConfigurations()
+				| mState.mChangingConfigurations
+				| mState.mDrawable.getChangingConfigurations();
+	}
+
+	@Override
+	public ConstantState getConstantState() {
+		if (mState.canConstantState()) {
+			mState.mChangingConfigurations = getChangingConfigurations();
+			return mState;
+		}
+		return null;
 	}
 
 	/**
@@ -73,64 +161,8 @@ public class RotateDrawable extends Drawable {
 	}
 
 	@Override
-	public int getChangingConfigurations() {
-		return super.getChangingConfigurations()
-				| mState.mChangingConfigurations
-				| mState.mDrawable.getChangingConfigurations();
-	}
-
-	public void setAlpha(int alpha) {
-		mState.mDrawable.setAlpha(alpha);
-	}
-
-	public void setColorFilter(ColorFilter cf) {
-		mState.mDrawable.setColorFilter(cf);
-	}
-
-	public int getOpacity() {
-		return mState.mDrawable.getOpacity();
-	}
-
-	@Override
-	public boolean getPadding(Rect padding) {
-		return mState.mDrawable.getPadding(padding);
-	}
-
-	@Override
-	public boolean setVisible(boolean visible, boolean restart) {
-		mState.mDrawable.setVisible(visible, restart);
-		return super.setVisible(visible, restart);
-	}
-
-	@Override
-	public boolean isStateful() {
-		return mState.mDrawable.isStateful();
-	}
-
-	@Override
-	protected boolean onStateChange(int[] state) {
-		boolean changed = mState.mDrawable.setState(state);
-		onBoundsChange(getBounds());
-		return changed;
-	}
-
-	@Override
-	protected boolean onLevelChange(int level) {
-		mState.mDrawable.setLevel(level);
-		onBoundsChange(getBounds());
-
-		mState.mCurrentDegrees = mState.mFromDegrees
-				+ (mState.mToDegrees - mState.mFromDegrees)
-				* ((float) level / MAX_LEVEL);
-
-		invalidateSelf();
-		return true;
-	}
-
-	@Override
-	protected void onBoundsChange(Rect bounds) {
-		mState.mDrawable.setBounds(bounds.left, bounds.top, bounds.right,
-				bounds.bottom);
+	public int getIntrinsicHeight() {
+		return mState.mDrawable.getIntrinsicHeight();
 	}
 
 	@Override
@@ -139,17 +171,13 @@ public class RotateDrawable extends Drawable {
 	}
 
 	@Override
-	public int getIntrinsicHeight() {
-		return mState.mDrawable.getIntrinsicHeight();
+	public int getOpacity() {
+		return mState.mDrawable.getOpacity();
 	}
 
 	@Override
-	public ConstantState getConstantState() {
-		if (mState.canConstantState()) {
-			mState.mChangingConfigurations = getChangingConfigurations();
-			return mState;
-		}
-		return null;
+	public boolean getPadding(Rect padding) {
+		return mState.mDrawable.getPadding(padding);
 	}
 
 	@Override
@@ -224,6 +252,56 @@ public class RotateDrawable extends Drawable {
 		mState.mToDegrees = toDegrees;
 	}
 
+	@Override
+	public boolean isStateful() {
+		return mState.mDrawable.isStateful();
+	}
+
+	@Override
+	public Drawable mutate() {
+		if (!mMutated && super.mutate() == this) {
+			mState.mDrawable.mutate();
+			mMutated = true;
+		}
+		return this;
+	}
+
+	@Override
+	protected void onBoundsChange(Rect bounds) {
+		mState.mDrawable.setBounds(bounds.left, bounds.top, bounds.right,
+				bounds.bottom);
+	}
+
+	@Override
+	protected boolean onLevelChange(int level) {
+		mState.mDrawable.setLevel(level);
+		onBoundsChange(getBounds());
+
+		mState.mCurrentDegrees = mState.mFromDegrees
+				+ (mState.mToDegrees - mState.mFromDegrees)
+				* (level / MAX_LEVEL);
+
+		invalidateSelf();
+		return true;
+	}
+
+	@Override
+	protected boolean onStateChange(int[] state) {
+		boolean changed = mState.mDrawable.setState(state);
+		onBoundsChange(getBounds());
+		return changed;
+	}
+
+	@Override
+	public void setAlpha(int alpha) {
+		mState.mDrawable.setAlpha(alpha);
+	}
+
+	@Override
+	public void setColorFilter(ColorFilter cf) {
+		mState.mDrawable.setColorFilter(cf);
+	}
+
 	public void setState(Drawable drawable, boolean pivotXRel,
 			boolean pivotYRel, float pivotX, float pivotY, float fromDegrees,
 			float toDegrees) {
@@ -237,82 +315,8 @@ public class RotateDrawable extends Drawable {
 	}
 
 	@Override
-	public Drawable mutate() {
-		if (!mMutated && super.mutate() == this) {
-			mState.mDrawable.mutate();
-			mMutated = true;
-		}
-		return this;
-	}
-
-	/**
-	 * <p>
-	 * Represents the state of a rotation for a given drawable. The same rotate
-	 * drawable can be invoked with different states to drive several rotations
-	 * at the same time.
-	 * </p>
-	 */
-	final static class RotateState extends Drawable.ConstantState {
-		Drawable mDrawable;
-
-		int mChangingConfigurations;
-
-		boolean mPivotXRel;
-		float mPivotX;
-		boolean mPivotYRel;
-		float mPivotY;
-
-		float mFromDegrees;
-		float mToDegrees;
-
-		float mCurrentDegrees;
-
-		private boolean mCanConstantState;
-		private boolean mCheckedConstantState;
-
-		@SuppressLint("NewApi")
-		public RotateState(RotateState source, RotateDrawable owner,
-				Resources res) {
-			if (source != null) {
-				if (res != null && VERSION.SDK_INT >= 5) {
-					mDrawable = source.mDrawable.getConstantState()
-							.newDrawable(res);
-				} else {
-					mDrawable = source.mDrawable.getConstantState()
-							.newDrawable();
-				}
-				mPivotXRel = source.mPivotXRel;
-				mPivotX = source.mPivotX;
-				mPivotYRel = source.mPivotYRel;
-				mPivotY = source.mPivotY;
-				mFromDegrees = mCurrentDegrees = source.mFromDegrees;
-				mToDegrees = source.mToDegrees;
-				mCanConstantState = mCheckedConstantState = true;
-			}
-		}
-
-		@Override
-		public Drawable newDrawable() {
-			return new RotateDrawable(this, null);
-		}
-
-		@Override
-		public Drawable newDrawable(Resources res) {
-			return new RotateDrawable(this, res);
-		}
-
-		@Override
-		public int getChangingConfigurations() {
-			return mChangingConfigurations;
-		}
-
-		public boolean canConstantState() {
-			if (!mCheckedConstantState) {
-				mCanConstantState = mDrawable.getConstantState() != null;
-				mCheckedConstantState = true;
-			}
-
-			return mCanConstantState;
-		}
+	public boolean setVisible(boolean visible, boolean restart) {
+		mState.mDrawable.setVisible(visible, restart);
+		return super.setVisible(visible, restart);
 	}
 }

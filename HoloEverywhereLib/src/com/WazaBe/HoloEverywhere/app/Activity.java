@@ -13,6 +13,10 @@ public abstract class Activity extends android.support.v4.app.FragmentActivity {
 		super.addContentView(FontLoader.loadFont(view), params);
 	}
 
+	public SharedPreferences getSupportSharedPreferences(String name, int mode) {
+		return new BaseSharedPreferences(getSharedPreferences(name, mode));
+	}
+
 	@Override
 	public void setContentView(int layoutResID) {
 		super.setContentView(FontLoader.inflate(this, layoutResID));
@@ -26,9 +30,5 @@ public abstract class Activity extends android.support.v4.app.FragmentActivity {
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		super.setContentView(FontLoader.loadFont(view), params);
-	}
-
-	public SharedPreferences getSupportSharedPreferences(String name, int mode) {
-		return new BaseSharedPreferences(getSharedPreferences(name, mode));
 	}
 }

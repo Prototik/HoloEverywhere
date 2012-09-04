@@ -15,8 +15,6 @@ import android.os.Build.VERSION;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
 public class BaseSharedPreferences implements SharedPreferences {
-	private final android.content.SharedPreferences prefs;
-
 	public static class BaseEditor implements Editor {
 		private android.content.SharedPreferences.Editor editor;
 
@@ -94,13 +92,78 @@ public class BaseSharedPreferences implements SharedPreferences {
 
 	}
 
-	public BaseSharedPreferences(android.content.SharedPreferences prefs) {
-		this.prefs = prefs;
+	public static class BaseOnSharedPreferenceChangeListener implements
+			android.content.SharedPreferences.OnSharedPreferenceChangeListener {
+		private static final Map<OnSharedPreferenceChangeListener, BaseOnSharedPreferenceChangeListener> instances = new HashMap<SharedPreferences.OnSharedPreferenceChangeListener, BaseOnSharedPreferenceChangeListener>();
+
+		public static BaseOnSharedPreferenceChangeListener obtain(
+				SharedPreferences prefs,
+				OnSharedPreferenceChangeListener listener) {
+			return obtain(prefs, listener,
+					BaseOnSharedPreferenceChangeListener.class);
+		}
+
+		@SuppressWarnings("unchecked")
+		public static <T extends BaseOnSharedPreferenceChangeListener> T obtain(
+				SharedPreferences prefs,
+				OnSharedPreferenceChangeListener listener, Class<T> clazz) {
+			if (!instances.containsKey(listener)) {
+				synchronized (instances) {
+					if (!instances.containsKey(listener)) {
+						try {
+							Constructor<T> constructor = clazz.getConstructor(
+									SharedPreferences.class,
+									OnSharedPreferenceChangeListener.class);
+							constructor.setAccessible(true);
+							instances.put(listener,
+									constructor.newInstance(prefs, listener));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+			return (T) instances.get(listener);
+		}
+
+		private OnSharedPreferenceChangeListener listener;
+
+		private SharedPreferences prefs;
+
+		public BaseOnSharedPreferenceChangeListener(SharedPreferences prefs,
+				OnSharedPreferenceChangeListener listener) {
+			this.prefs = prefs;
+			this.listener = listener;
+		}
+
+		@Override
+		public void onSharedPreferenceChanged(
+				android.content.SharedPreferences sharedPreferences, String key) {
+			listener.onSharedPreferenceChanged(prefs, key);
+		}
 	}
 
-	@Override
-	public android.content.SharedPreferences getPreferences() {
-		return prefs;
+	public static String setToString(Set<String> set) {
+		return new JSONArray(set).toString();
+	}
+
+	public static Set<String> stringToSet(String string) {
+		try {
+			JSONArray array = new JSONArray(string);
+			Set<String> set = new HashSet<String>(array.length());
+			for (int i = 0; i < array.length(); i++) {
+				set.add(array.getString(i));
+			}
+			return set;
+		} catch (JSONException e) {
+			return null;
+		}
+	}
+
+	private final android.content.SharedPreferences prefs;
+
+	public BaseSharedPreferences(android.content.SharedPreferences prefs) {
+		this.prefs = prefs;
 	}
 
 	@Override
@@ -139,6 +202,11 @@ public class BaseSharedPreferences implements SharedPreferences {
 	}
 
 	@Override
+	public android.content.SharedPreferences getPreferences() {
+		return prefs;
+	}
+
+	@Override
 	public String getString(String key, String defValue) {
 		return prefs.getString(key, defValue);
 	}
@@ -155,73 +223,6 @@ public class BaseSharedPreferences implements SharedPreferences {
 			} else {
 				return stringToSet(s);
 			}
-		}
-	}
-
-	public static String setToString(Set<String> set) {
-		return new JSONArray(set).toString();
-	}
-
-	public static Set<String> stringToSet(String string) {
-		try {
-			JSONArray array = new JSONArray(string);
-			Set<String> set = new HashSet<String>(array.length());
-			for (int i = 0; i < array.length(); i++) {
-				set.add(array.getString(i));
-			}
-			return set;
-		} catch (JSONException e) {
-			return null;
-		}
-	}
-
-	public static class BaseOnSharedPreferenceChangeListener implements
-			android.content.SharedPreferences.OnSharedPreferenceChangeListener {
-		private OnSharedPreferenceChangeListener listener;
-		private SharedPreferences prefs;
-
-		public BaseOnSharedPreferenceChangeListener(SharedPreferences prefs,
-				OnSharedPreferenceChangeListener listener) {
-			this.prefs = prefs;
-			this.listener = listener;
-		}
-
-		@Override
-		public void onSharedPreferenceChanged(
-				android.content.SharedPreferences sharedPreferences, String key) {
-			listener.onSharedPreferenceChanged(prefs, key);
-		}
-
-		public static BaseOnSharedPreferenceChangeListener obtain(
-				SharedPreferences prefs,
-				OnSharedPreferenceChangeListener listener) {
-			return obtain(prefs, listener,
-					BaseOnSharedPreferenceChangeListener.class);
-		}
-
-		private static final Map<OnSharedPreferenceChangeListener, BaseOnSharedPreferenceChangeListener> instances = new HashMap<SharedPreferences.OnSharedPreferenceChangeListener, BaseOnSharedPreferenceChangeListener>();
-
-		@SuppressWarnings("unchecked")
-		public static <T extends BaseOnSharedPreferenceChangeListener> T obtain(
-				SharedPreferences prefs,
-				OnSharedPreferenceChangeListener listener, Class<T> clazz) {
-			if (!instances.containsKey(listener)) {
-				synchronized (instances) {
-					if (!instances.containsKey(listener)) {
-						try {
-							Constructor<T> constructor = clazz.getConstructor(
-									SharedPreferences.class,
-									OnSharedPreferenceChangeListener.class);
-							constructor.setAccessible(true);
-							instances.put(listener,
-									constructor.newInstance(prefs, listener));
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}
-			return (T) instances.get(listener);
 		}
 	}
 

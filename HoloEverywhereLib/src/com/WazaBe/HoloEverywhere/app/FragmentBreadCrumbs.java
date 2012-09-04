@@ -18,20 +18,6 @@ import com.WazaBe.HoloEverywhere.R;
 
 public class FragmentBreadCrumbs extends ViewGroup implements
 		FragmentManager.OnBackStackChangedListener {
-	FragmentActivity mActivity;
-	LayoutInflater mInflater;
-	LinearLayout mContainer;
-	int mMaxVisible = -1;
-
-	// Hahah
-	BackStackEntry mTopEntry;
-	BackStackEntry mParentEntry;
-
-	/** Listener to inform when a parent entry is clicked */
-	private OnClickListener mParentClickListener;
-
-	private OnBreadCrumbClickListener mOnBreadCrumbClickListener;
-
 	/**
 	 * Interface to intercept clicks on the bread crumbs.
 	 */
@@ -54,6 +40,48 @@ public class FragmentBreadCrumbs extends ViewGroup implements
 		public boolean onBreadCrumbClick(BackStackEntry backStack, int flags);
 	}
 
+	FragmentActivity mActivity;
+	LinearLayout mContainer;
+	LayoutInflater mInflater;
+
+	int mMaxVisible = -1;
+	private OnBreadCrumbClickListener mOnBreadCrumbClickListener;
+
+	private OnClickListener mOnClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if (v.getTag() instanceof BackStackEntry) {
+				BackStackEntry bse = (BackStackEntry) v.getTag();
+				if (bse == mParentEntry) {
+					if (mParentClickListener != null) {
+						mParentClickListener.onClick(v);
+					}
+				} else {
+					if (mOnBreadCrumbClickListener != null) {
+						if (mOnBreadCrumbClickListener.onBreadCrumbClick(
+								bse == mTopEntry ? null : bse, 0)) {
+							return;
+						}
+					}
+					if (bse == mTopEntry) {
+						mActivity.getSupportFragmentManager().popBackStack();
+					} else {
+						mActivity.getSupportFragmentManager().popBackStack(
+								bse.getId(), 0);
+					}
+				}
+			}
+		}
+	};
+
+	/** Listener to inform when a parent entry is clicked */
+	private OnClickListener mParentClickListener;
+
+	BackStackEntry mParentEntry;
+
+	// Hahah
+	BackStackEntry mTopEntry;
+
 	public FragmentBreadCrumbs(Context context) {
 		this(context, null);
 	}
@@ -66,92 +94,19 @@ public class FragmentBreadCrumbs extends ViewGroup implements
 		super(context, attrs, defStyle);
 	}
 
-	/**
-	 * Attach the bread crumbs to their activity. This must be called once when
-	 * creating the bread crumbs.
-	 */
-	@SuppressLint("NewApi")
-	public void setActivity(FragmentActivity a) {
-		mActivity = a;
-		mInflater = (LayoutInflater) a
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		mContainer = (LinearLayout) mInflater.inflate(
-				R.layout.fragment_bread_crumbs, this, false);
-		addView(mContainer);
-		a.getSupportFragmentManager().addOnBackStackChangedListener(this);
-		updateCrumbs();
-		if (VERSION.SDK_INT >= 11) {
-			setLayoutTransition(new LayoutTransition());
-		}
-	}
-
-	/**
-	 * The maximum number of breadcrumbs to show. Older fragment headers will be
-	 * hidden from view.
-	 * 
-	 * @param visibleCrumbs
-	 *            the number of visible breadcrumbs. This should be greater than
-	 *            zero.
-	 */
-	public void setMaxVisible(int visibleCrumbs) {
-		if (visibleCrumbs < 1) {
-			throw new IllegalArgumentException(
-					"visibleCrumbs must be greater than zero");
-		}
-		mMaxVisible = visibleCrumbs;
-	}
-
-	/**
-	 * Inserts an optional parent entry at the first position in the
-	 * breadcrumbs. Selecting this entry will result in a call to the specified
-	 * listener's {@link android.view.View.OnClickListener#onClick(View)}
-	 * method.
-	 * 
-	 * @param title
-	 *            the title for the parent entry
-	 * @param shortTitle
-	 *            the short title for the parent entry
-	 * @param listener
-	 *            the {@link android.view.View.OnClickListener} to be called
-	 *            when clicked. A null will result in no action being taken when
-	 *            the parent entry is clicked.
-	 */
-	public void setParentTitle(CharSequence title, CharSequence shortTitle,
-			OnClickListener listener) {
-		mParentEntry = createBackStackEntry(title, shortTitle);
-		mParentClickListener = listener;
-		updateCrumbs();
-	}
-
-	/**
-	 * Sets a listener for clicks on the bread crumbs. This will be called
-	 * before the default click action is performed.
-	 * 
-	 * @param listener
-	 *            The new listener to set. Replaces any existing listener.
-	 */
-	public void setOnBreadCrumbClickListener(OnBreadCrumbClickListener listener) {
-		mOnBreadCrumbClickListener = listener;
-	}
-
 	private BackStackEntry createBackStackEntry(final CharSequence title,
 			final CharSequence shortTitle) {
-		if (title == null)
+		if (title == null) {
 			return null;
+		}
 		return new BackStackEntry() {
 			@Override
-			public String getName() {
-				return "backstackentry";
+			public CharSequence getBreadCrumbShortTitle() {
+				return shortTitle;
 			}
 
 			@Override
-			public int getId() {
-				// random id
-				return 2837452;
-			}
-
-			@Override
-			public int getBreadCrumbTitleRes() {
+			public int getBreadCrumbShortTitleRes() {
 				return 0;
 			}
 
@@ -161,25 +116,51 @@ public class FragmentBreadCrumbs extends ViewGroup implements
 			}
 
 			@Override
-			public int getBreadCrumbShortTitleRes() {
+			public int getBreadCrumbTitleRes() {
 				return 0;
 			}
 
 			@Override
-			public CharSequence getBreadCrumbShortTitle() {
-				return shortTitle;
+			public int getId() {
+				// random id
+				return 2837452;
+			}
+
+			@Override
+			public String getName() {
+				return "backstackentry";
 			}
 		};
 	}
 
 	/**
-	 * Set a custom title for the bread crumbs. This will be the first entry
-	 * shown at the left, representing the root of the bread crumbs. If the
-	 * title is null, it will not be shown.
+	 * Returns the pre-entry corresponding to the index. If there is a parent
+	 * and a top entry set, parent has an index of zero and top entry has an
+	 * index of 1. Returns null if the specified index doesn't exist or is null.
+	 * 
+	 * @param index
+	 *            should not be more than {@link #getPreEntryCount()} - 1
 	 */
-	public void setTitle(CharSequence title, CharSequence shortTitle) {
+	private BackStackEntry getPreEntry(int index) {
+		// If there's a parent entry, then return that for zero'th item, else
+		// top entry.
+		if (mParentEntry != null) {
+			return index == 0 ? mParentEntry : mTopEntry;
+		} else {
+			return mTopEntry;
+		}
+	}
 
-		mTopEntry = createBackStackEntry(title, shortTitle);
+	/**
+	 * Returns the number of entries before the backstack, including the title
+	 * of the current fragment and any custom parent title that was set.
+	 */
+	private int getPreEntryCount() {
+		return (mTopEntry != null ? 1 : 0) + (mParentEntry != null ? 1 : 0);
+	}
+
+	@Override
+	public void onBackStackChanged() {
 		updateCrumbs();
 	}
 
@@ -241,35 +222,83 @@ public class FragmentBreadCrumbs extends ViewGroup implements
 						measuredChildState << MEASURED_HEIGHT_STATE_SHIFT));
 	}
 
-	@Override
-	public void onBackStackChanged() {
+	/**
+	 * Attach the bread crumbs to their activity. This must be called once when
+	 * creating the bread crumbs.
+	 */
+	@SuppressLint("NewApi")
+	public void setActivity(FragmentActivity a) {
+		mActivity = a;
+		mInflater = (LayoutInflater) a
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mContainer = (LinearLayout) mInflater.inflate(
+				R.layout.fragment_bread_crumbs, this, false);
+		addView(mContainer);
+		a.getSupportFragmentManager().addOnBackStackChangedListener(this);
+		updateCrumbs();
+		if (VERSION.SDK_INT >= 11) {
+			setLayoutTransition(new LayoutTransition());
+		}
+	}
+
+	/**
+	 * The maximum number of breadcrumbs to show. Older fragment headers will be
+	 * hidden from view.
+	 * 
+	 * @param visibleCrumbs
+	 *            the number of visible breadcrumbs. This should be greater than
+	 *            zero.
+	 */
+	public void setMaxVisible(int visibleCrumbs) {
+		if (visibleCrumbs < 1) {
+			throw new IllegalArgumentException(
+					"visibleCrumbs must be greater than zero");
+		}
+		mMaxVisible = visibleCrumbs;
+	}
+
+	/**
+	 * Sets a listener for clicks on the bread crumbs. This will be called
+	 * before the default click action is performed.
+	 * 
+	 * @param listener
+	 *            The new listener to set. Replaces any existing listener.
+	 */
+	public void setOnBreadCrumbClickListener(OnBreadCrumbClickListener listener) {
+		mOnBreadCrumbClickListener = listener;
+	}
+
+	/**
+	 * Inserts an optional parent entry at the first position in the
+	 * breadcrumbs. Selecting this entry will result in a call to the specified
+	 * listener's {@link android.view.View.OnClickListener#onClick(View)}
+	 * method.
+	 * 
+	 * @param title
+	 *            the title for the parent entry
+	 * @param shortTitle
+	 *            the short title for the parent entry
+	 * @param listener
+	 *            the {@link android.view.View.OnClickListener} to be called
+	 *            when clicked. A null will result in no action being taken when
+	 *            the parent entry is clicked.
+	 */
+	public void setParentTitle(CharSequence title, CharSequence shortTitle,
+			OnClickListener listener) {
+		mParentEntry = createBackStackEntry(title, shortTitle);
+		mParentClickListener = listener;
 		updateCrumbs();
 	}
 
 	/**
-	 * Returns the number of entries before the backstack, including the title
-	 * of the current fragment and any custom parent title that was set.
+	 * Set a custom title for the bread crumbs. This will be the first entry
+	 * shown at the left, representing the root of the bread crumbs. If the
+	 * title is null, it will not be shown.
 	 */
-	private int getPreEntryCount() {
-		return (mTopEntry != null ? 1 : 0) + (mParentEntry != null ? 1 : 0);
-	}
+	public void setTitle(CharSequence title, CharSequence shortTitle) {
 
-	/**
-	 * Returns the pre-entry corresponding to the index. If there is a parent
-	 * and a top entry set, parent has an index of zero and top entry has an
-	 * index of 1. Returns null if the specified index doesn't exist or is null.
-	 * 
-	 * @param index
-	 *            should not be more than {@link #getPreEntryCount()} - 1
-	 */
-	private BackStackEntry getPreEntry(int index) {
-		// If there's a parent entry, then return that for zero'th item, else
-		// top entry.
-		if (mParentEntry != null) {
-			return index == 0 ? mParentEntry : mTopEntry;
-		} else {
-			return mTopEntry;
-		}
+		mTopEntry = createBackStackEntry(title, shortTitle);
+		updateCrumbs();
 	}
 
 	void updateCrumbs() {
@@ -326,30 +355,4 @@ public class FragmentBreadCrumbs extends ViewGroup implements
 			}
 		}
 	}
-
-	private OnClickListener mOnClickListener = new OnClickListener() {
-		public void onClick(View v) {
-			if (v.getTag() instanceof BackStackEntry) {
-				BackStackEntry bse = (BackStackEntry) v.getTag();
-				if (bse == mParentEntry) {
-					if (mParentClickListener != null) {
-						mParentClickListener.onClick(v);
-					}
-				} else {
-					if (mOnBreadCrumbClickListener != null) {
-						if (mOnBreadCrumbClickListener.onBreadCrumbClick(
-								bse == mTopEntry ? null : bse, 0)) {
-							return;
-						}
-					}
-					if (bse == mTopEntry) {
-						mActivity.getSupportFragmentManager().popBackStack();
-					} else {
-						mActivity.getSupportFragmentManager().popBackStack(
-								bse.getId(), 0);
-					}
-				}
-			}
-		}
-	};
 }

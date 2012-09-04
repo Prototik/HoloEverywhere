@@ -15,29 +15,37 @@ public class ExpandableListActivity extends Activity implements
 		ExpandableListView.OnGroupCollapseListener,
 		ExpandableListView.OnGroupExpandListener {
 	ExpandableListAdapter mAdapter;
-	ExpandableListView mList;
 	boolean mFinishedStart = false;
+	ExpandableListView mList;
 
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
+	private void ensureList() {
+		if (mList != null) {
+			return;
+		}
+		setContentView(R.layout.expandable_list_content);
 	}
 
+	public ExpandableListAdapter getExpandableListAdapter() {
+		return mAdapter;
+	}
+
+	public ExpandableListView getExpandableListView() {
+		ensureList();
+		return mList;
+	}
+
+	public long getSelectedId() {
+		return mList.getSelectedId();
+	}
+
+	public long getSelectedPosition() {
+		return mList.getSelectedPosition();
+	}
+
+	@Override
 	public boolean onChildClick(ExpandableListView parent, View v,
 			int groupPosition, int childPosition, long id) {
 		return false;
-	}
-
-	public void onGroupCollapse(int groupPosition) {
-	}
-
-	public void onGroupExpand(int groupPosition) {
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle state) {
-		ensureList();
-		super.onRestoreInstanceState(state);
 	}
 
 	@Override
@@ -63,36 +71,31 @@ public class ExpandableListActivity extends Activity implements
 		mFinishedStart = true;
 	}
 
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+	}
+
+	@Override
+	public void onGroupCollapse(int groupPosition) {
+	}
+
+	@Override
+	public void onGroupExpand(int groupPosition) {
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle state) {
+		ensureList();
+		super.onRestoreInstanceState(state);
+	}
+
 	public void setListAdapter(ExpandableListAdapter adapter) {
 		synchronized (this) {
 			ensureList();
 			mAdapter = adapter;
 			mList.setAdapter(adapter);
 		}
-	}
-
-	public ExpandableListView getExpandableListView() {
-		ensureList();
-		return mList;
-	}
-
-	public ExpandableListAdapter getExpandableListAdapter() {
-		return mAdapter;
-	}
-
-	private void ensureList() {
-		if (mList != null) {
-			return;
-		}
-		setContentView(R.layout.expandable_list_content);
-	}
-
-	public long getSelectedId() {
-		return mList.getSelectedId();
-	}
-
-	public long getSelectedPosition() {
-		return mList.getSelectedPosition();
 	}
 
 	public boolean setSelectedChild(int groupPosition, int childPosition,

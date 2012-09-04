@@ -260,26 +260,6 @@ public class ProgressBar extends View {
 		a.recycle();
 	}
 
-	private Drawable getDrawable(TypedArray a, int attr) {
-		Drawable d = a.getDrawable(attr);
-		try {
-			int id = a.getResourceId(attr, 0);
-			if (id == R.drawable.progress_small_holo
-					|| id == R.drawable.progress_medium_holo
-					|| id == R.drawable.progress_large_holo) {
-				LayerDrawable layers = (LayerDrawable) d;
-				com.WazaBe.HoloEverywhere.RotateDrawable r = new com.WazaBe.HoloEverywhere.RotateDrawable();
-				r.setState(
-						((RotateDrawable) layers.getDrawable(1)).getDrawable(),
-						true, true, 0.5f, 0.5f, 720f, 0f);
-				layers.setDrawableByLayerId(R.id.secondaryProgress, r);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return d;
-	}
-
 	private synchronized void doRefreshProgress(int id, int progress,
 			boolean fromUser, boolean callBackToApp) {
 		float scale = mMax > 0 ? (float) progress / (float) mMax : 0;
@@ -308,6 +288,26 @@ public class ProgressBar extends View {
 
 	protected Drawable getCurrentDrawable() {
 		return mCurrentDrawable;
+	}
+
+	private Drawable getDrawable(TypedArray a, int attr) {
+		Drawable d = a.getDrawable(attr);
+		try {
+			int id = a.getResourceId(attr, 0);
+			if (id == R.drawable.progress_small_holo
+					|| id == R.drawable.progress_medium_holo
+					|| id == R.drawable.progress_large_holo) {
+				LayerDrawable layers = (LayerDrawable) d;
+				com.WazaBe.HoloEverywhere.RotateDrawable r = new com.WazaBe.HoloEverywhere.RotateDrawable();
+				r.setState(
+						((RotateDrawable) layers.getDrawable(1)).getDrawable(),
+						true, true, 0.5f, 0.5f, 720f, 0f);
+				layers.setDrawableByLayerId(R.id.secondaryProgress, r);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return d;
 	}
 
 	private Shape getDrawableShape() {
