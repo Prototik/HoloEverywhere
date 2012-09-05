@@ -20,6 +20,7 @@ feel free to show me the points I am missing and I will fix them ASAP!
 ![Screenshot 2](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/screen2.png "Screenshot 2")
 ![Screenshot 3](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/screen3.png "Screenshot 3")
 ![Screenshot 4](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/screen4.png "Screenshot 4")
+![Screenshot 5](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/screen5.png "Screenshot 5")
 
 
 ##### "THE BEER-WARE LICENSE":
