@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <define file="blocks.xml" />
+  <!-- Black themes -->
+  <style name="Holo.Theme" parent="@android:style/Theme.Holo">
+    <include name="Base" />
+  </style>
+  <style name="Holo.Theme.Default.Sherlock" parent="@android:style/Theme.Holo">
+    <include name="Base" />
+  </style>
+  <style name="Holo.Theme.Sherlock" parent="@android:style/Theme.Holo">
+    <include name="Base" />
+  </style>
+  <style name="Holo.Theme.Sherlock.ForceOverflow" parent="@android:style/Theme.Holo">
+    <include name="Base" />
+  </style>
+  <!-- Light themes -->
+  <style name="Holo.Theme.Light" parent="@android:style/Theme.Holo.Light">
+    <include name="Base" />
+  </style>
+  <style name="Holo.Theme.Sherlock.Light" parent="@android:style/Theme.Holo.Light">
+    <include name="Base" />
+  </style>
+  <style name="Holo.Theme.Sherlock.Light.ForceOverflow" parent="@android:style/Theme.Holo.Light">
+    <include name="Base" />
+  </style>
+  <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+    <include name="Base" />
+  </style>
+  <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+    <include name="Base" />
+  </style>
+</resources>

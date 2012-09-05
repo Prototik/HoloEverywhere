@@ -235,18 +235,6 @@
     <!-- Sherlock themes -->
     <style name="Holo.Theme.Default.Sherlock" parent="@style/Theme.Sherlock"/>
     <style name="Holo.Theme.Sherlock" parent="@style/Theme.Sherlock">
-        <item name="android:scrollbarFadeDuration">250</item>
-        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
-        <item name="android:scrollbarSize">10dip</item>
-        <item name="android:scrollbarTrackHorizontal">@null</item>
-        <item name="android:scrollbarTrackVertical">@null</item>
-        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
-        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
-        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
-        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
-        <item name="android:preferenceStyle">@style/Holo.Preference</item>
-        <item name="android:divider">?android:attr/listDivider</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
         <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
         <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
@@ -269,6 +257,18 @@
         <item name="android:listPreferredItemHeight">64dip</item>
         <item name="android:listPreferredItemHeightSmall">48dip</item>
         <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
+        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
+        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
+        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
+        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
+        <item name="android:preferenceStyle">@style/Holo.Preference</item>
+        <item name="android:divider">?android:attr/listDivider</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:listViewStyle">@style/Holo.ListView</item>
         <item name="android:buttonStyle">@style/Holo.Button</item>
@@ -322,18 +322,6 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.ForceOverflow" parent="@style/Theme.Sherlock.ForceOverflow">
-        <item name="android:scrollbarFadeDuration">250</item>
-        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
-        <item name="android:scrollbarSize">10dip</item>
-        <item name="android:scrollbarTrackHorizontal">@null</item>
-        <item name="android:scrollbarTrackVertical">@null</item>
-        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
-        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
-        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
-        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
-        <item name="android:preferenceStyle">@style/Holo.Preference</item>
-        <item name="android:divider">?android:attr/listDivider</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
         <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
         <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
@@ -356,6 +344,18 @@
         <item name="android:listPreferredItemHeight">64dip</item>
         <item name="android:listPreferredItemHeightSmall">48dip</item>
         <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
+        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
+        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
+        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
+        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
+        <item name="android:preferenceStyle">@style/Holo.Preference</item>
+        <item name="android:divider">?android:attr/listDivider</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:listViewStyle">@style/Holo.ListView</item>
         <item name="android:buttonStyle">@style/Holo.Button</item>
@@ -409,18 +409,6 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light" parent="@style/Theme.Sherlock.Light">
-        <item name="android:scrollbarFadeDuration">250</item>
-        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
-        <item name="android:scrollbarSize">10dip</item>
-        <item name="android:scrollbarTrackHorizontal">@null</item>
-        <item name="android:scrollbarTrackVertical">@null</item>
-        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
-        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
-        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
-        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
-        <item name="android:preferenceStyle">@style/Holo.Preference</item>
-        <item name="android:divider">?android:attr/listDivider</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
         <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
         <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
@@ -443,6 +431,18 @@
         <item name="android:listPreferredItemHeight">64dip</item>
         <item name="android:listPreferredItemHeightSmall">48dip</item>
         <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
+        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
+        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
+        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
+        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
+        <item name="android:preferenceStyle">@style/Holo.Preference</item>
+        <item name="android:divider">?android:attr/listDivider</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
         <item name="android:buttonStyle">@style/Holo.Button.Light</item>
@@ -496,18 +496,6 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.ForceOverflow" parent="@style/Theme.Sherlock.Light.ForceOverflow">
-        <item name="android:scrollbarFadeDuration">250</item>
-        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
-        <item name="android:scrollbarSize">10dip</item>
-        <item name="android:scrollbarTrackHorizontal">@null</item>
-        <item name="android:scrollbarTrackVertical">@null</item>
-        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
-        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
-        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
-        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
-        <item name="android:preferenceStyle">@style/Holo.Preference</item>
-        <item name="android:divider">?android:attr/listDivider</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
         <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
         <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
@@ -530,6 +518,18 @@
         <item name="android:listPreferredItemHeight">64dip</item>
         <item name="android:listPreferredItemHeightSmall">48dip</item>
         <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
+        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
+        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
+        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
+        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
+        <item name="android:preferenceStyle">@style/Holo.Preference</item>
+        <item name="android:divider">?android:attr/listDivider</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
         <item name="android:buttonStyle">@style/Holo.Button.Light</item>
@@ -583,18 +583,6 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="@style/Theme.Sherlock.Light.DarkActionBar">
-        <item name="android:scrollbarFadeDuration">250</item>
-        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
-        <item name="android:scrollbarSize">10dip</item>
-        <item name="android:scrollbarTrackHorizontal">@null</item>
-        <item name="android:scrollbarTrackVertical">@null</item>
-        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
-        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
-        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
-        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
-        <item name="android:preferenceStyle">@style/Holo.Preference</item>
-        <item name="android:divider">?android:attr/listDivider</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
         <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
         <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
@@ -617,6 +605,18 @@
         <item name="android:listPreferredItemHeight">64dip</item>
         <item name="android:listPreferredItemHeightSmall">48dip</item>
         <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
+        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
+        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
+        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
+        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
+        <item name="android:preferenceStyle">@style/Holo.Preference</item>
+        <item name="android:divider">?android:attr/listDivider</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
         <item name="android:buttonStyle">@style/Holo.Button.Light</item>
@@ -670,18 +670,6 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow" parent="@style/Theme.Sherlock.Light.DarkActionBar.ForceOverflow">
-        <item name="android:scrollbarFadeDuration">250</item>
-        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
-        <item name="android:scrollbarSize">10dip</item>
-        <item name="android:scrollbarTrackHorizontal">@null</item>
-        <item name="android:scrollbarTrackVertical">@null</item>
-        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
-        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
-        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
-        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
-        <item name="android:preferenceStyle">@style/Holo.Preference</item>
-        <item name="android:divider">?android:attr/listDivider</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
         <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
         <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
@@ -704,6 +692,18 @@
         <item name="android:listPreferredItemHeight">64dip</item>
         <item name="android:listPreferredItemHeightSmall">48dip</item>
         <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
+        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
+        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
+        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
+        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
+        <item name="android:preferenceStyle">@style/Holo.Preference</item>
+        <item name="android:divider">?android:attr/listDivider</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
         <item name="android:buttonStyle">@style/Holo.Button.Light</item>
@@ -758,18 +758,6 @@
     </style>
     <!-- Standart themes -->
     <style name="Holo.Theme" parent="@android:style/Theme.Black">
-        <item name="android:scrollbarFadeDuration">250</item>
-        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
-        <item name="android:scrollbarSize">10dip</item>
-        <item name="android:scrollbarTrackHorizontal">@null</item>
-        <item name="android:scrollbarTrackVertical">@null</item>
-        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
-        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
-        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
-        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
-        <item name="android:preferenceStyle">@style/Holo.Preference</item>
-        <item name="android:divider">?android:attr/listDivider</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
         <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
         <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
@@ -792,6 +780,18 @@
         <item name="android:listPreferredItemHeight">64dip</item>
         <item name="android:listPreferredItemHeightSmall">48dip</item>
         <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
+        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
+        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
+        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
+        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
+        <item name="android:preferenceStyle">@style/Holo.Preference</item>
+        <item name="android:divider">?android:attr/listDivider</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:listViewStyle">@style/Holo.ListView</item>
         <item name="android:buttonStyle">@style/Holo.Button</item>
@@ -845,18 +845,6 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Light" parent="@android:style/Theme.Light">
-        <item name="android:scrollbarFadeDuration">250</item>
-        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
-        <item name="android:scrollbarSize">10dip</item>
-        <item name="android:scrollbarTrackHorizontal">@null</item>
-        <item name="android:scrollbarTrackVertical">@null</item>
-        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
-        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
-        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
-        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
-        <item name="android:preferenceStyle">@style/Holo.Preference</item>
-        <item name="android:divider">?android:attr/listDivider</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
         <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
         <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
@@ -879,6 +867,18 @@
         <item name="android:listPreferredItemHeight">64dip</item>
         <item name="android:listPreferredItemHeightSmall">48dip</item>
         <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarSize">10dip</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
+        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
+        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
+        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
+        <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
+        <item name="android:preferenceStyle">@style/Holo.Preference</item>
+        <item name="android:divider">?android:attr/listDivider</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
         <item name="android:buttonStyle">@style/Holo.Button.Light</item>
