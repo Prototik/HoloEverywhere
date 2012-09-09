@@ -1,6 +1,6 @@
 package com.WazaBe.HoloEverywhere.preference;
 
-import k.framework.lib.sw.Switch;
+//import k.framework.lib.sw.Switch;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -68,12 +68,14 @@ public class SwitchPreference extends TwoStatePreference {
 
 			sendAccessibilityEvent(checkableView);
 
-			if (checkableView instanceof Switch) {
+			/*
+            if (checkableView instanceof Switch) {
 				final Switch switchView = (Switch) checkableView;
 				switchView.setTextOn(mSwitchOn);
 				switchView.setTextOff(mSwitchOff);
 				switchView.setOnCheckedChangeListener(mListener);
 			}
+			*/
 		}
 
 		syncSummaryView(view);
