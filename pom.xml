@@ -11,7 +11,7 @@
 	<groupId>com.github.christopheversieux</groupId>
 	<artifactId>holoeverywhere-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.2.0-SNAPSHOT</version>
+	<version>1.2.0</version>
 
 	<name>HoloEverywhere (Parent)</name>
 	<description>Android library bringing Holo Theme to Android 1.6 and above.</description>
@@ -27,7 +27,8 @@
 		<url>https://github.com/ChristopheVersieux/HoloEverywhere</url>
 		<connection>scm:git:git://github.com/ChristopheVersieux/HoloEverywhere.git</connection>
 		<developerConnection>scm:git:git@github.com:ChristopheVersieux/HoloEverywhere.git</developerConnection>
-	</scm>
+	  <tag>holoeverywhere-1.2.0</tag>
+  </scm>
 
 	<developers>
 		<developer>
