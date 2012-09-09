@@ -311,8 +311,8 @@
         <item name="dialogButton">@drawable/dialog_button_dark</item>
         <item name="dialogButtonBorder">@drawable/dialog_button_border_dark</item>
         <item name="dialogStyle">@style/Holo.Dialog</item>
-        <item name="switchStyle">@style/Switch</item>
-        <item name="switchStyleOld">@style/Switch.Old</item>
+        <!--<item name="switchStyle">@style/Switch</item>-->
+        <!--<item name="switchStyleOld">@style/Switch.Old</item>-->
     </style>
     <style name="Holo.Theme.Sherlock.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
@@ -398,8 +398,8 @@
         <item name="dialogButton">@drawable/dialog_button_dark</item>
         <item name="dialogButtonBorder">@drawable/dialog_button_border_dark</item>
         <item name="dialogStyle">@style/Holo.Dialog</item>
-        <item name="switchStyle">@style/Switch</item>
-        <item name="switchStyleOld">@style/Switch.Old</item>
+        <!--<item name="switchStyle">@style/Switch</item>-->
+        <!--<item name="switchStyleOld">@style/Switch.Old</item>-->
     </style>
     <style name="Holo.Theme.Sherlock.ForceOverflow.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
@@ -485,8 +485,8 @@
         <item name="dialogButton">@drawable/dialog_button_light</item>
         <item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
         <item name="dialogStyle">@style/Holo.Dialog.Light</item>
-        <item name="switchStyle">@style/Switch.Light</item>
-        <item name="switchStyleOld">@style/Switch.Light.Old</item>
+        <!--<item name="switchStyle">@style/Switch.Light</item>-->
+        <!--<item name="switchStyleOld">@style/Switch.Light.Old</item>-->
     </style>
     <style name="Holo.Theme.Sherlock.Light.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
@@ -572,8 +572,8 @@
         <item name="dialogButton">@drawable/dialog_button_light</item>
         <item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
         <item name="dialogStyle">@style/Holo.Dialog.Light</item>
-        <item name="switchStyle">@style/Switch.Light</item>
-        <item name="switchStyleOld">@style/Switch.Light.Old</item>
+        <!--<item name="switchStyle">@style/Switch.Light</item>-->
+        <!--<item name="switchStyleOld">@style/Switch.Light.Old</item>-->
     </style>
     <style name="Holo.Theme.Sherlock.Light.ForceOverflow.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
@@ -659,8 +659,8 @@
         <item name="dialogButton">@drawable/dialog_button_light</item>
         <item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
         <item name="dialogStyle">@style/Holo.Dialog.Light</item>
-        <item name="switchStyle">@style/Switch.Light</item>
-        <item name="switchStyleOld">@style/Switch.Light.Old</item>
+        <!--<item name="switchStyle">@style/Switch.Light</item>-->
+        <!--<item name="switchStyleOld">@style/Switch.Light.Old</item>-->
     </style>
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
@@ -746,8 +746,8 @@
         <item name="dialogButton">@drawable/dialog_button_light</item>
         <item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
         <item name="dialogStyle">@style/Holo.Dialog.Light</item>
-        <item name="switchStyle">@style/Switch.Light</item>
-        <item name="switchStyleOld">@style/Switch.Light.Old</item>
+        <!--<item name="switchStyle">@style/Switch.Light</item>-->
+        <!--<item name="switchStyleOld">@style/Switch.Light.Old</item>-->
     </style>
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
@@ -834,8 +834,8 @@
         <item name="dialogButton">@drawable/dialog_button_dark</item>
         <item name="dialogButtonBorder">@drawable/dialog_button_border_dark</item>
         <item name="dialogStyle">@style/Holo.Dialog</item>
-        <item name="switchStyle">@style/Switch</item>
-        <item name="switchStyleOld">@style/Switch.Old</item>
+        <!--<item name="switchStyle">@style/Switch</item>-->
+        <!--<item name="switchStyleOld">@style/Switch.Old</item>-->
     </style>
     <style name="Holo.Theme.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
@@ -921,8 +921,8 @@
         <item name="dialogButton">@drawable/dialog_button_light</item>
         <item name="dialogButtonBorder">@drawable/dialog_button_border_light</item>
         <item name="dialogStyle">@style/Holo.Dialog.Light</item>
-        <item name="switchStyle">@style/Switch.Light</item>
-        <item name="switchStyleOld">@style/Switch.Light.Old</item>
+        <!--<item name="switchStyle">@style/Switch.Light</item>-->
+        <!--<item name="switchStyleOld">@style/Switch.Light.Old</item>-->
     </style>
     <style name="Holo.Theme.Light.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
