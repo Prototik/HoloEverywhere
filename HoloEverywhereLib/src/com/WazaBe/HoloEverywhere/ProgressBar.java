@@ -21,6 +21,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
+import android.os.Build.VERSION;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -294,9 +295,9 @@ public class ProgressBar extends View {
 		Drawable d = a.getDrawable(attr);
 		try {
 			int id = a.getResourceId(attr, 0);
-			if (id == R.drawable.progress_small_holo
-					|| id == R.drawable.progress_medium_holo
-					|| id == R.drawable.progress_large_holo) {
+			if ((id == R.drawable.progress_small_holo
+					|| id == R.drawable.progress_medium_holo || id == R.drawable.progress_large_holo)
+					&& VERSION.SDK_INT < 14) {
 				LayerDrawable layers = (LayerDrawable) d;
 				com.WazaBe.HoloEverywhere.RotateDrawable r = new com.WazaBe.HoloEverywhere.RotateDrawable();
 				r.setState(

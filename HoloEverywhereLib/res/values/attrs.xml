@@ -190,4 +190,7 @@
 		<attr name="dividerPadding" format="dimension" />
 		<attr name="android:divider" />
 	</declare-styleable>
+	<declare-styleable name="TextView">
+		<attr name="textAllCaps" />
+	</declare-styleable>
 </resources>
