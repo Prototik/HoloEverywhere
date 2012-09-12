@@ -88,8 +88,7 @@ public class AlertController {
 		public AlertParams(Context context) {
 			mContext = context;
 			mCancelable = true;
-			mInflater = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			mInflater = LayoutInflater.from(context);
 		}
 
 		public void apply(AlertController dialog) {
