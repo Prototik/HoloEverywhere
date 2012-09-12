@@ -65,7 +65,7 @@ public class SwitchPreference extends TwoStatePreference {
 		if (checkableView != null && checkableView instanceof Checkable) {
 			((Checkable) checkableView).setChecked(mChecked);
 			sendAccessibilityEvent(checkableView);
-            if (checkableView instanceof Switch) {
+			if (checkableView instanceof Switch) {
 				final Switch switchView = (Switch) checkableView;
 				switchView.setTextOn(mSwitchOn);
 				switchView.setTextOff(mSwitchOff);

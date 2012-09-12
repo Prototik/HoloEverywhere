@@ -160,21 +160,6 @@
     <item name="android:textColor">@color/holo_blue_light</item>
   </style>
   <style name="Holo.TextAppearance.DialogWindowTitle.Light" />
-  <style name="Holo.ListSeparator">
-    <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:textStyle">bold</item>
-    <item name="android:textColor">?android:textColorSecondary</item>
-    <item name="android:textSize">14sp</item>
-    <item name="android:gravity">center_vertical</item>
-    <item name="android:paddingLeft">8dip</item>
-    <item name="android:background">@drawable/list_section_divider_holo_dark</item>
-    <item name="android:textAllCaps">true</item>
-  </style>
-  <style name="Holo.ListSeparator.Light">
-    <item name="android:textColor">?android:textColorPrimaryInverse</item>
-    <item name="android:background">@drawable/list_section_divider_holo_light</item>
-  </style>
   <style name="Holo.Preference">
     <item name="layout">@layout/preference_holo</item>
   </style>
@@ -338,6 +323,20 @@
     <item name="android:textColor">@color/holo_blue_light</item>
   </style>
   <style name="Holo.TextAppearance.DialogWindowTitle.Light" />
+  <style name="Holo.TextView.ListSeparator">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textColor">?textColorSecondary</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:paddingLeft">8dip</item>
+    <item name="android:background">@drawable/list_section_divider_holo_dark</item>
+    <item name="android:textAllCaps">true</item>
+  </style>
+  <style name="Holo.TextView.ListSeparator.Light">
+    <item name="android:background">@drawable/list_section_divider_holo_light</item>
+  </style>
   <!-- Sherlock themes -->
   <style name="Holo.Theme.Default.Sherlock" parent="@style/Theme.Sherlock" />
   <style name="Holo.Theme.Sherlock" parent="@style/Theme.Sherlock">

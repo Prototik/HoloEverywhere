@@ -21,6 +21,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
+        <item name="android:dividerVertical">?dividerVertical</item>
+        <item name="dividerVertical">?android:listDivider</item>
+        <item name="android:dividerHorizontal">?dividerHorizontal</item>
+        <item name="dividerHorizontal">?android:listDivider</item>
+        <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
+        <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
+        <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
         <item name="android:alertDialogStyle">@style/Holo.AlertDialog</item>
@@ -28,6 +35,9 @@
         <item name="switchStyle">@style/Switch</item>
         <item name="switchStyleOld">@style/Switch.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_dark</item>
+        <item name="selectableItemBackground">@drawable/item_background_holo_dark</item>
+        <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
+        <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
     </style>
     <style name="Holo.Theme.Default.Sherlock" parent="@android:style/Theme.Holo">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -49,6 +59,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
+        <item name="android:dividerVertical">?dividerVertical</item>
+        <item name="dividerVertical">?android:listDivider</item>
+        <item name="android:dividerHorizontal">?dividerHorizontal</item>
+        <item name="dividerHorizontal">?android:listDivider</item>
+        <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
+        <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
+        <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
         <item name="android:alertDialogStyle">@style/Holo.AlertDialog</item>
@@ -56,6 +73,9 @@
         <item name="switchStyle">@style/Switch</item>
         <item name="switchStyleOld">@style/Switch.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_dark</item>
+        <item name="selectableItemBackground">@drawable/item_background_holo_dark</item>
+        <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
+        <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
     </style>
     <style name="Holo.Theme.Sherlock" parent="@android:style/Theme.Holo">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -77,6 +97,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
+        <item name="android:dividerVertical">?dividerVertical</item>
+        <item name="dividerVertical">?android:listDivider</item>
+        <item name="android:dividerHorizontal">?dividerHorizontal</item>
+        <item name="dividerHorizontal">?android:listDivider</item>
+        <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
+        <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
+        <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
         <item name="android:alertDialogStyle">@style/Holo.AlertDialog</item>
@@ -84,6 +111,9 @@
         <item name="switchStyle">@style/Switch</item>
         <item name="switchStyleOld">@style/Switch.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_dark</item>
+        <item name="selectableItemBackground">@drawable/item_background_holo_dark</item>
+        <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
+        <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
     </style>
     <style name="Holo.Theme.Sherlock.ForceOverflow" parent="@android:style/Theme.Holo">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -105,6 +135,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
+        <item name="android:dividerVertical">?dividerVertical</item>
+        <item name="dividerVertical">?android:listDivider</item>
+        <item name="android:dividerHorizontal">?dividerHorizontal</item>
+        <item name="dividerHorizontal">?android:listDivider</item>
+        <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
+        <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
+        <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
         <item name="android:alertDialogStyle">@style/Holo.AlertDialog</item>
@@ -112,6 +149,9 @@
         <item name="switchStyle">@style/Switch</item>
         <item name="switchStyleOld">@style/Switch.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_dark</item>
+        <item name="selectableItemBackground">@drawable/item_background_holo_dark</item>
+        <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
+        <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
     </style>
     <!-- Light themes -->
     <style name="Holo.Theme.Light" parent="@android:style/Theme.Holo.Light">
@@ -134,6 +174,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
+        <item name="android:dividerVertical">?dividerVertical</item>
+        <item name="dividerVertical">?android:listDivider</item>
+        <item name="android:dividerHorizontal">?dividerHorizontal</item>
+        <item name="dividerHorizontal">?android:listDivider</item>
+        <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
+        <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
+        <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="android:alertDialogStyle">@style/Holo.AlertDialog.Light</item>
@@ -162,6 +209,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
+        <item name="android:dividerVertical">?dividerVertical</item>
+        <item name="dividerVertical">?android:listDivider</item>
+        <item name="android:dividerHorizontal">?dividerHorizontal</item>
+        <item name="dividerHorizontal">?android:listDivider</item>
+        <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
+        <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
+        <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="android:alertDialogStyle">@style/Holo.AlertDialog.Light</item>
@@ -190,6 +244,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
+        <item name="android:dividerVertical">?dividerVertical</item>
+        <item name="dividerVertical">?android:listDivider</item>
+        <item name="android:dividerHorizontal">?dividerHorizontal</item>
+        <item name="dividerHorizontal">?android:listDivider</item>
+        <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
+        <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
+        <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="android:alertDialogStyle">@style/Holo.AlertDialog.Light</item>
@@ -218,6 +279,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
+        <item name="android:dividerVertical">?dividerVertical</item>
+        <item name="dividerVertical">?android:listDivider</item>
+        <item name="android:dividerHorizontal">?dividerHorizontal</item>
+        <item name="dividerHorizontal">?android:listDivider</item>
+        <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
+        <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
+        <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="android:alertDialogStyle">@style/Holo.AlertDialog.Light</item>
@@ -246,6 +314,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
+        <item name="android:dividerVertical">?dividerVertical</item>
+        <item name="dividerVertical">?android:listDivider</item>
+        <item name="android:dividerHorizontal">?dividerHorizontal</item>
+        <item name="dividerHorizontal">?android:listDivider</item>
+        <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
+        <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
+        <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="android:alertDialogStyle">@style/Holo.AlertDialog.Light</item>
