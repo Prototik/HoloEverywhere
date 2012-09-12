@@ -4,6 +4,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
+import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 import com.WazaBe.HoloEverywhere.util.BaseSharedPreferences;
 
@@ -19,6 +20,11 @@ public class TabActivity extends android.app.TabActivity {
 
 	public SharedPreferences getSupportSharedPreferences(String name, int mode) {
 		return new BaseSharedPreferences(getSharedPreferences(name, mode));
+	}
+
+	@Override
+	public Object getSystemService(String name) {
+		return LayoutInflater.getSystemService(super.getSystemService(name));
 	}
 
 	@Override

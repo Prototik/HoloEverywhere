@@ -3,4 +3,6 @@
 	<item name="progress" type="id"/>
 	<item name="secondaryProgress" type="id"/>
 	<item name="edit" type="id"/>
+	<item name="leftSpacer" type="id"/>
+	<item name="rightSpacer" type="id"/>
 </resources>

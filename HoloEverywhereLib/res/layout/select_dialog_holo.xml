@@ -3,8 +3,8 @@
 	android:id="@+id/select_dialog_listview"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	class="com.WazaBe.HoloEverywhere.AlertController$RecycleListView"
+	class="com.WazaBe.HoloEverywhere.internal.AlertController$RecycleListView"
 	android:cacheColorHint="@null"
-	android:divider="?android:attr/listDividerAlertDialog"
+	android:divider="?listDividerAlertDialog"
 	android:overScrollMode="ifContentScrolls"
 	android:scrollbars="vertical" />

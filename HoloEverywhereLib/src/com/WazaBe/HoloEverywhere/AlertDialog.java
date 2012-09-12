@@ -1,813 +1,447 @@
 package com.WazaBe.HoloEverywhere;
 
-import java.util.Map.Entry;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.TypedArray;
+import android.content.res.Resources.Theme;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
-import android.os.Build.VERSION;
+import android.os.Bundle;
+import android.os.Message;
 import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
+import android.view.ContextThemeWrapper;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager.LayoutParams;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-public class AlertDialog extends android.app.AlertDialog {
-	@SuppressLint("NewApi")
-	public static class Builder extends android.app.AlertDialog.Builder {
-		private static class InternalListListener implements
-				OnItemClickListener, OnItemSelectedListener {
+import com.WazaBe.HoloEverywhere.internal.AlertController;
 
-			private final Builder builder;
-			private OnClickListener listener;
-			private OnMultiChoiceClickListener multiListener;
-
-			public InternalListListener(OnClickListener listener,
-					Builder builder) {
-				this.listener = listener;
-				this.builder = builder;
-			}
-
-			public InternalListListener(
-					OnMultiChoiceClickListener multiListener, Builder builder) {
-				this.multiListener = multiListener;
-				this.builder = builder;
-			}
-
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view,
-					int position, long id) {
-				if (listener != null) {
-					listener.onClick(builder.getLastDialog(), position);
-				}
-			}
-
-			@Override
-			public void onItemSelected(AdapterView<?> adapterView, View view,
-					int position, long id) {
-				if (multiListener != null) {
-					multiListener
-							.onClick(builder.getLastDialog(), position,
-									((AbsListView) adapterView)
-											.isItemChecked(position));
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-
-			}
-		}
-
-		private ButtonEntry buttonNegative, buttonNeutral, buttonPositive;
-		private boolean cancelable = true;
-		private final Context context;
-		private Drawable icon;
-		private AlertDialog lastDialog;
-		private OnCancelListener onCancelListener;
-		private CharSequence title, message;
-		private boolean useNative = false;
-
-		private View view;
-
-		private int viewSpacingLeft = 0, viewSpacingTop = 0,
-				viewSpacingRight = 0, viewSpacingBottom = 0;
+public class AlertDialog extends Dialog implements DialogInterface {
+	public static class Builder {
+		private int mTheme;
+		private final AlertController.AlertParams P;
 
 		public Builder(Context context) {
-			this(context, useNative());
+			this(context, resolveDialogTheme(context, 0));
 		}
 
-		public Builder(Context context, boolean useNative) {
-			super(context);
-			setUseNative(useNative);
-			this.context = context;
+		public Builder(Context context, int theme) {
+			P = new AlertController.AlertParams(new ContextThemeWrapper(
+					context, resolveDialogTheme(context, theme)));
+			mTheme = theme;
 		}
 
-		public Context context() {
-			return context;
-		}
-
-		@Override
 		public AlertDialog create() {
-			AlertDialog dialog = new AlertDialog(context(), isCancelable(),
-					getOnCancelListener(), isUseNative());
-			if (title != null) {
-				dialog.setTitle(title);
+			final AlertDialog dialog = new AlertDialog(P.mContext, mTheme);
+			P.apply(dialog.mAlert);
+			dialog.setCancelable(P.mCancelable);
+			if (P.mCancelable) {
+				dialog.setCanceledOnTouchOutside(true);
 			}
-			if (message != null) {
-				dialog.setMessage(message);
+			dialog.setOnCancelListener(P.mOnCancelListener);
+			if (P.mOnKeyListener != null) {
+				dialog.setOnKeyListener(P.mOnKeyListener);
 			}
-			if (icon != null) {
-				dialog.setIcon(icon);
-			}
-			if (getPositiveButton() != null) {
-				dialog.setButton(DialogInterface.BUTTON_POSITIVE,
-						getPositiveButton().getKey(), getPositiveButton()
-								.getValue());
-			}
-			if (getNeutralButton() != null) {
-				dialog.setButton(DialogInterface.BUTTON_NEUTRAL,
-						getNeutralButton().getKey(), getNeutralButton()
-								.getValue());
-			}
-			if (getNegativeButton() != null) {
-				dialog.setButton(DialogInterface.BUTTON_NEGATIVE,
-						getNegativeButton().getKey(), getNegativeButton()
-								.getValue());
-			}
-			if (getView() != null) {
-				dialog.setView(getView(), getViewSpacingLeft(),
-						getViewSpacingTop(), getViewSpacingRight(),
-						getViewSpacingBottom());
-			}
-			return lastDialog = dialog;
+			return dialog;
 		}
 
-		public AlertDialog getLastDialog() {
-			return lastDialog;
+		public Context getContext() {
+			return P.mContext;
 		}
 
-		public LayoutInflater getLayoutInflater() {
-			return LayoutInflater.from(context);
-		}
-
-		public CharSequence getMessage() {
-			return message;
-		}
-
-		public ButtonEntry getNegativeButton() {
-			return buttonNegative;
-		}
-
-		public ButtonEntry getNeutralButton() {
-			return buttonNeutral;
-		}
-
-		public OnCancelListener getOnCancelListener() {
-			return onCancelListener;
-		}
-
-		public ButtonEntry getPositiveButton() {
-			return buttonPositive;
-		}
-
-		public CharSequence getTitle() {
-			return title;
-		}
-
-		public View getView() {
-			return view;
-		}
-
-		public int getViewSpacingBottom() {
-			return viewSpacingBottom;
-		}
-
-		public int getViewSpacingLeft() {
-			return viewSpacingLeft;
-		}
-
-		public int getViewSpacingRight() {
-			return viewSpacingRight;
-		}
-
-		public int getViewSpacingTop() {
-			return viewSpacingTop;
-		}
-
-		public boolean isCancelable() {
-			return cancelable;
-		}
-
-		public boolean isUseNative() {
-			return useNative;
-		}
-
-		public Builder removeNegativeButton() {
-			buttonNegative = null;
+		public Builder setAdapter(final ListAdapter adapter,
+				final OnClickListener listener) {
+			P.mAdapter = adapter;
+			P.mOnClickListener = listener;
 			return this;
 		}
 
-		public Builder removeNeutralButton() {
-			buttonNeutral = null;
-			return this;
-		}
-
-		public Builder removePositiveButton() {
-			buttonPositive = null;
-			return this;
-		}
-
-		@Override
 		public Builder setCancelable(boolean cancelable) {
-			this.cancelable = cancelable;
+			P.mCancelable = cancelable;
 			return this;
 		}
 
-		@Override
+		public Builder setCursor(final Cursor cursor,
+				final OnClickListener listener, String labelColumn) {
+			P.mCursor = cursor;
+			P.mLabelColumn = labelColumn;
+			P.mOnClickListener = listener;
+			return this;
+		}
+
+		public Builder setCustomTitle(View customTitleView) {
+			P.mCustomTitleView = customTitleView;
+			return this;
+		}
+
 		public Builder setIcon(Drawable icon) {
-			this.icon = icon;
+			P.mIcon = icon;
 			return this;
 		}
 
-		@Override
 		public Builder setIcon(int iconId) {
-			return setIcon(context().getResources().getDrawable(iconId));
-		}
-
-		@Override
-		public Builder setItems(CharSequence[] items, OnClickListener listener) {
-			return setItems(new ArrayAdapter<CharSequence>(context(),
-					android.R.layout.simple_list_item_1, items), -1, listener,
-					AbsListView.CHOICE_MODE_NONE);
-		}
-
-		@Override
-		public Builder setItems(int itemsId, OnClickListener listener) {
-			return setItems(ArrayAdapter.createFromResource(context(), itemsId,
-					android.R.layout.simple_list_item_1), -1, listener,
-					AbsListView.CHOICE_MODE_NONE);
-		}
-
-		public Builder setItems(ListAdapter adapter, boolean[] checkedItems,
-				OnMultiChoiceClickListener listener) {
-			ListView list = new ListView(context());
-			list.setAdapter(adapter);
-			if (listener != null) {
-				list.setOnItemSelectedListener(new InternalListListener(
-						listener, this));
-			}
-			for (int i = 0; i < checkedItems.length; i++) {
-				list.setItemChecked(i, checkedItems[i]);
-			}
-			list.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-			return setView(list);
-		}
-
-		public Builder setItems(ListAdapter adapter, int checkedItem,
-				OnClickListener listener, int choiceMode) {
-			ListView list = new ListView(context());
-			list.setAdapter(adapter);
-			if (listener != null) {
-				list.setOnItemClickListener(new InternalListListener(listener,
-						this));
-			}
-			if (checkedItem >= 0) {
-				list.setSelection(checkedItem);
-			}
-			list.setChoiceMode(choiceMode);
-			return setView(list);
-		}
-
-		@Override
-		public Builder setMessage(CharSequence message) {
-			this.message = message;
+			P.mIconId = iconId;
 			return this;
 		}
 
-		@Override
+		public Builder setIconAttribute(int attrId) {
+			TypedValue out = new TypedValue();
+			P.mContext.getTheme().resolveAttribute(attrId, out, true);
+			P.mIconId = out.resourceId;
+			return this;
+		}
+
+		public Builder setInverseBackgroundForced(boolean useInverseBackground) {
+			P.mForceInverseBackground = useInverseBackground;
+			return this;
+		}
+
+		public Builder setItems(CharSequence[] items,
+				final OnClickListener listener) {
+			P.mItems = items;
+			P.mOnClickListener = listener;
+			return this;
+		}
+
+		public Builder setItems(int itemsId, final OnClickListener listener) {
+			P.mItems = P.mContext.getResources().getTextArray(itemsId);
+			P.mOnClickListener = listener;
+			return this;
+		}
+
+		public Builder setMessage(CharSequence message) {
+			P.mMessage = message;
+			return this;
+		}
+
 		public Builder setMessage(int messageId) {
-			return setMessage(context().getText(messageId));
+			P.mMessage = P.mContext.getText(messageId);
+			return this;
 		}
 
-		@Override
 		public Builder setMultiChoiceItems(CharSequence[] items,
-				boolean[] checkedItems, OnMultiChoiceClickListener listener) {
-			return setItems(new ArrayAdapter<CharSequence>(context(),
-					android.R.layout.simple_list_item_multiple_choice, items),
-					checkedItems, listener);
+				boolean[] checkedItems,
+				final OnMultiChoiceClickListener listener) {
+			P.mItems = items;
+			P.mOnCheckboxClickListener = listener;
+			P.mCheckedItems = checkedItems;
+			P.mIsMultiChoice = true;
+			return this;
 		}
 
-		@Override
 		public Builder setMultiChoiceItems(Cursor cursor,
 				String isCheckedColumn, String labelColumn,
-				OnMultiChoiceClickListener listener) {
-			throw new RuntimeException(
-					"setMultiChoiceItems with Cursor temporary not supported");
-
+				final OnMultiChoiceClickListener listener) {
+			P.mCursor = cursor;
+			P.mOnCheckboxClickListener = listener;
+			P.mIsCheckedColumn = isCheckedColumn;
+			P.mLabelColumn = labelColumn;
+			P.mIsMultiChoice = true;
+			return this;
 		}
 
-		@Override
 		public Builder setMultiChoiceItems(int itemsId, boolean[] checkedItems,
-				OnMultiChoiceClickListener listener) {
-			return setItems(
-					ArrayAdapter.createFromResource(context(),
-							android.R.layout.simple_list_item_multiple_choice,
-							itemsId), checkedItems, listener);
+				final OnMultiChoiceClickListener listener) {
+			P.mItems = P.mContext.getResources().getTextArray(itemsId);
+			P.mOnCheckboxClickListener = listener;
+			P.mCheckedItems = checkedItems;
+			P.mIsMultiChoice = true;
+			return this;
 		}
 
-		@Override
 		public Builder setNegativeButton(CharSequence text,
-				OnClickListener listener) {
-			buttonNegative = new ButtonEntry(text, listener);
+				final OnClickListener listener) {
+			P.mNegativeButtonText = text;
+			P.mNegativeButtonListener = listener;
 			return this;
 		}
 
-		@Override
-		public Builder setNegativeButton(int resId, OnClickListener listener) {
-			return setNegativeButton(context().getText(resId), listener);
+		public Builder setNegativeButton(int textId,
+				final OnClickListener listener) {
+			P.mNegativeButtonText = P.mContext.getText(textId);
+			P.mNegativeButtonListener = listener;
+			return this;
 		}
 
-		@Override
 		public Builder setNeutralButton(CharSequence text,
-				OnClickListener listener) {
-			buttonNeutral = new ButtonEntry(text, listener);
+				final OnClickListener listener) {
+			P.mNeutralButtonText = text;
+			P.mNeutralButtonListener = listener;
 			return this;
 		}
 
-		@Override
-		public Builder setNeutralButton(int resId, OnClickListener listener) {
-			return setNeutralButton(context().getText(resId), listener);
+		public Builder setNeutralButton(int textId,
+				final OnClickListener listener) {
+			P.mNeutralButtonText = P.mContext.getText(textId);
+			P.mNeutralButtonListener = listener;
+			return this;
 		}
 
-		@Override
 		public Builder setOnCancelListener(OnCancelListener onCancelListener) {
-			this.onCancelListener = onCancelListener;
+			P.mOnCancelListener = onCancelListener;
 			return this;
 		}
 
-		@Override
+		public Builder setOnItemSelectedListener(
+				final AdapterView.OnItemSelectedListener listener) {
+			P.mOnItemSelectedListener = listener;
+			return this;
+		}
+
+		public Builder setOnKeyListener(OnKeyListener onKeyListener) {
+			P.mOnKeyListener = onKeyListener;
+			return this;
+		}
+
 		public Builder setPositiveButton(CharSequence text,
-				OnClickListener listener) {
-			buttonPositive = new ButtonEntry(text, listener);
+				final OnClickListener listener) {
+			P.mPositiveButtonText = text;
+			P.mPositiveButtonListener = listener;
 			return this;
 		}
 
-		@Override
-		public Builder setPositiveButton(int resId, OnClickListener listener) {
-			return setPositiveButton(context().getText(resId), listener);
+		public Builder setPositiveButton(int textId,
+				final OnClickListener listener) {
+			P.mPositiveButtonText = P.mContext.getText(textId);
+			P.mPositiveButtonListener = listener;
+			return this;
 		}
 
-		@Override
+		public Builder setRecycleOnMeasureEnabled(boolean enabled) {
+			P.mRecycleOnMeasure = enabled;
+			return this;
+		}
+
 		public Builder setSingleChoiceItems(CharSequence[] items,
-				int checkedItem, OnClickListener listener) {
-			return setSingleChoiceItems(new ArrayAdapter<CharSequence>(
-					context(), android.R.layout.simple_list_item_single_choice,
-					items), checkedItem, listener);
+				int checkedItem, final OnClickListener listener) {
+			P.mItems = items;
+			P.mOnClickListener = listener;
+			P.mCheckedItem = checkedItem;
+			P.mIsSingleChoice = true;
+			return this;
 		}
 
-		@Override
 		public Builder setSingleChoiceItems(Cursor cursor, int checkedItem,
-				String labelColumn, OnClickListener listener) {
-			throw new RuntimeException(
-					"setSingleChoiceItems with Cursor temporary not supported");
+				String labelColumn, final OnClickListener listener) {
+			P.mCursor = cursor;
+			P.mOnClickListener = listener;
+			P.mCheckedItem = checkedItem;
+			P.mLabelColumn = labelColumn;
+			P.mIsSingleChoice = true;
+			return this;
 		}
 
-		@Override
 		public Builder setSingleChoiceItems(int itemsId, int checkedItem,
-				OnClickListener listener) {
-			return setSingleChoiceItems(ArrayAdapter.createFromResource(
-					context(), itemsId,
-					android.R.layout.simple_list_item_single_choice),
-					checkedItem, listener);
+				final OnClickListener listener) {
+			P.mItems = P.mContext.getResources().getTextArray(itemsId);
+			P.mOnClickListener = listener;
+			P.mCheckedItem = checkedItem;
+			P.mIsSingleChoice = true;
+			return this;
 		}
 
-		@Override
 		public Builder setSingleChoiceItems(ListAdapter adapter,
-				int checkedItem, OnClickListener listener) {
-			return setItems(adapter, checkedItem, listener,
-					AbsListView.CHOICE_MODE_SINGLE);
+				int checkedItem, final OnClickListener listener) {
+			P.mAdapter = adapter;
+			P.mOnClickListener = listener;
+			P.mCheckedItem = checkedItem;
+			P.mIsSingleChoice = true;
+			return this;
 		}
 
-		@Override
 		public Builder setTitle(CharSequence title) {
-			this.title = title;
+			P.mTitle = title;
 			return this;
 		}
 
-		@Override
 		public Builder setTitle(int titleId) {
-			return setTitle(context().getText(titleId));
-		}
-
-		public Builder setUseNative(boolean useNative) {
-			this.useNative = useNative;
+			P.mTitle = P.mContext.getText(titleId);
 			return this;
 		}
 
-		public Builder setView(int resId) {
-			return setView(resId, 0, 0, 0, 0);
-		}
-
-		public Builder setView(int resId, int viewSpacingLeft,
-				int viewSpacingTop, int viewSpacingRight, int viewSpacingBottom) {
-			return setView(FontLoader.inflate(context(), resId),
-					viewSpacingLeft, viewSpacingTop, viewSpacingRight,
-					viewSpacingBottom);
-		}
-
-		@Override
 		public Builder setView(View view) {
-			setView(view, 0, 0, 0, 0);
+			P.mView = view;
+			P.mViewSpacingSpecified = false;
 			return this;
 		}
 
 		public Builder setView(View view, int viewSpacingLeft,
 				int viewSpacingTop, int viewSpacingRight, int viewSpacingBottom) {
-			this.view = view;
-			setViewSpacingLeft(viewSpacingLeft);
-			setViewSpacingTop(viewSpacingTop);
-			setViewSpacingRight(viewSpacingRight);
-			setViewSpacingBottom(viewSpacingBottom);
+			P.mView = view;
+			P.mViewSpacingSpecified = true;
+			P.mViewSpacingLeft = viewSpacingLeft;
+			P.mViewSpacingTop = viewSpacingTop;
+			P.mViewSpacingRight = viewSpacingRight;
+			P.mViewSpacingBottom = viewSpacingBottom;
 			return this;
 		}
 
-		public void setViewSpacingBottom(int viewSpacingBottom) {
-			this.viewSpacingBottom = viewSpacingBottom;
-		}
-
-		public void setViewSpacingLeft(int viewSpacingLeft) {
-			this.viewSpacingLeft = viewSpacingLeft;
-		}
-
-		public void setViewSpacingRight(int viewSpacingRight) {
-			this.viewSpacingRight = viewSpacingRight;
-		}
-
-		public void setViewSpacingTop(int viewSpacingTop) {
-			this.viewSpacingTop = viewSpacingTop;
+		public AlertDialog show() {
+			AlertDialog dialog = create();
+			dialog.show();
+			return dialog;
 		}
 	}
 
-	private static class ButtonEntry implements
-			Entry<CharSequence, OnClickListener> {
-		private OnClickListener listener;
-		private CharSequence text;
+	public static final int THEME_HOLO_DARK = 0;
+	public static final int THEME_HOLO_LIGHT = 1;
 
-		public ButtonEntry(CharSequence text, OnClickListener listener) {
-			this.text = text;
-			this.listener = listener;
-		}
-
-		@Override
-		public CharSequence getKey() {
-			return text;
-		}
-
-		@Override
-		public OnClickListener getValue() {
-			return listener;
-		}
-
-		@Override
-		public OnClickListener setValue(OnClickListener object) {
-			return listener = object;
-		}
-	}
-
-	private static class InternalListener implements
-			android.view.View.OnClickListener {
-		private AlertDialog dialog;
-		private OnClickListener listener;
-		private int which;
-
-		public InternalListener(final AlertDialog dialog,
-				OnClickListener listener, int which) {
-			this.dialog = dialog;
-			this.listener = listener;
-			this.which = which;
-		}
-
-		@Override
-		public void onClick(View v) {
-			if (listener != null) {
-				listener.onClick(dialog, which);
-			}
-			try {
-				dialog.dismiss();
-				dialog.cancel();
-			} catch (Exception e) {
-			}
-		}
-	}
-
-	private static int getDialogTheme(Context context) {
-		TypedValue value = new TypedValue();
-		context.getTheme().resolveAttribute(R.attr.dialogStyle, value, true);
-		return value.resourceId;
-	}
-
-	private static boolean useNative() {
-		return VERSION.SDK_INT >= 14;
-	}
-
-	private ButtonEntry buttonNegative, buttonNeutral, buttonPositive;
-	private DialogButtonBar buttonsLayout;
-	private View customTitleView, lastCustomTitleView;
-
-	private boolean dismissWhenOutside = true;
-
-	private Drawable icon;
-
-	private boolean oldTitleState = true;
-
-	private CharSequence title;
-
-	private boolean useNative;
-
-	private View view;
-
-	public AlertDialog(Context context) {
-		this(context, useNative());
-	}
-
-	public AlertDialog(Context context, boolean useNative) {
-		this(context, getDialogTheme(context), useNative);
-	}
-
-	public AlertDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
-		this(context, cancelable, cancelListener, useNative());
-	}
-
-	public AlertDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener, boolean useNative) {
-		super(context, getDialogTheme(context));
-		setCancelable(cancelable);
-		setOnCancelListener(cancelListener);
-		init(useNative);
-	}
-
-	public AlertDialog(Context context, int theme) {
-		this(context, theme, useNative());
-	}
-
-	public AlertDialog(Context context, int theme, boolean useNative) {
-		super(context, theme);
-		init(useNative);
-	}
-
-	private void checkTitleState() {
-		checkTitleState(icon != null || title != null && title.length() > 0);
-	}
-
-	private void checkTitleState(boolean newState) {
-		if (newState == oldTitleState) {
-			return;
-		}
-		oldTitleState = newState;
-		if (newState) {
-			if (lastCustomTitleView != null) {
-				setCustomTitle(lastCustomTitleView);
-			}
+	static int resolveDialogTheme(Context context, int resid) {
+		if (resid == THEME_HOLO_DARK) {
+			return R.style.Holo_Theme_Dialog_Alert;
+		} else if (resid == THEME_HOLO_LIGHT) {
+			return R.style.Holo_Theme_Dialog_Alert_Light;
+		} else if (resid >= 0x01000000) {
+			return resid;
 		} else {
-			setCustomTitle(null);
-		}
-	}
-
-	public View getCustomTitle() {
-		return customTitleView;
-	}
-
-	public Drawable getIcon() {
-		return icon;
-	}
-
-	@Override
-	public LayoutInflater getLayoutInflater() {
-		return LayoutInflater.from(getContext());
-	}
-
-	public CharSequence getTitle() {
-		return title;
-	}
-
-	public View getView() {
-		return view;
-	}
-
-	private void init(boolean useNative) {
-		this.useNative = useNative;
-		if (!useNative) {
-			getWindow().setBackgroundDrawableResource(R.drawable.transparent);
-			getWindow().setGravity(Gravity.CENTER);
-			getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,
-					ViewGroup.LayoutParams.WRAP_CONTENT);
-			getWindow().addFlags(LayoutParams.FLAG_DIM_BEHIND);
-			TypedArray a = getContext().obtainStyledAttributes(null,
-					R.styleable.AlertDialog, android.R.attr.alertDialogStyle,
-					R.style.Holo_AlertDialog);
-			setDialogAlpha(a.getFloat(R.styleable.AlertDialog_dialogAlpha,
-					0.986f));
-			setDialogDimAmount(a.getFloat(
-					R.styleable.AlertDialog_dialogDimAmount, 0.4f));
-			setDialogDismissWhenOutside(a.getBoolean(
-					R.styleable.AlertDialog_dialogDismissWhenOutside, true));
-			a.recycle();
-			buttonsLayout = new DialogButtonBar(getContext());
-			setCustomTitle(R.layout.alert_dialog_title);
-		}
-		checkTitleState(false);
-	}
-
-	public boolean isUseNative() {
-		return useNative;
-	}
-
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		if (dismissWhenOutside
-				&& (event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_OUTSIDE) {
-			dismiss();
-			return false;
-		}
-		return super.onTouchEvent(event);
-	}
-
-	private void pushButton(ButtonEntry button, int which) {
-		if (button == null || button.getKey() == null) {
-			return;
-		}
-		Button b = new Button(getContext());
-		b.setText(button.getKey());
-		b.setOnClickListener(new InternalListener(this, button.getValue(),
-				which));
-		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-				ViewGroup.LayoutParams.WRAP_CONTENT,
-				ViewGroup.LayoutParams.MATCH_PARENT);
-		layoutParams.weight = 1;
-		buttonsLayout.addView(b, layoutParams);
-	}
-
-	@Override
-	public void setButton(int whichButton, CharSequence text,
-			OnClickListener listener) {
-		if (useNative) {
-			super.setButton(whichButton, text, listener);
-		} else {
-			ButtonEntry entry = new ButtonEntry(text, listener);
-			switch (whichButton) {
-			case BUTTON_NEGATIVE:
-				buttonNegative = entry;
-				break;
-			case BUTTON_POSITIVE:
-				buttonPositive = entry;
-				break;
-			case BUTTON_NEUTRAL:
-				buttonNeutral = entry;
-				break;
-			}
-			updateButtonsLayout();
-		}
-	}
-
-	public void setCustomTitle(int resID) {
-		setCustomTitle(FontLoader.inflate(getContext(), resID));
-	}
-
-	@Override
-	public void setCustomTitle(View customTitleView) {
-		lastCustomTitleView = this.customTitleView;
-		super.setCustomTitle(this.customTitleView = customTitleView);
-	}
-
-	public void setDialogAlpha(float alpha) {
-		getWindow().getAttributes().alpha = alpha;
-	}
-
-	public void setDialogDimAmount(float dimAmount) {
-		getWindow().getAttributes().dimAmount = dimAmount;
-	}
-
-	public void setDialogDismissWhenOutside(boolean dismissWhenOutside) {
-		this.dismissWhenOutside = dismissWhenOutside;
-		if (dismissWhenOutside) {
-			getWindow().addFlags(LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
-			getWindow().addFlags(LayoutParams.FLAG_NOT_TOUCH_MODAL);
-		} else {
-			getWindow().clearFlags(LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
-			getWindow().clearFlags(LayoutParams.FLAG_NOT_TOUCH_MODAL);
-		}
-	}
-
-	@Override
-	public void setIcon(Drawable icon) {
-		this.icon = icon;
-		if (useNative) {
-			super.setIcon(icon);
-		} else {
-			checkTitleState();
-			if (getCustomTitle() != null) {
-				ImageView image = (ImageView) getCustomTitle().findViewById(
-						R.id.icon);
-				if (image != null) {
-					image.setImageDrawable(icon);
+			TypedValue outValue = new TypedValue();
+			int v = android.R.attr.alertDialogTheme;
+			Theme theme = context.getTheme();
+			while (true) {
+				theme.resolveAttribute(v, outValue, true);
+				if (outValue.type == TypedValue.TYPE_REFERENCE) {
+					v = outValue.resourceId;
+				} else {
+					return v;
 				}
 			}
 		}
 	}
 
-	@Override
-	public void setIcon(int resId) {
-		setIcon(getContext().getResources().getDrawable(resId));
+	private final AlertController mAlert;
+
+	protected AlertDialog(Context context) {
+		this(context, false, null, resolveDialogTheme(context, 0));
+	}
+
+	protected AlertDialog(Context context, boolean cancelable,
+			OnCancelListener cancelListener) {
+		this(context, cancelable, cancelListener,
+				resolveDialogTheme(context, 0));
+	}
+
+	protected AlertDialog(Context context, boolean cancelable,
+			OnCancelListener cancelListener, int theme) {
+		super(context, resolveDialogTheme(context, theme));
+		setCancelable(cancelable);
+		setOnCancelListener(cancelListener);
+		mAlert = new AlertController(context, this, getWindow());
+	}
+
+	protected AlertDialog(Context context, int theme) {
+		this(context, false, null, theme);
+	}
+
+	public Button getButton(int whichButton) {
+		return mAlert.getButton(whichButton);
+	}
+
+	public ListView getListView() {
+		return mAlert.getListView();
 	}
 
 	@Override
-	public void setMessage(CharSequence message) {
-		if (useNative) {
-			super.setMessage(message);
-		} else {
-			View customMessage = FontLoader.inflate(getContext(),
-					R.layout.alert_dialog_message);
-			TextView messageView = (TextView) customMessage
-					.findViewById(R.id.message);
-			messageView.setText(message);
-			setView(customMessage);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		mAlert.installContent();
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (mAlert.onKeyDown(keyCode, event)) {
+			return true;
 		}
+		return super.onKeyDown(keyCode, event);
 	}
 
-	public void setMessage(int res) {
-		setMessage(getContext().getText(res));
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if (mAlert.onKeyUp(keyCode, event)) {
+			return true;
+		}
+		return super.onKeyUp(keyCode, event);
+	}
+
+	@Deprecated
+	public void setButton(CharSequence text, Message msg) {
+		setButton(BUTTON_POSITIVE, text, msg);
+	}
+
+	@Deprecated
+	public void setButton(CharSequence text, final OnClickListener listener) {
+		setButton(BUTTON_POSITIVE, text, listener);
+	}
+
+	public void setButton(int whichButton, CharSequence text, Message msg) {
+		mAlert.setButton(whichButton, text, null, msg);
+	}
+
+	public void setButton(int whichButton, CharSequence text,
+			OnClickListener listener) {
+		mAlert.setButton(whichButton, text, listener, null);
+	}
+
+	@Deprecated
+	public void setButton2(CharSequence text, Message msg) {
+		setButton(BUTTON_NEGATIVE, text, msg);
+	}
+
+	@Deprecated
+	public void setButton2(CharSequence text, final OnClickListener listener) {
+		setButton(BUTTON_NEGATIVE, text, listener);
+	}
+
+	@Deprecated
+	public void setButton3(CharSequence text, Message msg) {
+		setButton(BUTTON_NEUTRAL, text, msg);
+	}
+
+	@Deprecated
+	public void setButton3(CharSequence text, final OnClickListener listener) {
+		setButton(BUTTON_NEUTRAL, text, listener);
+	}
+
+	public void setCustomTitle(View customTitleView) {
+		mAlert.setCustomTitle(customTitleView);
+	}
+
+	public void setIcon(Drawable icon) {
+		mAlert.setIcon(icon);
+	}
+
+	public void setIcon(int resId) {
+		mAlert.setIcon(resId);
+	}
+
+	public void setIconAttribute(int attrId) {
+		TypedValue out = new TypedValue();
+		getContext().getTheme().resolveAttribute(attrId, out, true);
+		mAlert.setIcon(out.resourceId);
+	}
+
+	public void setInverseBackgroundForced(boolean forceInverseBackground) {
+		mAlert.setInverseBackgroundForced(forceInverseBackground);
+	}
+
+	public void setMessage(CharSequence message) {
+		mAlert.setMessage(message);
 	}
 
 	@Override
 	public void setTitle(CharSequence title) {
-		this.title = title;
-		if (useNative) {
-			super.setTitle(title);
-		} else {
-			checkTitleState();
-			if (getCustomTitle() != null) {
-				TextView view = (TextView) getCustomTitle().findViewById(
-						R.id.alertTitle);
-				if (view != null) {
-					view.setText(title);
-				}
-			}
-		}
+		super.setTitle(title);
+		mAlert.setTitle(title);
 	}
 
-	@Override
-	public void setTitle(int res) {
-		setTitle(getContext().getText(res));
-	}
-
-	public void setView(int resId) {
-		setView(resId, 0, 0, 0, 0);
-	}
-
-	public void setView(int resId, int viewSpacingLeft, int viewSpacingTop,
-			int viewSpacingRight, int viewSpacingBottom) {
-		setView(View.inflate(getContext(), resId, null), viewSpacingLeft,
-				viewSpacingTop, viewSpacingRight, viewSpacingBottom);
-	}
-
-	@Override
 	public void setView(View view) {
-		setView(view, 0, 0, 0, 0);
+		mAlert.setView(view);
 	}
 
-	@Override
 	public void setView(View view, int viewSpacingLeft, int viewSpacingTop,
 			int viewSpacingRight, int viewSpacingBottom) {
-		this.view = view;
-		if (view == null) {
-			return;
-		}
-		FontLoader.loadFont(view);
-		if (useNative) {
-			super.setView(view, viewSpacingLeft, viewSpacingTop,
-					viewSpacingRight, viewSpacingBottom);
-		} else {
-			LinearLayout layout = new LinearLayout(getContext());
-			layout.setOrientation(LinearLayout.VERTICAL);
-			layout.addView(view);
-			try {
-				((LinearLayout) buttonsLayout.getParent())
-						.removeView(buttonsLayout);
-			} catch (Exception e) {
-			}
-			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-					ViewGroup.LayoutParams.MATCH_PARENT,
-					ViewGroup.LayoutParams.WRAP_CONTENT);
-			params.setMargins(0, viewSpacingBottom, 0, 0);
-			layout.addView(buttonsLayout, params);
-			super.setView(layout, viewSpacingLeft, viewSpacingTop,
-					viewSpacingRight, 0);
-		}
-	}
-
-	private void updateButtonsLayout() {
-		buttonsLayout.removeAllViews();
-		pushButton(buttonNegative, DialogInterface.BUTTON_NEGATIVE);
-		pushButton(buttonNeutral, DialogInterface.BUTTON_NEUTRAL);
-		pushButton(buttonPositive, DialogInterface.BUTTON_POSITIVE);
-		buttonsLayout.rebuild();
-		FontLoader.loadFont(buttonsLayout);
+		mAlert.setView(view, viewSpacingLeft, viewSpacingTop, viewSpacingRight,
+				viewSpacingBottom);
 	}
 }

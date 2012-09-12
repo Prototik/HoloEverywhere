@@ -6,7 +6,7 @@
 	android:layout_marginTop="5dip"
 	class="com.WazaBe.HoloEverywhere.AlertController$RecycleListView"
 	android:cacheColorHint="@null"
-	android:divider="?android:attr/listDividerAlertDialog"
+	android:divider="?listDividerAlertDialog"
 	android:overScrollMode="ifContentScrolls"
 	android:paddingLeft="16dip"
 	android:paddingRight="16dip"

@@ -6,10 +6,16 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
 public class Dialog extends android.app.Dialog {
+
 	private View contentView;
 
 	public Dialog(Context context) {
 		super(context);
+	}
+
+	public Dialog(Context context, boolean cancelable,
+			OnCancelListener cancelListener) {
+		super(context, cancelable, cancelListener);
 	}
 
 	public Dialog(Context context, int theme) {

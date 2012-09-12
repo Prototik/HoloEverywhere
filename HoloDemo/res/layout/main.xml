@@ -25,8 +25,8 @@
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:layout_weight="1"
-					android:onClick="showPreferences"
-					android:text="Preferences" />
+					android:onClick="showAlertDialog"
+					android:text="Dialog" />
 				<Button
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -41,8 +41,8 @@
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:layout_weight="1"
-					android:onClick="showAlertDialog"
-					android:text="Dialog" />
+					android:onClick="showPreferences"
+					android:text="Preferences" />
 				<Button
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -54,19 +54,19 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="EditText" />
-			<com.WazaBe.HoloEverywhere.ProgressBar
-				style="?android:progressBarStyleHorizontal"
+			<ProgressBar
+				style="?android:attr/progressBarStyleHorizontal"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:indeterminate="true"
+				android:indeterminateOnly="true"
 				android:paddingLeft="16dp"
 				android:paddingRight="16dp" />
 			<SeekBar
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:progress="75" />
-			<com.WazaBe.HoloEverywhere.ProgressBar
-				style="?android:progressBarStyleHorizontal"
+			<ProgressBar
+				style="?android:attr/progressBarStyleHorizontal"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:paddingLeft="16dp"
@@ -77,15 +77,15 @@
 				android:layout_height="wrap_content"
 				android:gravity="center"
 				android:orientation="horizontal" >
-				<com.WazaBe.HoloEverywhere.ProgressBar
+				<ProgressBar
 					style="?android:attr/progressBarStyleLarge"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content" />
-				<com.WazaBe.HoloEverywhere.ProgressBar
+				<ProgressBar
 					style="?android:attr/progressBarStyle"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content" />
-				<com.WazaBe.HoloEverywhere.ProgressBar
+				<ProgressBar
 					style="?android:attr/progressBarStyleSmall"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content" />

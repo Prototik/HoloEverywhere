@@ -11,6 +11,7 @@ import android.os.Message;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
+import android.view.View;
 import android.widget.TextView;
 
 public class ProgressDialog extends AlertDialog {
@@ -69,19 +70,14 @@ public class ProgressDialog extends AlertDialog {
 		initFormats();
 	}
 
-	public ProgressDialog(Context context, boolean useNative) {
-		super(context, useNative);
-		initFormats();
-	}
-
 	public ProgressDialog(Context context, int theme) {
 		super(context, theme);
 		initFormats();
 	}
 
-	public ProgressDialog(Context context, int theme, boolean useNative) {
-		super(context, theme, useNative);
-		initFormats();
+	@Override
+	public LayoutInflater getLayoutInflater() {
+		return LayoutInflater.from(getContext());
 	}
 
 	public int getMax() {
@@ -140,6 +136,7 @@ public class ProgressDialog extends AlertDialog {
 	protected void onCreate(Bundle savedInstanceState) {
 		TypedArray a = getContext().obtainStyledAttributes(null,
 				R.styleable.AlertDialog, android.R.attr.alertDialogStyle, 0);
+		View view;
 		if (mProgressStyle == STYLE_HORIZONTAL) {
 			mViewUpdateHandler = new Handler() {
 				@Override
@@ -167,21 +164,23 @@ public class ProgressDialog extends AlertDialog {
 					}
 				}
 			};
-			setView(a.getResourceId(
-					R.styleable.AlertDialog_android_horizontalProgressLayout,
-					R.layout.alert_dialog_progress));
-			mProgress = (ProgressBar) getView().findViewById(R.id.progress);
-			mProgressNumber = (TextView) getView().findViewById(
-					R.id.progress_number);
-			mProgressPercent = (TextView) getView().findViewById(
-					R.id.progress_percent);
+			view = getLayoutInflater().inflate(
+					a.getResourceId(
+							R.styleable.AlertDialog_horizontalProgressLayout,
+							R.layout.alert_dialog_progress_holo));
+			mProgress = (ProgressBar) view.findViewById(R.id.progress);
+			mProgressNumber = (TextView) view
+					.findViewById(R.id.progress_number);
+			mProgressPercent = (TextView) view
+					.findViewById(R.id.progress_percent);
 		} else {
-			setView(a.getResourceId(
-					R.styleable.AlertDialog_android_progressLayout,
-					R.layout.progress_dialog_holo));
-			mProgress = (ProgressBar) getView().findViewById(R.id.progress);
-			mMessageView = (TextView) getView().findViewById(R.id.message);
+			view = getLayoutInflater().inflate(
+					a.getResourceId(R.styleable.AlertDialog_progressLayout,
+							R.layout.progress_dialog_holo));
+			mProgress = (ProgressBar) view.findViewById(R.id.progress);
+			mMessageView = (TextView) view.findViewById(R.id.message);
 		}
+		setView(view);
 		a.recycle();
 		if (mMax > 0) {
 			setMax(mMax);

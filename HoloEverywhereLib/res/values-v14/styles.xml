@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <!-- Black themes -->
+    <!-- Dark themes -->
     <style name="Holo.Theme" parent="@android:style/Theme.Holo">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
         <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
@@ -21,9 +21,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
-        <item name="android:listPreferredItemHeight">64dip</item>
-        <item name="android:listPreferredItemHeightSmall">48dip</item>
-        <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:windowBackground">@drawable/background_holo_dark</item>
+        <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
+        <item name="android:alertDialogStyle">@style/Holo.AlertDialog</item>
+        <item name="android:alertDialogTheme">@style/Holo.Theme.Dialog.Alert</item>
+        <item name="switchStyle">@style/Switch</item>
+        <item name="switchStyleOld">@style/Switch.Old</item>
+        <item name="listDividerAlertDialog">@drawable/list_divider_holo_dark</item>
     </style>
     <style name="Holo.Theme.Default.Sherlock" parent="@android:style/Theme.Holo">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -45,9 +49,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
-        <item name="android:listPreferredItemHeight">64dip</item>
-        <item name="android:listPreferredItemHeightSmall">48dip</item>
-        <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:windowBackground">@drawable/background_holo_dark</item>
+        <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
+        <item name="android:alertDialogStyle">@style/Holo.AlertDialog</item>
+        <item name="android:alertDialogTheme">@style/Holo.Theme.Dialog.Alert</item>
+        <item name="switchStyle">@style/Switch</item>
+        <item name="switchStyleOld">@style/Switch.Old</item>
+        <item name="listDividerAlertDialog">@drawable/list_divider_holo_dark</item>
     </style>
     <style name="Holo.Theme.Sherlock" parent="@android:style/Theme.Holo">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -69,9 +77,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
-        <item name="android:listPreferredItemHeight">64dip</item>
-        <item name="android:listPreferredItemHeightSmall">48dip</item>
-        <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:windowBackground">@drawable/background_holo_dark</item>
+        <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
+        <item name="android:alertDialogStyle">@style/Holo.AlertDialog</item>
+        <item name="android:alertDialogTheme">@style/Holo.Theme.Dialog.Alert</item>
+        <item name="switchStyle">@style/Switch</item>
+        <item name="switchStyleOld">@style/Switch.Old</item>
+        <item name="listDividerAlertDialog">@drawable/list_divider_holo_dark</item>
     </style>
     <style name="Holo.Theme.Sherlock.ForceOverflow" parent="@android:style/Theme.Holo">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -93,9 +105,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
-        <item name="android:listPreferredItemHeight">64dip</item>
-        <item name="android:listPreferredItemHeightSmall">48dip</item>
-        <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:windowBackground">@drawable/background_holo_dark</item>
+        <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
+        <item name="android:alertDialogStyle">@style/Holo.AlertDialog</item>
+        <item name="android:alertDialogTheme">@style/Holo.Theme.Dialog.Alert</item>
+        <item name="switchStyle">@style/Switch</item>
+        <item name="switchStyleOld">@style/Switch.Old</item>
+        <item name="listDividerAlertDialog">@drawable/list_divider_holo_dark</item>
     </style>
     <!-- Light themes -->
     <style name="Holo.Theme.Light" parent="@android:style/Theme.Holo.Light">
@@ -118,9 +134,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
-        <item name="android:listPreferredItemHeight">64dip</item>
-        <item name="android:listPreferredItemHeightSmall">48dip</item>
-        <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:windowBackground">@drawable/background_holo_light</item>
+        <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
+        <item name="android:alertDialogStyle">@style/Holo.AlertDialog.Light</item>
+        <item name="android:alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
+        <item name="switchStyle">@style/Switch.Light</item>
+        <item name="switchStyleOld">@style/Switch.Light.Old</item>
+        <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light" parent="@android:style/Theme.Holo.Light">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -142,9 +162,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
-        <item name="android:listPreferredItemHeight">64dip</item>
-        <item name="android:listPreferredItemHeightSmall">48dip</item>
-        <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:windowBackground">@drawable/background_holo_light</item>
+        <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
+        <item name="android:alertDialogStyle">@style/Holo.AlertDialog.Light</item>
+        <item name="android:alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
+        <item name="switchStyle">@style/Switch.Light</item>
+        <item name="switchStyleOld">@style/Switch.Light.Old</item>
+        <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.ForceOverflow" parent="@android:style/Theme.Holo.Light">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -166,9 +190,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
-        <item name="android:listPreferredItemHeight">64dip</item>
-        <item name="android:listPreferredItemHeightSmall">48dip</item>
-        <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:windowBackground">@drawable/background_holo_light</item>
+        <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
+        <item name="android:alertDialogStyle">@style/Holo.AlertDialog.Light</item>
+        <item name="android:alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
+        <item name="switchStyle">@style/Switch.Light</item>
+        <item name="switchStyleOld">@style/Switch.Light.Old</item>
+        <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -190,9 +218,13 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
-        <item name="android:listPreferredItemHeight">64dip</item>
-        <item name="android:listPreferredItemHeightSmall">48dip</item>
-        <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:windowBackground">@drawable/background_holo_light</item>
+        <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
+        <item name="android:alertDialogStyle">@style/Holo.AlertDialog.Light</item>
+        <item name="android:alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
+        <item name="switchStyle">@style/Switch.Light</item>
+        <item name="switchStyleOld">@style/Switch.Light.Old</item>
+        <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow" parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -214,8 +246,12 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightSmall">48dip</item>
         <item name="listPreferredItemHeightLarge">80dip</item>
-        <item name="android:listPreferredItemHeight">64dip</item>
-        <item name="android:listPreferredItemHeightSmall">48dip</item>
-        <item name="android:listPreferredItemHeightLarge">80dip</item>
+        <item name="android:windowBackground">@drawable/background_holo_light</item>
+        <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
+        <item name="android:alertDialogStyle">@style/Holo.AlertDialog.Light</item>
+        <item name="android:alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
+        <item name="switchStyle">@style/Switch.Light</item>
+        <item name="switchStyleOld">@style/Switch.Light.Old</item>
+        <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
     </style>
 </resources>

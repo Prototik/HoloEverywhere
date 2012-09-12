@@ -26,8 +26,16 @@ public class HoloDemoActivity extends Activity {
 		s.setAdapter(adapter);
 	}
 
-	public void showProgressDialog(View v) {
-		Utils.showProgressDialog(this);
+	public void setClassicTheme(View v) {
+		Utils.changeToTheme(this, Utils.THEME_CLASSIC);
+	}
+
+	public void setDarkTheme(View v) {
+		Utils.changeToTheme(this, Utils.THEME_DARK);
+	}
+
+	public void setLightTheme(View v) {
+		Utils.changeToTheme(this, Utils.THEME_LIGHT);
 	}
 
 	public void showAlertDialog(View v) {
@@ -44,24 +52,16 @@ public class HoloDemoActivity extends Activity {
 		Utils.showDialog(this);
 	}
 
-	public void showToast(View v) {
-		Toast.makeText(this, "Toast", Toast.LENGTH_LONG).show();
-	}
-
-	public void setClassicTheme(View v) {
-		Utils.changeToTheme(this, Utils.THEME_CLASSIC);
-	}
-
-	public void setDarkTheme(View v) {
-		Utils.changeToTheme(this, Utils.THEME_DARK);
-	}
-
-	public void setLightTheme(View v) {
-		Utils.changeToTheme(this, Utils.THEME_LIGHT);
-	}
-
 	public void showPreferences(View v) {
 		Utils.showPreferences(this, false);
+	}
+
+	public void showProgressDialog(View v) {
+		Utils.showProgressDialog(this);
+	}
+
+	public void showToast(View v) {
+		Toast.makeText(this, "Toast", android.widget.Toast.LENGTH_LONG).show();
 	}
 
 }

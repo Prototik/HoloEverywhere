@@ -145,14 +145,15 @@ public final class PreferenceScreen extends PreferenceGroup implements
 		mListView = (ListView) childPrefScreen.findViewById(android.R.id.list);
 		bind(mListView);
 		final CharSequence title = getTitle();
-		AlertDialog dialog = mDialog = new AlertDialog(context);
-		dialog.setTitle(title);
-		dialog.setView(childPrefScreen);
-		dialog.setOnDismissListener(this);
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle(title);
+		builder.setView(childPrefScreen);
+		mDialog = builder.create();
+		mDialog.setOnDismissListener(this);
 		if (state != null) {
-			dialog.onRestoreInstanceState(state);
+			mDialog.onRestoreInstanceState(state);
 		}
-		getPreferenceManager().addPreferencesScreen(dialog);
-		dialog.show();
+		getPreferenceManager().addPreferencesScreen(mDialog);
+		mDialog.show();
 	}
 }

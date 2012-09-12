@@ -1,6 +1,5 @@
 package com.WazaBe.HoloEverywhere.preference;
 
-//import k.framework.lib.sw.Switch;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -9,6 +8,7 @@ import android.widget.Checkable;
 import android.widget.CompoundButton;
 
 import com.WazaBe.HoloEverywhere.R;
+import com.WazaBe.HoloEverywhere.Switch;
 
 public class SwitchPreference extends TwoStatePreference {
 	private class Listener implements CompoundButton.OnCheckedChangeListener {
@@ -61,23 +61,17 @@ public class SwitchPreference extends TwoStatePreference {
 	@Override
 	protected void onBindView(View view) {
 		super.onBindView(view);
-
 		View checkableView = view.findViewById(R.id.switchWidget);
 		if (checkableView != null && checkableView instanceof Checkable) {
 			((Checkable) checkableView).setChecked(mChecked);
-
 			sendAccessibilityEvent(checkableView);
-
-			/*
             if (checkableView instanceof Switch) {
 				final Switch switchView = (Switch) checkableView;
 				switchView.setTextOn(mSwitchOn);
 				switchView.setTextOff(mSwitchOff);
 				switchView.setOnCheckedChangeListener(mListener);
 			}
-			*/
 		}
-
 		syncSummaryView(view);
 	}
 

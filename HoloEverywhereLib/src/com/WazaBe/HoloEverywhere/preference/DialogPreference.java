@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.AlertDialog;
+import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
 
 public abstract class DialogPreference extends Preference implements
@@ -155,7 +156,7 @@ public abstract class DialogPreference extends Preference implements
 		if (mDialogLayoutResId == 0) {
 			return null;
 		}
-		return mBuilder.getLayoutInflater().inflate(mDialogLayoutResId, null);
+		return LayoutInflater.inflate(getContext(), mDialogLayoutResId);
 	}
 
 	protected void onDialogClosed(boolean positiveResult) {

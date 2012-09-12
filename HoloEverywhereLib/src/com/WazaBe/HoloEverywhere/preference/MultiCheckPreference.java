@@ -116,7 +116,7 @@ public class MultiCheckPreference extends DialogPreference {
 
 		if (mEntries == null || mEntryValues == null) {
 			throw new IllegalStateException(
-					"ListPreference requires an entries array and an entryValues array.");
+					"MultiCheckPreference requires an entries array and an entryValues array.");
 		}
 
 		mOrigValues = Arrays.copyOf(mSetValues, mSetValues.length);
@@ -133,7 +133,6 @@ public class MultiCheckPreference extends DialogPreference {
 	@Override
 	protected void onRestoreInstanceState(Parcelable state) {
 		if (state == null || !state.getClass().equals(SavedState.class)) {
-			// Didn't save state for us in onSaveInstanceState
 			super.onRestoreInstanceState(state);
 			return;
 		}

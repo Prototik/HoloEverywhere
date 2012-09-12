@@ -25,6 +25,18 @@ public class ActionBarHoloDemoActivity extends SActivity {
 		s.setAdapter(adapter);
 	}
 
+	public void setClassicTheme(View v) {
+		Utils.changeToTheme(this, Utils.THEME_CLASSIC);
+	}
+
+	public void setDarkTheme(View v) {
+		Utils.changeToTheme(this, Utils.THEME_DARK);
+	}
+
+	public void setLightTheme(View v) {
+		Utils.changeToTheme(this, Utils.THEME_LIGHT);
+	}
+
 	public void showAlertDialog(View v) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Work in Progress").setMessage("Dialog")
@@ -39,27 +51,15 @@ public class ActionBarHoloDemoActivity extends SActivity {
 		Utils.showDialog(this);
 	}
 
+	public void showPreferences(View v) {
+		Utils.showPreferences(this, true);
+	}
+
 	public void showProgressDialog(View v) {
 		Utils.showProgressDialog(this);
 	}
 
 	public void showToast(View v) {
-		Toast.makeText(this, "Toast", Toast.LENGTH_LONG).show();
-	}
-
-	public void setClassicTheme(View v) {
-		Utils.changeToTheme(this, Utils.THEME_CLASSIC);
-	}
-
-	public void setDarkTheme(View v) {
-		Utils.changeToTheme(this, Utils.THEME_DARK);
-	}
-
-	public void setLightTheme(View v) {
-		Utils.changeToTheme(this, Utils.THEME_LIGHT);
-	}
-
-	public void showPreferences(View v) {
-		Utils.showPreferences(this, true);
+		Toast.makeText(this, "Toast", android.widget.Toast.LENGTH_LONG).show();
 	}
 }

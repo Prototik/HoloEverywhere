@@ -2,11 +2,10 @@ package com.WazaBe.HoloEverywhere;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
+import android.view.Gravity;
 import android.widget.TextView;
 
 public class Toast extends android.widget.Toast {
-
 	private static final String TAG = "Toast";
 
 	public static Toast makeText(Context context, CharSequence s, int duration) {
@@ -15,6 +14,8 @@ public class Toast extends android.widget.Toast {
 		TextView view = new TextView(context);
 		view.setText(s);
 		view.setTextColor(0xFFDADADA);
+		view.setGravity(Gravity.CENTER);
+		view.setBackgroundResource(R.drawable.toast_frame);
 		toast.setView(view);
 		return toast;
 	}
@@ -24,28 +25,19 @@ public class Toast extends android.widget.Toast {
 				duration);
 	}
 
-	private View view;
-
 	public Toast(Context context) {
 		super(context);
 	}
 
 	@Override
 	public void setText(CharSequence s) {
-		if (view == null) {
+		if (getView() == null) {
 			return;
 		}
 		try {
-			((TextView) view).setText(s);
+			((TextView) getView()).setText(s);
 		} catch (ClassCastException e) {
 			Log.e(TAG, "This Toast was not created with Toast.makeText", e);
 		}
 	}
-
-	@Override
-	public void setView(View view) {
-		(this.view = view).setBackgroundResource(R.drawable.toast_frame);
-		super.setView(view);
-	}
-
 }

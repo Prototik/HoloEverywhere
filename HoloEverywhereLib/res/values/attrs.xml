@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<declare-styleable name="RotateDrawable">
-		<attr name="android:visible" />
-		<attr name="android:fromDegrees" />
-		<attr name="android:toDegrees" />
-		<attr name="android:pivotX" />
-		<attr name="android:pivotY" />
-		<attr name="android:drawable" />
-	</declare-styleable>
-	<attr name="dialogButton" format="reference" />
-	<attr name="dialogButtonBorder" format="reference" />
-	<attr name="dialogStyle" format="reference" />
+	<!-- Already defined in ABS -->
+	<!-- <attr name="listPreferredItemHeightSmall" format="dimension" /> -->
+	<!-- <attr name="dividerVertical" format="reference" /> -->
 	<attr name="preferenceFrameLayoutStyle" format="reference" />
 	<attr name="preferenceScreenStyle" format="reference" />
 	<attr name="preferenceFragmentStyle" format="reference" />
@@ -28,33 +20,64 @@
 	<attr name="seekBarPreferenceStyle" format="reference" />
 	<attr name="seekBarDialogPreferenceStyle" format="reference" />
 	<attr name="listPreferredItemHeight" format="dimension" />
-	<!-- Already defined in ABS -->
-	<!-- <attr name="listPreferredItemHeightSmall" format="dimension" /> -->
+	<attr name="alertDialogCenterButtons" format="boolean" />
+	<attr name="buttonBarStyle" format="reference" />
+	<attr name="buttonBarButtonStyle" format="reference" />
+	<attr name="borderlessButtonStyle" format="reference" />
+	<attr name="segmentedButtonStyle" format="reference" />
+	<attr name="selectableItemBackground" format="reference" />
 	<attr name="listPreferredItemHeightLarge" format="dimension" />
+	<attr name="dividerHorizontal" format="reference" />
+	<attr name="listDividerAlertDialog" format="reference" />
+	<attr name="gravity">
+		<flag name="top" value="0x30" />
+		<flag name="bottom" value="0x50" />
+		<flag name="left" value="0x03" />
+		<flag name="right" value="0x05" />
+		<flag name="center_vertical" value="0x10" />
+		<flag name="fill_vertical" value="0x70" />
+		<flag name="center_horizontal" value="0x01" />
+		<flag name="fill_horizontal" value="0x07" />
+		<flag name="center" value="0x11" />
+		<flag name="fill" value="0x77" />
+		<flag name="clip_vertical" value="0x80" />
+		<flag name="clip_horizontal" value="0x08" />
+		<flag name="start" value="0x00800003" />
+		<flag name="end" value="0x00800005" />
+	</attr>
+	<declare-styleable name="RotateDrawable">
+		<attr name="android:visible" />
+		<attr name="android:fromDegrees" />
+		<attr name="android:toDegrees" />
+		<attr name="android:pivotX" />
+		<attr name="android:pivotY" />
+		<attr name="android:drawable" />
+	</declare-styleable>
 	<declare-styleable name="DialogButtonBar.LayoutParams">
 		<attr name="android:hint" />
 	</declare-styleable>
 	<declare-styleable name="AlertDialog">
-		<attr name="android:fullDark" />
-		<attr name="android:topDark" />
-		<attr name="android:centerDark" />
-		<attr name="android:bottomDark" />
-		<attr name="android:fullBright" />
-		<attr name="android:topBright" />
-		<attr name="android:centerBright" />
-		<attr name="android:bottomBright" />
-		<attr name="android:bottomMedium" />
-		<attr name="android:centerMedium" />
-		<attr name="android:layout" />
-		<attr name="android:listLayout" />
-		<attr name="android:multiChoiceItemLayout" />
-		<attr name="android:singleChoiceItemLayout" />
-		<attr name="android:listItemLayout" />
-		<attr name="android:progressLayout" />
-		<attr name="android:horizontalProgressLayout" />
-		<attr name="dialogAlpha" format="reference|float" />
-		<attr name="dialogDimAmount" format="reference|float" />
-		<attr name="dialogDismissWhenOutside" format="reference|boolean" />
+		<attr name="fullDark" format="reference|color" />
+		<attr name="topDark" format="reference|color" />
+		<attr name="centerDark" format="reference|color" />
+		<attr name="bottomDark" format="reference|color" />
+		<attr name="fullBright" format="reference|color" />
+		<attr name="topBright" format="reference|color" />
+		<attr name="centerBright" format="reference|color" />
+		<attr name="bottomBright" format="reference|color" />
+		<attr name="bottomMedium" format="reference|color" />
+		<attr name="centerMedium" format="reference|color" />
+		<attr name="layout" />
+		<attr name="listLayout" format="reference" />
+		<attr name="multiChoiceItemLayout" format="reference" />
+		<attr name="singleChoiceItemLayout" format="reference" />
+		<attr name="listItemLayout" format="reference" />
+		<attr name="progressLayout" format="reference" />
+		<attr name="horizontalProgressLayout" format="reference" />
+		<attr name="gravity" />
+		<attr name="dimEnable" format="boolean" />
+		<attr name="dimFraction" format="fraction" />
+		<attr name="alpha" format="fraction" />
 	</declare-styleable>
 	<declare-styleable name="ProgressBar">
 		<attr name="android:max" />
@@ -155,5 +178,16 @@
 	</declare-styleable>
 	<declare-styleable name="SeekBarPreference">
 		<attr name="max" format="integer" />
+	</declare-styleable>
+	<declare-styleable name="LinearLayout">
+		<attr name="showDividers">
+			<flag name="none" value="0" />
+			<flag name="beginning" value="1" />
+			<flag name="middle" value="2" />
+			<flag name="end" value="4" />
+			<flag name="all" value="7" />
+		</attr>
+		<attr name="dividerPadding" format="dimension" />
+		<attr name="android:divider" />
 	</declare-styleable>
 </resources>

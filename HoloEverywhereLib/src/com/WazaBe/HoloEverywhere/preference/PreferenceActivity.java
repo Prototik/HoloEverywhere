@@ -24,7 +24,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.util.Xml;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -38,6 +37,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.ArrayAdapter;
+import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.app.FragmentBreadCrumbs;
 import com.WazaBe.HoloEverywhere.app.ListActivity;
@@ -370,6 +370,11 @@ public abstract class PreferenceActivity extends ListActivity implements
 		return mHeaders;
 	}
 
+	@Override
+	public LayoutInflater getLayoutInflater() {
+		return LayoutInflater.from(this);
+	}
+
 	protected Button getNextButton() {
 		return mNextButton;
 	}
@@ -385,6 +390,11 @@ public abstract class PreferenceActivity extends ListActivity implements
 			return mPreferenceManager.getPreferenceScreen();
 		}
 		return null;
+	}
+
+	@Override
+	public Object getSystemService(String name) {
+		return LayoutInflater.getSystemService(super.getSystemService(name));
 	}
 
 	public boolean hasHeaders() {

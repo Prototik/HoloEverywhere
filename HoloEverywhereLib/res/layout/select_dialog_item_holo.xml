@@ -5,7 +5,7 @@
 	android:layout_height="wrap_content"
 	android:ellipsize="marquee"
 	android:gravity="center_vertical"
-	android:minHeight="?android:attr/listPreferredItemHeightSmall"
+	android:minHeight="?listPreferredItemHeightSmall"
 	android:paddingLeft="16dip"
 	android:paddingRight="16dip"
 	android:textAppearance="?android:attr/textAppearanceListItemSmall"

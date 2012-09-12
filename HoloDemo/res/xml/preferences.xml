@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:holo="http://schemas.android.com/apk/res-auto"
-	xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:holo="http://schemas.android.com/apk/res-auto" >
 	<Preference
 		holo:icon="@drawable/prefs_icon"
 		holo:selectable="false"
@@ -26,6 +25,24 @@
 			holo:switchTextOff="OFF"
 			holo:switchTextOn="ON"
 			holo:title="Switch" />
+	</PreferenceCategory>
+	<PreferenceCategory holo:title="Lists" >
+		<ListPreference
+			holo:dialogIcon="@drawable/icon"
+			holo:dialogTitle="Skillet"
+			holo:entries="@array/skillet"
+			holo:entryValues="@array/skillet"
+			holo:negativeButtonText="I love Skillet!"
+			holo:summary="Skillet"
+			holo:title="List" />
+		<MultiSelectListPreference
+			holo:dialogIcon="@drawable/icon"
+			holo:dialogTitle="Nirvana"
+			holo:entries="@array/nirvana"
+			holo:entryValues="@array/nirvana"
+			holo:positiveButtonText="I love Nirvana!"
+			holo:summary="Nirvana"
+			holo:title="MultiSelectList" />
 	</PreferenceCategory>
 	<PreferenceCategory holo:title="Hidden (in the past)" >
 		<SeekBarPreference

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:holo="http://schemas.android.com/apk/res-auto"
 	android:id="@+id/parentPanel"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
@@ -32,7 +33,7 @@
 				android:layout_height="wrap_content"
 				android:paddingRight="8dip"
 				android:src="@null" />
-			<com.android.internal.widget.DialogTitle
+			<com.WazaBe.HoloEverywhere.internal.DialogTitle
 				android:id="@+id/alertTitle"
 				style="?android:attr/windowTitleStyle"
 				android:layout_width="match_parent"
@@ -46,7 +47,6 @@
 			android:layout_height="2dip"
 			android:background="@color/holo_blue_light"
 			android:visibility="gone" />
-		<!-- If the client uses a customTitle, it will be added here. -->
 	</LinearLayout>
 	<LinearLayout
 		android:id="@+id/contentPanel"
@@ -76,7 +76,7 @@
 		android:layout_height="wrap_content"
 		android:layout_weight="1" >
 		<FrameLayout
-			android:id="@+android:id/custom"
+			android:id="@+id/custom"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content" />
 	</FrameLayout>
@@ -84,22 +84,24 @@
 		android:id="@+id/buttonPanel"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:divider="?android:attr/dividerHorizontal"
-		android:dividerPadding="0dip"
 		android:minHeight="@dimen/alert_dialog_button_bar_height"
-		android:orientation="vertical"
-		android:showDividers="beginning" >
+		android:orientation="vertical" >
+		<View
+			android:id="@+id/buttonPanelTopDivivder"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="?dividerHorizontal" />
 		<LinearLayout
-			style="?android:attr/buttonBarStyle"
+			style="?buttonBarStyle"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:measureWithLargestChild="true"
 			android:orientation="horizontal" >
 			<Button
 				android:id="@+id/button2"
-				style="?android:attr/buttonBarButtonStyle"
+				style="?buttonBarButtonStyle"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_height="match_parent"
 				android:layout_gravity="left"
 				android:layout_weight="1"
 				android:maxLines="2"
@@ -107,9 +109,9 @@
 				android:textSize="14sp" />
 			<Button
 				android:id="@+id/button3"
-				style="?android:attr/buttonBarButtonStyle"
+				style="?buttonBarButtonStyle"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_height="match_parent"
 				android:layout_gravity="center_horizontal"
 				android:layout_weight="1"
 				android:maxLines="2"
@@ -117,9 +119,9 @@
 				android:textSize="14sp" />
 			<Button
 				android:id="@+id/button1"
-				style="?android:attr/buttonBarButtonStyle"
+				style="?buttonBarButtonStyle"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_height="match_parent"
 				android:layout_gravity="right"
 				android:layout_weight="1"
 				android:maxLines="2"

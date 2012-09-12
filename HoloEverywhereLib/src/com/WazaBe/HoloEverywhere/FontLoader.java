@@ -49,11 +49,11 @@ public final class FontLoader {
 	private static final String TAG = "FontLoader";
 
 	public static View inflate(Context context, int res) {
-		return inflate(context, res, null);
+		return loadFont(LayoutInflater.inflate(context, res));
 	}
 
 	public static View inflate(Context context, int res, ViewGroup parent) {
-		return loadFont(View.inflate(context, res, parent));
+		return loadFont(LayoutInflater.inflate(context, res, parent));
 	}
 
 	@Deprecated

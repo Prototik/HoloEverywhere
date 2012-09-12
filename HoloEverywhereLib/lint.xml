@@ -5,4 +5,8 @@
         <ignore path="src/com/WazaBe/HoloEverywhere/preference/PreferenceActivity.java" />
         <ignore path="src/com/WazaBe/HoloEverywhere/preference/PreferenceFragment.java" />
     </issue>
+    <issue id="NewApi">
+        <ignore path="src/com/WazaBe/HoloEverywhere/AlertDialog.java" />
+        <ignore path="src/com/WazaBe/HoloEverywhere/Dialog.java" />
+    </issue>
 </lint>

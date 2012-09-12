@@ -4,6 +4,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
+import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.actionbarsherlock.app.SherlockExpandableListActivity;
 
 public abstract class SExpandableListActivity extends
@@ -11,6 +12,16 @@ public abstract class SExpandableListActivity extends
 	@Override
 	public void addContentView(View view, LayoutParams params) {
 		super.addContentView(FontLoader.loadFont(view), params);
+	}
+
+	@Override
+	public LayoutInflater getLayoutInflater() {
+		return LayoutInflater.from(this);
+	}
+
+	@Override
+	public Object getSystemService(String name) {
+		return LayoutInflater.getSystemService(super.getSystemService(name));
 	}
 
 	@Override
