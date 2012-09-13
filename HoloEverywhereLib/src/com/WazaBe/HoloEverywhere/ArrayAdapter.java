@@ -41,13 +41,13 @@ public class ArrayAdapter<T> extends android.widget.ArrayAdapter<T> {
 
 	@Override
 	public View getDropDownView(int position, View convertView, ViewGroup parent) {
-		return FontLoader.loadFont(super.getDropDownView(position, convertView,
+		return FontLoader.apply(super.getDropDownView(position, convertView,
 				parent));
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		return FontLoader
-				.loadFont(super.getView(position, convertView, parent));
+				.apply(super.getView(position, convertView, parent));
 	}
 }

@@ -135,24 +135,31 @@
 					android:drawSelectorOnTop="true"
 					android:prompt="@string/spinner_prompt" />
 			</LinearLayout>
+			<AutoCompleteTextView
+				android:id="@+id/autoCompleteTextView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="Enter country name" />
 		</LinearLayout>
 	</ScrollView>
-	<LinearLayout
+	<View
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content" >
+		android:layout_height="1dp"
+		android:background="?dividerVertical" />
+	<LinearLayout
+		style="?buttonBarStyle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:minHeight="@dimen/alert_dialog_button_bar_height" >
 		<Button
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:onClick="setClassicTheme"
-			android:text="Classic" />
-		<Button
+			style="?buttonBarButtonStyle"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
 			android:onClick="setDarkTheme"
 			android:text="Dark" />
 		<Button
+			style="?buttonBarButtonStyle"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"

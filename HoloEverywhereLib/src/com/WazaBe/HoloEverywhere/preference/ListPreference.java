@@ -7,8 +7,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 
-import com.WazaBe.HoloEverywhere.AlertDialog.Builder;
 import com.WazaBe.HoloEverywhere.R;
+import com.WazaBe.HoloEverywhere.app.AlertDialog.Builder;
 
 public class ListPreference extends DialogPreference {
 	private static class SavedState extends BaseSavedState {

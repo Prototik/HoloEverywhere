@@ -8,7 +8,7 @@ import android.widget.Checkable;
 import android.widget.CompoundButton;
 
 import com.WazaBe.HoloEverywhere.R;
-import com.WazaBe.HoloEverywhere.Switch;
+import com.WazaBe.HoloEverywhere.widget.Switch;
 
 public class SwitchPreference extends TwoStatePreference {
 	private class Listener implements CompoundButton.OnCheckedChangeListener {

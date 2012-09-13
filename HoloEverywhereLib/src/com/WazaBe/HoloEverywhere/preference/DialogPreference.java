@@ -15,9 +15,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.WazaBe.HoloEverywhere.AlertDialog;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
+import com.WazaBe.HoloEverywhere.app.AlertDialog;
 
 public abstract class DialogPreference extends Preference implements
 		DialogInterface.OnClickListener, DialogInterface.OnDismissListener,

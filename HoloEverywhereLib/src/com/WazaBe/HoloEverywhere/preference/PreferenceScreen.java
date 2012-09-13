@@ -12,8 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.WazaBe.HoloEverywhere.AlertDialog;
 import com.WazaBe.HoloEverywhere.R;
+import com.WazaBe.HoloEverywhere.app.AlertDialog;
 
 public final class PreferenceScreen extends PreferenceGroup implements
 		AdapterView.OnItemClickListener, DialogInterface.OnDismissListener {

@@ -6,4 +6,5 @@
 	<string name="loading">Loading\u2026</string>
 	<string name="capital_on">ON</string>
 	<string name="capital_off">OFF</string>
+	<string name="candidates_style"><u>candidates</u></string>
 </resources>

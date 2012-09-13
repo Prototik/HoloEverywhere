@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
 
+import com.WazaBe.HoloEverywhere.Settings;
 import com.WazaBe.HoloEverywhere.util.XmlUtils;
 
 class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
@@ -38,7 +39,7 @@ class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
 
 	private void init(PreferenceManager preferenceManager) {
 		mPreferenceManager = preferenceManager;
-		setDefaultPackage("com.WazaBe.HoloEverywhere.preference.");
+		setDefaultPackage(Settings.getPreferencePackage() + ".");
 	}
 
 	@Override
@@ -49,7 +50,6 @@ class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
 
 		if (tag.equals(INTENT_TAG_NAME)) {
 			Intent intent = null;
-
 			try {
 				intent = Intent.parseIntent(getContext().getResources(),
 						parser, attrs);
@@ -59,7 +59,6 @@ class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
 				ex.initCause(e);
 				throw ex;
 			}
-
 			if (intent != null) {
 				parentPreference.setIntent(intent);
 			}
@@ -85,8 +84,6 @@ class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
 	@Override
 	protected PreferenceGroup onMergeRoots(PreferenceGroup givenRoot,
 			boolean attachToGivenRoot, PreferenceGroup xmlRoot) {
-		// If we were given a Preferences, use it as the root (ignoring the root
-		// Preferences from the XML file).
 		if (givenRoot == null) {
 			xmlRoot.onAttachedToHierarchy(mPreferenceManager);
 			return xmlRoot;
@@ -94,5 +91,4 @@ class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
 			return givenRoot;
 		}
 	}
-
 }

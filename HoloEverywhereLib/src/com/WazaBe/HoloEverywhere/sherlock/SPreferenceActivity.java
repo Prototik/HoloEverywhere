@@ -1,5 +1,6 @@
 package com.WazaBe.HoloEverywhere.sherlock;
 
+import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -231,6 +232,7 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 		return getSherlock().startActionMode(callback);
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public void supportInvalidateOptionsMenu() {
 		invalidateOptionsMenu();

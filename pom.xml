@@ -11,7 +11,7 @@
 	<groupId>com.github.christopheversieux</groupId>
 	<artifactId>holoeverywhere-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.2.1-SNAPSHOT</version>
+	<version>1.2.2-SNAPSHOT</version>
 
 	<name>HoloEverywhere (Parent)</name>
 	<description>Android library bringing Holo Theme to Android 1.6 and above.</description>
@@ -69,7 +69,7 @@
 		<java.version>1.6</java.version>
 		<android.version>4.1.1.4</android.version>
 		<android.platform>16</android.platform>
-		<android-support.version>r7</android-support.version>
+		<android-support.version>r10</android-support.version>
 
 		<android-maven.version>3.3.0</android-maven.version>
 

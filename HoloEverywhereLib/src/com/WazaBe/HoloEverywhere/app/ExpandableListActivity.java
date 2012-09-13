@@ -10,7 +10,7 @@ import android.widget.ExpandableListView;
 
 import com.WazaBe.HoloEverywhere.R;
 
-public class ExpandableListActivity extends Activity implements
+public abstract class ExpandableListActivity extends Activity implements
 		OnCreateContextMenuListener, ExpandableListView.OnChildClickListener,
 		ExpandableListView.OnGroupCollapseListener,
 		ExpandableListView.OnGroupExpandListener {

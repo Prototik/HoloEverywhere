@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import com.WazaBe.HoloEverywhere.R;
 
-public class ListActivity extends Activity {
+public abstract class ListActivity extends Activity {
 	protected ListAdapter mAdapter;
 	private boolean mFinishedStart = false;
 

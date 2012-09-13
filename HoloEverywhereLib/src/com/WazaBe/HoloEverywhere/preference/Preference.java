@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.R;
+import com.WazaBe.HoloEverywhere.Settings;
 import com.WazaBe.HoloEverywhere.util.CharSequences;
 
 public class Preference implements Comparable<Preference>,
@@ -126,8 +127,7 @@ public class Preference implements Comparable<Preference>,
 		mShouldDisableView = a.getBoolean(
 				R.styleable.Preference_shouldDisableView, mShouldDisableView);
 		a.recycle();
-		if (!getClass().getName().startsWith(
-				"com.WazaBe.HoloEverywhere.preference")) {
+		if (!getClass().getName().startsWith(Settings.getPreferencePackage())) {
 			mHasSpecifiedLayout = true;
 		}
 	}

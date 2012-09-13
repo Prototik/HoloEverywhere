@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -39,48 +37,29 @@ public final class FontLoader {
 	}
 
 	private static final SparseArray<Typeface> fontArray = new SparseArray<Typeface>();
-
-	@Deprecated
-	private static final Map<String, Typeface> fontMapOld = new HashMap<String, Typeface>();
-
-	@Deprecated
-	public static final String ROBOTO_REGULAR = "Roboto-Regular.ttf";
-
 	private static final String TAG = "FontLoader";
 
 	public static View inflate(Context context, int res) {
-		return loadFont(LayoutInflater.inflate(context, res));
+		return apply(LayoutInflater.inflate(context, res));
 	}
 
 	public static View inflate(Context context, int res, ViewGroup parent) {
-		return loadFont(LayoutInflater.inflate(context, res, parent));
+		return apply(LayoutInflater.inflate(context, res, parent));
 	}
 
-	@Deprecated
-	public static void loadFont(TextView view, String font) {
-		if (Build.VERSION.SDK_INT >= 14 || view == null
-				|| view.getContext() == null) {
-			return;
-		}
-		Typeface typeface = loadTypeface(view.getContext(), font);
-		if (typeface != null) {
-			view.setTypeface(typeface);
-		}
+	public static View apply(View view) {
+		return apply(view, HoloFont.ROBOTO_REGULAR);
 	}
 
-	public static View loadFont(View view) {
-		return loadFont(view, HoloFont.ROBOTO_REGULAR);
-	}
-
-	public static View loadFont(View view, HoloFont font) {
+	public static View apply(View view, HoloFont font) {
 		if (font.ignore) {
 			return view;
 		}
-		return loadFont(view, font.font);
+		return apply(view, font.font);
 	}
 
 	@SuppressLint("NewApi")
-	public static View loadFont(View view, int font) {
+	public static View apply(View view, int font) {
 		if (view == null || view.getContext() == null
 				|| view.getContext().isRestricted()) {
 			Log.e(TAG, "View or context is invalid");
@@ -118,11 +97,11 @@ public final class FontLoader {
 			Log.v(TAG, "Font " + font + " not found in resources");
 			return view;
 		} else {
-			return loadFont(view, typeface);
+			return apply(view, typeface);
 		}
 	}
 
-	public static View loadFont(View view, Typeface typeface) {
+	public static View apply(View view, Typeface typeface) {
 		if (view == null || view.getContext() == null
 				|| view.getContext().isRestricted()) {
 			return view;
@@ -138,26 +117,11 @@ public final class FontLoader {
 		try {
 			ViewGroup group = (ViewGroup) view;
 			for (int i = 0; i < group.getChildCount(); i++) {
-				loadFont(group.getChildAt(i), typeface);
+				apply(group.getChildAt(i), typeface);
 			}
 		} catch (ClassCastException e) {
 		}
 		return view;
-	}
-
-	@Deprecated
-	private static Typeface loadTypeface(Context ctx, String font) {
-		if (!FontLoader.fontMapOld.containsKey(font)) {
-			try {
-				Typeface typeface = Typeface.createFromAsset(ctx.getAssets(),
-						font);
-				FontLoader.fontMapOld.put(font, typeface);
-			} catch (Exception e) {
-				Log.w("FontLoader", "Error loading font " + font
-						+ " from assets. Error: " + e.getMessage());
-			}
-		}
-		return FontLoader.fontMapOld.get(font);
 	}
 
 	private FontLoader() {

@@ -15,4 +15,12 @@
 		<item>Jennifer Carole Ledger</item>
 		<item>Jacob Seth Morrison</item>
 	</string-array>
+	<string-array name="countries">
+		<item>Belgium</item>
+		<item>Russia</item>
+		<item>France</item>
+		<item>Italy</item>
+		<item>Germany</item>
+		<item>Spain</item>
+	</string-array>
 </resources>

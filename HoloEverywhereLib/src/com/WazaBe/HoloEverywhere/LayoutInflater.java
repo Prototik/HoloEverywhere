@@ -21,7 +21,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	private static final Map<String, String> VIEWS_MAP = new HashMap<String, String>();
 
 	static {
-		putToMap("com.WazaBe.HoloEverywhere.", "ProgressBar", "LinearLayout",
+		putToMap(Settings.getWidgetsPackage(), "ProgressBar", "LinearLayout",
 				"Switch", "TextView");
 	}
 
@@ -86,7 +86,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
 	public static void putToMap(String prefix, String... classess) {
 		for (String clazz : classess) {
-			VIEWS_MAP.put(clazz, prefix + clazz);
+			VIEWS_MAP.put(clazz, prefix + "." + clazz);
 		}
 	}
 

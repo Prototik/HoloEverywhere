@@ -355,7 +355,7 @@ public abstract class PreferenceActivity extends ListActivity implements
 			setResult(resultCode, resultData);
 			finish();
 		} else {
-			onBackPressed();
+			onSupportBackPressed();
 			if (caller != null) {
 				if (caller.getTargetFragment() != null) {
 					caller.getTargetFragment().onActivityResult(
