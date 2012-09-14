@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:holo="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/parentPanel"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginLeft="8dip"
+	android:layout_marginRight="8dip"
+	android:orientation="vertical" >
+	<LinearLayout
+		android:id="@+id/topPanel"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical" >
+		<View
+			android:id="@+id/titleDividerTop"
+			android:layout_width="match_parent"
+			android:layout_height="2dip"
+			android:background="@color/holo_blue_light"
+			android:visibility="gone" />
+		<LinearLayout
+			android:id="@+id/title_template"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="16dip"
+			android:layout_marginRight="16dip"
+			android:gravity="center_vertical|left"
+			android:minHeight="@dimen/alert_dialog_title_height"
+			android:orientation="horizontal" >
+			<ImageView
+				android:id="@+id/icon"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@string/loading"
+				android:paddingRight="8dip" />
+			<com.WazaBe.HoloEverywhere.internal.DialogTitle
+				android:id="@+id/alertTitle"
+				style="?android:attr/windowTitleStyle"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:ellipsize="end"
+				android:singleLine="true" />
+		</LinearLayout>
+		<View
+			android:id="@+id/titleDivider"
+			android:layout_width="match_parent"
+			android:layout_height="2dip"
+			android:background="@color/holo_blue_light"
+			android:visibility="gone" />
+	</LinearLayout>
+	<LinearLayout
+		android:id="@+id/contentPanel"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:orientation="vertical" >
+		<ScrollView
+			android:id="@+id/scrollView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:clipToPadding="false" >
+			<TextView
+				android:id="@+id/message"
+				style="?android:attr/textAppearanceMedium"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingBottom="8dip"
+				android:paddingLeft="16dip"
+				android:paddingRight="16dip"
+				android:paddingTop="8dip" />
+		</ScrollView>
+	</LinearLayout>
+	<FrameLayout
+		android:id="@+id/customPanel"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1" >
+		<FrameLayout
+			android:id="@+id/custom"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+	</FrameLayout>
+	<LinearLayout
+		android:id="@+id/buttonPanel"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:minHeight="@dimen/alert_dialog_button_bar_height"
+		android:orientation="vertical" >
+		<View
+			android:id="@+id/buttonPanelTopDivivder"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="?dividerHorizontal" />
+		<LinearLayout
+			style="?buttonBarStyle"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:measureWithLargestChild="true"
+			android:orientation="horizontal" >
+			<Button
+				android:id="@+id/button2"
+				style="?buttonBarButtonStyle"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_gravity="left"
+				android:layout_weight="1"
+				android:maxLines="2"
+				android:minHeight="@dimen/alert_dialog_button_bar_height"
+				android:textSize="14sp" />
+			<Button
+				android:id="@+id/button3"
+				style="?buttonBarButtonStyle"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_gravity="center_horizontal"
+				android:layout_weight="1"
+				android:maxLines="2"
+				android:minHeight="@dimen/alert_dialog_button_bar_height"
+				android:textSize="14sp" />
+			<Button
+				android:id="@+id/button1"
+				style="?buttonBarButtonStyle"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_gravity="right"
+				android:layout_weight="1"
+				android:maxLines="2"
+				android:minHeight="@dimen/alert_dialog_button_bar_height"
+				android:textSize="14sp" />
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>

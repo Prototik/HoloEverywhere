@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="back_button_label">Back</string>
+	<string name="skip_button_label">Skip</string>
+	<string name="next_button_label">Next</string>
+	<string name="loading">Loading\u2026</string>
+	<string name="capital_on">ON</string>
+	<string name="capital_off">OFF</string>
+	<string name="candidates_style"><u>candidates</u></string>
+</resources>

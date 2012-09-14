@@ -1,216 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
-
-	<groupId>com.github.christopheversieux</groupId>
-	<artifactId>holoeverywhere-parent</artifactId>
-	<packaging>pom</packaging>
-	<version>1.2.1-SNAPSHOT</version>
-
-	<name>HoloEverywhere (Parent)</name>
-	<description>Android library bringing Holo Theme to Android 1.6 and above.</description>
-	<url>https://github.com/ChristopheVersieux/HoloEverywhere</url>
-	<inceptionYear>2012</inceptionYear>
-
-	<modules>
-		<module>HoloEverywhereLib</module>
-		<module>HoloDemo</module>
-	</modules>
-
-	<scm>
-		<url>https://github.com/ChristopheVersieux/HoloEverywhere</url>
-		<connection>scm:git:git://github.com/ChristopheVersieux/HoloEverywhere.git</connection>
-		<developerConnection>scm:git:git@github.com:ChristopheVersieux/HoloEverywhere.git</developerConnection>
-	  <tag>HEAD</tag>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+  <groupId>com.github.christopheversieux</groupId>
+  <artifactId>holoeverywhere-parent</artifactId>
+  <packaging>pom</packaging>
+  <version>1.2.2-SNAPSHOT</version>
+  <name>HoloEverywhere (Parent)</name>
+  <description>Android library bringing Holo Theme to Android 1.6 and above.</description>
+  <url>https://github.com/ChristopheVersieux/HoloEverywhere</url>
+  <inceptionYear>2012</inceptionYear>
+  <modules>
+    <module>library</module>
+    <module>demo</module>
+  </modules>
+  <scm>
+    <url>https://github.com/ChristopheVersieux/HoloEverywhere</url>
+    <connection>scm:git:git://github.com/ChristopheVersieux/HoloEverywhere.git</connection>
+    <developerConnection>scm:git:git@github.com:ChristopheVersieux/HoloEverywhere.git</developerConnection>
+    <tag>HEAD</tag>
   </scm>
-
-	<developers>
-		<developer>
-			<name>Christophe Versieux</name>
-			<id>ChristopheVersieux</id>
-			<roles>
-				<role>developer</role>
-			</roles>
-		</developer>
-	</developers>
-
-	<issueManagement>
-		<system>GitHub Issues</system>
-		<url>https://github.com/ChristopheVersieux/HoloEverywhere/issues</url>
-	</issueManagement>
-
-    <distributionManagement>
-        <repository>
-            <uniqueVersion>true</uniqueVersion>
-            <id>${project.repo.release.id}</id>
-            <name>HoloEverywhere Repo</name>
-            <url>${project.release.repository.url}</url>
-        </repository>
-        <snapshotRepository>
-            <uniqueVersion>false</uniqueVersion>
-            <id>${project.repo.snapshots.id}</id>
-            <name>HoloEverywhere Repo Snapshots</name>
-            <url>${project.snapshots.repository.url}</url>
-        </snapshotRepository>
-    </distributionManagement>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-		<apk.prefix>holoeverywhere</apk.prefix>
-
-		<java.version>1.6</java.version>
-		<android.version>4.1.1.4</android.version>
-		<android.platform>16</android.platform>
-		<android-support.version>r7</android-support.version>
-
-		<android-maven.version>3.3.0</android-maven.version>
-
-		<github.downloads.repositoryOwner>ChristopheVersieux</github.downloads.repositoryOwner>
-		<github.downloads.repositoryName>HoloEverywhere</github.downloads.repositoryName>
-
-        <project.repo.release.id>holoeverywhere-repo</project.repo.release.id>
-        <project.release.repository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2</project.release.repository.url>
-
-        <project.repo.snapshots.id>holoeverywhere-repo-snapshots</project.repo.snapshots.id>
-        <project.snapshots.repository.url>https://oss.sonatype.org/content/repositories/snapshots</project.snapshots.repository.url>
-	</properties>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>com.google.android</groupId>
-				<artifactId>android</artifactId>
-				<version>${android.version}</version>
-                <scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.actionbarsherlock</groupId>
-				<artifactId>library</artifactId>
-				<version>4.1.0</version>
-				<type>apklib</type>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.5.1</version>
-                    <inherited>true</inherited>
-					<configuration>
-						<source>${java.version}</source>
-						<target>${java.version}</target>
-					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.8.1</version>
-                    <inherited>true</inherited>
-				</plugin>
-
-				<plugin>
-					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-					<artifactId>android-maven-plugin</artifactId>
-					<version>${android-maven.version}</version>
-					<inherited>true</inherited>
-					<configuration>
-						<sdk>
-							<platform>${android.platform}</platform>
-						</sdk>
-						<sign>
-							<debug>false</debug>
-						</sign>
-                        <zipalign>
-                            <verbose>true</verbose>
-                        </zipalign>
-						<undeployBeforeDeploy>true</undeployBeforeDeploy>
-                        <proguard>
-                            <skip>false</skip>
-                            <config>${project.basedir}/proguard.cfg</config>
-                        </proguard>
-                        <testSkip>true</testSkip>
-					</configuration>
-				</plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>2.3.2</version>
-                    <configuration>
-                        <autoVersionSubmodules>true</autoVersionSubmodules>
-                    </configuration>
-                </plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jarsigner-plugin</artifactId>
-					<version>1.2</version>
-                    <inherited>true</inherited>
-					<configuration>
-                        <removeExistingSignatures>true</removeExistingSignatures>
-                        <archiveDirectory />
-                        <archive>${project.build.directory}/${project.build.finalName}.${project.packaging}</archive>
-                        <verbose>true</verbose>
-                        <certs>true</certs>
-                        <keystore>${sign.keystore}</keystore>
-                        <alias>${sign.alias}</alias>
-                        <storepass>${sign.storepass}</storepass>
-                        <keypass>${sign.keypass}</keypass>
-					</configuration>
-				</plugin>
-
-                <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.12.3</version>
-                    <inherited>true</inherited>
-                    <configuration>
-                        <skip>true</skip>
-                    </configuration>
-                </plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
-
-    <profiles>
-        <profile>
-            <id>release</id>
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.4</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+  <developers>
+    <developer>
+      <name>Christophe Versieux</name>
+      <id>ChristopheVersieux</id>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <name>Sergey Shatunov</name>
+      <id>Prototik</id>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+  </developers>
+  <issueManagement>
+    <system>GitHub Issues</system>
+    <url>https://github.com/ChristopheVersieux/HoloEverywhere/issues</url>
+  </issueManagement>
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>${project.repo.release.id}</id>
+      <name>HoloEverywhere Repo</name>
+      <url>${project.release.repository.url}</url>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>${project.repo.snapshots.id}</id>
+      <name>HoloEverywhere Repo Snapshots</name>
+      <url>${project.snapshots.repository.url}</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <apk.prefix>holoeverywhere</apk.prefix>
+    <java.version>1.6</java.version>
+    <android.version>4.1.1.4</android.version>
+    <android.platform>16</android.platform>
+    <android-support.version>r10</android-support.version>
+    <android-maven.version>3.3.0</android-maven.version>
+    <github.downloads.repositoryOwner>ChristopheVersieux</github.downloads.repositoryOwner>
+    <github.downloads.repositoryName>HoloEverywhere</github.downloads.repositoryName>
+    <project.repo.release.id>holoeverywhere-repo</project.repo.release.id>
+    <project.release.repository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2</project.release.repository.url>
+    <project.repo.snapshots.id>holoeverywhere-repo-snapshots</project.repo.snapshots.id>
+    <project.snapshots.repository.url>https://oss.sonatype.org/content/repositories/snapshots</project.snapshots.repository.url>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.google.android</groupId>
+        <artifactId>android</artifactId>
+        <version>${android.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.actionbarsherlock</groupId>
+        <artifactId>library</artifactId>
+        <version>4.1.0</version>
+        <type>apklib</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.5.1</version>
+          <inherited>true</inherited>
+          <configuration>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.8.1</version>
+          <inherited>true</inherited>
+        </plugin>
+        <plugin>
+          <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+          <artifactId>android-maven-plugin</artifactId>
+          <version>${android-maven.version}</version>
+          <inherited>true</inherited>
+          <configuration>
+            <sdk>
+              <platform>${android.platform}</platform>
+            </sdk>
+            <sign>
+              <debug>false</debug>
+            </sign>
+            <zipalign>
+              <verbose>true</verbose>
+            </zipalign>
+            <undeployBeforeDeploy>true</undeployBeforeDeploy>
+            <proguard>
+              <skip>false</skip>
+              <config>${project.basedir}/proguard.cfg</config>
+            </proguard>
+            <testSkip>true</testSkip>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.3.2</version>
+          <configuration>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jarsigner-plugin</artifactId>
+          <version>1.2</version>
+          <inherited>true</inherited>
+          <configuration>
+            <removeExistingSignatures>true</removeExistingSignatures>
+            <archiveDirectory />
+            <archive>${project.build.directory}/${project.build.finalName}.${project.packaging}</archive>
+            <verbose>true</verbose>
+            <certs>true</certs>
+            <keystore>${sign.keystore}</keystore>
+            <alias>${sign.alias}</alias>
+            <storepass>${sign.storepass}</storepass>
+            <keypass>${sign.keypass}</keypass>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.12.3</version>
+          <inherited>true</inherited>
+          <configuration>
+            <skip>true</skip>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  <profiles>
+    <profile>
+      <id>release</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.4</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

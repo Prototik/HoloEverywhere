@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="HandlerLeak">
+        <ignore path="src/com/WazaBe/HoloEverywhere/widget/ProgressDialog.java" />
+        <ignore path="src/com/WazaBe/HoloEverywhere/preference/PreferenceActivity.java" />
+        <ignore path="src/com/WazaBe/HoloEverywhere/preference/PreferenceFragment.java" />
+    </issue>
+    <issue id="NewApi">
+        <ignore path="src/com/WazaBe/HoloEverywhere/app/AlertDialog.java" />
+        <ignore path="src/com/WazaBe/HoloEverywhere/app/Dialog.java" />
+        <ignore path="res/layout/preference_widget_switch.xml" />
+    </issue>
+</lint>
