@@ -16,21 +16,6 @@ import com.WazaBe.HoloEverywhere.app.ProgressDialog;
 import com.WazaBe.HoloEverywhere.app.Toast;
 
 public class Utils {
-	public static void onCreate(Activity activity) {
-		activity.setContentView(R.layout.main);
-		Spinner s = (Spinner) activity.findViewById(R.id.spinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-				activity, R.array.countries,
-				android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		s.setAdapter(adapter);
-		AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) activity
-				.findViewById(R.id.autoCompleteTextView);
-		adapter = ArrayAdapter.createFromResource(activity, R.array.countries,
-				android.R.layout.simple_dropdown_item_1line);
-		autoCompleteTextView.setAdapter(adapter);
-	}
-
 	private static void setLink(View v, int id, final String link) {
 		v.findViewById(id).setOnClickListener(new OnClickListener() {
 			@Override
@@ -65,10 +50,8 @@ public class Utils {
 		builder.show();
 	}
 
-	public static void showPreferences(Activity activity, boolean abs) {
-		Intent intent = new Intent(activity,
-				abs ? ActionBarHoloPreferenceActivity.class
-						: HoloPreferenceActivity.class);
+	public static void showPreferences(Activity activity) {
+		Intent intent = new Intent(activity, HoloPreferenceActivity.class);
 		intent.putExtra(ThemeManager.THEME_TAG, ThemeManager.getTheme(activity));
 		activity.startActivity(intent);
 	}
@@ -84,5 +67,19 @@ public class Utils {
 	public static void showToast(Activity activity) {
 		Toast.makeText(activity, "Toast example",
 				android.widget.Toast.LENGTH_LONG).show();
+	}
+
+	public static void onViewCreated(View view) {
+		Spinner s = (Spinner) view.findViewById(R.id.spinner);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+				view.getContext(), R.array.countries,
+				android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		s.setAdapter(adapter);
+		AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) view
+				.findViewById(R.id.autoCompleteTextView);
+		adapter = ArrayAdapter.createFromResource(view.getContext(),
+				R.array.countries, android.R.layout.simple_dropdown_item_1line);
+		autoCompleteTextView.setAdapter(adapter);
 	}
 }

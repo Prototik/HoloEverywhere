@@ -462,6 +462,8 @@
         <item name="selectableItemBackground">@drawable/item_background_holo_dark</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
         <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
+        <item name="calendarViewStyle">@style/CalendarView</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
     </style>
     <style name="Holo.Theme.Default.Sherlock.Light" parent="@style/Theme.Sherlock.Light">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -497,6 +499,8 @@
         <item name="switchStyle">@style/Switch.Light</item>
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
+        <item name="calendarViewStyle">@style/CalendarView.Light</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
     </style>
     <style name="Holo.Theme.Sherlock" parent="@style/Theme.Sherlock">
         <item name="android:scrollbarFadeDuration">250</item>
@@ -546,6 +550,8 @@
         <item name="selectableItemBackground">@drawable/item_background_holo_dark</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
         <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
+        <item name="calendarViewStyle">@style/CalendarView</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
         <item name="android:textColorLink">@color/holo_blue_light</item>
         <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
         <item name="android:textCheckMark">?android:checkMark</item>
@@ -656,6 +662,8 @@
         <item name="selectableItemBackground">@drawable/item_background_holo_dark</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
         <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
+        <item name="calendarViewStyle">@style/CalendarView</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
         <item name="android:textColorLink">@color/holo_blue_light</item>
         <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
         <item name="android:textCheckMark">?android:checkMark</item>
@@ -763,6 +771,8 @@
         <item name="switchStyle">@style/Switch.Light</item>
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
+        <item name="calendarViewStyle">@style/CalendarView.Light</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <item name="android:textColorLink">@color/holo_blue_light</item>
         <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
         <item name="android:textCheckMark">?android:checkMark</item>
@@ -872,6 +882,8 @@
         <item name="switchStyle">@style/Switch.Light</item>
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
+        <item name="calendarViewStyle">@style/CalendarView.Light</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <item name="android:textColorLink">@color/holo_blue_light</item>
         <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
         <item name="android:textCheckMark">?android:checkMark</item>
@@ -981,6 +993,8 @@
         <item name="switchStyle">@style/Switch.Light</item>
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
+        <item name="calendarViewStyle">@style/CalendarView.Light</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <item name="android:textColorLink">@color/holo_blue_light</item>
         <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
         <item name="android:textCheckMark">?android:checkMark</item>
@@ -1090,6 +1104,8 @@
         <item name="switchStyle">@style/Switch.Light</item>
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
+        <item name="calendarViewStyle">@style/CalendarView.Light</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <item name="android:textColorLink">@color/holo_blue_light</item>
         <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
         <item name="android:textCheckMark">?android:checkMark</item>
@@ -1203,6 +1219,8 @@
         <item name="selectableItemBackground">@drawable/item_background_holo_dark</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
         <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
+        <item name="calendarViewStyle">@style/CalendarView</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
         <item name="android:textColorLink">@color/holo_blue_light</item>
         <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
         <item name="android:textCheckMark">?android:checkMark</item>
@@ -1310,6 +1328,8 @@
         <item name="switchStyle">@style/Switch.Light</item>
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
+        <item name="calendarViewStyle">@style/CalendarView.Light</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <item name="android:textColorLink">@color/holo_blue_light</item>
         <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
         <item name="android:textCheckMark">?android:checkMark</item>

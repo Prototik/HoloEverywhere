@@ -21,7 +21,7 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".ActionBarHoloDemoActivity"
+			android:name=".sherlock.SHoloDemoActivity"
 			android:enabled="@bool/displayActionBarActivity"
 			android:windowSoftInputMode="stateHidden" >
 			<intent-filter>
@@ -29,9 +29,6 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity
-			android:name=".ActionBarHoloPreferenceActivity"
-			android:label="Preferences" />
 		<activity
 			android:name=".HoloPreferenceActivity"
 			android:label="Preferences" />

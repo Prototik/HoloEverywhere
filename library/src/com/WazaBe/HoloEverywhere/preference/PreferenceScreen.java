@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.app.AlertDialog;
 
@@ -138,8 +138,7 @@ public final class PreferenceScreen extends PreferenceGroup implements
 		if (mListView != null) {
 			mListView.setAdapter(null);
 		}
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = LayoutInflater.from(context);
 		View childPrefScreen = inflater.inflate(
 				R.layout.preference_list_fragment, null);
 		mListView = (ListView) childPrefScreen.findViewById(android.R.id.list);
