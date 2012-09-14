@@ -40,6 +40,7 @@
     <item name="selectableItemBackground">@drawable/item_background_holo_dark</item>
     <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
     <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
+    <item name="calendarViewStyle">@style/CalendarView</item>
   </define>
   <define name="BaseLight">
     <include name="Base" />
@@ -50,6 +51,7 @@
     <item name="switchStyle">@style/Switch.Light</item>
     <item name="switchStyleOld">@style/Switch.Light.Old</item>
     <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
+    <item name="calendarViewStyle">@style/CalendarView.Light</item>
   </define>
   <define name="ThemeData">
     <item name="android:scrollbarFadeDuration">250</item>

@@ -15,12 +15,12 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.AbsSavedState;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.Settings;
 import com.WazaBe.HoloEverywhere.util.CharSequences;

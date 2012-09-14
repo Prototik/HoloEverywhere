@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/viewPager"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" >
+	<PagerTitleStrip
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="top"
+		android:background="@color/holo_blue_light"
+		android:textColor="#FFFDFDFD" />
+</ViewPager>

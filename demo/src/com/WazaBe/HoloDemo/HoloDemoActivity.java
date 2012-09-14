@@ -11,7 +11,13 @@ public class HoloDemoActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		setForceThemeApply(true);
 		super.onCreate(savedInstanceState);
-		Utils.onCreate(this);
+		setContentView(R.layout.main);
+	}
+
+	@Override
+	public void onContentChanged() {
+		super.onContentChanged();
+		Utils.onViewCreated(findViewById(R.id.main));
 	}
 
 	public void setDarkTheme(View v) {
@@ -31,7 +37,7 @@ public class HoloDemoActivity extends Activity {
 	}
 
 	public void showPreferences(View v) {
-		Utils.showPreferences(this, false);
+		Utils.showPreferences(this);
 	}
 
 	public void showProgressDialog(View v) {

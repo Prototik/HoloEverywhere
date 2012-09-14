@@ -4,15 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
+import com.WazaBe.HoloEverywhere.app.Fragment;
 
 public abstract class PreferenceFragment extends Fragment implements
 		PreferenceManager.OnPreferenceTreeClickListener {

@@ -23,8 +23,7 @@ public final class ThemeManager {
 
 	public static void applyTheme(Activity activity, boolean force) {
 		if (hasSpecifiedTheme(activity) || force) {
-			int theme = getThemeResource(
-					activity.getIntent().getIntExtra(THEME_TAG, THEME_DEFAULT),
+			int theme = getThemeResource(getTheme(activity),
 					activity.isABSSupport());
 			activity.setTheme(theme);
 		}

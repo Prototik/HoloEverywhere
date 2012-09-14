@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<attr name="calendarViewStyle" format="reference" />
+	<declare-styleable name="CalendarView">
+		<attr name="firstDayOfWeek" format="integer" />
+		<attr name="showWeekNumber" format="boolean" />
+		<attr name="minDate" format="string|reference" />
+		<attr name="maxDate" format="string|reference" />
+		<attr name="shownWeekCount" format="integer" />
+		<attr name="selectedWeekBackgroundColor" format="color|reference" />
+		<attr name="focusedMonthDateColor" format="color|reference" />
+		<attr name="unfocusedMonthDateColor" format="color|reference" />
+		<attr name="weekNumberColor" format="color|reference" />
+		<attr name="weekSeparatorLineColor" format="color|reference" />
+		<attr name="selectedDateVerticalBar" format="reference" />
+		<attr name="weekDayTextAppearance" format="reference" />
+		<attr name="dateTextAppearance" format="reference" />
+	</declare-styleable>
+	<style name="CalendarView">
+		<item name="showWeekNumber">true</item>
+		<item name="firstDayOfWeek">1</item>
+		<item name="minDate">01/01/1900</item>
+		<item name="maxDate">12/31/2100</item>
+		<item name="shownWeekCount">6</item>
+		<item name="selectedWeekBackgroundColor">#330099FF</item>
+		<item name="focusedMonthDateColor">#FFFFFFFF</item>
+		<item name="unfocusedMonthDateColor">#66FFFFFF</item>
+		<item name="weekNumberColor">#33FFFFFF</item>
+		<item name="weekSeparatorLineColor">#19FFFFFF</item>
+		<item name="selectedDateVerticalBar">@drawable/day_picker_week_view_dayline_holo</item>
+		<item name="weekDayTextAppearance">@style/CalendarViewTextAppearanceWeekDayView</item>
+		<item name="dateTextAppearance">?android:attr/textAppearanceSmall</item>
+	</style>
+	<style name="CalendarView.Light">
+		<item name="selectedWeekBackgroundColor">#330066ff</item>
+		<item name="focusedMonthDateColor">#FF000000</item>
+		<item name="unfocusedMonthDateColor">#7F08002B</item>
+		<item name="weekNumberColor">#7F080021</item>
+		<item name="weekSeparatorLineColor">#7F08002A</item>
+	</style>
+	<style name="CalendarViewTextAppearanceWeekDayView">
+		<item name="android:textColor">#505050</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+</resources>

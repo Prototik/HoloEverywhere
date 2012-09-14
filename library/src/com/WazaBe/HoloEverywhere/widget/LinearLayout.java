@@ -22,10 +22,24 @@ public class LinearLayout extends NineLinearLayout {
 	private int mDividerWidth;
 	private int mShowDividers;
 
+	public LinearLayout(Context context) {
+		super(context, null);
+		init(context, null, 0);
+	}
+
 	public LinearLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		init(context, attrs, 0);
+	}
+
+	public LinearLayout(Context context, AttributeSet attrs, int defStyleRes) {
+		super(context, attrs, defStyleRes);
+		init(context, attrs, defStyleRes);
+	}
+
+	protected void init(Context context, AttributeSet attrs, int defStyleRes) {
 		TypedArray a = context.obtainStyledAttributes(attrs,
-				R.styleable.LinearLayout);
+				R.styleable.LinearLayout, defStyleRes, 0);
 		setDividerDrawable(a
 				.getDrawable(R.styleable.LinearLayout_android_divider));
 		mShowDividers = a.getInt(R.styleable.LinearLayout_showDividers,
