@@ -32,6 +32,7 @@
 	<attr name="listDividerAlertDialog" format="reference" />
 	<attr name="alertDialogStyle" format="reference" />
 	<attr name="alertDialogTheme" format="reference" />
+	<attr name="textColorAlertDialogListItem" format="reference" />
 	<attr name="gravity">
 		<flag name="top" value="0x30" />
 		<flag name="bottom" value="0x50" />

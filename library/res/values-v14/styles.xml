@@ -39,6 +39,7 @@
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
         <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
         <item name="calendarViewStyle">@style/CalendarView</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
     </style>
     <style name="Holo.Theme.Default.Sherlock" parent="@android:style/Theme.Holo">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -78,6 +79,7 @@
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
         <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
         <item name="calendarViewStyle">@style/CalendarView</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
     </style>
     <style name="Holo.Theme.Sherlock" parent="@android:style/Theme.Holo">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -117,6 +119,7 @@
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
         <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
         <item name="calendarViewStyle">@style/CalendarView</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
     </style>
     <style name="Holo.Theme.Sherlock.ForceOverflow" parent="@android:style/Theme.Holo">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -156,6 +159,7 @@
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
         <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
         <item name="calendarViewStyle">@style/CalendarView</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
     </style>
     <!-- Light themes -->
     <style name="Holo.Theme.Light" parent="@android:style/Theme.Holo.Light">
@@ -193,6 +197,7 @@
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
         <item name="calendarViewStyle">@style/CalendarView.Light</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light" parent="@android:style/Theme.Holo.Light">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -229,6 +234,7 @@
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
         <item name="calendarViewStyle">@style/CalendarView.Light</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.ForceOverflow" parent="@android:style/Theme.Holo.Light">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -265,6 +271,7 @@
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
         <item name="calendarViewStyle">@style/CalendarView.Light</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -301,6 +308,7 @@
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
         <item name="calendarViewStyle">@style/CalendarView.Light</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow" parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -337,5 +345,6 @@
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
         <item name="calendarViewStyle">@style/CalendarView.Light</item>
+        <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
     </style>
 </resources>
