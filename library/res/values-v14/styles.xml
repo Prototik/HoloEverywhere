@@ -201,6 +201,9 @@
         <item name="switchStyle">@style/Switch.Light</item>
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
+        <item name="selectableItemBackground">@drawable/item_background_holo_light</item>
+        <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
+        <item name="segmentedButtonStyle">@style/Holo.SegmentedButton.Light</item>
         <item name="calendarViewStyle">@style/CalendarView.Light</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
     </style>
@@ -239,6 +242,9 @@
         <item name="switchStyle">@style/Switch.Light</item>
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
+        <item name="selectableItemBackground">@drawable/item_background_holo_light</item>
+        <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
+        <item name="segmentedButtonStyle">@style/Holo.SegmentedButton.Light</item>
         <item name="calendarViewStyle">@style/CalendarView.Light</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
     </style>
@@ -277,6 +283,9 @@
         <item name="switchStyle">@style/Switch.Light</item>
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
+        <item name="selectableItemBackground">@drawable/item_background_holo_light</item>
+        <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
+        <item name="segmentedButtonStyle">@style/Holo.SegmentedButton.Light</item>
         <item name="calendarViewStyle">@style/CalendarView.Light</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
     </style>
@@ -315,6 +324,9 @@
         <item name="switchStyle">@style/Switch.Light</item>
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
+        <item name="selectableItemBackground">@drawable/item_background_holo_light</item>
+        <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
+        <item name="segmentedButtonStyle">@style/Holo.SegmentedButton.Light</item>
         <item name="calendarViewStyle">@style/CalendarView.Light</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
     </style>
@@ -353,6 +365,9 @@
         <item name="switchStyle">@style/Switch.Light</item>
         <item name="switchStyleOld">@style/Switch.Light.Old</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
+        <item name="selectableItemBackground">@drawable/item_background_holo_light</item>
+        <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
+        <item name="segmentedButtonStyle">@style/Holo.SegmentedButton.Light</item>
         <item name="calendarViewStyle">@style/CalendarView.Light</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
     </style>
