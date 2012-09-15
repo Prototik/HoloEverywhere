@@ -1,7 +1,9 @@
 package com.WazaBe.HoloEverywhere.sherlock;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources.Theme;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.actionbarsherlock.ActionBarSherlock.OnCreatePanelMenuListener;
 import com.actionbarsherlock.ActionBarSherlock.OnMenuItemSelectedListener;
 import com.actionbarsherlock.ActionBarSherlock.OnPreparePanelListener;
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockBaseContext;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -23,7 +26,7 @@ import com.actionbarsherlock.view.MenuItem;
 public abstract class SActivity extends Activity implements
 		OnCreatePanelMenuListener, OnPreparePanelListener,
 		OnMenuItemSelectedListener, OnActionModeStartedListener,
-		OnActionModeFinishedListener {
+		OnActionModeFinishedListener, SherlockBaseContext {
 	private ActionBarSherlock mSherlock;
 
 	@Override
@@ -58,6 +61,16 @@ public abstract class SActivity extends Activity implements
 		return getSherlock().getActionBar();
 	}
 
+	@Override
+	public void onActivityResult(int arg0, int arg1, Intent arg2) {
+		super.onActivityResult(arg0, arg1, arg2);
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
+
 	public MenuInflater getSupportMenuInflater() {
 		return getSherlock().getMenuInflater();
 	}
@@ -70,6 +83,11 @@ public abstract class SActivity extends Activity implements
 	@Override
 	public boolean isABSSupport() {
 		return true;
+	}
+
+	@Override
+	protected void onApplyThemeResource(Theme theme, int resid, boolean first) {
+		super.onApplyThemeResource(theme, resid, first);
 	}
 
 	@Override

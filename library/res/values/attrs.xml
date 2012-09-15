@@ -4,6 +4,7 @@
 	<!-- <attr name="listPreferredItemHeightSmall" format="dimension" /> -->
 	<!-- <attr name="dividerVertical" format="reference" /> -->
 	<!-- <attr name="listPopupWindowStyle" format="reference" /> -->
+	<!-- <attr name="dropdownListPreferredItemHeight" format="reference" /> -->
 	<attr name="preferenceFrameLayoutStyle" format="reference" />
 	<attr name="preferenceScreenStyle" format="reference" />
 	<attr name="preferenceFragmentStyle" format="reference" />

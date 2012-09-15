@@ -74,7 +74,7 @@ public class Utils {
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
 				view.getContext(), R.array.countries,
 				android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
 		s.setAdapter(adapter);
 		AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) view
 				.findViewById(R.id.autoCompleteTextView);
