@@ -11,7 +11,8 @@ import com.WazaBe.HoloEverywhere.ThemeManager;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 import com.WazaBe.HoloEverywhere.util.BaseSharedPreferences;
 
-public abstract class Activity extends android.support.v4.app.FragmentActivity {
+public abstract class Activity extends android.support.v4.app.FragmentActivity
+		implements Base {
 	private boolean forceThemeApply = false;
 
 	@Override
@@ -24,6 +25,7 @@ public abstract class Activity extends android.support.v4.app.FragmentActivity {
 		return LayoutInflater.from(this);
 	}
 
+	@Override
 	public SharedPreferences getSupportSharedPreferences(String name, int mode) {
 		return new BaseSharedPreferences(getSharedPreferences(name, mode));
 	}
@@ -33,6 +35,7 @@ public abstract class Activity extends android.support.v4.app.FragmentActivity {
 		return LayoutInflater.getSystemService(super.getSystemService(name));
 	}
 
+	@Override
 	public boolean isABSSupport() {
 		return false;
 	}
@@ -54,6 +57,7 @@ public abstract class Activity extends android.support.v4.app.FragmentActivity {
 		super.onCreate(savedInstanceState);
 	}
 
+	@Override
 	@SuppressLint("NewApi")
 	public void onSupportBackPressed() {
 		onBackPressed();

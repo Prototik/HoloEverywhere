@@ -22,7 +22,8 @@ public final class ReflectHelper {
 			Method method = (superClass ? object.getClass().getSuperclass()
 					: object.getClass()).getMethod(methodName, argsClasses);
 			method.setAccessible(true);
-			return result.cast(method.invoke(object, args));
+			Object r = method.invoke(object, args);
+			return result != null ? result.cast(r) : null;
 		} catch (Exception e) {
 			return null;
 		}

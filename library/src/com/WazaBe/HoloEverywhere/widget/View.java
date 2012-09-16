@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import com.WazaBe.HoloEverywhere.sherlock.SBase;
 import com.actionbarsherlock.internal.nineoldandroids.view.animation.AnimatorProxy;
+import com.actionbarsherlock.view.ActionMode;
 
 public class View extends android.view.View {
 	public static int supportResolveSize(int size, int measureSpec) {
@@ -121,5 +123,9 @@ public class View extends android.view.View {
 			}
 		}
 		super.setVisibility(visibility);
+	}
+
+	public ActionMode startActionMode(ActionMode.Callback actionModeCallback) {
+		return ((SBase) getContext()).startActionMode(actionModeCallback);
 	}
 }

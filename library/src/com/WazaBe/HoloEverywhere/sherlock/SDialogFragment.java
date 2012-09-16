@@ -23,6 +23,11 @@ public class SDialogFragment extends DialogFragment implements
 	}
 
 	@Override
+	public boolean isABSSupport() {
+		return true;
+	}
+
+	@Override
 	public void onAttach(Activity activity) {
 		if (!(activity instanceof SActivity)) {
 			throw new IllegalStateException(getClass().getSimpleName()
@@ -30,12 +35,6 @@ public class SDialogFragment extends DialogFragment implements
 		}
 		mActivity = (SActivity) activity;
 		super.onAttach(activity);
-	}
-
-	@Override
-	public void onDetach() {
-		mActivity = null;
-		super.onDetach();
 	}
 
 	@Override
@@ -50,12 +49,9 @@ public class SDialogFragment extends DialogFragment implements
 	}
 
 	@Override
-	public final void onPrepareOptionsMenu(android.view.Menu menu) {
-		onPrepareOptionsMenu(new MenuWrapper(menu));
-	}
-
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
+	public void onDetach() {
+		mActivity = null;
+		super.onDetach();
 	}
 
 	@Override
@@ -66,6 +62,15 @@ public class SDialogFragment extends DialogFragment implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return false;
+	}
+
+	@Override
+	public final void onPrepareOptionsMenu(android.view.Menu menu) {
+		onPrepareOptionsMenu(new MenuWrapper(menu));
+	}
+
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
 	}
 
 }

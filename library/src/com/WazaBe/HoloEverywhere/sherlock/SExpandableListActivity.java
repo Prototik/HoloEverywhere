@@ -23,7 +23,7 @@ import com.actionbarsherlock.view.MenuItem;
 public abstract class SExpandableListActivity extends ExpandableListActivity
 		implements OnCreatePanelMenuListener, OnPreparePanelListener,
 		OnMenuItemSelectedListener, OnActionModeStartedListener,
-		OnActionModeFinishedListener {
+		OnActionModeFinishedListener, SBase {
 	private ActionBarSherlock mSherlock;
 
 	@Override
@@ -46,7 +46,8 @@ public abstract class SExpandableListActivity extends ExpandableListActivity
 		return super.dispatchKeyEvent(event);
 	}
 
-	protected final ActionBarSherlock getSherlock() {
+	@Override
+	public final ActionBarSherlock getSherlock() {
 		if (mSherlock == null) {
 			mSherlock = ActionBarSherlock.wrap(this,
 					ActionBarSherlock.FLAG_DELEGATE);
@@ -54,10 +55,12 @@ public abstract class SExpandableListActivity extends ExpandableListActivity
 		return mSherlock;
 	}
 
+	@Override
 	public ActionBar getSupportActionBar() {
 		return getSherlock().getActionBar();
 	}
 
+	@Override
 	public MenuInflater getSupportMenuInflater() {
 		return getSherlock().getMenuInflater();
 	}
@@ -91,6 +94,7 @@ public abstract class SExpandableListActivity extends ExpandableListActivity
 		return getSherlock().dispatchCreateOptionsMenu(menu);
 	}
 
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return true;
 	}
@@ -130,6 +134,7 @@ public abstract class SExpandableListActivity extends ExpandableListActivity
 		return getSherlock().dispatchOptionsItemSelected(item);
 	}
 
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return false;
 	}
@@ -233,6 +238,7 @@ public abstract class SExpandableListActivity extends ExpandableListActivity
 		getSherlock().setSecondaryProgress(secondaryProgress);
 	}
 
+	@Override
 	public ActionMode startActionMode(ActionMode.Callback callback) {
 		return getSherlock().startActionMode(callback);
 	}

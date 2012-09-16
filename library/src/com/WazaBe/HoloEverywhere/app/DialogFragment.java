@@ -16,38 +16,31 @@ import com.WazaBe.HoloEverywhere.util.Pair;
 
 public class DialogFragment extends Fragment implements
 		DialogInterface.OnCancelListener, DialogInterface.OnDismissListener {
-	public static final int STYLE_NORMAL = 0;
-	public static final int STYLE_NO_TITLE = 1;
-	public static final int STYLE_NO_FRAME = 2;
-	public static final int STYLE_NO_INPUT = 3;
-
+	private static final String SAVED_BACK_STACK_ID = "android:backStackId";
+	private static final String SAVED_CANCELABLE = "android:cancelable";
 	private static final String SAVED_DIALOG_STATE_TAG = "android:savedDialogState";
+	private static final String SAVED_SHOWS_DIALOG = "android:showsDialog";
+
 	private static final String SAVED_STYLE = "android:style";
 	private static final String SAVED_THEME = "android:theme";
-	private static final String SAVED_CANCELABLE = "android:cancelable";
-	private static final String SAVED_SHOWS_DIALOG = "android:showsDialog";
-	private static final String SAVED_BACK_STACK_ID = "android:backStackId";
+	public static final int STYLE_NO_FRAME = 2;
+	public static final int STYLE_NO_INPUT = 3;
+	public static final int STYLE_NO_TITLE = 1;
+	public static final int STYLE_NORMAL = 0;
 
+	protected final String classTag = getClass().getName() + "@!"
+			+ Integer.toHexString(getClass().hashCode());
+	int mBackStackId = -1;
+	boolean mCancelable = true;
+	Dialog mDialog;
+	boolean mDismissed;
+
+	boolean mShownByMe;
+	boolean mShowsDialog = true;
 	int mStyle = STYLE_NORMAL;
 	int mTheme = 0;
-	boolean mCancelable = true;
-	boolean mShowsDialog = true;
-	int mBackStackId = -1;
 
-	Dialog mDialog;
 	boolean mViewDestroyed;
-	boolean mDismissed;
-	boolean mShownByMe;
-
-	public void setStyle(int style, int theme) {
-		mStyle = style;
-		if (mStyle == STYLE_NO_FRAME || mStyle == STYLE_NO_INPUT) {
-			mTheme = android.R.style.Theme_Panel;
-		}
-		if (theme != 0) {
-			mTheme = theme;
-		}
-	}
 
 	public void dismiss() {
 		dismissInternal(false);
@@ -87,65 +80,6 @@ public class DialogFragment extends Fragment implements
 		return mDialog;
 	}
 
-	public int getTheme() {
-		return mTheme;
-	}
-
-	public void setCancelable(boolean cancelable) {
-		mCancelable = cancelable;
-		if (mDialog != null)
-			mDialog.setCancelable(cancelable);
-	}
-
-	public boolean isCancelable() {
-		return mCancelable;
-	}
-
-	public void setShowsDialog(boolean showsDialog) {
-		mShowsDialog = showsDialog;
-	}
-
-	public boolean getShowsDialog() {
-		return mShowsDialog;
-	}
-
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		if (!mShownByMe) {
-			mDismissed = false;
-		}
-	}
-
-	@Override
-	public void onDetach() {
-		super.onDetach();
-		if (!mShownByMe && !mDismissed) {
-			mDismissed = true;
-		}
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		try {
-			Field field = getClass().getField("mContainerId");
-			field.setAccessible(true);
-			mShowsDialog = (Integer) field.get(field) == 0;
-		} catch (Exception e) {
-			mShowsDialog = false;
-		}
-		if (savedInstanceState != null) {
-			mStyle = savedInstanceState.getInt(SAVED_STYLE, STYLE_NORMAL);
-			mTheme = savedInstanceState.getInt(SAVED_THEME, 0);
-			mCancelable = savedInstanceState.getBoolean(SAVED_CANCELABLE, true);
-			mShowsDialog = savedInstanceState.getBoolean(SAVED_SHOWS_DIALOG,
-					mShowsDialog);
-			mBackStackId = savedInstanceState.getInt(SAVED_BACK_STACK_ID, -1);
-		}
-
-	}
-
 	@Override
 	public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
 		if (!mShowsDialog) {
@@ -174,17 +108,31 @@ public class DialogFragment extends Fragment implements
 		}
 	}
 
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		return new Dialog(getActivity(), getTheme());
+	public boolean getShowsDialog() {
+		return mShowsDialog;
 	}
 
-	public void onCancel(DialogInterface dialog) {
+	public int getTheme() {
+		return mTheme;
 	}
 
-	public void onDismiss(DialogInterface dialog) {
-		if (!mViewDestroyed) {
-			dismissInternal(true);
+	public void hide() {
+		hide(getSupportFragmentManager().beginTransaction());
+	}
+
+	public void hide(FragmentManager fm, FragmentTransaction ft) {
+		Fragment fragment = (Fragment) fm.findFragmentByTag(classTag);
+		if (fragment != null) {
+			ft.remove(fragment);
 		}
+	}
+
+	public void hide(FragmentTransaction ft) {
+		hide(getSupportFragmentManager(), ft);
+	}
+
+	public boolean isCancelable() {
+		return mCancelable;
 	}
 
 	@Override
@@ -215,11 +163,64 @@ public class DialogFragment extends Fragment implements
 	}
 
 	@Override
-	public void onStart() {
-		super.onStart();
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if (!mShownByMe) {
+			mDismissed = false;
+		}
+	}
+
+	@Override
+	public void onCancel(DialogInterface dialog) {
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		try {
+			Field field = getClass().getField("mContainerId");
+			field.setAccessible(true);
+			mShowsDialog = (Integer) field.get(field) == 0;
+		} catch (Exception e) {
+			mShowsDialog = false;
+		}
+		if (savedInstanceState != null) {
+			mStyle = savedInstanceState.getInt(SAVED_STYLE, STYLE_NORMAL);
+			mTheme = savedInstanceState.getInt(SAVED_THEME, 0);
+			mCancelable = savedInstanceState.getBoolean(SAVED_CANCELABLE, true);
+			mShowsDialog = savedInstanceState.getBoolean(SAVED_SHOWS_DIALOG,
+					mShowsDialog);
+			mBackStackId = savedInstanceState.getInt(SAVED_BACK_STACK_ID, -1);
+		}
+
+	}
+
+	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		return new Dialog(getActivity(), getTheme());
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
 		if (mDialog != null) {
-			mViewDestroyed = false;
-			mDialog.show();
+			mViewDestroyed = true;
+			mDialog.dismiss();
+			mDialog = null;
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		if (!mShownByMe && !mDismissed) {
+			mDismissed = true;
+		}
+	}
+
+	@Override
+	public void onDismiss(DialogInterface dialog) {
+		if (!mViewDestroyed) {
+			dismissInternal(true);
 		}
 	}
 
@@ -250,20 +251,19 @@ public class DialogFragment extends Fragment implements
 	}
 
 	@Override
-	public void onStop() {
-		super.onStop();
+	public void onStart() {
+		super.onStart();
 		if (mDialog != null) {
-			mDialog.hide();
+			mViewDestroyed = false;
+			mDialog.show();
 		}
 	}
 
 	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
+	public void onStop() {
+		super.onStop();
 		if (mDialog != null) {
-			mViewDestroyed = true;
-			mDialog.dismiss();
-			mDialog = null;
+			mDialog.hide();
 		}
 	}
 
@@ -286,23 +286,29 @@ public class DialogFragment extends Fragment implements
 		return replace(getSupportFragmentManager(), ft);
 	}
 
-	public Pair<FragmentTransaction, Integer> show() {
-		return show(getSupportFragmentManager().beginTransaction());
-	}
-
-	public void hide() {
-		hide(getSupportFragmentManager().beginTransaction());
-	}
-
-	public void hide(FragmentManager fm, FragmentTransaction ft) {
-		Fragment fragment = (Fragment) fm.findFragmentByTag(classTag);
-		if (fragment != null) {
-			ft.remove(fragment);
+	public void setCancelable(boolean cancelable) {
+		mCancelable = cancelable;
+		if (mDialog != null) {
+			mDialog.setCancelable(cancelable);
 		}
 	}
 
-	public void hide(FragmentTransaction ft) {
-		hide(getSupportFragmentManager(), ft);
+	public void setShowsDialog(boolean showsDialog) {
+		mShowsDialog = showsDialog;
+	}
+
+	public void setStyle(int style, int theme) {
+		mStyle = style;
+		if (mStyle == STYLE_NO_FRAME || mStyle == STYLE_NO_INPUT) {
+			mTheme = android.R.style.Theme_Panel;
+		}
+		if (theme != 0) {
+			mTheme = theme;
+		}
+	}
+
+	public Pair<FragmentTransaction, Integer> show() {
+		return show(getSupportFragmentManager().beginTransaction());
 	}
 
 	@Deprecated
@@ -313,9 +319,6 @@ public class DialogFragment extends Fragment implements
 		ft.add(this, tag);
 		ft.commit();
 	}
-
-	protected final String classTag = getClass().getName() + "@!"
-			+ Integer.toHexString(getClass().hashCode());
 
 	public Pair<FragmentTransaction, Integer> show(FragmentTransaction ft) {
 		return Pair.create(ft, show(ft, classTag));

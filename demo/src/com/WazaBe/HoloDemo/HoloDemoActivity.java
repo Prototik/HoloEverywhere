@@ -8,16 +8,16 @@ import com.WazaBe.HoloEverywhere.app.Activity;
 
 public class HoloDemoActivity extends Activity {
 	@Override
+	public void onContentChanged() {
+		super.onContentChanged();
+		Utils.onViewCreated(findViewById(R.id.main));
+	}
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setForceThemeApply(true);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-	}
-
-	@Override
-	public void onContentChanged() {
-		super.onContentChanged();
-		Utils.onViewCreated(findViewById(R.id.main));
 	}
 
 	public void setDarkTheme(View v) {

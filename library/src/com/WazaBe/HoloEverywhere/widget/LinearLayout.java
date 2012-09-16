@@ -37,18 +37,6 @@ public class LinearLayout extends NineLinearLayout {
 		init(context, attrs, defStyleRes);
 	}
 
-	protected void init(Context context, AttributeSet attrs, int defStyleRes) {
-		TypedArray a = context.obtainStyledAttributes(attrs,
-				R.styleable.LinearLayout, defStyleRes, 0);
-		setDividerDrawable(a
-				.getDrawable(R.styleable.LinearLayout_android_divider));
-		mShowDividers = a.getInt(R.styleable.LinearLayout_showDividers,
-				SHOW_DIVIDER_NONE);
-		mDividerPadding = a.getDimensionPixelSize(
-				R.styleable.LinearLayout_dividerPadding, 0);
-		a.recycle();
-	}
-
 	void drawDividersHorizontal(Canvas canvas) {
 		final int count = getChildCount();
 		for (int i = 0; i < count; i++) {
@@ -147,6 +135,18 @@ public class LinearLayout extends NineLinearLayout {
 			return hasVisibleViewBefore;
 		}
 		return false;
+	}
+
+	protected void init(Context context, AttributeSet attrs, int defStyleRes) {
+		TypedArray a = context.obtainStyledAttributes(attrs,
+				R.styleable.LinearLayout, defStyleRes, 0);
+		setDividerDrawable(a
+				.getDrawable(R.styleable.LinearLayout_android_divider));
+		mShowDividers = a.getInt(R.styleable.LinearLayout_showDividers,
+				SHOW_DIVIDER_NONE);
+		mDividerPadding = a.getDimensionPixelSize(
+				R.styleable.LinearLayout_dividerPadding, 0);
+		a.recycle();
 	}
 
 	@Override

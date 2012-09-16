@@ -14,25 +14,17 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 
 public class SHoloDemoActivity extends SActivity {
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		setForceThemeApply(true);
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.content);
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
-		getSupportActionBar().setDisplayShowHomeEnabled(false);
-		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		addTab(SMainFragment.class, "Holo Demo");
-		addTab(SPreferenceFragment.class, "Settings");
-		addTab(SCalendarFragment.class, "Calendar");
-	}
-
 	private final class FragmentListener implements TabListener {
 		private final Class<? extends Fragment> clazz;
 		private Fragment fragment;
 
 		public FragmentListener(Class<? extends Fragment> clazz) {
 			this.clazz = clazz;
+		}
+
+		@Override
+		public void onTabReselected(Tab tab, FragmentTransaction ft) {
+
 		}
 
 		@Override
@@ -52,11 +44,6 @@ public class SHoloDemoActivity extends SActivity {
 		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 
 		}
-
-		@Override
-		public void onTabReselected(Tab tab, FragmentTransaction ft) {
-
-		}
 	}
 
 	private void addTab(Class<? extends Fragment> clazz, String title) {
@@ -64,6 +51,19 @@ public class SHoloDemoActivity extends SActivity {
 		tab.setText(title);
 		tab.setTabListener(new FragmentListener(clazz));
 		getSupportActionBar().addTab(tab);
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		setForceThemeApply(true);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.content);
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setDisplayShowHomeEnabled(false);
+		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		addTab(SMainFragment.class, "Holo Demo");
+		addTab(SPreferenceFragment.class, "Settings");
+		addTab(SCalendarFragment.class, "Calendar");
 	}
 
 	public void setDarkTheme(View v) {

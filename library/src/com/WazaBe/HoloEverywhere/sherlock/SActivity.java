@@ -17,7 +17,6 @@ import com.actionbarsherlock.ActionBarSherlock.OnCreatePanelMenuListener;
 import com.actionbarsherlock.ActionBarSherlock.OnMenuItemSelectedListener;
 import com.actionbarsherlock.ActionBarSherlock.OnPreparePanelListener;
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockBaseContext;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -26,7 +25,7 @@ import com.actionbarsherlock.view.MenuItem;
 public abstract class SActivity extends Activity implements
 		OnCreatePanelMenuListener, OnPreparePanelListener,
 		OnMenuItemSelectedListener, OnActionModeStartedListener,
-		OnActionModeFinishedListener, SherlockBaseContext {
+		OnActionModeFinishedListener, SBase {
 	private ActionBarSherlock mSherlock;
 
 	@Override
@@ -49,7 +48,8 @@ public abstract class SActivity extends Activity implements
 		return super.dispatchKeyEvent(event);
 	}
 
-	protected final ActionBarSherlock getSherlock() {
+	@Override
+	public final ActionBarSherlock getSherlock() {
 		if (mSherlock == null) {
 			mSherlock = ActionBarSherlock.wrap(this,
 					ActionBarSherlock.FLAG_DELEGATE);
@@ -57,20 +57,12 @@ public abstract class SActivity extends Activity implements
 		return mSherlock;
 	}
 
+	@Override
 	public ActionBar getSupportActionBar() {
 		return getSherlock().getActionBar();
 	}
 
 	@Override
-	public void onActivityResult(int arg0, int arg1, Intent arg2) {
-		super.onActivityResult(arg0, arg1, arg2);
-	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-
 	public MenuInflater getSupportMenuInflater() {
 		return getSherlock().getMenuInflater();
 	}
@@ -86,16 +78,21 @@ public abstract class SActivity extends Activity implements
 	}
 
 	@Override
-	protected void onApplyThemeResource(Theme theme, int resid, boolean first) {
-		super.onApplyThemeResource(theme, resid, first);
-	}
-
-	@Override
 	public void onActionModeFinished(ActionMode mode) {
 	}
 
 	@Override
 	public void onActionModeStarted(ActionMode mode) {
+	}
+
+	@Override
+	public void onActivityResult(int arg0, int arg1, Intent arg2) {
+		super.onActivityResult(arg0, arg1, arg2);
+	}
+
+	@Override
+	protected void onApplyThemeResource(Theme theme, int resid, boolean first) {
+		super.onApplyThemeResource(theme, resid, first);
 	}
 
 	@Override
@@ -105,10 +102,16 @@ public abstract class SActivity extends Activity implements
 	}
 
 	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
+
+	@Override
 	public final boolean onCreateOptionsMenu(android.view.Menu menu) {
 		return getSherlock().dispatchCreateOptionsMenu(menu);
 	}
 
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return true;
 	}
@@ -148,6 +151,7 @@ public abstract class SActivity extends Activity implements
 		return getSherlock().dispatchOptionsItemSelected(item);
 	}
 
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return false;
 	}
@@ -251,6 +255,7 @@ public abstract class SActivity extends Activity implements
 		getSherlock().setSecondaryProgress(secondaryProgress);
 	}
 
+	@Override
 	public ActionMode startActionMode(ActionMode.Callback callback) {
 		return getSherlock().startActionMode(callback);
 	}
