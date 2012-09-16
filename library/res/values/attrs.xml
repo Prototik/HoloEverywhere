@@ -4,6 +4,7 @@
 	<!-- <attr name="listPreferredItemHeightSmall" format="dimension" /> -->
 	<!-- <attr name="dividerVertical" format="reference" /> -->
 	<!-- <attr name="listPopupWindowStyle" format="reference" /> -->
+	<!-- <attr name="dropdownListPreferredItemHeight" format="reference" /> -->
 	<attr name="preferenceFrameLayoutStyle" format="reference" />
 	<attr name="preferenceScreenStyle" format="reference" />
 	<attr name="preferenceFragmentStyle" format="reference" />
@@ -33,6 +34,7 @@
 	<attr name="alertDialogStyle" format="reference" />
 	<attr name="alertDialogTheme" format="reference" />
 	<attr name="textColorAlertDialogListItem" format="reference" />
+	<attr name="spinnerStyle" format="reference" />
 	<attr name="gravity">
 		<flag name="top" value="0x30" />
 		<flag name="bottom" value="0x50" />
@@ -196,5 +198,31 @@
 	</declare-styleable>
 	<declare-styleable name="TextView">
 		<attr name="textAllCaps" />
+	</declare-styleable>
+	<declare-styleable name="Spinner">
+		<attr name="prompt" format="reference" />
+		<attr name="spinnerMode" format="enum">
+			<enum name="dialog" value="0" />
+			<enum name="dropdown" value="1" />
+		</attr>
+		<attr name="dropDownSelector" format="reference|color" />
+		<attr name="popupBackground" />
+		<attr name="dropDownVerticalOffset" format="dimension" />
+		<attr name="dropDownHorizontalOffset" format="dimension" />
+		<attr name="dropDownWidth" format="dimension">
+			<enum name="fill_parent" value="-1" />
+			<enum name="match_parent" value="-1" />
+			<enum name="wrap_content" value="-2" />
+		</attr>
+		<attr name="popupPromptView" format="reference" />
+		<attr name="gravity" />
+		<attr name="disableChildrenWhenDisabled" format="boolean" />
+	</declare-styleable>
+	<declare-styleable name="AbsSpinner">
+		<attr name="entries" />
+	</declare-styleable>
+	<declare-styleable name="PopupWindow">
+		<attr name="popupBackground" format="reference|color" />
+		<attr name="popupAnimationStyle" format="reference" />
 	</declare-styleable>
 </resources>

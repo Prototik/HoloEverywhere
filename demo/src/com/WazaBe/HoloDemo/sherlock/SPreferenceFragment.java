@@ -11,4 +11,9 @@ public class SPreferenceFragment extends
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 	}
+
+	@Override
+	public String toString() {
+		return "Preferences";
+	}
 }

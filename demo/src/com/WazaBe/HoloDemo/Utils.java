@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AutoCompleteTextView;
-import android.widget.Spinner;
 
-import com.WazaBe.HoloEverywhere.ArrayAdapter;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.ThemeManager;
 import com.WazaBe.HoloEverywhere.app.Activity;
@@ -16,6 +13,16 @@ import com.WazaBe.HoloEverywhere.app.ProgressDialog;
 import com.WazaBe.HoloEverywhere.app.Toast;
 
 public class Utils {
+	public static void onViewCreated(View view) {
+		/*
+		 * AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView)
+		 * view .findViewById(R.id.autoCompleteTextView); adapter =
+		 * ArrayAdapter.createFromResource(view.getContext(), R.array.countries,
+		 * android.R.layout.simple_dropdown_item_1line);
+		 * autoCompleteTextView.setAdapter(adapter);
+		 */
+	}
+
 	private static void setLink(View v, int id, final String link) {
 		v.findViewById(id).setOnClickListener(new OnClickListener() {
 			@Override
@@ -31,7 +38,10 @@ public class Utils {
 
 	public static void showAlertDialog(Activity activity) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-		builder.setTitle("Work in Progress").setMessage("Dialog")
+		builder.setTitle("AlertDialog")
+				.setMessage(
+						"Is fully-working port of AlertDialog from Android Jelly Bean\n"
+								+ "Yes, I know it's a long text. At the same time check that part.")
 				.setIcon(R.drawable.icon);
 		builder.setPositiveButton("Positive", null);
 		builder.setNegativeButton("Negative", null);
@@ -67,19 +77,5 @@ public class Utils {
 	public static void showToast(Activity activity) {
 		Toast.makeText(activity, "Toast example",
 				android.widget.Toast.LENGTH_LONG).show();
-	}
-
-	public static void onViewCreated(View view) {
-		Spinner s = (Spinner) view.findViewById(R.id.spinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-				view.getContext(), R.array.countries,
-				android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		s.setAdapter(adapter);
-		AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) view
-				.findViewById(R.id.autoCompleteTextView);
-		adapter = ArrayAdapter.createFromResource(view.getContext(),
-				R.array.countries, android.R.layout.simple_dropdown_item_1line);
-		autoCompleteTextView.setAdapter(adapter);
 	}
 }

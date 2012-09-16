@@ -14,26 +14,25 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class SFragment extends Fragment implements OnCreateOptionsMenuListener,
 		OnPrepareOptionsMenuListener, OnOptionsItemSelectedListener {
-	private SActivity mActivity;
+	private SBase mActivity;
 
-	public SActivity getSherlockActivity() {
+	public SBase getSherlockActivity() {
 		return mActivity;
 	}
 
 	@Override
-	public void onAttach(Activity activity) {
-		if (!(activity instanceof SActivity)) {
-			throw new IllegalStateException(getClass().getSimpleName()
-					+ " must be attached to a SActivity.");
-		}
-		mActivity = (SActivity) activity;
-		super.onAttach(activity);
+	public boolean isABSSupport() {
+		return true;
 	}
 
 	@Override
-	public void onDetach() {
-		mActivity = null;
-		super.onDetach();
+	public void onAttach(Activity activity) {
+		if (!(activity instanceof SBase)) {
+			throw new IllegalStateException(getClass().getSimpleName()
+					+ " must be attached to a SActivity.");
+		}
+		mActivity = (SBase) activity;
+		super.onAttach(activity);
 	}
 
 	@Override
@@ -48,12 +47,9 @@ public class SFragment extends Fragment implements OnCreateOptionsMenuListener,
 	}
 
 	@Override
-	public final void onPrepareOptionsMenu(android.view.Menu menu) {
-		onPrepareOptionsMenu(new MenuWrapper(menu));
-	}
-
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
+	public void onDetach() {
+		mActivity = null;
+		super.onDetach();
 	}
 
 	@Override
@@ -64,5 +60,14 @@ public class SFragment extends Fragment implements OnCreateOptionsMenuListener,
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return false;
+	}
+
+	@Override
+	public final void onPrepareOptionsMenu(android.view.Menu menu) {
+		onPrepareOptionsMenu(new MenuWrapper(menu));
+	}
+
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
 	}
 }

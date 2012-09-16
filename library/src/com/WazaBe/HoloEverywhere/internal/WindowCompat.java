@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.Window;
 
-public class WindowCompact {
+public class WindowCompat {
 
 	private static boolean isOutOfBounds(Window window, MotionEvent event) {
 		final int x = (int) event.getX();
@@ -26,7 +26,7 @@ public class WindowCompact {
 		return false;
 	}
 
-	private WindowCompact() {
+	private WindowCompat() {
 
 	}
 }
