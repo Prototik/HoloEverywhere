@@ -25,6 +25,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 				"Switch", "TextView", "CalendarView", "Spinner",
 				"NumberPicker", "DatePicker");
 		putToMap("android.support.v4.view", "ViewPager", "PagerTitleStrip");
+		putToMap("android.webkit", "WebView");
 	}
 
 	public static LayoutInflater from(android.view.LayoutInflater inflater) {
