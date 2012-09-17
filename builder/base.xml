@@ -92,6 +92,7 @@
     <include name="DarkTextColors" />
     <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
     <item name="android:listViewStyle">@style/Holo.ListView</item>
+    <item name="android:expandableListViewStyle">@style/Holo.ExpandableListView</item>
     <item name="android:buttonStyle">@style/Holo.Button</item>
     <item name="android:buttonStyleToggle">@style/Holo.Button.Toggle</item>
     <item name="android:imageButtonStyle">@style/Holo.ImageButton</item>
@@ -118,6 +119,7 @@
     <include name="LightTextColors" />
     <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal.Light</item>
     <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
+    <item name="android:expandableListViewStyle">@style/Holo.ExpandableListView.Light</item>
     <item name="android:buttonStyle">@style/Holo.Button.Light</item>
     <item name="android:buttonStyleToggle">@style/Holo.Button.Toggle.Light</item>
     <item name="android:imageButtonStyle">@style/Holo.ImageButton.Light</item>
