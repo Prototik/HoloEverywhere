@@ -35,6 +35,11 @@
 	<attr name="alertDialogTheme" format="reference" />
 	<attr name="textColorAlertDialogListItem" format="reference" />
 	<attr name="spinnerStyle" format="reference" />
+	<attr name="numberPickerStyle" format="reference" />
+	<attr name="numberPickerUpButtonStyle" format="reference" />
+	<attr name="numberPickerDownButtonStyle" format="reference" />
+	<attr name="numberPickerInputTextStyle" format="reference" />
+	<attr name="datePickerStyle" format="reference" />
 	<attr name="gravity">
 		<flag name="top" value="0x30" />
 		<flag name="bottom" value="0x50" />
@@ -206,7 +211,7 @@
 			<enum name="dropdown" value="1" />
 		</attr>
 		<attr name="dropDownSelector" format="reference|color" />
-		<attr name="popupBackground" />
+		<attr name="popupBackground" format="reference" />
 		<attr name="dropDownVerticalOffset" format="dimension" />
 		<attr name="dropDownHorizontalOffset" format="dimension" />
 		<attr name="dropDownWidth" format="dimension">
@@ -221,8 +226,25 @@
 	<declare-styleable name="AbsSpinner">
 		<attr name="entries" />
 	</declare-styleable>
-	<declare-styleable name="PopupWindow">
-		<attr name="popupBackground" format="reference|color" />
-		<attr name="popupAnimationStyle" format="reference" />
+	<declare-styleable name="NumberPicker">
+		<attr name="solidColor" format="color|reference" />
+		<attr name="flingable" format="boolean" />
+		<attr name="selectionDivider" format="reference" />
+		<attr name="selectionDividerHeight" format="dimension" />
+		<attr name="android:minHeight" />
+		<attr name="android:maxHeight" />
+		<attr name="android:minWidth" />
+		<attr name="android:maxWidth" />
+		<attr name="android:orientation" />
+		<attr name="android:fadingEdgeLength" />
+	</declare-styleable>
+	<declare-styleable name="DatePicker">
+		<attr name="startYear" format="integer" />
+		<attr name="endYear" format="integer" />
+		<attr name="spinnersShown" format="boolean" />
+		<attr name="calendarViewShown" format="boolean" />
+		<attr name="minDate" />
+		<attr name="maxDate" />
+		<attr name="internalLayout" format="reference" />
 	</declare-styleable>
 </resources>

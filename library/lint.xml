@@ -9,5 +9,6 @@
         <ignore path="src/com/WazaBe/HoloEverywhere/app/AlertDialog.java" />
         <ignore path="src/com/WazaBe/HoloEverywhere/app/Dialog.java" />
         <ignore path="res/layout/preference_widget_switch.xml" />
+        <ignore path="res/layout/date_picker_holo.xml" />
     </issue>
 </lint>

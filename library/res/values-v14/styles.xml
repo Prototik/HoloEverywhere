@@ -29,6 +29,8 @@
         <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
+        <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
+        <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
         <item name="alertDialogStyle">@style/Holo.AlertDialog</item>
@@ -44,6 +46,8 @@
         <item name="spinnerStyle">@style/Holo.Spinner</item>
         <item name="spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
         <item name="spinnerDropDownItemStyle">@style/Holo.TextView.SpinnerItem.DropDown</item>
+        <item name="numberPickerUpButtonStyle">@style/Holo.ImageButton.NumberPickerUpButton</item>
+        <item name="numberPickerDownButtonStyle">@style/Holo.ImageButton.NumberPickerDownButton</item>
     </style>
     <style name="Holo.Theme.Default.Sherlock" parent="Holo.Theme"/>
     <style name="Holo.Theme.Sherlock" parent="Holo.Theme"/>
@@ -77,6 +81,8 @@
         <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
+        <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
+        <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
@@ -92,6 +98,8 @@
         <item name="spinnerStyle">@style/Holo.Spinner.Light</item>
         <item name="spinnerItemStyle">@style/Holo.TextView.SpinnerItem.Light</item>
         <item name="spinnerDropDownItemStyle">@style/Holo.TextView.SpinnerItem.DropDown.Light</item>
+        <item name="numberPickerUpButtonStyle">@style/Holo.ImageButton.NumberPickerUpButton.Light</item>
+        <item name="numberPickerDownButtonStyle">@style/Holo.ImageButton.NumberPickerDownButton.Light</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light" parent="Holo.Theme.Light"/>
     <style name="Holo.Theme.Sherlock.Light.ForceOverflow" parent="Holo.Theme.Light"/>

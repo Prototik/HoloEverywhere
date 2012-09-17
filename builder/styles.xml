@@ -178,7 +178,7 @@
     <item name="spinnerMode">dialog</item>
     <item name="android:background">@drawable/spinner_background_holo_dark</item>
     <item name="dropDownSelector">@drawable/list_selector_holo_dark</item>
-    <item name="popupBackground">@drawable/menu_dropdown_panel_holo_dark</item>
+    <!--item name="popupBackground">@drawable/menu_dropdown_panel_holo_dark</item-->
     <item name="dropDownVerticalOffset">0dip</item>
     <item name="dropDownHorizontalOffset">0dip</item>
     <item name="dropDownWidth">wrap_content</item>
@@ -188,7 +188,7 @@
   <style name="Holo.Spinner.Light">
     <item name="background">@drawable/spinner_background_holo_light</item>
     <item name="dropDownSelector">@drawable/list_selector_holo_light</item>
-    <item name="popupBackground">@drawable/menu_dropdown_panel_holo_light</item>
+    <!--item name="popupBackground">@drawable/menu_dropdown_panel_holo_light</item-->
   </style>
   <style name="Holo.TextView" />
   <style name="Holo.TextView.SpinnerItem">
@@ -424,6 +424,50 @@
   <style name="Holo.Animation.DropDownUp">
     <item name="android:windowEnterAnimation">@anim/grow_fade_in_from_bottom</item>
     <item name="android:windowExitAnimation">@anim/shrink_fade_out_from_bottom</item>
+  </style>
+  <style name="Holo.NumberPicker">
+    <item name="android:fadingEdge">vertical</item>
+    <item name="android:fadingEdgeLength">50dip</item>
+    <item name="solidColor">@android:color/transparent</item>
+    <item name="flingable">true</item>
+    <item name="selectionDivider">@drawable/numberpicker_selection_divider</item>
+    <item name="selectionDividerHeight">2dip</item>
+    <item name="android:minWidth">48dip</item>
+    <item name="android:maxHeight">200dip</item>
+    <item name="android:textAppearance">?android:attr/textAppearance</item>
+    <item name="android:orientation">vertical</item>
+  </style>
+  <style name="Holo.ImageButton.NumberPickerUpButton">
+    <item name="android:background">@null</item>
+    <item name="android:src">@drawable/numberpicker_up_btn_holo_dark</item>
+    <item name="android:paddingTop">16dip</item>
+    <item name="android:paddingBottom">22dip</item>
+  </style>
+  <style name="Holo.ImageButton.NumberPickerUpButton.Light">
+    <item name="android:src">@drawable/numberpicker_up_btn_holo_light</item>
+  </style>
+  <style name="Holo.ImageButton.NumberPickerDownButton">
+    <item name="android:background">@null</item>
+    <item name="android:src">@drawable/numberpicker_down_btn_holo_dark</item>
+    <item name="android:paddingTop">22dip</item>
+    <item name="android:paddingBottom">16dip</item>
+  </style>
+  <style name="Holo.ImageButton.NumberPickerDownButton.Light">
+    <item name="android:src">@drawable/numberpicker_down_btn_holo_light</item>
+  </style>
+  <style name="Holo.EditText.NumberPickerInputText">
+    <item name="android:paddingTop">13sp</item>
+    <item name="android:paddingBottom">13sp</item>
+    <item name="android:paddingLeft">2sp</item>
+    <item name="android:paddingRight">2sp</item>
+    <item name="android:gravity">center</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:textSize">18sp</item>
+    <item name="android:background">@null</item>
+  </style>
+  <style name="Holo.DatePicker">
+    <item name="internalLayout">@layout/date_picker_holo</item>
+    <item name="calendarViewShown">true</item>
   </style>
   <!-- Sherlock themes -->
   <style name="Holo.Theme.Default.Sherlock" parent="@style/Theme.Sherlock">
