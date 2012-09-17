@@ -16,6 +16,18 @@
         <item name="android:listSelector">@drawable/list_selector_holo_light</item>
     </style>
     <style name="Holo.ListView.DropDown"/>
+    <style name="Holo.ExpandableListView" parent="Holo.ListView">
+        <item name="android:groupIndicator">@drawable/expander_group_holo_dark</item>
+        <item name="android:indicatorLeft">?android:attr/expandableListPreferredItemIndicatorLeft</item>
+        <item name="android:indicatorRight">?android:attr/expandableListPreferredItemIndicatorRight</item>
+        <item name="android:childDivider">?android:attr/listDivider</item>
+    </style>
+    <style name="Holo.ExpandableListView.Light" parent="Holo.ListView.Light">
+        <item name="android:groupIndicator">@drawable/expander_group_holo_light</item>
+        <item name="android:indicatorLeft">?android:attr/expandableListPreferredItemIndicatorLeft</item>
+        <item name="android:indicatorRight">?android:attr/expandableListPreferredItemIndicatorRight</item>
+        <item name="android:childDivider">?android:attr/listDivider</item>
+    </style>
     <style name="Holo.AlertDialog">
         <item name="fullDark">@drawable/dialog_full_holo_dark</item>
         <item name="topDark">@drawable/dialog_top_holo_dark</item>
@@ -597,6 +609,7 @@
         <item name="android:textColorHighlight">@color/highlighted_text_holo_dark</item>
         <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
         <item name="android:listViewStyle">@style/Holo.ListView</item>
+        <item name="android:expandableListViewStyle">@style/Holo.ExpandableListView</item>
         <item name="android:buttonStyle">@style/Holo.Button</item>
         <item name="android:buttonStyleToggle">@style/Holo.Button.Toggle</item>
         <item name="android:imageButtonStyle">@style/Holo.ImageButton</item>
@@ -711,6 +724,7 @@
         <item name="android:textColorHighlight">@color/highlighted_text_holo_dark</item>
         <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
         <item name="android:listViewStyle">@style/Holo.ListView</item>
+        <item name="android:expandableListViewStyle">@style/Holo.ExpandableListView</item>
         <item name="android:buttonStyle">@style/Holo.Button</item>
         <item name="android:buttonStyleToggle">@style/Holo.Button.Toggle</item>
         <item name="android:imageButtonStyle">@style/Holo.ImageButton</item>
@@ -825,6 +839,7 @@
         <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
         <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal.Light</item>
         <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
+        <item name="android:expandableListViewStyle">@style/Holo.ExpandableListView.Light</item>
         <item name="android:buttonStyle">@style/Holo.Button.Light</item>
         <item name="android:buttonStyleToggle">@style/Holo.Button.Toggle.Light</item>
         <item name="android:imageButtonStyle">@style/Holo.ImageButton.Light</item>
@@ -941,6 +956,7 @@
         <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
         <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal.Light</item>
         <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
+        <item name="android:expandableListViewStyle">@style/Holo.ExpandableListView.Light</item>
         <item name="android:buttonStyle">@style/Holo.Button.Light</item>
         <item name="android:buttonStyleToggle">@style/Holo.Button.Toggle.Light</item>
         <item name="android:imageButtonStyle">@style/Holo.ImageButton.Light</item>
@@ -1057,6 +1073,7 @@
         <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
         <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal.Light</item>
         <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
+        <item name="android:expandableListViewStyle">@style/Holo.ExpandableListView.Light</item>
         <item name="android:buttonStyle">@style/Holo.Button.Light</item>
         <item name="android:buttonStyleToggle">@style/Holo.Button.Toggle.Light</item>
         <item name="android:imageButtonStyle">@style/Holo.ImageButton.Light</item>
@@ -1173,6 +1190,7 @@
         <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
         <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal.Light</item>
         <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
+        <item name="android:expandableListViewStyle">@style/Holo.ExpandableListView.Light</item>
         <item name="android:buttonStyle">@style/Holo.Button.Light</item>
         <item name="android:buttonStyleToggle">@style/Holo.Button.Toggle.Light</item>
         <item name="android:imageButtonStyle">@style/Holo.ImageButton.Light</item>
@@ -1290,6 +1308,7 @@
         <item name="android:textColorHighlight">@color/highlighted_text_holo_dark</item>
         <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
         <item name="android:listViewStyle">@style/Holo.ListView</item>
+        <item name="android:expandableListViewStyle">@style/Holo.ExpandableListView</item>
         <item name="android:buttonStyle">@style/Holo.Button</item>
         <item name="android:buttonStyleToggle">@style/Holo.Button.Toggle</item>
         <item name="android:imageButtonStyle">@style/Holo.ImageButton</item>
@@ -1404,6 +1423,7 @@
         <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
         <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal.Light</item>
         <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
+        <item name="android:expandableListViewStyle">@style/Holo.ExpandableListView.Light</item>
         <item name="android:buttonStyle">@style/Holo.Button.Light</item>
         <item name="android:buttonStyleToggle">@style/Holo.Button.Toggle.Light</item>
         <item name="android:imageButtonStyle">@style/Holo.ImageButton.Light</item>
