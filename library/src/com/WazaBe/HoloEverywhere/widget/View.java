@@ -50,9 +50,18 @@ public class View extends android.view.View {
 	static final int VIEW_STATE_HOVERED = 1 << 7;
 	static final int VIEW_STATE_PRESSED = 1 << 4;
 	static final int VIEW_STATE_SELECTED = 1 << 1;
+	private static final int[][] VIEW_STATE_SETS;
+
 	static final int VIEW_STATE_WINDOW_FOCUSED = 1;
 
-	static final int[] _VIEW_STATE_IDS = new int[] {
+	private static final int[] ViewDrawableStates = {
+			android.R.attr.state_pressed, android.R.attr.state_focused,
+			android.R.attr.state_selected, android.R.attr.state_window_focused,
+			android.R.attr.state_enabled, android.R.attr.state_activated,
+			android.R.attr.state_accelerated, android.R.attr.state_hovered,
+			android.R.attr.state_drag_can_accept,
+			android.R.attr.state_drag_hovered };
+	static final int[] Z_VIEW_STATE_IDS = new int[] {
 			android.R.attr.state_window_focused, VIEW_STATE_WINDOW_FOCUSED,
 			android.R.attr.state_selected, VIEW_STATE_SELECTED,
 			android.R.attr.state_focused, VIEW_STATE_FOCUSED,
@@ -64,31 +73,22 @@ public class View extends android.view.View {
 			android.R.attr.state_drag_can_accept, VIEW_STATE_DRAG_CAN_ACCEPT,
 			android.R.attr.state_drag_hovered, VIEW_STATE_DRAG_HOVERED };
 
-	private static final int[][] VIEW_STATE_SETS;
-	private static final int[] ViewDrawableStates = {
-			android.R.attr.state_pressed, android.R.attr.state_focused,
-			android.R.attr.state_selected, android.R.attr.state_window_focused,
-			android.R.attr.state_enabled, android.R.attr.state_activated,
-			android.R.attr.state_accelerated, android.R.attr.state_hovered,
-			android.R.attr.state_drag_can_accept,
-			android.R.attr.state_drag_hovered };
-
 	static {
-		if (_VIEW_STATE_IDS.length / 2 != ViewDrawableStates.length) {
+		if (Z_VIEW_STATE_IDS.length / 2 != ViewDrawableStates.length) {
 			throw new IllegalStateException(
 					"VIEW_STATE_IDs array length does not match ViewDrawableStates style array");
 		}
-		int[] orderedIds = new int[_VIEW_STATE_IDS.length];
+		int[] orderedIds = new int[Z_VIEW_STATE_IDS.length];
 		for (int i = 0; i < ViewDrawableStates.length; i++) {
 			int viewState = ViewDrawableStates[i];
-			for (int j = 0; j < _VIEW_STATE_IDS.length; j += 2) {
-				if (_VIEW_STATE_IDS[j] == viewState) {
+			for (int j = 0; j < Z_VIEW_STATE_IDS.length; j += 2) {
+				if (Z_VIEW_STATE_IDS[j] == viewState) {
 					orderedIds[i * 2] = viewState;
-					orderedIds[i * 2 + 1] = _VIEW_STATE_IDS[j + 1];
+					orderedIds[i * 2 + 1] = Z_VIEW_STATE_IDS[j + 1];
 				}
 			}
 		}
-		final int NUM_BITS = _VIEW_STATE_IDS.length / 2;
+		final int NUM_BITS = Z_VIEW_STATE_IDS.length / 2;
 		VIEW_STATE_SETS = new int[1 << NUM_BITS][];
 		for (int i = 0; i < VIEW_STATE_SETS.length; i++) {
 			int numBits = Integer.bitCount(i);

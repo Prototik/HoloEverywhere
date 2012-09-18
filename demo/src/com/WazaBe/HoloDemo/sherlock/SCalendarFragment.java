@@ -14,9 +14,4 @@ public class SCalendarFragment extends SFragment {
 			Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.calendar);
 	}
-
-	@Override
-	public String toString() {
-		return "Calendar";
-	}
 }

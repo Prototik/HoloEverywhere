@@ -19,6 +19,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.accessibility.AccessibilityEvent;
@@ -30,6 +31,7 @@ import android.widget.ImageButton;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
+import com.WazaBe.HoloEverywhere.internal.NumberPickerEditText;
 import com.WazaBe.HoloEverywhere.util.SparseArray;
 import com.actionbarsherlock.internal.nineoldandroids.animation.Animator;
 import com.actionbarsherlock.internal.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -68,20 +70,6 @@ public class NumberPicker extends LinearLayout {
 
 		private void setIncrement(boolean increment) {
 			mIncrement = increment;
-		}
-	}
-
-	public class EditText extends android.widget.EditText {
-		public EditText(Context context, AttributeSet attrs) {
-			super(context, attrs);
-		}
-
-		@Override
-		public void onEditorAction(int actionCode) {
-			super.onEditorAction(actionCode);
-			if (actionCode == EditorInfo.IME_ACTION_DONE) {
-				clearFocus();
-			}
 		}
 	}
 
@@ -217,7 +205,7 @@ public class NumberPicker extends LinearLayout {
 	private Formatter mFormatter;
 	private final ImageButton mIncrementButton;
 	private int mInitialScrollOffset = Integer.MIN_VALUE;
-	private final EditText mInputText;
+	private final NumberPickerEditText mInputText;
 	private float mLastDownEventY;
 	private float mLastMotionEventY;
 	private long mLastUpEventTimeMillis;
@@ -331,7 +319,7 @@ public class NumberPicker extends LinearLayout {
 		mDecrementButton = (ImageButton) findViewById(R.id.decrement);
 		mDecrementButton.setOnClickListener(onClickListener);
 		mDecrementButton.setOnLongClickListener(onLongClickListener);
-		mInputText = (EditText) findViewById(R.id.numberpicker_input);
+		mInputText = (NumberPickerEditText) findViewById(R.id.numberpicker_input);
 		mInputText.setOnFocusChangeListener(new OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
@@ -339,7 +327,7 @@ public class NumberPicker extends LinearLayout {
 					mInputText.selectAll();
 				} else {
 					mInputText.setSelection(0, 0);
-					validateInputTextView(v);
+					validateInputTextView(mInputText);
 				}
 			}
 		});
@@ -1188,12 +1176,11 @@ public class NumberPicker extends LinearLayout {
 		if (selectorWheelState == SELECTOR_WHEEL_STATE_LARGE) {
 			mSelectorWheelPaint.setAlpha(SELECTOR_WHEEL_BRIGHT_ALPHA);
 		}
-		if (mFlingable
-				&& selectorWheelState == SELECTOR_WHEEL_STATE_LARGE
-				&& ((AccessibilityManager) getContext().getSystemService(
-						Context.ACCESSIBILITY_SERVICE)).isEnabled()) {
-			((AccessibilityManager) getContext().getSystemService(
-					Context.ACCESSIBILITY_SERVICE)).interrupt();
+		AccessibilityManager accessibilityManager = ((AccessibilityManager) getContext()
+				.getSystemService(Context.ACCESSIBILITY_SERVICE));
+		if (mFlingable && selectorWheelState == SELECTOR_WHEEL_STATE_LARGE
+				&& accessibilityManager.isEnabled()) {
+			accessibilityManager.interrupt();
 			String text = getContext().getString(
 					R.string.number_picker_increment_scroll_action);
 			mInputText.setContentDescription(text);
@@ -1313,13 +1300,17 @@ public class NumberPicker extends LinearLayout {
 		}
 	}
 
-	private void validateInputTextView(View v) {
-		String str = String.valueOf(((TextView) v).getText());
+	private void validateInputTextView(NumberPickerEditText v) {
+		String str = String.valueOf(v.getText());
 		if (TextUtils.isEmpty(str)) {
 			updateInputTextView();
 		} else {
 			int current = getSelectedPos(str.toString());
 			changeCurrent(current);
 		}
+	}
+
+	public NumberPickerEditText getInputField() {
+		return mInputText;
 	}
 }

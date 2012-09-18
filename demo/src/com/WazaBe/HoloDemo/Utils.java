@@ -1,5 +1,8 @@
 package com.WazaBe.HoloDemo;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
@@ -9,8 +12,12 @@ import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.ThemeManager;
 import com.WazaBe.HoloEverywhere.app.Activity;
 import com.WazaBe.HoloEverywhere.app.AlertDialog;
+import com.WazaBe.HoloEverywhere.app.DatePickerDialog;
+import com.WazaBe.HoloEverywhere.app.DatePickerDialog.OnDateSetListener;
 import com.WazaBe.HoloEverywhere.app.ProgressDialog;
 import com.WazaBe.HoloEverywhere.app.Toast;
+import com.WazaBe.HoloEverywhere.widget.DatePicker;
+import com.WazaBe.HoloEverywhere.widget.NumberPicker;
 
 public class Utils {
 	public static void onViewCreated(View view) {
@@ -77,5 +84,39 @@ public class Utils {
 	public static void showToast(Activity activity) {
 		Toast.makeText(activity, "Toast example",
 				android.widget.Toast.LENGTH_LONG).show();
+	}
+
+	public static void showDatePicker(final Activity activity) {
+		DatePickerDialog dialog = new DatePickerDialog(activity,
+				new OnDateSetListener() {
+					@Override
+					public void onDateSet(DatePicker view, int year,
+							int monthOfYear, int dayOfMonth) {
+						Calendar calendar = Calendar.getInstance();
+						calendar.set(Calendar.YEAR, year);
+						calendar.set(Calendar.MONTH, monthOfYear);
+						calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+						String s = new SimpleDateFormat("yyyy-MM-dd")
+								.format(calendar.getTime());
+						s = "You select date: " + s;
+						Toast.makeText(activity, s, Toast.LENGTH_SHORT).show();
+					}
+				}, 2012, 12, 21);
+		dialog.show();
+	}
+
+	public static void showNumberPicker(Activity activity) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+		builder.setTitle("Select number");
+		View view = LayoutInflater.inflate(activity,
+				R.layout.number_picker_demo);
+		NumberPicker picker = (NumberPicker) view
+				.findViewById(R.id.numberPicker);
+		picker.setMinValue(1);
+		picker.setMaxValue(15);
+		picker.setValue(3);
+		builder.setView(view);
+		builder.setNegativeButton(android.R.string.cancel, null);
+		builder.show();
 	}
 }

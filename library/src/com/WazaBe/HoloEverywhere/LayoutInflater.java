@@ -23,7 +23,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	static {
 		putToMap(Settings.getWidgetsPackage(), "ProgressBar", "LinearLayout",
 				"Switch", "TextView", "CalendarView", "Spinner",
-				"NumberPicker", "DatePicker");
+				"NumberPicker", "DatePicker", "ListView");
 		putToMap("android.support.v4.view", "ViewPager", "PagerTitleStrip");
 		putToMap("android.webkit", "WebView");
 	}

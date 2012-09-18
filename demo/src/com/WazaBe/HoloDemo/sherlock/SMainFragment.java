@@ -26,9 +26,4 @@ public class SMainFragment extends SFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		Utils.onViewCreated(view);
 	}
-
-	@Override
-	public String toString() {
-		return "Home";
-	}
 }

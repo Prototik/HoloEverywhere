@@ -6,12 +6,11 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:contentDescription="@string/number_picker_increment_button" />
-	<view
+	<com.WazaBe.HoloEverywhere.internal.NumberPickerEditText
 		android:id="@+id/numberpicker_input"
 		style="?numberPickerInputTextStyle"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		class="com.WazaBe.HoloEverywhere.widget.NumberPicker$EditText" />
+		android:layout_height="wrap_content" />
 	<ImageButton
 		android:id="@+id/decrement"
 		style="?numberPickerDownButtonStyle"

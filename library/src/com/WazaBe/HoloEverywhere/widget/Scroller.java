@@ -100,8 +100,7 @@ public class Scroller {
 				context.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.HONEYCOMB);
 	}
 
-	public Scroller(Context context, Interpolator interpolator,
-			boolean flywheel) {
+	public Scroller(Context context, Interpolator interpolator, boolean flywheel) {
 		mFinished = true;
 		mInterpolator = interpolator;
 		mPpi = context.getResources().getDisplayMetrics().density * 160.0f;

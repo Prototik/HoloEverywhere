@@ -90,4 +90,11 @@ public class SHoloDemoActivity extends SActivity {
 		Utils.showToast(this);
 	}
 
+	public void showDatePicker(View v) {
+		Utils.showDatePicker(this);
+	}
+
+	public void showNumberPicker(View v) {
+		Utils.showNumberPicker(this);
+	}
 }
