@@ -31,6 +31,7 @@
     <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
     <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
     <item name="datePickerStyle">@style/Holo.DatePicker</item>
+    <item name="timePickerStyle">@style/Holo.TimePicker</item>
   </define>
   <define name="BaseDark">
     <include name="Base" />

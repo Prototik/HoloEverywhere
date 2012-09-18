@@ -18,11 +18,11 @@ import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.accessibility.AccessibilityManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
@@ -30,19 +30,27 @@ import com.WazaBe.HoloEverywhere.internal.NumberPickerEditText;
 import com.WazaBe.HoloEverywhere.util.Arrays;
 import com.WazaBe.HoloEverywhere.widget.CalendarView.OnDateChangeListener;
 import com.WazaBe.HoloEverywhere.widget.NumberPicker.OnValueChangeListener;
-import com.actionbarsherlock.internal.nineoldandroids.widget.NineFrameLayout;
 
-public class DatePicker extends NineFrameLayout implements
-		OnDateChangeListener, OnValueChangeListener {
+public class DatePicker extends FrameLayout implements OnValueChangeListener,
+		OnDateChangeListener {
 	public interface OnDateChangedListener {
 		void onDateChanged(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth);
 	}
 
 	private static class SavedState extends BaseSavedState {
-		private final int mDay;
-		private final int mMonth;
-		private final int mYear;
+		@SuppressWarnings("all")
+		public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+			public SavedState createFromParcel(Parcel in) {
+				return new SavedState(in);
+			}
+
+			public SavedState[] newArray(int size) {
+				return new SavedState[size];
+			}
+		};
+
+		private final int mYear, mMonth, mDay;
 
 		private SavedState(Parcel in) {
 			super(in);
@@ -68,9 +76,9 @@ public class DatePicker extends NineFrameLayout implements
 	}
 
 	private static final String DATE_FORMAT = "MM/dd/yyyy";
-
 	private static final String LOG_TAG = DatePicker.class.getSimpleName();
 	private final CalendarView mCalendarView;
+	private Context mContext;
 	private Locale mCurrentLocale;
 	private final java.text.DateFormat mDateFormat = new SimpleDateFormat(
 			DATE_FORMAT);
@@ -78,11 +86,13 @@ public class DatePicker extends NineFrameLayout implements
 	private final NumberPickerEditText mDaySpinnerInput, mMonthSpinnerInput,
 			mYearSpinnerInput;
 	private boolean mIsEnabled = true;
-	private Calendar mMaxDate, mMinDate, mTempDate, mCurrentDate;
 	private int mNumberOfMonths;
 	private OnDateChangedListener mOnDateChangedListener;
 	private String[] mShortMonths;
+
 	private final LinearLayout mSpinners;
+
+	private Calendar mTempDate, mMinDate, mMaxDate, mCurrentDate;
 
 	public DatePicker(Context context) {
 		this(context, null);
@@ -92,49 +102,53 @@ public class DatePicker extends NineFrameLayout implements
 		this(context, attrs, R.attr.datePickerStyle);
 	}
 
-	@SuppressLint("NewApi")
 	public DatePicker(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		mContext = context;
 		setCurrentLocale(Locale.getDefault());
-		TypedArray a = context.obtainStyledAttributes(attrs,
-				R.styleable.DatePicker, defStyle, R.style.Holo_DatePicker);
-		boolean spinnersShown = a.getBoolean(
+		TypedArray attributesArray = context.obtainStyledAttributes(attrs,
+				R.styleable.DatePicker, defStyle, 0);
+		boolean spinnersShown = attributesArray.getBoolean(
 				R.styleable.DatePicker_spinnersShown, true);
-		boolean calendarViewShown = a.getBoolean(
+		boolean calendarViewShown = attributesArray.getBoolean(
 				R.styleable.DatePicker_calendarViewShown, true);
-		int startYear = a.getInt(R.styleable.DatePicker_startYear, 1900);
-		int endYear = a.getInt(R.styleable.DatePicker_endYear, 2100);
-		String minDate = a.getString(R.styleable.DatePicker_minDate);
-		String maxDate = a.getString(R.styleable.DatePicker_maxDate);
-		int layoutResourceId = a.getResourceId(
+		int startYear = attributesArray.getInt(
+				R.styleable.DatePicker_startYear, 1900);
+		int endYear = attributesArray.getInt(R.styleable.DatePicker_endYear,
+				2100);
+		String minDate = attributesArray
+				.getString(R.styleable.DatePicker_minDate);
+		String maxDate = attributesArray
+				.getString(R.styleable.DatePicker_maxDate);
+		int layoutResourceId = attributesArray.getResourceId(
 				R.styleable.DatePicker_internalLayout,
 				R.layout.date_picker_holo);
-		a.recycle();
-		getLayoutInflater().inflate(layoutResourceId, this, true);
+		attributesArray.recycle();
+		LayoutInflater.inflate(context, layoutResourceId, this, true);
 		mSpinners = (LinearLayout) findViewById(R.id.pickers);
 		mCalendarView = (CalendarView) findViewById(R.id.calendar_view);
-		mDaySpinner = (NumberPicker) findViewById(R.id.day);
-		mMonthSpinner = (NumberPicker) findViewById(R.id.month);
-		mYearSpinner = (NumberPicker) findViewById(R.id.year);
-		mDaySpinnerInput = mDaySpinner.getInputField();
-		mMonthSpinnerInput = mMonthSpinner.getInputField();
-		mYearSpinnerInput = mYearSpinner.getInputField();
 		mCalendarView.setOnDateChangeListener(this);
+		mDaySpinner = (NumberPicker) findViewById(R.id.day);
 		mDaySpinner.setFormatter(NumberPicker.TWO_DIGIT_FORMATTER);
 		mDaySpinner.setOnLongPressUpdateInterval(100);
 		mDaySpinner.setOnValueChangedListener(this);
+		mDaySpinnerInput = mDaySpinner.getInputField();
+		mMonthSpinner = (NumberPicker) findViewById(R.id.month);
 		mMonthSpinner.setMinValue(0);
 		mMonthSpinner.setMaxValue(mNumberOfMonths - 1);
 		mMonthSpinner.setDisplayedValues(mShortMonths);
 		mMonthSpinner.setOnLongPressUpdateInterval(200);
 		mMonthSpinner.setOnValueChangedListener(this);
+		mMonthSpinnerInput = mMonthSpinner.getInputField();
+		mYearSpinner = (NumberPicker) findViewById(R.id.year);
 		mYearSpinner.setOnLongPressUpdateInterval(100);
 		mYearSpinner.setOnValueChangedListener(this);
-		if (spinnersShown || calendarViewShown) {
+		mYearSpinnerInput = mYearSpinner.getInputField();
+		if (!spinnersShown && !calendarViewShown) {
+			setSpinnersShown(true);
+		} else {
 			setSpinnersShown(spinnersShown);
 			setCalendarViewShown(calendarViewShown);
-		} else {
-			setSpinnersShown(true);
 		}
 		mTempDate.clear();
 		if (!TextUtils.isEmpty(minDate)) {
@@ -158,18 +172,22 @@ public class DatePicker extends NineFrameLayout implements
 		init(mCurrentDate.get(Calendar.YEAR), mCurrentDate.get(Calendar.MONTH),
 				mCurrentDate.get(Calendar.DAY_OF_MONTH), null);
 		reorderSpinners();
-		setContentDescriptions();
-		if (VERSION.SDK_INT >= 16
-				&& getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
-			setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
+		AccessibilityManager am = (AccessibilityManager) mContext
+				.getSystemService(Context.ACCESSIBILITY_SERVICE);
+		if (am.isEnabled()) {
+			setContentDescriptions();
 		}
 	}
 
-	@Override
 	@SuppressLint("NewApi")
+	@Override
 	public boolean dispatchPopulateAccessibilityEvent(AccessibilityEvent event) {
-		onPopulateAccessibilityEvent(event);
-		return true;
+		if (VERSION.SDK_INT >= 14) {
+			onPopulateAccessibilityEvent(event);
+			return true;
+		} else {
+			return super.dispatchPopulateAccessibilityEvent(event);
+		}
 	}
 
 	@Override
@@ -199,10 +217,6 @@ public class DatePicker extends NineFrameLayout implements
 
 	public int getDayOfMonth() {
 		return mCurrentDate.get(Calendar.DAY_OF_MONTH);
-	}
-
-	public LayoutInflater getLayoutInflater() {
-		return LayoutInflater.from(getContext());
 	}
 
 	public long getMaxDate() {
@@ -252,25 +266,11 @@ public class DatePicker extends NineFrameLayout implements
 		}
 	}
 
-	@Override
 	@SuppressLint("NewApi")
+	@Override
 	protected void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		setCurrentLocale(newConfig.locale);
-	}
-
-	@Override
-	@SuppressLint("NewApi")
-	public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
-		super.onInitializeAccessibilityEvent(event);
-		event.setClassName(DatePicker.class.getName());
-	}
-
-	@Override
-	@SuppressLint("NewApi")
-	public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
-		super.onInitializeAccessibilityNodeInfo(info);
-		info.setClassName(DatePicker.class.getName());
 	}
 
 	@Override
@@ -279,7 +279,7 @@ public class DatePicker extends NineFrameLayout implements
 		super.onPopulateAccessibilityEvent(event);
 		final int flags = DateUtils.FORMAT_SHOW_DATE
 				| DateUtils.FORMAT_SHOW_YEAR;
-		String selectedDateUtterance = DateUtils.formatDateTime(getContext(),
+		String selectedDateUtterance = DateUtils.formatDateTime(mContext,
 				mCurrentDate.getTimeInMillis(), flags);
 		event.getText().add(selectedDateUtterance);
 	}
@@ -381,18 +381,19 @@ public class DatePicker extends NineFrameLayout implements
 	}
 
 	private void setContentDescriptions() {
-		trySetContentDescription(mDaySpinner, R.id.increment,
-				R.string.date_picker_increment_day_button);
-		trySetContentDescription(mDaySpinner, R.id.decrement,
-				R.string.date_picker_decrement_day_button);
-		trySetContentDescription(mMonthSpinner, R.id.increment,
-				R.string.date_picker_increment_month_button);
-		trySetContentDescription(mMonthSpinner, R.id.decrement,
-				R.string.date_picker_decrement_month_button);
-		trySetContentDescription(mYearSpinner, R.id.increment,
-				R.string.date_picker_increment_year_button);
-		trySetContentDescription(mYearSpinner, R.id.decrement,
-				R.string.date_picker_decrement_year_button);
+		String text;
+		text = mContext.getString(R.string.date_picker_increment_day_button);
+		mDaySpinner.findViewById(R.id.increment).setContentDescription(text);
+		text = mContext.getString(R.string.date_picker_decrement_day_button);
+		mDaySpinner.findViewById(R.id.decrement).setContentDescription(text);
+		text = mContext.getString(R.string.date_picker_increment_month_button);
+		mMonthSpinner.findViewById(R.id.increment).setContentDescription(text);
+		text = mContext.getString(R.string.date_picker_decrement_month_button);
+		mMonthSpinner.findViewById(R.id.decrement).setContentDescription(text);
+		text = mContext.getString(R.string.date_picker_increment_year_button);
+		mYearSpinner.findViewById(R.id.increment).setContentDescription(text);
+		text = mContext.getString(R.string.date_picker_decrement_year_button);
+		mYearSpinner.findViewById(R.id.decrement).setContentDescription(text);
 	}
 
 	private void setCurrentLocale(Locale locale) {
@@ -436,16 +437,20 @@ public class DatePicker extends NineFrameLayout implements
 
 	private void setImeOptions(NumberPicker spinner, int spinnerCount,
 			int spinnerIndex) {
-		NumberPickerEditText input = (NumberPickerEditText) spinner
-				.findViewById(R.id.numberpicker_input);
-		input.setImeOptions(spinnerIndex < spinnerCount - 1 ? EditorInfo.IME_ACTION_NEXT
-				: EditorInfo.IME_ACTION_DONE);
+		final int imeOptions;
+		if (spinnerIndex < spinnerCount - 1) {
+			imeOptions = EditorInfo.IME_ACTION_NEXT;
+		} else {
+			imeOptions = EditorInfo.IME_ACTION_DONE;
+		}
+		NumberPickerEditText input = spinner.getInputField();
+		input.setImeOptions(imeOptions);
 	}
 
 	public void setMaxDate(long maxDate) {
 		mTempDate.setTimeInMillis(maxDate);
 		if (mTempDate.get(Calendar.YEAR) == mMaxDate.get(Calendar.YEAR)
-				&& mTempDate.get(Calendar.DAY_OF_YEAR) == mMaxDate
+				&& mTempDate.get(Calendar.DAY_OF_YEAR) != mMaxDate
 						.get(Calendar.DAY_OF_YEAR)) {
 			return;
 		}
@@ -461,7 +466,7 @@ public class DatePicker extends NineFrameLayout implements
 	public void setMinDate(long minDate) {
 		mTempDate.setTimeInMillis(minDate);
 		if (mTempDate.get(Calendar.YEAR) == mMinDate.get(Calendar.YEAR)
-				&& mTempDate.get(Calendar.DAY_OF_YEAR) == mMinDate
+				&& mTempDate.get(Calendar.DAY_OF_YEAR) != mMinDate
 						.get(Calendar.DAY_OF_YEAR)) {
 			return;
 		}
@@ -476,14 +481,6 @@ public class DatePicker extends NineFrameLayout implements
 
 	public void setSpinnersShown(boolean shown) {
 		mSpinners.setVisibility(shown ? VISIBLE : GONE);
-	}
-
-	private void trySetContentDescription(View root, int viewId,
-			int contDescResId) {
-		View target = root.findViewById(viewId);
-		if (target != null) {
-			target.setContentDescription(getContext().getString(contDescResId));
-		}
 	}
 
 	private void updateCalendarView() {
@@ -501,8 +498,7 @@ public class DatePicker extends NineFrameLayout implements
 	}
 
 	private void updateInputState() {
-
-		InputMethodManager inputMethodManager = (InputMethodManager) getContext()
+		InputMethodManager inputMethodManager = (InputMethodManager) mContext
 				.getSystemService(Context.INPUT_METHOD_SERVICE);
 		if (inputMethodManager != null) {
 			if (inputMethodManager.isActive(mYearSpinnerInput)) {
@@ -516,7 +512,6 @@ public class DatePicker extends NineFrameLayout implements
 				inputMethodManager.hideSoftInputFromWindow(getWindowToken(), 0);
 			}
 		}
-
 	}
 
 	private void updateSpinners() {

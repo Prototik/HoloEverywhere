@@ -1,5 +1,7 @@
 package com.WazaBe.HoloEverywhere.widget;
 
+import java.util.Locale;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -16,6 +18,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.NumberKeyListener;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -29,10 +32,10 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 
+import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.internal.NumberPickerEditText;
-import com.WazaBe.HoloEverywhere.util.SparseArray;
 import com.actionbarsherlock.internal.nineoldandroids.animation.Animator;
 import com.actionbarsherlock.internal.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.actionbarsherlock.internal.nineoldandroids.animation.AnimatorSet;
@@ -73,12 +76,25 @@ public class NumberPicker extends LinearLayout {
 		}
 	}
 
+	protected static class DigitFormatter implements Formatter {
+		protected String formatS;
+		protected Locale locale = Locale.getDefault();
+
+		public DigitFormatter(int digits) {
+			formatS = "%0" + digits + "d";
+		}
+
+		@Override
+		public String format(int value) {
+			return String.format(locale, formatS, value);
+		}
+	}
+
 	public interface Formatter {
 		public String format(int value);
 	}
 
 	class InputTextFilter extends NumberKeyListener {
-
 		@Override
 		public CharSequence filter(CharSequence source, int start, int end,
 				Spanned dest, int dstart, int dend) {
@@ -173,22 +189,7 @@ public class NumberPicker extends LinearLayout {
 			.getDoubleTapTimeout();
 	private static final int SIZE_UNSPECIFIED = -1;
 	private static final float TOP_AND_BOTTOM_FADING_EDGE_STRENGTH = 0.9f;
-
-	public static final NumberPicker.Formatter TWO_DIGIT_FORMATTER = new NumberPicker.Formatter() {
-		final Object[] mArgs = new Object[1];
-		final StringBuilder mBuilder = new StringBuilder();
-		final java.util.Formatter mFmt = new java.util.Formatter(mBuilder,
-				java.util.Locale.US);
-
-		@Override
-		public String format(int value) {
-			mArgs[0] = value;
-			mBuilder.delete(0, mBuilder.length());
-			mFmt.format("%02d", mArgs);
-			return mFmt.toString();
-		}
-	};
-
+	public static final Formatter TWO_DIGIT_FORMATTER = new DigitFormatter(2);
 	private static final int UNSCALED_DEFAULT_SELECTION_DIVIDER_HEIGHT = 2;
 	private final Scroller mAdjustScroller;
 	private AdjustScrollerCommand mAdjustScrollerCommand;
@@ -196,41 +197,30 @@ public class NumberPicker extends LinearLayout {
 	private ChangeCurrentByOneFromLongPressCommand mChangeCurrentByOneFromLongPressCommand;
 	private boolean mCheckBeginEditOnUpEvent;
 	private final boolean mComputeMaxWidth;
-	private int mCurrentScrollOffset;
-	private final ImageButton mDecrementButton;
 	private final Animator mDimSelectorWheelAnimator;
 	private String[] mDisplayedValues;
 	private final boolean mFlingable;
 	private final Scroller mFlingScroller;
 	private Formatter mFormatter;
-	private final ImageButton mIncrementButton;
-	private int mInitialScrollOffset = Integer.MIN_VALUE;
+	private final ImageButton mIncrementButton, mDecrementButton;
 	private final NumberPickerEditText mInputText;
-	private float mLastDownEventY;
-	private float mLastMotionEventY;
+	private float mLastDownEventY, mLastMotionEventY;
 	private long mLastUpEventTimeMillis;
 	private long mLongPressUpdateInterval = DEFAULT_LONG_PRESS_UPDATE_INTERVAL;
-	private final int mMaxHeight;
-	private int mMaximumFlingVelocity;
-	private int mMaxValue;
-	private int mMaxWidth;
-	private final int mMinHeight;
-	private int mMinimumFlingVelocity;
-	private int mMinValue;
-	private final int mMinWidth;
+	private int mMaxWidth, mSelectorTextGapHeight, mMinValue, mMaxValue,
+			mValue, mSelectorElementHeight, mCurrentScrollOffset,
+			mPreviousScrollerY, mInitialScrollOffset = Integer.MIN_VALUE;
+	private final int mMinHeight, mMaxHeight, mMinWidth, mTextSize;
 	private OnScrollListener mOnScrollListener;
 	private OnValueChangeListener mOnValueChangeListener;
-	private int mPreviousScrollerY;
 	private int mScrollState = OnScrollListener.SCROLL_STATE_IDLE;
 	private boolean mScrollWheelAndFadingEdgesInitialized;
 	private final Drawable mSelectionDivider;
 	private final int mSelectionDividerHeight;
-	private int mSelectorElementHeight;
 	private final SparseArray<String> mSelectorIndexToStringCache = new SparseArray<String>();
 	private final int[] mSelectorIndices = new int[] { Integer.MIN_VALUE,
 			Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE,
 			Integer.MIN_VALUE };
-	private int mSelectorTextGapHeight;
 	private final Paint mSelectorWheelPaint;
 	private int mSelectorWheelState;
 	private SetSelectionCommand mSetSelectionCommand;
@@ -238,9 +228,7 @@ public class NumberPicker extends LinearLayout {
 	private final long mShowInputControlsAnimimationDuration;
 	private final int mSolidColor;
 	private final Rect mTempRect = new Rect();
-	private final int mTextSize;
-	private int mTouchSlop;
-	private int mValue;
+	private int mTouchSlop, mMinimumFlingVelocity, mMaximumFlingVelocity;
 	private VelocityTracker mVelocityTracker;
 	private boolean mWrapSelectorWheel;
 
@@ -254,43 +242,47 @@ public class NumberPicker extends LinearLayout {
 
 	public NumberPicker(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs);
-		TypedArray a = context.obtainStyledAttributes(attrs,
-				R.styleable.NumberPicker, R.attr.numberPickerStyle,
-				R.style.Holo_NumberPicker);
-		mSolidColor = a.getColor(R.styleable.NumberPicker_solidColor, 0);
-		mFlingable = a.getBoolean(R.styleable.NumberPicker_flingable, true);
-		mSelectionDivider = a
+		TypedArray attributesArray = context.obtainStyledAttributes(attrs,
+				R.styleable.NumberPicker, R.attr.numberPickerStyle, 0);
+		mSolidColor = attributesArray.getColor(
+				R.styleable.NumberPicker_solidColor, 0);
+		mFlingable = attributesArray.getBoolean(
+				R.styleable.NumberPicker_flingable, true);
+		mSelectionDivider = attributesArray
 				.getDrawable(R.styleable.NumberPicker_selectionDivider);
 		int defSelectionDividerHeight = (int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP,
 				UNSCALED_DEFAULT_SELECTION_DIVIDER_HEIGHT, getResources()
 						.getDisplayMetrics());
-		mSelectionDividerHeight = a.getDimensionPixelSize(
+		mSelectionDividerHeight = attributesArray.getDimensionPixelSize(
 				R.styleable.NumberPicker_selectionDividerHeight,
 				defSelectionDividerHeight);
-		mMinHeight = a.getDimensionPixelSize(
+		mMinHeight = attributesArray.getDimensionPixelSize(
 				R.styleable.NumberPicker_android_minHeight, SIZE_UNSPECIFIED);
-		mMaxHeight = a.getDimensionPixelSize(
+		mMaxHeight = attributesArray.getDimensionPixelSize(
 				R.styleable.NumberPicker_android_maxHeight, SIZE_UNSPECIFIED);
 		if (mMinHeight != SIZE_UNSPECIFIED && mMaxHeight != SIZE_UNSPECIFIED
 				&& mMinHeight > mMaxHeight) {
 			throw new IllegalArgumentException("minHeight > maxHeight");
 		}
-		mMinWidth = a.getDimensionPixelSize(
+		mMinWidth = attributesArray.getDimensionPixelSize(
 				R.styleable.NumberPicker_android_minWidth, SIZE_UNSPECIFIED);
-		mMaxWidth = a.getDimensionPixelSize(
+		mMaxWidth = attributesArray.getDimensionPixelSize(
 				R.styleable.NumberPicker_android_maxWidth, SIZE_UNSPECIFIED);
 		if (mMinWidth != SIZE_UNSPECIFIED && mMaxWidth != SIZE_UNSPECIFIED
 				&& mMinWidth > mMaxWidth) {
 			throw new IllegalArgumentException("minWidth > maxWidth");
 		}
+		setFadingEdgeLength(attributesArray.getDimensionPixelSize(
+				R.styleable.NumberPicker_android_fadingEdgeLength, 0));
+		attributesArray.recycle();
 		mComputeMaxWidth = mMaxWidth == Integer.MAX_VALUE;
 		mShowInputControlsAnimimationDuration = getResources().getInteger(
 				R.integer.config_longAnimTime);
 		setWillNotDraw(false);
 		setSelectorWheelState(SELECTOR_WHEEL_STATE_NONE);
-		LayoutInflater inflater = LayoutInflater.from(context);
-		inflater.inflate(R.layout.number_picker, this, true);
+		LayoutInflater.inflate(context, R.layout.number_picker, this, true);
+		FontLoader.apply(this);
 		OnClickListener onClickListener = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -302,14 +294,22 @@ public class NumberPicker extends LinearLayout {
 							getWindowToken(), 0);
 				}
 				mInputText.clearFocus();
-				changeCurrentByOne(v.getId() == R.id.increment);
+				if (v.getId() == R.id.increment) {
+					changeCurrentByOne(true);
+				} else {
+					changeCurrentByOne(false);
+				}
 			}
 		};
 		OnLongClickListener onLongClickListener = new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
 				mInputText.clearFocus();
-				postChangeCurrentByOneFromLongPress(v.getId() == R.id.increment);
+				if (v.getId() == R.id.increment) {
+					postChangeCurrentByOneFromLongPress(true);
+				} else {
+					postChangeCurrentByOneFromLongPress(false);
+				}
 				return true;
 			}
 		};
@@ -327,7 +327,7 @@ public class NumberPicker extends LinearLayout {
 					mInputText.selectAll();
 				} else {
 					mInputText.setSelection(0, 0);
-					validateInputTextView(mInputText);
+					validateInputTextView((NumberPickerEditText) v);
 				}
 			}
 		});
@@ -393,16 +393,8 @@ public class NumberPicker extends LinearLayout {
 				hideInputControls();
 			}
 		}
-		int orientation = a.getInt(
-				R.styleable.NumberPicker_android_orientation, -1);
-		if (orientation >= 0) {
-			setOrientation(orientation);
-		}
 		setMinimumWidth(mMinWidth);
-		setFadingEdgeLength(a.getDimensionPixelSize(
-				R.styleable.NumberPicker_android_fadingEdgeLength, 0));
 		setVerticalFadingEdgeEnabled(true);
-		a.recycle();
 	}
 
 	private void changeCurrent(int current) {
@@ -596,6 +588,10 @@ public class NumberPicker extends LinearLayout {
 
 	public String[] getDisplayedValues() {
 		return mDisplayedValues;
+	}
+
+	public NumberPickerEditText getInputField() {
+		return mInputText;
 	}
 
 	public int getMaxValue() {
@@ -1088,7 +1084,6 @@ public class NumberPicker extends LinearLayout {
 		}
 		mDisplayedValues = displayedValues;
 		if (mDisplayedValues != null) {
-			// Allow text entry rather than strictly numeric entry.
 			mInputText.setRawInputType(InputType.TYPE_CLASS_TEXT
 					| InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 		} else {
@@ -1165,8 +1160,7 @@ public class NumberPicker extends LinearLayout {
 		mOnValueChangeListener = onValueChangedListener;
 	}
 
-	@SuppressWarnings("unused")
-	private void setSelectorPaintAlpha(int alpha) {
+	public void setSelectorPaintAlpha(int alpha) {
 		mSelectorWheelPaint.setAlpha(alpha);
 		invalidate();
 	}
@@ -1176,8 +1170,8 @@ public class NumberPicker extends LinearLayout {
 		if (selectorWheelState == SELECTOR_WHEEL_STATE_LARGE) {
 			mSelectorWheelPaint.setAlpha(SELECTOR_WHEEL_BRIGHT_ALPHA);
 		}
-		AccessibilityManager accessibilityManager = ((AccessibilityManager) getContext()
-				.getSystemService(Context.ACCESSIBILITY_SERVICE));
+		AccessibilityManager accessibilityManager = (AccessibilityManager) getContext()
+				.getSystemService(Context.ACCESSIBILITY_SERVICE);
 		if (mFlingable && selectorWheelState == SELECTOR_WHEEL_STATE_LARGE
 				&& accessibilityManager.isEnabled()) {
 			accessibilityManager.interrupt();
@@ -1290,7 +1284,6 @@ public class NumberPicker extends LinearLayout {
 		}
 		mInputText.setSelection(mInputText.getText().length());
 		if (mFlingable
-				&& !isInEditMode()
 				&& ((AccessibilityManager) getContext().getSystemService(
 						Context.ACCESSIBILITY_SERVICE)).isEnabled()) {
 			String text = getContext().getString(
@@ -1308,9 +1301,5 @@ public class NumberPicker extends LinearLayout {
 			int current = getSelectedPos(str.toString());
 			changeCurrent(current);
 		}
-	}
-
-	public NumberPickerEditText getInputField() {
-		return mInputText;
 	}
 }

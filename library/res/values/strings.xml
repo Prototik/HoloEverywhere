@@ -11,6 +11,15 @@
 	<string name="number_picker_increment_scroll_action">Slide up to increment and down to decrement.</string>
 	<string name="number_picker_increment_button">Increment</string>
 	<string name="number_picker_decrement_button">Decrement</string>
+	<string name="time_picker_dialog_title">Set time</string>
+	<string name="time_picker_increment_minute_button">Increment minute</string>
+	<string name="time_picker_decrement_minute_button">Decrement minute</string>
+	<string name="time_picker_increment_hour_button">Increment hour</string>
+	<string name="time_picker_decrement_hour_button">Decrement hour</string>
+	<string name="time_picker_increment_set_pm_button">Set PM</string>
+	<string name="time_picker_decrement_set_am_button">Set AM</string>
+	<string name="time_picker_separator">:</string>
+	<string name="date_picker_dialog_title">Set date</string>
 	<string name="date_picker_increment_day_button">Increase day</string>
 	<string name="date_picker_decrement_day_button">Decrease day</string>
 	<string name="date_picker_increment_month_button">Increase month</string>
@@ -18,5 +27,5 @@
 	<string name="date_picker_increment_year_button">Increase year</string>
 	<string name="date_picker_decrement_year_button">Decrease year</string>
 	<string name="date_time_done">Done</string>
-	<string name="date_picker_dialog_title">Set date</string>
+	<string name="date_time_set">Set</string>
 </resources>

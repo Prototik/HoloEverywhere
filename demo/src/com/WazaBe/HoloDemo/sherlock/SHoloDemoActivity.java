@@ -78,23 +78,27 @@ public class SHoloDemoActivity extends SActivity {
 		Utils.showAlertDialog(this);
 	}
 
+	public void showDatePicker(View v) {
+		Utils.showDatePicker(this);
+	}
+
 	public void showDialog(View v) {
 		Utils.showDialog(this);
+	}
+
+	public void showNumberPicker(View v) {
+		Utils.showNumberPicker(this);
 	}
 
 	public void showProgressDialog(View v) {
 		Utils.showProgressDialog(this);
 	}
 
+	public void showTimePicker(View v) {
+		Utils.showTimePicker(this);
+	}
+
 	public void showToast(View v) {
 		Utils.showToast(this);
-	}
-
-	public void showDatePicker(View v) {
-		Utils.showDatePicker(this);
-	}
-
-	public void showNumberPicker(View v) {
-		Utils.showNumberPicker(this);
 	}
 }

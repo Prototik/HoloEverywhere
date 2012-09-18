@@ -14,157 +14,181 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical" >
-			<LinearLayout
-				android:id="@+id/buttonPanel1"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content" >
-				<Button
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:onClick="showToast"
-					android:text="Toast" />
-				<Button
-					android:id="@+id/showAlertDialog"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:onClick="showAlertDialog"
-					android:text="Dialog" />
-				<Button
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:onClick="showDialog"
-					android:text="Links" />
-			</LinearLayout>
-			<LinearLayout
-				android:id="@+id/buttonPanel2"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content" >
-				<Button
-					android:id="@+id/showPreferences"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:onClick="showPreferences"
-					android:text="Preferences" />
-				<Button
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:onClick="showProgressDialog"
-					android:text="ProgressDialog" />
-			</LinearLayout>
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content" >
-				<Button
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:onClick="showDatePicker"
-					android:text="DatePicker" />
-				<Button
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:onClick="showNumberPicker"
-					android:text="NumberPicker" />
-			</LinearLayout>
-			<EditText
+			<TextView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:text="EditText" />
-			<ProgressBar
-				style="?android:attr/progressBarStyleHorizontal"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:indeterminateOnly="true"
-				android:paddingLeft="16dp"
-				android:paddingRight="16dp" />
-			<SeekBar
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:progress="75" />
-			<ProgressBar
-				style="?android:attr/progressBarStyleHorizontal"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:paddingLeft="16dp"
-				android:paddingRight="16dp"
-				android:progress="25" />
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
+				android:drawableLeft="@drawable/icon"
+				android:ellipsize="marquee"
 				android:gravity="center"
-				android:orientation="horizontal" >
-				<ProgressBar
-					style="?android:attr/progressBarStyleLarge"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content" />
-				<ProgressBar
-					style="?android:attr/progressBarStyle"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content" />
-				<ProgressBar
-					style="?android:attr/progressBarStyleSmall"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout
+				android:lines="1"
+				android:padding="6dp"
+				android:text="HoloEverywhere"
+				android:textSize="30sp"
+				android:textStyle="bold" />
+			<Divider
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content" >
-				<RadioGroup
-					android:layout_width="0dp"
-					android:layout_height="match_parent"
-					android:layout_weight="1" >
-					<RadioButton
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="RadioButton" />
-					<RadioButton
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="RadioButton" />
-				</RadioGroup>
+				android:layout_height="1dp" />
+			<WidgetContainer
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Base widgets" >
 				<LinearLayout
-					android:layout_width="0dp"
-					android:layout_height="match_parent"
-					android:layout_weight="1"
-					android:orientation="vertical" >
-					<CheckBox
-						android:layout_width="wrap_content"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal" >
+					<Button
+						android:layout_width="0dp"
 						android:layout_height="wrap_content"
-						android:text="CheckBox" />
-					<CheckBox
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="CheckBox" />
+						android:layout_weight="1"
+						android:text="Button" />
+					<ToggleButton
+						android:layout_width="80dp"
+						android:layout_height="match_parent" />
 				</LinearLayout>
-			</LinearLayout>
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content" >
-				<ToggleButton
-					android:layout_width="80dp"
-					android:layout_height="match_parent" />
+				<EditText
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="EditText" />
 				<Spinner
-					android:id="@+id/spinner"
-					android:layout_width="0dp"
-					android:layout_height="match_parent"
-					android:layout_weight="1"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
 					android:drawSelectorOnTop="true"
 					holo:entries="@array/countries"
 					holo:prompt="@string/spinner_prompt" />
-			</LinearLayout>
-			<!--
-                AutoCompleteTextView
-				android:id="@+id/autoCompleteTextView"
+			</WidgetContainer>
+			<WidgetContainer
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:hint="Enter country name" /
-			-->
+				android:text="Progress bars" >
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="center"
+					android:paddingBottom="4dp"
+					android:paddingLeft="10dp"
+					android:paddingRight="4dp"
+					android:paddingTop="4dp" >
+					<ProgressBar
+						style="?android:attr/progressBarStyleLarge"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content" />
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:gravity="center"
+						android:orientation="vertical" >
+						<ProgressBar
+							style="?android:attr/progressBarStyleHorizontal"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:indeterminateOnly="true"
+							android:paddingLeft="16dp"
+							android:paddingRight="16dp" />
+						<SeekBar
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:progress="75" />
+						<ProgressBar
+							style="?android:attr/progressBarStyleHorizontal"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:paddingLeft="16dp"
+							android:paddingRight="16dp"
+							android:progress="25" />
+					</LinearLayout>
+				</LinearLayout>
+			</WidgetContainer>
+			<WidgetContainer
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Compound buttons" >
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" >
+					<RadioGroup
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1" >
+						<RadioButton
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="RadioButton" />
+						<RadioButton
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="RadioButton" />
+						<RadioButton
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="RadioButton" />
+					</RadioGroup>
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:orientation="vertical" >
+						<CheckBox
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="CheckBox" />
+						<CheckBox
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="CheckBox" />
+						<CheckBox
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="CheckBox" />
+					</LinearLayout>
+				</LinearLayout>
+			</WidgetContainer>
+			<WidgetContainer
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Other" >
+				<Button
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="showDialog"
+					android:text="Links" />
+				<Button
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="showAlertDialog"
+					android:text="AlertDialog" />
+				<Button
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="showProgressDialog"
+					android:text="ProgressDialog" />
+				<Button
+					android:id="@+id/showPreferences"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="showPreferences"
+					android:text="Preferences" />
+				<Button
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="showToast"
+					android:text="Toast" />
+				<Button
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="showNumberPicker"
+					android:text="NumberPicker" />
+				<Button
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="showDatePicker"
+					android:text="DatePicker" />
+				<Button
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="showTimePicker"
+					android:text="TimePicker" />
+			</WidgetContainer>
 		</LinearLayout>
 	</ScrollView>
 	<View

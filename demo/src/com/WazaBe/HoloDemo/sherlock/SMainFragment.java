@@ -15,10 +15,6 @@ public class SMainFragment extends SFragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.main);
 		view.findViewById(R.id.showPreferences).setVisibility(View.GONE);
-		View showAlertDialog = view.findViewById(R.id.showAlertDialog);
-		((ViewGroup) showAlertDialog.getParent()).removeView(showAlertDialog);
-		((ViewGroup) view.findViewById(R.id.buttonPanel2))
-				.addView(showAlertDialog);
 		return view;
 	}
 

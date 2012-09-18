@@ -6,13 +6,15 @@ import java.util.WeakHashMap;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 
 public class LayoutInflater extends android.view.LayoutInflater implements
 		Cloneable {
 	public static interface OnInitInflaterListener {
-		public void onInitInflate(LayoutInflater infaler);
+		public void onInitInflate(LayoutInflater inflater);
 	}
 
 	private static boolean inited = false;
@@ -23,7 +25,8 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	static {
 		putToMap(Settings.getWidgetsPackage(), "ProgressBar", "LinearLayout",
 				"Switch", "TextView", "CalendarView", "Spinner",
-				"NumberPicker", "DatePicker", "ListView");
+				"NumberPicker", "DatePicker", "TimePicker", "ListView",
+				"Divider");
 		putToMap("android.support.v4.view", "ViewPager", "PagerTitleStrip");
 		putToMap("android.webkit", "WebView");
 	}

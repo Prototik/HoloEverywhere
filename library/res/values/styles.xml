@@ -480,6 +480,9 @@
         <item name="internalLayout">@layout/date_picker_holo</item>
         <item name="calendarViewShown">true</item>
     </style>
+    <style name="Holo.TimePicker">
+        <item name="internalLayout">@layout/time_picker_holo</item>
+    </style>
     <!-- Sherlock themes -->
     <style name="Holo.Theme.Default.Sherlock" parent="@style/Theme.Sherlock">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -512,6 +515,7 @@
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
+        <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
         <item name="alertDialogStyle">@style/Holo.AlertDialog</item>
@@ -561,6 +565,7 @@
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
+        <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
@@ -622,6 +627,7 @@
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
+        <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
         <item name="alertDialogStyle">@style/Holo.AlertDialog</item>
@@ -742,6 +748,7 @@
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
+        <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
         <item name="alertDialogStyle">@style/Holo.AlertDialog</item>
@@ -862,6 +869,7 @@
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
+        <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
@@ -984,6 +992,7 @@
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
+        <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
@@ -1106,6 +1115,7 @@
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
+        <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
@@ -1228,6 +1238,7 @@
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
+        <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
@@ -1351,6 +1362,7 @@
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
+        <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
         <item name="alertDialogStyle">@style/Holo.AlertDialog</item>
@@ -1471,6 +1483,7 @@
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
+        <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>

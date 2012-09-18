@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="WidgetContainer">
+		<attr name="android:text" />
+		<attr name="android:layout" />
+		<attr name="titleLayout" format="reference" />
+	</declare-styleable>
+</resources>

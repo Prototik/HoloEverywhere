@@ -40,6 +40,7 @@
 	<attr name="numberPickerDownButtonStyle" format="reference" />
 	<attr name="numberPickerInputTextStyle" format="reference" />
 	<attr name="datePickerStyle" format="reference" />
+	<attr name="timePickerStyle" format="reference" />
 	<attr name="gravity">
 		<flag name="top" value="0x30" />
 		<flag name="bottom" value="0x50" />
@@ -246,5 +247,11 @@
 		<attr name="minDate" />
 		<attr name="maxDate" />
 		<attr name="internalLayout" format="reference" />
+	</declare-styleable>
+	<declare-styleable name="TimePicker">
+		<attr name="internalLayout" />
+	</declare-styleable>
+	<declare-styleable name="Divider">
+		<attr name="android:orientation" />
 	</declare-styleable>
 </resources>

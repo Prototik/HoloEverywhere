@@ -30,13 +30,13 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
-import android.widget.ListView;
 
+import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
+import com.actionbarsherlock.internal.nineoldandroids.widget.NineFrameLayout;
 
-public class CalendarView extends FrameLayout {
+public class CalendarView extends NineFrameLayout {
 	public interface OnDateChangeListener {
 		public void onSelectedDayChange(CalendarView view, int year, int month,
 				int dayOfMonth);
@@ -531,14 +531,11 @@ public class CalendarView extends FrameLayout {
 				.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
 						CalendarView.UNSCALED_WEEK_SEPARATOR_LINE_WIDTH,
 						displayMetrics);
-		LayoutInflater layoutInflater = (LayoutInflater) getContext()
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View content = layoutInflater.inflate(R.layout.calendar_view, null,
-				false);
-		addView(content);
+		LayoutInflater.inflate(context, R.layout.calendar_view, this, true);
+		FontLoader.apply(this);
 		mListView = (ListView) findViewById(R.id.list);
-		mDayNamesHeader = (ViewGroup) content.findViewById(R.id.day_names);
-		mMonthName = (TextView) content.findViewById(R.id.month_name);
+		mDayNamesHeader = (ViewGroup) findViewById(R.id.day_names);
+		mMonthName = (TextView) findViewById(R.id.month_name);
 		setUpHeader(weekDayTextAppearanceResId);
 		setUpListView();
 		setUpAdapter();

@@ -481,6 +481,9 @@
     <item name="internalLayout">@layout/date_picker_holo</item>
     <item name="calendarViewShown">true</item>
   </style>
+  <style name="Holo.TimePicker">
+    <item name="internalLayout">@layout/time_picker_holo</item>
+  </style>
   <!-- Sherlock themes -->
   <style name="Holo.Theme.Default.Sherlock" parent="@style/Theme.Sherlock">
     <include name="BaseDark" />

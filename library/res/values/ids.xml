@@ -5,4 +5,5 @@
 	<item name="edit" type="id"/>
 	<item name="leftSpacer" type="id"/>
 	<item name="rightSpacer" type="id"/>
+	<item name="typeface" type="id"/>
 </resources>
