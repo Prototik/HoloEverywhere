@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 public final class FontLoader {
 	public static class HoloFont {
+		public static final HoloFont ROBOTO = new HoloFont(-1);
 		public static final HoloFont ROBOTO_BOLD = new HoloFont(
 				R.raw.roboto_bold);
 		public static final HoloFont ROBOTO_BOLD_ITALIC = new HoloFont(
@@ -27,7 +28,6 @@ public final class FontLoader {
 				R.raw.roboto_italic);
 		public static final HoloFont ROBOTO_REGULAR = new HoloFont(
 				R.raw.roboto_regular);
-		public static final HoloFont ROBOTO = new HoloFont(-1);
 
 		protected final int font;
 		protected final boolean ignore;
@@ -56,37 +56,6 @@ public final class FontLoader {
 		return apply(view, font.font);
 	}
 
-	public static Typeface loadTypeface(Context context, int font) {
-		if (fontArray.get(font) == null) {
-			try {
-				File file = new File(Environment.getDataDirectory(), "data/"
-						+ context.getPackageName() + "/fonts");
-				if (!file.exists()) {
-					file.mkdirs();
-				}
-				file = new File(file, Integer.toHexString(font));
-				if (file.exists()) {
-					file.delete();
-				}
-				Resources res = context.getResources();
-				InputStream is = res.openRawResource(font);
-				OutputStream os = new FileOutputStream(file);
-				byte[] buffer = new byte[8192];
-				int read;
-				while ((read = is.read(buffer)) > 0) {
-					os.write(buffer, 0, read);
-				}
-				os.flush();
-				os.close();
-				is.close();
-				fontArray.put(font, Typeface.createFromFile(file));
-			} catch (Exception e) {
-				Log.e(TAG, "Error of loading font", e);
-			}
-		}
-		return fontArray.get(font);
-	}
-
 	@SuppressLint("NewApi")
 	public static View apply(View view, int font) {
 		if (view == null || view.getContext() == null
@@ -104,6 +73,27 @@ public final class FontLoader {
 		} else {
 			return apply(view, typeface);
 		}
+	}
+
+	public static View apply(View view, Typeface typeface) {
+		if (view == null || view.getContext() == null
+				|| view.getContext().isRestricted()) {
+			return view;
+		}
+		if (typeface == null) {
+			Log.v(TAG, "Font is null");
+			return view;
+		}
+		if (view instanceof TextView) {
+			((TextView) view).setTypeface(typeface);
+		}
+		if (view instanceof ViewGroup) {
+			ViewGroup group = (ViewGroup) view;
+			for (int i = 0; i < group.getChildCount(); i++) {
+				apply(group.getChildAt(i), typeface);
+			}
+		}
+		return view;
 	}
 
 	public static View applyDefaultStyles(View view) {
@@ -146,33 +136,43 @@ public final class FontLoader {
 		return view;
 	}
 
-	public static View apply(View view, Typeface typeface) {
-		if (view == null || view.getContext() == null
-				|| view.getContext().isRestricted()) {
-			return view;
-		}
-		if (typeface == null) {
-			Log.v(TAG, "Font is null");
-			return view;
-		}
-		if (view instanceof TextView) {
-			((TextView) view).setTypeface(typeface);
-		}
-		if (view instanceof ViewGroup) {
-			ViewGroup group = (ViewGroup) view;
-			for (int i = 0; i < group.getChildCount(); i++) {
-				apply(group.getChildAt(i), typeface);
-			}
-		}
-		return view;
-	}
-
 	public static View inflate(Context context, int res) {
 		return apply(LayoutInflater.inflate(context, res));
 	}
 
 	public static View inflate(Context context, int res, ViewGroup parent) {
 		return apply(LayoutInflater.inflate(context, res, parent));
+	}
+
+	public static Typeface loadTypeface(Context context, int font) {
+		if (fontArray.get(font) == null) {
+			try {
+				File file = new File(Environment.getDataDirectory(), "data/"
+						+ context.getPackageName() + "/fonts");
+				if (!file.exists()) {
+					file.mkdirs();
+				}
+				file = new File(file, Integer.toHexString(font));
+				if (file.exists()) {
+					file.delete();
+				}
+				Resources res = context.getResources();
+				InputStream is = res.openRawResource(font);
+				OutputStream os = new FileOutputStream(file);
+				byte[] buffer = new byte[8192];
+				int read;
+				while ((read = is.read(buffer)) > 0) {
+					os.write(buffer, 0, read);
+				}
+				os.flush();
+				os.close();
+				is.close();
+				fontArray.put(font, Typeface.createFromFile(file));
+			} catch (Exception e) {
+				Log.e(TAG, "Error of loading font", e);
+			}
+		}
+		return fontArray.get(font);
 	}
 
 	private FontLoader() {

@@ -42,11 +42,12 @@ public final class ThemeManager {
 		}
 		switch (themeTag) {
 		case HOLO_DARK:
-		default:
 			return abs ? R.style.Holo_Theme_Sherlock : R.style.Holo_Theme;
 		case HOLO_LIGHT:
 			return abs ? R.style.Holo_Theme_Sherlock_Light
 					: R.style.Holo_Theme_Light;
+		default:
+			return themeTag;
 		}
 	}
 
@@ -63,6 +64,7 @@ public final class ThemeManager {
 			boolean force) {
 		if (getTheme(activity) != theme || force) {
 			Intent intent = activity.getIntent();
+			intent.setClass(activity, activity.getClass());
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			intent.putExtra(THEME_TAG, theme);
 			activity.finish();

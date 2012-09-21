@@ -5,4 +5,8 @@
 		<attr name="android:layout" />
 		<attr name="titleLayout" format="reference" />
 	</declare-styleable>
+	<declare-styleable name="OtherButton">
+		<attr name="android:text" />
+		<attr name="android:icon" />
+	</declare-styleable>
 </resources>

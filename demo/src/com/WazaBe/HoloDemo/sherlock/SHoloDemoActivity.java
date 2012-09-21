@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
+import com.WazaBe.HoloDemo.AboutFragment;
 import com.WazaBe.HoloDemo.R;
+import com.WazaBe.HoloDemo.MainFragment;
 import com.WazaBe.HoloDemo.Utils;
 import com.WazaBe.HoloEverywhere.ThemeManager;
 import com.WazaBe.HoloEverywhere.app.Fragment;
@@ -61,9 +63,9 @@ public class SHoloDemoActivity extends SActivity {
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		getSupportActionBar().setDisplayShowHomeEnabled(false);
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		addTab(SMainFragment.class, "Holo Demo");
+		addTab(MainFragment.class, "Holo Demo");
 		addTab(SPreferenceFragment.class, "Settings");
-		addTab(SCalendarFragment.class, "Calendar");
+		addTab(AboutFragment.class, "About");
 	}
 
 	public void setDarkTheme(View v) {
@@ -82,10 +84,6 @@ public class SHoloDemoActivity extends SActivity {
 		Utils.showDatePicker(this);
 	}
 
-	public void showDialog(View v) {
-		Utils.showDialog(this);
-	}
-
 	public void showNumberPicker(View v) {
 		Utils.showNumberPicker(this);
 	}
@@ -100,5 +98,13 @@ public class SHoloDemoActivity extends SActivity {
 
 	public void showToast(View v) {
 		Utils.showToast(this);
+	}
+
+	public void showCalendar(View v) {
+		Utils.showCalendar(this);
+	}
+
+	public void closeCalendar(View v) {
+		Utils.closeCalendar(this);
 	}
 }

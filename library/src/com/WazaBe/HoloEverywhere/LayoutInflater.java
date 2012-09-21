@@ -6,10 +6,8 @@ import java.util.WeakHashMap;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 
 public class LayoutInflater extends android.view.LayoutInflater implements
 		Cloneable {

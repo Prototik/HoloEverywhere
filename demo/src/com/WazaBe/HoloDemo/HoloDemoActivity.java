@@ -1,6 +1,7 @@
 package com.WazaBe.HoloDemo;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.WazaBe.HoloEverywhere.ThemeManager;
@@ -17,7 +18,11 @@ public class HoloDemoActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		setForceThemeApply(true);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.content);
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		ft.replace(android.R.id.content, MainFragment.getInstance());
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+		ft.commit();
 	}
 
 	public void setDarkTheme(View v) {
@@ -34,10 +39,6 @@ public class HoloDemoActivity extends Activity {
 
 	public void showDatePicker(View v) {
 		Utils.showDatePicker(this);
-	}
-
-	public void showDialog(View v) {
-		Utils.showDialog(this);
 	}
 
 	public void showNumberPicker(View v) {
@@ -58,5 +59,13 @@ public class HoloDemoActivity extends Activity {
 
 	public void showToast(View v) {
 		Utils.showToast(this);
+	}
+
+	public void showCalendar(View v) {
+		Utils.showCalendar(this);
+	}
+
+	public void closeCalendar(View v) {
+		Utils.closeCalendar(this);
 	}
 }
