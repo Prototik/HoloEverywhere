@@ -26,11 +26,11 @@ public class HoloDemoActivity extends Activity {
 	}
 
 	public void setDarkTheme(View v) {
-		ThemeManager.restartWithTheme(this, ThemeManager.HOLO_DARK);
+		ThemeManager.restartWithTheme(this, ThemeManager.DARK);
 	}
 
 	public void setLightTheme(View v) {
-		ThemeManager.restartWithTheme(this, ThemeManager.HOLO_LIGHT);
+		ThemeManager.restartWithTheme(this, ThemeManager.LIGHT);
 	}
 
 	public void showAlertDialog(View v) {

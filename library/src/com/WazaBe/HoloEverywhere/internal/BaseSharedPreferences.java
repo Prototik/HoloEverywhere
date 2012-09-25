@@ -1,4 +1,4 @@
-package com.WazaBe.HoloEverywhere.util;
+package com.WazaBe.HoloEverywhere.internal;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
@@ -57,7 +57,7 @@ public class BaseSharedPreferences implements SharedPreferences {
 
 		@Override
 		public Editor putInt(String key, int value) {
-			editor.putFloat(key, value);
+			editor.putInt(key, value);
 			return this;
 		}
 

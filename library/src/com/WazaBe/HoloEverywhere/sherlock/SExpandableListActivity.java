@@ -2,18 +2,15 @@ package com.WazaBe.HoloEverywhere.sherlock;
 
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;
+import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 
 import com.WazaBe.HoloEverywhere.app.ExpandableListActivity;
 import com.actionbarsherlock.ActionBarSherlock;
-import com.actionbarsherlock.ActionBarSherlock.OnActionModeFinishedListener;
-import com.actionbarsherlock.ActionBarSherlock.OnActionModeStartedListener;
-import com.actionbarsherlock.ActionBarSherlock.OnCreatePanelMenuListener;
-import com.actionbarsherlock.ActionBarSherlock.OnMenuItemSelectedListener;
-import com.actionbarsherlock.ActionBarSherlock.OnPreparePanelListener;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
@@ -21,26 +18,28 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class SExpandableListActivity extends ExpandableListActivity
-		implements OnCreatePanelMenuListener, OnPreparePanelListener,
-		OnMenuItemSelectedListener, OnActionModeStartedListener,
-		OnActionModeFinishedListener, SBase {
+		implements SBase {
 	private ActionBarSherlock mSherlock;
 
 	@Override
 	public void addContentView(View view, LayoutParams params) {
-		getSherlock().addContentView(view, params);
+		if (isABSSupport()) {
+			getSherlock().addContentView(view, params);
+		} else {
+			super.addContentView(view, params);
+		}
 	}
 
 	@Override
 	public void closeOptionsMenu() {
-		if (!getSherlock().dispatchCloseOptionsMenu()) {
+		if (!isABSSupport() || !getSherlock().dispatchCloseOptionsMenu()) {
 			super.closeOptionsMenu();
 		}
 	}
 
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
-		if (getSherlock().dispatchKeyEvent(event)) {
+		if (isABSSupport() && getSherlock().dispatchKeyEvent(event)) {
 			return true;
 		}
 		return super.dispatchKeyEvent(event);
@@ -48,6 +47,9 @@ public abstract class SExpandableListActivity extends ExpandableListActivity
 
 	@Override
 	public final ActionBarSherlock getSherlock() {
+		if (!isABSSupport()) {
+			return null;
+		}
 		if (mSherlock == null) {
 			mSherlock = ActionBarSherlock.wrap(this,
 					ActionBarSherlock.FLAG_DELEGATE);
@@ -57,22 +59,26 @@ public abstract class SExpandableListActivity extends ExpandableListActivity
 
 	@Override
 	public ActionBar getSupportActionBar() {
-		return getSherlock().getActionBar();
+		return isABSSupport() ? getSherlock().getActionBar() : null;
 	}
 
 	@Override
 	public MenuInflater getSupportMenuInflater() {
-		return getSherlock().getMenuInflater();
+		return isABSSupport() ? getSherlock().getMenuInflater() : null;
 	}
 
 	@Override
 	public void invalidateOptionsMenu() {
-		getSherlock().dispatchInvalidateOptionsMenu();
+		if (isABSSupport()) {
+			getSherlock().dispatchInvalidateOptionsMenu();
+		} else if (VERSION.SDK_INT >= 11) {
+			super.invalidateOptionsMenu();
+		}
 	}
 
 	@Override
 	public boolean isABSSupport() {
-		return true;
+		return VERSION.SDK_INT >= 7;
 	}
 
 	@Override
@@ -86,22 +92,32 @@ public abstract class SExpandableListActivity extends ExpandableListActivity
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		getSherlock().dispatchConfigurationChanged(newConfig);
+		if (isABSSupport()) {
+			getSherlock().dispatchConfigurationChanged(newConfig);
+		}
 	}
 
 	@Override
 	public final boolean onCreateOptionsMenu(android.view.Menu menu) {
-		return getSherlock().dispatchCreateOptionsMenu(menu);
+		if (isABSSupport()) {
+			return getSherlock().dispatchCreateOptionsMenu(menu);
+		} else {
+			return super.onCreateOptionsMenu(menu);
+		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		return true;
+		if (isABSSupport()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean onCreatePanelMenu(int featureId, Menu menu) {
-		if (featureId == android.view.Window.FEATURE_OPTIONS_PANEL) {
+		if (isABSSupport() && featureId == Window.FEATURE_OPTIONS_PANEL) {
 			return onCreateOptionsMenu(menu);
 		}
 		return false;
@@ -109,13 +125,15 @@ public abstract class SExpandableListActivity extends ExpandableListActivity
 
 	@Override
 	protected void onDestroy() {
-		getSherlock().dispatchDestroy();
+		if (isABSSupport()) {
+			getSherlock().dispatchDestroy();
+		}
 		super.onDestroy();
 	}
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		if (featureId == android.view.Window.FEATURE_OPTIONS_PANEL) {
+		if (isABSSupport() && featureId == Window.FEATURE_OPTIONS_PANEL) {
 			return onOptionsItemSelected(item);
 		}
 		return false;
@@ -123,7 +141,7 @@ public abstract class SExpandableListActivity extends ExpandableListActivity
 
 	@Override
 	public final boolean onMenuOpened(int featureId, android.view.Menu menu) {
-		if (getSherlock().dispatchMenuOpened(featureId, menu)) {
+		if (isABSSupport() && getSherlock().dispatchMenuOpened(featureId, menu)) {
 			return true;
 		}
 		return super.onMenuOpened(featureId, menu);
@@ -131,7 +149,11 @@ public abstract class SExpandableListActivity extends ExpandableListActivity
 
 	@Override
 	public final boolean onOptionsItemSelected(android.view.MenuItem item) {
-		return getSherlock().dispatchOptionsItemSelected(item);
+		if (isABSSupport()) {
+			return getSherlock().dispatchOptionsItemSelected(item);
+		} else {
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override
@@ -141,40 +163,53 @@ public abstract class SExpandableListActivity extends ExpandableListActivity
 
 	@Override
 	public void onPanelClosed(int featureId, android.view.Menu menu) {
-		getSherlock().dispatchPanelClosed(featureId, menu);
+		if (isABSSupport()) {
+			getSherlock().dispatchPanelClosed(featureId, menu);
+		}
 		super.onPanelClosed(featureId, menu);
 	}
 
 	@Override
 	protected void onPause() {
-		getSherlock().dispatchPause();
+		if (isABSSupport()) {
+			getSherlock().dispatchPause();
+		}
 		super.onPause();
 	}
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
-		getSherlock().dispatchPostCreate(savedInstanceState);
+		if (isABSSupport()) {
+			getSherlock().dispatchPostCreate(savedInstanceState);
+		}
 		super.onPostCreate(savedInstanceState);
 	}
 
 	@Override
 	protected void onPostResume() {
 		super.onPostResume();
-		getSherlock().dispatchPostResume();
+		if (isABSSupport()) {
+			getSherlock().dispatchPostResume();
+		}
 	}
 
 	@Override
 	public final boolean onPrepareOptionsMenu(android.view.Menu menu) {
-		return getSherlock().dispatchPrepareOptionsMenu(menu);
+		if (isABSSupport()) {
+			return getSherlock().dispatchPrepareOptionsMenu(menu);
+		} else {
+			return super.onPrepareOptionsMenu(menu);
+		}
 	}
 
+	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		return true;
 	}
 
 	@Override
 	public boolean onPreparePanel(int featureId, View view, Menu menu) {
-		if (featureId == android.view.Window.FEATURE_OPTIONS_PANEL) {
+		if (isABSSupport() && featureId == Window.FEATURE_OPTIONS_PANEL) {
 			return onPrepareOptionsMenu(menu);
 		}
 		return false;
@@ -182,70 +217,122 @@ public abstract class SExpandableListActivity extends ExpandableListActivity
 
 	@Override
 	protected void onStop() {
-		getSherlock().dispatchStop();
+		if (isABSSupport()) {
+			getSherlock().dispatchStop();
+		}
 		super.onStop();
 	}
 
 	@Override
 	protected void onTitleChanged(CharSequence title, int color) {
-		getSherlock().dispatchTitleChanged(title, color);
+		if (isABSSupport()) {
+			getSherlock().dispatchTitleChanged(title, color);
+		}
 		super.onTitleChanged(title, color);
 	}
 
 	@Override
 	public void openOptionsMenu() {
-		if (!getSherlock().dispatchOpenOptionsMenu()) {
+		if (!isABSSupport() || !getSherlock().dispatchOpenOptionsMenu()) {
 			super.openOptionsMenu();
 		}
 	}
 
+	@Override
 	public void requestWindowFeature(long featureId) {
-		getSherlock().requestFeature((int) featureId);
+		if (isABSSupport()) {
+			getSherlock().requestFeature((int) featureId);
+		} else {
+			try {
+				requestWindowFeature((int) featureId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public void setContentView(int layoutResId) {
-		getSherlock().setContentView(layoutResId);
+		if (isABSSupport()) {
+			getSherlock().setContentView(layoutResId);
+		} else {
+			super.setContentView(layoutResId);
+		}
 	}
 
 	@Override
 	public void setContentView(View view) {
-		getSherlock().setContentView(view);
+		if (isABSSupport()) {
+			getSherlock().setContentView(view);
+		} else {
+			super.setContentView(view);
+		}
 	}
 
 	@Override
 	public void setContentView(View view, LayoutParams params) {
-		getSherlock().setContentView(view, params);
+		if (isABSSupport()) {
+			getSherlock().setContentView(view, params);
+		} else {
+			super.setContentView(view, params);
+		}
 	}
 
+	@Override
 	public void setSupportProgress(int progress) {
-		getSherlock().setProgress(progress);
+		if (isABSSupport()) {
+			getSherlock().setProgress(progress);
+		} else {
+			setProgress(progress);
+		}
 	}
 
+	@Override
 	public void setSupportProgressBarIndeterminate(boolean indeterminate) {
-		getSherlock().setProgressBarIndeterminate(indeterminate);
+		if (isABSSupport()) {
+			getSherlock().setProgressBarIndeterminate(indeterminate);
+		} else {
+			setProgressBarIndeterminate(indeterminate);
+		}
 	}
 
+	@Override
 	public void setSupportProgressBarIndeterminateVisibility(boolean visible) {
-		getSherlock().setProgressBarIndeterminateVisibility(visible);
+		if (isABSSupport()) {
+			getSherlock().setProgressBarIndeterminateVisibility(visible);
+		} else {
+			setProgressBarIndeterminateVisibility(visible);
+		}
 	}
 
+	@Override
 	public void setSupportProgressBarVisibility(boolean visible) {
-		getSherlock().setProgressBarVisibility(visible);
+		if (isABSSupport()) {
+			getSherlock().setProgressBarVisibility(visible);
+		} else {
+			setProgressBarVisibility(visible);
+		}
 	}
 
+	@Override
 	public void setSupportSecondaryProgress(int secondaryProgress) {
-		getSherlock().setSecondaryProgress(secondaryProgress);
+		if (isABSSupport()) {
+			getSherlock().setSecondaryProgress(secondaryProgress);
+		} else {
+			setSecondaryProgress(secondaryProgress);
+		}
 	}
 
 	@Override
 	public ActionMode startActionMode(ActionMode.Callback callback) {
-		return getSherlock().startActionMode(callback);
+		return isABSSupport() ? getSherlock().startActionMode(callback) : null;
 	}
 
 	@SuppressLint("NewApi")
 	@Override
 	public void supportInvalidateOptionsMenu() {
-		invalidateOptionsMenu();
+		if (isABSSupport() || VERSION.SDK_INT >= 11) {
+			invalidateOptionsMenu();
+		}
 	}
 }

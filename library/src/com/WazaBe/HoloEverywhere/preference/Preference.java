@@ -435,7 +435,6 @@ public class Preference implements Comparable<Preference>,
 				titleView.setVisibility(View.GONE);
 			}
 		}
-
 		final TextView summaryView = (TextView) view.findViewById(R.id.summary);
 		if (summaryView != null) {
 			final CharSequence summary = getSummary();
@@ -446,7 +445,6 @@ public class Preference implements Comparable<Preference>,
 				summaryView.setVisibility(View.GONE);
 			}
 		}
-
 		ImageView imageView = (ImageView) view.findViewById(R.id.icon);
 		if (imageView != null) {
 			if (mIconResId != 0 || mIcon != null) {
@@ -459,7 +457,6 @@ public class Preference implements Comparable<Preference>,
 			}
 			imageView.setVisibility(mIcon != null ? View.VISIBLE : View.GONE);
 		}
-
 		if (mShouldDisableView) {
 			setEnabledStateOnViews(view, isEnabled());
 		}

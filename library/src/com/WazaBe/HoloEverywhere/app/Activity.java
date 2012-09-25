@@ -8,8 +8,8 @@ import android.view.ViewGroup.LayoutParams;
 import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.ThemeManager;
+import com.WazaBe.HoloEverywhere.internal.BaseSharedPreferences;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
-import com.WazaBe.HoloEverywhere.util.BaseSharedPreferences;
 
 public abstract class Activity extends android.support.v4.app.FragmentActivity
 		implements Base {
@@ -40,6 +40,7 @@ public abstract class Activity extends android.support.v4.app.FragmentActivity
 		return false;
 	}
 
+	@Override
 	public boolean isForceThemeApply() {
 		return forceThemeApply;
 	}
@@ -53,7 +54,7 @@ public abstract class Activity extends android.support.v4.app.FragmentActivity
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		ThemeManager.applyTheme(this, forceThemeApply);
+		ThemeManager.applyTheme(this);
 		super.onCreate(savedInstanceState);
 	}
 
