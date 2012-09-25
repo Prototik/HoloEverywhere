@@ -5,9 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
-import com.WazaBe.HoloEverywhere.app.Fragment;
+import com.WazaBe.HoloEverywhere.sherlock.SFragment;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends SFragment {
 	private static MainFragment instance;
 
 	public static MainFragment getInstance() {

@@ -12,20 +12,12 @@
 		android:icon="@drawable/icon"
 		android:label="@string/app_name" >
 		<activity
-			android:name=".HoloRunner"
+			android:name=".HoloDemoActivity"
 			android:windowSoftInputMode="stateHidden" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
-		</activity>
-		<activity
-			android:name=".HoloDemoActivity"
-			android:windowSoftInputMode="stateHidden" >
-		</activity>
-		<activity
-			android:name=".sherlock.SHoloDemoActivity"
-			android:windowSoftInputMode="stateHidden" >
 		</activity>
 		<activity
 			android:name=".HoloPreferenceActivity"
