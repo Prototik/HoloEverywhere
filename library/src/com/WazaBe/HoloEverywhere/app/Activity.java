@@ -7,6 +7,7 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
+import com.WazaBe.HoloEverywhere.Settings;
 import com.WazaBe.HoloEverywhere.ThemeManager;
 import com.WazaBe.HoloEverywhere.internal.BaseSharedPreferences;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
@@ -54,7 +55,9 @@ public abstract class Activity extends android.support.v4.app.FragmentActivity
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		ThemeManager.applyTheme(this);
+		if (Settings.isUseThemeManager()) {
+			ThemeManager.applyTheme(this);
+		}
 		super.onCreate(savedInstanceState);
 	}
 

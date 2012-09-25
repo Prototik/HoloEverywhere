@@ -78,11 +78,13 @@ public class DemoActivity extends SActivity {
 	}
 
 	public void setDarkTheme(View v) {
-		ThemeManager.restartWithTheme(this, ThemeManager.DARK);
+		ThemeManager.restartWithTheme(this, ThemeManager.DARK
+				| ThemeManager.FULLSCREEN);
 	}
 
 	public void setLightTheme(View v) {
-		ThemeManager.restartWithTheme(this, ThemeManager.LIGHT);
+		ThemeManager.restartWithTheme(this, ThemeManager.LIGHT
+				| ThemeManager.FULLSCREEN);
 	}
 
 	public void showAlertDialog(View v) {

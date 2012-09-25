@@ -20,6 +20,12 @@ public final class Settings {
 		}
 
 		@Override
+		public void onChangeUseThemeManager(boolean oldUseThemeManager,
+				boolean newUseThemeManager) {
+
+		}
+
+		@Override
 		public void onChangeWidgetsPackage(String oldWidgetsPackage,
 				String newWidgetsPackage) {
 
@@ -33,6 +39,9 @@ public final class Settings {
 		public void onChangePreferencePackage(String oldPreferencePackage,
 				String newPreferencePackage);
 
+		public void onChangeUseThemeManager(boolean oldUseThemeManager,
+				boolean newUseThemeManager);
+
 		public void onChangeWidgetsPackage(String oldWidgetsPackage,
 				String newWidgetsPackage);
 	}
@@ -42,10 +51,12 @@ public final class Settings {
 	private static final SettingsListener DEFAULT_SETTINGS_LISTENER = new DefaultSettingsListener();
 	private static final Set<SettingsListener> LISTENERS = new HashSet<SettingsListener>();
 	private static String packageName, widgetsPackage, preferencePackage;
+	private static boolean useThemeManager;
 
 	static {
 		addSettingsListener(DEFAULT_SETTINGS_LISTENER);
 		setPackageName(DEFAULT_PACKAGE_NAME);
+		setUseThemeManager(false);
 	}
 
 	public static void addSettingsListener(SettingsListener listener) {
@@ -80,6 +91,10 @@ public final class Settings {
 
 	}
 
+	public static boolean isUseThemeManager() {
+		return useThemeManager;
+	}
+
 	private static void onChangePackageName(String oldPackageName,
 			String newPackageName) {
 		for (SettingsListener listener : LISTENERS) {
@@ -95,6 +110,16 @@ public final class Settings {
 			if (listener != null) {
 				listener.onChangePreferencePackage(oldPreferencePackage,
 						newPreferencePackage);
+			}
+		}
+	}
+
+	private static void onChangeUseThemeManager(boolean oldUseThemeManager,
+			boolean newUseThemeManager) {
+		for (SettingsListener listener : LISTENERS) {
+			if (listener != null) {
+				listener.onChangeUseThemeManager(oldUseThemeManager,
+						newUseThemeManager);
 			}
 		}
 	}
@@ -139,6 +164,14 @@ public final class Settings {
 			String oldPreferencePackage = Settings.preferencePackage;
 			Settings.preferencePackage = preferencePackage;
 			onChangePreferencePackage(oldPreferencePackage, preferencePackage);
+		}
+	}
+
+	public static void setUseThemeManager(boolean useThemeManager) {
+		if (useThemeManager != Settings.useThemeManager) {
+			boolean oldUseThemeManager = Settings.useThemeManager;
+			Settings.useThemeManager = useThemeManager;
+			onChangeUseThemeManager(oldUseThemeManager, useThemeManager);
 		}
 	}
 

@@ -1,8 +1,10 @@
 package com.WazaBe.HoloEverywhere;
 
+import android.app.Activity;
 import android.content.Intent;
 
-import com.WazaBe.HoloEverywhere.app.Activity;
+import com.WazaBe.HoloEverywhere.app.Application;
+import com.WazaBe.HoloEverywhere.app.Base;
 
 public final class ThemeManager {
 	public static interface ThemeGetter {
@@ -14,24 +16,30 @@ public final class ThemeManager {
 	public static final int LIGHT = 2;
 	public static final int LIGHT_WITH_DARK_ACTION_BAR = 4;
 	public static final int NO_ACTION_BAR = 2048;
-	public static final int THEME_DEFAULT = DARK;
+	public static int THEME_DEFAULT = DARK;
 	public static final String THEME_TAG = "holoeverywhere:theme";
 	private static ThemeGetter themeGetter;
 
 	public static void applyTheme(Activity activity) {
-		applyTheme(activity, activity.isForceThemeApply());
+		boolean force = activity instanceof Base ? ((Base) activity)
+				.isForceThemeApply() : false;
+		applyTheme(activity, force);
 	}
 
 	public static void applyTheme(Activity activity, boolean force) {
-		if (hasSpecifiedTheme(activity) || force) {
-			int theme = getThemeResource(getTheme(activity),
-					activity.isABSSupport());
-			activity.setTheme(theme);
+		if (force || hasSpecifiedTheme(activity)) {
+			activity.setTheme(getThemeResource(activity));
 		}
 	}
 
 	public static int getTheme(Activity activity) {
 		return activity.getIntent().getIntExtra(THEME_TAG, THEME_DEFAULT);
+	}
+
+	public static int getThemeResource(Activity activity) {
+		boolean force = activity instanceof Base ? ((Base) activity)
+				.isABSSupport() : false;
+		return getThemeResource(getTheme(activity), force);
 	}
 
 	public static int getThemeResource(int themeTag, boolean abs) {
@@ -40,6 +48,9 @@ public final class ThemeManager {
 			if (getterResource > 0) {
 				return getterResource;
 			}
+		}
+		if (themeTag >= 0x01000000) {
+			return themeTag;
 		}
 		boolean dark = is(themeTag, DARK);
 		boolean light = is(themeTag, LIGHT);
@@ -90,12 +101,9 @@ public final class ThemeManager {
 					return abs ? R.style.Holo_Theme_Sherlock_Light_DarkActionBar
 							: R.style.Holo_Theme_Light_DarkActionBar;
 				}
-			} else {
-				throw new RuntimeException("AHTUNG EXCEPTION");
 			}
-		} else {
-			return themeTag;
 		}
+		return themeTag;
 	}
 
 	public static boolean hasSpecifiedTheme(Activity activity) {
@@ -103,7 +111,7 @@ public final class ThemeManager {
 				&& activity.getIntent().getIntExtra(THEME_TAG, 0) > 0;
 	}
 
-	public static boolean is(int config, int key) {
+	private static boolean is(int config, int key) {
 		return (config & key) != 0;
 	}
 
@@ -113,13 +121,22 @@ public final class ThemeManager {
 
 	public static void restartWithTheme(Activity activity, int theme,
 			boolean force) {
-		if (getTheme(activity) != theme || force) {
+		if (force || getTheme(activity) != theme) {
 			Intent intent = activity.getIntent();
 			intent.setClass(activity, activity.getClass());
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			intent.putExtra(THEME_TAG, theme);
-			activity.finish();
-			activity.startActivity(intent);
+			if (activity.isRestricted()) {
+				Application app = Application.getLastInstance();
+				if (app != null && !app.isRestricted()) {
+					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					app.startActivity(intent);
+				}
+			} else {
+				if (!activity.isFinishing()) {
+					activity.finish();
+				}
+				activity.startActivity(intent);
+			}
 		}
 	}
 
