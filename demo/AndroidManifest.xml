@@ -7,12 +7,12 @@
 		android:minSdkVersion="4"
 		android:targetSdkVersion="16" />
 	<application
-		android:name=".HoloApplication"
+		android:name=".Application"
 		android:hardwareAccelerated="true"
 		android:icon="@drawable/icon"
 		android:label="@string/app_name" >
 		<activity
-			android:name=".HoloDemoActivity"
+			android:name=".DemoActivity"
 			android:windowSoftInputMode="stateHidden" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,7 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".HoloPreferenceActivity"
+			android:name=".PreferenceActivity"
 			android:label="Preferences" />
 	</application>
 </manifest>

@@ -13,6 +13,12 @@ import com.WazaBe.HoloEverywhere.widget.TextView;
 
 public class OtherButton extends LinearLayout {
 
+	private ImageView icon;
+
+	private OnClickListener onClickListener;
+
+	private TextView text;
+
 	public OtherButton(Context context) {
 		super(context);
 	}
@@ -24,9 +30,6 @@ public class OtherButton extends LinearLayout {
 	public OtherButton(Context context, AttributeSet attrs, int defStyleRes) {
 		super(context, attrs, defStyleRes);
 	}
-
-	private TextView text;
-	private ImageView icon;
 
 	@Override
 	protected void init(Context context, AttributeSet attrs, int defStyleRes) {
@@ -53,7 +56,13 @@ public class OtherButton extends LinearLayout {
 		}
 	}
 
-	private OnClickListener onClickListener;
+	public void setIcon(Drawable drawable) {
+		icon.setImageDrawable(drawable);
+	}
+
+	public void setIcon(int resId) {
+		icon.setImageResource(resId);
+	}
 
 	@Override
 	public void setOnClickListener(OnClickListener l) {
@@ -70,13 +79,5 @@ public class OtherButton extends LinearLayout {
 
 	public void setText(int resId) {
 		text.setText(resId);
-	}
-
-	public void setIcon(Drawable drawable) {
-		icon.setImageDrawable(drawable);
-	}
-
-	public void setIcon(int resId) {
-		icon.setImageResource(resId);
 	}
 }

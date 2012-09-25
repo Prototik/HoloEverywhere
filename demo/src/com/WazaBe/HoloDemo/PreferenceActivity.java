@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.WazaBe.HoloEverywhere.sherlock.SPreferenceActivity;
 
-public class HoloPreferenceActivity extends SPreferenceActivity {
+public class PreferenceActivity extends SPreferenceActivity {
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

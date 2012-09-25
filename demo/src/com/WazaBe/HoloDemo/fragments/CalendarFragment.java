@@ -1,9 +1,10 @@
-package com.WazaBe.HoloDemo;
+package com.WazaBe.HoloDemo.fragments;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.WazaBe.HoloDemo.R;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.sherlock.SFragment;
 

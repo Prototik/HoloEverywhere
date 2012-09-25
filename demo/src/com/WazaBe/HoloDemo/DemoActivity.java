@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
-import com.WazaBe.HoloDemo.R;
+import com.WazaBe.HoloDemo.fragments.AboutFragment;
+import com.WazaBe.HoloDemo.fragments.MainFragment;
+import com.WazaBe.HoloDemo.fragments.PreferenceFragment;
 import com.WazaBe.HoloEverywhere.ThemeManager;
 import com.WazaBe.HoloEverywhere.app.Fragment;
 import com.WazaBe.HoloEverywhere.sherlock.SActivity;
@@ -12,7 +14,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 
-public class HoloDemoActivity extends SActivity {
+public class DemoActivity extends SActivity {
 	private final class FragmentListener implements TabListener {
 		private final Class<? extends Fragment> clazz;
 		private Fragment fragment;
@@ -52,6 +54,10 @@ public class HoloDemoActivity extends SActivity {
 		getSupportActionBar().addTab(tab);
 	}
 
+	public void closeCalendar(View v) {
+		Utils.closeCalendar(this);
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setForceThemeApply(true);
@@ -66,11 +72,8 @@ public class HoloDemoActivity extends SActivity {
 			addTab(PreferenceFragment.class, "Settings");
 			addTab(AboutFragment.class, "About");
 		} else {
-			FragmentTransaction ft = getSupportFragmentManager()
-					.beginTransaction();
-			ft.replace(android.R.id.content, MainFragment.getInstance());
-			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-			ft.commit();
+			Utils.replaceFragment(android.R.id.content,
+					MainFragment.getInstance(), this);
 		}
 	}
 
@@ -84,6 +87,10 @@ public class HoloDemoActivity extends SActivity {
 
 	public void showAlertDialog(View v) {
 		Utils.showAlertDialog(this);
+	}
+
+	public void showCalendar(View v) {
+		Utils.showCalendar(this);
 	}
 
 	public void showDatePicker(View v) {
@@ -104,13 +111,5 @@ public class HoloDemoActivity extends SActivity {
 
 	public void showToast(View v) {
 		Utils.showToast(this);
-	}
-
-	public void showCalendar(View v) {
-		Utils.showCalendar(this);
-	}
-
-	public void closeCalendar(View v) {
-		Utils.closeCalendar(this);
 	}
 }

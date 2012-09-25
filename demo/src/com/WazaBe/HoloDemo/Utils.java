@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
+import com.WazaBe.HoloDemo.fragments.CalendarFragment;
+import com.WazaBe.HoloDemo.fragments.MainFragment;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.ThemeManager;
 import com.WazaBe.HoloEverywhere.app.Activity;
@@ -16,8 +18,18 @@ import com.WazaBe.HoloEverywhere.app.Toast;
 import com.WazaBe.HoloEverywhere.widget.NumberPicker;
 
 public class Utils {
-	public static void onViewCreated(View view) {
+	public static void closeCalendar(Activity activity) {
+		replaceFragment(android.R.id.content, MainFragment.getInstance(),
+				activity);
+	}
 
+	public static void replaceFragment(int resId, Fragment fragment,
+			Activity activity) {
+		FragmentTransaction ft = activity.getSupportFragmentManager()
+				.beginTransaction();
+		ft.replace(resId, fragment);
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+		ft.commit();
 	}
 
 	public static void showAlertDialog(Activity activity) {
@@ -31,6 +43,11 @@ public class Utils {
 		builder.setNegativeButton("Negative", null);
 		builder.setNeutralButton("Neutral", null);
 		builder.show();
+	}
+
+	public static void showCalendar(Activity activity) {
+		replaceFragment(android.R.id.content, CalendarFragment.getInstance(),
+				activity);
 	}
 
 	public static void showDatePicker(final Activity activity) {
@@ -53,7 +70,7 @@ public class Utils {
 	}
 
 	public static void showPreferences(Activity activity) {
-		Intent intent = new Intent(activity, HoloPreferenceActivity.class);
+		Intent intent = new Intent(activity, PreferenceActivity.class);
 		intent.putExtra(ThemeManager.THEME_TAG, ThemeManager.getTheme(activity));
 		activity.startActivity(intent);
 	}
@@ -71,25 +88,7 @@ public class Utils {
 	}
 
 	public static void showToast(Activity activity) {
-		Toast.makeText(activity, "Toast example", Toast.LENGTH_LONG).show();
-	}
-
-	public static void showCalendar(Activity activity) {
-		replaceFragment(android.R.id.content, CalendarFragment.getInstance(),
-				activity);
-	}
-
-	public static void closeCalendar(Activity activity) {
-		replaceFragment(android.R.id.content, MainFragment.getInstance(),
-				activity);
-	}
-
-	public static void replaceFragment(int resId, Fragment fragment,
-			Activity activity) {
-		FragmentTransaction ft = activity.getSupportFragmentManager()
-				.beginTransaction();
-		ft.replace(resId, fragment);
-		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-		ft.commit();
+		Toast.makeText(activity, "Toast example",
+				android.widget.Toast.LENGTH_LONG).show();
 	}
 }

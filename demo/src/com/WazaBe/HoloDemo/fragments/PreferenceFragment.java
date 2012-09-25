@@ -1,4 +1,4 @@
-package com.WazaBe.HoloDemo;
+package com.WazaBe.HoloDemo.fragments;
 
 import android.os.Bundle;
 
