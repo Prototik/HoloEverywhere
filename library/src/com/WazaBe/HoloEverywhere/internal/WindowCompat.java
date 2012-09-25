@@ -18,7 +18,7 @@ public class WindowCompat {
 	}
 
 	public static boolean shouldCloseOnTouch(Window window, MotionEvent event) {
-		if (event.getAction() == MotionEvent.ACTION_DOWN
+		if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN
 				&& isOutOfBounds(window, event)
 				&& window.peekDecorView() != null) {
 			return true;

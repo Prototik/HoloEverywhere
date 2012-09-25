@@ -17,6 +17,8 @@
 			holo:summaryOn="I checked! :)"
 			holo:title="CheckBox" />
 		<RingtonePreference
+			holo:key="ringtone"
+			holo:ringtoneType="all"
 			holo:summary="I love music!"
 			holo:title="Ringtone" />
 		<SwitchPreference

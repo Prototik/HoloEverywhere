@@ -28,4 +28,7 @@
 	<string name="date_picker_decrement_year_button">Decrease year</string>
 	<string name="date_time_done">Done</string>
 	<string name="date_time_set">Set</string>
+	<string name="ringtone_picker_title">Ringtones</string>
+	<string name="ringtone_default">Default ringtone</string>
+	<string name="ringtone_silent">Silent</string>
 </resources>

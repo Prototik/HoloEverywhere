@@ -355,11 +355,14 @@
     <item name="android:windowBackground">@drawable/dialog_full_holo_dark</item>
     <item name="android:windowIsFloating">true</item>
     <item name="android:windowContentOverlay">@null</item>
+    <item name="windowContentOverlay">@null</item>
     <item name="android:windowAnimationStyle">@style/Holo.Animation.Dialog</item>
+    <item name="windowAnimationStyle">@style/Holo.Animation.Dialog</item>
     <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
     <item name="android:windowActionBar">false</item>
     <item name="windowActionBar">false</item>
     <item name="android:windowActionModeOverlay">true</item>
+    <item name="windowActionModeOverlay">true</item>
     <item name="android:colorBackgroundCacheHint">@null</item>
     <item name="buttonBarStyle">@style/Holo.ButtonBar.AlertDialog</item>
     <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Small</item>
@@ -372,11 +375,14 @@
     <item name="android:windowBackground">@drawable/dialog_full_holo_light</item>
     <item name="android:windowIsFloating">true</item>
     <item name="android:windowContentOverlay">@null</item>
+    <item name="windowContentOverlay">@null</item>
     <item name="android:windowAnimationStyle">@style/Holo.Animation.Dialog</item>
+    <item name="windowAnimationStyle">@style/Holo.Animation.Dialog</item>
     <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
     <item name="android:windowActionBar">false</item>
     <item name="windowActionBar">false</item>
     <item name="android:windowActionModeOverlay">true</item>
+    <item name="windowActionModeOverlay">true</item>
     <item name="android:colorBackgroundCacheHint">@null</item>
     <item name="buttonBarStyle">@style/Holo.ButtonBar.AlertDialog</item>
     <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Small</item>
@@ -410,24 +416,6 @@
   </style>
   <style name="Holo.TextView.ListSeparator.Light">
     <item name="android:background">@drawable/list_section_divider_holo_light</item>
-  </style>
-  <style name="Holo.AutoCompleteTextView" parent="@style/Holo.EditText">
-    <item name="android:completionHintView">@layout/simple_dropdown_hint</item>
-    <item name="android:completionThreshold">2</item>
-    <item name="android:dropDownVerticalOffset">-6dip</item>
-    <item name="android:dropDownHorizontalOffset">0dip</item>
-    <item name="android:dropDownWidth">wrap_content</item>
-    <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
-    <item name="android:popupBackground">@drawable/menu_dropdown_panel_holo_dark</item>
-  </style>
-  <style name="Holo.AutoCompleteTextView.Light" parent="@style/Holo.EditText.Light">
-    <item name="android:completionHintView">@layout/simple_dropdown_hint</item>
-    <item name="android:completionThreshold">2</item>
-    <item name="android:dropDownVerticalOffset">-6dip</item>
-    <item name="android:dropDownHorizontalOffset">0dip</item>
-    <item name="android:dropDownWidth">wrap_content</item>
-    <item name="android:dropDownSelector">@drawable/list_selector_holo_light</item>
-    <item name="android:popupBackground">@drawable/menu_dropdown_panel_holo_light</item>
   </style>
   <style name="Holo.Animation.DropDownDown">
     <item name="android:windowEnterAnimation">@anim/grow_fade_in</item>

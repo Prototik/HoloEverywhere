@@ -205,14 +205,11 @@ public class AlertController {
 							CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 				}
 			}
-
 			if (mOnPrepareListViewListener != null) {
 				mOnPrepareListViewListener.onPrepareListView(listView);
 			}
-
 			dialog.mAdapter = adapter;
 			dialog.mCheckedItem = mCheckedItem;
-
 			if (mOnClickListener != null) {
 				listView.setOnItemClickListener(new OnItemClickListener() {
 					@Override

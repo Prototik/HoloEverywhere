@@ -112,7 +112,6 @@
     <item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_dark</item>
     <item name="android:listChoiceIndicatorMultiple">@drawable/btn_checkbox_holo_dark</item>
     <item name="android:listSeparatorTextViewStyle">@style/Holo.TextView.ListSeparator</item>
-    <!--<item name="android:autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView</item>-->
   </define>
   <define name="LightThemeData">
     <include name="ThemeData" />
@@ -141,7 +140,6 @@
     <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
     <item name="segmentedButtonStyle">@style/Holo.SegmentedButton.Light</item>
     <item name="android:listSeparatorTextViewStyle">@style/Holo.TextView.ListSeparator.Light</item>
-    <!--<item name="android:autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>-->
   </define>
   <define name="NoActionBar">
     <item name="android:windowActionBar">false</item>
@@ -152,6 +150,7 @@
   <define name="Fullscreen">
     <item name="android:windowFullscreen">true</item>
     <item name="android:windowContentOverlay">@null</item>
+    <item name="windowContentOverlay">@null</item>
   </define>
   <define name="TextColors">
     <item name="android:textColorLink">@color/holo_blue_light</item>

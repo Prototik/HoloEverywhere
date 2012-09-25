@@ -354,11 +354,14 @@
         <item name="android:windowBackground">@drawable/dialog_full_holo_dark</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@style/Holo.Animation.Dialog</item>
+        <item name="windowAnimationStyle">@style/Holo.Animation.Dialog</item>
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
         <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowActionModeOverlay">true</item>
+        <item name="windowActionModeOverlay">true</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar.AlertDialog</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Small</item>
@@ -371,11 +374,14 @@
         <item name="android:windowBackground">@drawable/dialog_full_holo_light</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@style/Holo.Animation.Dialog</item>
+        <item name="windowAnimationStyle">@style/Holo.Animation.Dialog</item>
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
         <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowActionModeOverlay">true</item>
+        <item name="windowActionModeOverlay">true</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar.AlertDialog</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Small</item>
@@ -704,10 +710,12 @@
     <style name="Holo.Theme.Sherlock.NoActionBar.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.ForceOverflow" parent="@style/Theme.Sherlock.ForceOverflow">
         <item name="android:scrollbarFadeDuration">250</item>
@@ -829,10 +837,12 @@
     <style name="Holo.Theme.Sherlock.ForceOverflow.NoActionBar.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.ForceOverflow.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light" parent="@style/Theme.Sherlock.Light">
         <item name="android:scrollbarFadeDuration">250</item>
@@ -956,10 +966,12 @@
     <style name="Holo.Theme.Sherlock.Light.NoActionBar.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.ForceOverflow" parent="@style/Theme.Sherlock.Light.ForceOverflow">
         <item name="android:scrollbarFadeDuration">250</item>
@@ -1083,10 +1095,12 @@
     <style name="Holo.Theme.Sherlock.Light.ForceOverflow.NoActionBar.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.ForceOverflow.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="@style/Theme.Sherlock.Light.DarkActionBar">
         <item name="android:scrollbarFadeDuration">250</item>
@@ -1210,10 +1224,12 @@
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar.NoActionBar.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow" parent="@style/Theme.Sherlock.Light.DarkActionBar.ForceOverflow">
         <item name="android:scrollbarFadeDuration">250</item>
@@ -1337,10 +1353,12 @@
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow.NoActionBar.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <!-- Standart themes -->
     <style name="Holo.Theme" parent="@android:style/Theme.Black">
@@ -1463,10 +1481,12 @@
     <style name="Holo.Theme.NoActionBar.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Light" parent="@android:style/Theme.Light">
         <item name="android:scrollbarFadeDuration">250</item>
@@ -1590,10 +1610,12 @@
     <style name="Holo.Theme.Light.NoActionBar.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Light.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Light.DarkActionBar"/>
     <style name="Holo.Theme.Light.DarkActionBar.NoActionBar">
@@ -1605,10 +1627,12 @@
     <style name="Holo.Theme.Light.DarkActionBar.NoActionBar.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Holo.Theme.Light.DarkActionBar.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="windowContentOverlay">@null</item>
     </style>
     <!-- Text colors -->
     <style name="Holo.TextAppearance">

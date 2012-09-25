@@ -9,15 +9,13 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.WazaBe.HoloEverywhere.R;
+import com.WazaBe.HoloEverywhere.internal.RingtonePicker;
+import com.WazaBe.HoloEverywhere.internal.RingtonePicker.RingtonePickerListener;
 
 public class RingtonePreference extends Preference implements
-		PreferenceManager.OnActivityResultListener {
-
-	private int mRequestCode;
+		RingtonePickerListener {
 	private int mRingtoneType;
-	private boolean mShowDefault;
-
-	private boolean mShowSilent;
+	private boolean mShowDefault, mShowSilent;
 
 	public RingtonePreference(Context context) {
 		this(context, null);
@@ -29,7 +27,6 @@ public class RingtonePreference extends Preference implements
 
 	public RingtonePreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-
 		TypedArray a = context.obtainStyledAttributes(attrs,
 				R.styleable.RingtonePreference, defStyle, 0);
 		mRingtoneType = a.getInt(R.styleable.RingtonePreference_ringtoneType,
@@ -54,39 +51,10 @@ public class RingtonePreference extends Preference implements
 	}
 
 	@Override
-	public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == mRequestCode) {
-			if (data != null) {
-				Uri uri = data
-						.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-				if (callChangeListener(uri != null ? uri.toString() : "")) {
-					onSaveRingtone(uri);
-				}
-			}
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	protected void onAttachedToHierarchy(PreferenceManager preferenceManager) {
-		super.onAttachedToHierarchy(preferenceManager);
-		preferenceManager.registerOnActivityResultListener(this);
-		mRequestCode = preferenceManager.getNextRequestCode();
-	}
-
-	@Override
 	protected void onClick() {
 		Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
 		onPrepareRingtonePickerIntent(intent);
-		PreferenceFragment owningFragment = getPreferenceManager()
-				.getFragment();
-		if (owningFragment != null) {
-			owningFragment.startActivityForResult(intent, mRequestCode);
-		} else {
-			getPreferenceManager().getActivity().startActivityForResult(intent,
-					mRequestCode);
-		}
+		new RingtonePicker(getContext(), intent, this).show();
 	}
 
 	@Override
@@ -116,6 +84,20 @@ public class RingtonePreference extends Preference implements
 	protected Uri onRestoreRingtone() {
 		final String uriString = getPersistedString(null);
 		return !TextUtils.isEmpty(uriString) ? Uri.parse(uriString) : null;
+	}
+
+	@Override
+	public void onRingtonePickerCanceled() {
+		if (callChangeListener("")) {
+			onSaveRingtone(null);
+		}
+	}
+
+	@Override
+	public void onRingtonePickerChanged(Uri uri) {
+		if (callChangeListener(uri != null ? uri.toString() : "")) {
+			onSaveRingtone(uri);
+		}
 	}
 
 	protected void onSaveRingtone(Uri ringtoneUri) {

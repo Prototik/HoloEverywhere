@@ -17,6 +17,7 @@ import android.widget.ListView;
 
 import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.internal.AlertController;
+import com.WazaBe.HoloEverywhere.internal.AlertController.AlertParams.OnPrepareListViewListener;
 
 public class AlertDialog extends Dialog implements DialogInterface {
 	public static class Builder {
@@ -59,6 +60,11 @@ public class AlertDialog extends Dialog implements DialogInterface {
 
 		public Builder setCancelable(boolean cancelable) {
 			P.mCancelable = cancelable;
+			return this;
+		}
+
+		public Builder setCheckedItem(int checkedItem) {
+			P.mCheckedItem = checkedItem;
 			return this;
 		}
 
@@ -191,6 +197,12 @@ public class AlertDialog extends Dialog implements DialogInterface {
 
 		public Builder setOnKeyListener(OnKeyListener onKeyListener) {
 			P.mOnKeyListener = onKeyListener;
+			return this;
+		}
+
+		public Builder setOnPrepareListViewListener(
+				OnPrepareListViewListener listener) {
+			P.mOnPrepareListViewListener = listener;
 			return this;
 		}
 
