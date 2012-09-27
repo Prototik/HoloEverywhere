@@ -1,4 +1,4 @@
-package com.WazaBe.HoloEverywhere.app;
+package com.WazaBe.HoloEverywhere.widget;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.WazaBe.HoloEverywhere.R;
 
 public class Toast extends android.widget.Toast {
+	public static final int LENGTH_LONG = android.widget.Toast.LENGTH_LONG;
+	public static final int LENGTH_SHORT = android.widget.Toast.LENGTH_SHORT;
 	private static final String TAG = "Toast";
 
 	public static Toast makeText(Context context, CharSequence s, int duration) {

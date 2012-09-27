@@ -5,11 +5,19 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.WazaBe.HoloDemo.fragments.AboutFragment;
+import com.WazaBe.HoloDemo.fragments.CalendarFragment;
 import com.WazaBe.HoloDemo.fragments.MainFragment;
 import com.WazaBe.HoloDemo.fragments.PreferenceFragment;
+import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.ThemeManager;
+import com.WazaBe.HoloEverywhere.app.AlertDialog;
+import com.WazaBe.HoloEverywhere.app.DatePickerDialog;
 import com.WazaBe.HoloEverywhere.app.Fragment;
+import com.WazaBe.HoloEverywhere.app.ProgressDialog;
+import com.WazaBe.HoloEverywhere.app.TimePickerDialog;
 import com.WazaBe.HoloEverywhere.sherlock.SActivity;
+import com.WazaBe.HoloEverywhere.widget.NumberPicker;
+import com.WazaBe.HoloEverywhere.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
@@ -55,7 +63,7 @@ public class DemoActivity extends SActivity {
 	}
 
 	public void closeCalendar(View v) {
-		Utils.closeCalendar(this);
+		replaceFragment(android.R.id.content, MainFragment.getInstance());
 	}
 
 	@Override
@@ -72,9 +80,23 @@ public class DemoActivity extends SActivity {
 			addTab(PreferenceFragment.class, "Settings");
 			addTab(AboutFragment.class, "About");
 		} else {
-			Utils.replaceFragment(android.R.id.content,
-					MainFragment.getInstance(), this);
+			replaceFragment(android.R.id.content, MainFragment.getInstance());
 		}
+	}
+
+	public void replaceFragment(int resId, Fragment fragment) {
+		replaceFragment(resId, fragment, null);
+	}
+
+	public void replaceFragment(int resId, Fragment fragment,
+			String backStackName) {
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		ft.replace(resId, fragment);
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+		if (backStackName != null) {
+			ft.addToBackStack(backStackName);
+		}
+		ft.commit();
 	}
 
 	public void setDarkTheme(View v) {
@@ -88,30 +110,61 @@ public class DemoActivity extends SActivity {
 	}
 
 	public void showAlertDialog(View v) {
-		Utils.showAlertDialog(this);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("AlertDialog");
+		builder.setIcon(R.drawable.icon);
+		builder.setMessage("Is fully-working port of AlertDialog from Android Jelly Bean\n"
+				+ "Yes, I know it's a long text. At the same time check that part.");
+		builder.setPositiveButton("Positive", null);
+		builder.setNegativeButton("Negative", null);
+		builder.setNeutralButton("Neutral", null);
+		builder.show();
 	}
 
 	public void showCalendar(View v) {
-		Utils.showCalendar(this);
+		replaceFragment(android.R.id.content, CalendarFragment.getInstance(),
+				isABSSupport() ? null : "calendar");
 	}
 
 	public void showDatePicker(View v) {
-		Utils.showDatePicker(this);
+		new DatePickerDialog(this, null, 2012, 11, 21).show();
 	}
 
 	public void showNumberPicker(View v) {
-		Utils.showNumberPicker(this);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Select number");
+		View view = LayoutInflater.inflate(this, R.layout.number_picker_demo);
+		NumberPicker picker = (NumberPicker) view
+				.findViewById(R.id.numberPicker);
+		picker.setMinValue(1);
+		picker.setMaxValue(15);
+		picker.setValue(3);
+		builder.setView(view);
+		builder.setNegativeButton(android.R.string.cancel, null);
+		builder.show();
+	}
+
+	public void showPreferences(View v) {
+		replaceFragment(android.R.id.content, new PreferenceFragment(), "prefs");
+	}
+
+	public void showAbout(View v) {
+		replaceFragment(android.R.id.content, new AboutFragment(), "about");
 	}
 
 	public void showProgressDialog(View v) {
-		Utils.showProgressDialog(this);
+		ProgressDialog dialog = new ProgressDialog(this);
+		dialog.setCancelable(true);
+		dialog.setIndeterminate(true);
+		dialog.setMessage("I can close!");
+		dialog.show();
 	}
 
 	public void showTimePicker(View v) {
-		Utils.showTimePicker(this);
+		new TimePickerDialog(this, null, 12, 34, false).show();
 	}
 
 	public void showToast(View v) {
-		Utils.showToast(this);
+		Toast.makeText(this, "Toast example", Toast.LENGTH_LONG).show();
 	}
 }

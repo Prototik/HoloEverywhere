@@ -32,8 +32,18 @@ public final class ThemeManager {
 		}
 	}
 
+	public static void cloneTheme(Intent sourceIntent, Intent intent) {
+		if (hasSpecifiedTheme(sourceIntent)) {
+			intent.putExtra(THEME_TAG, getTheme(sourceIntent));
+		}
+	}
+
 	public static int getTheme(Activity activity) {
-		return activity.getIntent().getIntExtra(THEME_TAG, THEME_DEFAULT);
+		return getTheme(activity.getIntent());
+	}
+
+	public static int getTheme(Intent intent) {
+		return intent.getIntExtra(THEME_TAG, THEME_DEFAULT);
 	}
 
 	public static int getThemeResource(Activity activity) {
@@ -107,8 +117,12 @@ public final class ThemeManager {
 	}
 
 	public static boolean hasSpecifiedTheme(Activity activity) {
-		return activity.getIntent().hasExtra(THEME_TAG)
-				&& activity.getIntent().getIntExtra(THEME_TAG, 0) > 0;
+		return hasSpecifiedTheme(activity.getIntent());
+	}
+
+	public static boolean hasSpecifiedTheme(Intent intent) {
+		return intent != null && intent.hasExtra(THEME_TAG)
+				&& intent.getIntExtra(THEME_TAG, 0) > 0;
 	}
 
 	private static boolean is(int config, int key) {

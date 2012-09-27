@@ -152,6 +152,13 @@
 				android:text="Other"
 				holo:showDividers="middle" >
 				<OtherButton
+					android:id="@+id/showAbout"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:icon="@drawable/toast"
+					android:onClick="showAbout"
+					android:text="About" />
+				<OtherButton
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:icon="@drawable/alert_dialog"

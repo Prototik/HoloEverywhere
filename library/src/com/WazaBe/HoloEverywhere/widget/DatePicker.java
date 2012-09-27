@@ -142,12 +142,12 @@ public class DatePicker extends NineFrameLayout {
 	}
 
 	private final Callback callback = new Callback();
-	private final InputMethodManager inputMethodManager;
-	private final CalendarView mCalendarView;
-	private Locale locale;
 	private final java.text.DateFormat dateFormat = new SimpleDateFormat(
 			DATE_FORMAT);
 	private final NumberPicker daySpinner, monthSpinner, yearSpinner;
+	private final InputMethodManager inputMethodManager;
+	private Locale locale;
+	private final CalendarView mCalendarView;
 	private int numberOfMonths;
 	private OnDateChangedListener onDateChangedListener;
 	private String[] shortMonths;
@@ -355,6 +355,18 @@ public class DatePicker extends NineFrameLayout {
 		}
 	}
 
+	private void pushSpinner(NumberPicker spinner, int spinnerCount, int i) {
+		if (spinner.getParent() != null
+				&& spinner.getParent() instanceof ViewGroup) {
+			ViewGroup parent = (ViewGroup) spinner.getParent();
+			if (parent.getChildAt(i) != spinner) {
+				parent.removeView(spinner);
+				parent.addView(spinner);
+				setImeOptions(spinner, spinnerCount, i);
+			}
+		}
+	}
+
 	@SuppressWarnings("unused")
 	private void reorderSpinners() {
 		char[] order = DateFormat.getDateFormatOrder(getContext());
@@ -370,18 +382,6 @@ public class DatePicker extends NineFrameLayout {
 			case DateFormat.YEAR:
 				pushSpinner(yearSpinner, spinnerCount, i);
 				break;
-			}
-		}
-	}
-
-	private void pushSpinner(NumberPicker spinner, int spinnerCount, int i) {
-		if (spinner.getParent() != null
-				&& spinner.getParent() instanceof ViewGroup) {
-			ViewGroup parent = (ViewGroup) spinner.getParent();
-			if (parent.getChildAt(i) != spinner) {
-				parent.removeView(spinner);
-				parent.addView(spinner);
-				setImeOptions(spinner, spinnerCount, i);
 			}
 		}
 	}

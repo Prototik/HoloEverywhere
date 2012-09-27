@@ -32,6 +32,7 @@ public class MainFragment extends SFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		if (isABSSupport()) {
 			view.findViewById(R.id.showPreferences).setVisibility(View.GONE);
+			view.findViewById(R.id.showAbout).setVisibility(View.GONE);
 		}
 	}
 }
