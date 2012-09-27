@@ -8,33 +8,19 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.app.Fragment;
+import com.WazaBe.HoloEverywhere.widget.ListView;
 
 public abstract class PreferenceFragment extends Fragment implements
 		PreferenceManager.OnPreferenceTreeClickListener {
-
-	/**
-	 * Interface that PreferenceFragment's containing activity should implement
-	 * to be able to process preference items that wish to switch to a new
-	 * fragment.
-	 */
 	public interface OnPreferenceStartFragmentCallback {
-		/**
-		 * Called when the user has clicked on a Preference that has a fragment
-		 * class name associated with it. The implementation to should
-		 * instantiate and switch to an instance of the given fragment.
-		 */
 		boolean onPreferenceStartFragment(PreferenceFragment caller,
 				Preference pref);
 	}
 
-	/**
-	 * The starting request code given out to preference framework.
-	 */
 	private static final int FIRST_REQUEST_CODE = 100;
 	private static final int MSG_BIND_PREFERENCES = 1;
 	private static final String PREFERENCES_TAG = "android:preferences";
@@ -50,11 +36,8 @@ public abstract class PreferenceFragment extends Fragment implements
 		}
 	};
 
-	private boolean mHavePrefs;
-
-	private boolean mInitDone;
+	private boolean mHavePrefs, mInitDone;
 	private ListView mList;
-
 	private OnKeyListener mListOnKeyListener = new OnKeyListener() {
 
 		@Override
@@ -79,12 +62,6 @@ public abstract class PreferenceFragment extends Fragment implements
 		}
 	};
 
-	/**
-	 * Adds preferences from activities that match the given {@link Intent}.
-	 * 
-	 * @param intent
-	 *            The {@link Intent} to query activities.
-	 */
 	public void addPreferencesFromIntent(Intent intent) {
 		requirePreferenceManager();
 
@@ -92,13 +69,6 @@ public abstract class PreferenceFragment extends Fragment implements
 				getPreferenceScreen()));
 	}
 
-	/**
-	 * Inflates the given XML resource and adds the preference hierarchy to the
-	 * current preference hierarchy.
-	 * 
-	 * @param preferencesResId
-	 *            The XML resource ID to inflate.
-	 */
 	public void addPreferencesFromResource(int preferencesResId) {
 		requirePreferenceManager();
 
@@ -137,14 +107,6 @@ public abstract class PreferenceFragment extends Fragment implements
 		mHandler.post(mRequestFocus);
 	}
 
-	/**
-	 * Finds a {@link Preference} based on its key.
-	 * 
-	 * @param key
-	 *            The key of the preference to retrieve.
-	 * @return The {@link Preference} with the key, or null.
-	 * @see PreferenceGroup#findPreference(CharSequence)
-	 */
 	public Preference findPreference(CharSequence key) {
 		if (mPreferenceManager == null) {
 			return null;
@@ -152,27 +114,15 @@ public abstract class PreferenceFragment extends Fragment implements
 		return mPreferenceManager.findPreference(key);
 	}
 
-	/** @hide */
 	public ListView getListView() {
 		ensureList();
 		return mList;
 	}
 
-	/**
-	 * Returns the {@link PreferenceManager} used by this fragment.
-	 * 
-	 * @return The {@link PreferenceManager}.
-	 */
 	public PreferenceManager getPreferenceManager() {
 		return mPreferenceManager;
 	}
 
-	/**
-	 * Gets the root of the preference hierarchy that this fragment is showing.
-	 * 
-	 * @return The {@link PreferenceScreen} that is the root of the preference
-	 *         hierarchy.
-	 */
 	public PreferenceScreen getPreferenceScreen() {
 		return mPreferenceManager.getPreferenceScreen();
 	}
@@ -180,13 +130,10 @@ public abstract class PreferenceFragment extends Fragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
 		if (mHavePrefs) {
 			bindPreferences();
 		}
-
 		mInitDone = true;
-
 		if (savedInstanceState != null) {
 			Bundle container = savedInstanceState.getBundle(PREFERENCES_TAG);
 			if (container != null) {
@@ -201,7 +148,6 @@ public abstract class PreferenceFragment extends Fragment implements
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-
 		mPreferenceManager
 				.dispatchActivityResult(requestCode, resultCode, data);
 	}
@@ -235,9 +181,6 @@ public abstract class PreferenceFragment extends Fragment implements
 		super.onDestroyView();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
 			Preference preference) {
@@ -252,7 +195,6 @@ public abstract class PreferenceFragment extends Fragment implements
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-
 		final PreferenceScreen preferenceScreen = getPreferenceScreen();
 		if (preferenceScreen != null) {
 			Bundle container = new Bundle();
@@ -288,12 +230,6 @@ public abstract class PreferenceFragment extends Fragment implements
 		}
 	}
 
-	/**
-	 * Sets the root of the preference hierarchy that this fragment is showing.
-	 * 
-	 * @param preferenceScreen
-	 *            The root {@link PreferenceScreen} of the preference hierarchy.
-	 */
 	public void setPreferenceScreen(PreferenceScreen preferenceScreen) {
 		if (mPreferenceManager.setPreferences(preferenceScreen)
 				&& preferenceScreen != null) {

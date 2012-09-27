@@ -13,11 +13,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 
 import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.internal.AlertController;
 import com.WazaBe.HoloEverywhere.internal.AlertController.AlertParams.OnPrepareListViewListener;
+import com.WazaBe.HoloEverywhere.widget.ListView;
 
 public class AlertDialog extends Dialog implements DialogInterface {
 	public static class Builder {

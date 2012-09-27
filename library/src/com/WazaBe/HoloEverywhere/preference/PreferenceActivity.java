@@ -33,7 +33,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.ArrayAdapter;
@@ -42,6 +41,7 @@ import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.app.FragmentBreadCrumbs;
 import com.WazaBe.HoloEverywhere.app.ListActivity;
 import com.WazaBe.HoloEverywhere.util.XmlUtils;
+import com.WazaBe.HoloEverywhere.widget.ListView;
 
 public abstract class PreferenceActivity extends ListActivity implements
 		PreferenceManager.OnPreferenceTreeClickListener,
