@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     <style name="Holo"/>
-    <style name="Holo.ListView">
+    <style name="Holo.ListView" parent="@android:style/Widget.AbsListView">
         <item name="android:scrollbars">vertical</item>
         <item name="android:fadingEdge">vertical</item>
         <item name="android:listDivider">@drawable/list_divider_holo_dark</item>
