@@ -24,17 +24,17 @@ public class LinearLayout extends NineLinearLayout {
 
 	public LinearLayout(Context context) {
 		super(context, null);
-		init(context, null, 0);
+		init(null, 0);
 	}
 
 	public LinearLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init(context, attrs, 0);
+		init(attrs, 0);
 	}
 
 	public LinearLayout(Context context, AttributeSet attrs, int defStyleRes) {
 		super(context, attrs, defStyleRes);
-		init(context, attrs, defStyleRes);
+		init(attrs, defStyleRes);
 	}
 
 	void drawDividersHorizontal(Canvas canvas) {
@@ -137,8 +137,8 @@ public class LinearLayout extends NineLinearLayout {
 		return false;
 	}
 
-	protected void init(Context context, AttributeSet attrs, int defStyleRes) {
-		TypedArray a = context.obtainStyledAttributes(attrs,
+	protected void init(AttributeSet attrs, int defStyleRes) {
+		TypedArray a = getContext().obtainStyledAttributes(attrs,
 				R.styleable.LinearLayout, defStyleRes, 0);
 		setDividerDrawable(a
 				.getDrawable(R.styleable.LinearLayout_android_divider));

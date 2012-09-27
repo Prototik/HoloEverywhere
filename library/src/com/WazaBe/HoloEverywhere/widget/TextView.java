@@ -7,8 +7,11 @@ import android.util.AttributeSet;
 import com.WazaBe.HoloEverywhere.R;
 
 public class TextView extends android.widget.TextView {
-
 	private boolean allCaps = false;
+
+	private CharSequence originalText;
+
+	private BufferType originalType;
 
 	public TextView(Context context) {
 		super(context);
@@ -39,10 +42,18 @@ public class TextView extends android.widget.TextView {
 	@Override
 	public void setAllCaps(boolean allCaps) {
 		this.allCaps = allCaps;
+		updateTextState();
 	}
 
 	@Override
 	public void setText(CharSequence text, BufferType type) {
-		super.setText(allCaps ? text.toString().toUpperCase() : text, type);
+		originalText = text;
+		originalType = type;
+		updateTextState();
+	}
+
+	private void updateTextState() {
+		super.setText(allCaps ? originalText.toString().toUpperCase()
+				: originalText, originalType);
 	}
 }

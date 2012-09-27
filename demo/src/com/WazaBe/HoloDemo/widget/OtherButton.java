@@ -12,11 +12,8 @@ import com.WazaBe.HoloEverywhere.widget.LinearLayout;
 import com.WazaBe.HoloEverywhere.widget.TextView;
 
 public class OtherButton extends LinearLayout {
-
 	private ImageView icon;
-
 	private OnClickListener onClickListener;
-
 	private TextView text;
 
 	public OtherButton(Context context) {
@@ -32,15 +29,15 @@ public class OtherButton extends LinearLayout {
 	}
 
 	@Override
-	protected void init(Context context, AttributeSet attrs, int defStyleRes) {
-		super.init(context, attrs, defStyleRes);
-		LayoutInflater.inflate(context, R.layout.other_button, this, true);
+	protected void init(AttributeSet attrs, int defStyleRes) {
+		super.init(attrs, defStyleRes);
+		LayoutInflater.inflate(getContext(), R.layout.other_button, this, true);
 		text = (TextView) findViewById(R.id.text);
 		icon = (ImageView) findViewById(R.id.icon);
 		if (onClickListener != null) {
 			text.setOnClickListener(onClickListener);
 		}
-		TypedArray a = context.obtainStyledAttributes(attrs,
+		TypedArray a = getContext().obtainStyledAttributes(attrs,
 				R.styleable.OtherButton);
 		String textR = a.getString(R.styleable.OtherButton_android_text);
 		Drawable iconR = a.getDrawable(R.styleable.OtherButton_android_icon);

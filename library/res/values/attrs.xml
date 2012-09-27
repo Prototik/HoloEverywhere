@@ -247,6 +247,7 @@
 		<attr name="minDate" />
 		<attr name="maxDate" />
 		<attr name="internalLayout" format="reference" />
+		<attr name="forceShownState" format="boolean" />
 	</declare-styleable>
 	<declare-styleable name="TimePicker">
 		<attr name="internalLayout" />

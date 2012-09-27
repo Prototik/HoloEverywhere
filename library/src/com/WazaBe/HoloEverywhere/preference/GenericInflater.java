@@ -40,49 +40,22 @@ abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 		public void addItemFromInflater(T child);
 	}
 
-	private static final Class<?>[] mConstructorSignature = new Class[] {
+	protected static final HashMap<String, Constructor<?>> constructorMap = new HashMap<String, Constructor<?>>();
+	protected static final Class<?>[] constructorSignature = new Class<?>[] {
 			Context.class, AttributeSet.class };
+	protected final Object[] constructorArgs = new Object[2];
+	protected final Context context;
+	private String defaultPackage;
+	private Factory<T> factory;
+	private boolean factorySet;
 
-	private static final HashMap<String, Constructor<?>> sConstructorMap = new HashMap<String, Constructor<?>>();
-
-	private final boolean DEBUG = false;
-
-	private final Object[] mConstructorArgs = new Object[2];
-
-	protected final Context mContext;
-
-	private String mDefaultPackage;
-
-	private Factory<T> mFactory;
-
-	// these are optional, set by the caller
-	private boolean mFactorySet;
-
-	/**
-	 * Create a new inflater instance associated with a particular Context.
-	 * 
-	 * @param context
-	 *            The Context in which this inflater will create its items; most
-	 *            importantly, this supplies the theme from which the default
-	 *            values for their attributes are retrieved.
-	 */
 	protected GenericInflater(Context context) {
-		mContext = context;
+		this.context = context;
 	}
 
-	/**
-	 * Create a new inflater instance that is a copy of an existing inflater,
-	 * optionally with its Context changed. For use in implementing
-	 * {@link #cloneInContext}.
-	 * 
-	 * @param original
-	 *            The original inflater to copy.
-	 * @param newContext
-	 *            The new Context to use.
-	 */
 	protected GenericInflater(GenericInflater<T, P> original, Context newContext) {
-		mContext = newContext;
-		mFactory = original.mFactory;
+		context = newContext;
+		factory = original.factory;
 	}
 
 	public abstract GenericInflater<T, P> cloneInContext(Context newContext);
@@ -90,16 +63,16 @@ abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 	@SuppressWarnings("unchecked")
 	public final T createItem(String name, String prefix, AttributeSet attrs)
 			throws ClassNotFoundException, InflateException {
-		Constructor<?> constructor = sConstructorMap.get(name);
+		Constructor<?> constructor = constructorMap.get(name);
 
 		try {
 			if (constructor == null) {
-				Class<?> clazz = mContext.getClassLoader().loadClass(
+				Class<?> clazz = context.getClassLoader().loadClass(
 						prefix != null ? prefix + name : name);
-				constructor = clazz.getConstructor(mConstructorSignature);
-				sConstructorMap.put(name, constructor);
+				constructor = findConstructor(clazz);
+				constructorMap.put(name, constructor);
 			}
-			Object[] args = mConstructorArgs;
+			Object[] args = constructorArgs;
 			args[1] = attrs;
 			return (T) constructor.newInstance(args);
 		} catch (NoSuchMethodException e) {
@@ -119,37 +92,25 @@ abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 
 	private final T createItemFromTag(XmlPullParser parser, String name,
 			AttributeSet attrs) {
-		if (DEBUG) {
-			System.out.println("******** Creating item: " + name);
-		}
-
 		try {
-			T item = mFactory == null ? null : mFactory.onCreateItem(name,
-					mContext, attrs);
-
+			T item = factory == null ? null : factory.onCreateItem(name,
+					context, attrs);
 			if (item == null) {
-				if (-1 == name.indexOf('.')) {
+				if (name.indexOf('.') < 0) {
 					item = onCreateItem(name, attrs);
 				} else {
 					item = createItem(name, null, attrs);
 				}
 			}
-
-			if (DEBUG) {
-				System.out.println("Created item is: " + item);
-			}
 			return item;
-
 		} catch (InflateException e) {
 			throw e;
-
 		} catch (ClassNotFoundException e) {
 			InflateException ie = new InflateException(
 					attrs.getPositionDescription() + ": Error inflating class "
 							+ name);
 			ie.initCause(e);
 			throw ie;
-
 		} catch (Exception e) {
 			InflateException ie = new InflateException(
 					attrs.getPositionDescription() + ": Error inflating class "
@@ -159,16 +120,21 @@ abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 		}
 	}
 
+	protected Constructor<?> findConstructor(Class<?> clazz)
+			throws NoSuchMethodException {
+		return clazz.getConstructor(constructorSignature);
+	}
+
 	public Context getContext() {
-		return mContext;
+		return context;
 	}
 
 	public String getDefaultPackage() {
-		return mDefaultPackage;
+		return defaultPackage;
 	}
 
 	public final Factory<T> getFactory() {
-		return mFactory;
+		return factory;
 	}
 
 	public T inflate(int resource, P root) {
@@ -176,9 +142,6 @@ abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 	}
 
 	public T inflate(int resource, P root, boolean attachToRoot) {
-		if (DEBUG) {
-			System.out.println("INFLATING from resource: " + resource);
-		}
 		XmlResourceParser parser = getContext().getResources().getXml(resource);
 		try {
 			return inflate(parser, root, attachToRoot);
@@ -193,46 +156,25 @@ abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 
 	@SuppressWarnings("unchecked")
 	public T inflate(XmlPullParser parser, P root, boolean attachToRoot) {
-		synchronized (mConstructorArgs) {
+		synchronized (constructorArgs) {
 			final AttributeSet attrs = Xml.asAttributeSet(parser);
-			mConstructorArgs[0] = mContext;
+			constructorArgs[0] = context;
 			T result = (T) root;
-
 			try {
-				// Look for the root node.
 				int type;
 				while ((type = parser.next()) != XmlPullParser.START_TAG
 						&& type != XmlPullParser.END_DOCUMENT) {
 					;
 				}
-
 				if (type != XmlPullParser.START_TAG) {
 					throw new InflateException(parser.getPositionDescription()
 							+ ": No start tag found!");
 				}
-
-				if (DEBUG) {
-					System.out.println("**************************");
-					System.out.println("Creating root: " + parser.getName());
-					System.out.println("**************************");
-				}
-				// Temp is the root that was found in the xml
 				T xmlRoot = createItemFromTag(parser, parser.getName(), attrs);
-
 				result = (T) onMergeRoots(root, attachToRoot, (P) xmlRoot);
-
-				if (DEBUG) {
-					System.out.println("-----> start inflating children");
-				}
-				// Inflate all children under temp
 				rInflate(parser, result, attrs);
-				if (DEBUG) {
-					System.out.println("-----> done inflating children");
-				}
-
 			} catch (InflateException e) {
 				throw e;
-
 			} catch (XmlPullParserException e) {
 				InflateException ex = new InflateException(e.getMessage());
 				ex.initCause(e);
@@ -243,7 +185,6 @@ abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 				ex.initCause(e);
 				throw ex;
 			}
-
 			return result;
 		}
 	}
@@ -255,7 +196,7 @@ abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 
 	protected T onCreateItem(String name, AttributeSet attrs)
 			throws ClassNotFoundException {
-		return createItem(name, mDefaultPackage, attrs);
+		return createItem(name, defaultPackage, attrs);
 	}
 
 	protected P onMergeRoots(P givenRoot, boolean attachToGivenRoot, P xmlRoot) {
@@ -267,60 +208,39 @@ abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 			final AttributeSet attrs) throws XmlPullParserException,
 			IOException {
 		final int depth = parser.getDepth();
-
 		int type;
 		while (((type = parser.next()) != XmlPullParser.END_TAG || parser
 				.getDepth() > depth) && type != XmlPullParser.END_DOCUMENT) {
-
 			if (type != XmlPullParser.START_TAG) {
 				continue;
 			}
-
 			if (onCreateCustomFromTag(parser, parent, attrs)) {
 				continue;
 			}
-
-			if (DEBUG) {
-				System.out.println("Now inflating tag: " + parser.getName());
-			}
 			String name = parser.getName();
-
 			T item = createItemFromTag(parser, name, attrs);
-
-			if (DEBUG) {
-				System.out.println("Creating params from parent: " + parent);
-			}
-
 			((P) parent).addItemFromInflater(item);
-
-			if (DEBUG) {
-				System.out.println("-----> start inflating children");
-			}
 			rInflate(parser, item, attrs);
-			if (DEBUG) {
-				System.out.println("-----> done inflating children");
-			}
 		}
-
 	}
 
 	public void setDefaultPackage(String defaultPackage) {
-		mDefaultPackage = defaultPackage;
+		this.defaultPackage = defaultPackage;
 	}
 
 	public void setFactory(Factory<T> factory) {
-		if (mFactorySet) {
+		if (factorySet) {
 			throw new IllegalStateException(""
 					+ "A factory has already been set on this inflater");
 		}
 		if (factory == null) {
 			throw new NullPointerException("Given factory can not be null");
 		}
-		mFactorySet = true;
-		if (mFactory == null) {
-			mFactory = factory;
+		factorySet = true;
+		if (this.factory == null) {
+			this.factory = factory;
 		} else {
-			mFactory = new FactoryMerger<T>(factory, mFactory);
+			this.factory = new FactoryMerger<T>(factory, this.factory);
 		}
 	}
 }

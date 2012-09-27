@@ -26,7 +26,7 @@ import com.WazaBe.HoloEverywhere.app.AlertDialog;
 import com.WazaBe.HoloEverywhere.app.AlertDialog.Builder;
 import com.WazaBe.HoloEverywhere.internal.AlertController.AlertParams.OnPrepareListViewListener;
 
-public final class RingtonePicker implements OnItemSelectedListener, Runnable,
+public class RingtonePicker implements OnItemSelectedListener, Runnable,
 		OnClickListener, OnPrepareListViewListener, OnCancelListener,
 		OnDismissListener {
 	public static interface RingtonePickerListener {

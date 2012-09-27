@@ -8,17 +8,23 @@ import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.os.Build.VERSION;
+import android.util.Log;
 
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
-public class BaseSharedPreferences implements SharedPreferences {
-	public static class BaseEditor implements Editor {
+public final class BaseSharedPreferences implements SharedPreferences {
+	private static final class BaseEditor implements Editor {
 		private android.content.SharedPreferences.Editor editor;
 
 		public BaseEditor(android.content.SharedPreferences.Editor editor) {
+			if (editor == null) {
+				throw new IllegalArgumentException(
+						"SharedPreferences.Editor can't be null");
+			}
 			this.editor = editor;
 		}
 
@@ -56,14 +62,46 @@ public class BaseSharedPreferences implements SharedPreferences {
 		}
 
 		@Override
+		public Editor putFloatSet(String key, Set<Float> value) {
+			return putSet(key, value);
+		}
+
+		@Override
 		public Editor putInt(String key, int value) {
 			editor.putInt(key, value);
 			return this;
 		}
 
 		@Override
+		public Editor putIntSet(String key, Set<Integer> value) {
+			return putSet(key, value);
+		}
+
+		@Override
+		public Editor putJSONArray(String key, JSONArray value) {
+			editor.putString(key, value.toString());
+			return this;
+		}
+
+		@Override
+		public Editor putJSONObject(String key, JSONObject value) {
+			editor.putString(key, value.toString());
+			return this;
+		}
+
+		@Override
 		public Editor putLong(String key, long value) {
 			editor.putLong(key, value);
+			return this;
+		}
+
+		@Override
+		public Editor putLongSet(String key, Set<Long> value) {
+			return putSet(key, value);
+		}
+
+		private Editor putSet(String key, Set<?> value) {
+			editor.putString(key, setToString(value));
 			return this;
 		}
 
@@ -89,7 +127,6 @@ public class BaseSharedPreferences implements SharedPreferences {
 			editor.remove(key);
 			return this;
 		}
-
 	}
 
 	public static class BaseOnSharedPreferenceChangeListener implements
@@ -143,18 +180,22 @@ public class BaseSharedPreferences implements SharedPreferences {
 		}
 	}
 
-	public static String setToString(Set<String> set) {
+	private static String setToString(Set<?> set) {
 		return new JSONArray(set).toString();
 	}
 
-	public static Set<String> stringToSet(String string) {
+	@SuppressWarnings("unchecked")
+	private static <T> Set<T> stringToSet(String string, Class<T> clazz) {
 		try {
 			JSONArray array = new JSONArray(string);
-			Set<String> set = new HashSet<String>(array.length());
+			Set<T> set = new HashSet<T>(array.length());
 			for (int i = 0; i < array.length(); i++) {
-				set.add(array.getString(i));
+				set.add((T) array.getString(i));
 			}
 			return set;
+		} catch (ClassCastException e) {
+			Log.e("SupportSharedPreferences", "Error of cast", e);
+			return null;
 		} catch (JSONException e) {
 			return null;
 		}
@@ -163,6 +204,10 @@ public class BaseSharedPreferences implements SharedPreferences {
 	private final android.content.SharedPreferences prefs;
 
 	public BaseSharedPreferences(android.content.SharedPreferences prefs) {
+		if (prefs == null) {
+			throw new IllegalArgumentException(
+					"SharedPreferences can't be null");
+		}
 		this.prefs = prefs;
 	}
 
@@ -192,8 +237,38 @@ public class BaseSharedPreferences implements SharedPreferences {
 	}
 
 	@Override
+	public Set<Float> getFloatSet(String key, Set<Float> defValue) {
+		return getSet(key, defValue, Float.class);
+	}
+
+	@Override
 	public int getInt(String key, int defValue) {
 		return prefs.getInt(key, defValue);
+	}
+
+	@Override
+	public Set<Integer> getIntegerSet(String key, Set<Integer> defValue) {
+		return getSet(key, defValue, Integer.class);
+	}
+
+	@Override
+	public JSONArray getJSONArray(String key, JSONArray defValue) {
+		String s = prefs.getString(key, null);
+		try {
+			return s == null ? defValue : new JSONArray(s);
+		} catch (JSONException e) {
+			return new JSONArray();
+		}
+	}
+
+	@Override
+	public JSONObject getJSONObject(String key, JSONObject defValue) {
+		String s = prefs.getString(key, null);
+		try {
+			return s == null ? defValue : new JSONObject(s);
+		} catch (JSONException e) {
+			return new JSONObject();
+		}
 	}
 
 	@Override
@@ -202,8 +277,22 @@ public class BaseSharedPreferences implements SharedPreferences {
 	}
 
 	@Override
+	public Set<Long> getLongSet(String key, Set<Long> defValue) {
+		return getSet(key, defValue, Long.class);
+	}
+
+	@Override
 	public android.content.SharedPreferences getPreferences() {
 		return prefs;
+	}
+
+	private <T> Set<T> getSet(String key, Set<T> defValue, Class<T> clazz) {
+		String s = prefs.getString(key, null);
+		if (s == null) {
+			return defValue;
+		} else {
+			return stringToSet(s, clazz);
+		}
 	}
 
 	@Override
@@ -217,12 +306,7 @@ public class BaseSharedPreferences implements SharedPreferences {
 		if (VERSION.SDK_INT >= 11) {
 			return prefs.getStringSet(key, defValue);
 		} else {
-			String s = prefs.getString(key, null);
-			if (s == null) {
-				return defValue;
-			} else {
-				return stringToSet(s);
-			}
+			return getSet(key, defValue, String.class);
 		}
 	}
 
@@ -239,5 +323,4 @@ public class BaseSharedPreferences implements SharedPreferences {
 		prefs.unregisterOnSharedPreferenceChangeListener(BaseOnSharedPreferenceChangeListener
 				.obtain(this, listener));
 	}
-
 }

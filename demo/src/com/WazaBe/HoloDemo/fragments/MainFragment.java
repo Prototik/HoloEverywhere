@@ -13,7 +13,7 @@ public class MainFragment extends SFragment {
 
 	public static MainFragment getInstance() {
 		if (instance == null) {
-			instance = new MainFragment();
+			return new MainFragment();
 		}
 		return instance;
 	}
@@ -30,6 +30,8 @@ public class MainFragment extends SFragment {
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		view.findViewById(R.id.showPreferences).setVisibility(View.GONE);
+		if (isABSSupport()) {
+			view.findViewById(R.id.showPreferences).setVisibility(View.GONE);
+		}
 	}
 }

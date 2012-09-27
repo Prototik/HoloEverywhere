@@ -467,7 +467,11 @@
   </style>
   <style name="Holo.DatePicker">
     <item name="internalLayout">@layout/date_picker_holo</item>
-    <item name="calendarViewShown">true</item>
+    <item name="calendarViewShown">false</item>
+    <item name="spinnersShown">true</item>
+    <item name="startYear">1900</item>
+    <item name="endYear">2100</item>
+    <item name="forceShownState">false</item>
   </style>
   <style name="Holo.TimePicker">
     <item name="internalLayout">@layout/time_picker_holo</item>
