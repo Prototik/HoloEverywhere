@@ -5,6 +5,8 @@
 	<!-- <attr name="dividerVertical" format="reference" /> -->
 	<!-- <attr name="listPopupWindowStyle" format="reference" /> -->
 	<!-- <attr name="dropdownListPreferredItemHeight" format="reference" /> -->
+	<!-- <attr name="textAppearanceLargePopupMenu" format="reference" /> -->
+	<!-- <attr name="textAppearanceSmallPopupMenu" format="reference" /> -->
 	<attr name="preferenceFrameLayoutStyle" format="reference" />
 	<attr name="preferenceScreenStyle" format="reference" />
 	<attr name="preferenceFragmentStyle" format="reference" />
@@ -41,6 +43,7 @@
 	<attr name="numberPickerInputTextStyle" format="reference" />
 	<attr name="datePickerStyle" format="reference" />
 	<attr name="timePickerStyle" format="reference" />
+	<attr name="autoCompleteTextViewStyle" format="reference" />
 	<attr name="gravity">
 		<flag name="top" value="0x30" />
 		<flag name="bottom" value="0x50" />
@@ -204,28 +207,25 @@
 	</declare-styleable>
 	<declare-styleable name="TextView">
 		<attr name="textAllCaps" format="boolean" />
+		<attr name="android:text" />
 	</declare-styleable>
 	<declare-styleable name="Spinner">
-		<attr name="prompt" format="reference" />
+		<attr name="android:prompt" />
 		<attr name="spinnerMode" format="enum">
 			<enum name="dialog" value="0" />
 			<enum name="dropdown" value="1" />
 		</attr>
-		<attr name="dropDownSelector" format="reference|color" />
-		<attr name="popupBackground" format="reference" />
+		<attr name="android:dropDownSelector" />
+		<attr name="android:popupBackground" />
 		<attr name="dropDownVerticalOffset" format="dimension" />
 		<attr name="dropDownHorizontalOffset" format="dimension" />
-		<attr name="dropDownWidth" format="dimension">
-			<enum name="fill_parent" value="-1" />
-			<enum name="match_parent" value="-1" />
-			<enum name="wrap_content" value="-2" />
-		</attr>
+		<attr name="android:dropDownWidth" />
 		<attr name="popupPromptView" format="reference" />
-		<attr name="gravity" />
+		<attr name="android:gravity" />
 		<attr name="disableChildrenWhenDisabled" format="boolean" />
 	</declare-styleable>
 	<declare-styleable name="AbsSpinner">
-		<attr name="entries" />
+		<attr name="android:entries" />
 	</declare-styleable>
 	<declare-styleable name="NumberPicker">
 		<attr name="solidColor" format="color|reference" />
@@ -254,6 +254,24 @@
 	</declare-styleable>
 	<declare-styleable name="Divider">
 		<attr name="android:orientation" />
+	</declare-styleable>
+	<declare-styleable name="AutoCompleteTextView">
+		<attr name="android:completionHint" />
+		<attr name="android:completionHintView" />
+		<attr name="android:completionThreshold" />
+		<attr name="android:dropDownSelector" />
+		<attr name="dropDownVerticalOffset" />
+		<attr name="dropDownHorizontalOffset" />
+		<attr name="android:dropDownAnchor" />
+		<attr name="android:dropDownWidth" />
+		<attr name="android:dropDownHeight" />
+		<attr name="android:inputType" />
+		<attr name="android:entries" />
+	</declare-styleable>
+	<declare-styleable name="SeekBar">
+		<attr name="android:thumb" />
+		<attr name="android:thumbOffset" />
+		<attr name="android:disabledAlpha" />
 	</declare-styleable>
 	<declare-styleable name="TextAppearance">
 		<attr name="android:typeface" />
