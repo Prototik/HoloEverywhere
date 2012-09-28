@@ -81,8 +81,8 @@ public class DemoActivity extends SActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content);
 		if (isABSSupport()) {
-			// getSupportActionBar().setDisplayShowTitleEnabled(false);
-			// getSupportActionBar().setDisplayShowHomeEnabled(false);
+			getSupportActionBar().setDisplayShowTitleEnabled(false);
+			getSupportActionBar().setDisplayShowHomeEnabled(false);
 			getSupportActionBar().setNavigationMode(
 					ActionBar.NAVIGATION_MODE_TABS);
 			addTab(MainFragment.class, "Holo Demo");
