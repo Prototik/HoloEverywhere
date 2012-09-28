@@ -339,10 +339,13 @@ public class ProgressBar extends View {
 		return mProgressDrawable;
 	}
 
-	@Override
+	public int getResolvedLayoutDirection() {
+		return 0;
+	}
+
 	public int getResolvedLayoutDirection(Drawable who) {
 		return who == mProgressDrawable || who == mIndeterminateDrawable ? getResolvedLayoutDirection()
-				: super.getResolvedLayoutDirection(who);
+				: 0;
 	}
 
 	@ViewDebug.ExportedProperty(category = "progress")

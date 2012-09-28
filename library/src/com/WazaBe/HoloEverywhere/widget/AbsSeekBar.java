@@ -83,6 +83,10 @@ public abstract class AbsSeekBar extends ProgressBar {
 		return mThumbOffset;
 	}
 
+	public boolean isInScrollingContainer() {
+		return false;
+	}
+
 	@Override
 	@SuppressLint("NewApi")
 	public void jumpDrawablesToCurrentState() {

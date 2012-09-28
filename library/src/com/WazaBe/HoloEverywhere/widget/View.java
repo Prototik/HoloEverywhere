@@ -3,7 +3,6 @@ package com.WazaBe.HoloEverywhere.widget;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Build.VERSION;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEventSource;
@@ -199,8 +198,6 @@ public class View extends android.view.View implements Drawable.Callback,
 		return result | childMeasuredState & MEASURED_STATE_MASK;
 	}
 
-	private boolean mInScrollingContainer;
-
 	private final AnimatorProxy proxy;
 
 	public View(Context context) {
@@ -218,12 +215,6 @@ public class View extends android.view.View implements Drawable.Callback,
 		proxy = AnimatorProxy.NEEDS_PROXY ? AnimatorProxy.wrap(this) : null;
 	}
 
-	@Override
-	@SuppressLint("NewApi")
-	public void dispatchDisplayHint(int hint) {
-		onDisplayHint(hint);
-	}
-
 	@SuppressLint("NewApi")
 	@Override
 	public float getAlpha() {
@@ -237,14 +228,6 @@ public class View extends android.view.View implements Drawable.Callback,
 		return getMeasuredWidth() & MEASURED_STATE_MASK
 				| getMeasuredHeight() >> MEASURED_HEIGHT_STATE_SHIFT
 				& MEASURED_STATE_MASK >> MEASURED_HEIGHT_STATE_SHIFT;
-	}
-
-	public int getResolvedLayoutDirection() {
-		return 0;
-	}
-
-	public int getResolvedLayoutDirection(Drawable who) {
-		return 0;
 	}
 
 	@SuppressLint("NewApi")
@@ -265,18 +248,6 @@ public class View extends android.view.View implements Drawable.Callback,
 		return super.getTranslationY();
 	}
 
-	public boolean isInScrollingContainer() {
-		return mInScrollingContainer;
-	}
-
-	@Override
-	@SuppressLint("NewApi")
-	protected void onDisplayHint(int hint) {
-		if (VERSION.SDK_INT >= 8) {
-			super.onDisplayHint(hint);
-		}
-	}
-
 	@SuppressLint("NewApi")
 	public void onVisibilityChanged(View changedView, int visibility) {
 		super.onVisibilityChanged(changedView, visibility);
@@ -289,14 +260,6 @@ public class View extends android.view.View implements Drawable.Callback,
 			proxy.setAlpha(alpha);
 		}
 		super.setAlpha(alpha);
-	}
-
-	protected boolean setFrame(int l, int t, int r, int b) {
-		return false;
-	}
-
-	public void setInScrollingContainer(boolean inScrollingContainer) {
-		mInScrollingContainer = inScrollingContainer;
 	}
 
 	@SuppressLint("NewApi")

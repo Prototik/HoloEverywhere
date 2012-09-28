@@ -234,10 +234,10 @@
 			</WidgetContainer>
 		</LinearLayout>
 	</ScrollView>
-	<View
+	<Divider
 		android:layout_width="match_parent"
 		android:layout_height="1dp"
-		android:background="?dividerVertical" />
+		android:orientation="vertical" />
 	<LinearLayout
 		style="?buttonBarStyle"
 		android:layout_width="match_parent"
