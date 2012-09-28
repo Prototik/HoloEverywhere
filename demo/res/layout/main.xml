@@ -48,13 +48,18 @@
 				<EditText
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:text="EditText" />
+					android:hint="EditText" />
+				<AutoCompleteTextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:entries="@array/countries"
+					android:hint="AutoCompleteTextView" />
 				<Spinner
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:drawSelectorOnTop="true"
-					holo:entries="@array/countries"
-					holo:prompt="@string/spinner_prompt" />
+					android:entries="@array/countries"
+					android:prompt="@string/spinner_prompt" />
 				<RatingBar
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"

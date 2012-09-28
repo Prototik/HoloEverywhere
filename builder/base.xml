@@ -56,6 +56,9 @@
     <item name="android:popupBackground">@drawable/dialog_full_holo_dark</item>
     <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow</item>
     <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown</item>
+    <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView</item>
+    <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Large</item>
+    <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Small</item>
   </define>
   <define name="BaseLight">
     <include name="Base" />
@@ -80,6 +83,9 @@
     <item name="android:popupBackground">@drawable/dialog_full_holo_light</item>
     <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow.Light</item>
     <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
+    <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
+    <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
+    <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
   </define>
   <define name="ThemeData">
     <item name="android:scrollbarFadeDuration">250</item>
@@ -93,6 +99,7 @@
     <item name="android:divider">?android:listDivider</item>
     <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
     <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
+    <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
   </define>
   <define name="DarkThemeData">
     <include name="ThemeData" />

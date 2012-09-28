@@ -1,6 +1,5 @@
 package com.WazaBe.HoloEverywhere.sherlock;
 
-import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Build.VERSION;
 import android.os.Bundle;
@@ -19,6 +18,9 @@ import com.actionbarsherlock.view.MenuItem;
 
 public abstract class SPreferenceActivity extends PreferenceActivity implements
 		SBase {
+	private boolean mIgnoreNativeCreate = false;
+	private boolean mIgnoreNativePrepare = false;
+	private boolean mIgnoreNativeSelected = false;
 	private ActionBarSherlock mSherlock;
 
 	@Override
@@ -47,10 +49,7 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 
 	@Override
 	public final ActionBarSherlock getSherlock() {
-		if (!isABSSupport()) {
-			return null;
-		}
-		if (mSherlock == null) {
+		if (isABSSupport() && mSherlock == null) {
 			mSherlock = ActionBarSherlock.wrap(this,
 					ActionBarSherlock.FLAG_DELEGATE);
 		}
@@ -71,8 +70,6 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 	public void invalidateOptionsMenu() {
 		if (isABSSupport()) {
 			getSherlock().dispatchInvalidateOptionsMenu();
-		} else if (VERSION.SDK_INT >= 11) {
-			super.invalidateOptionsMenu();
 		}
 	}
 
@@ -99,28 +96,24 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 
 	@Override
 	public final boolean onCreateOptionsMenu(android.view.Menu menu) {
-		if (isABSSupport()) {
-			return getSherlock().dispatchCreateOptionsMenu(menu);
-		} else {
-			return super.onCreateOptionsMenu(menu);
-		}
+		return true;
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if (isABSSupport()) {
-			return true;
-		} else {
-			return false;
-		}
+		return true;
 	}
 
 	@Override
-	public boolean onCreatePanelMenu(int featureId, Menu menu) {
-		if (isABSSupport() && featureId == Window.FEATURE_OPTIONS_PANEL) {
-			return onCreateOptionsMenu(menu);
+	public final boolean onCreatePanelMenu(int featureId, android.view.Menu menu) {
+		if (isABSSupport() && featureId == Window.FEATURE_OPTIONS_PANEL
+				&& !mIgnoreNativeCreate) {
+			mIgnoreNativeCreate = true;
+			boolean result = getSherlock().dispatchCreateOptionsMenu(menu);
+			mIgnoreNativeCreate = false;
+			return result;
 		}
-		return false;
+		return super.onCreatePanelMenu(featureId, menu);
 	}
 
 	@Override
@@ -132,11 +125,16 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 	}
 
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		if (isABSSupport() && featureId == Window.FEATURE_OPTIONS_PANEL) {
-			return onOptionsItemSelected(item);
+	public final boolean onMenuItemSelected(int featureId,
+			android.view.MenuItem item) {
+		if (isABSSupport() && featureId == Window.FEATURE_OPTIONS_PANEL
+				&& !mIgnoreNativeSelected) {
+			mIgnoreNativeSelected = true;
+			boolean result = getSherlock().dispatchOptionsItemSelected(item);
+			mIgnoreNativeSelected = false;
+			return result;
 		}
-		return false;
+		return super.onMenuItemSelected(featureId, item);
 	}
 
 	@Override
@@ -149,11 +147,7 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 
 	@Override
 	public final boolean onOptionsItemSelected(android.view.MenuItem item) {
-		if (isABSSupport()) {
-			return getSherlock().dispatchOptionsItemSelected(item);
-		} else {
-			return super.onOptionsItemSelected(item);
-		}
+		return false;
 	}
 
 	@Override
@@ -195,11 +189,7 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 
 	@Override
 	public final boolean onPrepareOptionsMenu(android.view.Menu menu) {
-		if (isABSSupport()) {
-			return getSherlock().dispatchPrepareOptionsMenu(menu);
-		} else {
-			return super.onPrepareOptionsMenu(menu);
-		}
+		return true;
 	}
 
 	@Override
@@ -208,11 +198,16 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 	}
 
 	@Override
-	public boolean onPreparePanel(int featureId, View view, Menu menu) {
-		if (isABSSupport() && featureId == Window.FEATURE_OPTIONS_PANEL) {
-			return onPrepareOptionsMenu(menu);
+	public final boolean onPreparePanel(int featureId, View view,
+			android.view.Menu menu) {
+		if (isABSSupport() && featureId == Window.FEATURE_OPTIONS_PANEL
+				&& !mIgnoreNativePrepare) {
+			mIgnoreNativePrepare = true;
+			boolean result = getSherlock().dispatchPrepareOptionsMenu(menu);
+			mIgnoreNativePrepare = false;
+			return result;
 		}
-		return false;
+		return super.onPreparePanel(featureId, view, menu);
 	}
 
 	@Override
@@ -243,11 +238,7 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 		if (isABSSupport()) {
 			getSherlock().requestFeature((int) featureId);
 		} else {
-			try {
-				requestWindowFeature((int) featureId);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			requestWindowFeature((int) featureId);
 		}
 	}
 
@@ -328,11 +319,8 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 		return isABSSupport() ? getSherlock().startActionMode(callback) : null;
 	}
 
-	@SuppressLint("NewApi")
 	@Override
 	public void supportInvalidateOptionsMenu() {
-		if (isABSSupport() || VERSION.SDK_INT >= 11) {
-			invalidateOptionsMenu();
-		}
+		invalidateOptionsMenu();
 	}
 }

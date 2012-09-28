@@ -17,10 +17,10 @@ import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.WazaBe.HoloEverywhere.R;
+import com.WazaBe.HoloEverywhere.widget.SeekBar;
+import com.WazaBe.HoloEverywhere.widget.SeekBar.OnSeekBarChangeListener;
 
 public class VolumePreference extends SeekBarDialogPreference implements
 		PreferenceManager.OnActivityStopListener, View.OnKeyListener {

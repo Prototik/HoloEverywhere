@@ -350,10 +350,10 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 		case MODE_DROPDOWN: {
 			DropdownPopup popup = new DropdownPopup(context, attrs, defStyle);
 			mDropDownWidth = a.getLayoutDimension(
-					R.styleable.Spinner_dropDownWidth,
+					R.styleable.Spinner_android_dropDownWidth,
 					ViewGroup.LayoutParams.WRAP_CONTENT);
 			popup.setBackgroundDrawable(a
-					.getDrawable(R.styleable.Spinner_popupBackground));
+					.getDrawable(R.styleable.Spinner_android_popupBackground));
 			final int verticalOffset = a.getDimensionPixelOffset(
 					R.styleable.Spinner_dropDownVerticalOffset, 0);
 			if (verticalOffset != 0) {
@@ -369,8 +369,9 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 
 		}
 		}
-		mGravity = a.getInt(R.styleable.Spinner_gravity, Gravity.CENTER);
-		mPopup.setPromptText(a.getString(R.styleable.Spinner_prompt));
+		mGravity = a
+				.getInt(R.styleable.Spinner_android_gravity, Gravity.CENTER);
+		mPopup.setPromptText(a.getString(R.styleable.Spinner_android_prompt));
 		mDisableChildrenWhenDisabled = a.getBoolean(
 				R.styleable.Spinner_disableChildrenWhenDisabled, false);
 		a.recycle();

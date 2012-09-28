@@ -5,9 +5,9 @@ import android.content.res.TypedArray;
 import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.R;
-import com.WazaBe.HoloEverywhere.widget.TextView;
 
 public class DialogTitle extends TextView {
 	public DialogTitle(Context context) {

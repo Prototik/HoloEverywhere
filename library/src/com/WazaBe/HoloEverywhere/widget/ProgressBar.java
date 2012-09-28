@@ -175,7 +175,7 @@ public class ProgressBar extends View {
 	private boolean mInDrawing;
 	private Interpolator mInterpolator;
 	private int mMax;
-	private int mMinWidth, mMaxWidth, mMinHeight, mMaxHeight;
+	protected int mMinWidth, mMaxWidth, mMinHeight, mMaxHeight;
 	private boolean mNoInvalidate;
 	private boolean mOnlyIndeterminate;
 	private int mProgress;
@@ -339,11 +339,10 @@ public class ProgressBar extends View {
 		return mProgressDrawable;
 	}
 
+	@Override
 	public int getResolvedLayoutDirection(Drawable who) {
-		return who == mProgressDrawable || who == mIndeterminateDrawable ? ReflectHelper
-				.invoke(this, "getResolvedLayoutDirection", int.class)
-				: ReflectHelper.invoke(this, "getResolvedLayoutDirection",
-						int.class, true, new Object[] { who });
+		return who == mProgressDrawable || who == mIndeterminateDrawable ? getResolvedLayoutDirection()
+				: super.getResolvedLayoutDirection(who);
 	}
 
 	@ViewDebug.ExportedProperty(category = "progress")

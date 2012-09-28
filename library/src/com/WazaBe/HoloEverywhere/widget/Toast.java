@@ -3,7 +3,6 @@ package com.WazaBe.HoloEverywhere.widget;
 import android.content.Context;
 import android.util.Log;
 import android.view.Gravity;
-import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.R;
 

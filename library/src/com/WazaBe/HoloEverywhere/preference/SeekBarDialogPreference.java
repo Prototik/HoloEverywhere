@@ -6,9 +6,9 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 
 import com.WazaBe.HoloEverywhere.R;
+import com.WazaBe.HoloEverywhere.widget.SeekBar;
 
 public class SeekBarDialogPreference extends DialogPreference {
 	protected static SeekBar getSeekBar(View dialogView) {

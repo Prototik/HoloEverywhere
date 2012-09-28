@@ -54,6 +54,9 @@
         <item name="android:popupBackground">@drawable/dialog_full_holo_dark</item>
         <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown</item>
+        <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView</item>
+        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Large</item>
+        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Small</item>
     </style>
     <style name="Holo.Theme.Default.Sherlock" parent="Holo.Theme"/>
     <style name="Holo.Theme.Sherlock" parent="Holo.Theme"/>
@@ -112,6 +115,9 @@
         <item name="android:popupBackground">@drawable/dialog_full_holo_light</item>
         <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow.Light</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
+        <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
+        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
+        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light" parent="Holo.Theme.Light"/>
     <style name="Holo.Theme.Sherlock.Light.ForceOverflow" parent="Holo.Theme.Light"/>
@@ -168,6 +174,9 @@
         <item name="android:popupBackground">@drawable/dialog_full_holo_light</item>
         <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow.Light</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
+        <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
+        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
+        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
     </style>
     <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow" parent="Holo.Theme.Sherlock.Light.DarkActionBar"/>
 </resources>

@@ -7,10 +7,10 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.WazaBe.HoloEverywhere.R;
+import com.WazaBe.HoloEverywhere.widget.SeekBar;
+import com.WazaBe.HoloEverywhere.widget.SeekBar.OnSeekBarChangeListener;
 
 public class SeekBarPreference extends Preference implements
 		OnSeekBarChangeListener {

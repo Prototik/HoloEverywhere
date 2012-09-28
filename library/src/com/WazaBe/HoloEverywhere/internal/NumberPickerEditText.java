@@ -3,7 +3,8 @@ package com.WazaBe.HoloEverywhere.internal;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
+
+import com.WazaBe.HoloEverywhere.widget.EditText;
 
 public class NumberPickerEditText extends EditText {
 	public NumberPickerEditText(Context context, AttributeSet attrs) {
