@@ -1,13 +1,21 @@
 package com.WazaBe.HoloDemo;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.PopupWindow;
 
 import com.WazaBe.HoloDemo.fragments.AboutFragment;
 import com.WazaBe.HoloDemo.fragments.CalendarFragment;
 import com.WazaBe.HoloDemo.fragments.MainFragment;
 import com.WazaBe.HoloDemo.fragments.PreferenceFragment;
+import com.WazaBe.HoloEverywhere.ArrayAdapter;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.ThemeManager;
 import com.WazaBe.HoloEverywhere.app.AlertDialog;
@@ -16,6 +24,7 @@ import com.WazaBe.HoloEverywhere.app.Fragment;
 import com.WazaBe.HoloEverywhere.app.ProgressDialog;
 import com.WazaBe.HoloEverywhere.app.TimePickerDialog;
 import com.WazaBe.HoloEverywhere.sherlock.SActivity;
+import com.WazaBe.HoloEverywhere.widget.ListPopupWindow;
 import com.WazaBe.HoloEverywhere.widget.NumberPicker;
 import com.WazaBe.HoloEverywhere.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
@@ -109,6 +118,10 @@ public class DemoActivity extends SActivity {
 				| ThemeManager.FULLSCREEN);
 	}
 
+	public void showAbout(View v) {
+		replaceFragment(android.R.id.content, new AboutFragment(), "about");
+	}
+
 	public void showAlertDialog(View v) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("AlertDialog");
@@ -130,6 +143,22 @@ public class DemoActivity extends SActivity {
 		new DatePickerDialog(this, null, 2012, 11, 21).show();
 	}
 
+	@SuppressLint("NewApi")
+	public void showListPopupWindow(View v) {
+		final ListPopupWindow w = new ListPopupWindow(this);
+		w.setAnchorView(v);
+		w.setAdapter(ArrayAdapter.createFromResource(this, R.array.countries,
+				R.layout.list_popup_window_row));
+		w.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				w.dismiss();
+			}
+		});
+		w.show();
+	}
+
 	public void showNumberPicker(View v) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Select number");
@@ -144,12 +173,23 @@ public class DemoActivity extends SActivity {
 		builder.show();
 	}
 
-	public void showPreferences(View v) {
-		replaceFragment(android.R.id.content, new PreferenceFragment(), "prefs");
+	public void showPopupWindow(View v) {
+		View content = LayoutInflater.inflate(this, R.layout.popup_window);
+		final PopupWindow w = new PopupWindow(content,
+				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		content.findViewById(R.id.imageButton).setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						w.dismiss();
+					}
+				});
+		w.setFocusable(true);
+		w.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 0);
 	}
 
-	public void showAbout(View v) {
-		replaceFragment(android.R.id.content, new AboutFragment(), "about");
+	public void showPreferences(View v) {
+		replaceFragment(android.R.id.content, new PreferenceFragment(), "prefs");
 	}
 
 	public void showProgressDialog(View v) {

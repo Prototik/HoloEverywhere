@@ -15,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.AbsListView;
 import android.widget.ListAdapter;
+import android.widget.PopupWindow;
 import android.widget.SpinnerAdapter;
 
 import com.WazaBe.HoloEverywhere.R;
@@ -104,57 +106,6 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 		}
 	}
 
-	/*
-	 * private class DropdownPopup extends ListPopupWindow implements
-	 * SpinnerPopup { private CharSequence mHintText; private ListAdapter
-	 * mAdapter;
-	 * 
-	 * public DropdownPopup(Context context, AttributeSet attrs, int
-	 * defStyleRes) { super(context, attrs, 0, defStyleRes);
-	 * 
-	 * setAnchorView(Spinner.this); setModal(true);
-	 * setPromptPosition(POSITION_PROMPT_ABOVE); setOnItemClickListener(new
-	 * AdapterView.OnItemClickListener() { public void
-	 * onItemClick(AdapterView<?> parent, View v, int position, long id) {
-	 * Spinner.this.setSelection(position); if (mOnItemClickListener != null) {
-	 * Spinner.this.performItemClick(v, position, mAdapter.getItemId(position));
-	 * } dismiss(); } }); }
-	 * 
-	 * @Override public void setAdapter(ListAdapter adapter) {
-	 * super.setAdapter(adapter); mAdapter = adapter; }
-	 * 
-	 * public CharSequence getHintText() { return mHintText; }
-	 * 
-	 * public void setPromptText(CharSequence hintText) { mHintText = hintText;
-	 * }
-	 * 
-	 * @Override public void show() { final Drawable background =
-	 * getBackground(); int bgOffset = 0; if (background != null) {
-	 * background.getPadding(mTempRect); bgOffset = -mTempRect.left; } else {
-	 * mTempRect.left = mTempRect.right = 0; }
-	 * 
-	 * final int spinnerPaddingLeft = Spinner.this.getPaddingLeft(); if
-	 * (mDropDownWidth == WRAP_CONTENT) { final int spinnerWidth =
-	 * Spinner.this.getWidth(); final int spinnerPaddingRight =
-	 * Spinner.this.getPaddingRight();
-	 * 
-	 * int contentWidth = measureContentWidth( (SpinnerAdapter) mAdapter,
-	 * getBackground()); final int contentWidthLimit =
-	 * getContext().getResources() .getDisplayMetrics().widthPixels -
-	 * mTempRect.left - mTempRect.right; if (contentWidth > contentWidthLimit) {
-	 * contentWidth = contentWidthLimit; }
-	 * 
-	 * setContentWidth(Math.max(contentWidth, spinnerWidth - spinnerPaddingLeft
-	 * - spinnerPaddingRight)); } else if (mDropDownWidth == MATCH_PARENT) {
-	 * final int spinnerWidth = Spinner.this.getWidth(); final int
-	 * spinnerPaddingRight = Spinner.this.getPaddingRight();
-	 * setContentWidth(spinnerWidth - spinnerPaddingLeft - spinnerPaddingRight);
-	 * } else { setContentWidth(mDropDownWidth); } setHorizontalOffset(bgOffset
-	 * + spinnerPaddingLeft);
-	 * setInputMethodMode(ListPopupWindow.INPUT_METHOD_NOT_NEEDED);
-	 * super.show(); getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-	 * setSelection(Spinner.this.getSelectedItemPosition()); } }
-	 */
 	private static class DropDownAdapter implements ListAdapter, SpinnerAdapter {
 		private SpinnerAdapter mAdapter;
 		private ListAdapter mListAdapter;
@@ -248,6 +199,89 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 		}
 	}
 
+	private class DropdownPopup extends ListPopupWindow implements SpinnerPopup {
+		private ListAdapter mAdapter;
+		private CharSequence mHintText;
+
+		public DropdownPopup(Context context, AttributeSet attrs,
+				int defStyleRes) {
+			super(context, attrs, R.attr.listPopupWindowStyle, defStyleRes);
+			setAnchorView(Spinner.this);
+			setModal(true);
+			setPromptPosition(POSITION_PROMPT_ABOVE);
+			setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+				@Override
+				public void onItemClick(android.widget.AdapterView<?> parent,
+						View v, int position, long id) {
+					Spinner.this.setSelection(position);
+					if (mOnItemClickListener != null) {
+						Spinner.this.performItemClick(v, position,
+								mAdapter.getItemId(position));
+					}
+					dismiss();
+				}
+			});
+		}
+
+		@Override
+		public CharSequence getHintText() {
+			return mHintText;
+		}
+
+		@Override
+		public void setAdapter(ListAdapter adapter) {
+			super.setAdapter(adapter);
+			mAdapter = adapter;
+		}
+
+		@Override
+		public void setPromptText(CharSequence hintText) {
+			mHintText = hintText;
+		}
+
+		@Override
+		public void show() {
+			final Drawable background = getBackground();
+			int bgOffset = 0;
+			if (background != null) {
+				background.getPadding(mTempRect);
+				bgOffset = -mTempRect.left;
+			} else {
+				mTempRect.left = mTempRect.right = 0;
+			}
+			final int spinnerPaddingLeft = getPaddingLeft();
+			if (mDropDownWidth == LayoutParams.WRAP_CONTENT) {
+				final int spinnerWidth = Spinner.this.getWidth();
+				final int spinnerPaddingRight = getPaddingRight();
+
+				int contentWidth = measureContentWidth(
+						(SpinnerAdapter) mAdapter, getBackground());
+				final int contentWidthLimit = getContext().getResources()
+						.getDisplayMetrics().widthPixels
+						- mTempRect.left
+						- mTempRect.right;
+				if (contentWidth > contentWidthLimit) {
+					contentWidth = contentWidthLimit;
+				}
+
+				setContentWidth(Math.max(contentWidth, spinnerWidth
+						- spinnerPaddingLeft - spinnerPaddingRight));
+			} else if (mDropDownWidth == LayoutParams.MATCH_PARENT) {
+				final int spinnerWidth = Spinner.this.getWidth();
+				final int spinnerPaddingRight = getPaddingRight();
+				setContentWidth(spinnerWidth - spinnerPaddingLeft
+						- spinnerPaddingRight);
+			} else {
+				setContentWidth(mDropDownWidth);
+			}
+			setHorizontalOffset(bgOffset + spinnerPaddingLeft);
+			setInputMethodMode(PopupWindow.INPUT_METHOD_NOT_NEEDED);
+			super.show();
+			getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+			setSelection(Spinner.this.getSelectedItemPosition());
+		}
+	}
+
 	private interface SpinnerPopup {
 		public void dismiss();
 
@@ -314,23 +348,25 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 			break;
 		}
 		case MODE_DROPDOWN: {
-			throw new RuntimeException("Mode dropdown don't supported");
-			/*
-			 * DropdownPopup popup = new DropdownPopup(context, attrs,
-			 * defStyle); mDropDownWidth = a.getLayoutDimension(
-			 * R.styleable.Spinner_dropDownWidth,
-			 * ViewGroup.LayoutParams.WRAP_CONTENT);
-			 * popup.setBackgroundDrawable(a
-			 * .getDrawable(R.styleable.Spinner_popupBackground)); final int
-			 * verticalOffset = a.getDimensionPixelOffset(
-			 * R.styleable.Spinner_dropDownVerticalOffset, 0); if
-			 * (verticalOffset != 0) { popup.setVerticalOffset(verticalOffset);
-			 * } final int horizontalOffset = a.getDimensionPixelOffset(
-			 * R.styleable.Spinner_dropDownHorizontalOffset, 0); if
-			 * (horizontalOffset != 0) {
-			 * popup.setHorizontalOffset(horizontalOffset); } mPopup = popup;
-			 * break;
-			 */
+			DropdownPopup popup = new DropdownPopup(context, attrs, defStyle);
+			mDropDownWidth = a.getLayoutDimension(
+					R.styleable.Spinner_dropDownWidth,
+					ViewGroup.LayoutParams.WRAP_CONTENT);
+			popup.setBackgroundDrawable(a
+					.getDrawable(R.styleable.Spinner_popupBackground));
+			final int verticalOffset = a.getDimensionPixelOffset(
+					R.styleable.Spinner_dropDownVerticalOffset, 0);
+			if (verticalOffset != 0) {
+				popup.setVerticalOffset(verticalOffset);
+			}
+			final int horizontalOffset = a.getDimensionPixelOffset(
+					R.styleable.Spinner_dropDownHorizontalOffset, 0);
+			if (horizontalOffset != 0) {
+				popup.setHorizontalOffset(horizontalOffset);
+			}
+			mPopup = popup;
+			break;
+
 		}
 		}
 		mGravity = a.getInt(R.styleable.Spinner_gravity, Gravity.CENTER);
@@ -561,11 +597,11 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 	}
 
 	public void setDropDownWidth(int pixels) {
-		/*
-		 * if (!(mPopup instanceof DropdownPopup)) { Log.e(TAG,
-		 * "Cannot set dropdown width for MODE_DIALOG, ignoring"); return; }
-		 * mDropDownWidth = pixels;
-		 */
+		if (!(mPopup instanceof DropdownPopup)) {
+			Log.e(TAG, "Cannot set dropdown width for MODE_DIALOG, ignoring");
+			return;
+		}
+		mDropDownWidth = pixels;
 	}
 
 	@Override
@@ -600,12 +636,12 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 	}
 
 	public void setPopupBackgroundDrawable(Drawable background) {
-		/*
-		 * if (!(mPopup instanceof DropdownPopup)) { Log.e(TAG,
-		 * "setPopupBackgroundDrawable: incompatible spinner mode; ignoring..."
-		 * ); return; } ((DropdownPopup)
-		 * mPopup).setBackgroundDrawable(background);
-		 */
+		if (!(mPopup instanceof DropdownPopup)) {
+			Log.e(TAG,
+					"setPopupBackgroundDrawable: incompatible spinner mode; ignoring...");
+			return;
+		}
+		((DropdownPopup) mPopup).setBackgroundDrawable(background);
 	}
 
 	public void setPopupBackgroundResource(int resId) {

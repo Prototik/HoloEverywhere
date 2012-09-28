@@ -220,6 +220,12 @@ public class View extends android.view.View {
 		return super.getAlpha();
 	}
 
+	public int getMeasuredStateInt() {
+		return getMeasuredWidth() & MEASURED_STATE_MASK
+				| getMeasuredHeight() >> MEASURED_HEIGHT_STATE_SHIFT
+				& MEASURED_STATE_MASK >> MEASURED_HEIGHT_STATE_SHIFT;
+	}
+
 	@SuppressLint("NewApi")
 	@Override
 	public float getTranslationX() {

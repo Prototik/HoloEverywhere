@@ -45,13 +45,17 @@
     <item name="selectableItemBackground">@drawable/item_background_holo_dark</item>
     <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
     <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
-    <item name="calendarViewStyle">@style/CalendarView</item>
+    <item name="calendarViewStyle">@style/Holo.CalendarView</item>
     <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
     <item name="spinnerStyle">@style/Holo.Spinner</item>
     <item name="spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
     <item name="spinnerDropDownItemStyle">@style/Holo.TextView.SpinnerItem.DropDown</item>
     <item name="numberPickerUpButtonStyle">@style/Holo.ImageButton.NumberPickerUpButton</item>
     <item name="numberPickerDownButtonStyle">@style/Holo.ImageButton.NumberPickerDownButton</item>
+    <item name="android:popupWindowStyle">@style/Holo.PopupWindow</item>
+    <item name="android:popupBackground">@drawable/dialog_full_holo_dark</item>
+    <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow</item>
+    <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown</item>
   </define>
   <define name="BaseLight">
     <include name="Base" />
@@ -65,13 +69,17 @@
     <item name="selectableItemBackground">@drawable/item_background_holo_light</item>
     <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
     <item name="segmentedButtonStyle">@style/Holo.SegmentedButton.Light</item>
-    <item name="calendarViewStyle">@style/CalendarView.Light</item>
+    <item name="calendarViewStyle">@style/Holo.CalendarView.Light</item>
     <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
     <item name="spinnerStyle">@style/Holo.Spinner.Light</item>
     <item name="spinnerItemStyle">@style/Holo.TextView.SpinnerItem.Light</item>
     <item name="spinnerDropDownItemStyle">@style/Holo.TextView.SpinnerItem.DropDown.Light</item>
     <item name="numberPickerUpButtonStyle">@style/Holo.ImageButton.NumberPickerUpButton.Light</item>
     <item name="numberPickerDownButtonStyle">@style/Holo.ImageButton.NumberPickerDownButton.Light</item>
+    <item name="android:popupWindowStyle">@style/Holo.PopupWindow.Light</item>
+    <item name="android:popupBackground">@drawable/dialog_full_holo_light</item>
+    <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow.Light</item>
+    <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
   </define>
   <define name="ThemeData">
     <item name="android:scrollbarFadeDuration">250</item>
@@ -82,7 +90,6 @@
     <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
     <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
     <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
-    <item name="android:preferenceStyle">@style/Holo.Preference</item>
     <item name="android:divider">?android:listDivider</item>
     <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
     <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
@@ -132,13 +139,11 @@
     <item name="android:ratingBarStyleSmall">@style/Holo.RatingBar.Small.Light</item>
     <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
     <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
-    <item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_light</item>
-    <item name="android:listChoiceIndicatorMultiple">@drawable/btn_checkbox_holo_light</item>
+    <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_light</item>
     <item name="android:listSelector">@drawable/list_selector_holo_light</item>
     <item name="android:listDivider">@drawable/list_divider_holo_light</item>
-    <item name="selectableItemBackground">@drawable/item_background_holo_light</item>
-    <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
-    <item name="segmentedButtonStyle">@style/Holo.SegmentedButton.Light</item>
+    <item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_light</item>
+    <item name="android:listChoiceIndicatorMultiple">@drawable/btn_checkbox_holo_light</item>
     <item name="android:listSeparatorTextViewStyle">@style/Holo.TextView.ListSeparator.Light</item>
   </define>
   <define name="NoActionBar">
