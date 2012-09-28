@@ -39,8 +39,8 @@
     <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
     <item name="alertDialogStyle">@style/Holo.AlertDialog</item>
     <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert</item>
-    <item name="switchStyle">@style/Switch</item>
-    <item name="switchStyleOld">@style/Switch.Old</item>
+    <item name="switchStyle">@style/Holo.Switch</item>
+    <item name="switchStyleOld">@style/Holo.Switch.Old</item>
     <item name="listDividerAlertDialog">@drawable/list_divider_holo_dark</item>
     <item name="selectableItemBackground">@drawable/item_background_holo_dark</item>
     <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
@@ -59,8 +59,8 @@
     <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
     <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
     <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
-    <item name="switchStyle">@style/Switch.Light</item>
-    <item name="switchStyleOld">@style/Switch.Light.Old</item>
+    <item name="switchStyle">@style/Holo.Switch.Light</item>
+    <item name="switchStyleOld">@style/Holo.Switch.Light.Old</item>
     <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
     <item name="selectableItemBackground">@drawable/item_background_holo_light</item>
     <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>

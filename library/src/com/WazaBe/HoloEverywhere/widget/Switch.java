@@ -405,14 +405,14 @@ public class Switch extends CompoundButton {
 		ColorStateList colors;
 		int ts;
 		colors = appearance
-				.getColorStateList(R.styleable.TextAppearance_textColor);
+				.getColorStateList(R.styleable.TextAppearance_android_textColor);
 		if (colors != null) {
 			mTextColors = colors;
 		} else {
 			mTextColors = getTextColors();
 		}
 		ts = appearance.getDimensionPixelSize(
-				R.styleable.TextAppearance_textSize, 0);
+				R.styleable.TextAppearance_android_textSize, 0);
 		if (ts != 0) {
 			if (ts != mTextPaint.getTextSize()) {
 				mTextPaint.setTextSize(ts);
@@ -420,10 +420,10 @@ public class Switch extends CompoundButton {
 			}
 		}
 		int typefaceIndex, styleIndex;
-		typefaceIndex = appearance.getInt(R.styleable.TextAppearance_typeface,
-				-1);
-		styleIndex = appearance
-				.getInt(R.styleable.TextAppearance_textStyle, -1);
+		typefaceIndex = appearance.getInt(
+				R.styleable.TextAppearance_android_typeface, -1);
+		styleIndex = appearance.getInt(
+				R.styleable.TextAppearance_android_textStyle, -1);
 		setSwitchTypefaceByIndex(typefaceIndex, styleIndex);
 		appearance.recycle();
 	}
