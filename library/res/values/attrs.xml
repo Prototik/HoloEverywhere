@@ -18,12 +18,12 @@
 	<attr name="dialogPreferenceStyle" format="reference" />
 	<attr name="editTextPreferenceStyle" format="reference" />
 	<attr name="ringtonePreferenceStyle" format="reference" />
+	<attr name="numberPickerPreferenceStyle" format="reference" />
 	<attr name="preferenceLayoutChild" format="reference" />
 	<attr name="preferencePanelStyle" format="reference" />
 	<attr name="switchPreferenceStyle" format="reference" />
 	<attr name="seekBarPreferenceStyle" format="reference" />
 	<attr name="seekBarDialogPreferenceStyle" format="reference" />
-	<attr name="numberPickerPreferenceStyle" format="reference" />
 	<attr name="listPreferredItemHeight" format="dimension" />
 	<attr name="alertDialogCenterButtons" format="boolean" />
 	<attr name="buttonBarStyle" format="reference" />
@@ -162,6 +162,11 @@
 		<attr name="negativeButtonText" format="string" />
 		<attr name="dialogLayout" format="reference" />
 	</declare-styleable>
+		<declare-styleable name="NumberPickerPreference">
+		<attr name="minValue" format="integer" />
+		<attr name="maxValue" format="integer" />
+		<attr name="wrapSelectorWheel" format="boolean" />
+    </declare-styleable>
 	<declare-styleable name="SwitchPreference">
 		<attr name="summaryOn" />
 		<attr name="summaryOff" />
@@ -193,10 +198,6 @@
 		</attr>
 	</declare-styleable>
 	<declare-styleable name="SeekBarPreference">
-		<attr name="max" />
-	</declare-styleable>
-	<declare-styleable name="NumberPickerPreference">
-		<attr name="min" format="integer" />
 		<attr name="max" format="integer" />
 	</declare-styleable>
 	<declare-styleable name="LinearLayout">

@@ -27,11 +27,6 @@
 			holo:switchTextOff="OFF"
 			holo:switchTextOn="ON"
 			holo:title="Switch" />
-		<NumberPickerPreference
-			holo:defaultValue="10"
-			holo:max="25"
-			holo:min="5"
-			holo:title="NumberPicker" />
 	</PreferenceCategory>
 	<PreferenceCategory holo:title="Lists" >
 		<ListPreference

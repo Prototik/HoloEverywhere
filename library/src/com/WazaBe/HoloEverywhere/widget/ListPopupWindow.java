@@ -134,7 +134,7 @@ public class ListPopupWindow {
 	}
 
 	private static final boolean DEBUG = false;
-	private static final int EXPAND_LIST_TIMEOUT = 2500;
+	private static final int EXPAND_LIST_TIMEOUT = 250;
 	public static final int INPUT_METHOD_FROM_FOCUSABLE = PopupWindow.INPUT_METHOD_FROM_FOCUSABLE;
 	public static final int INPUT_METHOD_NEEDED = PopupWindow.INPUT_METHOD_NEEDED;
 	public static final int INPUT_METHOD_NOT_NEEDED = PopupWindow.INPUT_METHOD_NOT_NEEDED;

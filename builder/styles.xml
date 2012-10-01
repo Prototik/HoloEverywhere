@@ -295,9 +295,7 @@
     <item name="dialogLayout">@layout/preference_dialog_edittext</item>
   </style>
   <style name="Holo.PreferenceDialog.NumberPickerPreference">
-    <item name="min">0</item>
-    <item name="max">10</item>
-    <item name="dialogLayout">@layout/preference_number_picker</item>
+        <item name="android:dialogLayout">@layout/preference_dialog_numberpicker</item>
   </style>
   <style name="Holo.PreferenceRingtone">
     <item name="ringtoneType">ringtone</item>
