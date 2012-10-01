@@ -272,7 +272,6 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
 	@Override
 	public void notifyDataSetChanged() {
 		super.notifyDataSetChanged();
-		mNotifyOnChange = true;
 	}
 
 	public void remove(T object) {
