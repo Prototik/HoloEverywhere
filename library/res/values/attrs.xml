@@ -23,6 +23,7 @@
 	<attr name="switchPreferenceStyle" format="reference" />
 	<attr name="seekBarPreferenceStyle" format="reference" />
 	<attr name="seekBarDialogPreferenceStyle" format="reference" />
+	<attr name="numberPickerPreferenceStyle" format="reference" />
 	<attr name="listPreferredItemHeight" format="dimension" />
 	<attr name="alertDialogCenterButtons" format="boolean" />
 	<attr name="buttonBarStyle" format="reference" />
@@ -192,6 +193,10 @@
 		</attr>
 	</declare-styleable>
 	<declare-styleable name="SeekBarPreference">
+		<attr name="max" />
+	</declare-styleable>
+	<declare-styleable name="NumberPickerPreference">
+		<attr name="min" format="integer" />
 		<attr name="max" format="integer" />
 	</declare-styleable>
 	<declare-styleable name="LinearLayout">
