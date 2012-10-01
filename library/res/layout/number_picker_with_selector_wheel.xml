@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+	<com.WazaBe.HoloEverywhere.internal.NumberPickerEditText
+		android:id="@+id/numberpicker_input"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@null"
+		android:gravity="center"
+		android:singleLine="true"
+		android:textAppearance="?android:attr/textAppearanceMedium" />
+</merge>

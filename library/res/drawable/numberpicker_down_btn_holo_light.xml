@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:drawable="@drawable/numberpicker_down_normal_holo_light" android:state_enabled="true" android:state_focused="false" android:state_pressed="false"/>
-	<item android:drawable="@drawable/numberpicker_down_pressed_holo_light" android:state_enabled="true" android:state_pressed="true"/>
-	<item android:drawable="@drawable/numberpicker_down_focused_holo_light" android:state_enabled="true" android:state_focused="true" android:state_pressed="false"/>
-	<item android:drawable="@drawable/numberpicker_down_disabled_holo_light" android:state_enabled="false" android:state_focused="false" android:state_pressed="false"/>
-	<item android:drawable="@drawable/numberpicker_down_disabled_focused_holo_light" android:state_enabled="false" android:state_focused="true" android:state_pressed="false"/>
-</selector>
