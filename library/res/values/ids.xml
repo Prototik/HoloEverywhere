@@ -6,4 +6,6 @@
 	<item name="leftSpacer" type="id"/>
 	<item name="rightSpacer" type="id"/>
 	<item name="typeface" type="id"/>
+	<item name="increment" type="id"/>
+	<item name="decrement" type="id"/>
 </resources>

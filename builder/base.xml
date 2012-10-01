@@ -51,8 +51,6 @@
     <item name="spinnerStyle">@style/Holo.Spinner</item>
     <item name="spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
     <item name="spinnerDropDownItemStyle">@style/Holo.TextView.SpinnerItem.DropDown</item>
-    <item name="numberPickerUpButtonStyle">@style/Holo.ImageButton.NumberPickerUpButton</item>
-    <item name="numberPickerDownButtonStyle">@style/Holo.ImageButton.NumberPickerDownButton</item>
     <item name="android:popupWindowStyle">@style/Holo.PopupWindow</item>
     <item name="android:popupBackground">@drawable/dialog_full_holo_dark</item>
     <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow</item>
@@ -78,8 +76,6 @@
     <item name="spinnerStyle">@style/Holo.Spinner.Light</item>
     <item name="spinnerItemStyle">@style/Holo.TextView.SpinnerItem.Light</item>
     <item name="spinnerDropDownItemStyle">@style/Holo.TextView.SpinnerItem.DropDown.Light</item>
-    <item name="numberPickerUpButtonStyle">@style/Holo.ImageButton.NumberPickerUpButton.Light</item>
-    <item name="numberPickerDownButtonStyle">@style/Holo.ImageButton.NumberPickerDownButton.Light</item>
     <item name="android:popupWindowStyle">@style/Holo.PopupWindow.Light</item>
     <item name="android:popupBackground">@drawable/dialog_full_holo_light</item>
     <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow.Light</item>

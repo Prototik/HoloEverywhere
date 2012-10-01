@@ -1,16 +1,18 @@
 package com.WazaBe.HoloEverywhere.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.WazaBe.HoloEverywhere.R;
-import com.actionbarsherlock.internal.nineoldandroids.widget.NineLinearLayout;
+import com.actionbarsherlock.internal.nineoldandroids.view.animation.AnimatorProxy;
 
-public class LinearLayout extends NineLinearLayout {
+public class LinearLayout extends android.widget.LinearLayout {
 	public static final int SHOW_DIVIDER_ALL = 7;
 	public static final int SHOW_DIVIDER_BEGINNING = 1;
 	public static final int SHOW_DIVIDER_END = 4;
@@ -20,20 +22,22 @@ public class LinearLayout extends NineLinearLayout {
 	private int mDividerHeight;
 	private int mDividerPadding;
 	private int mDividerWidth;
+	private final AnimatorProxy mProxy;
 	private int mShowDividers;
 
 	public LinearLayout(Context context) {
-		super(context, null);
+		super(context);
+		mProxy = AnimatorProxy.NEEDS_PROXY ? AnimatorProxy.wrap(this) : null;
 		init(null, 0);
 	}
 
 	public LinearLayout(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		init(attrs, 0);
+		this(context, attrs, 0);
 	}
 
 	public LinearLayout(Context context, AttributeSet attrs, int defStyleRes) {
-		super(context, attrs, defStyleRes);
+		super(context, attrs);
+		mProxy = AnimatorProxy.NEEDS_PROXY ? AnimatorProxy.wrap(this) : null;
 		init(attrs, defStyleRes);
 	}
 
@@ -106,6 +110,16 @@ public class LinearLayout extends NineLinearLayout {
 	}
 
 	@Override
+	@SuppressLint("NewApi")
+	public float getAlpha() {
+		if (AnimatorProxy.NEEDS_PROXY) {
+			return mProxy.getAlpha();
+		} else {
+			return super.getAlpha();
+		}
+	}
+
+	@Override
 	public int getDividerPadding() {
 		return mDividerPadding;
 	}
@@ -117,6 +131,26 @@ public class LinearLayout extends NineLinearLayout {
 	@Override
 	public int getShowDividers() {
 		return mShowDividers;
+	}
+
+	@Override
+	@SuppressLint("NewApi")
+	public float getTranslationX() {
+		if (AnimatorProxy.NEEDS_PROXY) {
+			return mProxy.getTranslationX();
+		} else {
+			return super.getTranslationX();
+		}
+	}
+
+	@Override
+	@SuppressLint("NewApi")
+	public float getTranslationY() {
+		if (AnimatorProxy.NEEDS_PROXY) {
+			return mProxy.getTranslationY();
+		} else {
+			return super.getTranslationY();
+		}
 	}
 
 	protected boolean hasDividerBeforeChildAt(int childIndex) {
@@ -137,6 +171,7 @@ public class LinearLayout extends NineLinearLayout {
 		return false;
 	}
 
+	@SuppressLint("NewApi")
 	protected void init(AttributeSet attrs, int defStyleRes) {
 		TypedArray a = getContext().obtainStyledAttributes(attrs,
 				R.styleable.LinearLayout, defStyleRes, 0);
@@ -147,6 +182,19 @@ public class LinearLayout extends NineLinearLayout {
 		mDividerPadding = a.getDimensionPixelSize(
 				R.styleable.LinearLayout_dividerPadding, 0);
 		a.recycle();
+	}
+
+	@SuppressLint("NewApi")
+	protected boolean isVisibleToUser(Rect boundInView) {
+		Rect visibleRect = new Rect();
+		getWindowVisibleDisplayFrame(visibleRect);
+		boolean isVisible = getWindowVisibility() == View.VISIBLE
+				&& getAlpha() > 0 && isShown()
+				&& getGlobalVisibleRect(visibleRect);
+		if (isVisible && boundInView != null) {
+			isVisible &= boundInView.intersect(visibleRect);
+		}
+		return isVisible;
 	}
 
 	@Override
@@ -190,6 +238,16 @@ public class LinearLayout extends NineLinearLayout {
 	}
 
 	@Override
+	@SuppressLint("NewApi")
+	public void setAlpha(float alpha) {
+		if (AnimatorProxy.NEEDS_PROXY) {
+			mProxy.setAlpha(alpha);
+		} else {
+			super.setAlpha(alpha);
+		}
+	}
+
+	@Override
 	public void setDividerDrawable(Drawable divider) {
 		if (divider == mDivider) {
 			return;
@@ -218,5 +276,37 @@ public class LinearLayout extends NineLinearLayout {
 			invalidate();
 		}
 		mShowDividers = showDividers;
+	}
+
+	@Override
+	@SuppressLint("NewApi")
+	public void setTranslationX(float translationX) {
+		if (AnimatorProxy.NEEDS_PROXY) {
+			mProxy.setTranslationX(translationX);
+		} else {
+			super.setTranslationX(translationX);
+		}
+	}
+
+	@Override
+	@SuppressLint("NewApi")
+	public void setTranslationY(float translationY) {
+		if (AnimatorProxy.NEEDS_PROXY) {
+			mProxy.setTranslationY(translationY);
+		} else {
+			super.setTranslationY(translationY);
+		}
+	}
+
+	@Override
+	public void setVisibility(int visibility) {
+		if (mProxy != null) {
+			if (visibility == GONE) {
+				clearAnimation();
+			} else if (visibility == VISIBLE) {
+				setAnimation(mProxy);
+			}
+		}
+		super.setVisibility(visibility);
 	}
 }

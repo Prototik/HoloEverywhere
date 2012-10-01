@@ -235,14 +235,17 @@
 	<declare-styleable name="NumberPicker">
 		<attr name="solidColor" format="color|reference" />
 		<attr name="flingable" format="boolean" />
+		<attr name="virtualButtonPressedDrawable" format="reference" />
 		<attr name="selectionDivider" format="reference" />
 		<attr name="selectionDividerHeight" format="dimension" />
+		<attr name="selectionDividersDistance" format="dimension" />
 		<attr name="android:minHeight" />
 		<attr name="android:maxHeight" />
 		<attr name="android:minWidth" />
 		<attr name="android:maxWidth" />
 		<attr name="android:orientation" />
 		<attr name="android:fadingEdgeLength" />
+		<attr name="android:layout" />
 	</declare-styleable>
 	<declare-styleable name="DatePicker">
 		<attr name="startYear" format="integer" />
