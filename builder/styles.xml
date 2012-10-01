@@ -298,6 +298,7 @@
     <item name="min">0</item>
     <item name="max">10</item>
     <item name="dialogLayout">@layout/preference_number_picker</item>
+    <item name="wrapSelectorWhell">true</item>
   </style>
   <style name="Holo.PreferenceRingtone">
     <item name="ringtoneType">ringtone</item>

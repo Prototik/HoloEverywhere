@@ -26,9 +26,7 @@ public class LinearLayout extends android.widget.LinearLayout {
 	private int mShowDividers;
 
 	public LinearLayout(Context context) {
-		super(context);
-		mProxy = AnimatorProxy.NEEDS_PROXY ? AnimatorProxy.wrap(this) : null;
-		init(null, 0);
+		this(context, null, 0);
 	}
 
 	public LinearLayout(Context context, AttributeSet attrs) {
@@ -177,10 +175,21 @@ public class LinearLayout extends android.widget.LinearLayout {
 				R.styleable.LinearLayout, defStyleRes, 0);
 		setDividerDrawable(a
 				.getDrawable(R.styleable.LinearLayout_android_divider));
-		mShowDividers = a.getInt(R.styleable.LinearLayout_showDividers,
-				SHOW_DIVIDER_NONE);
-		mDividerPadding = a.getDimensionPixelSize(
-				R.styleable.LinearLayout_dividerPadding, 0);
+		if (a.hasValue(R.styleable.LinearLayout_android_showDividers)) {
+			mShowDividers = a.getInt(
+					R.styleable.LinearLayout_android_showDividers,
+					SHOW_DIVIDER_NONE);
+		} else {
+			mShowDividers = a.getInt(R.styleable.LinearLayout_showDividers,
+					SHOW_DIVIDER_NONE);
+		}
+		if (a.hasValue(R.styleable.LinearLayout_android_dividerPadding)) {
+			mDividerPadding = a.getDimensionPixelSize(
+					R.styleable.LinearLayout_dividerPadding, 0);
+		} else {
+			mDividerPadding = a.getDimensionPixelSize(
+					R.styleable.LinearLayout_dividerPadding, 0);
+		}
 		a.recycle();
 	}
 

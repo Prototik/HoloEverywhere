@@ -13,21 +13,30 @@ import com.WazaBe.HoloEverywhere.widget.NumberPicker.OnScrollListener;
 import com.WazaBe.HoloEverywhere.widget.NumberPicker.OnValueChangeListener;
 
 public class NumberPickerPreference extends DialogPreference {
+	public static interface OnBindPickerListener {
+		public void onBindPicker(NumberPicker picker,
+				NumberPickerPreference preference);
+	}
+
 	private static final class SavedState extends BaseSavedState {
 		protected int min, max, value;
+		protected boolean wrapSelectorWhell;
 
 		public SavedState(Parcel source) {
 			super(source);
 			min = source.readInt();
 			max = source.readInt();
 			value = source.readInt();
+			wrapSelectorWhell = source.readInt() == 1;
 		}
 
-		public SavedState(Parcelable superState, int min, int max, int value) {
+		public SavedState(Parcelable superState, int min, int max, int value,
+				boolean wrapSelectorWhell) {
 			super(superState);
 			this.min = min;
 			this.max = max;
 			this.value = value;
+			this.wrapSelectorWhell = wrapSelectorWhell;
 		}
 
 		@Override
@@ -36,14 +45,17 @@ public class NumberPickerPreference extends DialogPreference {
 			dest.writeInt(min);
 			dest.writeInt(max);
 			dest.writeInt(value);
+			dest.writeInt(wrapSelectorWhell ? 1 : 0);
 		}
 	}
 
 	private NumberPicker lastNumberPicker;
 	private int min, max, value;
+	private OnBindPickerListener onBindPickerListener;
 	private long onLongPressUpdateInterval = 0;
 	private OnScrollListener onScrollListener;
 	private OnValueChangeListener onValueChangedListener;
+	private boolean wrapSelectorWhell;
 
 	public NumberPickerPreference(Context context, AttributeSet attrs) {
 		this(context, attrs, R.attr.numberPickerPreferenceStyle);
@@ -57,10 +69,12 @@ public class NumberPickerPreference extends DialogPreference {
 				R.style.Holo_PreferenceDialog_NumberPickerPreference);
 		min = a.getInteger(R.styleable.NumberPickerPreference_min, 0);
 		max = a.getInteger(R.styleable.NumberPickerPreference_max, 10);
+		wrapSelectorWhell = a.getBoolean(
+				R.styleable.NumberPickerPreference_wrapSelectorWhell, true);
 		a.recycle();
 	}
 
-	public NumberPicker getLastNumberPicker() {
+	protected NumberPicker getLastNumberPicker() {
 		return lastNumberPicker;
 	}
 
@@ -70,6 +84,10 @@ public class NumberPickerPreference extends DialogPreference {
 
 	public int getMin() {
 		return min;
+	}
+
+	public OnBindPickerListener getOnBindPickerListener() {
+		return onBindPickerListener;
 	}
 
 	public long getOnLongPressUpdateInterval() {
@@ -82,6 +100,14 @@ public class NumberPickerPreference extends DialogPreference {
 
 	public OnValueChangeListener getOnValueChangedListener() {
 		return onValueChangedListener;
+	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public boolean isWrapSelectorWhell() {
+		return wrapSelectorWhell;
 	}
 
 	@Override
@@ -101,6 +127,9 @@ public class NumberPickerPreference extends DialogPreference {
 		picker.setOnValueChangedListener(onValueChangedListener);
 		if (onLongPressUpdateInterval > 0) {
 			picker.setOnLongPressUpdateInterval(onLongPressUpdateInterval);
+		}
+		if (onBindPickerListener != null) {
+			onBindPickerListener.onBindPicker(picker, this);
 		}
 	}
 
@@ -130,30 +159,43 @@ public class NumberPickerPreference extends DialogPreference {
 
 	@Override
 	protected void onPrepareForRemoval() {
-		lastNumberPicker.setOnValueChangedListener(null);
-		lastNumberPicker.setOnScrollListener(null);
+		if (lastNumberPicker != null) {
+			lastNumberPicker.setOnValueChangedListener(null);
+			lastNumberPicker.setOnScrollListener(null);
+		}
 		super.onPrepareForRemoval();
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Parcelable state) {
+		if (isPersistent()) {
+			super.onRestoreInstanceState(state);
+			return;
+		}
 		SavedState s = (SavedState) state;
 		super.onRestoreInstanceState(s.getSuperState());
 		if (lastNumberPicker != null) {
 			lastNumberPicker.setMinValue(s.min);
 			lastNumberPicker.setMaxValue(s.max);
 			lastNumberPicker.setValue(s.value);
+			lastNumberPicker.setWrapSelectorWheel(s.wrapSelectorWhell);
 		}
 	}
 
 	@Override
 	protected Parcelable onSaveInstanceState() {
+		Parcelable superState = super.onSaveInstanceState();
+		if (isPersistent()) {
+			return superState;
+		}
 		if (lastNumberPicker == null) {
-			return new SavedState(super.onSaveInstanceState(), min, max, value);
+			return new SavedState(superState, min, max, value,
+					wrapSelectorWhell);
 		} else {
-			return new SavedState(super.onSaveInstanceState(),
-					lastNumberPicker.getMinValue(),
-					lastNumberPicker.getMaxValue(), lastNumberPicker.getValue());
+			return new SavedState(superState, lastNumberPicker.getMinValue(),
+					lastNumberPicker.getMaxValue(),
+					lastNumberPicker.getValue(),
+					lastNumberPicker.getWrapSelectorWheel());
 		}
 	}
 
@@ -185,6 +227,11 @@ public class NumberPickerPreference extends DialogPreference {
 		notifyChanged();
 	}
 
+	public void setOnBindPickerListener(
+			OnBindPickerListener onBindPickerListener) {
+		this.onBindPickerListener = onBindPickerListener;
+	}
+
 	public void setOnLongPressUpdateInterval(long onLongPressUpdateInterval) {
 		this.onLongPressUpdateInterval = onLongPressUpdateInterval;
 		notifyChanged();
@@ -204,6 +251,20 @@ public class NumberPickerPreference extends DialogPreference {
 	public void setRange(int min, int max) {
 		this.min = min;
 		this.max = max;
+		notifyChanged();
+	}
+
+	public void setValue(int value) {
+		if (this.value == value) {
+			return;
+		}
+		this.value = value;
+		persistInt(value);
+		notifyChanged();
+	}
+
+	public void setWrapSelectorWhell(boolean wrapSelectorWhell) {
+		this.wrapSelectorWhell = wrapSelectorWhell;
 		notifyChanged();
 	}
 }
