@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
+import com.WazaBe.HoloEverywhere.internal.BaseSharedPreferences;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
-import com.WazaBe.HoloEverywhere.util.BaseSharedPreferences;
 
 public class Fragment extends android.support.v4.app.Fragment {
 	public LayoutInflater getLayoutInflater() {

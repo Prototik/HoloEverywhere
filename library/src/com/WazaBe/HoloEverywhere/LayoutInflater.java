@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 public class LayoutInflater extends android.view.LayoutInflater implements
 		Cloneable {
 	public static interface OnInitInflaterListener {
-		public void onInitInflate(LayoutInflater infaler);
+		public void onInitInflater(LayoutInflater inflater);
 	}
 
 	private static boolean inited = false;
@@ -22,8 +22,12 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
 	static {
 		putToMap(Settings.getWidgetsPackage(), "ProgressBar", "LinearLayout",
-				"Switch", "TextView", "CalendarView", "Spinner");
+				"Switch", "TextView", "EditText", "AutoCompleteTextView",
+				"MultiAutoCompleteTextView", "CalendarView", "Spinner",
+				"NumberPicker", "DatePicker", "TimePicker", "ListView",
+				"Divider", "SeekBar");
 		putToMap("android.support.v4.view", "ViewPager", "PagerTitleStrip");
+		putToMap("android.webkit", "WebView");
 	}
 
 	public static LayoutInflater from(android.view.LayoutInflater inflater) {
@@ -87,7 +91,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
 	public static void putToMap(String prefix, String... classess) {
 		for (String clazz : classess) {
-			VIEWS_MAP.put(clazz, prefix + "." + clazz);
+			VIEWS_MAP.put(clazz, prefix);
 		}
 	}
 
@@ -121,7 +125,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 				if (!inited) {
 					inited = true;
 					if (listener != null) {
-						listener.onInitInflate(this);
+						listener.onInitInflater(this);
 					}
 				}
 			}
@@ -133,7 +137,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 			throws ClassNotFoundException {
 		name = name.intern();
 		if (VIEWS_MAP.containsKey(name)) {
-			return createView(VIEWS_MAP.get(name), null, attrs);
+			return createView(name, VIEWS_MAP.get(name) + ".", attrs);
 		}
 		try {
 			return createView(name, "android.widget.", attrs);

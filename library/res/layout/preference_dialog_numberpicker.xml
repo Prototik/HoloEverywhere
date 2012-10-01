@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:padding="5dip" >
+	<TextView
+		android:id="@+id/message"
+		style="?android:attr/textAppearanceSmall"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="8dp"
+		android:gravity="center_horizontal"
+		android:textColor="?android:attr/textColorSecondary" />
+	<NumberPicker
+		android:id="@+id/number_picker"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
+</LinearLayout>

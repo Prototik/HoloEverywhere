@@ -5,6 +5,8 @@
 	<!-- <attr name="dividerVertical" format="reference" /> -->
 	<!-- <attr name="listPopupWindowStyle" format="reference" /> -->
 	<!-- <attr name="dropdownListPreferredItemHeight" format="reference" /> -->
+	<!-- <attr name="textAppearanceLargePopupMenu" format="reference" /> -->
+	<!-- <attr name="textAppearanceSmallPopupMenu" format="reference" /> -->
 	<attr name="preferenceFrameLayoutStyle" format="reference" />
 	<attr name="preferenceScreenStyle" format="reference" />
 	<attr name="preferenceFragmentStyle" format="reference" />
@@ -16,6 +18,7 @@
 	<attr name="dialogPreferenceStyle" format="reference" />
 	<attr name="editTextPreferenceStyle" format="reference" />
 	<attr name="ringtonePreferenceStyle" format="reference" />
+	<attr name="numberPickerPreferenceStyle" format="reference" />
 	<attr name="preferenceLayoutChild" format="reference" />
 	<attr name="preferencePanelStyle" format="reference" />
 	<attr name="switchPreferenceStyle" format="reference" />
@@ -35,6 +38,13 @@
 	<attr name="alertDialogTheme" format="reference" />
 	<attr name="textColorAlertDialogListItem" format="reference" />
 	<attr name="spinnerStyle" format="reference" />
+	<attr name="numberPickerStyle" format="reference" />
+	<attr name="numberPickerUpButtonStyle" format="reference" />
+	<attr name="numberPickerDownButtonStyle" format="reference" />
+	<attr name="numberPickerInputTextStyle" format="reference" />
+	<attr name="datePickerStyle" format="reference" />
+	<attr name="timePickerStyle" format="reference" />
+	<attr name="autoCompleteTextViewStyle" format="reference" />
 	<attr name="gravity">
 		<flag name="top" value="0x30" />
 		<flag name="bottom" value="0x50" />
@@ -183,9 +193,15 @@
 		</attr>
 	</declare-styleable>
 	<declare-styleable name="SeekBarPreference">
+		<attr name="max" />
+	</declare-styleable>
+	<declare-styleable name="NumberPickerPreference">
+		<attr name="min" format="integer" />
 		<attr name="max" format="integer" />
+		<attr name="wrapSelectorWheel" format="boolean" />
 	</declare-styleable>
 	<declare-styleable name="LinearLayout">
+		<attr name="android:showDividers" />
 		<attr name="showDividers">
 			<flag name="none" value="0" />
 			<flag name="beginning" value="1" />
@@ -193,36 +209,89 @@
 			<flag name="end" value="4" />
 			<flag name="all" value="7" />
 		</attr>
+		<attr name="android:dividerPadding" />
 		<attr name="dividerPadding" format="dimension" />
 		<attr name="android:divider" />
 	</declare-styleable>
 	<declare-styleable name="TextView">
-		<attr name="textAllCaps" />
+		<attr name="textAllCaps" format="boolean" />
+		<attr name="android:text" />
 	</declare-styleable>
 	<declare-styleable name="Spinner">
-		<attr name="prompt" format="reference" />
+		<attr name="android:prompt" />
 		<attr name="spinnerMode" format="enum">
 			<enum name="dialog" value="0" />
 			<enum name="dropdown" value="1" />
 		</attr>
-		<attr name="dropDownSelector" format="reference|color" />
-		<attr name="popupBackground" />
+		<attr name="android:dropDownSelector" />
+		<attr name="android:popupBackground" />
 		<attr name="dropDownVerticalOffset" format="dimension" />
 		<attr name="dropDownHorizontalOffset" format="dimension" />
-		<attr name="dropDownWidth" format="dimension">
-			<enum name="fill_parent" value="-1" />
-			<enum name="match_parent" value="-1" />
-			<enum name="wrap_content" value="-2" />
-		</attr>
+		<attr name="android:dropDownWidth" />
 		<attr name="popupPromptView" format="reference" />
-		<attr name="gravity" />
+		<attr name="android:gravity" />
 		<attr name="disableChildrenWhenDisabled" format="boolean" />
 	</declare-styleable>
 	<declare-styleable name="AbsSpinner">
-		<attr name="entries" />
+		<attr name="android:entries" />
 	</declare-styleable>
-	<declare-styleable name="PopupWindow">
-		<attr name="popupBackground" format="reference|color" />
-		<attr name="popupAnimationStyle" format="reference" />
+	<declare-styleable name="NumberPicker">
+		<attr name="solidColor" format="color|reference" />
+		<attr name="flingable" format="boolean" />
+		<attr name="virtualButtonPressedDrawable" format="reference" />
+		<attr name="selectionDivider" format="reference" />
+		<attr name="selectionDividerHeight" format="dimension" />
+		<attr name="selectionDividersDistance" format="dimension" />
+		<attr name="android:minHeight" />
+		<attr name="android:maxHeight" />
+		<attr name="android:minWidth" />
+		<attr name="android:maxWidth" />
+		<attr name="android:orientation" />
+		<attr name="android:fadingEdgeLength" />
+		<attr name="android:layout" />
+	</declare-styleable>
+	<declare-styleable name="DatePicker">
+		<attr name="startYear" format="integer" />
+		<attr name="endYear" format="integer" />
+		<attr name="spinnersShown" format="boolean" />
+		<attr name="calendarViewShown" format="boolean" />
+		<attr name="minDate" />
+		<attr name="maxDate" />
+		<attr name="internalLayout" format="reference" />
+		<attr name="forceShownState" format="boolean" />
+	</declare-styleable>
+	<declare-styleable name="TimePicker">
+		<attr name="internalLayout" />
+	</declare-styleable>
+	<declare-styleable name="Divider">
+		<attr name="android:orientation" />
+	</declare-styleable>
+	<declare-styleable name="AutoCompleteTextView">
+		<attr name="android:completionHint" />
+		<attr name="android:completionHintView" />
+		<attr name="android:completionThreshold" />
+		<attr name="android:dropDownSelector" />
+		<attr name="dropDownVerticalOffset" />
+		<attr name="dropDownHorizontalOffset" />
+		<attr name="android:dropDownAnchor" />
+		<attr name="android:dropDownWidth" />
+		<attr name="android:dropDownHeight" />
+		<attr name="android:inputType" />
+		<attr name="android:entries" />
+	</declare-styleable>
+	<declare-styleable name="SeekBar">
+		<attr name="android:thumb" />
+		<attr name="android:thumbOffset" />
+		<attr name="android:disabledAlpha" />
+	</declare-styleable>
+	<declare-styleable name="TextAppearance">
+		<attr name="android:typeface" />
+		<attr name="android:textSize" />
+		<attr name="android:textColorHighlight" />
+		<attr name="android:textColorHint" />
+		<attr name="android:textColorLink" />
+		<attr name="android:textStyle" />
+		<attr name="android:textColor" />
+		<attr name="android:textAllCaps" />
 	</declare-styleable>
 </resources>

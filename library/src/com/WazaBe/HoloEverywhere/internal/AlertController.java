@@ -30,15 +30,15 @@ import android.widget.CheckedTextView;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.ArrayAdapter;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
+import com.WazaBe.HoloEverywhere.widget.LinearLayout;
+import com.WazaBe.HoloEverywhere.widget.ListView;
 
 public class AlertController {
 	public static class AlertParams {
@@ -205,14 +205,11 @@ public class AlertController {
 							CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 				}
 			}
-
 			if (mOnPrepareListViewListener != null) {
 				mOnPrepareListViewListener.onPrepareListView(listView);
 			}
-
 			dialog.mAdapter = adapter;
 			dialog.mCheckedItem = mCheckedItem;
-
 			if (mOnClickListener != null) {
 				listView.setOnItemClickListener(new OnItemClickListener() {
 					@Override

@@ -50,9 +50,7 @@ public abstract class TwoStatePreference extends Preference {
 	boolean mChecked;
 	private boolean mDisableDependentsState;
 	private boolean mSendClickAccessibilityEvent;
-	private CharSequence mSummaryOff;
-
-	private CharSequence mSummaryOn;
+	private CharSequence mSummaryOff, mSummaryOn;
 
 	public TwoStatePreference(Context context) {
 		this(context, null);
@@ -85,15 +83,11 @@ public abstract class TwoStatePreference extends Preference {
 	@Override
 	protected void onClick() {
 		super.onClick();
-
 		boolean newValue = !isChecked();
-
 		mSendClickAccessibilityEvent = true;
-
 		if (!callChangeListener(newValue)) {
 			return;
 		}
-
 		setChecked(newValue);
 	}
 
@@ -108,7 +102,6 @@ public abstract class TwoStatePreference extends Preference {
 			super.onRestoreInstanceState(state);
 			return;
 		}
-
 		SavedState myState = (SavedState) state;
 		super.onRestoreInstanceState(myState.getSuperState());
 		setChecked(myState.checked);
@@ -189,8 +182,8 @@ public abstract class TwoStatePreference extends Preference {
 
 	@Override
 	public boolean shouldDisableDependents() {
-		boolean shouldDisable = mDisableDependentsState ? mChecked : !mChecked;
-		return shouldDisable || super.shouldDisableDependents();
+		return mDisableDependentsState ? mChecked : !mChecked
+				|| super.shouldDisableDependents();
 	}
 
 	void syncSummaryView(View view) {
@@ -204,7 +197,6 @@ public abstract class TwoStatePreference extends Preference {
 				summaryView.setText(mSummaryOff);
 				useDefaultSummary = false;
 			}
-
 			if (useDefaultSummary) {
 				final CharSequence summary = getSummary();
 				if (summary != null) {
@@ -212,11 +204,7 @@ public abstract class TwoStatePreference extends Preference {
 					useDefaultSummary = false;
 				}
 			}
-
-			int newVisibility = View.GONE;
-			if (!useDefaultSummary) {
-				newVisibility = View.VISIBLE;
-			}
+			int newVisibility = useDefaultSummary ? View.GONE : View.VISIBLE;
 			if (newVisibility != summaryView.getVisibility()) {
 				summaryView.setVisibility(newVisibility);
 			}

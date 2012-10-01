@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">HoloDemo</string>
+	<string name="app_name">HoloEverywhere Demo</string>
 	<string name="spinner_prompt">Spinner sample</string>
 </resources>

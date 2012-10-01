@@ -3,6 +3,10 @@
 	<item name="progress" type="id"/>
 	<item name="secondaryProgress" type="id"/>
 	<item name="edit" type="id"/>
+	<item name="numberPicker" type="id"/>
 	<item name="leftSpacer" type="id"/>
 	<item name="rightSpacer" type="id"/>
+	<item name="typeface" type="id"/>
+	<item name="increment" type="id"/>
+	<item name="decrement" type="id"/>
 </resources>

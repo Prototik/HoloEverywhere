@@ -2,7 +2,7 @@
 <resources>
   <define file="base.xml" />
   <style name="Holo" />
-  <style name="Holo.ListView">
+  <style name="Holo.ListView" parent="@android:style/Widget.AbsListView">
     <item name="android:scrollbars">vertical</item>
     <item name="android:fadingEdge">vertical</item>
     <item name="android:listDivider">@drawable/list_divider_holo_dark</item>
@@ -17,6 +17,19 @@
     <item name="android:listSelector">@drawable/list_selector_holo_light</item>
   </style>
   <style name="Holo.ListView.DropDown" />
+  <style name="Holo.ListView.DropDown.Light" parent="Holo.ListView.Light" />
+  <style name="Holo.ExpandableListView" parent="Holo.ListView">
+    <item name="android:groupIndicator">@drawable/expander_group_holo_dark</item>
+    <item name="android:indicatorLeft">?android:attr/expandableListPreferredItemIndicatorLeft</item>
+    <item name="android:indicatorRight">?android:attr/expandableListPreferredItemIndicatorRight</item>
+    <item name="android:childDivider">?android:attr/listDivider</item>
+  </style>
+  <style name="Holo.ExpandableListView.Light" parent="Holo.ListView.Light">
+    <item name="android:groupIndicator">@drawable/expander_group_holo_light</item>
+    <item name="android:indicatorLeft">?android:attr/expandableListPreferredItemIndicatorLeft</item>
+    <item name="android:indicatorRight">?android:attr/expandableListPreferredItemIndicatorRight</item>
+    <item name="android:childDivider">?android:attr/listDivider</item>
+  </style>
   <style name="Holo.AlertDialog">
     <item name="fullDark">@drawable/dialog_full_holo_dark</item>
     <item name="topDark">@drawable/dialog_top_holo_dark</item>
@@ -175,20 +188,19 @@
   </style>
   <style name="Holo.Spinner">
     <item name="android:clickable">true</item>
-    <item name="spinnerMode">dialog</item>
+    <item name="spinnerMode">dropdown</item>
     <item name="android:background">@drawable/spinner_background_holo_dark</item>
-    <item name="dropDownSelector">@drawable/list_selector_holo_dark</item>
-    <item name="popupBackground">@drawable/menu_dropdown_panel_holo_dark</item>
+    <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
+    <item name="android:popupBackground">@drawable/menu_dropdown_panel_holo_dark</item>
     <item name="dropDownVerticalOffset">0dip</item>
     <item name="dropDownHorizontalOffset">0dip</item>
-    <item name="dropDownWidth">wrap_content</item>
-    <item name="gravity">left|center_vertical</item>
+    <item name="android:dropDownWidth">wrap_content</item>
     <item name="android:gravity">left|center_vertical</item>
   </style>
   <style name="Holo.Spinner.Light">
     <item name="background">@drawable/spinner_background_holo_light</item>
-    <item name="dropDownSelector">@drawable/list_selector_holo_light</item>
-    <item name="popupBackground">@drawable/menu_dropdown_panel_holo_light</item>
+    <item name="android:dropDownSelector">@drawable/list_selector_holo_light</item>
+    <item name="android:popupBackground">@drawable/menu_dropdown_panel_holo_light</item>
   </style>
   <style name="Holo.TextView" />
   <style name="Holo.TextView.SpinnerItem">
@@ -282,6 +294,12 @@
   <style name="Holo.PreferenceDialog.EditTextPreference">
     <item name="dialogLayout">@layout/preference_dialog_edittext</item>
   </style>
+  <style name="Holo.PreferenceDialog.NumberPickerPreference">
+    <item name="min">0</item>
+    <item name="max">10</item>
+    <item name="dialogLayout">@layout/preference_dialog_numberpicker</item>
+    <item name="wrapSelectorWheel">true</item>
+  </style>
   <style name="Holo.PreferenceRingtone">
     <item name="ringtoneType">ringtone</item>
     <item name="showSilent">true</item>
@@ -343,11 +361,14 @@
     <item name="android:windowBackground">@drawable/dialog_full_holo_dark</item>
     <item name="android:windowIsFloating">true</item>
     <item name="android:windowContentOverlay">@null</item>
+    <item name="windowContentOverlay">@null</item>
     <item name="android:windowAnimationStyle">@style/Holo.Animation.Dialog</item>
+    <item name="windowAnimationStyle">@style/Holo.Animation.Dialog</item>
     <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
     <item name="android:windowActionBar">false</item>
     <item name="windowActionBar">false</item>
     <item name="android:windowActionModeOverlay">true</item>
+    <item name="windowActionModeOverlay">true</item>
     <item name="android:colorBackgroundCacheHint">@null</item>
     <item name="buttonBarStyle">@style/Holo.ButtonBar.AlertDialog</item>
     <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Small</item>
@@ -360,11 +381,14 @@
     <item name="android:windowBackground">@drawable/dialog_full_holo_light</item>
     <item name="android:windowIsFloating">true</item>
     <item name="android:windowContentOverlay">@null</item>
+    <item name="windowContentOverlay">@null</item>
     <item name="android:windowAnimationStyle">@style/Holo.Animation.Dialog</item>
+    <item name="windowAnimationStyle">@style/Holo.Animation.Dialog</item>
     <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
     <item name="android:windowActionBar">false</item>
     <item name="windowActionBar">false</item>
     <item name="android:windowActionModeOverlay">true</item>
+    <item name="windowActionModeOverlay">true</item>
     <item name="android:colorBackgroundCacheHint">@null</item>
     <item name="buttonBarStyle">@style/Holo.ButtonBar.AlertDialog</item>
     <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Small</item>
@@ -399,9 +423,71 @@
   <style name="Holo.TextView.ListSeparator.Light">
     <item name="android:background">@drawable/list_section_divider_holo_light</item>
   </style>
+  <style name="Holo.Animation.DropDownDown">
+    <item name="android:windowEnterAnimation">@anim/grow_fade_in</item>
+    <item name="android:windowExitAnimation">@anim/shrink_fade_out</item>
+  </style>
+  <style name="Holo.Animation.DropDownUp">
+    <item name="android:windowEnterAnimation">@anim/grow_fade_in_from_bottom</item>
+    <item name="android:windowExitAnimation">@anim/shrink_fade_out_from_bottom</item>
+  </style>
+  <style name="Holo.NumberPicker">
+    <item name="android:orientation">vertical</item>
+    <item name="android:fadingEdge">vertical</item>
+    <item name="android:fadingEdgeLength">50dip</item>
+    <item name="android:layout">@layout/number_picker_with_selector_wheel</item>
+    <item name="android:solidColor">@android:color/transparent</item>
+    <item name="selectionDivider">@drawable/numberpicker_selection_divider</item>
+    <item name="selectionDividerHeight">2dip</item>
+    <item name="selectionDividersDistance">48dip</item>
+    <item name="android:minWidth">64dip</item>
+    <item name="android:maxHeight">180dip</item>
+    <item name="virtualButtonPressedDrawable">?selectableItemBackground</item>
+  </style>
+  <style name="Holo.EditText.NumberPickerInputText">
+    <item name="android:paddingTop">13sp</item>
+    <item name="android:paddingBottom">13sp</item>
+    <item name="android:paddingLeft">2sp</item>
+    <item name="android:paddingRight">2sp</item>
+    <item name="android:gravity">center</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:textSize">18sp</item>
+    <item name="android:background">@null</item>
+  </style>
+  <style name="Holo.DatePicker">
+    <item name="internalLayout">@layout/date_picker_holo</item>
+    <item name="calendarViewShown">false</item>
+    <item name="spinnersShown">true</item>
+    <item name="startYear">1900</item>
+    <item name="endYear">2100</item>
+    <item name="forceShownState">false</item>
+  </style>
+  <style name="Holo.TimePicker">
+    <item name="internalLayout">@layout/time_picker_holo</item>
+  </style>
+  <style name="Holo.PopupWindow">
+    <item name="android:popupBackground">@drawable/dialog_full_holo_dark</item>
+    <item name="android:popupAnimationStyle">@style/Holo.Animation.PopupWindow</item>
+  </style>
+  <style name="Holo.PopupWindow.Light">
+    <item name="android:popupBackground">@drawable/dialog_full_holo_light</item>
+  </style>
+  <style name="Holo.ListPopupWindow">
+    <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
+    <item name="android:popupBackground">@drawable/menu_dropdown_panel_holo_dark</item>
+    <item name="dropDownVerticalOffset">0dip</item>
+    <item name="dropDownHorizontalOffset">0dip</item>
+    <item name="android:dropDownWidth">wrap_content</item>
+  </style>
+  <style name="Holo.ListPopupWindow.Light">
+    <item name="android:dropDownSelector">@drawable/list_selector_holo_light</item>
+    <item name="android:popupBackground">@drawable/menu_dropdown_panel_holo_light</item>
+  </style>
   <style name="Holo.AutoCompleteTextView" parent="@style/Holo.EditText">
     <item name="android:completionHintView">@layout/simple_dropdown_hint</item>
     <item name="android:completionThreshold">2</item>
+    <item name="android:dropDownSelector">@drawable/list_selector_background</item>
+    <item name="android:popupBackground">@drawable/spinner_dropdown_background</item>
     <item name="android:dropDownVerticalOffset">-6dip</item>
     <item name="android:dropDownHorizontalOffset">0dip</item>
     <item name="android:dropDownWidth">wrap_content</item>
@@ -411,27 +497,43 @@
   <style name="Holo.AutoCompleteTextView.Light" parent="@style/Holo.EditText.Light">
     <item name="android:completionHintView">@layout/simple_dropdown_hint</item>
     <item name="android:completionThreshold">2</item>
+    <item name="android:dropDownSelector">@drawable/list_selector_background</item>
+    <item name="android:popupBackground">@drawable/spinner_dropdown_background</item>
     <item name="android:dropDownVerticalOffset">-6dip</item>
     <item name="android:dropDownHorizontalOffset">0dip</item>
     <item name="android:dropDownWidth">wrap_content</item>
     <item name="android:dropDownSelector">@drawable/list_selector_holo_light</item>
     <item name="android:popupBackground">@drawable/menu_dropdown_panel_holo_light</item>
   </style>
-  <style name="Holo.Animation.DropDownDown">
-    <item name="android:windowEnterAnimation">@anim/grow_fade_in</item>
-    <item name="android:windowExitAnimation">@anim/shrink_fade_out</item>
+  <style name="Holo.DropDownItem">
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:textAppearance">@style/Holo.TextAppearance.DropDownItem</item>
+    <item name="android:paddingLeft">8dp</item>
+    <item name="android:paddingRight">8dp</item>
   </style>
-  <style name="Holo.Animation.DropDownUp">
-    <item name="android:windowEnterAnimation">@anim/grow_fade_in_from_bottom</item>
-    <item name="android:windowExitAnimation">@anim/shrink_fade_out_from_bottom</item>
+  <style name="Holo.TextAppearance.DropDownItem">
+    <item name="android:textColor">?android:textColorPrimaryDisableOnly</item>
   </style>
+  <style name="Holo.TextAppearance.PopupMenu">
+    <include name="ColorsDark" />
+  </style>
+  <style name="Holo.TextAppearance.PopupMenu.Large">
+    <item name="android:textSize">18sp</item>
+  </style>
+  <style name="Holo.TextAppearance.PopupMenu.Small">
+    <item name="android:textSize">14sp</item>
+  </style>
+  <style name="Holo.TextAppearance.PopupMenu.Light">
+    <include name="ColorsLight" />
+  </style>
+  <style name="Holo.TextAppearance.PopupMenu.Light.Large">
+    <item name="android:textSize">18sp</item>
+  </style>
+  <style name="Holo.TextAppearance.PopupMenu.Light.Small">
+    <item name="android:textSize">14sp</item>
+  </style>
+  <style name="Holo.Animation.PopupWindow" />
   <!-- Sherlock themes -->
-  <style name="Holo.Theme.Default.Sherlock" parent="@style/Theme.Sherlock">
-    <include name="BaseDark" />
-  </style>
-  <style name="Holo.Theme.Default.Sherlock.Light" parent="@style/Theme.Sherlock.Light">
-    <include name="BaseLight" />
-  </style>
   <style name="Holo.Theme.Sherlock" parent="@style/Theme.Sherlock">
     <include name="DarkThemeData" />
   </style>
@@ -439,6 +541,9 @@
     <include name="NoActionBar" />
   </style>
   <style name="Holo.Theme.Sherlock.NoActionBar.Fullscreen">
+    <include name="Fullscreen" />
+  </style>
+  <style name="Holo.Theme.Sherlock.Fullscreen">
     <include name="Fullscreen" />
   </style>
   <style name="Holo.Theme.Sherlock.ForceOverflow" parent="@style/Theme.Sherlock.ForceOverflow">
@@ -450,6 +555,9 @@
   <style name="Holo.Theme.Sherlock.ForceOverflow.NoActionBar.Fullscreen">
     <include name="Fullscreen" />
   </style>
+  <style name="Holo.Theme.Sherlock.ForceOverflow.Fullscreen">
+    <include name="Fullscreen" />
+  </style>
   <style name="Holo.Theme.Sherlock.Light" parent="@style/Theme.Sherlock.Light">
     <include name="LightThemeData" />
   </style>
@@ -457,6 +565,9 @@
     <include name="NoActionBar" />
   </style>
   <style name="Holo.Theme.Sherlock.Light.NoActionBar.Fullscreen">
+    <include name="Fullscreen" />
+  </style>
+  <style name="Holo.Theme.Sherlock.Light.Fullscreen">
     <include name="Fullscreen" />
   </style>
   <style name="Holo.Theme.Sherlock.Light.ForceOverflow" parent="@style/Theme.Sherlock.Light.ForceOverflow">
@@ -468,6 +579,9 @@
   <style name="Holo.Theme.Sherlock.Light.ForceOverflow.NoActionBar.Fullscreen">
     <include name="Fullscreen" />
   </style>
+  <style name="Holo.Theme.Sherlock.Light.ForceOverflow.Fullscreen">
+    <include name="Fullscreen" />
+  </style>
   <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="@style/Theme.Sherlock.Light.DarkActionBar">
     <include name="LightThemeData" />
   </style>
@@ -477,6 +591,9 @@
   <style name="Holo.Theme.Sherlock.Light.DarkActionBar.NoActionBar.Fullscreen">
     <include name="Fullscreen" />
   </style>
+  <style name="Holo.Theme.Sherlock.Light.DarkActionBar.Fullscreen">
+    <include name="Fullscreen" />
+  </style>
   <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow" parent="@style/Theme.Sherlock.Light.DarkActionBar.ForceOverflow">
     <include name="LightThemeData" />
   </style>
@@ -484,6 +601,9 @@
     <include name="NoActionBar" />
   </style>
   <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow.NoActionBar.Fullscreen">
+    <include name="Fullscreen" />
+  </style>
+  <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow.Fullscreen">
     <include name="Fullscreen" />
   </style>
   <!-- Standart themes -->
@@ -496,6 +616,9 @@
   <style name="Holo.Theme.NoActionBar.Fullscreen">
     <include name="Fullscreen" />
   </style>
+  <style name="Holo.Theme.Fullscreen">
+    <include name="Fullscreen" />
+  </style>
   <style name="Holo.Theme.Light" parent="@android:style/Theme.Light">
     <include name="LightThemeData" />
   </style>
@@ -503,6 +626,19 @@
     <include name="NoActionBar" />
   </style>
   <style name="Holo.Theme.Light.NoActionBar.Fullscreen">
+    <include name="Fullscreen" />
+  </style>
+  <style name="Holo.Theme.Light.Fullscreen">
+    <include name="Fullscreen" />
+  </style>
+  <style name="Holo.Theme.Light.DarkActionBar" />
+  <style name="Holo.Theme.Light.DarkActionBar.NoActionBar">
+    <include name="NoActionBar" />
+  </style>
+  <style name="Holo.Theme.Light.DarkActionBar.NoActionBar.Fullscreen">
+    <include name="Fullscreen" />
+  </style>
+  <style name="Holo.Theme.Light.DarkActionBar.Fullscreen">
     <include name="Fullscreen" />
   </style>
   <define name="ColorsLight">

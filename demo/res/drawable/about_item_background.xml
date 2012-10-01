@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android" android:enterFadeDuration="300" android:exitFadeDuration="800">
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:enterFadeDuration="50" android:exitFadeDuration="200">
 	<item android:state_pressed="true"><color android:color="#20DEDEDE" />
 	</item>
 	<item><color android:color="@android:color/transparent" />

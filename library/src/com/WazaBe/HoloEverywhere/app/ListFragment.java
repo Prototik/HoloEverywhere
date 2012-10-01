@@ -10,24 +10,20 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.widget.LinearLayout;
+import com.WazaBe.HoloEverywhere.widget.ListView;
 import com.WazaBe.HoloEverywhere.widget.ProgressBar;
-import com.WazaBe.HoloEverywhere.widget.TextView;
 
 public class ListFragment extends Fragment {
 	static final int INTERNAL_EMPTY_ID = 0x00ff0001;
 	static final int INTERNAL_LIST_CONTAINER_ID = 0x00ff0003;
 	static final int INTERNAL_PROGRESS_CONTAINER_ID = 0x00ff0002;
-
 	private ListAdapter mAdapter;
-
 	private CharSequence mEmptyText;
-
 	private View mEmptyView;
-
 	final private Handler mHandler = new Handler();
 	private ListView mList;
 	private View mListContainer;

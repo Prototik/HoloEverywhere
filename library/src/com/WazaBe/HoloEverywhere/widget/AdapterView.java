@@ -13,7 +13,6 @@ import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Adapter;
 
@@ -427,16 +426,6 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 			checkSelectionChanged();
 		}
 		ReflectHelper.invoke(this, "notifyAccessibilityStateChanged", null);
-	}
-
-	protected boolean isAccessibilityManagerEnabled() {
-		boolean enabled = false;
-		try {
-			enabled = ((AccessibilityManager) getContext().getSystemService(
-					Context.ACCESSIBILITY_SERVICE)).isEnabled();
-		} catch (Exception e) {
-		}
-		return enabled;
 	}
 
 	boolean isInFilterMode() {

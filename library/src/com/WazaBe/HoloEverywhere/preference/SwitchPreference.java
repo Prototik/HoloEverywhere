@@ -24,9 +24,7 @@ public class SwitchPreference extends TwoStatePreference {
 	}
 
 	private final Listener mListener = new Listener();
-	private CharSequence mSwitchOff;
-
-	private CharSequence mSwitchOn;
+	private CharSequence mSwitchOff, mSwitchOn;
 
 	public SwitchPreference(Context context) {
 		this(context, null);
@@ -39,7 +37,8 @@ public class SwitchPreference extends TwoStatePreference {
 	public SwitchPreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		TypedArray a = context.obtainStyledAttributes(attrs,
-				R.styleable.SwitchPreference, defStyle, 0);
+				R.styleable.SwitchPreference, defStyle,
+				R.style.Holo_PreferenceSwitch);
 		setSummaryOn(a.getString(R.styleable.SwitchPreference_summaryOn));
 		setSummaryOff(a.getString(R.styleable.SwitchPreference_summaryOff));
 		setSwitchTextOn(a.getString(R.styleable.SwitchPreference_switchTextOn));
@@ -81,7 +80,7 @@ public class SwitchPreference extends TwoStatePreference {
 	}
 
 	public void setSwitchTextOff(int resId) {
-		setSwitchTextOff(getContext().getString(resId));
+		setSwitchTextOff(getContext().getText(resId));
 	}
 
 	public void setSwitchTextOn(CharSequence onText) {
@@ -90,6 +89,6 @@ public class SwitchPreference extends TwoStatePreference {
 	}
 
 	public void setSwitchTextOn(int resId) {
-		setSwitchTextOn(getContext().getString(resId));
+		setSwitchTextOn(getContext().getText(resId));
 	}
 }

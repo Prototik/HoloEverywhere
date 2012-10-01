@@ -43,7 +43,7 @@ class PreferenceGroupAdapter extends BaseAdapter implements
 	private boolean mHasReturnedViewTypeCount = false;
 	private volatile boolean mIsSyncing = false;
 	private PreferenceGroup mPreferenceGroup;
-	private ArrayList<PreferenceLayout> mPreferenceLayouts;
+	private List<PreferenceLayout> mPreferenceLayouts;
 	private List<Preference> mPreferenceList;
 	private Runnable mSyncRunnable = new Runnable() {
 		@Override
@@ -57,8 +57,9 @@ class PreferenceGroupAdapter extends BaseAdapter implements
 	public PreferenceGroupAdapter(PreferenceGroup preferenceGroup) {
 		mPreferenceGroup = preferenceGroup;
 		mPreferenceGroup.setOnPreferenceChangeInternalListener(this);
-		mPreferenceList = new ArrayList<Preference>();
-		mPreferenceLayouts = new ArrayList<PreferenceLayout>();
+		int c = preferenceGroup.getPreferenceCount();
+		mPreferenceList = new ArrayList<Preference>(c);
+		mPreferenceLayouts = new ArrayList<PreferenceLayout>(c);
 		syncMyPreferences();
 	}
 
@@ -88,24 +89,19 @@ class PreferenceGroupAdapter extends BaseAdapter implements
 	private void flattenPreferenceGroup(List<Preference> preferences,
 			PreferenceGroup group) {
 		group.sortPreferences();
-
 		final int groupSize = group.getPreferenceCount();
 		for (int i = 0; i < groupSize; i++) {
 			final Preference preference = group.getPreference(i);
-
 			preferences.add(preference);
-
 			if (!mHasReturnedViewTypeCount && !preference.hasSpecifiedLayout()) {
 				addPreferenceClassName(preference);
 			}
-
 			if (preference instanceof PreferenceGroup) {
 				final PreferenceGroup preferenceAsGroup = (PreferenceGroup) preference;
 				if (preferenceAsGroup.isOnSameScreenAsChildren()) {
 					flattenPreferenceGroup(preferences, preferenceAsGroup);
 				}
 			}
-
 			preference.setOnPreferenceChangeInternalListener(this);
 		}
 	}
@@ -137,7 +133,7 @@ class PreferenceGroupAdapter extends BaseAdapter implements
 			mHasReturnedViewTypeCount = true;
 		}
 		final Preference preference = getItem(position);
-		if (preference.hasSpecifiedLayout()) {
+		if (!preference.hasSpecifiedLayout()) {
 			return IGNORE_ITEM_VIEW_TYPE;
 		}
 		mTempPreferenceLayout = createPreferenceLayout(preference,
@@ -199,17 +195,13 @@ class PreferenceGroupAdapter extends BaseAdapter implements
 			if (mIsSyncing) {
 				return;
 			}
-
 			mIsSyncing = true;
 		}
-
 		List<Preference> newPreferenceList = new ArrayList<Preference>(
 				mPreferenceList.size());
 		flattenPreferenceGroup(newPreferenceList, mPreferenceGroup);
 		mPreferenceList = newPreferenceList;
-
 		notifyDataSetChanged();
-
 		synchronized (this) {
 			mIsSyncing = false;
 			notifyAll();

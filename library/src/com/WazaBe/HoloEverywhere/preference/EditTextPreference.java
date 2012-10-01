@@ -9,9 +9,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.widget.EditText;
 
 import com.WazaBe.HoloEverywhere.R;
+import com.WazaBe.HoloEverywhere.widget.EditText;
 
 public class EditTextPreference extends DialogPreference {
 	private static class SavedState extends BaseSavedState {

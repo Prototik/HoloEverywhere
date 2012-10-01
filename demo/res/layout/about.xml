@@ -1,36 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:holo="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:divider="?dividerVertical"
-	android:orientation="vertical"
-	holo:dividerPadding="16dp"
-	holo:showDividers="middle" >
-	<TextView
-		android:id="@+id/gplus"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center"
-		android:background="@drawable/about_item_background"
-		android:drawableLeft="@drawable/gplus"
-		android:gravity="center"
-		android:padding="10dip"
-		android:text="Google Plus"
-		android:textColor="@color/holo_blue_light"
-		android:textSize="20sp"
-		android:textStyle="bold" />
-	<TextView
-		android:id="@+id/github"
+	android:layout_height="match_parent" >
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_gravity="center"
-		android:background="@drawable/about_item_background"
-		android:drawableLeft="@drawable/github"
-		android:gravity="center"
-		android:padding="10dip"
-		android:text="Github"
-		android:textColor="@color/holo_blue_light"
-		android:textSize="20sp"
-		android:textStyle="bold" />
-</LinearLayout>
+		android:orientation="vertical" >
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:drawableLeft="@drawable/icon"
+			android:ellipsize="marquee"
+			android:gravity="center"
+			android:lines="1"
+			android:padding="6dp"
+			android:text="HoloEverywhere"
+			android:textSize="30sp"
+			android:textStyle="bold" />
+		<Divider
+			android:layout_width="match_parent"
+			android:layout_height="1dp" />
+		<TextView
+			android:id="@+id/github"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/about_item_background"
+			android:drawableLeft="@drawable/github"
+			android:gravity="center"
+			android:maxLines="2"
+			android:padding="6dp"
+			android:text="Fork me on GitHub"
+			android:textSize="26sp" />
+		<TextView
+			android:id="@+id/google_plus"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/about_item_background"
+			android:drawableRight="@drawable/gplus"
+			android:gravity="center"
+			android:maxLines="2"
+			android:padding="6dp"
+			android:text="Write to Christophe"
+			android:textSize="26sp" />
+		<TextView
+			android:id="@+id/email"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/about_item_background"
+			android:drawableLeft="@drawable/email"
+			android:gravity="center"
+			android:maxLines="2"
+			android:padding="6dp"
+			android:text="Write to Sergey"
+			android:textSize="26sp" />
+	</LinearLayout>
+</ScrollView>

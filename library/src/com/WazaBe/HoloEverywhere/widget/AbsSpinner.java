@@ -118,7 +118,8 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
 		initAbsSpinner();
 		TypedArray a = context.obtainStyledAttributes(attrs,
 				R.styleable.AbsSpinner, defStyle, 0);
-		CharSequence[] entries = a.getTextArray(R.styleable.AbsSpinner_entries);
+		CharSequence[] entries = a
+				.getTextArray(R.styleable.AbsSpinner_android_entries);
 		if (entries != null) {
 			ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
 					context, R.layout.simple_spinner_item, entries);

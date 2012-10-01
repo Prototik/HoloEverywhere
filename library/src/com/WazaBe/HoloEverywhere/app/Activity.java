@@ -2,17 +2,19 @@ package com.WazaBe.HoloEverywhere.app;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.v4.app._ActionBarSherlockTrojanHorse;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
+import com.WazaBe.HoloEverywhere.Settings;
 import com.WazaBe.HoloEverywhere.ThemeManager;
+import com.WazaBe.HoloEverywhere.internal.BaseSharedPreferences;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
-import com.WazaBe.HoloEverywhere.util.BaseSharedPreferences;
 
-public abstract class Activity extends android.support.v4.app.FragmentActivity
-		implements Base {
+public abstract class Activity extends _ActionBarSherlockTrojanHorse implements
+		Base {
 	private boolean forceThemeApply = false;
 
 	@Override
@@ -40,6 +42,7 @@ public abstract class Activity extends android.support.v4.app.FragmentActivity
 		return false;
 	}
 
+	@Override
 	public boolean isForceThemeApply() {
 		return forceThemeApply;
 	}
@@ -53,7 +56,9 @@ public abstract class Activity extends android.support.v4.app.FragmentActivity
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		ThemeManager.applyTheme(this, forceThemeApply);
+		if (Settings.isUseThemeManager()) {
+			ThemeManager.applyTheme(this);
+		}
 		super.onCreate(savedInstanceState);
 	}
 

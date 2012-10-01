@@ -18,7 +18,7 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.WazaBe.HoloEverywhere.util.BaseSharedPreferences;
+import com.WazaBe.HoloEverywhere.internal.BaseSharedPreferences;
 
 public class PreferenceManager {
 	public interface OnActivityDestroyListener {

@@ -14,6 +14,8 @@
   </style>
   <style name="Holo.Theme.Sherlock.Light" parent="Holo.Theme.Light" />
   <style name="Holo.Theme.Sherlock.Light.ForceOverflow" parent="Holo.Theme.Light" />
-  <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="Holo.Theme.Light" />
-  <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow" parent="Holo.Theme.Light" />
+  <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="android:Theme.Holo.Light.DarkActionBar">
+    <include name="BaseLight" />
+  </style>
+  <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow" parent="Holo.Theme.Sherlock.Light.DarkActionBar" />
 </resources>

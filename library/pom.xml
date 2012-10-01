@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.github.christopheversieux</groupId>
     <artifactId>holoeverywhere-parent</artifactId>
-    <version>1.2.3-SNAPSHOT</version>
+    <version>1.2.4</version>
   </parent>
   <dependencies>
     <dependency>

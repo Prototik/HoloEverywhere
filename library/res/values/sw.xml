@@ -12,42 +12,33 @@
 		<attr name="textOff" format="reference|string" />
 		<attr name="thumb" format="reference" />
 	</declare-styleable>
-	<declare-styleable name="TextAppearance">
-		<attr name="typeface">
-			<flag name="sans" value="1" />
-			<flag name="serif" value="2" />
-			<flag name="monospace" value="3" />
-		</attr>
-		<attr name="textSize" format="reference|dimension" />
-		<attr name="textColorHighlight" format="reference|color" />
-		<attr name="textColorHint" format="reference|color" />
-		<attr name="textColorLink" format="reference|color" />
-		<attr name="textStyle" format="reference" />
-		<attr name="textColor" format="reference|color" />
-		<attr name="textAllCaps" format="boolean" />
-	</declare-styleable>
-	<style name="Switch.TextAppearance" parent="@android:style/TextAppearance.Small">
+	<style name="Holo.Switch.TextAppearance" parent="@style/Holo.TextAppearance.Small">
 		<item name="android:textSize">12sp</item>
 	</style>
-	<style name="Switch">
+	<style name="Holo.Switch.TextAppearance.Light" parent="@style/Holo.TextAppearance.Small.Light">
+		<item name="android:textSize">12sp</item>
+	</style>
+	<style name="Holo.Switch">
 		<item name="track">@drawable/switch_track_holo_dark</item>
 		<item name="thumb">@drawable/switch_inner_holo_dark</item>
-		<item name="switchTextAppearance">@style/Switch.TextAppearance</item>
+		<item name="switchTextAppearance">@style/Holo.Switch.TextAppearance</item>
 		<item name="textOn">@string/switch_on</item>
 		<item name="textOff">@string/switch_off</item>
 		<item name="thumbTextPadding">12dip</item>
 		<item name="switchMinWidth">96dip</item>
 		<item name="switchPadding">16dip</item>
 	</style>
-	<style name="Switch.Light">
+	<style name="Holo.Switch.Light">
 		<item name="track">@drawable/switch_track_holo_light</item>
 		<item name="thumb">@drawable/switch_inner_holo_light</item>
+		<item name="switchTextAppearance">@style/Holo.Switch.TextAppearance.Light</item>
 	</style>
-	<style name="Switch.Old">
+	<style name="Holo.Switch.Old">
 		<item name="thumb">@drawable/old_switch_inner_holo_dark</item>
 	</style>
-	<style name="Switch.Light.Old">
+	<style name="Holo.Switch.Light.Old">
 		<item name="thumb">@drawable/old_switch_inner_holo_light</item>
+		<item name="switchTextAppearance">@style/Holo.Switch.TextAppearance.Light</item>
 	</style>
 	<string name="switch_on">ON</string>
 	<string name="switch_off">OFF</string>

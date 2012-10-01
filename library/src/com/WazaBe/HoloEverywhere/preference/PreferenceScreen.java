@@ -9,11 +9,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.app.AlertDialog;
+import com.WazaBe.HoloEverywhere.widget.ListView;
 
 public final class PreferenceScreen extends PreferenceGroup implements
 		AdapterView.OnItemClickListener, DialogInterface.OnDismissListener {

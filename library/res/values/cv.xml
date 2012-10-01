@@ -16,7 +16,7 @@
 		<attr name="weekDayTextAppearance" format="reference" />
 		<attr name="dateTextAppearance" format="reference" />
 	</declare-styleable>
-	<style name="CalendarView">
+	<style name="Holo.CalendarView">
 		<item name="showWeekNumber">true</item>
 		<item name="firstDayOfWeek">1</item>
 		<item name="minDate">01/01/1900</item>
@@ -28,17 +28,17 @@
 		<item name="weekNumberColor">#33FFFFFF</item>
 		<item name="weekSeparatorLineColor">#19FFFFFF</item>
 		<item name="selectedDateVerticalBar">@drawable/day_picker_week_view_dayline_holo</item>
-		<item name="weekDayTextAppearance">@style/CalendarViewTextAppearanceWeekDayView</item>
-		<item name="dateTextAppearance">?android:attr/textAppearanceSmall</item>
+		<item name="weekDayTextAppearance">@style/Holo.CalendarViewTextAppearanceWeekDayView</item>
+		<item name="dateTextAppearance">?android:textAppearanceSmall</item>
 	</style>
-	<style name="CalendarView.Light">
+	<style name="Holo.CalendarView.Light">
 		<item name="selectedWeekBackgroundColor">#330066ff</item>
 		<item name="focusedMonthDateColor">#FF000000</item>
 		<item name="unfocusedMonthDateColor">#7F08002B</item>
 		<item name="weekNumberColor">#7F080021</item>
 		<item name="weekSeparatorLineColor">#7F08002A</item>
 	</style>
-	<style name="CalendarViewTextAppearanceWeekDayView">
+	<style name="Holo.CalendarViewTextAppearanceWeekDayView">
 		<item name="android:textColor">#505050</item>
 		<item name="android:textStyle">bold</item>
 	</style>

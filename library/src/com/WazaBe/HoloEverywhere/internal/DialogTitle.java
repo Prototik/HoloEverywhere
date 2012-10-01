@@ -5,9 +5,9 @@ import android.content.res.TypedArray;
 import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.R;
-import com.WazaBe.HoloEverywhere.widget.TextView;
 
 public class DialogTitle extends TextView {
 	public DialogTitle(Context context) {
@@ -39,7 +39,7 @@ public class DialogTitle extends TextView {
 							android.R.attr.textAppearanceMedium,
 							android.R.style.TextAppearance_Medium);
 					final int textSize = a.getDimensionPixelSize(
-							R.styleable.TextAppearance_textSize, 0);
+							R.styleable.TextAppearance_android_textSize, 0);
 					if (textSize != 0) {
 						setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 					}
