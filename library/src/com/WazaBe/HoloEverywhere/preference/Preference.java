@@ -258,10 +258,6 @@ public class Preference implements Comparable<Preference>,
 		return mKey;
 	}
 
-	public LayoutInflater getLayoutInflater() {
-		return LayoutInflater.from(mContext);
-	}
-
 	public int getLayoutResource() {
 		return mLayoutResId;
 	}
