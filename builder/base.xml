@@ -11,6 +11,7 @@
     <item name="dialogPreferenceStyle">@style/Holo.PreferenceDialog</item>
     <item name="yesNoPreferenceStyle">@style/Holo.PreferenceDialog.YesNoPreference</item>
     <item name="editTextPreferenceStyle">@style/Holo.PreferenceDialog.EditTextPreference</item>
+    <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
     <item name="ringtonePreferenceStyle">@style/Holo.PreferenceRingtone</item>
     <item name="preferenceLayoutChild">@layout/preference_child_holo</item>
     <item name="preferencePanelStyle">@style/Holo.PreferencePanel</item>
