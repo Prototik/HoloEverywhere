@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:holo="http://schemas.android.com/apk/res-auto" >
+<PreferenceScreen 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:holo="http://schemas.android.com/apk/res-auto" >
 	<Preference
 		holo:icon="@drawable/prefs_icon"
 		holo:selectable="false"
@@ -28,10 +30,14 @@
 			holo:switchTextOn="ON"
 			holo:title="Switch" />
 		<NumberPickerPreference
+			holo:dialogIcon="@drawable/icon"
 			holo:defaultValue="10"
-			holo:max="25"
-			holo:min="5"
-			holo:title="NumberPicker" />
+			holo:maxValue="25"
+			holo:minValue="5"
+			holo:wrapSelectorWheel="false"
+			holo:summary="Bring up a dialog!"
+			holo:title="NumberPicker"
+			holo:dialogMessage="Play NumberPicker roulette!" />
 	</PreferenceCategory>
 	<PreferenceCategory holo:title="Lists" >
 		<ListPreference

@@ -297,7 +297,7 @@
   <style name="Holo.PreferenceDialog.NumberPickerPreference">
     <item name="min">0</item>
     <item name="max">10</item>
-    <item name="dialogLayout">@layout/preference_number_picker</item>
+    <item name="dialogLayout">@layout/preference_dialog_numberpicker</item>
     <item name="wrapSelectorWhell">true</item>
   </style>
   <style name="Holo.PreferenceRingtone">
