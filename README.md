@@ -1,17 +1,54 @@
-# HoloEverywhere
+# HoloEverywhere v1.2.4
 ## What is it?
-Bringing Holo Theme from Android 4.0 to 1.6 and above.
+Bringing Holo Theme from Android 4.1 to 1.6 and above.
 ## How to use?
+
 ```
 git clone git://github.com/ChristopheVersieux/HoloEverywhere.git
 cd HoloEverywhere
 git submodule update --init
 ```
-* Import HoloEverywhere and ActionBarSherlock into Eclipse
+
+* You should clone git repo, init and update submodules:
+
+```
+git clone git://github.com/ChristopheVersieux/HoloEverywhere.git HoloEverywhere
+cd HoloEverywhere
+git submodule update --init
+```
+
+You also may use git GUI programs
+* Import HoloEverywhere from root folder and ActionBarSherlock from contrib folder into Eclipse
+
 * Add HoloEverywhere project as library into your project (Properties/Android/Library/Add)
-* Add android:theme="@style/Holo.Theme.Sherlock" in your application manifest, you may also want to use light theme: Holo.Theme.Sherlock.Light
-* Extend the Application object from com.WazaBe.Holo.Everywhere.Application (optional)
-* Extend the Activities from com.WazaBe.HoloEverywhere.sherlock.S\*\*\*Activity (example com.WazaBe.HoloEverywhere.sherlock.SListActivity)
+
+* Add next theme declaration:
+
+```
+android:theme="@style/Holo.Theme.Sherlock"
+```
+
+in your application manifest
+Example:
+
+```
+<application
+  android:name=".Application"
+  android:icon="@drawable/icon"
+  android:label="@string/app_name"
+  android:theme="@style/Holo.Theme.Sherlock" >
+```
+
+Also you can use Holo.Theme.Sherlock.Light for light theme and Holo.Theme.Sherlock.Light.DarkActionBar for light theme with dark action bar.
+
+* Extend the Activities from com.WazaBe.HoloEverywhere.sherlock.S***Activity
+
+Example:
+
+```
+public class MainActivity extends com.WazaBe.HoloEverywhere.sherlock.SListActivity { ...
+```
+Also you should cast view to with the same name from package com.WazaBe.HoloEverywhere.widget, if possible. This, for example, ProgressBar and Spinner.
 
 ## Contact
 Christophe: [Google Plus](https://plus.google.com/108315424589085456181/posts "Google Plus")
