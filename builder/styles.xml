@@ -198,7 +198,7 @@
     <item name="android:gravity">left|center_vertical</item>
   </style>
   <style name="Holo.Spinner.Light">
-    <item name="background">@drawable/spinner_background_holo_light</item>
+    <item name="android:background">@drawable/spinner_background_holo_light</item>
     <item name="android:dropDownSelector">@drawable/list_selector_holo_light</item>
     <item name="android:popupBackground">@drawable/menu_dropdown_panel_holo_light</item>
   </style>
@@ -486,10 +486,8 @@
   <style name="Holo.AutoCompleteTextView" parent="@style/Holo.EditText">
     <item name="android:completionHintView">@layout/simple_dropdown_hint</item>
     <item name="android:completionThreshold">2</item>
-    <item name="android:dropDownSelector">@drawable/list_selector_background</item>
-    <item name="android:popupBackground">@drawable/spinner_dropdown_background</item>
-    <item name="android:dropDownVerticalOffset">-6dip</item>
-    <item name="android:dropDownHorizontalOffset">0dip</item>
+    <item name="dropDownVerticalOffset">-6dip</item>
+    <item name="dropDownHorizontalOffset">0dip</item>
     <item name="android:dropDownWidth">wrap_content</item>
     <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
     <item name="android:popupBackground">@drawable/menu_dropdown_panel_holo_dark</item>
@@ -497,10 +495,8 @@
   <style name="Holo.AutoCompleteTextView.Light" parent="@style/Holo.EditText.Light">
     <item name="android:completionHintView">@layout/simple_dropdown_hint</item>
     <item name="android:completionThreshold">2</item>
-    <item name="android:dropDownSelector">@drawable/list_selector_background</item>
-    <item name="android:popupBackground">@drawable/spinner_dropdown_background</item>
-    <item name="android:dropDownVerticalOffset">-6dip</item>
-    <item name="android:dropDownHorizontalOffset">0dip</item>
+    <item name="dropDownVerticalOffset">-6dip</item>
+    <item name="dropDownHorizontalOffset">0dip</item>
     <item name="android:dropDownWidth">wrap_content</item>
     <item name="android:dropDownSelector">@drawable/list_selector_holo_light</item>
     <item name="android:popupBackground">@drawable/menu_dropdown_panel_holo_light</item>
@@ -546,18 +542,6 @@
   <style name="Holo.Theme.Sherlock.Fullscreen">
     <include name="Fullscreen" />
   </style>
-  <style name="Holo.Theme.Sherlock.ForceOverflow" parent="@style/Theme.Sherlock.ForceOverflow">
-    <include name="DarkThemeData" />
-  </style>
-  <style name="Holo.Theme.Sherlock.ForceOverflow.NoActionBar">
-    <include name="NoActionBar" />
-  </style>
-  <style name="Holo.Theme.Sherlock.ForceOverflow.NoActionBar.Fullscreen">
-    <include name="Fullscreen" />
-  </style>
-  <style name="Holo.Theme.Sherlock.ForceOverflow.Fullscreen">
-    <include name="Fullscreen" />
-  </style>
   <style name="Holo.Theme.Sherlock.Light" parent="@style/Theme.Sherlock.Light">
     <include name="LightThemeData" />
   </style>
@@ -570,18 +554,6 @@
   <style name="Holo.Theme.Sherlock.Light.Fullscreen">
     <include name="Fullscreen" />
   </style>
-  <style name="Holo.Theme.Sherlock.Light.ForceOverflow" parent="@style/Theme.Sherlock.Light.ForceOverflow">
-    <include name="LightThemeData" />
-  </style>
-  <style name="Holo.Theme.Sherlock.Light.ForceOverflow.NoActionBar">
-    <include name="NoActionBar" />
-  </style>
-  <style name="Holo.Theme.Sherlock.Light.ForceOverflow.NoActionBar.Fullscreen">
-    <include name="Fullscreen" />
-  </style>
-  <style name="Holo.Theme.Sherlock.Light.ForceOverflow.Fullscreen">
-    <include name="Fullscreen" />
-  </style>
   <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="@style/Theme.Sherlock.Light.DarkActionBar">
     <include name="LightThemeData" />
   </style>
@@ -592,18 +564,6 @@
     <include name="Fullscreen" />
   </style>
   <style name="Holo.Theme.Sherlock.Light.DarkActionBar.Fullscreen">
-    <include name="Fullscreen" />
-  </style>
-  <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow" parent="@style/Theme.Sherlock.Light.DarkActionBar.ForceOverflow">
-    <include name="LightThemeData" />
-  </style>
-  <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow.NoActionBar">
-    <include name="NoActionBar" />
-  </style>
-  <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow.NoActionBar.Fullscreen">
-    <include name="Fullscreen" />
-  </style>
-  <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow.Fullscreen">
     <include name="Fullscreen" />
   </style>
   <!-- Standart themes -->
@@ -727,9 +687,4 @@
   <style name="Holo.TextAppearance.TextView.SpinnerItem.Light">
     <include name="ColorsLight" />
   </style>
-  <style name="Holo.TextAppearance.DialogWindowTitle">
-    <item name="android:textSize">22sp</item>
-    <item name="android:textColor">@color/holo_blue_light</item>
-  </style>
-  <style name="Holo.TextAppearance.DialogWindowTitle.Light" />
 </resources>

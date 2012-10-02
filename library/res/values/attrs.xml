@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- Already defined in ABS -->
-	<!-- <attr name="listPreferredItemHeightSmall" format="dimension" /> -->
-	<!-- <attr name="dividerVertical" format="reference" /> -->
-	<!-- <attr name="listPopupWindowStyle" format="reference" /> -->
-	<!-- <attr name="dropdownListPreferredItemHeight" format="reference" /> -->
-	<!-- <attr name="textAppearanceLargePopupMenu" format="reference" /> -->
-	<!-- <attr name="textAppearanceSmallPopupMenu" format="reference" /> -->
+	<!--
+    Already defined in ABS 
+	<attr name="progressBarStyle" format="reference" />
+	<attr name="spinnerItemStyle" format="reference" />
+	<attr name="spinnerDropDownItemStyle" format="reference" />
+	<attr name="dropDownListViewStyle" format="reference" />
+	<attr name="listPreferredItemPaddingRight" format="dimension" />
+	<attr name="listPreferredItemPaddingLeft" format="dimension" />
+	<attr name="listPreferredItemHeightSmall" format="dimension" />
+	<attr name="dividerVertical" format="reference" />
+	<attr name="listPopupWindowStyle" format="reference" />
+	<attr name="dropdownListPreferredItemHeight" format="reference" />
+	<attr name="textAppearanceLargePopupMenu" format="reference" />
+	<attr name="textAppearanceSmallPopupMenu" format="reference" />
+	-->
 	<attr name="preferenceFrameLayoutStyle" format="reference" />
 	<attr name="preferenceScreenStyle" format="reference" />
 	<attr name="preferenceFragmentStyle" format="reference" />
@@ -113,9 +121,14 @@
 		<attr name="android:animationResolution" />
 	</declare-styleable>
 	<declare-styleable name="Preference">
+		<!--
+		Alredy defined in ABS
+		<attr name="icon" format="reference" />
+		<attr name="title" format="string" />
+		-->
 		<attr name="icon" />
-		<attr name="key" format="string" />
 		<attr name="title" />
+		<attr name="key" format="string" />
 		<attr name="summary" />
 		<attr name="order" format="integer" />
 		<attr name="fragment" />

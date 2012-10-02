@@ -57,9 +57,7 @@
         <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Large</item>
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Small</item>
     </style>
-    <style name="Holo.Theme.Default.Sherlock" parent="Holo.Theme"/>
     <style name="Holo.Theme.Sherlock" parent="Holo.Theme"/>
-    <style name="Holo.Theme.Sherlock.ForceOverflow" parent="Holo.Theme"/>
     <!-- Light themes -->
     <style name="Holo.Theme.Light" parent="android:Theme.Holo.Light">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
@@ -117,9 +115,7 @@
         <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
     </style>
-    <style name="Holo.Theme.Sherlock.Light" parent="Holo.Theme.Light"/>
-    <style name="Holo.Theme.Sherlock.Light.ForceOverflow" parent="Holo.Theme.Light"/>
-    <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="Holo.Theme.Light.DarkActionBar" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
         <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
         <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
@@ -175,5 +171,6 @@
         <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
     </style>
-    <style name="Holo.Theme.Sherlock.Light.DarkActionBar.ForceOverflow" parent="Holo.Theme.Sherlock.Light.DarkActionBar"/>
+    <style name="Holo.Theme.Sherlock.Light" parent="Holo.Theme.Light"/>
+    <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="Holo.Theme.Light.DarkActionBar"/>
 </resources>
