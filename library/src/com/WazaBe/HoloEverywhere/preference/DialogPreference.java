@@ -55,6 +55,10 @@ public abstract class DialogPreference extends Preference implements
 
 	private int mWhichButtonClicked;
 
+	public DialogPreference(Context context) {
+		this(context, null);
+	}
+
 	public DialogPreference(Context context, AttributeSet attrs) {
 		this(context, attrs, R.attr.dialogPreferenceStyle);
 	}

@@ -135,10 +135,15 @@ public class DatePicker extends NineFrameLayout {
 		}
 	}
 
-	private static void setContentDescription(View view, int childId,
-			int stringId) {
-		view.findViewById(childId).setContentDescription(
-				view.getContext().getString(stringId));
+	private static void setContentDescription(View parent, int childId,
+			int textId) {
+		if (parent == null) {
+			return;
+		}
+		View child = parent.findViewById(childId);
+		if (child != null) {
+			child.setContentDescription(parent.getContext().getText(textId));
+		}
 	}
 
 	private final Callback callback = new Callback();

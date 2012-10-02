@@ -11,189 +11,240 @@ import android.view.ViewParent;
 
 import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.widget.NumberPicker;
-import com.WazaBe.HoloEverywhere.widget.NumberPicker.Formatter;
+import com.WazaBe.HoloEverywhere.widget.NumberPicker.OnScrollListener;
+import com.WazaBe.HoloEverywhere.widget.NumberPicker.OnValueChangeListener;
 
 public class NumberPickerPreference extends DialogPreference {
-	private int mValue = 5;
-	private NumberPicker mNumberPicker;
-
-	/**
-	 * TODO see NumberPickerPreference(Context context, AttributeSet attrs)
-	 * this constructor is broken
-	public NumberPickerPreference(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-	}
-	*/
-
-	/**
-	 * TODO there is no button bar using this constructor. This is a workaround for now.
-	 * When fixed we should call this method inside the constructor like EditTextPreference:
-	 * this(context, attrs, R.attr.numberPickerPreferenceStyle);
-	 * and move all the logic into NumberPickerPreference(Context context, AttributeSet attrs, int defStyle)
-	 */ 
-	public NumberPickerPreference(Context context, AttributeSet attrs, int defStyle) {
-		super(context,attrs);
-		mNumberPicker = new NumberPicker(context, attrs);
-		mNumberPicker.setId(R.id.numberPicker);
-		mNumberPicker.setFocusable(true);
-		mNumberPicker.setFocusableInTouchMode(true);
-		mNumberPicker.setEnabled(true);
-
-		// some sane defaults if not provided in xml
-		onSetInitialValue(true, mValue);
-		int mMinValue = 0, mMaxValue = 10;
-		boolean mWrapSelectorWheel = true;
-		TypedArray numberPickerAttrs = context.obtainStyledAttributes(attrs, R.styleable.NumberPickerPreference);
-		mMinValue = numberPickerAttrs.getInt(R.styleable.NumberPickerPreference_min, mMinValue);
-		mMaxValue = numberPickerAttrs.getInt(R.styleable.NumberPickerPreference_max, mMaxValue);
-		mWrapSelectorWheel = numberPickerAttrs.getBoolean(R.styleable.NumberPickerPreference_wrapSelectorWheel, mWrapSelectorWheel);
-
-		mNumberPicker.setMinValue(mMinValue);
-		mNumberPicker.setMaxValue(mMaxValue);
-		mNumberPicker.setWrapSelectorWheel(mWrapSelectorWheel);
-
-		/**
-		 * Force dialog resource until constructor issue is fixed.
-		 */
-		setDialogLayoutResource(R.layout.preference_dialog_numberpicker);
-	}
-
-	public NumberPickerPreference(Context context, AttributeSet attrs) {
-		this(context, attrs, R.attr.numberPickerPreferenceStyle);
-	}
-
-
-	public NumberPickerPreference(Context context) {
-		this(context, null);
-	}
-
-	/**
-	 * Returns the {@link NumberPicker} widget that will be shown in the dialog.
-	 * 
-	 * @return The {@link NumberPicker} widget that will be shown in the dialog.
-	 */
-	public NumberPicker getNumberPicker() {
-		return mNumberPicker;
-	}
-
-	/**
-	 * Gets the value from the {@link Formatter}.
-	 * 
-	 * @return The current preference value.
-	 */
-	public int getValue() {
-		return mValue;
-	}
-
-	/**
-	 * Saves the value to the {@link SharedPreferences}.
-	 * 
-	 * @param value The value to save
-	 */
-	public void setValue(int value) {
-		final boolean wasBlocking = shouldDisableDependents();
-
-		mValue = value;
-
-		persistInt(value);
-
-		final boolean isBlocking = shouldDisableDependents(); 
-		if (isBlocking != wasBlocking) {
-			notifyDependencyChange(isBlocking);
-		}
-	}
-
-	@Override
-	protected void onBindDialogView(View view) {
-		super.onBindDialogView(view);
-		NumberPicker numberPicker = mNumberPicker;
-		numberPicker.setValue(getValue());
-
-		ViewParent oldParent = numberPicker.getParent();
-        if (oldParent != view) {
-    		if (oldParent != null) {
-    			((ViewGroup) oldParent).removeView(numberPicker);
-    		}
-    		((ViewGroup) view).addView(numberPicker, ViewGroup.LayoutParams.WRAP_CONTENT,
-    				ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-	}
-
-	@Override
-	protected void onDialogClosed(boolean positiveResult) {
-		super.onDialogClosed(positiveResult);
-
-		if (positiveResult) {
-			int value = mNumberPicker.getValue();
-			if (callChangeListener(value)) {
-				setValue(value);
-			}
-		}
-	}
-
-	@Override
-	protected Object onGetDefaultValue(TypedArray a, int index) {
-		return a.getInteger(index, 0);
-	}
-
-	@Override
-	protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-		setValue(restoreValue ? getPersistedInt(mValue) : (Integer) defaultValue);
-	}
-
-	@Override
-	protected Parcelable onSaveInstanceState() {
-		final Parcelable superState = super.onSaveInstanceState();
-		if (isPersistent()) {
-			// No need to save instance state since it's persistent
-			return superState;
-		}
-
-		final SavedState myState = new SavedState(superState);
-		myState.value = getValue();
-		return myState;
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Parcelable state) {
-		if (state == null || !state.getClass().equals(SavedState.class)) {
-			// Didn't save state for us in onSaveInstanceState
-			super.onRestoreInstanceState(state);
-			return;
-		}
-
-		SavedState myState = (SavedState) state;
-		super.onRestoreInstanceState(myState.getSuperState());
-		setValue(myState.value);
-	}
-
 	private static class SavedState extends BaseSavedState {
-		int value;
+		@SuppressWarnings("unused")
+		public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+			@Override
+			public SavedState createFromParcel(Parcel in) {
+				return new SavedState(in);
+			}
+
+			@Override
+			public SavedState[] newArray(int size) {
+				return new SavedState[size];
+			}
+		};
+
+		protected int mValue, mMinValue, mMaxValue;
+		protected boolean mWrapSelectorWheel;
 
 		public SavedState(Parcel source) {
 			super(source);
-			value = source.readInt();
-		}
-
-		@Override
-		public void writeToParcel(Parcel dest, int flags) {
-			super.writeToParcel(dest, flags);
-			dest.writeInt(value);
+			mValue = source.readInt();
+			mMinValue = source.readInt();
+			mMaxValue = source.readInt();
+			mWrapSelectorWheel = source.readInt() > 0;
 		}
 
 		public SavedState(Parcelable superState) {
 			super(superState);
 		}
 
-		public static final Parcelable.Creator<SavedState> CREATOR =
-				new Parcelable.Creator<SavedState>() {
-			public SavedState createFromParcel(Parcel in) {
-				return new SavedState(in);
-			}
+		@Override
+		public void writeToParcel(Parcel dest, int flags) {
+			super.writeToParcel(dest, flags);
+			dest.writeInt(mValue);
+			dest.writeInt(mMinValue);
+			dest.writeInt(mMaxValue);
+			dest.writeInt(mWrapSelectorWheel ? 1 : 0);
+		}
+	}
 
-			public SavedState[] newArray(int size) {
-				return new SavedState[size];
+	private final NumberPicker mNumberPicker;
+	private OnScrollListener mOnScrollListener;
+	private OnValueChangeListener mOnValueChangeListener;
+
+	private int mValue = Integer.MIN_VALUE, mMinValue = Integer.MIN_VALUE,
+			mMaxValue = Integer.MIN_VALUE;
+
+	private boolean mWrapSelectorWheel = true;
+
+	public NumberPickerPreference(Context context) {
+		this(context, null);
+	}
+
+	public NumberPickerPreference(Context context, AttributeSet attrs) {
+		this(context, attrs, R.attr.numberPickerPreferenceStyle);
+	}
+
+	public NumberPickerPreference(Context context, AttributeSet attrs,
+			int defStyle) {
+		super(context, attrs, defStyle);
+		TypedArray a = context.obtainStyledAttributes(attrs,
+				R.styleable.NumberPickerPreference, defStyle,
+				R.style.Holo_PreferenceDialog_NumberPickerPreference);
+		int minValue = a.getInt(R.styleable.NumberPickerPreference_min, 1);
+		int maxValue = a.getInt(R.styleable.NumberPickerPreference_max, 10);
+		boolean wrapSelectorWheel = a.getBoolean(
+				R.styleable.NumberPickerPreference_wrapSelectorWheel, true);
+		a.recycle();
+		mNumberPicker = onCreateNumberPicker();
+		setMinValue(minValue);
+		setMaxValue(maxValue);
+		setWrapSelectorWheel(wrapSelectorWheel);
+	}
+
+	public int getMaxValue() {
+		return mMaxValue;
+	}
+
+	public int getMinValue() {
+		return mMinValue;
+	}
+
+	public NumberPicker getNumberPicker() {
+		return mNumberPicker;
+	}
+
+	public OnScrollListener getOnScrollListener() {
+		return mOnScrollListener;
+	}
+
+	public OnValueChangeListener getOnValueChangeListener() {
+		return mOnValueChangeListener;
+	}
+
+	public int getValue() {
+		return mValue;
+	}
+
+	@Override
+	protected void onBindDialogView(View view) {
+		super.onBindDialogView(view);
+		synchronized (mNumberPicker) {
+			if (mOnValueChangeListener != null) {
+				mNumberPicker.setOnValueChangedListener(mOnValueChangeListener);
 			}
-		};
+			if (mOnScrollListener != null) {
+				mNumberPicker.setOnScrollListener(mOnScrollListener);
+			}
+			ViewParent oldParent = mNumberPicker.getParent();
+			if (oldParent != view) {
+				if (oldParent != null) {
+					((ViewGroup) oldParent).removeView(mNumberPicker);
+				}
+				((ViewGroup) view).addView(mNumberPicker);
+			}
+		}
+	}
+
+	protected NumberPicker onCreateNumberPicker() {
+		return new NumberPicker(getContext());
+	}
+
+	@Override
+	protected void onDialogClosed(boolean positiveResult) {
+		super.onDialogClosed(positiveResult);
+		final int value;
+		synchronized (mNumberPicker) {
+			mNumberPicker.setOnValueChangedListener(null);
+			mNumberPicker.setOnScrollListener(null);
+			value = mNumberPicker.getValue();
+		}
+		if (positiveResult && callChangeListener(value)) {
+			setValue(value);
+		}
+	}
+
+	@Override
+	protected Integer onGetDefaultValue(TypedArray a, int index) {
+		return Integer.parseInt(a.getString(index));
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Parcelable state) {
+		if (state == null || !(state instanceof SavedState)) {
+			super.onRestoreInstanceState(state);
+			return;
+		}
+		SavedState ss = (SavedState) state;
+		super.onRestoreInstanceState(ss.getSuperState());
+		setValue(ss.mValue);
+		setMinValue(ss.mMinValue);
+		setMaxValue(ss.mMaxValue);
+		setWrapSelectorWheel(ss.mWrapSelectorWheel);
+	}
+
+	@Override
+	protected Parcelable onSaveInstanceState() {
+		final Parcelable superState = super.onSaveInstanceState();
+		if (isPersistent()) {
+			return superState;
+		}
+		final SavedState myState = new SavedState(superState);
+		myState.mValue = mValue;
+		myState.mMinValue = mMinValue;
+		myState.mMaxValue = mMaxValue;
+		myState.mWrapSelectorWheel = mWrapSelectorWheel;
+		return myState;
+	}
+
+	@Override
+	protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
+		int def = defaultValue instanceof Integer ? (Integer) defaultValue
+				: Integer.parseInt(defaultValue.toString());
+		setValue(restoreValue ? getPersistedInt(def) : def);
+	}
+
+	public void setMaxValue(int maxValue) {
+		if (mMaxValue == maxValue) {
+			return;
+		}
+		final boolean wasBlocking = shouldDisableDependents();
+		mMaxValue = maxValue;
+		mNumberPicker.setMaxValue(maxValue);
+		if (shouldDisableDependents() != wasBlocking) {
+			notifyDependencyChange(!wasBlocking);
+		}
+	}
+
+	public void setMinValue(int minValue) {
+		if (mMinValue == minValue) {
+			return;
+		}
+		final boolean wasBlocking = shouldDisableDependents();
+		mMinValue = minValue;
+		mNumberPicker.setMinValue(minValue);
+		if (shouldDisableDependents() != wasBlocking) {
+			notifyDependencyChange(!wasBlocking);
+		}
+	}
+
+	public void setOnScrollListener(OnScrollListener onScrollListener) {
+		mOnScrollListener = onScrollListener;
+	}
+
+	public void setOnValueChangeListener(
+			OnValueChangeListener onValueChangeListener) {
+		mOnValueChangeListener = onValueChangeListener;
+	}
+
+	public void setValue(int value) {
+		if (mValue == value) {
+			return;
+		}
+		final boolean wasBlocking = shouldDisableDependents();
+		mValue = value;
+		mNumberPicker.setValue(value);
+		persistInt(value);
+		if (shouldDisableDependents() != wasBlocking) {
+			notifyDependencyChange(!wasBlocking);
+		}
+	}
+
+	public void setWrapSelectorWheel(boolean wrapSelectorWheel) {
+		if (mWrapSelectorWheel == wrapSelectorWheel) {
+			return;
+		}
+		final boolean wasBlocking = shouldDisableDependents();
+		mWrapSelectorWheel = wrapSelectorWheel;
+		mNumberPicker.setWrapSelectorWheel(wrapSelectorWheel);
+		if (shouldDisableDependents() != wasBlocking) {
+			notifyDependencyChange(!wasBlocking);
+		}
 	}
 }
