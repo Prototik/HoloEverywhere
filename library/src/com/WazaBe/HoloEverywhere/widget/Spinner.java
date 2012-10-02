@@ -17,7 +17,6 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.AbsListView;
 import android.widget.ListAdapter;
-import android.widget.PopupWindow;
 import android.widget.SpinnerAdapter;
 
 import com.WazaBe.HoloEverywhere.R;

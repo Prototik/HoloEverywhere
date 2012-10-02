@@ -58,7 +58,7 @@ public interface SharedPreferences {
 
 	public int getInt(String key, int defValue);
 
-	public Set<Integer> getIntegerSet(String key, Set<Integer> defValue);
+	public Set<Integer> getIntSet(String key, Set<Integer> defValue);
 
 	public JSONArray getJSONArray(String key, JSONArray defValue);
 

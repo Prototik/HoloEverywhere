@@ -247,7 +247,7 @@ public final class BaseSharedPreferences implements SharedPreferences {
 	}
 
 	@Override
-	public Set<Integer> getIntegerSet(String key, Set<Integer> defValue) {
+	public Set<Integer> getIntSet(String key, Set<Integer> defValue) {
 		return getSet(key, defValue, Integer.class);
 	}
 
