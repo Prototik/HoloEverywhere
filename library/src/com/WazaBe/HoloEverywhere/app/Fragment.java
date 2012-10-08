@@ -2,6 +2,7 @@ package com.WazaBe.HoloEverywhere.app;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app._HoloFragment;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.internal.BaseSharedPreferences;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
-public class Fragment extends android.support.v4.app.Fragment {
+public class Fragment extends _HoloFragment {
 	public LayoutInflater getLayoutInflater() {
 		return LayoutInflater.from(getActivity());
 	}

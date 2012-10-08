@@ -1,7 +1,5 @@
 package com.WazaBe.HoloEverywhere.app;
 
-import java.lang.reflect.Field;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -177,13 +175,7 @@ public class DialogFragment extends Fragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		try {
-			Field field = getClass().getField("mContainerId");
-			field.setAccessible(true);
-			mShowsDialog = (Integer) field.get(field) == 0;
-		} catch (Exception e) {
-			mShowsDialog = false;
-		}
+		mShowsDialog = internaGetContainerId() == 0;
 		if (savedInstanceState != null) {
 			mStyle = savedInstanceState.getInt(SAVED_STYLE, STYLE_NORMAL);
 			mTheme = savedInstanceState.getInt(SAVED_THEME, 0);
@@ -192,7 +184,6 @@ public class DialogFragment extends Fragment implements
 					mShowsDialog);
 			mBackStackId = savedInstanceState.getInt(SAVED_BACK_STACK_ID, -1);
 		}
-
 	}
 
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

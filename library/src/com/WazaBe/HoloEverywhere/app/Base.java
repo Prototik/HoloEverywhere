@@ -11,6 +11,4 @@ public interface Base {
 	public boolean isABSSupport();
 
 	public boolean isForceThemeApply();
-
-	public void onSupportBackPressed();
 }

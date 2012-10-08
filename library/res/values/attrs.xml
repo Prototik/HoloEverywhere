@@ -14,6 +14,7 @@
 	<attr name="dropdownListPreferredItemHeight" format="reference" />
 	<attr name="textAppearanceLargePopupMenu" format="reference" />
 	<attr name="textAppearanceSmallPopupMenu" format="reference" />
+	<attr name="selectableItemBackground" format="reference" />
 	-->
 	<attr name="preferenceFrameLayoutStyle" format="reference" />
 	<attr name="preferenceScreenStyle" format="reference" />
@@ -38,7 +39,6 @@
 	<attr name="buttonBarButtonStyle" format="reference" />
 	<attr name="borderlessButtonStyle" format="reference" />
 	<attr name="segmentedButtonStyle" format="reference" />
-	<attr name="selectableItemBackground" format="reference" />
 	<attr name="listPreferredItemHeightLarge" format="dimension" />
 	<attr name="dividerHorizontal" format="reference" />
 	<attr name="listDividerAlertDialog" format="reference" />

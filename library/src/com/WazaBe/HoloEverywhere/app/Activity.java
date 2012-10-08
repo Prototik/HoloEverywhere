@@ -2,7 +2,7 @@ package com.WazaBe.HoloEverywhere.app;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.v4.app._ActionBarSherlockTrojanHorse;
+import android.support.v4.app.Watson;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
@@ -13,8 +13,7 @@ import com.WazaBe.HoloEverywhere.ThemeManager;
 import com.WazaBe.HoloEverywhere.internal.BaseSharedPreferences;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
-public abstract class Activity extends _ActionBarSherlockTrojanHorse implements
-		Base {
+public abstract class Activity extends Watson implements Base {
 	private boolean forceThemeApply = false;
 
 	@Override
@@ -48,6 +47,7 @@ public abstract class Activity extends _ActionBarSherlockTrojanHorse implements
 	}
 
 	@Override
+	@SuppressLint("NewApi")
 	public void onBackPressed() {
 		if (!getSupportFragmentManager().popBackStackImmediate()) {
 			finish();
@@ -56,16 +56,11 @@ public abstract class Activity extends _ActionBarSherlockTrojanHorse implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		getLayoutInflater().setFactory(this);
 		if (Settings.isUseThemeManager()) {
 			ThemeManager.applyTheme(this);
 		}
 		super.onCreate(savedInstanceState);
-	}
-
-	@Override
-	@SuppressLint("NewApi")
-	public void onSupportBackPressed() {
-		onBackPressed();
 	}
 
 	@Override

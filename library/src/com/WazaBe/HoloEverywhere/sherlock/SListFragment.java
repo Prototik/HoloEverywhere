@@ -1,9 +1,9 @@
 package com.WazaBe.HoloEverywhere.sherlock;
 
 import android.os.Build.VERSION;
-import android.support.v4.app._ActionBarSherlockTrojanHorse.OnCreateOptionsMenuListener;
-import android.support.v4.app._ActionBarSherlockTrojanHorse.OnOptionsItemSelectedListener;
-import android.support.v4.app._ActionBarSherlockTrojanHorse.OnPrepareOptionsMenuListener;
+import android.support.v4.app.Watson.OnCreateOptionsMenuListener;
+import android.support.v4.app.Watson.OnOptionsItemSelectedListener;
+import android.support.v4.app.Watson.OnPrepareOptionsMenuListener;
 
 import com.WazaBe.HoloEverywhere.app.Activity;
 import com.WazaBe.HoloEverywhere.app.ListFragment;
@@ -18,8 +18,14 @@ public class SListFragment extends ListFragment implements
 		OnOptionsItemSelectedListener {
 	private SBase mBase;
 
+	@Deprecated
 	public SActivity getSherlockActivity() {
 		return (SActivity) mBase;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends Activity & SBase> T getSActivity() {
+		return (T) mBase;
 	}
 
 	@Override
@@ -32,7 +38,7 @@ public class SListFragment extends ListFragment implements
 		if (isABSSupport()) {
 			if (!(activity instanceof SBase)) {
 				throw new IllegalStateException(getClass().getSimpleName()
-						+ " must be attached to a SActivity.");
+						+ " must be attached to a S***Activity.");
 			}
 			mBase = (SBase) activity;
 		}
