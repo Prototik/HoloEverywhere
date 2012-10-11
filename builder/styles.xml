@@ -76,13 +76,11 @@
     <item name="android:background">@drawable/btn_toggle_holo_dark</item>
     <item name="android:textOn">@string/capital_on</item>
     <item name="android:textOff">@string/capital_off</item>
-    <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
   </style>
   <style name="Holo.Button.Toggle.Light" parent="Holo.Button.Light">
     <item name="android:background">@drawable/btn_toggle_holo_light</item>
     <item name="android:textOn">@string/capital_on</item>
     <item name="android:textOff">@string/capital_off</item>
-    <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
   </style>
   <style name="Holo.Button.Borderless">
     <item name="android:background">?selectableItemBackground</item>

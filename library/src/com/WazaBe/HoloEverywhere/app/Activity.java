@@ -10,7 +10,7 @@ import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.Settings;
 import com.WazaBe.HoloEverywhere.ThemeManager;
-import com.WazaBe.HoloEverywhere.internal.BaseSharedPreferences;
+import com.WazaBe.HoloEverywhere.preference.PreferenceManager;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
 public abstract class Activity extends Watson implements Base {
@@ -28,7 +28,7 @@ public abstract class Activity extends Watson implements Base {
 
 	@Override
 	public SharedPreferences getSupportSharedPreferences(String name, int mode) {
-		return new BaseSharedPreferences(getSharedPreferences(name, mode));
+		return PreferenceManager.wrap(this, name, mode);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public abstract class Activity extends Watson implements Base {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		getLayoutInflater().setFactory(this);
+		getLayoutInflater().addFactory(this, 0);
 		if (Settings.isUseThemeManager()) {
 			ThemeManager.applyTheme(this);
 		}

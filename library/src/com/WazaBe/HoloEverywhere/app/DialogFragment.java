@@ -175,7 +175,7 @@ public class DialogFragment extends Fragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mShowsDialog = internaGetContainerId() == 0;
+		mShowsDialog = getContainerId() == 0;
 		if (savedInstanceState != null) {
 			mStyle = savedInstanceState.getInt(SAVED_STYLE, STYLE_NORMAL);
 			mTheme = savedInstanceState.getInt(SAVED_THEME, 0);

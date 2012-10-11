@@ -3,5 +3,6 @@
     <issue id="NewApi">
         <ignore path="res/layout/calendar.xml" />
         <ignore path="res/layout/number_picker_demo.xml" />
+        <ignore path="res/layout/main.xml" />
     </issue>
 </lint>

@@ -30,6 +30,12 @@ public final class Settings {
 				String newWidgetsPackage) {
 
 		}
+
+		@Override
+		public void onChangePreferenceMode(PreferenceMode oldPreferenceMode,
+				PreferenceMode newPreferenceMode) {
+
+		}
 	}
 
 	public static interface SettingsListener {
@@ -44,6 +50,13 @@ public final class Settings {
 
 		public void onChangeWidgetsPackage(String oldWidgetsPackage,
 				String newWidgetsPackage);
+
+		public void onChangePreferenceMode(PreferenceMode oldPreferenceMode,
+				PreferenceMode newPreferenceMode);
+	}
+
+	public static enum PreferenceMode {
+		XML, JSON;
 	}
 
 	private static final String DEFAULT_PACKAGE_NAME = Settings.class
@@ -52,11 +65,13 @@ public final class Settings {
 	private static final Set<SettingsListener> LISTENERS = new HashSet<SettingsListener>();
 	private static String packageName, widgetsPackage, preferencePackage;
 	private static boolean useThemeManager;
+	private static PreferenceMode preferenceMode;
 
 	static {
 		addSettingsListener(DEFAULT_SETTINGS_LISTENER);
 		setPackageName(DEFAULT_PACKAGE_NAME);
 		setUseThemeManager(false);
+		setPreferenceMode(PreferenceMode.JSON);
 	}
 
 	public static void addSettingsListener(SettingsListener listener) {
@@ -183,4 +198,27 @@ public final class Settings {
 			onChangeWidgetsPackage(oldWidgetsPackage, widgetsPackage);
 		}
 	}
+
+	public static PreferenceMode getPreferenceMode() {
+		return preferenceMode;
+	}
+
+	public static void setPreferenceMode(PreferenceMode preferenceMode) {
+		if (preferenceMode != null && preferenceMode != Settings.preferenceMode) {
+			PreferenceMode oldPreferenceMode = Settings.preferenceMode;
+			Settings.preferenceMode = preferenceMode;
+			onChangePreferenceMode(oldPreferenceMode, preferenceMode);
+		}
+	}
+
+	private static void onChangePreferenceMode(
+			PreferenceMode oldPreferenceMode, PreferenceMode newPreferenceMode) {
+		for (SettingsListener listener : LISTENERS) {
+			if (listener != null) {
+				listener.onChangePreferenceMode(oldPreferenceMode,
+						newPreferenceMode);
+			}
+		}
+	}
+
 }

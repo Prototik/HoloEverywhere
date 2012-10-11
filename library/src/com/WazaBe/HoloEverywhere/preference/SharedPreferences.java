@@ -68,8 +68,6 @@ public interface SharedPreferences {
 
 	public Set<Long> getLongSet(String key, Set<Long> defValue);
 
-	public android.content.SharedPreferences getPreferences();
-
 	public String getString(String key, String defValue);
 
 	public Set<String> getStringSet(String key, Set<String> defValue);

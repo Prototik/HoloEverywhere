@@ -16,7 +16,7 @@ import android.util.Log;
 
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
-public final class BaseSharedPreferences implements SharedPreferences {
+public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 	private static final class BaseEditor implements Editor {
 		private android.content.SharedPreferences.Editor editor;
 
@@ -184,13 +184,12 @@ public final class BaseSharedPreferences implements SharedPreferences {
 		return new JSONArray(set).toString();
 	}
 
-	@SuppressWarnings("unchecked")
 	private static <T> Set<T> stringToSet(String string, Class<T> clazz) {
 		try {
 			JSONArray array = new JSONArray(string);
 			Set<T> set = new HashSet<T>(array.length());
 			for (int i = 0; i < array.length(); i++) {
-				set.add((T) array.getString(i));
+				set.add(clazz.cast(array.get(i)));
 			}
 			return set;
 		} catch (ClassCastException e) {
@@ -203,7 +202,7 @@ public final class BaseSharedPreferences implements SharedPreferences {
 
 	private final android.content.SharedPreferences prefs;
 
-	public BaseSharedPreferences(android.content.SharedPreferences prefs) {
+	public _SharedPreferencesImpl_XML(android.content.SharedPreferences prefs) {
 		if (prefs == null) {
 			throw new IllegalArgumentException(
 					"SharedPreferences can't be null");
@@ -279,11 +278,6 @@ public final class BaseSharedPreferences implements SharedPreferences {
 	@Override
 	public Set<Long> getLongSet(String key, Set<Long> defValue) {
 		return getSet(key, defValue, Long.class);
-	}
-
-	@Override
-	public android.content.SharedPreferences getPreferences() {
-		return prefs;
 	}
 
 	private <T> Set<T> getSet(String key, Set<T> defValue, Class<T> clazz) {

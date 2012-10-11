@@ -11,6 +11,9 @@ public class Application extends android.app.Application {
 
 	public Application() {
 		lastInstance = this;
+	}
+
+	static {
 		Settings.init();
 	}
 }

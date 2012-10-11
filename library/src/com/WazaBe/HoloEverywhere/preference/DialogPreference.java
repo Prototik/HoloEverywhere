@@ -255,10 +255,11 @@ public abstract class DialogPreference extends Preference implements
 	protected void showDialog(Bundle state) {
 		Context context = getContext();
 		mWhichButtonClicked = DialogInterface.BUTTON_NEGATIVE;
-		mBuilder = new AlertDialog.Builder(context).setTitle(mDialogTitle)
-				.setIcon(mDialogIcon)
-				.setPositiveButton(mPositiveButtonText, this)
-				.setNegativeButton(mNegativeButtonText, this);
+		mBuilder = new AlertDialog.Builder(context);
+		mBuilder.setTitle(mDialogTitle);
+		mBuilder.setIcon(mDialogIcon);
+		mBuilder.setPositiveButton(mPositiveButtonText, this);
+		mBuilder.setNegativeButton(mNegativeButtonText, this);
 		View contentView = onCreateDialogView();
 		if (contentView != null) {
 			onBindDialogView(contentView);

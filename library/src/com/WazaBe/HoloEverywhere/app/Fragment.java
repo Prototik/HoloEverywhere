@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
-import com.WazaBe.HoloEverywhere.internal.BaseSharedPreferences;
+import com.WazaBe.HoloEverywhere.preference.PreferenceManager;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
 public class Fragment extends _HoloFragment {
@@ -35,8 +35,7 @@ public class Fragment extends _HoloFragment {
 	}
 
 	public SharedPreferences getSupportSharedPreferences(String name, int mode) {
-		return new BaseSharedPreferences(getActivity().getSharedPreferences(
-				name, mode));
+		return PreferenceManager.wrap(getActivity(), name, mode);
 	}
 
 	public Object getSystemService(String name) {

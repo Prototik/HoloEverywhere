@@ -186,7 +186,8 @@ public class NumberPickerPreference extends DialogPreference {
 	@Override
 	protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
 		int def = defaultValue instanceof Integer ? (Integer) defaultValue
-				: Integer.parseInt(defaultValue.toString());
+				: defaultValue == null ? 0 : Integer.parseInt(defaultValue
+						.toString());
 		setValue(restoreValue ? getPersistedInt(def) : def);
 	}
 

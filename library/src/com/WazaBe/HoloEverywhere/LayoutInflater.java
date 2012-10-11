@@ -1,5 +1,6 @@
 package com.WazaBe.HoloEverywhere;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -120,6 +121,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	}
 
 	private void init() {
+		super.setFactory(factoryMerger);
 		if (!inited) {
 			synchronized (LayoutInflater.class) {
 				if (!inited) {
@@ -130,6 +132,55 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 				}
 			}
 		}
+	}
+
+	private final class HoloFactoryMerger extends ArrayList<Factory> implements
+			Factory {
+		private static final long serialVersionUID = -851134244408815411L;
+
+		@Override
+		public View onCreateView(String name, Context context,
+				AttributeSet attrs) {
+			for (Factory factory : this) {
+				try {
+					View view = factory.onCreateView(name, context, attrs);
+					if (view != null) {
+						return view;
+					}
+				} catch (RuntimeException e) {
+				}
+			}
+			return null;
+		}
+	}
+
+	private final HoloFactoryMerger factoryMerger = new HoloFactoryMerger();
+	private boolean factorySet = false;
+
+	@Override
+	public void setFactory(Factory factory) {
+		if (factorySet) {
+			throw new IllegalStateException(
+					"A factory has already been set on this inflater");
+		}
+		addFactory(factory);
+		factorySet = true;
+	}
+
+	public void addFactory(Factory factory) {
+		checkFactoryOnNull(factory);
+		factoryMerger.add(factory);
+	}
+
+	private void checkFactoryOnNull(Factory factory) {
+		if (factory == null) {
+			throw new NullPointerException("Given factory can not be null");
+		}
+	}
+
+	public void addFactory(Factory factory, int index) {
+		checkFactoryOnNull(factory);
+		factoryMerger.add(index, factory);
 	}
 
 	@Override

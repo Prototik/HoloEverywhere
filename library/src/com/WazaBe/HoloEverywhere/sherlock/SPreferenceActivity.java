@@ -255,7 +255,7 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 	@Override
 	public void setContentView(View view) {
 		if (isABSSupport()) {
-			getSherlock().setContentView(FontLoader.apply(view));
+			getSherlock().setContentView((view));
 		} else {
 			super.setContentView(view);
 		}
@@ -264,7 +264,7 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		if (isABSSupport()) {
-			getSherlock().setContentView(FontLoader.apply(view), params);
+			getSherlock().setContentView((view), params);
 		} else {
 			super.setContentView(view, params);
 		}

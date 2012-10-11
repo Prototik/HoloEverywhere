@@ -67,6 +67,21 @@
 					android:numStars="5"
 					android:rating="2.5"
 					android:stepSize="0.5" />
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="center"
+					android:orientation="horizontal" >
+					<Switch
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginRight="10dp" />
+					<Switch
+						style="?switchStyleOld"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="10dp" />
+				</LinearLayout>
 			</WidgetContainer>
 			<WidgetContainer
 				android:layout_width="match_parent"

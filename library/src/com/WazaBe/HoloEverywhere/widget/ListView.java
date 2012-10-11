@@ -157,36 +157,16 @@ public class ListView extends android.widget.ListView {
 
 	@Override
 	public boolean performItemClick(View view, int position, long id) {
-		boolean handled = false;
-		boolean dispatchItemClick = true;
-		boolean checkStateChanged = false;
-		if (choiceMode != CHOICE_MODE_NONE) {
-			handled = true;
-			if (choiceMode == CHOICE_MODE_MULTIPLE
-					|| choiceMode == CHOICE_MODE_MULTIPLE_MODAL
-					&& actionMode != null) {
-				boolean newValue = !getCheckedItemPositions().get(position);
-				setItemChecked(position, newValue);
-				if (actionMode != null) {
-					choiceModeListener.onItemCheckedStateChanged(actionMode,
-							position, id, newValue);
-					dispatchItemClick = false;
-				}
-				checkStateChanged = true;
-				return false;
-			} else if (choiceMode == CHOICE_MODE_SINGLE) {
-				boolean newValue = !getCheckedItemPositions().get(position);
-				setItemChecked(position, newValue);
-				checkStateChanged = true;
+		if (choiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+			boolean newValue = !getCheckedItemPositions().get(position);
+			setItemChecked(position, newValue);
+			if (actionMode != null) {
+				choiceModeListener.onItemCheckedStateChanged(actionMode,
+						position, id, newValue);
 			}
-			if (checkStateChanged) {
-				updateOnScreenCheckedViews();
-			}
+			return true;
 		}
-		if (dispatchItemClick) {
-			handled |= super.performItemClick(view, position, id);
-		}
-		return handled;
+		return super.performItemClick(view, position, id);
 	}
 
 	@Override
