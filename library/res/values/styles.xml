@@ -569,7 +569,6 @@
         <item name="dividerVertical">?android:listDivider</item>
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="dividerHorizontal">?android:listDivider</item>
-        <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
@@ -701,7 +700,6 @@
         <item name="dividerVertical">?android:listDivider</item>
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="dividerHorizontal">?android:listDivider</item>
-        <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
@@ -833,7 +831,6 @@
         <item name="dividerVertical">?android:listDivider</item>
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="dividerHorizontal">?android:listDivider</item>
-        <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
@@ -966,7 +963,6 @@
         <item name="dividerVertical">?android:listDivider</item>
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="dividerHorizontal">?android:listDivider</item>
-        <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
@@ -1098,7 +1094,6 @@
         <item name="dividerVertical">?android:listDivider</item>
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="dividerHorizontal">?android:listDivider</item>
-        <item name="android:checkMark">?android:listChoiceIndicatorMultiple</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
