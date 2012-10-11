@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import com.WazaBe.HoloEverywhere.Settings;
-import com.WazaBe.HoloEverywhere.internal._SharedPreferencesImpl_JSON;
-import com.WazaBe.HoloEverywhere.internal._SharedPreferencesImpl_XML;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -21,6 +17,10 @@ import android.content.res.XmlResourceParser;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.WazaBe.HoloEverywhere.Settings;
+import com.WazaBe.HoloEverywhere.internal._SharedPreferencesImpl_JSON;
+import com.WazaBe.HoloEverywhere.internal._SharedPreferencesImpl_XML;
 
 public class PreferenceManager {
 	public interface OnActivityDestroyListener {
@@ -90,12 +90,24 @@ public class PreferenceManager {
 		}
 	}
 
+	public static SharedPreferences wrap(Context context, String name, int mode) {
+		switch (Settings.getPreferenceMode()) {
+		case XML:
+			return new _SharedPreferencesImpl_XML(context.getSharedPreferences(
+					name, mode));
+		case JSON:
+		default:
+			return new _SharedPreferencesImpl_JSON(context, name, mode);
+		}
+	}
+
 	private Activity mActivity;
 	private List<OnActivityDestroyListener> mActivityDestroyListeners;
 	private List<OnActivityResultListener> mActivityResultListeners;
 	private List<OnActivityStopListener> mActivityStopListeners;
 	private Context mContext;
 	private SharedPreferences.Editor mEditor;
+
 	private PreferenceFragment mFragment;
 
 	private long mNextId = 0;
@@ -273,17 +285,6 @@ public class PreferenceManager {
 
 	PreferenceScreen getPreferenceScreen() {
 		return mPreferenceScreen;
-	}
-
-	public static SharedPreferences wrap(Context context, String name, int mode) {
-		switch (Settings.getPreferenceMode()) {
-		case XML:
-			return new _SharedPreferencesImpl_XML(context.getSharedPreferences(
-					name, mode));
-		case JSON:
-		default:
-			return new _SharedPreferencesImpl_JSON(context, name, mode);
-		}
 	}
 
 	public SharedPreferences getSharedPreferences() {

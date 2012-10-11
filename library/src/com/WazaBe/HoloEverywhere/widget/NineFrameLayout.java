@@ -1,11 +1,11 @@
 package com.WazaBe.HoloEverywhere.widget;
 
-import com.actionbarsherlock.internal.nineoldandroids.view.animation.AnimatorProxy;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
+
+import com.actionbarsherlock.internal.nineoldandroids.view.animation.AnimatorProxy;
 
 public class NineFrameLayout extends FrameLayout {
 	private final AnimatorProxy mProxy;
@@ -26,17 +26,6 @@ public class NineFrameLayout extends FrameLayout {
 	}
 
 	@Override
-	public void setVisibility(int visibility) {
-		if (mProxy != null) {
-			if (visibility == GONE) {
-				clearAnimation();
-			} else if (visibility == VISIBLE) {
-				setAnimation(mProxy);
-			}
-		}
-		super.setVisibility(visibility);
-	}
-
 	@SuppressLint("NewApi")
 	public float getAlpha() {
 		if (AnimatorProxy.NEEDS_PROXY) {
@@ -46,15 +35,7 @@ public class NineFrameLayout extends FrameLayout {
 		}
 	}
 
-	@SuppressLint("NewApi")
-	public void setAlpha(float alpha) {
-		if (AnimatorProxy.NEEDS_PROXY) {
-			mProxy.setAlpha(alpha);
-		} else {
-			super.setAlpha(alpha);
-		}
-	}
-
+	@Override
 	@SuppressLint("NewApi")
 	public float getTranslationX() {
 		if (AnimatorProxy.NEEDS_PROXY) {
@@ -64,15 +45,7 @@ public class NineFrameLayout extends FrameLayout {
 		}
 	}
 
-	@SuppressLint("NewApi")
-	public void setTranslationX(float translationX) {
-		if (AnimatorProxy.NEEDS_PROXY) {
-			mProxy.setTranslationX(translationX);
-		} else {
-			super.setTranslationX(translationX);
-		}
-	}
-
+	@Override
 	@SuppressLint("NewApi")
 	public float getTranslationY() {
 		if (AnimatorProxy.NEEDS_PROXY) {
@@ -82,6 +55,27 @@ public class NineFrameLayout extends FrameLayout {
 		}
 	}
 
+	@Override
+	@SuppressLint("NewApi")
+	public void setAlpha(float alpha) {
+		if (AnimatorProxy.NEEDS_PROXY) {
+			mProxy.setAlpha(alpha);
+		} else {
+			super.setAlpha(alpha);
+		}
+	}
+
+	@Override
+	@SuppressLint("NewApi")
+	public void setTranslationX(float translationX) {
+		if (AnimatorProxy.NEEDS_PROXY) {
+			mProxy.setTranslationX(translationX);
+		} else {
+			super.setTranslationX(translationX);
+		}
+	}
+
+	@Override
 	@SuppressLint("NewApi")
 	public void setTranslationY(float translationY) {
 		if (AnimatorProxy.NEEDS_PROXY) {
@@ -89,5 +83,17 @@ public class NineFrameLayout extends FrameLayout {
 		} else {
 			super.setTranslationY(translationY);
 		}
+	}
+
+	@Override
+	public void setVisibility(int visibility) {
+		if (mProxy != null) {
+			if (visibility == GONE) {
+				clearAnimation();
+			} else if (visibility == VISIBLE) {
+				setAnimation(mProxy);
+			}
+		}
+		super.setVisibility(visibility);
 	}
 }

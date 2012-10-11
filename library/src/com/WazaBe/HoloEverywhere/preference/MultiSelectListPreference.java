@@ -10,7 +10,6 @@ import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.app.AlertDialog.Builder;

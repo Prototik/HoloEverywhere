@@ -323,4 +323,5 @@ public abstract class SExpandableListActivity extends ExpandableListActivity
 	@Override
 	public void supportInvalidateOptionsMenu() {
 		invalidateOptionsMenu();
-	}}
+	}
+}

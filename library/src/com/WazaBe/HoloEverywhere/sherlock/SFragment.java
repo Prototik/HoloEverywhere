@@ -17,14 +17,14 @@ public class SFragment extends Fragment implements OnCreateOptionsMenuListener,
 		OnPrepareOptionsMenuListener, OnOptionsItemSelectedListener {
 	private SBase mBase;
 
-	@Deprecated
-	public SActivity getSherlockActivity() {
-		return (SActivity) mBase;
-	}
-
 	@SuppressWarnings("unchecked")
 	public <T extends Activity & SBase> T getSActivity() {
 		return (T) mBase;
+	}
+
+	@Deprecated
+	public SActivity getSherlockActivity() {
+		return (SActivity) mBase;
 	}
 
 	@Override

@@ -14,6 +14,12 @@ public final class Settings {
 		}
 
 		@Override
+		public void onChangePreferenceMode(PreferenceMode oldPreferenceMode,
+				PreferenceMode newPreferenceMode) {
+
+		}
+
+		@Override
 		public void onChangePreferencePackage(String oldPreferencePackage,
 				String newPreferencePackage) {
 
@@ -30,17 +36,18 @@ public final class Settings {
 				String newWidgetsPackage) {
 
 		}
+	}
 
-		@Override
-		public void onChangePreferenceMode(PreferenceMode oldPreferenceMode,
-				PreferenceMode newPreferenceMode) {
-
-		}
+	public static enum PreferenceMode {
+		JSON, XML;
 	}
 
 	public static interface SettingsListener {
 		public void onChangePackageName(String oldPackageName,
 				String newPackageName);
+
+		public void onChangePreferenceMode(PreferenceMode oldPreferenceMode,
+				PreferenceMode newPreferenceMode);
 
 		public void onChangePreferencePackage(String oldPreferencePackage,
 				String newPreferencePackage);
@@ -50,13 +57,6 @@ public final class Settings {
 
 		public void onChangeWidgetsPackage(String oldWidgetsPackage,
 				String newWidgetsPackage);
-
-		public void onChangePreferenceMode(PreferenceMode oldPreferenceMode,
-				PreferenceMode newPreferenceMode);
-	}
-
-	public static enum PreferenceMode {
-		XML, JSON;
 	}
 
 	private static final String DEFAULT_PACKAGE_NAME = Settings.class
@@ -64,8 +64,8 @@ public final class Settings {
 	private static final SettingsListener DEFAULT_SETTINGS_LISTENER = new DefaultSettingsListener();
 	private static final Set<SettingsListener> LISTENERS = new HashSet<SettingsListener>();
 	private static String packageName, widgetsPackage, preferencePackage;
-	private static boolean useThemeManager;
 	private static PreferenceMode preferenceMode;
+	private static boolean useThemeManager;
 
 	static {
 		addSettingsListener(DEFAULT_SETTINGS_LISTENER);
@@ -89,6 +89,10 @@ public final class Settings {
 
 	public static String getPackageName() {
 		return packageName;
+	}
+
+	public static PreferenceMode getPreferenceMode() {
+		return preferenceMode;
 	}
 
 	public static String getPreferencePackage() {
@@ -115,6 +119,16 @@ public final class Settings {
 		for (SettingsListener listener : LISTENERS) {
 			if (listener != null) {
 				listener.onChangePackageName(oldPackageName, newPackageName);
+			}
+		}
+	}
+
+	private static void onChangePreferenceMode(
+			PreferenceMode oldPreferenceMode, PreferenceMode newPreferenceMode) {
+		for (SettingsListener listener : LISTENERS) {
+			if (listener != null) {
+				listener.onChangePreferenceMode(oldPreferenceMode,
+						newPreferenceMode);
 			}
 		}
 	}
@@ -173,6 +187,14 @@ public final class Settings {
 		}
 	}
 
+	public static void setPreferenceMode(PreferenceMode preferenceMode) {
+		if (preferenceMode != null && preferenceMode != Settings.preferenceMode) {
+			PreferenceMode oldPreferenceMode = Settings.preferenceMode;
+			Settings.preferenceMode = preferenceMode;
+			onChangePreferenceMode(oldPreferenceMode, preferenceMode);
+		}
+	}
+
 	public static void setPreferencePackage(String preferencePackage) {
 		if (preferencePackage != null
 				&& !preferencePackage.equals(Settings.preferencePackage)) {
@@ -196,28 +218,6 @@ public final class Settings {
 			String oldWidgetsPackage = Settings.widgetsPackage;
 			Settings.widgetsPackage = widgetsPackage;
 			onChangeWidgetsPackage(oldWidgetsPackage, widgetsPackage);
-		}
-	}
-
-	public static PreferenceMode getPreferenceMode() {
-		return preferenceMode;
-	}
-
-	public static void setPreferenceMode(PreferenceMode preferenceMode) {
-		if (preferenceMode != null && preferenceMode != Settings.preferenceMode) {
-			PreferenceMode oldPreferenceMode = Settings.preferenceMode;
-			Settings.preferenceMode = preferenceMode;
-			onChangePreferenceMode(oldPreferenceMode, preferenceMode);
-		}
-	}
-
-	private static void onChangePreferenceMode(
-			PreferenceMode oldPreferenceMode, PreferenceMode newPreferenceMode) {
-		for (SettingsListener listener : LISTENERS) {
-			if (listener != null) {
-				listener.onChangePreferenceMode(oldPreferenceMode,
-						newPreferenceMode);
-			}
 		}
 	}
 

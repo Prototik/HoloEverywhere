@@ -12,6 +12,26 @@ import android.view.ViewGroup;
 
 public class LayoutInflater extends android.view.LayoutInflater implements
 		Cloneable {
+	private final class HoloFactoryMerger extends ArrayList<Factory> implements
+			Factory {
+		private static final long serialVersionUID = -851134244408815411L;
+
+		@Override
+		public View onCreateView(String name, Context context,
+				AttributeSet attrs) {
+			for (Factory factory : this) {
+				try {
+					View view = factory.onCreateView(name, context, attrs);
+					if (view != null) {
+						return view;
+					}
+				} catch (RuntimeException e) {
+				}
+			}
+			return null;
+		}
+	}
+
 	public static interface OnInitInflaterListener {
 		public void onInitInflater(LayoutInflater inflater);
 	}
@@ -19,6 +39,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	private static boolean inited = false;
 	private static final Map<Context, LayoutInflater> INSTANCES_MAP = new WeakHashMap<Context, LayoutInflater>();
 	private static OnInitInflaterListener listener;
+
 	private static final Map<String, String> VIEWS_MAP = new HashMap<String, String>();
 
 	static {
@@ -100,6 +121,10 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 		LayoutInflater.listener = listener;
 	}
 
+	private final HoloFactoryMerger factoryMerger = new HoloFactoryMerger();
+
+	private boolean factorySet = false;
+
 	protected LayoutInflater(android.view.LayoutInflater original,
 			Context newContext) {
 		super(original, newContext);
@@ -109,6 +134,22 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	protected LayoutInflater(Context context) {
 		super(context);
 		init();
+	}
+
+	public void addFactory(Factory factory) {
+		checkFactoryOnNull(factory);
+		factoryMerger.add(factory);
+	}
+
+	public void addFactory(Factory factory, int index) {
+		checkFactoryOnNull(factory);
+		factoryMerger.add(index, factory);
+	}
+
+	private void checkFactoryOnNull(Factory factory) {
+		if (factory == null) {
+			throw new NullPointerException("Given factory can not be null");
+		}
 	}
 
 	@Override
@@ -134,55 +175,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 		}
 	}
 
-	private final class HoloFactoryMerger extends ArrayList<Factory> implements
-			Factory {
-		private static final long serialVersionUID = -851134244408815411L;
-
-		@Override
-		public View onCreateView(String name, Context context,
-				AttributeSet attrs) {
-			for (Factory factory : this) {
-				try {
-					View view = factory.onCreateView(name, context, attrs);
-					if (view != null) {
-						return view;
-					}
-				} catch (RuntimeException e) {
-				}
-			}
-			return null;
-		}
-	}
-
-	private final HoloFactoryMerger factoryMerger = new HoloFactoryMerger();
-	private boolean factorySet = false;
-
-	@Override
-	public void setFactory(Factory factory) {
-		if (factorySet) {
-			throw new IllegalStateException(
-					"A factory has already been set on this inflater");
-		}
-		addFactory(factory);
-		factorySet = true;
-	}
-
-	public void addFactory(Factory factory) {
-		checkFactoryOnNull(factory);
-		factoryMerger.add(factory);
-	}
-
-	private void checkFactoryOnNull(Factory factory) {
-		if (factory == null) {
-			throw new NullPointerException("Given factory can not be null");
-		}
-	}
-
-	public void addFactory(Factory factory, int index) {
-		checkFactoryOnNull(factory);
-		factoryMerger.add(index, factory);
-	}
-
 	@Override
 	protected View onCreateView(String name, AttributeSet attrs)
 			throws ClassNotFoundException {
@@ -195,5 +187,15 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 		} catch (ClassNotFoundException e) {
 			return createView(name, "android.view.", attrs);
 		}
+	}
+
+	@Override
+	public void setFactory(Factory factory) {
+		if (factorySet) {
+			throw new IllegalStateException(
+					"A factory has already been set on this inflater");
+		}
+		addFactory(factory);
+		factorySet = true;
 	}
 }

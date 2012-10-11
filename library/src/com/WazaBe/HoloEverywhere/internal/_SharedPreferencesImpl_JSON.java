@@ -32,9 +32,6 @@ import android.util.Log;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
 public class _SharedPreferencesImpl_JSON implements SharedPreferences {
-	private final JSONObject data;
-	private File file;
-
 	private final class CouldNotCreateStorage extends RuntimeException {
 		private static final long serialVersionUID = -8602981054023098742L;
 
@@ -43,55 +40,12 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 		}
 	}
 
-	private static interface FutureJSONManipulate {
-		public boolean onJSONManipulate(JSONObject object);
-	}
-
-	private class PutValueJSONManipulate implements FutureJSONManipulate {
-		private Object t;
-		private String key;
-
-		public PutValueJSONManipulate(String key, Object t) {
-			this.key = key;
-			this.t = t;
-		}
-
-		@Override
-		public boolean onJSONManipulate(JSONObject object) {
-			try {
-				if (t instanceof Set) {
-					t = new JSONArray((Set<?>) t);
-				}
-				object.put(key, t);
-				notifyOnChange(key);
-				return true;
-			} catch (JSONException e) {
-				return false;
-			}
-		}
-	}
-
-	private class RemoveValueJSONManipulate implements FutureJSONManipulate {
-		private String key;
-
-		public RemoveValueJSONManipulate(String key) {
-			this.key = key;
-		}
-
-		@Override
-		public boolean onJSONManipulate(JSONObject object) {
-			if (object.has(key)) {
-				object.remove(key);
-				notifyOnChange(key);
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-
 	private final class EditorImpl implements Editor {
 		private final List<FutureJSONManipulate> manipulate = new ArrayList<FutureJSONManipulate>();
+
+		private void add(FutureJSONManipulate t) {
+			manipulate.add(t);
+		}
 
 		@Override
 		public void apply() {
@@ -116,10 +70,6 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 		public Editor clear() {
 			manipulate.clear();
 			return this;
-		}
-
-		private void add(FutureJSONManipulate t) {
-			manipulate.add(t);
 		}
 
 		@Override
@@ -206,6 +156,66 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
 	}
 
+	private static interface FutureJSONManipulate {
+		public boolean onJSONManipulate(JSONObject object);
+	}
+
+	private class PutValueJSONManipulate implements FutureJSONManipulate {
+		private String key;
+		private Object t;
+
+		public PutValueJSONManipulate(String key, Object t) {
+			this.key = key;
+			this.t = t;
+		}
+
+		@Override
+		public boolean onJSONManipulate(JSONObject object) {
+			try {
+				if (t instanceof Set) {
+					t = new JSONArray((Set<?>) t);
+				}
+				object.put(key, t);
+				notifyOnChange(key);
+				return true;
+			} catch (JSONException e) {
+				return false;
+			}
+		}
+	}
+
+	private class RemoveValueJSONManipulate implements FutureJSONManipulate {
+		private String key;
+
+		public RemoveValueJSONManipulate(String key) {
+			this.key = key;
+		}
+
+		@Override
+		public boolean onJSONManipulate(JSONObject object) {
+			if (object.has(key)) {
+				object.remove(key);
+				notifyOnChange(key);
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	private static final boolean DEBUG = false;
+
+	private static final Map<SharedPreferences, Set<OnSharedPreferenceChangeListener>> listeners = new HashMap<SharedPreferences, Set<OnSharedPreferenceChangeListener>>();
+
+	private static final String TAG = _SharedPreferencesImpl_JSON.class
+			.getSimpleName();
+
+	private String charset;
+
+	private final JSONObject data;
+
+	private File file;
+
 	@SuppressLint("NewApi")
 	public _SharedPreferencesImpl_JSON(Context context, String name, int mode) {
 		setCharset("utf-8");
@@ -247,81 +257,6 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 		}
 	}
 
-	public void saveDataToFile(File file, JSONObject data) {
-		String s = data.toString();
-		byte[] b;
-		try {
-			b = s.getBytes(charset);
-		} catch (UnsupportedEncodingException e) {
-			b = s.getBytes();
-		}
-		try {
-			OutputStream os = new FileOutputStream(file);
-			os.write(b);
-			os.flush();
-			os.close();
-		} catch (IOException e) {
-			throw new RuntimeException("IOException", e);
-		}
-	}
-
-	public void notifyOnChange(String key) {
-		synchronized (listeners) {
-			if (!listeners.containsKey(this)) {
-				return;
-			}
-			for (OnSharedPreferenceChangeListener listener : listeners
-					.get(this)) {
-				listener.onSharedPreferenceChanged(this, key);
-			}
-		}
-	}
-
-	private String charset;
-
-	public void setCharset(String charset) {
-		if (charset == null || !Charset.isSupported(charset)) {
-			throw new RuntimeException("Illegal charset: " + charset);
-		}
-		this.charset = charset;
-	}
-
-	public String getCharset() {
-		return charset;
-	}
-
-	private static final boolean DEBUG = false;
-	private static final String TAG = _SharedPreferencesImpl_JSON.class
-			.getSimpleName();
-
-	protected JSONObject readDataFromFile(File file) {
-		try {
-			InputStream is = new FileInputStream(file);
-			Reader reader;
-			try {
-				reader = new InputStreamReader(is, charset);
-			} catch (UnsupportedEncodingException e) {
-				if (DEBUG) {
-					Log.w(TAG, "Encoding unsupport: " + charset);
-				}
-				reader = new InputStreamReader(is);
-			}
-			reader = new BufferedReader(reader, 1024);
-			StringBuilder builder = new StringBuilder(Math.max(is.available(),
-					0));
-			char[] buffer = new char[8192];
-			int c;
-			while ((c = reader.read(buffer)) > 0) {
-				builder.append(buffer, 0, c);
-			}
-			reader.close();
-			is.close();
-			return new JSONObject(builder.toString());
-		} catch (Exception e) {
-			return new JSONObject();
-		}
-	}
-
 	@Override
 	public boolean contains(String key) {
 		synchronized (data) {
@@ -356,6 +291,10 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 		return data.optBoolean(key, defValue);
 	}
 
+	public String getCharset() {
+		return charset;
+	}
+
 	@Override
 	public float getFloat(String key, float defValue) {
 		return (float) data.optDouble(key, defValue);
@@ -364,19 +303,6 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 	@Override
 	public Set<Float> getFloatSet(String key, Set<Float> defValue) {
 		return getSet(key, defValue);
-	}
-
-	@SuppressWarnings("unchecked")
-	private <T> Set<T> getSet(String key, Set<T> defValue) {
-		JSONArray a = data.optJSONArray(key);
-		if (a == null) {
-			return defValue;
-		}
-		Set<T> set = new HashSet<T>(Math.max(a.length(), 0));
-		for (int i = 0; i < a.length(); i++) {
-			set.add((T) a.opt(i));
-		}
-		return set;
 	}
 
 	@Override
@@ -411,6 +337,19 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 		return getSet(key, defValue);
 	}
 
+	@SuppressWarnings("unchecked")
+	private <T> Set<T> getSet(String key, Set<T> defValue) {
+		JSONArray a = data.optJSONArray(key);
+		if (a == null) {
+			return defValue;
+		}
+		Set<T> set = new HashSet<T>(Math.max(a.length(), 0));
+		for (int i = 0; i < a.length(); i++) {
+			set.add((T) a.opt(i));
+		}
+		return set;
+	}
+
 	@Override
 	public String getString(String key, String defValue) {
 		return data.optString(key, defValue);
@@ -421,7 +360,45 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 		return getSet(key, defValue);
 	}
 
-	private static final Map<SharedPreferences, Set<OnSharedPreferenceChangeListener>> listeners = new HashMap<SharedPreferences, Set<OnSharedPreferenceChangeListener>>();
+	public void notifyOnChange(String key) {
+		synchronized (listeners) {
+			if (!listeners.containsKey(this)) {
+				return;
+			}
+			for (OnSharedPreferenceChangeListener listener : listeners
+					.get(this)) {
+				listener.onSharedPreferenceChanged(this, key);
+			}
+		}
+	}
+
+	protected JSONObject readDataFromFile(File file) {
+		try {
+			InputStream is = new FileInputStream(file);
+			Reader reader;
+			try {
+				reader = new InputStreamReader(is, charset);
+			} catch (UnsupportedEncodingException e) {
+				if (DEBUG) {
+					Log.w(TAG, "Encoding unsupport: " + charset);
+				}
+				reader = new InputStreamReader(is);
+			}
+			reader = new BufferedReader(reader, 1024);
+			StringBuilder builder = new StringBuilder(Math.max(is.available(),
+					0));
+			char[] buffer = new char[8192];
+			int c;
+			while ((c = reader.read(buffer)) > 0) {
+				builder.append(buffer, 0, c);
+			}
+			reader.close();
+			is.close();
+			return new JSONObject(builder.toString());
+		} catch (Exception e) {
+			return new JSONObject();
+		}
+	}
 
 	@Override
 	public void registerOnSharedPreferenceChangeListener(
@@ -436,6 +413,31 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 				set.add(listener);
 			}
 		}
+	}
+
+	public void saveDataToFile(File file, JSONObject data) {
+		String s = data.toString();
+		byte[] b;
+		try {
+			b = s.getBytes(charset);
+		} catch (UnsupportedEncodingException e) {
+			b = s.getBytes();
+		}
+		try {
+			OutputStream os = new FileOutputStream(file);
+			os.write(b);
+			os.flush();
+			os.close();
+		} catch (IOException e) {
+			throw new RuntimeException("IOException", e);
+		}
+	}
+
+	public void setCharset(String charset) {
+		if (charset == null || !Charset.isSupported(charset)) {
+			throw new RuntimeException("Illegal charset: " + charset);
+		}
+		this.charset = charset;
 	}
 
 	@Override
