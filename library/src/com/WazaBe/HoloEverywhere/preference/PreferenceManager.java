@@ -18,7 +18,9 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.WazaBe.HoloEverywhere.internal.BaseSharedPreferences;
+import com.WazaBe.HoloEverywhere.Settings;
+import com.WazaBe.HoloEverywhere.internal._SharedPreferencesImpl_JSON;
+import com.WazaBe.HoloEverywhere.internal._SharedPreferencesImpl_XML;
 
 public class PreferenceManager {
 	public interface OnActivityDestroyListener {
@@ -43,9 +45,8 @@ public class PreferenceManager {
 	private static final String TAG = "PreferenceManager";
 
 	public static SharedPreferences getDefaultSharedPreferences(Context context) {
-		return new BaseSharedPreferences(context.getSharedPreferences(
-				getDefaultSharedPreferencesName(context),
-				getDefaultSharedPreferencesMode()));
+		return wrap(context, getDefaultSharedPreferencesName(context),
+				getDefaultSharedPreferencesMode());
 	}
 
 	private static int getDefaultSharedPreferencesMode() {
@@ -58,8 +59,6 @@ public class PreferenceManager {
 
 	public static void setDefaultValues(Context context, int resId,
 			boolean readAgain) {
-
-		// Use the default shared preferences name and mode
 		setDefaultValues(context, getDefaultSharedPreferencesName(context),
 				getDefaultSharedPreferencesMode(), resId, readAgain);
 	}
@@ -68,10 +67,8 @@ public class PreferenceManager {
 	public static void setDefaultValues(Context context,
 			String sharedPreferencesName, int sharedPreferencesMode, int resId,
 			boolean readAgain) {
-		final SharedPreferences defaultValueSp = new BaseSharedPreferences(
-				context.getSharedPreferences(KEY_HAS_SET_DEFAULT_VALUES,
-						Context.MODE_PRIVATE));
-
+		final SharedPreferences defaultValueSp = wrap(context,
+				KEY_HAS_SET_DEFAULT_VALUES, Context.MODE_PRIVATE);
 		if (readAgain
 				|| !defaultValueSp
 						.getBoolean(KEY_HAS_SET_DEFAULT_VALUES, false)) {
@@ -93,12 +90,24 @@ public class PreferenceManager {
 		}
 	}
 
+	public static SharedPreferences wrap(Context context, String name, int mode) {
+		switch (Settings.getPreferenceMode()) {
+		case XML:
+			return new _SharedPreferencesImpl_XML(context.getSharedPreferences(
+					name, mode));
+		case JSON:
+		default:
+			return new _SharedPreferencesImpl_JSON(context, name, mode);
+		}
+	}
+
 	private Activity mActivity;
 	private List<OnActivityDestroyListener> mActivityDestroyListeners;
 	private List<OnActivityResultListener> mActivityResultListeners;
 	private List<OnActivityStopListener> mActivityStopListeners;
 	private Context mContext;
 	private SharedPreferences.Editor mEditor;
+
 	private PreferenceFragment mFragment;
 
 	private long mNextId = 0;
@@ -280,9 +289,8 @@ public class PreferenceManager {
 
 	public SharedPreferences getSharedPreferences() {
 		if (mSharedPreferences == null) {
-			mSharedPreferences = new BaseSharedPreferences(
-					mContext.getSharedPreferences(mSharedPreferencesName,
-							mSharedPreferencesMode));
+			mSharedPreferences = wrap(mContext, mSharedPreferencesName,
+					mSharedPreferencesMode);
 		}
 		return mSharedPreferences;
 	}

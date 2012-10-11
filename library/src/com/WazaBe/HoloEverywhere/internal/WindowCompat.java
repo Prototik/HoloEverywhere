@@ -6,10 +6,8 @@ import android.view.ViewConfiguration;
 import android.view.Window;
 
 public class WindowCompat {
-
 	private static boolean isOutOfBounds(Window window, MotionEvent event) {
-		final int x = (int) event.getX();
-		final int y = (int) event.getY();
+		final int x = (int) event.getX(), y = (int) event.getY();
 		final int slop = ViewConfiguration.get(window.getContext())
 				.getScaledWindowTouchSlop();
 		final View decorView = window.getDecorView();
@@ -18,15 +16,11 @@ public class WindowCompat {
 	}
 
 	public static boolean shouldCloseOnTouch(Window window, MotionEvent event) {
-		if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN
+		return (event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN
 				&& isOutOfBounds(window, event)
-				&& window.peekDecorView() != null) {
-			return true;
-		}
-		return false;
+				&& window.peekDecorView() != null;
 	}
 
 	private WindowCompat() {
-
 	}
 }

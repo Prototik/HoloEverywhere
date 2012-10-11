@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:holo="http://schemas.android.com/apk/res-auto" >
+<PreferenceScreen xmlns:holo="http://schemas.android.com/apk/res-auto" >
 	<Preference
 		holo:icon="@drawable/prefs_icon"
 		holo:selectable="false"
@@ -10,10 +9,12 @@
 		<EditTextPreference
 			holo:dialogIcon="@drawable/icon"
 			holo:dialogTitle="Enter message:"
+			holo:key="edit_text"
 			holo:summary="Tap me!"
 			holo:title="EditText" />
 		<CheckBoxPreference
 			holo:defaultValue="false"
+			holo:key="check_box"
 			holo:summaryOff="I not checked ;("
 			holo:summaryOn="I checked! :)"
 			holo:title="CheckBox" />
@@ -23,6 +24,7 @@
 			holo:summary="I love music!"
 			holo:title="Ringtone" />
 		<SwitchPreference
+			holo:key="switch"
 			holo:summaryOff="Noooooo! ;("
 			holo:summaryOn="Yes, man! :)"
 			holo:switchTextOff="OFF"
@@ -32,11 +34,12 @@
 			holo:defaultValue="10"
 			holo:dialogIcon="@drawable/number_picker"
 			holo:dialogMessage="Play NumberPicker roulette!"
+			holo:key="number_picker"
 			holo:max="25"
 			holo:min="5"
 			holo:summary="Bring up a dialog!"
 			holo:title="NumberPicker"
-			holo:wrapSelectorWheel="false" />
+			holo:wrapSelectorWheel="true" />
 	</PreferenceCategory>
 	<PreferenceCategory holo:title="Lists" >
 		<ListPreference
@@ -44,6 +47,7 @@
 			holo:dialogTitle="Skillet"
 			holo:entries="@array/skillet"
 			holo:entryValues="@array/skillet"
+			holo:key="list"
 			holo:negativeButtonText="I love Skillet!"
 			holo:summary="Skillet"
 			holo:title="List" />
@@ -52,15 +56,18 @@
 			holo:dialogTitle="Nirvana"
 			holo:entries="@array/nirvana"
 			holo:entryValues="@array/nirvana"
+			holo:key="multi_select_list"
 			holo:positiveButtonText="I love Nirvana!"
 			holo:summary="Nirvana"
 			holo:title="MultiSelectList" />
 	</PreferenceCategory>
 	<PreferenceCategory holo:title="Hidden (in the past)" >
 		<SeekBarPreference
+			holo:key="seek_bar"
 			holo:max="100"
 			holo:title="SeekBar" />
 		<SeekBarDialogPreference
+			holo:key="seek_bar_dialog"
 			holo:max="100"
 			holo:title="SeekBarDialog" />
 	</PreferenceCategory>

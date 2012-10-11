@@ -83,6 +83,7 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
 		return new ArrayAdapter<CharSequence>(context, textViewResId, strings);
 	}
 
+	private boolean mAutoSetNotifyFlag = true;
 	private Context mContext;
 	private int mDropDownResource;
 	private int mFieldId = 0;
@@ -90,6 +91,7 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
 	private LayoutInflater mInflater;
 	private final Object mLock = new Object();
 	private boolean mNotifyOnChange = true;
+
 	private List<T> mObjects;
 
 	private ArrayList<T> mOriginalValues;
@@ -269,10 +271,16 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
 		}
 	}
 
+	public boolean isAutoSetNotifyFlag() {
+		return mAutoSetNotifyFlag;
+	}
+
 	@Override
 	public void notifyDataSetChanged() {
 		super.notifyDataSetChanged();
-		mNotifyOnChange = true;
+		if (mAutoSetNotifyFlag) {
+			mNotifyOnChange = true;
+		}
 	}
 
 	public void remove(T object) {
@@ -286,6 +294,10 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
 		if (mNotifyOnChange) {
 			notifyDataSetChanged();
 		}
+	}
+
+	public void setAutoSetNotifyFlag(boolean autoSetNotifyFlag) {
+		this.mAutoSetNotifyFlag = autoSetNotifyFlag;
 	}
 
 	public void setDropDownViewResource(int resource) {

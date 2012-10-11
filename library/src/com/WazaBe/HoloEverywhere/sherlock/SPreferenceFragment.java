@@ -1,9 +1,9 @@
 package com.WazaBe.HoloEverywhere.sherlock;
 
 import android.os.Build.VERSION;
-import android.support.v4.app._ActionBarSherlockTrojanHorse.OnCreateOptionsMenuListener;
-import android.support.v4.app._ActionBarSherlockTrojanHorse.OnOptionsItemSelectedListener;
-import android.support.v4.app._ActionBarSherlockTrojanHorse.OnPrepareOptionsMenuListener;
+import android.support.v4.app.Watson.OnCreateOptionsMenuListener;
+import android.support.v4.app.Watson.OnOptionsItemSelectedListener;
+import android.support.v4.app.Watson.OnPrepareOptionsMenuListener;
 
 import com.WazaBe.HoloEverywhere.app.Activity;
 import com.WazaBe.HoloEverywhere.preference.PreferenceFragment;

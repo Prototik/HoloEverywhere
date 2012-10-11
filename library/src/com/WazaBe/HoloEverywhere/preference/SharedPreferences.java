@@ -58,7 +58,7 @@ public interface SharedPreferences {
 
 	public int getInt(String key, int defValue);
 
-	public Set<Integer> getIntegerSet(String key, Set<Integer> defValue);
+	public Set<Integer> getIntSet(String key, Set<Integer> defValue);
 
 	public JSONArray getJSONArray(String key, JSONArray defValue);
 
@@ -67,8 +67,6 @@ public interface SharedPreferences {
 	public long getLong(String key, long defValue);
 
 	public Set<Long> getLongSet(String key, Set<Long> defValue);
-
-	public android.content.SharedPreferences getPreferences();
 
 	public String getString(String key, String defValue);
 

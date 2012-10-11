@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.WazaBe.HoloEverywhere.R;
-import com.actionbarsherlock.internal.nineoldandroids.widget.NineFrameLayout;
+import com.WazaBe.HoloEverywhere.widget.NineFrameLayout;
 
 public class PreferenceFrameLayout extends NineFrameLayout {
 	public static class LayoutParams extends NineFrameLayout.LayoutParams {

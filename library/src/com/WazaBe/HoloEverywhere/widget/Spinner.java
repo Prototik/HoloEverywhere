@@ -17,7 +17,6 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.AbsListView;
 import android.widget.ListAdapter;
-import android.widget.PopupWindow;
 import android.widget.SpinnerAdapter;
 
 import com.WazaBe.HoloEverywhere.R;
@@ -203,9 +202,8 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 		private ListAdapter mAdapter;
 		private CharSequence mHintText;
 
-		public DropdownPopup(Context context, AttributeSet attrs,
-				int defStyleRes) {
-			super(context, attrs, R.attr.listPopupWindowStyle, defStyleRes);
+		public DropdownPopup(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, R.attr.listPopupWindowStyle);
 			setAnchorView(Spinner.this);
 			setModal(true);
 			setPromptPosition(POSITION_PROMPT_ABOVE);
@@ -253,7 +251,6 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 			if (mDropDownWidth == LayoutParams.WRAP_CONTENT) {
 				final int spinnerWidth = Spinner.this.getWidth();
 				final int spinnerPaddingRight = getPaddingRight();
-
 				int contentWidth = measureContentWidth(
 						(SpinnerAdapter) mAdapter, getBackground());
 				final int contentWidthLimit = getContext().getResources()
@@ -263,7 +260,6 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 				if (contentWidth > contentWidthLimit) {
 					contentWidth = contentWidthLimit;
 				}
-
 				setContentWidth(Math.max(contentWidth, spinnerWidth
 						- spinnerPaddingLeft - spinnerPaddingRight));
 			} else if (mDropDownWidth == LayoutParams.MATCH_PARENT) {
@@ -275,7 +271,7 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 				setContentWidth(mDropDownWidth);
 			}
 			setHorizontalOffset(bgOffset + spinnerPaddingLeft);
-			setInputMethodMode(PopupWindow.INPUT_METHOD_NOT_NEEDED);
+			setInputMethodMode(INPUT_METHOD_NOT_NEEDED);
 			super.show();
 			getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 			setSelection(Spinner.this.getSelectedItemPosition());

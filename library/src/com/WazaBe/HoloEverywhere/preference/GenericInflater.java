@@ -230,8 +230,8 @@ abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 
 	public void setFactory(Factory<T> factory) {
 		if (factorySet) {
-			throw new IllegalStateException(""
-					+ "A factory has already been set on this inflater");
+			throw new IllegalStateException(
+					"A factory has already been set on this inflater");
 		}
 		if (factory == null) {
 			throw new NullPointerException("Given factory can not be null");

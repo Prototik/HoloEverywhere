@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -292,6 +295,14 @@ public class Preference implements Comparable<Preference>,
 				defaultReturnValue);
 	}
 
+	protected Set<Float> getPersistedFloatSet(Set<Float> defaultReturnValue) {
+		if (!shouldPersist()) {
+			return defaultReturnValue;
+		}
+		return mPreferenceManager.getSharedPreferences().getFloatSet(mKey,
+				defaultReturnValue);
+	}
+
 	protected int getPersistedInt(int defaultReturnValue) {
 		if (!shouldPersist()) {
 			return defaultReturnValue;
@@ -301,12 +312,44 @@ public class Preference implements Comparable<Preference>,
 				defaultReturnValue);
 	}
 
+	protected Set<Integer> getPersistedIntSet(Set<Integer> defaultReturnValue) {
+		if (!shouldPersist()) {
+			return defaultReturnValue;
+		}
+		return mPreferenceManager.getSharedPreferences().getIntSet(mKey,
+				defaultReturnValue);
+	}
+
+	protected JSONArray getPersistedJSONArray(JSONArray defaultReturnValue) {
+		if (!shouldPersist()) {
+			return defaultReturnValue;
+		}
+		return mPreferenceManager.getSharedPreferences().getJSONArray(mKey,
+				defaultReturnValue);
+	}
+
+	protected JSONObject getPersistedJSONObject(JSONObject defaultReturnValue) {
+		if (!shouldPersist()) {
+			return defaultReturnValue;
+		}
+		return mPreferenceManager.getSharedPreferences().getJSONObject(mKey,
+				defaultReturnValue);
+	}
+
 	protected long getPersistedLong(long defaultReturnValue) {
 		if (!shouldPersist()) {
 			return defaultReturnValue;
 		}
 
 		return mPreferenceManager.getSharedPreferences().getLong(mKey,
+				defaultReturnValue);
+	}
+
+	protected Set<Long> getPersistedLongSet(Set<Long> defaultReturnValue) {
+		if (!shouldPersist()) {
+			return defaultReturnValue;
+		}
+		return mPreferenceManager.getSharedPreferences().getLongSet(mKey,
 				defaultReturnValue);
 	}
 
@@ -582,6 +625,19 @@ public class Preference implements Comparable<Preference>,
 		return false;
 	}
 
+	protected boolean persistFloatSet(Set<Float> values) {
+		if (shouldPersist()) {
+			if (values.equals(getPersistedFloatSet(null))) {
+				return true;
+			}
+			SharedPreferences.Editor editor = mPreferenceManager.getEditor();
+			editor.putFloatSet(mKey, values);
+			tryCommit(editor);
+			return true;
+		}
+		return false;
+	}
+
 	protected boolean persistInt(int value) {
 		if (shouldPersist()) {
 			if (value == getPersistedInt(~value)) {
@@ -597,6 +653,45 @@ public class Preference implements Comparable<Preference>,
 		return false;
 	}
 
+	protected boolean persistIntSet(Set<Integer> values) {
+		if (shouldPersist()) {
+			if (values.equals(getPersistedIntSet(null))) {
+				return true;
+			}
+			SharedPreferences.Editor editor = mPreferenceManager.getEditor();
+			editor.putIntSet(mKey, values);
+			tryCommit(editor);
+			return true;
+		}
+		return false;
+	}
+
+	protected boolean persistJSONArray(JSONArray value) {
+		if (shouldPersist()) {
+			if (value.equals(getPersistedJSONArray(null))) {
+				return true;
+			}
+			SharedPreferences.Editor editor = mPreferenceManager.getEditor();
+			editor.putJSONArray(mKey, value);
+			tryCommit(editor);
+			return true;
+		}
+		return false;
+	}
+
+	protected boolean persistJSONObject(JSONObject value) {
+		if (shouldPersist()) {
+			if (value.equals(getPersistedJSONObject(null))) {
+				return true;
+			}
+			SharedPreferences.Editor editor = mPreferenceManager.getEditor();
+			editor.putJSONObject(mKey, value);
+			tryCommit(editor);
+			return true;
+		}
+		return false;
+	}
+
 	protected boolean persistLong(long value) {
 		if (shouldPersist()) {
 			if (value == getPersistedLong(~value)) {
@@ -606,6 +701,19 @@ public class Preference implements Comparable<Preference>,
 
 			SharedPreferences.Editor editor = mPreferenceManager.getEditor();
 			editor.putLong(mKey, value);
+			tryCommit(editor);
+			return true;
+		}
+		return false;
+	}
+
+	protected boolean persistLongSet(Set<Long> values) {
+		if (shouldPersist()) {
+			if (values.equals(getPersistedLongSet(null))) {
+				return true;
+			}
+			SharedPreferences.Editor editor = mPreferenceManager.getEditor();
+			editor.putLongSet(mKey, values);
 			tryCommit(editor);
 			return true;
 		}

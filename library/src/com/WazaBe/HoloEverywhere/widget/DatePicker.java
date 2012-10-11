@@ -29,7 +29,6 @@ import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.internal.NumberPickerEditText;
 import com.WazaBe.HoloEverywhere.util.Arrays;
-import com.actionbarsherlock.internal.nineoldandroids.widget.NineFrameLayout;
 
 public class DatePicker extends NineFrameLayout {
 	private final class Callback implements NumberPicker.OnValueChangeListener,
@@ -135,10 +134,15 @@ public class DatePicker extends NineFrameLayout {
 		}
 	}
 
-	private static void setContentDescription(View view, int childId,
-			int stringId) {
-		view.findViewById(childId).setContentDescription(
-				view.getContext().getString(stringId));
+	private static void setContentDescription(View parent, int childId,
+			int textId) {
+		if (parent == null) {
+			return;
+		}
+		View child = parent.findViewById(childId);
+		if (child != null) {
+			child.setContentDescription(parent.getContext().getText(textId));
+		}
 	}
 
 	private final Callback callback = new Callback();
@@ -165,7 +169,7 @@ public class DatePicker extends NineFrameLayout {
 	public DatePicker(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		TypedArray a = context.obtainStyledAttributes(attrs,
-				R.styleable.DatePicker, defStyle, 0);
+				R.styleable.DatePicker, defStyle, R.style.Holo_DatePicker);
 		boolean spinnersShown = a.getBoolean(
 				R.styleable.DatePicker_spinnersShown, true);
 		boolean calendarViewShown = a.getBoolean(
