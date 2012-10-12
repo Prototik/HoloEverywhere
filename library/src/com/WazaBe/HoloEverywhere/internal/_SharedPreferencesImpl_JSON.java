@@ -235,7 +235,6 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 				tempFile.setReadable(true);
 			}
 			tempFile = new File(tempFile, name + ".json");
-			Log.v(TAG, tempFile.getAbsolutePath());
 			if (!tempFile.exists() && !tempFile.createNewFile()) {
 				throw new CouldNotCreateStorage(tempFile,
 						"Сann't create a storage for the preferences.");
