@@ -27,13 +27,13 @@ public class Dialog extends android.app.Dialog {
 	}
 
 	@Override
-	public void setContentView(int layoutResID) {
-		super.setContentView(FontLoader.inflate(getContext(), layoutResID));
+	public LayoutInflater getLayoutInflater() {
+		return LayoutInflater.from(getContext());
 	}
 
 	@Override
-	public LayoutInflater getLayoutInflater() {
-		return LayoutInflater.from(getContext());
+	public void setContentView(int layoutResID) {
+		super.setContentView(FontLoader.inflate(getContext(), layoutResID));
 	}
 
 	@Override

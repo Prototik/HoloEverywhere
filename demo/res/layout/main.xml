@@ -264,13 +264,20 @@
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
 			android:onClick="setDarkTheme"
-			android:text="Holo Dark" />
+			android:text="Dark" />
 		<Button
 			style="?buttonBarButtonStyle"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
 			android:onClick="setLightTheme"
-			android:text="Holo Light" />
+			android:text="Light" />
+		<Button
+			style="?buttonBarButtonStyle"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:onClick="setMixedTheme"
+			android:text="Mixed" />
 	</LinearLayout>
 </LinearLayout>
