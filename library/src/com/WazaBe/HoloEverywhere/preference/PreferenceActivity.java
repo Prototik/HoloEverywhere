@@ -170,8 +170,7 @@ public abstract class PreferenceActivity extends ListActivity implements
 
 		public HeaderAdapter(Context context, List<Header> objects) {
 			super(context, 0, objects);
-			mInflater = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			mInflater = LayoutInflater.from(context);
 		}
 
 		@Override

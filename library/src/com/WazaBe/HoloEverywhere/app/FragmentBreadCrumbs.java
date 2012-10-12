@@ -176,8 +176,7 @@ public class FragmentBreadCrumbs extends ViewGroup implements
 	@SuppressLint("NewApi")
 	public void setActivity(FragmentActivity a) {
 		mActivity = a;
-		mInflater = (LayoutInflater) a
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mInflater = LayoutInflater.from(a);
 		mContainer = (LinearLayout) mInflater.inflate(
 				R.layout.fragment_bread_crumbs, this, false);
 		addView(mContainer);
