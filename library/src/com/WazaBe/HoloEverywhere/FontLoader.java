@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Build.VERSION;
-import android.os.Environment;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -147,8 +146,8 @@ public final class FontLoader {
 	public static Typeface loadTypeface(Context context, int font) {
 		if (fontArray.get(font) == null) {
 			try {
-				File file = new File(Environment.getDataDirectory(), "data/"
-						+ context.getPackageName() + "/fonts");
+				File file = new File(context.getApplicationInfo().dataDir
+						+ "/fonts");
 				if (!file.exists()) {
 					file.mkdirs();
 				}

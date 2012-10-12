@@ -204,31 +204,38 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 	}
 
 	private static final boolean DEBUG = false;
-
 	private static final Map<SharedPreferences, Set<OnSharedPreferenceChangeListener>> listeners = new HashMap<SharedPreferences, Set<OnSharedPreferenceChangeListener>>();
-
 	private static final String TAG = _SharedPreferencesImpl_JSON.class
 			.getSimpleName();
-
 	private String charset;
-
 	private final JSONObject data;
-
 	private File file;
 
 	@SuppressLint("NewApi")
 	public _SharedPreferencesImpl_JSON(Context context, String name, int mode) {
 		setCharset("utf-8");
 		try {
-			File tempFile = new File(Environment.getDataDirectory(), "data/"
-					+ context.getPackageName() + "/shared_prefs");
-			if (tempFile.exists() && !tempFile.isDirectory()) {
-				if (!tempFile.delete() && !tempFile.mkdirs()) {
+			File tempFile = new File(context.getApplicationInfo().dataDir
+					+ "/shared_prefs");
+			if (tempFile.exists()) {
+				if (!tempFile.isDirectory()) {
+					if (!tempFile.delete() && !tempFile.mkdirs()) {
+						throw new CouldNotCreateStorage(tempFile,
+								"Сann't create a storage for the preferences.");
+					}
+					tempFile.setWritable(true);
+					tempFile.setReadable(true);
+				}
+			} else {
+				if (!tempFile.mkdirs()) {
 					throw new CouldNotCreateStorage(tempFile,
 							"Сann't create a storage for the preferences.");
 				}
+				tempFile.setWritable(true);
+				tempFile.setReadable(true);
 			}
 			tempFile = new File(tempFile, name + ".json");
+			Log.v(TAG, tempFile.getAbsolutePath());
 			if (!tempFile.exists() && !tempFile.createNewFile()) {
 				throw new CouldNotCreateStorage(tempFile,
 						"Сann't create a storage for the preferences.");
