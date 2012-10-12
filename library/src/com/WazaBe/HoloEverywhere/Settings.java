@@ -7,6 +7,14 @@ public final class Settings {
 	private static final class DefaultSettingsListener implements
 			SettingsListener {
 		@Override
+		public void onAttach() {
+			setPackageName(DEFAULT_PACKAGE_NAME);
+			setUseThemeManager(false);
+			setUseParentTheme(false);
+			setPreferenceMode(PreferenceMode.JSON);
+		}
+
+		@Override
 		public void onChangePackageName(String oldPackageName,
 				String newPackageName) {
 			setWidgetsPackage(newPackageName + ".widget");
@@ -26,6 +34,12 @@ public final class Settings {
 		}
 
 		@Override
+		public void onChangeUseParentTheme(boolean oldUseParentTheme,
+				boolean newUseParentTheme) {
+
+		}
+
+		@Override
 		public void onChangeUseThemeManager(boolean oldUseThemeManager,
 				boolean newUseThemeManager) {
 
@@ -36,6 +50,11 @@ public final class Settings {
 				String newWidgetsPackage) {
 
 		}
+
+		@Override
+		public void onDeattach() {
+
+		}
 	}
 
 	public static enum PreferenceMode {
@@ -43,6 +62,8 @@ public final class Settings {
 	}
 
 	public static interface SettingsListener {
+		public void onAttach();
+
 		public void onChangePackageName(String oldPackageName,
 				String newPackageName);
 
@@ -52,11 +73,16 @@ public final class Settings {
 		public void onChangePreferencePackage(String oldPreferencePackage,
 				String newPreferencePackage);
 
+		public void onChangeUseParentTheme(boolean oldUseParentTheme,
+				boolean newUseParentTheme);
+
 		public void onChangeUseThemeManager(boolean oldUseThemeManager,
 				boolean newUseThemeManager);
 
 		public void onChangeWidgetsPackage(String oldWidgetsPackage,
 				String newWidgetsPackage);
+
+		public void onDeattach();
 	}
 
 	private static final String DEFAULT_PACKAGE_NAME = Settings.class
@@ -65,13 +91,10 @@ public final class Settings {
 	private static final Set<SettingsListener> LISTENERS = new HashSet<SettingsListener>();
 	private static String packageName, widgetsPackage, preferencePackage;
 	private static PreferenceMode preferenceMode;
-	private static boolean useThemeManager;
+	private static boolean useThemeManager, useParentTheme;
 
 	static {
 		addSettingsListener(DEFAULT_SETTINGS_LISTENER);
-		setPackageName(DEFAULT_PACKAGE_NAME);
-		setUseThemeManager(false);
-		setPreferenceMode(PreferenceMode.JSON);
 	}
 
 	public static void addSettingsListener(SettingsListener listener) {
@@ -80,10 +103,12 @@ public final class Settings {
 				synchronized (LISTENERS) {
 					if (LISTENERS.contains(listener)) {
 						LISTENERS.remove(listener);
+						listener.onDeattach();
 					}
 				}
 			}
 			LISTENERS.add(listener);
+			listener.onAttach();
 		}
 	}
 
@@ -108,6 +133,10 @@ public final class Settings {
 	 */
 	public static void init() {
 
+	}
+
+	public static boolean isUseParentTheme() {
+		return useParentTheme;
 	}
 
 	public static boolean isUseThemeManager() {
@@ -143,6 +172,16 @@ public final class Settings {
 		}
 	}
 
+	private static void onChangeUseParentTheme(boolean oldUseParentTheme,
+			boolean newUseParentTheme) {
+		for (SettingsListener listener : LISTENERS) {
+			if (listener != null) {
+				listener.onChangeUseParentTheme(oldUseParentTheme,
+						newUseParentTheme);
+			}
+		}
+	}
+
 	private static void onChangeUseThemeManager(boolean oldUseThemeManager,
 			boolean newUseThemeManager) {
 		for (SettingsListener listener : LISTENERS) {
@@ -173,6 +212,7 @@ public final class Settings {
 				synchronized (LISTENERS) {
 					if (LISTENERS.contains(listener)) {
 						LISTENERS.remove(listener);
+						listener.onDeattach();
 					}
 				}
 			}
@@ -201,6 +241,14 @@ public final class Settings {
 			String oldPreferencePackage = Settings.preferencePackage;
 			Settings.preferencePackage = preferencePackage;
 			onChangePreferencePackage(oldPreferencePackage, preferencePackage);
+		}
+	}
+
+	public static void setUseParentTheme(boolean useParentTheme) {
+		if (useParentTheme != Settings.useParentTheme) {
+			boolean oldUseParentTheme = Settings.useParentTheme;
+			Settings.useParentTheme = useParentTheme;
+			onChangeUseParentTheme(oldUseParentTheme, useParentTheme);
 		}
 	}
 

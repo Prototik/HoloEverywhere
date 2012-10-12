@@ -1,6 +1,5 @@
 package com.WazaBe.HoloEverywhere.app;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -83,7 +82,6 @@ public class DialogFragment extends Fragment implements
 		if (!mShowsDialog) {
 			return super.getLayoutInflater(savedInstanceState);
 		}
-
 		mDialog = onCreateDialog(savedInstanceState);
 		switch (mStyle) {
 		case STYLE_NO_INPUT:
@@ -96,11 +94,9 @@ public class DialogFragment extends Fragment implements
 		}
 		try {
 			if (mDialog != null) {
-				return (LayoutInflater) mDialog.getContext().getSystemService(
-						Context.LAYOUT_INFLATER_SERVICE);
+				return LayoutInflater.from(mDialog.getContext());
 			}
-			return (LayoutInflater) getSupportActivity().getSystemService(
-					Context.LAYOUT_INFLATER_SERVICE);
+			return LayoutInflater.from(getSupportActivity());
 		} catch (ClassCastException e) {
 			return super.getLayoutInflater(savedInstanceState);
 		}

@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
+import com.WazaBe.HoloEverywhere.LayoutInflater;
 
 public class Dialog extends android.app.Dialog {
 	public Dialog(Context context) {
@@ -23,6 +24,11 @@ public class Dialog extends android.app.Dialog {
 	@Override
 	public void addContentView(View view, LayoutParams params) {
 		super.addContentView(FontLoader.apply(view), params);
+	}
+
+	@Override
+	public LayoutInflater getLayoutInflater() {
+		return LayoutInflater.from(getContext());
 	}
 
 	@Override

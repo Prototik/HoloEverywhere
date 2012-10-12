@@ -463,12 +463,9 @@
         <item name="internalLayout">@layout/time_picker_holo</item>
     </style>
     <style name="Holo.PopupWindow">
-        <item name="android:popupBackground">@drawable/dialog_full_holo_dark</item>
         <item name="android:popupAnimationStyle">@style/Holo.Animation.PopupWindow</item>
     </style>
-    <style name="Holo.PopupWindow.Light">
-        <item name="android:popupBackground">@drawable/dialog_full_holo_light</item>
-    </style>
+    <style name="Holo.PopupWindow.Light"/>
     <style name="Holo.ListPopupWindow">
         <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_holo_dark</item>
@@ -591,7 +588,6 @@
         <item name="spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
         <item name="spinnerDropDownItemStyle">@style/Holo.TextView.SpinnerItem.DropDown</item>
         <item name="android:popupWindowStyle">@style/Holo.PopupWindow</item>
-        <item name="android:popupBackground">@drawable/dialog_full_holo_dark</item>
         <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView</item>
@@ -722,7 +718,6 @@
         <item name="spinnerItemStyle">@style/Holo.TextView.SpinnerItem.Light</item>
         <item name="spinnerDropDownItemStyle">@style/Holo.TextView.SpinnerItem.DropDown.Light</item>
         <item name="android:popupWindowStyle">@style/Holo.PopupWindow.Light</item>
-        <item name="android:popupBackground">@drawable/dialog_full_holo_light</item>
         <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow.Light</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
@@ -853,7 +848,6 @@
         <item name="spinnerItemStyle">@style/Holo.TextView.SpinnerItem.Light</item>
         <item name="spinnerDropDownItemStyle">@style/Holo.TextView.SpinnerItem.DropDown.Light</item>
         <item name="android:popupWindowStyle">@style/Holo.PopupWindow.Light</item>
-        <item name="android:popupBackground">@drawable/dialog_full_holo_light</item>
         <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow.Light</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
@@ -985,7 +979,6 @@
         <item name="spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
         <item name="spinnerDropDownItemStyle">@style/Holo.TextView.SpinnerItem.DropDown</item>
         <item name="android:popupWindowStyle">@style/Holo.PopupWindow</item>
-        <item name="android:popupBackground">@drawable/dialog_full_holo_dark</item>
         <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView</item>
@@ -1116,7 +1109,6 @@
         <item name="spinnerItemStyle">@style/Holo.TextView.SpinnerItem.Light</item>
         <item name="spinnerDropDownItemStyle">@style/Holo.TextView.SpinnerItem.DropDown.Light</item>
         <item name="android:popupWindowStyle">@style/Holo.PopupWindow.Light</item>
-        <item name="android:popupBackground">@drawable/dialog_full_holo_light</item>
         <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow.Light</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>

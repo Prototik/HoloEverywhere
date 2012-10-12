@@ -4,11 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build.VERSION;
 import android.util.AttributeSet;
-import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Checkable;
+import android.widget.ListAdapter;
 
 import com.WazaBe.HoloEverywhere.sherlock.SBase;
 import com.actionbarsherlock.view.ActionMode;
@@ -149,7 +149,7 @@ public class ListView extends android.widget.ListView {
 	}
 
 	protected void init(Context context) {
-		setOnLongClickListener(null);
+		super.setOnItemLongClickListener(longClickListenerWrapper = new OnItemLongClickListenerWrapper());
 		if (context instanceof SBase) {
 			sBase = (SBase) context;
 		}
@@ -171,56 +171,47 @@ public class ListView extends android.widget.ListView {
 
 	@Override
 	public void setChoiceMode(int choiceMode) {
+		if (this.choiceMode == choiceMode) {
+			return;
+		}
 		this.choiceMode = choiceMode;
 		if (actionMode != null) {
 			actionMode.finish();
 			actionMode = null;
 		}
-		if (choiceMode == CHOICE_MODE_MULTIPLE_MODAL && VERSION.SDK_INT < 11) {
-			choiceMode = CHOICE_MODE_MULTIPLE;
+		if (choiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
 			clearChoices();
 			checkedItemCount = 0;
 			setLongClickable(true);
 			updateOnScreenCheckedViews();
 			requestLayout();
 			invalidate();
+			super.setChoiceMode(CHOICE_MODE_MULTIPLE);
+		} else {
+			super.setChoiceMode(choiceMode);
 		}
-		super.setChoiceMode(choiceMode);
 	}
 
 	@Override
 	public void setItemChecked(int position, boolean value) {
-		if (choiceMode == CHOICE_MODE_NONE) {
-			return;
-		}
-		SparseBooleanArray checkStates = getCheckedItemPositions();
-		if (value && choiceMode == CHOICE_MODE_MULTIPLE_MODAL
-				&& actionMode == null) {
-			actionMode = startActionMode(choiceModeListener);
-		}
-		if (choiceMode == CHOICE_MODE_MULTIPLE
-				|| choiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
-			checkStates.put(position, value);
-			if (value) {
-				checkedItemCount++;
-			} else {
-				checkedItemCount--;
+		if (choiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+			if (value && actionMode == null) {
+				actionMode = startActionMode(choiceModeListener);
 			}
+			super.setItemChecked(position, value);
+			checkedItemCount += value ? 1 : -1;
 			if (actionMode != null) {
-				final long id = getAdapter().getItemId(position);
-				choiceModeListener.onItemCheckedStateChanged(actionMode,
-						position, id, value);
+				ListAdapter adapter = getAdapter();
+				if (adapter != null) {
+					choiceModeListener.onItemCheckedStateChanged(actionMode,
+							position, adapter.getItemId(position), value);
+				}
 			}
+			requestLayout();
+			invalidate();
 		} else {
-			if (value || isItemChecked(position)) {
-				checkStates.clear();
-			}
-			if (value) {
-				checkStates.put(position, true);
-			}
+			super.setItemChecked(position, value);
 		}
-		requestLayout();
-		invalidate();
 	}
 
 	public void setMultiChoiceModeListener(MultiChoiceModeListener listener) {

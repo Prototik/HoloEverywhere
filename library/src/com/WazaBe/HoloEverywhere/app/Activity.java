@@ -1,6 +1,8 @@
 package com.WazaBe.HoloEverywhere.app;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.support.v4.app.Watson;
 import android.view.View;
@@ -34,6 +36,16 @@ public abstract class Activity extends Watson implements Base {
 	@Override
 	public Object getSystemService(String name) {
 		return LayoutInflater.getSystemService(super.getSystemService(name));
+	}
+
+	@Override
+	@SuppressLint("NewApi")
+	public void holoStartThemedActivity(Intent intent, Bundle options) {
+		if (VERSION.SDK_INT >= 16) {
+			super.startActivity(intent, options);
+		} else {
+			super.startActivity(intent);
+		}
 	}
 
 	@Override
@@ -80,5 +92,23 @@ public abstract class Activity extends Watson implements Base {
 
 	public void setForceThemeApply(boolean forceThemeApply) {
 		this.forceThemeApply = forceThemeApply;
+	}
+
+	@Override
+	public void startActivity(Intent intent) {
+		if (Settings.isUseParentTheme()) {
+			ThemeManager.startActivity(this, intent);
+		} else {
+			holoStartThemedActivity(intent, null);
+		}
+	}
+
+	@Override
+	public void startActivity(Intent intent, Bundle options) {
+		if (Settings.isUseParentTheme()) {
+			ThemeManager.startActivity(this, intent, options);
+		} else {
+			holoStartThemedActivity(intent, options);
+		}
 	}
 }

@@ -445,7 +445,8 @@ public class AlertController {
 			mWindow.setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
 					WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 		}
-		mWindow.setContentView(mAlertDialogLayout);
+		mWindow.setContentView(LayoutInflater.inflate(mWindow.getContext(),
+				mAlertDialogLayout));
 		setupView();
 	}
 

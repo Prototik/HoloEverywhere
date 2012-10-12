@@ -5,10 +5,11 @@ import com.WazaBe.HoloEverywhere.Settings;
 import com.WazaBe.HoloEverywhere.ThemeManager;
 
 public class Application extends com.WazaBe.HoloEverywhere.app.Application {
-	public Application() {
+	static {
 		LayoutInflater.putToMap("com.WazaBe.HoloDemo.widget",
 				"WidgetContainer", "OtherButton");
 		Settings.setUseThemeManager(true);
-		ThemeManager.THEME_DEFAULT |= ThemeManager.FULLSCREEN;
+		Settings.setUseParentTheme(true);
+		ThemeManager.modifyDefaultTheme(ThemeManager.FULLSCREEN);
 	}
 }

@@ -14,7 +14,6 @@ import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.TextView;
 
-import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.widget.ProgressBar;
 
@@ -79,11 +78,6 @@ public class ProgressDialog extends AlertDialog {
 		initFormats();
 	}
 
-	@Override
-	public LayoutInflater getLayoutInflater() {
-		return LayoutInflater.from(getContext());
-	}
-
 	public int getMax() {
 		if (mProgress != null) {
 			return mProgress.getMax();
@@ -139,7 +133,8 @@ public class ProgressDialog extends AlertDialog {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		TypedArray a = getContext().obtainStyledAttributes(null,
-				R.styleable.AlertDialog, R.attr.alertDialogStyle, 0);
+				R.styleable.AlertDialog, R.attr.alertDialogStyle,
+				R.style.Holo_AlertDialog);
 		View view;
 		if (mProgressStyle == STYLE_HORIZONTAL) {
 			mViewUpdateHandler = new Handler() {
