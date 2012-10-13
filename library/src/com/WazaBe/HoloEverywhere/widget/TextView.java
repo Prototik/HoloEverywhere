@@ -10,33 +10,19 @@ import com.WazaBe.HoloEverywhere.R;
 
 public class TextView extends android.widget.TextView {
 	private boolean allCaps = false;
-
 	private CharSequence originalText;
-
 	private BufferType originalType;
 
 	public TextView(Context context) {
-		super(context);
-		init(null, 0);
+		this(context, null);
 	}
 
 	public TextView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		init(attrs, 0);
+		this(context, attrs, android.R.attr.textViewStyle);
 	}
 
 	public TextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		init(attrs, defStyle);
-	}
-
-	@Override
-	@SuppressLint("NewApi")
-	public void dispatchDisplayHint(int hint) {
-		onDisplayHint(hint);
-	}
-
-	protected void init(AttributeSet attrs, int defStyle) {
 		TypedArray a = getContext().obtainStyledAttributes(attrs,
 				R.styleable.TextView, defStyle, 0);
 		allCaps = a.getBoolean(R.styleable.TextView_textAllCaps, false);
@@ -48,6 +34,12 @@ public class TextView extends android.widget.TextView {
 		if (text != null) {
 			setText(text);
 		}
+	}
+
+	@Override
+	@SuppressLint("NewApi")
+	public void dispatchDisplayHint(int hint) {
+		onDisplayHint(hint);
 	}
 
 	public boolean isAllCaps() {
@@ -79,5 +71,4 @@ public class TextView extends android.widget.TextView {
 		super.setText(allCaps ? originalText.toString().toUpperCase()
 				: originalText, originalType);
 	}
-
 }

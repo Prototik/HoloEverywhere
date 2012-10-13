@@ -36,20 +36,22 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 		public void onInitInflater(LayoutInflater inflater);
 	}
 
-	private static boolean inited = false;
 	private static final Map<Context, LayoutInflater> INSTANCES_MAP = new WeakHashMap<Context, LayoutInflater>();
 	private static OnInitInflaterListener listener;
-
 	private static final Map<String, String> VIEWS_MAP = new HashMap<String, String>();
 
 	static {
-		putToMap(Settings.getWidgetsPackage(), "ProgressBar", "LinearLayout",
+		remap(Settings.getWidgetsPackage(), "ProgressBar", "LinearLayout",
 				"Switch", "TextView", "EditText", "AutoCompleteTextView",
 				"MultiAutoCompleteTextView", "CalendarView", "Spinner",
 				"NumberPicker", "DatePicker", "TimePicker", "ListView",
 				"Divider", "SeekBar");
-		putToMap("android.support.v4.view", "ViewPager", "PagerTitleStrip");
-		putToMap("android.webkit", "WebView");
+		remap("android.support.v4.view", "ViewPager", "PagerTitleStrip");
+		remap("android.webkit", "WebView");
+	}
+
+	public static void clearInstances() {
+		INSTANCES_MAP.clear();
 	}
 
 	public static LayoutInflater from(android.view.LayoutInflater inflater) {
@@ -111,10 +113,24 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 		return from(view).inflate(resource, root, attachToRoot);
 	}
 
-	public static void putToMap(String prefix, String... classess) {
-		for (String clazz : classess) {
-			VIEWS_MAP.put(clazz, prefix);
+	public static void onDestroy(Context context) {
+		if (INSTANCES_MAP.containsKey(context)) {
+			synchronized (INSTANCES_MAP) {
+				if (INSTANCES_MAP.containsKey(context)) {
+					INSTANCES_MAP.remove(context);
+				}
+			}
 		}
+	}
+
+	public static void remap(String prefix, String... classess) {
+		for (String clazz : classess) {
+			VIEWS_MAP.put(clazz, prefix + "." + clazz);
+		}
+	}
+
+	public static void remapHard(String from, String to) {
+		VIEWS_MAP.put(from, to);
 	}
 
 	public static void setOnInitInflaterListener(OnInitInflaterListener listener) {
@@ -163,15 +179,8 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
 	private void init() {
 		super.setFactory(factoryMerger);
-		if (!inited) {
-			synchronized (LayoutInflater.class) {
-				if (!inited) {
-					inited = true;
-					if (listener != null) {
-						listener.onInitInflater(this);
-					}
-				}
-			}
+		if (listener != null) {
+			listener.onInitInflater(this);
 		}
 	}
 
@@ -180,7 +189,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 			throws ClassNotFoundException {
 		name = name.intern();
 		if (VIEWS_MAP.containsKey(name)) {
-			return createView(name, VIEWS_MAP.get(name) + ".", attrs);
+			return createView(VIEWS_MAP.get(name), null, attrs);
 		}
 		try {
 			return createView(name, "android.widget.", attrs);

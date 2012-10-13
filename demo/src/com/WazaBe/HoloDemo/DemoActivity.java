@@ -1,6 +1,7 @@
 package com.WazaBe.HoloDemo;
 
 import android.annotation.SuppressLint;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
@@ -23,6 +24,7 @@ import com.WazaBe.HoloEverywhere.app.DatePickerDialog;
 import com.WazaBe.HoloEverywhere.app.Fragment;
 import com.WazaBe.HoloEverywhere.app.ProgressDialog;
 import com.WazaBe.HoloEverywhere.app.TimePickerDialog;
+import com.WazaBe.HoloEverywhere.app.Activity.Holo;
 import com.WazaBe.HoloEverywhere.sherlock.SActivity;
 import com.WazaBe.HoloEverywhere.widget.ListPopupWindow;
 import com.WazaBe.HoloEverywhere.widget.NumberPicker;
@@ -31,6 +33,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 
+@Holo(forceThemeApply = true, layout = R.layout.content)
 public class DemoActivity extends SActivity {
 	private final class FragmentListener implements TabListener {
 		private final Class<? extends Fragment> clazz;
@@ -77,9 +80,7 @@ public class DemoActivity extends SActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setForceThemeApply(true);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.content);
 		if (isABSSupport()) {
 			getSupportActionBar().setDisplayShowTitleEnabled(false);
 			getSupportActionBar().setDisplayShowHomeEnabled(false);
@@ -109,19 +110,15 @@ public class DemoActivity extends SActivity {
 	}
 
 	public void setDarkTheme(View v) {
-		ThemeManager.restartWithTheme(this, ThemeManager.DARK
-				| ThemeManager.FULLSCREEN);
+		ThemeManager.restartWithDarkTheme(this);
 	}
 
 	public void setLightTheme(View v) {
-		ThemeManager.restartWithTheme(this, ThemeManager.LIGHT
-				| ThemeManager.FULLSCREEN);
+		ThemeManager.restartWithLightTheme(this);
 	}
 
 	public void setMixedTheme(View v) {
-		ThemeManager.restartWithTheme(this,
-				ThemeManager.LIGHT_WITH_DARK_ACTION_BAR
-						| ThemeManager.FULLSCREEN);
+		ThemeManager.restartWithLightWithDarkActionBarTheme(this);
 	}
 
 	public void showAbout(View v) {

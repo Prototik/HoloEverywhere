@@ -1,5 +1,10 @@
 package com.WazaBe.HoloEverywhere.app;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build.VERSION;
@@ -16,6 +21,37 @@ import com.WazaBe.HoloEverywhere.preference.PreferenceManager;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
 public abstract class Activity extends Watson implements Base {
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.TYPE)
+	public static @interface Holo {
+		public boolean addFactoryToInflater() default true;
+
+		public boolean forceThemeApply() default false;
+
+		public int layout() default -1;
+	}
+
+	private static final Holo DEFAULT_HOLO = new Holo() {
+		@Override
+		public boolean addFactoryToInflater() {
+			return true;
+		}
+
+		@Override
+		public Class<Holo> annotationType() {
+			return Holo.class;
+		}
+
+		@Override
+		public boolean forceThemeApply() {
+			return false;
+		}
+
+		public int layout() {
+			return 0;
+		}
+	};
+
 	private boolean forceThemeApply = false;
 
 	@Override
@@ -40,11 +76,12 @@ public abstract class Activity extends Watson implements Base {
 
 	@Override
 	@SuppressLint("NewApi")
-	public void holoStartThemedActivity(Intent intent, Bundle options) {
+	public void holoStartThemedActivity(Intent intent, int requestCode,
+			Bundle options) {
 		if (VERSION.SDK_INT >= 16) {
-			super.startActivity(intent, options);
+			super.startActivityForResult(intent, requestCode, options);
 		} else {
-			super.startActivity(intent);
+			super.startActivityForResult(intent, requestCode);
 		}
 	}
 
@@ -68,11 +105,25 @@ public abstract class Activity extends Watson implements Base {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		getLayoutInflater().addFactory(this, 0);
-		if (Settings.isUseThemeManager()) {
-			ThemeManager.applyTheme(this);
+		Holo holo = getClass().isAnnotationPresent(Holo.class) ? getClass()
+				.getAnnotation(Holo.class) : DEFAULT_HOLO;
+		if (holo.addFactoryToInflater()) {
+			getLayoutInflater().addFactory(this, 0);
+		}
+		if (holo.forceThemeApply()) {
+			setForceThemeApply(true);
 		}
 		super.onCreate(savedInstanceState);
+		final int layout = holo.layout();
+		if (layout > 0) {
+			setContentView(layout);
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LayoutInflater.onDestroy(this);
 	}
 
 	@Override
@@ -95,20 +146,39 @@ public abstract class Activity extends Watson implements Base {
 	}
 
 	@Override
-	public void startActivity(Intent intent) {
-		if (Settings.isUseParentTheme()) {
-			ThemeManager.startActivity(this, intent);
-		} else {
-			holoStartThemedActivity(intent, null);
+	public void startActivities(Intent[] intents) {
+		startActivities(intents, null);
+	}
+
+	@Override
+	public void startActivities(Intent[] intents, Bundle options) {
+		for (Intent intent : intents) {
+			startActivity(intent, options);
 		}
 	}
 
 	@Override
+	public void startActivity(Intent intent) {
+		startActivity(intent, null);
+	}
+
+	@Override
 	public void startActivity(Intent intent, Bundle options) {
+		startActivityForResult(intent, -1, options);
+	}
+
+	@Override
+	public void startActivityForResult(Intent intent, int requestCode) {
+		startActivityForResult(intent, requestCode, null);
+	}
+
+	@Override
+	public void startActivityForResult(Intent intent, int requestCode,
+			Bundle options) {
 		if (Settings.isUseParentTheme()) {
-			ThemeManager.startActivity(this, intent, options);
+			ThemeManager.startActivity(this, intent, requestCode, options);
 		} else {
-			holoStartThemedActivity(intent, options);
+			holoStartThemedActivity(intent, requestCode, options);
 		}
 	}
 }

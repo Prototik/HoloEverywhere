@@ -313,6 +313,7 @@ public class NumberPicker extends LinearLayout {
 		this(context, attrs, R.attr.numberPickerStyle);
 	}
 
+	@SuppressLint("NewApi")
 	public NumberPicker(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		TypedArray attributesArray = context.obtainStyledAttributes(attrs,
@@ -524,15 +525,21 @@ public class NumberPicker extends LinearLayout {
 			switch (event.getAction() & MotionEvent.ACTION_MASK) {
 			case MotionEvent.ACTION_HOVER_ENTER: {
 				sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER);
-				performAccessibilityAction(
-						AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
+				if (VERSION.SDK_INT >= 16) {
+					performAccessibilityAction(
+							AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS,
+							null);
+				}
 			}
 				break;
 			case MotionEvent.ACTION_HOVER_MOVE: {
 				sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT);
 				sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER);
-				performAccessibilityAction(
-						AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
+				if (VERSION.SDK_INT >= 16) {
+					performAccessibilityAction(
+							AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS,
+							null);
+				}
 			}
 				break;
 			case MotionEvent.ACTION_HOVER_EXIT: {

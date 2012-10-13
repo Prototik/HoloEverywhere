@@ -26,7 +26,6 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build.VERSION;
-import android.os.Environment;
 import android.util.Log;
 
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
