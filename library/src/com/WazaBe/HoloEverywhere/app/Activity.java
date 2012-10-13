@@ -110,8 +110,12 @@ public abstract class Activity extends Watson implements Base {
 		if (holo.addFactoryToInflater()) {
 			getLayoutInflater().addFactory(this, 0);
 		}
+		boolean forceThemeApply = isForceThemeApply();
 		if (holo.forceThemeApply()) {
-			setForceThemeApply(true);
+			setForceThemeApply(forceThemeApply = true);
+		}
+		if (forceThemeApply || Settings.isUseThemeManager()) {
+			ThemeManager.applyTheme(this, forceThemeApply);
 		}
 		super.onCreate(savedInstanceState);
 		final int layout = holo.layout();
