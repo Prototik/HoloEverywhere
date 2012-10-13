@@ -1,7 +1,6 @@
 package com.WazaBe.HoloDemo;
 
 import android.annotation.SuppressLint;
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
@@ -19,12 +18,12 @@ import com.WazaBe.HoloDemo.fragments.PreferenceFragment;
 import com.WazaBe.HoloEverywhere.ArrayAdapter;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.ThemeManager;
+import com.WazaBe.HoloEverywhere.app.Activity.Holo;
 import com.WazaBe.HoloEverywhere.app.AlertDialog;
 import com.WazaBe.HoloEverywhere.app.DatePickerDialog;
 import com.WazaBe.HoloEverywhere.app.Fragment;
 import com.WazaBe.HoloEverywhere.app.ProgressDialog;
 import com.WazaBe.HoloEverywhere.app.TimePickerDialog;
-import com.WazaBe.HoloEverywhere.app.Activity.Holo;
 import com.WazaBe.HoloEverywhere.sherlock.SActivity;
 import com.WazaBe.HoloEverywhere.widget.ListPopupWindow;
 import com.WazaBe.HoloEverywhere.widget.NumberPicker;

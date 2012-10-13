@@ -3,6 +3,8 @@
     <issue id="HandlerLeak">
         <ignore path="src/com/WazaBe/HoloEverywhere/app/ProgressDialog.java" />
         <ignore path="src/com/WazaBe/HoloEverywhere/preference/PreferenceActivity.java" />
+        <ignore path="src/com/WazaBe/HoloEverywhere/preference/PreferenceActivity.java" />
+        <ignore path="src/com/WazaBe/HoloEverywhere/preference/PreferenceFragment.java" />
         <ignore path="src/com/WazaBe/HoloEverywhere/preference/PreferenceFragment.java" />
         <ignore path="src/com/WazaBe/HoloEverywhere/widget/ProgressDialog.java" />
     </issue>

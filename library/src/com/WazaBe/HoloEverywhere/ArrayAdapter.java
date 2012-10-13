@@ -181,7 +181,7 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
 		View view;
 		TextView text;
 		if (convertView == null) {
-			view = mInflater.inflate(resource, parent, false);
+			view = FontLoader.apply(mInflater.inflate(resource, parent, false));
 		} else {
 			view = convertView;
 		}

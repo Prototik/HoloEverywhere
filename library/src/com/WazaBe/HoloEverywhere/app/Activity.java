@@ -47,6 +47,7 @@ public abstract class Activity extends Watson implements Base {
 			return false;
 		}
 
+		@Override
 		public int layout() {
 			return 0;
 		}
