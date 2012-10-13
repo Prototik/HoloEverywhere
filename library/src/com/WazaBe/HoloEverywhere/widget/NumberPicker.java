@@ -414,7 +414,7 @@ public class NumberPicker extends LinearLayout {
 					mInputText.selectAll();
 				} else {
 					mInputText.setSelection(0, 0);
-					validateInputTextView(v);
+					validateInputTextView(mInputText);
 				}
 			}
 		});
@@ -1359,8 +1359,8 @@ public class NumberPicker extends LinearLayout {
 		return false;
 	}
 
-	private void validateInputTextView(View v) {
-		String str = String.valueOf(((TextView) v).getText());
+	private void validateInputTextView(NumberPickerEditText v) {
+		String str = String.valueOf(v.getText());
 		if (TextUtils.isEmpty(str)) {
 			updateInputTextView();
 		} else {
