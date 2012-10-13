@@ -26,7 +26,7 @@ public class LinearLayout extends android.widget.LinearLayout {
 	private int mShowDividers;
 
 	public LinearLayout(Context context) {
-		this(context, null, 0);
+		this(context, null);
 	}
 
 	public LinearLayout(Context context, AttributeSet attrs) {
@@ -47,8 +47,7 @@ public class LinearLayout extends android.widget.LinearLayout {
 				if (hasDividerBeforeChildAt(i)) {
 					final LayoutParams lp = (LayoutParams) child
 							.getLayoutParams();
-					final int left = child.getLeft() - lp.leftMargin
-							- mDividerWidth;
+					final int left = child.getLeft() - lp.leftMargin;
 					drawVerticalDivider(canvas, left);
 				}
 			}
@@ -57,7 +56,7 @@ public class LinearLayout extends android.widget.LinearLayout {
 			final View child = getChildAt(count - 1);
 			int right = 0;
 			if (child == null) {
-				right = getWidth() - getPaddingRight() - mDividerWidth;
+				right = getWidth() - getPaddingRight();
 			} else {
 				final LayoutParams lp = (LayoutParams) child.getLayoutParams();
 				right = child.getRight() + lp.rightMargin;
@@ -75,8 +74,7 @@ public class LinearLayout extends android.widget.LinearLayout {
 				if (hasDividerBeforeChildAt(i)) {
 					final LayoutParams lp = (LayoutParams) child
 							.getLayoutParams();
-					final int top = child.getTop() - lp.topMargin
-							- mDividerHeight;
+					final int top = child.getTop() - lp.topMargin;
 					drawHorizontalDivider(canvas, top);
 				}
 			}
@@ -85,7 +83,7 @@ public class LinearLayout extends android.widget.LinearLayout {
 			final View child = getChildAt(count - 1);
 			int bottom = 0;
 			if (child == null) {
-				bottom = getHeight() - getPaddingBottom() - mDividerHeight;
+				bottom = getHeight() - getPaddingBottom();
 			} else {
 				final LayoutParams lp = (LayoutParams) child.getLayoutParams();
 				bottom = child.getBottom() + lp.bottomMargin;
