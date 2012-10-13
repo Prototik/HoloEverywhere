@@ -1,4 +1,2 @@
 *.DS_Store
-bin/
-gen/
-target/
+
