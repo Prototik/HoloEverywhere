@@ -516,6 +516,7 @@ public class NumberPicker extends LinearLayout {
 	}
 
 	@Override
+	@SuppressLint("NewApi")
 	protected boolean dispatchHoverEvent(MotionEvent event) {
 		if (!mHasSelectorWheel) {
 			return super.dispatchHoverEvent(event);

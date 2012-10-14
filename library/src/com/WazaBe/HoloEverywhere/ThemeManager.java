@@ -12,7 +12,7 @@ import com.WazaBe.HoloEverywhere.app.Base;
 
 public final class ThemeManager {
 	public static interface ThemedIntentStarter {
-		public void holoStartThemedActivity(Intent intent, int requestCode,
+		public void superStartActivity(Intent intent, int requestCode,
 				Bundle options);
 	}
 
@@ -323,7 +323,7 @@ public final class ThemeManager {
 			cloneTheme(activity.getIntent(), intent, true);
 		}
 		if (context instanceof ThemedIntentStarter) {
-			((ThemedIntentStarter) context).holoStartThemedActivity(intent,
+			((ThemedIntentStarter) context).superStartActivity(intent,
 					requestCode, options);
 		} else {
 			if (activity != null) {

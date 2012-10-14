@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.WazaBe.HoloEverywhere.app.Application;
+
 public class LayoutInflater extends android.view.LayoutInflater implements
 		Cloneable {
 	private final class HoloFactoryMerger extends ArrayList<Factory> implements
@@ -41,11 +43,11 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	private static final Map<String, String> VIEWS_MAP = new HashMap<String, String>();
 
 	static {
-		remap(Settings.getWidgetsPackage(), "ProgressBar", "LinearLayout",
-				"Switch", "TextView", "EditText", "AutoCompleteTextView",
-				"MultiAutoCompleteTextView", "CalendarView", "Spinner",
-				"NumberPicker", "DatePicker", "TimePicker", "ListView",
-				"Divider", "SeekBar");
+		remap(Application.getSettings().getWidgetsPackage(), "ProgressBar",
+				"LinearLayout", "Switch", "TextView", "EditText",
+				"AutoCompleteTextView", "MultiAutoCompleteTextView",
+				"CalendarView", "Spinner", "NumberPicker", "DatePicker",
+				"TimePicker", "ListView", "Divider", "SeekBar");
 		remap("android.support.v4.view", "ViewPager", "PagerTitleStrip");
 		remap("android.webkit", "WebView");
 	}

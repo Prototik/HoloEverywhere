@@ -18,7 +18,7 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.WazaBe.HoloEverywhere.Settings;
+import com.WazaBe.HoloEverywhere.app.Application;
 import com.WazaBe.HoloEverywhere.internal._SharedPreferencesImpl_JSON;
 import com.WazaBe.HoloEverywhere.internal._SharedPreferencesImpl_XML;
 
@@ -91,7 +91,7 @@ public class PreferenceManager {
 	}
 
 	public static SharedPreferences wrap(Context context, String name, int mode) {
-		switch (Settings.getPreferenceMode()) {
+		switch (Application.getSettings().getPreferenceImpl()) {
 		case XML:
 			return new _SharedPreferencesImpl_XML(context.getSharedPreferences(
 					name, mode));

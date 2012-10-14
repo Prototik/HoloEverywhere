@@ -1,272 +1,227 @@
 package com.WazaBe.HoloEverywhere;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import android.util.Log;
 
 public final class Settings {
-	private static final class DefaultSettingsListener implements
-			SettingsListener {
-		@Override
-		public void onAttach() {
-			setPackageName(DEFAULT_PACKAGE_NAME);
-			setUseThemeManager(false);
-			setUseParentTheme(false);
-			setPreferenceMode(PreferenceMode.JSON);
+	public static class BooleanProperty extends Property<Boolean> {
+
+	}
+
+	public static class EnumProperty<T extends Enum<T>> extends Property<T> {
+
+	}
+
+	public static class IntegerProperty extends Property<Integer> {
+
+	}
+
+	public static class Property<Z> {
+		private Setting<?> setting;
+
+		private Z value;
+		private boolean wasAttach = false;
+
+		public final Setting<?> getSetting() {
+			return setting;
 		}
 
-		@Override
-		public void onChangePackageName(String oldPackageName,
-				String newPackageName) {
-			setWidgetsPackage(newPackageName + ".widget");
-			setPreferencePackage(newPackageName + ".preference");
+		public Z getValue() {
+			return value;
 		}
 
-		@Override
-		public void onChangePreferenceMode(PreferenceMode oldPreferenceMode,
-				PreferenceMode newPreferenceMode) {
-
+		public boolean isValid() {
+			return true;
 		}
 
-		@Override
-		public void onChangePreferencePackage(String oldPreferencePackage,
-				String newPreferencePackage) {
-
+		public final void notifyOnChange() {
+			if (setting != null) {
+				setting.onPropertyChange(this);
+			}
 		}
 
-		@Override
-		public void onChangeUseParentTheme(boolean oldUseParentTheme,
-				boolean newUseParentTheme) {
-
-		}
-
-		@Override
-		public void onChangeUseThemeManager(boolean oldUseThemeManager,
-				boolean newUseThemeManager) {
-
-		}
-
-		@Override
-		public void onChangeWidgetsPackage(String oldWidgetsPackage,
-				String newWidgetsPackage) {
+		protected void onAttach(Setting<?> setting) {
 
 		}
 
-		@Override
-		public void onDeattach() {
+		protected void onDetach() {
 
+		}
+
+		private final void setSetting(Setting<?> setting) {
+			this.setting = setting;
+			if (setting != null) {
+				if (wasAttach) {
+					onDetach();
+				}
+				onAttach(setting);
+				wasAttach = true;
+			} else if (wasAttach) {
+				onDetach();
+				wasAttach = false;
+			}
+		}
+
+		public void setValue(Z value) {
+			if (this.value != value) {
+				this.value = value;
+				notifyOnChange();
+			}
 		}
 	}
 
-	public static enum PreferenceMode {
-		JSON, XML;
-	}
+	public static abstract class Setting<T extends Setting<T>> {
+		private final List<SettingListener> listeners = new ArrayList<SettingListener>();
+		private final List<Property<?>> propertyList = new ArrayList<Property<?>>();
 
-	public static interface SettingsListener {
-		public void onAttach();
+		@Retention(RetentionPolicy.RUNTIME)
+		@Target(ElementType.FIELD)
+		public static @interface SettingProperty {
+			public boolean create() default false;
+		}
 
-		public void onChangePackageName(String oldPackageName,
-				String newPackageName);
+		@SuppressWarnings("unchecked")
+		public final T addListener(SettingListener listener) {
+			if (listener == null) {
+				throw new IllegalArgumentException(
+						"SettingListener can't be null");
+			}
+			if (!listeners.contains(listener)) {
+				listeners.add(listener);
+				listener.onAttach(this);
+			} else {
+				listeners.remove(listener);
+				listeners.add(listener);
+			}
+			return (T) this;
+		}
 
-		public void onChangePreferenceMode(PreferenceMode oldPreferenceMode,
-				PreferenceMode newPreferenceMode);
-
-		public void onChangePreferencePackage(String oldPreferencePackage,
-				String newPreferencePackage);
-
-		public void onChangeUseParentTheme(boolean oldUseParentTheme,
-				boolean newUseParentTheme);
-
-		public void onChangeUseThemeManager(boolean oldUseThemeManager,
-				boolean newUseThemeManager);
-
-		public void onChangeWidgetsPackage(String oldWidgetsPackage,
-				String newWidgetsPackage);
-
-		public void onDeattach();
-	}
-
-	private static final String DEFAULT_PACKAGE_NAME = Settings.class
-			.getPackage().getName();
-	private static final SettingsListener DEFAULT_SETTINGS_LISTENER = new DefaultSettingsListener();
-	private static final Set<SettingsListener> LISTENERS = new HashSet<SettingsListener>();
-	private static String packageName, widgetsPackage, preferencePackage;
-	private static PreferenceMode preferenceMode;
-	private static boolean useThemeManager, useParentTheme;
-
-	static {
-		addSettingsListener(DEFAULT_SETTINGS_LISTENER);
-	}
-
-	public static void addSettingsListener(SettingsListener listener) {
-		if (listener != null) {
-			if (LISTENERS.contains(listener)) {
-				synchronized (LISTENERS) {
-					if (LISTENERS.contains(listener)) {
-						LISTENERS.remove(listener);
-						listener.onDeattach();
+		private void init() {
+			for (Field field : getFields()) {
+				try {
+					field.setAccessible(true);
+					if (field.isAnnotationPresent(SettingProperty.class)) {
+						SettingProperty settingProperty = field
+								.getAnnotation(SettingProperty.class);
+						if (settingProperty.create()) {
+							field.set(this, field.getType().newInstance());
+						}
+						register((Property<?>) field.get(this));
 					}
+				} catch (Exception e) {
+					Log.e(TAG, "Error on processing property", e);
 				}
 			}
-			LISTENERS.add(listener);
-			listener.onAttach();
+			onInit();
 		}
-	}
 
-	public static String getPackageName() {
-		return packageName;
-	}
+		protected void onInit() {
 
-	public static PreferenceMode getPreferenceMode() {
-		return preferenceMode;
-	}
+		}
 
-	public static String getPreferencePackage() {
-		return preferencePackage;
-	}
-
-	public static String getWidgetsPackage() {
-		return widgetsPackage;
-	}
-
-	/*
-	 * Nop. For execute static code block
-	 */
-	public static void init() {
-
-	}
-
-	public static boolean isUseParentTheme() {
-		return useParentTheme;
-	}
-
-	public static boolean isUseThemeManager() {
-		return useThemeManager;
-	}
-
-	private static void onChangePackageName(String oldPackageName,
-			String newPackageName) {
-		for (SettingsListener listener : LISTENERS) {
-			if (listener != null) {
-				listener.onChangePackageName(oldPackageName, newPackageName);
+		private Field[] getFields() {
+			try {
+				return getClass().getDeclaredFields();
+			} catch (Exception e) {
+				return getClass().getFields();
 			}
 		}
-	}
 
-	private static void onChangePreferenceMode(
-			PreferenceMode oldPreferenceMode, PreferenceMode newPreferenceMode) {
-		for (SettingsListener listener : LISTENERS) {
-			if (listener != null) {
-				listener.onChangePreferenceMode(oldPreferenceMode,
-						newPreferenceMode);
-			}
-		}
-	}
-
-	private static void onChangePreferencePackage(String oldPreferencePackage,
-			String newPreferencePackage) {
-		for (SettingsListener listener : LISTENERS) {
-			if (listener != null) {
-				listener.onChangePreferencePackage(oldPreferencePackage,
-						newPreferencePackage);
-			}
-		}
-	}
-
-	private static void onChangeUseParentTheme(boolean oldUseParentTheme,
-			boolean newUseParentTheme) {
-		for (SettingsListener listener : LISTENERS) {
-			if (listener != null) {
-				listener.onChangeUseParentTheme(oldUseParentTheme,
-						newUseParentTheme);
-			}
-		}
-	}
-
-	private static void onChangeUseThemeManager(boolean oldUseThemeManager,
-			boolean newUseThemeManager) {
-		for (SettingsListener listener : LISTENERS) {
-			if (listener != null) {
-				listener.onChangeUseThemeManager(oldUseThemeManager,
-						newUseThemeManager);
-			}
-		}
-	}
-
-	private static void onChangeWidgetsPackage(String oldWidgetsPackage,
-			String newWidgetsPackage) {
-		for (SettingsListener listener : LISTENERS) {
-			if (listener != null) {
-				listener.onChangeWidgetsPackage(oldWidgetsPackage,
-						newWidgetsPackage);
-			}
-		}
-	}
-
-	public static void removeDefaultSettingsListener() {
-		removeSettingsListener(DEFAULT_SETTINGS_LISTENER);
-	}
-
-	public static void removeSettingsListener(SettingsListener listener) {
-		if (listener != null) {
-			if (LISTENERS.contains(listener)) {
-				synchronized (LISTENERS) {
-					if (LISTENERS.contains(listener)) {
-						LISTENERS.remove(listener);
-						listener.onDeattach();
-					}
+		protected void onPropertyChange(Property<?> property) {
+			for (SettingListener listener : listeners) {
+				try {
+					listener.onPropertyChange(this, property);
+				} catch (RuntimeException e) {
+					Log.w(TAG, "Listener error", e);
 				}
 			}
 		}
-	}
 
-	public static void setPackageName(String packageName) {
-		if (packageName != null && !packageName.equals(Settings.packageName)) {
-			String oldPackageName = Settings.packageName;
-			Settings.packageName = packageName;
-			onChangePackageName(oldPackageName, packageName);
+		@SuppressWarnings("unchecked")
+		public final T register(Property<?> property) {
+			Log.v(TAG, "Register " + property);
+			if (property == null || !property.isValid()) {
+				throw new RuntimeException("Property not valid");
+			}
+			if (property.getSetting() != null && property.getSetting() != this) {
+				throw new RuntimeException("Property already attached to "
+						+ property.getSetting().getClass().getName());
+			}
+			property.setSetting(this);
+			propertyList.add(property);
+			return (T) this;
+		}
+
+		@SuppressWarnings("unchecked")
+		public final T removeListener(SettingListener listener) {
+			if (listener == null) {
+				throw new IllegalArgumentException(
+						"SettingListener can't be null");
+			}
+			if (listeners.contains(listener)) {
+				listener.onDetach(this);
+				listeners.remove(listener);
+			}
+			return (T) this;
+		}
+
+		@SuppressWarnings("unchecked")
+		public final T unregister(Property<?> property) {
+			if (property != null) {
+				propertyList.remove(property);
+				property.setSetting(null);
+			}
+			return (T) this;
 		}
 	}
 
-	public static void setPreferenceMode(PreferenceMode preferenceMode) {
-		if (preferenceMode != null && preferenceMode != Settings.preferenceMode) {
-			PreferenceMode oldPreferenceMode = Settings.preferenceMode;
-			Settings.preferenceMode = preferenceMode;
-			onChangePreferenceMode(oldPreferenceMode, preferenceMode);
-		}
+	public static interface SettingListener {
+		public void onAttach(Setting<?> setting);
+
+		public void onDetach(Setting<?> setting);
+
+		public void onPropertyChange(Setting<?> setting, Property<?> property);
 	}
 
-	public static void setPreferencePackage(String preferencePackage) {
-		if (preferencePackage != null
-				&& !preferencePackage.equals(Settings.preferencePackage)) {
-			String oldPreferencePackage = Settings.preferencePackage;
-			Settings.preferencePackage = preferencePackage;
-			onChangePreferencePackage(oldPreferencePackage, preferencePackage);
-		}
+	public static class StringProperty extends Property<String> {
+
 	}
 
-	public static void setUseParentTheme(boolean useParentTheme) {
-		if (useParentTheme != Settings.useParentTheme) {
-			boolean oldUseParentTheme = Settings.useParentTheme;
-			Settings.useParentTheme = useParentTheme;
-			onChangeUseParentTheme(oldUseParentTheme, useParentTheme);
+	private static final Map<Class<? extends Setting<?>>, Setting<?>> settingMap = new HashMap<Class<? extends Setting<?>>, Setting<?>>();
+	private static final String TAG = Setting.class.getSimpleName();
+
+	@SuppressWarnings("unchecked")
+	public static <T extends Setting<T>> T get(Class<T> clazz) {
+		if (!settingMap.containsKey(clazz)) {
+			try {
+				T t = clazz.newInstance();
+				settingMap.put(clazz, t);
+				t.init();
+			} catch (Exception e) {
+				Log.e(TAG, "Error init setting instance", e);
+			}
 		}
+		return (T) settingMap.get(clazz);
 	}
 
-	public static void setUseThemeManager(boolean useThemeManager) {
-		if (useThemeManager != Settings.useThemeManager) {
-			boolean oldUseThemeManager = Settings.useThemeManager;
-			Settings.useThemeManager = useThemeManager;
-			onChangeUseThemeManager(oldUseThemeManager, useThemeManager);
-		}
+	public <T extends Setting<T>> void addListener(Class<T> clazz,
+			SettingListener settingListener) {
+		get(clazz).addListener(settingListener);
 	}
 
-	public static void setWidgetsPackage(String widgetsPackage) {
-		if (widgetsPackage != null
-				&& !widgetsPackage.equals(Settings.widgetsPackage)) {
-			String oldWidgetsPackage = Settings.widgetsPackage;
-			Settings.widgetsPackage = widgetsPackage;
-			onChangeWidgetsPackage(oldWidgetsPackage, widgetsPackage);
+	public <T extends Setting<T>> void removeListener(Class<T> clazz,
+			SettingListener settingListener) {
+		if (settingMap.containsKey(clazz)) {
+			get(clazz).addListener(settingListener);
 		}
 	}
-
 }

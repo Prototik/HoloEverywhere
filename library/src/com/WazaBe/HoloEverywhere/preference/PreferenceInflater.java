@@ -9,7 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
 
-import com.WazaBe.HoloEverywhere.Settings;
+import com.WazaBe.HoloEverywhere.app.Application;
 import com.WazaBe.HoloEverywhere.util.XmlUtils;
 
 class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
@@ -39,7 +39,8 @@ class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
 
 	private void init(PreferenceManager preferenceManager) {
 		mPreferenceManager = preferenceManager;
-		setDefaultPackage(Settings.getPreferencePackage() + ".");
+		setDefaultPackage(Application.getSettings().getPreferencePackage()
+				+ ".");
 	}
 
 	@Override

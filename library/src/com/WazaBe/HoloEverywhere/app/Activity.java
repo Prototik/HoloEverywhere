@@ -15,8 +15,8 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
-import com.WazaBe.HoloEverywhere.Settings;
 import com.WazaBe.HoloEverywhere.ThemeManager;
+import com.WazaBe.HoloEverywhere.app.Application.Setting;
 import com.WazaBe.HoloEverywhere.preference.PreferenceManager;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
@@ -66,6 +66,11 @@ public abstract class Activity extends Watson implements Base {
 	}
 
 	@Override
+	public Setting getSettings() {
+		return Application.getSettings();
+	}
+
+	@Override
 	public SharedPreferences getSupportSharedPreferences(String name, int mode) {
 		return PreferenceManager.wrap(this, name, mode);
 	}
@@ -77,7 +82,7 @@ public abstract class Activity extends Watson implements Base {
 
 	@Override
 	@SuppressLint("NewApi")
-	public void holoStartThemedActivity(Intent intent, int requestCode,
+	public void superStartActivity(Intent intent, int requestCode,
 			Bundle options) {
 		if (VERSION.SDK_INT >= 16) {
 			super.startActivityForResult(intent, requestCode, options);
@@ -104,6 +109,10 @@ public abstract class Activity extends Watson implements Base {
 		}
 	}
 
+	public SharedPreferences getDefaultSharedPreferences() {
+		return PreferenceManager.getDefaultSharedPreferences(this);
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Holo holo = getClass().isAnnotationPresent(Holo.class) ? getClass()
@@ -115,7 +124,7 @@ public abstract class Activity extends Watson implements Base {
 		if (holo.forceThemeApply()) {
 			setForceThemeApply(forceThemeApply = true);
 		}
-		if (forceThemeApply || Settings.isUseThemeManager()) {
+		if (forceThemeApply || getSettings().isUseThemeManager()) {
 			ThemeManager.applyTheme(this, forceThemeApply);
 		}
 		super.onCreate(savedInstanceState);
@@ -180,10 +189,10 @@ public abstract class Activity extends Watson implements Base {
 	@Override
 	public void startActivityForResult(Intent intent, int requestCode,
 			Bundle options) {
-		if (Settings.isUseParentTheme()) {
+		if (getSettings().isAlwaysUseParentTheme()) {
 			ThemeManager.startActivity(this, intent, requestCode, options);
 		} else {
-			holoStartThemedActivity(intent, requestCode, options);
+			superStartActivity(intent, requestCode, options);
 		}
 	}
 }
