@@ -8,13 +8,13 @@ import android.widget.ImageView;
 
 import com.WazaBe.HoloDemo.R;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
+import com.WazaBe.HoloEverywhere.widget.Button;
 import com.WazaBe.HoloEverywhere.widget.LinearLayout;
-import com.WazaBe.HoloEverywhere.widget.TextView;
 
 public class OtherButton extends LinearLayout {
 	private ImageView icon;
 	private OnClickListener onClickListener;
-	private TextView text;
+	private Button text;
 
 	public OtherButton(Context context) {
 		super(context);
@@ -32,7 +32,7 @@ public class OtherButton extends LinearLayout {
 	protected void init(AttributeSet attrs, int defStyleRes) {
 		super.init(attrs, defStyleRes);
 		LayoutInflater.inflate(getContext(), R.layout.other_button, this, true);
-		text = (TextView) findViewById(R.id.text);
+		text = (Button) findViewById(R.id.text);
 		icon = (ImageView) findViewById(R.id.icon);
 		if (onClickListener != null) {
 			text.setOnClickListener(onClickListener);

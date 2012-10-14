@@ -77,7 +77,7 @@ public class SeekBarPreference extends Preference implements
 	}
 
 	@Override
-	protected Object onGetDefaultValue(TypedArray a, int index) {
+	protected Integer onGetDefaultValue(TypedArray a, int index) {
 		return a.getInt(index, 0);
 	}
 

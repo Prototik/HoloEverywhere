@@ -208,6 +208,9 @@
 	<declare-styleable name="SeekBarPreference">
 		<attr name="max" />
 	</declare-styleable>
+	<declare-styleable name="SeekBarDialogPreference">
+		<attr name="max" />
+	</declare-styleable>
 	<declare-styleable name="NumberPickerPreference">
 		<attr name="min" format="integer" />
 		<attr name="max" format="integer" />

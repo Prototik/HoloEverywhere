@@ -28,6 +28,7 @@ import android.content.Context;
 import android.os.Build.VERSION;
 import android.util.Log;
 
+import com.WazaBe.HoloEverywhere.app.Application;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
 public class _SharedPreferencesImpl_JSON implements SharedPreferences {
@@ -202,7 +203,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 		}
 	}
 
-	private static final boolean DEBUG = false;
+	private final boolean DEBUG = Application.getSettings().getDebugMode();
 	private static final Map<SharedPreferences, Set<OnSharedPreferenceChangeListener>> listeners = new HashMap<SharedPreferences, Set<OnSharedPreferenceChangeListener>>();
 	private static final String TAG = _SharedPreferencesImpl_JSON.class
 			.getSimpleName();
@@ -421,7 +422,17 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 	}
 
 	public void saveDataToFile(File file, JSONObject data) {
-		String s = data.toString();
+		String s;
+		if (DEBUG) {
+			try {
+				s = data.toString(2);
+			} catch (JSONException e) {
+				Log.e(TAG, "JSONException", e);
+				s = data.toString();
+			}
+		} else {
+			s = data.toString();
+		}
 		byte[] b;
 		try {
 			b = s.getBytes(charset);

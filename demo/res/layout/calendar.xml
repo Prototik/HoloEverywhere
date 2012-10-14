@@ -3,17 +3,17 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical" >
-	<CalendarView
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1" />
-	<Divider
-		android:layout_width="match_parent"
-		android:layout_height="1dp" />
 	<Button
 		style="?borderlessButtonStyle"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:onClick="closeCalendar"
-		android:text="Close" />
+		android:text="Back" />
+	<Divider
+		android:layout_width="match_parent"
+		android:layout_height="1dp" />
+	<CalendarView
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1" />
 </LinearLayout>

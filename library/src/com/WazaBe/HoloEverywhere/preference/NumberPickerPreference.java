@@ -57,10 +57,8 @@ public class NumberPickerPreference extends DialogPreference {
 	private final NumberPicker mNumberPicker;
 	private OnScrollListener mOnScrollListener;
 	private OnValueChangeListener mOnValueChangeListener;
-
 	private int mValue = Integer.MIN_VALUE, mMinValue = Integer.MIN_VALUE,
 			mMaxValue = Integer.MIN_VALUE;
-
 	private boolean mWrapSelectorWheel = true;
 
 	public NumberPickerPreference(Context context) {

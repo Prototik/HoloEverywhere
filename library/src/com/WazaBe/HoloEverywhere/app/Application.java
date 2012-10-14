@@ -55,6 +55,16 @@ public class Application extends android.app.Application implements
 		private EnumProperty<PreferenceImpl> preferenceImpl;
 		@SettingProperty(create = true)
 		private BooleanProperty useThemeManager;
+		@SettingProperty(create = true)
+		private BooleanProperty debugMode;
+
+		public void setDebugMode(boolean debugMode) {
+			this.debugMode.setValue(debugMode);
+		}
+
+		public boolean getDebugMode() {
+			return debugMode.getValue();
+		}
 
 		public Setting attachDefaultListener() {
 			return addListener(DEFAULT_SETTINGS_LISTENER);
@@ -91,6 +101,7 @@ public class Application extends android.app.Application implements
 		@Override
 		protected void onInit() {
 			attachDefaultListener();
+			setDebugMode(false);
 			setPreferenceImpl(PreferenceImpl.JSON);
 			setAlwaysUseParentTheme(false);
 			setUseThemeManager(false);
