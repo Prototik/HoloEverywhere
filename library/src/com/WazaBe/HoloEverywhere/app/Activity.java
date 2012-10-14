@@ -19,6 +19,8 @@ import com.WazaBe.HoloEverywhere.ThemeManager;
 import com.WazaBe.HoloEverywhere.app.Application.Setting;
 import com.WazaBe.HoloEverywhere.preference.PreferenceManager;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 public abstract class Activity extends Watson implements Base {
 	@Retention(RetentionPolicy.RUNTIME)
@@ -99,6 +101,21 @@ public abstract class Activity extends Watson implements Base {
 	@Override
 	public boolean isForceThemeApply() {
 		return forceThemeApply;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		return false;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		return false;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		return false;
 	}
 
 	@Override
