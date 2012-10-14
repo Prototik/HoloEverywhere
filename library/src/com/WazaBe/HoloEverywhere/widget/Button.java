@@ -13,6 +13,14 @@ public class Button extends android.widget.Button {
 	private CharSequence originalText;
 	private BufferType originalType;
 
+	public Button(Context context) {
+		this(context, null);
+	}
+
+	public Button(Context context, AttributeSet attrs) {
+		this(context, attrs, android.R.attr.buttonStyle);
+	}
+
 	public Button(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		TypedArray a = getContext().obtainStyledAttributes(attrs,
@@ -31,14 +39,6 @@ public class Button extends android.widget.Button {
 		if (text != null) {
 			setText(text);
 		}
-	}
-
-	public Button(Context context, AttributeSet attrs) {
-		this(context, attrs, android.R.attr.buttonStyle);
-	}
-
-	public Button(Context context) {
-		this(context, null);
 	}
 
 	@Override

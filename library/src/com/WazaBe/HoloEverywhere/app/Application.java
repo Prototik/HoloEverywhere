@@ -17,13 +17,15 @@ import com.WazaBe.HoloEverywhere.ThemeManager.ThemedIntentStarter;
 
 public class Application extends android.app.Application implements
 		ThemedIntentStarter {
-	private static final String DEFAULT_HOLO_EVERYWHERE_PACKAGE = "com.WazaBe.HoloEverywhere";
-
 	public static final class Setting extends Settings.Setting<Setting> {
 		public static enum PreferenceImpl {
 			JSON, XML
 		}
 
+		@SettingProperty(create = true)
+		private BooleanProperty alwaysUseParentTheme;
+		@SettingProperty(create = true)
+		private BooleanProperty debugMode;
 		private final SettingListener DEFAULT_SETTINGS_LISTENER = new SettingListener() {
 			@Override
 			public void onAttach(Settings.Setting<?> setting) {
@@ -44,27 +46,15 @@ public class Application extends android.app.Application implements
 			}
 		};
 		@SettingProperty(create = true)
-		private BooleanProperty alwaysUseParentTheme;
-		@SettingProperty(create = true)
 		private StringProperty holoEverywherePackage;
-		@SettingProperty(create = true)
-		private StringProperty widgetsPackage;
-		@SettingProperty(create = true)
-		private StringProperty preferencePackage;
 		@SettingProperty(create = true)
 		private EnumProperty<PreferenceImpl> preferenceImpl;
 		@SettingProperty(create = true)
+		private StringProperty preferencePackage;
+		@SettingProperty(create = true)
 		private BooleanProperty useThemeManager;
 		@SettingProperty(create = true)
-		private BooleanProperty debugMode;
-
-		public void setDebugMode(boolean debugMode) {
-			this.debugMode.setValue(debugMode);
-		}
-
-		public boolean getDebugMode() {
-			return debugMode.getValue();
-		}
+		private StringProperty widgetsPackage;
 
 		public Setting attachDefaultListener() {
 			return addListener(DEFAULT_SETTINGS_LISTENER);
@@ -72,6 +62,10 @@ public class Application extends android.app.Application implements
 
 		public Setting detachDefaultListener() {
 			return removeListener(DEFAULT_SETTINGS_LISTENER);
+		}
+
+		public boolean getDebugMode() {
+			return debugMode.getValue();
 		}
 
 		public String getHoloEverywherePackage() {
@@ -113,6 +107,10 @@ public class Application extends android.app.Application implements
 			return this;
 		}
 
+		public void setDebugMode(boolean debugMode) {
+			this.debugMode.setValue(debugMode);
+		}
+
 		public Setting setHoloEverywherePackage(String holoEverywherePackage) {
 			this.holoEverywherePackage.setValue(holoEverywherePackage);
 			return this;
@@ -139,6 +137,8 @@ public class Application extends android.app.Application implements
 		}
 	}
 
+	private static final String DEFAULT_HOLO_EVERYWHERE_PACKAGE = "com.WazaBe.HoloEverywhere";
+
 	private static Application lastInstance;
 
 	public static Application getLastInstance() {
@@ -151,17 +151,6 @@ public class Application extends android.app.Application implements
 
 	public Application() {
 		lastInstance = this;
-	}
-
-	@Override
-	@SuppressLint("NewApi")
-	public void superStartActivity(Intent intent, int requestCode,
-			Bundle options) {
-		if (VERSION.SDK_INT >= 16) {
-			super.startActivity(intent, options);
-		} else {
-			super.startActivity(intent);
-		}
 	}
 
 	@Override
@@ -196,6 +185,17 @@ public class Application extends android.app.Application implements
 			ThemeManager.startActivity(this, intent, options);
 		} else {
 			superStartActivity(intent, -1, options);
+		}
+	}
+
+	@Override
+	@SuppressLint("NewApi")
+	public void superStartActivity(Intent intent, int requestCode,
+			Bundle options) {
+		if (VERSION.SDK_INT >= 16) {
+			super.startActivity(intent, options);
+		} else {
+			super.startActivity(intent);
 		}
 	}
 }

@@ -80,14 +80,15 @@ public final class Settings {
 	}
 
 	public static abstract class Setting<T extends Setting<T>> {
-		private final List<SettingListener> listeners = new ArrayList<SettingListener>();
-		private final List<Property<?>> propertyList = new ArrayList<Property<?>>();
-
 		@Retention(RetentionPolicy.RUNTIME)
 		@Target(ElementType.FIELD)
 		public static @interface SettingProperty {
 			public boolean create() default false;
 		}
+
+		private final List<SettingListener> listeners = new ArrayList<SettingListener>();
+
+		private final List<Property<?>> propertyList = new ArrayList<Property<?>>();
 
 		@SuppressWarnings("unchecked")
 		public final T addListener(SettingListener listener) {
@@ -103,6 +104,14 @@ public final class Settings {
 				listeners.add(listener);
 			}
 			return (T) this;
+		}
+
+		private Field[] getFields() {
+			try {
+				return getClass().getDeclaredFields();
+			} catch (Exception e) {
+				return getClass().getFields();
+			}
 		}
 
 		private void init() {
@@ -126,14 +135,6 @@ public final class Settings {
 
 		protected void onInit() {
 
-		}
-
-		private Field[] getFields() {
-			try {
-				return getClass().getDeclaredFields();
-			} catch (Exception e) {
-				return getClass().getFields();
-			}
 		}
 
 		protected void onPropertyChange(Property<?> property) {

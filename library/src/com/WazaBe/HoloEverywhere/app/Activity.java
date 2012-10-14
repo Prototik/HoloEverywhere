@@ -62,6 +62,10 @@ public abstract class Activity extends Watson implements Base {
 		super.addContentView(FontLoader.apply(view), params);
 	}
 
+	public SharedPreferences getDefaultSharedPreferences() {
+		return PreferenceManager.getDefaultSharedPreferences(this);
+	}
+
 	@Override
 	public LayoutInflater getLayoutInflater() {
 		return LayoutInflater.from(this);
@@ -83,17 +87,6 @@ public abstract class Activity extends Watson implements Base {
 	}
 
 	@Override
-	@SuppressLint("NewApi")
-	public void superStartActivity(Intent intent, int requestCode,
-			Bundle options) {
-		if (VERSION.SDK_INT >= 16) {
-			super.startActivityForResult(intent, requestCode, options);
-		} else {
-			super.startActivityForResult(intent, requestCode);
-		}
-	}
-
-	@Override
 	public boolean isABSSupport() {
 		return false;
 	}
@@ -104,30 +97,11 @@ public abstract class Activity extends Watson implements Base {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return false;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		return false;
-	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		return false;
-	}
-
-	@Override
 	@SuppressLint("NewApi")
 	public void onBackPressed() {
 		if (!getSupportFragmentManager().popBackStackImmediate()) {
 			finish();
 		}
-	}
-
-	public SharedPreferences getDefaultSharedPreferences() {
-		return PreferenceManager.getDefaultSharedPreferences(this);
 	}
 
 	@Override
@@ -152,9 +126,24 @@ public abstract class Activity extends Watson implements Base {
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		return false;
+	}
+
+	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		LayoutInflater.onDestroy(this);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		return false;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		return false;
 	}
 
 	@Override
@@ -210,6 +199,17 @@ public abstract class Activity extends Watson implements Base {
 			ThemeManager.startActivity(this, intent, requestCode, options);
 		} else {
 			superStartActivity(intent, requestCode, options);
+		}
+	}
+
+	@Override
+	@SuppressLint("NewApi")
+	public void superStartActivity(Intent intent, int requestCode,
+			Bundle options) {
+		if (VERSION.SDK_INT >= 16) {
+			super.startActivityForResult(intent, requestCode, options);
+		} else {
+			super.startActivityForResult(intent, requestCode);
 		}
 	}
 }

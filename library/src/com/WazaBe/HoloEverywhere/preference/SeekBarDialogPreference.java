@@ -71,11 +71,6 @@ public class SeekBarDialogPreference extends DialogPreference {
 		setMaxValue(maxValue);
 	}
 
-	protected SeekBar onCreateSeekBar() {
-		return (SeekBar) LayoutInflater.inflate(getContext(),
-				R.layout.preference_dialog_seekbar_widget);
-	}
-
 	public int getMaxValue() {
 		return mMaxValue;
 	}
@@ -100,6 +95,11 @@ public class SeekBarDialogPreference extends DialogPreference {
 				((ViewGroup) view).addView(mSeekBar);
 			}
 		}
+	}
+
+	protected SeekBar onCreateSeekBar() {
+		return (SeekBar) LayoutInflater.inflate(getContext(),
+				R.layout.preference_dialog_seekbar_widget);
 	}
 
 	@Override

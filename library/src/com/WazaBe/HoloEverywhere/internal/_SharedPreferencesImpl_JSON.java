@@ -203,12 +203,12 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 		}
 	}
 
-	private final boolean DEBUG = Application.getSettings().getDebugMode();
 	private static final Map<SharedPreferences, Set<OnSharedPreferenceChangeListener>> listeners = new HashMap<SharedPreferences, Set<OnSharedPreferenceChangeListener>>();
 	private static final String TAG = _SharedPreferencesImpl_JSON.class
 			.getSimpleName();
 	private String charset;
 	private final JSONObject data;
+	private final boolean DEBUG = Application.getSettings().getDebugMode();
 	private File file;
 
 	@SuppressLint("NewApi")
