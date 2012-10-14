@@ -8,20 +8,12 @@ import android.util.AttributeSet;
 
 import com.WazaBe.HoloEverywhere.R;
 
-public class TextView extends android.widget.TextView {
+public class Button extends android.widget.Button {
 	private boolean allCaps = false;
 	private CharSequence originalText;
 	private BufferType originalType;
 
-	public TextView(Context context) {
-		this(context, null);
-	}
-
-	public TextView(Context context, AttributeSet attrs) {
-		this(context, attrs, android.R.attr.textViewStyle);
-	}
-
-	public TextView(Context context, AttributeSet attrs, int defStyle) {
+	public Button(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		TypedArray a = getContext().obtainStyledAttributes(attrs,
 				R.styleable.TextView, defStyle, 0);
@@ -39,6 +31,14 @@ public class TextView extends android.widget.TextView {
 		if (text != null) {
 			setText(text);
 		}
+	}
+
+	public Button(Context context, AttributeSet attrs) {
+		this(context, attrs, android.R.attr.buttonStyle);
+	}
+
+	public Button(Context context) {
+		this(context, null);
 	}
 
 	@Override

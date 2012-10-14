@@ -259,6 +259,12 @@ public final class ThemeManager {
 
 	public static void restartWithTheme(Activity activity, int theme,
 			boolean force) {
+		if (themeModifier > 0) {
+			theme |= themeModifier;
+		}
+		if (onlyBaseThemes) {
+			theme &= THEME_MASK;
+		}
 		if (force || getTheme(activity) != theme) {
 			Intent intent = activity.getIntent();
 			intent.setClass(activity, activity.getClass());

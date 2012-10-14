@@ -56,7 +56,7 @@ public class DemoActivity extends SActivity {
 					e.printStackTrace();
 				}
 			}
-			ft.replace(android.R.id.content, fragment);
+			ft.replace(R.id.content, fragment);
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 		}
 
@@ -74,7 +74,7 @@ public class DemoActivity extends SActivity {
 	}
 
 	public void closeCalendar(View v) {
-		replaceFragment(android.R.id.content, MainFragment.getInstance());
+		replaceFragment(R.id.content, MainFragment.getInstance());
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class DemoActivity extends SActivity {
 			addTab(PreferenceFragment.class, "Settings");
 			addTab(AboutFragment.class, "About");
 		} else {
-			replaceFragment(android.R.id.content, MainFragment.getInstance());
+			replaceFragment(R.id.content, MainFragment.getInstance());
 		}
 	}
 
@@ -121,7 +121,7 @@ public class DemoActivity extends SActivity {
 	}
 
 	public void showAbout(View v) {
-		replaceFragment(android.R.id.content, new AboutFragment(), "about");
+		replaceFragment(R.id.content, new AboutFragment(), "about");
 	}
 
 	public void showAlertDialog(View v) {
@@ -137,7 +137,7 @@ public class DemoActivity extends SActivity {
 	}
 
 	public void showCalendar(View v) {
-		replaceFragment(android.R.id.content, CalendarFragment.getInstance(),
+		replaceFragment(R.id.content, CalendarFragment.getInstance(),
 				isABSSupport() ? null : "calendar");
 	}
 

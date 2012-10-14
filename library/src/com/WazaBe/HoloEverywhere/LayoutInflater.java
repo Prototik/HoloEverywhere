@@ -47,7 +47,8 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 				"LinearLayout", "Switch", "TextView", "EditText",
 				"AutoCompleteTextView", "MultiAutoCompleteTextView",
 				"CalendarView", "Spinner", "NumberPicker", "DatePicker",
-				"TimePicker", "ListView", "Divider", "SeekBar");
+				"TimePicker", "ListView", "Divider", "SeekBar", "Button",
+				"CheckedTextView");
 		remap("android.support.v4.view", "ViewPager", "PagerTitleStrip");
 		remap("android.webkit", "WebView");
 	}

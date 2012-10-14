@@ -15,12 +15,12 @@
 		android:layout_marginBottom="4dp"
 		android:layout_marginTop="4dp"
 		android:orientation="horizontal" />
-	<TextView
+	<Button
 		android:id="@+id/text"
 		android:layout_width="0dp"
 		android:layout_height="match_parent"
 		android:layout_weight="1"
-		android:background="@drawable/other_button_background"
+		android:background="?selectableItemBackground"
 		android:gravity="center"
 		android:textAppearance="?android:textAppearanceLarge" />
 </LinearLayout>

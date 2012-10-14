@@ -25,7 +25,12 @@ public class EditText extends android.widget.EditText {
 		super(context, attrs, defStyle);
 		TypedArray a = getContext().obtainStyledAttributes(attrs,
 				R.styleable.TextView, defStyle, 0);
-		allCaps = a.getBoolean(R.styleable.TextView_textAllCaps, false);
+		if (a.hasValue(R.styleable.TextView_android_textAllCaps)) {
+			allCaps = a.getBoolean(R.styleable.TextView_android_textAllCaps,
+					false);
+		} else {
+			allCaps = a.getBoolean(R.styleable.TextView_textAllCaps, false);
+		}
 		CharSequence text = null;
 		if (a.hasValue(R.styleable.TextView_android_text)) {
 			text = a.getText(R.styleable.TextView_android_text);

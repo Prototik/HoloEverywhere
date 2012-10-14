@@ -228,6 +228,7 @@
 	</declare-styleable>
 	<declare-styleable name="TextView">
 		<attr name="textAllCaps" format="boolean" />
+		<attr name="android:textAllCaps" />
 		<attr name="android:text" />
 	</declare-styleable>
 	<declare-styleable name="Spinner">
