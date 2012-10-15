@@ -22,6 +22,7 @@ public class Application extends android.app.Application implements
 		private final SettingListener<Config> DEFAULT_SETTINGS_LISTENER = new SettingListener<Config>() {
 			@Override
 			public void onAttach(Config config) {
+				config.preferenceImpl.setEnumClass(PreferenceImpl.class);
 				onStateChange(config);
 			}
 
