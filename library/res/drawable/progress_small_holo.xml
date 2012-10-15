@@ -8,7 +8,7 @@
 			android:pivotY="50%"
 			android:toDegrees="1080" />
 	</item>
-	<item android:id="@id/secondaryProgress">
+	<item>
 		<rotate
 			android:drawable="@drawable/spinner_16_inner_holo"
 			android:fromDegrees="720"

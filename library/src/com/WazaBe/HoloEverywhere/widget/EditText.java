@@ -2,16 +2,17 @@ package com.WazaBe.HoloEverywhere.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.Editable;
-import android.text.Selection;
-import android.text.TextUtils;
-import android.text.method.ArrowKeyMovementMethod;
-import android.text.method.MovementMethod;
+import android.content.res.TypedArray;
+import android.os.Build.VERSION;
 import android.util.AttributeSet;
-import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityNodeInfo;
 
-public class EditText extends TextView {
+import com.WazaBe.HoloEverywhere.R;
+
+public class EditText extends android.widget.EditText {
+	private boolean allCaps = false;
+	private CharSequence originalText;
+	private BufferType originalType;
+
 	public EditText(Context context) {
 		this(context, null);
 	}
@@ -22,64 +23,57 @@ public class EditText extends TextView {
 
 	public EditText(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-	}
-
-	public void extendSelection(int index) {
-		Selection.extendSelection(getText(), index);
-	}
-
-	@Override
-	protected boolean getDefaultEditable() {
-		return true;
-	}
-
-	@Override
-	protected MovementMethod getDefaultMovementMethod() {
-		return ArrowKeyMovementMethod.getInstance();
-	}
-
-	@Override
-	public Editable getText() {
-		return (Editable) super.getText();
-	}
-
-	@Override
-	public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
-		super.onInitializeAccessibilityEvent(event);
-		event.setClassName(EditText.class.getName());
+		TypedArray a = getContext().obtainStyledAttributes(attrs,
+				R.styleable.TextView, defStyle, 0);
+		if (a.hasValue(R.styleable.TextView_android_textAllCaps)) {
+			allCaps = a.getBoolean(R.styleable.TextView_android_textAllCaps,
+					false);
+		} else {
+			allCaps = a.getBoolean(R.styleable.TextView_textAllCaps, false);
+		}
+		CharSequence text = null;
+		if (a.hasValue(R.styleable.TextView_android_text)) {
+			text = a.getText(R.styleable.TextView_android_text);
+		}
+		a.recycle();
+		if (text != null) {
+			setText(text);
+		}
 	}
 
 	@Override
 	@SuppressLint("NewApi")
-	public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
-		super.onInitializeAccessibilityNodeInfo(info);
-		info.setClassName(EditText.class.getName());
+	public void dispatchDisplayHint(int hint) {
+		onDisplayHint(hint);
 	}
 
-	public void selectAll() {
-		Selection.selectAll(getText());
+	public boolean isAllCaps() {
+		return allCaps;
 	}
 
 	@Override
-	public void setEllipsize(TextUtils.TruncateAt ellipsis) {
-		if (ellipsis == TextUtils.TruncateAt.MARQUEE) {
-			throw new IllegalArgumentException(
-					"EditText cannot use the ellipsize mode "
-							+ "TextUtils.TruncateAt.MARQUEE");
+	@SuppressLint("NewApi")
+	protected void onDisplayHint(int hint) {
+		if (VERSION.SDK_INT >= 8) {
+			super.onDisplayHint(hint);
 		}
-		super.setEllipsize(ellipsis);
 	}
 
-	public void setSelection(int index) {
-		Selection.setSelection(getText(), index);
-	}
-
-	public void setSelection(int start, int stop) {
-		Selection.setSelection(getText(), start, stop);
+	@Override
+	public void setAllCaps(boolean allCaps) {
+		this.allCaps = allCaps;
+		updateTextState();
 	}
 
 	@Override
 	public void setText(CharSequence text, BufferType type) {
-		super.setText(text, BufferType.EDITABLE);
+		originalText = text;
+		originalType = type;
+		updateTextState();
+	}
+
+	private void updateTextState() {
+		super.setText(allCaps ? originalText.toString().toUpperCase()
+				: originalText, originalType);
 	}
 }

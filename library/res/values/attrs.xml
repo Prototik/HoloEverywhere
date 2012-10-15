@@ -208,6 +208,9 @@
 	<declare-styleable name="SeekBarPreference">
 		<attr name="max" />
 	</declare-styleable>
+	<declare-styleable name="SeekBarDialogPreference">
+		<attr name="max" />
+	</declare-styleable>
 	<declare-styleable name="NumberPickerPreference">
 		<attr name="min" format="integer" />
 		<attr name="max" format="integer" />
@@ -228,6 +231,7 @@
 	</declare-styleable>
 	<declare-styleable name="TextView">
 		<attr name="textAllCaps" format="boolean" />
+		<attr name="android:textAllCaps" />
 		<attr name="android:text" />
 	</declare-styleable>
 	<declare-styleable name="Spinner">

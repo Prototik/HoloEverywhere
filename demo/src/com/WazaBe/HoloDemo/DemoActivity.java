@@ -18,6 +18,7 @@ import com.WazaBe.HoloDemo.fragments.PreferenceFragment;
 import com.WazaBe.HoloEverywhere.ArrayAdapter;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.ThemeManager;
+import com.WazaBe.HoloEverywhere.app.Activity.Holo;
 import com.WazaBe.HoloEverywhere.app.AlertDialog;
 import com.WazaBe.HoloEverywhere.app.DatePickerDialog;
 import com.WazaBe.HoloEverywhere.app.Fragment;
@@ -31,6 +32,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 
+@Holo(forceThemeApply = true, layout = R.layout.content)
 public class DemoActivity extends SActivity {
 	private final class FragmentListener implements TabListener {
 		private final Class<? extends Fragment> clazz;
@@ -54,7 +56,7 @@ public class DemoActivity extends SActivity {
 					e.printStackTrace();
 				}
 			}
-			ft.replace(android.R.id.content, fragment);
+			ft.replace(R.id.content, fragment);
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 		}
 
@@ -72,14 +74,12 @@ public class DemoActivity extends SActivity {
 	}
 
 	public void closeCalendar(View v) {
-		replaceFragment(android.R.id.content, MainFragment.getInstance());
+		replaceFragment(R.id.content, MainFragment.getInstance());
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setForceThemeApply(true);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.content);
 		if (isABSSupport()) {
 			getSupportActionBar().setDisplayShowTitleEnabled(false);
 			getSupportActionBar().setDisplayShowHomeEnabled(false);
@@ -89,7 +89,7 @@ public class DemoActivity extends SActivity {
 			addTab(PreferenceFragment.class, "Settings");
 			addTab(AboutFragment.class, "About");
 		} else {
-			replaceFragment(android.R.id.content, MainFragment.getInstance());
+			replaceFragment(R.id.content, MainFragment.getInstance());
 		}
 	}
 
@@ -109,23 +109,19 @@ public class DemoActivity extends SActivity {
 	}
 
 	public void setDarkTheme(View v) {
-		ThemeManager.restartWithTheme(this, ThemeManager.DARK
-				| ThemeManager.FULLSCREEN);
+		ThemeManager.restartWithDarkTheme(this);
 	}
 
 	public void setLightTheme(View v) {
-		ThemeManager.restartWithTheme(this, ThemeManager.LIGHT
-				| ThemeManager.FULLSCREEN);
+		ThemeManager.restartWithLightTheme(this);
 	}
 
 	public void setMixedTheme(View v) {
-		ThemeManager.restartWithTheme(this,
-				ThemeManager.LIGHT_WITH_DARK_ACTION_BAR
-						| ThemeManager.FULLSCREEN);
+		ThemeManager.restartWithLightWithDarkActionBarTheme(this);
 	}
 
 	public void showAbout(View v) {
-		replaceFragment(android.R.id.content, new AboutFragment(), "about");
+		replaceFragment(R.id.content, new AboutFragment(), "about");
 	}
 
 	public void showAlertDialog(View v) {
@@ -141,7 +137,7 @@ public class DemoActivity extends SActivity {
 	}
 
 	public void showCalendar(View v) {
-		replaceFragment(android.R.id.content, CalendarFragment.getInstance(),
+		replaceFragment(R.id.content, CalendarFragment.getInstance(),
 				isABSSupport() ? null : "calendar");
 	}
 

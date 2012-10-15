@@ -313,6 +313,7 @@ public class NumberPicker extends LinearLayout {
 		this(context, attrs, R.attr.numberPickerStyle);
 	}
 
+	@SuppressLint("NewApi")
 	public NumberPicker(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		TypedArray attributesArray = context.obtainStyledAttributes(attrs,
@@ -413,7 +414,7 @@ public class NumberPicker extends LinearLayout {
 					mInputText.selectAll();
 				} else {
 					mInputText.setSelection(0, 0);
-					validateInputTextView(v);
+					validateInputTextView(mInputText);
 				}
 			}
 		});
@@ -515,6 +516,7 @@ public class NumberPicker extends LinearLayout {
 	}
 
 	@Override
+	@SuppressLint("NewApi")
 	protected boolean dispatchHoverEvent(MotionEvent event) {
 		if (!mHasSelectorWheel) {
 			return super.dispatchHoverEvent(event);
@@ -524,15 +526,21 @@ public class NumberPicker extends LinearLayout {
 			switch (event.getAction() & MotionEvent.ACTION_MASK) {
 			case MotionEvent.ACTION_HOVER_ENTER: {
 				sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER);
-				performAccessibilityAction(
-						AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
+				if (VERSION.SDK_INT >= 16) {
+					performAccessibilityAction(
+							AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS,
+							null);
+				}
 			}
 				break;
 			case MotionEvent.ACTION_HOVER_MOVE: {
 				sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT);
 				sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER);
-				performAccessibilityAction(
-						AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
+				if (VERSION.SDK_INT >= 16) {
+					performAccessibilityAction(
+							AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS,
+							null);
+				}
 			}
 				break;
 			case MotionEvent.ACTION_HOVER_EXIT: {
@@ -1352,8 +1360,8 @@ public class NumberPicker extends LinearLayout {
 		return false;
 	}
 
-	private void validateInputTextView(View v) {
-		String str = String.valueOf(((TextView) v).getText());
+	private void validateInputTextView(NumberPickerEditText v) {
+		String str = String.valueOf(v.getText());
 		if (TextUtils.isEmpty(str)) {
 			updateInputTextView();
 		} else {

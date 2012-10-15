@@ -21,33 +21,33 @@
 		<Divider
 			android:layout_width="match_parent"
 			android:layout_height="1dp" />
-		<TextView
+		<Button
 			android:id="@+id/github"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="@drawable/about_item_background"
+			android:background="?selectableItemBackground"
 			android:drawableLeft="@drawable/github"
 			android:gravity="center"
 			android:maxLines="2"
 			android:padding="6dp"
 			android:text="Fork me on GitHub"
 			android:textSize="26sp" />
-		<TextView
+		<Button
 			android:id="@+id/google_plus"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="@drawable/about_item_background"
+			android:background="?selectableItemBackground"
 			android:drawableRight="@drawable/gplus"
 			android:gravity="center"
 			android:maxLines="2"
 			android:padding="6dp"
 			android:text="Write to Christophe"
 			android:textSize="26sp" />
-		<TextView
+		<Button
 			android:id="@+id/email"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="@drawable/about_item_background"
+			android:background="?selectableItemBackground"
 			android:drawableLeft="@drawable/email"
 			android:gravity="center"
 			android:maxLines="2"

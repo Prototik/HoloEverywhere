@@ -8,20 +8,20 @@ import android.util.AttributeSet;
 
 import com.WazaBe.HoloEverywhere.R;
 
-public class TextView extends android.widget.TextView {
+public class CheckedTextView extends android.widget.CheckedTextView {
 	private boolean allCaps = false;
 	private CharSequence originalText;
 	private BufferType originalType;
 
-	public TextView(Context context) {
+	public CheckedTextView(Context context) {
 		this(context, null);
 	}
 
-	public TextView(Context context, AttributeSet attrs) {
-		this(context, attrs, android.R.attr.textViewStyle);
+	public CheckedTextView(Context context, AttributeSet attrs) {
+		this(context, attrs, 0);
 	}
 
-	public TextView(Context context, AttributeSet attrs, int defStyle) {
+	public CheckedTextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		TypedArray a = getContext().obtainStyledAttributes(attrs,
 				R.styleable.TextView, defStyle, 0);
@@ -76,4 +76,5 @@ public class TextView extends android.widget.TextView {
 		super.setText(allCaps ? originalText.toString().toUpperCase()
 				: originalText, originalType);
 	}
+
 }

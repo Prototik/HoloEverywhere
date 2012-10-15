@@ -369,11 +369,6 @@ public abstract class PreferenceActivity extends ListActivity implements
 		return mHeaders;
 	}
 
-	@Override
-	public LayoutInflater getLayoutInflater() {
-		return LayoutInflater.from(this);
-	}
-
 	protected Button getNextButton() {
 		return mNextButton;
 	}
@@ -389,11 +384,6 @@ public abstract class PreferenceActivity extends ListActivity implements
 			return mPreferenceManager.getPreferenceScreen();
 		}
 		return null;
-	}
-
-	@Override
-	public Object getSystemService(String name) {
-		return LayoutInflater.getSystemService(super.getSystemService(name));
 	}
 
 	public boolean hasHeaders() {

@@ -1,283 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:holo="http://schemas.android.com/apk/res-auto"
-	android:id="@+id/main"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:descendantFocusability="beforeDescendants"
-	android:orientation="vertical" >
-	<ScrollView
-		android:layout_width="match_parent"
-		android:layout_height="0dip"
-		android:layout_weight="1" >
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical" >
-			<TextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:drawableLeft="@drawable/icon"
-				android:ellipsize="marquee"
-				android:gravity="center"
-				android:lines="1"
-				android:padding="6dp"
-				android:text="HoloEverywhere"
-				android:textSize="30sp"
-				android:textStyle="bold" />
-			<Divider
-				android:layout_width="match_parent"
-				android:layout_height="1dp" />
-			<WidgetContainer
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="Base widgets" >
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:orientation="horizontal" >
-					<Button
-						android:layout_width="0dp"
-						android:layout_height="wrap_content"
-						android:layout_weight="1"
-						android:text="Button" />
-					<ToggleButton
-						android:layout_width="80dp"
-						android:layout_height="match_parent" />
-				</LinearLayout>
-				<EditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:hint="EditText" />
-				<AutoCompleteTextView
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:entries="@array/countries"
-					android:hint="AutoCompleteTextView" />
-				<Spinner
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:drawSelectorOnTop="true"
-					android:entries="@array/countries"
-					android:prompt="@string/spinner_prompt" />
-				<RatingBar
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center"
-					android:numStars="5"
-					android:rating="2.5"
-					android:stepSize="0.5" />
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:gravity="center"
-					android:orientation="horizontal" >
-					<Switch
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginRight="10dp" />
-					<Switch
-						style="?switchStyleOld"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginLeft="10dp" />
-				</LinearLayout>
-			</WidgetContainer>
-			<WidgetContainer
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="Progress bars" >
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:gravity="center"
-					android:paddingBottom="4dp"
-					android:paddingLeft="16dp"
-					android:paddingRight="4dp"
-					android:paddingTop="4dp" >
-					<ProgressBar
-						style="?android:attr/progressBarStyleLarge"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content" />
-					<LinearLayout
-						android:layout_width="0dp"
-						android:layout_height="match_parent"
-						android:layout_weight="1"
-						android:gravity="center"
-						android:orientation="vertical" >
-						<SeekBar
-							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
-							android:progress="75" />
-						<ProgressBar
-							style="?android:attr/progressBarStyleHorizontal"
-							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
-							android:paddingLeft="16dp"
-							android:paddingRight="16dp"
-							android:progress="25" />
-						<ProgressBar
-							style="?android:attr/progressBarStyleHorizontal"
-							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
-							android:layout_marginTop="8dp"
-							android:indeterminateOnly="true"
-							android:paddingLeft="16dp"
-							android:paddingRight="16dp" />
-					</LinearLayout>
-				</LinearLayout>
-			</WidgetContainer>
-			<WidgetContainer
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="Checkable buttons" >
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content" >
-					<RadioGroup
-						android:layout_width="0dp"
-						android:layout_height="match_parent"
-						android:layout_weight="1" >
-						<RadioButton
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="RadioButton" />
-						<RadioButton
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="RadioButton" />
-						<RadioButton
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="RadioButton" />
-					</RadioGroup>
-					<LinearLayout
-						android:layout_width="0dp"
-						android:layout_height="match_parent"
-						android:layout_weight="1"
-						android:orientation="vertical" >
-						<CheckBox
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="CheckBox" />
-						<CheckBox
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="CheckBox" />
-						<CheckBox
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="CheckBox" />
-					</LinearLayout>
-				</LinearLayout>
-			</WidgetContainer>
-			<WidgetContainer
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:divider="?dividerVertical"
-				android:showDividers="middle"
-				android:text="Other"
-				holo:showDividers="middle" >
-				<OtherButton
-					android:id="@+id/showAbout"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:icon="@drawable/toast"
-					android:onClick="showAbout"
-					android:text="About" />
-				<OtherButton
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:icon="@drawable/alert_dialog"
-					android:onClick="showAlertDialog"
-					android:text="AlertDialog" />
-				<OtherButton
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:icon="@drawable/progress_dialog"
-					android:onClick="showProgressDialog"
-					android:text="ProgressDialog" />
-				<OtherButton
-					android:id="@+id/showPreferences"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:icon="@drawable/prefs_icon"
-					android:onClick="showPreferences"
-					android:text="Preferences" />
-				<OtherButton
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:icon="@drawable/calendar"
-					android:onClick="showCalendar"
-					android:text="Calendar" />
-				<OtherButton
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:icon="@drawable/number_picker"
-					android:onClick="showNumberPicker"
-					android:text="NumberPicker" />
-				<OtherButton
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:icon="@drawable/date_picker"
-					android:onClick="showDatePicker"
-					android:text="DatePicker" />
-				<OtherButton
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:icon="@drawable/time_picker"
-					android:onClick="showTimePicker"
-					android:text="TimePicker" />
-				<OtherButton
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:icon="@drawable/popup_window"
-					android:onClick="showPopupWindow"
-					android:text="PopupWindow" />
-				<OtherButton
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:icon="@drawable/list_popup_window"
-					android:onClick="showListPopupWindow"
-					android:text="ListPopupWindow" />
-				<OtherButton
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:icon="@drawable/toast"
-					android:onClick="showToast"
-					android:text="Toast" />
-			</WidgetContainer>
-		</LinearLayout>
-	</ScrollView>
-	<Divider
-		android:layout_width="match_parent"
-		android:layout_height="1dp"
-		android:orientation="vertical" />
+	android:layout_height="0dip"
+	android:layout_weight="1"
+	android:descendantFocusability="beforeDescendants" >
 	<LinearLayout
-		style="?buttonBarStyle"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:minHeight="@dimen/alert_dialog_button_bar_height" >
-		<Button
-			style="?buttonBarButtonStyle"
-			android:layout_width="0dp"
+		android:orientation="vertical" >
+		<TextView
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:onClick="setDarkTheme"
-			android:text="Dark" />
-		<Button
-			style="?buttonBarButtonStyle"
-			android:layout_width="0dp"
+			android:drawableLeft="@drawable/icon"
+			android:ellipsize="marquee"
+			android:gravity="center"
+			android:lines="1"
+			android:padding="6dp"
+			android:text="HoloEverywhere"
+			android:textSize="30sp"
+			android:textStyle="bold" />
+		<Divider
+			android:layout_width="match_parent"
+			android:layout_height="1dp" />
+		<WidgetContainer
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:onClick="setLightTheme"
-			android:text="Light" />
-		<Button
-			style="?buttonBarButtonStyle"
-			android:layout_width="0dp"
+			android:text="Base widgets" >
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal" >
+				<Button
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="Button" />
+				<ToggleButton
+					android:layout_width="80dp"
+					android:layout_height="match_parent" />
+			</LinearLayout>
+			<EditText
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="EditText" />
+			<AutoCompleteTextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:entries="@array/countries"
+				android:hint="AutoCompleteTextView" />
+			<Spinner
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:drawSelectorOnTop="true"
+				android:entries="@array/countries"
+				android:prompt="@string/spinner_prompt" />
+			<RatingBar
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:numStars="5"
+				android:rating="2.5"
+				android:stepSize="0.5" />
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:orientation="horizontal" >
+				<Switch
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginRight="10dp" />
+				<Switch
+					style="?switchStyleOld"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="10dp" />
+			</LinearLayout>
+		</WidgetContainer>
+		<WidgetContainer
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:onClick="setMixedTheme"
-			android:text="Mixed" />
+			android:text="Progress bars" >
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:paddingBottom="4dp"
+				android:paddingLeft="16dp"
+				android:paddingRight="4dp"
+				android:paddingTop="4dp" >
+				<ProgressBar
+					style="?android:attr/progressBarStyleLarge"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" />
+				<LinearLayout
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:layout_weight="1"
+					android:gravity="center"
+					android:orientation="vertical" >
+					<SeekBar
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:progress="75" />
+					<ProgressBar
+						style="?android:attr/progressBarStyleHorizontal"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:paddingLeft="16dp"
+						android:paddingRight="16dp"
+						android:progress="25" />
+					<ProgressBar
+						style="?android:attr/progressBarStyleHorizontal"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="8dp"
+						android:indeterminateOnly="true"
+						android:paddingLeft="16dp"
+						android:paddingRight="16dp" />
+				</LinearLayout>
+			</LinearLayout>
+		</WidgetContainer>
+		<WidgetContainer
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Checkable buttons" >
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" >
+				<RadioGroup
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:layout_weight="1" >
+					<RadioButton
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="RadioButton" />
+					<RadioButton
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="RadioButton" />
+					<RadioButton
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="RadioButton" />
+				</RadioGroup>
+				<LinearLayout
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:layout_weight="1"
+					android:orientation="vertical" >
+					<CheckBox
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="CheckBox" />
+					<CheckBox
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="CheckBox" />
+					<CheckBox
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="CheckBox" />
+				</LinearLayout>
+			</LinearLayout>
+		</WidgetContainer>
+		<WidgetContainer
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:divider="?dividerVertical"
+			android:showDividers="middle"
+			android:text="Other"
+			holo:showDividers="middle" >
+			<OtherButton
+				android:id="@+id/showAbout"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/toast"
+				android:onClick="showAbout"
+				android:text="About" />
+			<OtherButton
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/alert_dialog"
+				android:onClick="showAlertDialog"
+				android:text="AlertDialog" />
+			<OtherButton
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/progress_dialog"
+				android:onClick="showProgressDialog"
+				android:text="ProgressDialog" />
+			<OtherButton
+				android:id="@+id/showPreferences"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/prefs_icon"
+				android:onClick="showPreferences"
+				android:text="Preferences" />
+			<OtherButton
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/calendar"
+				android:onClick="showCalendar"
+				android:text="Calendar" />
+			<OtherButton
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/number_picker"
+				android:onClick="showNumberPicker"
+				android:text="NumberPicker" />
+			<OtherButton
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/date_picker"
+				android:onClick="showDatePicker"
+				android:text="DatePicker" />
+			<OtherButton
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/time_picker"
+				android:onClick="showTimePicker"
+				android:text="TimePicker" />
+			<OtherButton
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/popup_window"
+				android:onClick="showPopupWindow"
+				android:text="PopupWindow" />
+			<OtherButton
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/list_popup_window"
+				android:onClick="showListPopupWindow"
+				android:text="ListPopupWindow" />
+			<OtherButton
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/toast"
+				android:onClick="showToast"
+				android:text="Toast" />
+		</WidgetContainer>
 	</LinearLayout>
-</LinearLayout>
+</ScrollView>

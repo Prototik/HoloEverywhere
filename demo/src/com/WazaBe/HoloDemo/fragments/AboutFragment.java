@@ -53,7 +53,6 @@ public class AboutFragment extends SFragment {
 
 	private final OnClickListener emailListener = new EmailListener(
 			"prototypegamez@gmail.com", "HoloEverywhere");
-
 	private final OnClickListener githubListener = new UrlListener(
 			"https://github.com/ChristopheVersieux/HoloEverywhere");
 	private final OnClickListener gplusListener = new UrlListener(

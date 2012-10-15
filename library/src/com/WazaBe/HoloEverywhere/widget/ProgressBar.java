@@ -292,6 +292,8 @@ public class ProgressBar extends View {
 		return mCurrentDrawable;
 	}
 
+	// Very funny change android.RotateDrawable on custom RotateDrawable,
+	// ported from JB
 	private Drawable getDrawable(TypedArray a, int attr) {
 		Drawable d = a.getDrawable(attr);
 		try {
@@ -300,11 +302,26 @@ public class ProgressBar extends View {
 					|| id == R.drawable.progress_medium_holo || id == R.drawable.progress_large_holo)
 					&& VERSION.SDK_INT < 14) {
 				LayerDrawable layers = (LayerDrawable) d;
-				com.WazaBe.HoloEverywhere.drawable.RotateDrawable r = new com.WazaBe.HoloEverywhere.drawable.RotateDrawable();
-				r.setState(
-						((RotateDrawable) layers.getDrawable(1)).getDrawable(),
-						true, true, 0.5f, 0.5f, 720f, 0f);
-				layers.setDrawableByLayerId(R.id.secondaryProgress, r);
+				int layersCount = layers.getNumberOfLayers();
+				Drawable[] newLayers = new Drawable[layersCount];
+				for (int i = 0; i < layersCount; i++) {
+					Drawable layer = layers.getDrawable(i);
+					if (layer instanceof RotateDrawable && (i == 0 || i == 1)) {
+						com.WazaBe.HoloEverywhere.drawable.RotateDrawable r = new com.WazaBe.HoloEverywhere.drawable.RotateDrawable();
+						Drawable rotatedDrawable = ((RotateDrawable) layer)
+								.getDrawable();
+						if (i == 0) {
+							r.setState(rotatedDrawable, true, true, 0.5f, 0.5f,
+									0f, 1080f);
+						} else if (i == 1) {
+							r.setState(rotatedDrawable, true, true, 0.5f, 0.5f,
+									720f, 0f);
+						}
+						layer = r;
+					}
+					newLayers[i] = layer;
+				}
+				return new LayerDrawable(newLayers);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

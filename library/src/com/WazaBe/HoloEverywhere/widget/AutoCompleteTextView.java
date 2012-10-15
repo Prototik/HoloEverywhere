@@ -677,6 +677,7 @@ public class AutoCompleteTextView extends EditText implements
 		mValidator = validator;
 	}
 
+	@SuppressLint("NewApi")
 	public void showDropDown() {
 		buildImeCompletions();
 		if (mPopup.getAnchorView() == null) {

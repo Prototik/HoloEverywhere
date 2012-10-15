@@ -292,6 +292,9 @@
   <style name="Holo.PreferenceDialog.EditTextPreference">
     <item name="dialogLayout">@layout/preference_dialog_edittext</item>
   </style>
+  <style name="Holo.PreferenceDialog.SeekBarDialogPreference">
+    <item name="dialogLayout">@layout/preference_dialog_seekbar</item>
+  </style>
   <style name="Holo.PreferenceDialog.NumberPickerPreference">
     <item name="min">0</item>
     <item name="max">10</item>
@@ -311,9 +314,6 @@
   </style>
   <style name="Holo.PreferenceSeekBar">
     <item name="layout">@layout/preference_widget_seekbar</item>
-  </style>
-  <style name="Holo.PreferenceSeekBarDialog">
-    <item name="dialogLayout">@layout/seekbar_dialog</item>
   </style>
   <style name="Holo.ButtonBar">
     <item name="android:paddingTop">0dip</item>

@@ -12,7 +12,8 @@ import com.WazaBe.HoloEverywhere.app.Base;
 
 public final class ThemeManager {
 	public static interface ThemedIntentStarter {
-		public void holoStartThemedActivity(Intent intent, Bundle options);
+		public void superStartActivity(Intent intent, int requestCode,
+				Bundle options);
 	}
 
 	public static interface ThemeGetter {
@@ -25,10 +26,12 @@ public final class ThemeManager {
 	public static final int LIGHT = 2;
 	public static final int LIGHT_WITH_DARK_ACTION_BAR = 4;
 	public static final int NO_ACTION_BAR = 8;
+	private static boolean onlyBaseThemes = true;
 	private static final int THEME_MASK = DARK | LIGHT
 			| LIGHT_WITH_DARK_ACTION_BAR | NO_ACTION_BAR | FULLSCREEN;
-	public static final String THEME_TAG = "holoeverywhere:theme";
+	private static final String THEME_TAG = "holoeverywhere:theme";
 	private static ThemeGetter themeGetter;
+	private static int themeModifier = 0;
 
 	public static void applyTheme(Activity activity) {
 		boolean force = activity instanceof Base ? ((Base) activity)
@@ -61,12 +64,23 @@ public final class ThemeManager {
 		return defaultTheme;
 	}
 
+	public static int getModifier() {
+		return themeModifier;
+	}
+
 	public static int getTheme(Activity activity) {
 		return getTheme(activity.getIntent());
 	}
 
 	public static int getTheme(Intent intent) {
-		return intent.getIntExtra(THEME_TAG, defaultTheme) & THEME_MASK;
+		int i = intent.getIntExtra(THEME_TAG, defaultTheme);
+		if (onlyBaseThemes) {
+			i &= THEME_MASK;
+		}
+		if (themeModifier > 0) {
+			i |= themeModifier;
+		}
+		return i;
 	}
 
 	public static int getThemeResource(Activity activity) {
@@ -76,13 +90,18 @@ public final class ThemeManager {
 	}
 
 	public static int getThemeResource(int themeTag, boolean abs) {
+		if (themeModifier > 0) {
+			themeTag |= themeModifier;
+		}
 		if (themeGetter != null) {
 			int getterResource = themeGetter.getThemeResource(themeTag, abs);
 			if (getterResource > 0) {
 				return getterResource;
 			}
 		}
-		if (themeTag >= 0x01000000) {
+		if (onlyBaseThemes) {
+			themeTag &= THEME_MASK;
+		} else if (themeTag >= 0x01000000) {
 			return themeTag;
 		}
 		boolean dark = isDark(themeTag);
@@ -90,49 +109,46 @@ public final class ThemeManager {
 		boolean lightWithDarkActionBar = isLightWithDarkActionBar(themeTag);
 		boolean noActionBar = isNoActionBar(themeTag);
 		boolean fullScreen = isFullScreen(themeTag);
-		if (dark || light || lightWithDarkActionBar) {
-			if (dark) {
-				if (noActionBar && fullScreen) {
-					return abs ? R.style.Holo_Theme_Sherlock_NoActionBar_Fullscreen
-							: R.style.Holo_Theme_NoActionBar_Fullscreen;
-				} else if (noActionBar && !fullScreen) {
-					return abs ? R.style.Holo_Theme_Sherlock_NoActionBar
-							: R.style.Holo_Theme_NoActionBar;
-				} else if (!noActionBar && fullScreen) {
-					return abs ? R.style.Holo_Theme_Sherlock_Fullscreen
-							: R.style.Holo_Theme_Fullscreen;
-				} else {
-					return abs ? R.style.Holo_Theme_Sherlock
-							: R.style.Holo_Theme;
-				}
-			} else if (light) {
-				if (noActionBar && fullScreen) {
-					return abs ? R.style.Holo_Theme_Sherlock_Light_NoActionBar_Fullscreen
-							: R.style.Holo_Theme_Light_NoActionBar_Fullscreen;
-				} else if (noActionBar && !fullScreen) {
-					return abs ? R.style.Holo_Theme_Sherlock_Light_NoActionBar
-							: R.style.Holo_Theme_Light_NoActionBar;
-				} else if (!noActionBar && fullScreen) {
-					return abs ? R.style.Holo_Theme_Sherlock_Light_Fullscreen
-							: R.style.Holo_Theme_Light_Fullscreen;
-				} else {
-					return abs ? R.style.Holo_Theme_Sherlock_Light
-							: R.style.Holo_Theme_Light;
-				}
-			} else if (lightWithDarkActionBar) {
-				if (noActionBar && fullScreen) {
-					return abs ? R.style.Holo_Theme_Sherlock_Light_DarkActionBar_NoActionBar_Fullscreen
-							: R.style.Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen;
-				} else if (noActionBar && !fullScreen) {
-					return abs ? R.style.Holo_Theme_Sherlock_Light_DarkActionBar_NoActionBar
-							: R.style.Holo_Theme_Light_DarkActionBar_NoActionBar;
-				} else if (!noActionBar && fullScreen) {
-					return abs ? R.style.Holo_Theme_Sherlock_Light_DarkActionBar_Fullscreen
-							: R.style.Holo_Theme_Light_DarkActionBar_Fullscreen;
-				} else {
-					return abs ? R.style.Holo_Theme_Sherlock_Light_DarkActionBar
-							: R.style.Holo_Theme_Light_DarkActionBar;
-				}
+		if (dark) {
+			if (noActionBar && fullScreen) {
+				return abs ? R.style.Holo_Theme_Sherlock_NoActionBar_Fullscreen
+						: R.style.Holo_Theme_NoActionBar_Fullscreen;
+			} else if (noActionBar && !fullScreen) {
+				return abs ? R.style.Holo_Theme_Sherlock_NoActionBar
+						: R.style.Holo_Theme_NoActionBar;
+			} else if (!noActionBar && fullScreen) {
+				return abs ? R.style.Holo_Theme_Sherlock_Fullscreen
+						: R.style.Holo_Theme_Fullscreen;
+			} else {
+				return abs ? R.style.Holo_Theme_Sherlock : R.style.Holo_Theme;
+			}
+		} else if (light) {
+			if (noActionBar && fullScreen) {
+				return abs ? R.style.Holo_Theme_Sherlock_Light_NoActionBar_Fullscreen
+						: R.style.Holo_Theme_Light_NoActionBar_Fullscreen;
+			} else if (noActionBar && !fullScreen) {
+				return abs ? R.style.Holo_Theme_Sherlock_Light_NoActionBar
+						: R.style.Holo_Theme_Light_NoActionBar;
+			} else if (!noActionBar && fullScreen) {
+				return abs ? R.style.Holo_Theme_Sherlock_Light_Fullscreen
+						: R.style.Holo_Theme_Light_Fullscreen;
+			} else {
+				return abs ? R.style.Holo_Theme_Sherlock_Light
+						: R.style.Holo_Theme_Light;
+			}
+		} else if (lightWithDarkActionBar) {
+			if (noActionBar && fullScreen) {
+				return abs ? R.style.Holo_Theme_Sherlock_Light_DarkActionBar_NoActionBar_Fullscreen
+						: R.style.Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen;
+			} else if (noActionBar && !fullScreen) {
+				return abs ? R.style.Holo_Theme_Sherlock_Light_DarkActionBar_NoActionBar
+						: R.style.Holo_Theme_Light_DarkActionBar_NoActionBar;
+			} else if (!noActionBar && fullScreen) {
+				return abs ? R.style.Holo_Theme_Sherlock_Light_DarkActionBar_Fullscreen
+						: R.style.Holo_Theme_Light_DarkActionBar_Fullscreen;
+			} else {
+				return abs ? R.style.Holo_Theme_Sherlock_Light_DarkActionBar
+						: R.style.Holo_Theme_Light_DarkActionBar;
 			}
 		}
 		return themeTag;
@@ -211,8 +227,30 @@ public final class ThemeManager {
 		return isNoActionBar(getTheme(intent));
 	}
 
+	public static void modify(int mod) {
+		if (onlyBaseThemes) {
+			mod &= THEME_MASK;
+		}
+		themeModifier |= mod;
+	}
+
 	public static void modifyDefaultTheme(int mod) {
-		defaultTheme |= mod & THEME_MASK;
+		if (onlyBaseThemes) {
+			mod &= THEME_MASK;
+		}
+		defaultTheme |= mod;
+	}
+
+	public static void restartWithDarkTheme(Activity activity) {
+		restartWithTheme(activity, DARK);
+	}
+
+	public static void restartWithLightTheme(Activity activity) {
+		restartWithTheme(activity, LIGHT);
+	}
+
+	public static void restartWithLightWithDarkActionBarTheme(Activity activity) {
+		restartWithTheme(activity, LIGHT_WITH_DARK_ACTION_BAR);
 	}
 
 	public static void restartWithTheme(Activity activity, int theme) {
@@ -221,6 +259,12 @@ public final class ThemeManager {
 
 	public static void restartWithTheme(Activity activity, int theme,
 			boolean force) {
+		if (themeModifier > 0) {
+			theme |= themeModifier;
+		}
+		if (onlyBaseThemes) {
+			theme &= THEME_MASK;
+		}
 		if (force || getTheme(activity) != theme) {
 			Intent intent = activity.getIntent();
 			intent.setClass(activity, activity.getClass());
@@ -241,31 +285,66 @@ public final class ThemeManager {
 	}
 
 	public static void setDefaultTheme(int theme) {
-		defaultTheme = theme & THEME_MASK;
+		if (onlyBaseThemes) {
+			theme &= THEME_MASK;
+		}
+		defaultTheme = theme;
+	}
+
+	public static void setOnlyBaseThemes(boolean onlyBaseThemes) {
+		ThemeManager.onlyBaseThemes = onlyBaseThemes;
 	}
 
 	public static void setThemeGetter(ThemeGetter themeGetter) {
 		ThemeManager.themeGetter = themeGetter;
 	}
 
+	public static void setThemeModifier(int mod) {
+		if (onlyBaseThemes) {
+			mod &= THEME_MASK;
+		}
+		themeModifier = mod;
+	}
+
 	public static void startActivity(Context context, Intent intent) {
-		startActivity(context, intent, null);
+		startActivity(context, intent, -1);
+	}
+
+	public static void startActivity(Context context, Intent intent,
+			Bundle options) {
+		startActivity(context, intent, -1, options);
+	}
+
+	public static void startActivity(Context context, Intent intent,
+			int requestCode) {
+		startActivity(context, intent, requestCode, null);
 	}
 
 	@SuppressLint("NewApi")
 	public static void startActivity(Context context, Intent intent,
-			Bundle options) {
-		if (context instanceof Activity) {
-			cloneTheme(((Activity) context).getIntent(), intent, true);
+			int requestCode, Bundle options) {
+		final Activity activity = context instanceof Activity ? (Activity) context
+				: null;
+		if (activity != null) {
+			cloneTheme(activity.getIntent(), intent, true);
 		}
 		if (context instanceof ThemedIntentStarter) {
-			((ThemedIntentStarter) context).holoStartThemedActivity(intent,
-					options);
+			((ThemedIntentStarter) context).superStartActivity(intent,
+					requestCode, options);
 		} else {
-			if (VERSION.SDK_INT >= 16) {
-				context.startActivity(intent, options);
+			if (activity != null) {
+				if (VERSION.SDK_INT >= 16) {
+					activity.startActivityForResult(intent, requestCode,
+							options);
+				} else {
+					activity.startActivityForResult(intent, requestCode);
+				}
 			} else {
-				context.startActivity(intent);
+				if (VERSION.SDK_INT >= 16) {
+					context.startActivity(intent, options);
+				} else {
+					context.startActivity(intent);
+				}
 			}
 		}
 	}

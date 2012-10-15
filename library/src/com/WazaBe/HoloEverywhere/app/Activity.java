@@ -1,5 +1,10 @@
 package com.WazaBe.HoloEverywhere.app;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build.VERSION;
@@ -10,12 +15,46 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
-import com.WazaBe.HoloEverywhere.Settings;
 import com.WazaBe.HoloEverywhere.ThemeManager;
+import com.WazaBe.HoloEverywhere.app.Application.Config;
 import com.WazaBe.HoloEverywhere.preference.PreferenceManager;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 public abstract class Activity extends Watson implements Base {
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.TYPE)
+	public static @interface Holo {
+		public boolean addFactoryToInflater() default true;
+
+		public boolean forceThemeApply() default false;
+
+		public int layout() default -1;
+	}
+
+	private static final Holo DEFAULT_HOLO = new Holo() {
+		@Override
+		public boolean addFactoryToInflater() {
+			return true;
+		}
+
+		@Override
+		public Class<Holo> annotationType() {
+			return Holo.class;
+		}
+
+		@Override
+		public boolean forceThemeApply() {
+			return false;
+		}
+
+		@Override
+		public int layout() {
+			return 0;
+		}
+	};
+
 	private boolean forceThemeApply = false;
 
 	@Override
@@ -23,9 +62,18 @@ public abstract class Activity extends Watson implements Base {
 		super.addContentView(FontLoader.apply(view), params);
 	}
 
+	public SharedPreferences getDefaultSharedPreferences() {
+		return PreferenceManager.getDefaultSharedPreferences(this);
+	}
+
 	@Override
 	public LayoutInflater getLayoutInflater() {
 		return LayoutInflater.from(this);
+	}
+
+	@Override
+	public Config getSettings() {
+		return Application.getConfig();
 	}
 
 	@Override
@@ -36,16 +84,6 @@ public abstract class Activity extends Watson implements Base {
 	@Override
 	public Object getSystemService(String name) {
 		return LayoutInflater.getSystemService(super.getSystemService(name));
-	}
-
-	@Override
-	@SuppressLint("NewApi")
-	public void holoStartThemedActivity(Intent intent, Bundle options) {
-		if (VERSION.SDK_INT >= 16) {
-			super.startActivity(intent, options);
-		} else {
-			super.startActivity(intent);
-		}
 	}
 
 	@Override
@@ -68,11 +106,44 @@ public abstract class Activity extends Watson implements Base {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		getLayoutInflater().addFactory(this, 0);
-		if (Settings.isUseThemeManager()) {
-			ThemeManager.applyTheme(this);
+		Holo holo = getClass().isAnnotationPresent(Holo.class) ? getClass()
+				.getAnnotation(Holo.class) : DEFAULT_HOLO;
+		if (holo.addFactoryToInflater()) {
+			getLayoutInflater().addFactory(this, 0);
+		}
+		boolean forceThemeApply = isForceThemeApply();
+		if (holo.forceThemeApply()) {
+			setForceThemeApply(forceThemeApply = true);
+		}
+		if (forceThemeApply || getSettings().isUseThemeManager()) {
+			ThemeManager.applyTheme(this, forceThemeApply);
 		}
 		super.onCreate(savedInstanceState);
+		final int layout = holo.layout();
+		if (layout > 0) {
+			setContentView(layout);
+		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		return false;
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LayoutInflater.onDestroy(this);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		return false;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		return false;
 	}
 
 	@Override
@@ -95,20 +166,50 @@ public abstract class Activity extends Watson implements Base {
 	}
 
 	@Override
-	public void startActivity(Intent intent) {
-		if (Settings.isUseParentTheme()) {
-			ThemeManager.startActivity(this, intent);
-		} else {
-			holoStartThemedActivity(intent, null);
+	public void startActivities(Intent[] intents) {
+		startActivities(intents, null);
+	}
+
+	@Override
+	public void startActivities(Intent[] intents, Bundle options) {
+		for (Intent intent : intents) {
+			startActivity(intent, options);
 		}
 	}
 
 	@Override
+	public void startActivity(Intent intent) {
+		startActivity(intent, null);
+	}
+
+	@Override
 	public void startActivity(Intent intent, Bundle options) {
-		if (Settings.isUseParentTheme()) {
-			ThemeManager.startActivity(this, intent, options);
+		startActivityForResult(intent, -1, options);
+	}
+
+	@Override
+	public void startActivityForResult(Intent intent, int requestCode) {
+		startActivityForResult(intent, requestCode, null);
+	}
+
+	@Override
+	public void startActivityForResult(Intent intent, int requestCode,
+			Bundle options) {
+		if (getSettings().isAlwaysUseParentTheme()) {
+			ThemeManager.startActivity(this, intent, requestCode, options);
 		} else {
-			holoStartThemedActivity(intent, options);
+			superStartActivity(intent, requestCode, options);
+		}
+	}
+
+	@Override
+	@SuppressLint("NewApi")
+	public void superStartActivity(Intent intent, int requestCode,
+			Bundle options) {
+		if (VERSION.SDK_INT >= 16) {
+			super.startActivityForResult(intent, requestCode, options);
+		} else {
+			super.startActivityForResult(intent, requestCode);
 		}
 	}
 }
