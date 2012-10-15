@@ -5,7 +5,7 @@ import com.WazaBe.HoloEverywhere.ThemeManager;
 
 public class Application extends com.WazaBe.HoloEverywhere.app.Application {
 	static {
-		Application.getSettings().setUseThemeManager(true)
+		Application.getConfig().setUseThemeManager(true)
 				.setAlwaysUseParentTheme(true).setDebugMode(true);
 		LayoutInflater.remap("com.WazaBe.HoloDemo.widget", "WidgetContainer",
 				"OtherButton");

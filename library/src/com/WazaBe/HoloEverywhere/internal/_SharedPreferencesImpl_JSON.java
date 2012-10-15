@@ -208,7 +208,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 			.getSimpleName();
 	private String charset;
 	private final JSONObject data;
-	private final boolean DEBUG = Application.getSettings().getDebugMode();
+	private final boolean DEBUG = Application.isDebugMode();
 	private File file;
 
 	@SuppressLint("NewApi")

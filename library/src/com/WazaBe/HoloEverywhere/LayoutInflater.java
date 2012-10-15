@@ -43,7 +43,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	private static final Map<String, String> VIEWS_MAP = new HashMap<String, String>();
 
 	static {
-		remap(Application.getSettings().getWidgetsPackage(), "ProgressBar",
+		remap(Application.getConfig().getWidgetsPackage(), "ProgressBar",
 				"LinearLayout", "Switch", "TextView", "EditText",
 				"AutoCompleteTextView", "MultiAutoCompleteTextView",
 				"CalendarView", "Spinner", "NumberPicker", "DatePicker",

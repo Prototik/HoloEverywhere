@@ -91,7 +91,7 @@ public class PreferenceManager {
 	}
 
 	public static SharedPreferences wrap(Context context, String name, int mode) {
-		switch (Application.getSettings().getPreferenceImpl()) {
+		switch (Application.getConfig().getPreferenceImpl()) {
 		case XML:
 			return new _SharedPreferencesImpl_XML(context.getSharedPreferences(
 					name, mode));

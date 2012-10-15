@@ -16,7 +16,7 @@ import android.view.ViewGroup.LayoutParams;
 import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.ThemeManager;
-import com.WazaBe.HoloEverywhere.app.Application.Setting;
+import com.WazaBe.HoloEverywhere.app.Application.Config;
 import com.WazaBe.HoloEverywhere.preference.PreferenceManager;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 import com.actionbarsherlock.view.Menu;
@@ -72,8 +72,8 @@ public abstract class Activity extends Watson implements Base {
 	}
 
 	@Override
-	public Setting getSettings() {
-		return Application.getSettings();
+	public Config getSettings() {
+		return Application.getConfig();
 	}
 
 	@Override

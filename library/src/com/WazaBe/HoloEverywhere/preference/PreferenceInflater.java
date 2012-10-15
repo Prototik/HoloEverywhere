@@ -39,7 +39,7 @@ class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
 
 	private void init(PreferenceManager preferenceManager) {
 		mPreferenceManager = preferenceManager;
-		setDefaultPackage(Application.getSettings().getPreferencePackage()
+		setDefaultPackage(Application.getConfig().getPreferencePackage()
 				+ ".");
 	}
 

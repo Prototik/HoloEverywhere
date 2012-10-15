@@ -6,65 +6,66 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
-import com.WazaBe.HoloEverywhere.Settings;
-import com.WazaBe.HoloEverywhere.Settings.BooleanProperty;
-import com.WazaBe.HoloEverywhere.Settings.EnumProperty;
-import com.WazaBe.HoloEverywhere.Settings.Property;
-import com.WazaBe.HoloEverywhere.Settings.SettingListener;
-import com.WazaBe.HoloEverywhere.Settings.StringProperty;
+import com.WazaBe.HoloEverywhere.Setting;
 import com.WazaBe.HoloEverywhere.ThemeManager;
 import com.WazaBe.HoloEverywhere.ThemeManager.ThemedIntentStarter;
 
 public class Application extends android.app.Application implements
 		ThemedIntentStarter {
-	public static final class Setting extends Settings.Setting<Setting> {
+	public static final class Config extends Setting<Config> {
+		private static final String DEFAULT_HOLO_EVERYWHERE_PACKAGE = "com.WazaBe.HoloEverywhere";
+
 		public static enum PreferenceImpl {
 			JSON, XML
 		}
 
-		@SettingProperty(create = true)
-		private BooleanProperty alwaysUseParentTheme;
-		@SettingProperty(create = true)
-		private BooleanProperty debugMode;
-		private final SettingListener DEFAULT_SETTINGS_LISTENER = new SettingListener() {
+		private final SettingListener<Config> DEFAULT_SETTINGS_LISTENER = new SettingListener<Config>() {
 			@Override
-			public void onAttach(Settings.Setting<?> setting) {
+			public void onAttach(Config config) {
+				onStateChange(config);
 			}
 
 			@Override
-			public void onDetach(Settings.Setting<?> setting) {
+			public void onDetach(Config config) {
+			}
+
+			private void onStateChange(Config config) {
+				String p = config.holoEverywherePackage.getValue();
+				config.setWidgetsPackage(p + ".widget");
+				config.setPreferencePackage(p + ".preference");
 			}
 
 			@Override
-			public void onPropertyChange(Settings.Setting<?> setting,
-					Property<?> property) {
-				if (property == holoEverywherePackage) {
-					String p = holoEverywherePackage.getValue();
-					setWidgetsPackage(p + ".widget");
-					setPreferencePackage(p + ".preference");
+			public void onPropertyChange(Config config, Property<?> property) {
+				if (property == config.holoEverywherePackage) {
+					onStateChange(config);
 				}
 			}
 		};
-		@SettingProperty(create = true)
+		@SettingProperty(create = true, defaultBoolean = false)
+		private BooleanProperty alwaysUseParentTheme;
+		@SettingProperty(create = true, defaultBoolean = false)
+		private BooleanProperty debugMode;
+		@SettingProperty(create = true, defaultString = DEFAULT_HOLO_EVERYWHERE_PACKAGE)
 		private StringProperty holoEverywherePackage;
-		@SettingProperty(create = true)
+		@SettingProperty(create = true, defaultEnum = "JSON")
 		private EnumProperty<PreferenceImpl> preferenceImpl;
 		@SettingProperty(create = true)
 		private StringProperty preferencePackage;
-		@SettingProperty(create = true)
+		@SettingProperty(create = true, defaultBoolean = false)
 		private BooleanProperty useThemeManager;
 		@SettingProperty(create = true)
 		private StringProperty widgetsPackage;
 
-		public Setting attachDefaultListener() {
+		public Config attachDefaultListener() {
 			return addListener(DEFAULT_SETTINGS_LISTENER);
 		}
 
-		public Setting detachDefaultListener() {
+		public Config detachDefaultListener() {
 			return removeListener(DEFAULT_SETTINGS_LISTENER);
 		}
 
-		public boolean getDebugMode() {
+		public boolean isDebugMode() {
 			return debugMode.getValue();
 		}
 
@@ -95,14 +96,9 @@ public class Application extends android.app.Application implements
 		@Override
 		protected void onInit() {
 			attachDefaultListener();
-			setDebugMode(false);
-			setPreferenceImpl(PreferenceImpl.JSON);
-			setAlwaysUseParentTheme(false);
-			setUseThemeManager(false);
-			setHoloEverywherePackage(DEFAULT_HOLO_EVERYWHERE_PACKAGE);
 		}
 
-		public Setting setAlwaysUseParentTheme(boolean alwaysUseParentTheme) {
+		public Config setAlwaysUseParentTheme(boolean alwaysUseParentTheme) {
 			this.alwaysUseParentTheme.setValue(alwaysUseParentTheme);
 			return this;
 		}
@@ -111,33 +107,31 @@ public class Application extends android.app.Application implements
 			this.debugMode.setValue(debugMode);
 		}
 
-		public Setting setHoloEverywherePackage(String holoEverywherePackage) {
+		public Config setHoloEverywherePackage(String holoEverywherePackage) {
 			this.holoEverywherePackage.setValue(holoEverywherePackage);
 			return this;
 		}
 
-		public Setting setPreferenceImpl(PreferenceImpl preferenceImpl) {
+		public Config setPreferenceImpl(PreferenceImpl preferenceImpl) {
 			this.preferenceImpl.setValue(preferenceImpl);
 			return this;
 		}
 
-		public Setting setPreferencePackage(String preferencePackage) {
+		public Config setPreferencePackage(String preferencePackage) {
 			this.preferencePackage.setValue(preferencePackage);
 			return this;
 		}
 
-		public Setting setUseThemeManager(boolean useThemeManager) {
+		public Config setUseThemeManager(boolean useThemeManager) {
 			this.useThemeManager.setValue(useThemeManager);
 			return this;
 		}
 
-		public Setting setWidgetsPackage(String widgetsPackage) {
+		public Config setWidgetsPackage(String widgetsPackage) {
 			this.widgetsPackage.setValue(widgetsPackage);
 			return this;
 		}
 	}
-
-	private static final String DEFAULT_HOLO_EVERYWHERE_PACKAGE = "com.WazaBe.HoloEverywhere";
 
 	private static Application lastInstance;
 
@@ -145,8 +139,12 @@ public class Application extends android.app.Application implements
 		return lastInstance;
 	}
 
-	public static Setting getSettings() {
-		return Settings.get(Setting.class);
+	public static Config getConfig() {
+		return Setting.get(Config.class);
+	}
+
+	public static boolean isDebugMode() {
+		return getConfig().isDebugMode();
 	}
 
 	public Application() {
@@ -181,7 +179,7 @@ public class Application extends android.app.Application implements
 
 	@Override
 	public void startActivity(Intent intent, Bundle options) {
-		if (getSettings().isAlwaysUseParentTheme()) {
+		if (getConfig().isAlwaysUseParentTheme()) {
 			ThemeManager.startActivity(this, intent, options);
 		} else {
 			superStartActivity(intent, -1, options);

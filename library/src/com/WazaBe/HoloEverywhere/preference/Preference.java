@@ -131,7 +131,7 @@ public class Preference implements Comparable<Preference>,
 				R.styleable.Preference_shouldDisableView, mShouldDisableView);
 		a.recycle();
 		if (!getClass().getName().startsWith(
-				Application.getSettings().getPreferencePackage())) {
+				Application.getConfig().getPreferencePackage())) {
 			mHasSpecifiedLayout = true;
 		}
 	}
