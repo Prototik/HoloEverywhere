@@ -63,7 +63,7 @@ public abstract class Setting<T extends Setting<T>> {
 
 		public void detach() {
 			if (setting != null) {
-				setting.attach(this);
+				setting.detach(this);
 			}
 		}
 
