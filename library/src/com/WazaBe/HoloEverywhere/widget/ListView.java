@@ -129,7 +129,7 @@ public class ListView extends android.widget.ListView {
 
 	protected boolean doLongPress(final View child,
 			final int longPressPosition, final long longPressId) {
-		if (choiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+		if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
 			if (actionMode == null
 					&& (actionMode = startActionMode(choiceModeListener)) != null) {
 				setItemChecked(longPressPosition, true);
@@ -157,7 +157,7 @@ public class ListView extends android.widget.ListView {
 
 	@Override
 	public boolean performItemClick(View view, int position, long id) {
-		if (choiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+		if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
 			boolean newValue = !getCheckedItemPositions().get(position);
 			setItemChecked(position, newValue);
 			if (actionMode != null) {
@@ -179,14 +179,14 @@ public class ListView extends android.widget.ListView {
 			actionMode.finish();
 			actionMode = null;
 		}
-		if (choiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+		if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
 			clearChoices();
 			checkedItemCount = 0;
 			setLongClickable(true);
 			updateOnScreenCheckedViews();
 			requestLayout();
 			invalidate();
-			super.setChoiceMode(CHOICE_MODE_MULTIPLE);
+			super.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 		} else {
 			super.setChoiceMode(choiceMode);
 		}
@@ -194,7 +194,7 @@ public class ListView extends android.widget.ListView {
 
 	@Override
 	public void setItemChecked(int position, boolean value) {
-		if (choiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+		if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
 			if (value && actionMode == null) {
 				actionMode = startActionMode(choiceModeListener);
 			}

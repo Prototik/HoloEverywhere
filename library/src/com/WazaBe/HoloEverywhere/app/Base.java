@@ -6,9 +6,9 @@ import com.WazaBe.HoloEverywhere.app.Application.Config;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
 public interface Base extends ThemedIntentStarter {
-	public LayoutInflater getLayoutInflater();
+	public Config getConfig();
 
-	public Config getSettings();
+	public LayoutInflater getLayoutInflater();
 
 	public SharedPreferences getSupportSharedPreferences(String name, int mode);
 

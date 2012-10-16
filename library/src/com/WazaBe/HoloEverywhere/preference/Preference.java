@@ -86,7 +86,7 @@ public class Preference implements Comparable<Preference>,
 	private OnPreferenceChangeInternalListener mListener;
 	private OnPreferenceChangeListener mOnChangeListener;
 	private OnPreferenceClickListener mOnClickListener;
-	private int mOrder = DEFAULT_ORDER;
+	private int mOrder = Preference.DEFAULT_ORDER;
 	private boolean mPersistent = true;
 	private PreferenceManager mPreferenceManager;
 	private boolean mRequiresKey;
@@ -143,8 +143,9 @@ public class Preference implements Comparable<Preference>,
 
 	@Override
 	public int compareTo(Preference another) {
-		if (mOrder != DEFAULT_ORDER || mOrder == DEFAULT_ORDER
-				&& another.mOrder != DEFAULT_ORDER) {
+		if (mOrder != Preference.DEFAULT_ORDER
+				|| mOrder == Preference.DEFAULT_ORDER
+				&& another.mOrder != Preference.DEFAULT_ORDER) {
 			return mOrder - another.mOrder;
 		} else if (mTitle == null) {
 			return 1;

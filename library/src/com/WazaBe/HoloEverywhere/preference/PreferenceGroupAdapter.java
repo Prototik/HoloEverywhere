@@ -7,6 +7,7 @@ import java.util.List;
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 
@@ -134,14 +135,14 @@ class PreferenceGroupAdapter extends BaseAdapter implements
 		}
 		final Preference preference = getItem(position);
 		if (!preference.hasSpecifiedLayout()) {
-			return IGNORE_ITEM_VIEW_TYPE;
+			return Adapter.IGNORE_ITEM_VIEW_TYPE;
 		}
 		mTempPreferenceLayout = createPreferenceLayout(preference,
 				mTempPreferenceLayout);
 		int viewType = Collections.binarySearch(mPreferenceLayouts,
 				mTempPreferenceLayout);
 		if (viewType < 0) {
-			return IGNORE_ITEM_VIEW_TYPE;
+			return Adapter.IGNORE_ITEM_VIEW_TYPE;
 		} else {
 			return viewType;
 		}

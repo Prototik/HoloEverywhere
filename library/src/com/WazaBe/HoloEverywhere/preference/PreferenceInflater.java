@@ -39,8 +39,7 @@ class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
 
 	private void init(PreferenceManager preferenceManager) {
 		mPreferenceManager = preferenceManager;
-		setDefaultPackage(Application.getConfig().getPreferencePackage()
-				+ ".");
+		setDefaultPackage(Application.getConfig().getPreferencePackage() + ".");
 	}
 
 	@Override
@@ -49,7 +48,7 @@ class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
 			throws XmlPullParserException {
 		final String tag = parser.getName();
 
-		if (tag.equals(INTENT_TAG_NAME)) {
+		if (tag.equals(PreferenceInflater.INTENT_TAG_NAME)) {
 			Intent intent = null;
 			try {
 				intent = Intent.parseIntent(getContext().getResources(),
@@ -65,8 +64,9 @@ class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
 			}
 
 			return true;
-		} else if (tag.equals(EXTRA_TAG_NAME)) {
-			getContext().getResources().parseBundleExtra(EXTRA_TAG_NAME, attrs,
+		} else if (tag.equals(PreferenceInflater.EXTRA_TAG_NAME)) {
+			getContext().getResources().parseBundleExtra(
+					PreferenceInflater.EXTRA_TAG_NAME, attrs,
 					parentPreference.getExtras());
 			try {
 				XmlUtils.skipCurrentTag(parser);

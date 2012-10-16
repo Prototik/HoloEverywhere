@@ -18,7 +18,7 @@ public final class ReflectHelper {
 	public static <Result> Result invoke(Object object, String methodName,
 			Class<Result> result, boolean superClass, Object... args) {
 		try {
-			Class<?>[] argsClasses = classess(args);
+			Class<?>[] argsClasses = ReflectHelper.classess(args);
 			Method method = (superClass ? object.getClass().getSuperclass()
 					: object.getClass()).getMethod(methodName, argsClasses);
 			method.setAccessible(true);
@@ -31,7 +31,7 @@ public final class ReflectHelper {
 
 	public static <Result> Result invoke(Object object, String methodName,
 			Class<Result> result, Object... args) {
-		return invoke(object, methodName, result, false, args);
+		return ReflectHelper.invoke(object, methodName, result, false, args);
 	}
 
 }

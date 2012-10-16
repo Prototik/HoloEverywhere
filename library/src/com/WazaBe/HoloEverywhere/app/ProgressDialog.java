@@ -23,17 +23,19 @@ public class ProgressDialog extends AlertDialog {
 
 	public static ProgressDialog show(Context context, CharSequence title,
 			CharSequence message) {
-		return show(context, title, message, false);
+		return ProgressDialog.show(context, title, message, false);
 	}
 
 	public static ProgressDialog show(Context context, CharSequence title,
 			CharSequence message, boolean indeterminate) {
-		return show(context, title, message, indeterminate, false, null);
+		return ProgressDialog.show(context, title, message, indeterminate,
+				false, null);
 	}
 
 	public static ProgressDialog show(Context context, CharSequence title,
 			CharSequence message, boolean indeterminate, boolean cancelable) {
-		return show(context, title, message, indeterminate, cancelable, null);
+		return ProgressDialog.show(context, title, message, indeterminate,
+				cancelable, null);
 	}
 
 	public static ProgressDialog show(Context context, CharSequence title,
@@ -63,7 +65,7 @@ public class ProgressDialog extends AlertDialog {
 	private String mProgressNumberFormat;
 	private TextView mProgressPercent;
 	private NumberFormat mProgressPercentFormat;
-	private int mProgressStyle = STYLE_SPINNER;
+	private int mProgressStyle = ProgressDialog.STYLE_SPINNER;
 	private int mProgressVal;
 	private int mSecondaryProgressVal;
 	private Handler mViewUpdateHandler;
@@ -136,7 +138,7 @@ public class ProgressDialog extends AlertDialog {
 				R.styleable.AlertDialog, R.attr.alertDialogStyle,
 				R.style.Holo_AlertDialog);
 		View view;
-		if (mProgressStyle == STYLE_HORIZONTAL) {
+		if (mProgressStyle == ProgressDialog.STYLE_HORIZONTAL) {
 			mViewUpdateHandler = new Handler() {
 				@Override
 				public void handleMessage(Message msg) {
@@ -211,7 +213,7 @@ public class ProgressDialog extends AlertDialog {
 	}
 
 	private void onProgressChanged() {
-		if (mProgressStyle == STYLE_HORIZONTAL) {
+		if (mProgressStyle == ProgressDialog.STYLE_HORIZONTAL) {
 			if (mViewUpdateHandler != null
 					&& !mViewUpdateHandler.hasMessages(0)) {
 				mViewUpdateHandler.sendEmptyMessage(0);
@@ -259,7 +261,7 @@ public class ProgressDialog extends AlertDialog {
 	@Override
 	public void setMessage(CharSequence message) {
 		if (mProgress != null) {
-			if (mProgressStyle == STYLE_HORIZONTAL) {
+			if (mProgressStyle == ProgressDialog.STYLE_HORIZONTAL) {
 				super.setMessage(message);
 			} else {
 				mMessageView.setText(message);

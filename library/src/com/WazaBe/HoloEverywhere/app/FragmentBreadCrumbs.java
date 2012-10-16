@@ -149,15 +149,15 @@ public class FragmentBreadCrumbs extends ViewGroup implements
 		int measuredChildState = 0;
 		for (int i = 0; i < count; i++) {
 			final View child = getChildAt(i);
-			if (child.getVisibility() != GONE) {
+			if (child.getVisibility() != View.GONE) {
 				measureChild(child, widthMeasureSpec, heightMeasureSpec);
 				maxWidth = Math.max(maxWidth, child.getMeasuredWidth());
 				maxHeight = Math.max(maxHeight, child.getMeasuredHeight());
 				if (VERSION.SDK_INT >= 11) {
-					measuredChildState = combineMeasuredStates(
+					measuredChildState = View.combineMeasuredStates(
 							measuredChildState, child.getMeasuredState());
 				} else {
-					measuredChildState = combineMeasuredStates(
+					measuredChildState = View.combineMeasuredStates(
 							measuredChildState, 0);
 				}
 			}
@@ -166,11 +166,10 @@ public class FragmentBreadCrumbs extends ViewGroup implements
 		maxHeight += getPaddingTop() + getPaddingBottom();
 		maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight());
 		maxWidth = Math.max(maxWidth, getSuggestedMinimumWidth());
-		setMeasuredDimension(
-				resolveSizeAndState(maxWidth, widthMeasureSpec,
-						measuredChildState),
-				resolveSizeAndState(maxHeight, heightMeasureSpec,
-						measuredChildState << MEASURED_HEIGHT_STATE_SHIFT));
+		setMeasuredDimension(View.resolveSizeAndState(maxWidth,
+				widthMeasureSpec, measuredChildState),
+				View.resolveSizeAndState(maxHeight, heightMeasureSpec,
+						measuredChildState << View.MEASURED_HEIGHT_STATE_SHIFT));
 	}
 
 	@SuppressLint("NewApi")

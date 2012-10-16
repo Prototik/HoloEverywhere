@@ -28,20 +28,21 @@ public class FastXmlSerializer implements XmlSerializer {
 			null, null, null, null, "&lt;", null, "&gt;", null, // 56-63
 	};
 
-	private ByteBuffer mBytes = ByteBuffer.allocate(BUFFER_LEN);
+	private ByteBuffer mBytes = ByteBuffer
+			.allocate(FastXmlSerializer.BUFFER_LEN);
 	private CharsetEncoder mCharset;
 
 	private boolean mInTag;
 
 	private OutputStream mOutputStream;
 	private int mPos;
-	private final char[] mText = new char[BUFFER_LEN];
+	private final char[] mText = new char[FastXmlSerializer.BUFFER_LEN];
 
 	private Writer mWriter;
 
 	private void append(char c) throws IOException {
 		int pos = mPos;
-		if (pos >= BUFFER_LEN - 1) {
+		if (pos >= FastXmlSerializer.BUFFER_LEN - 1) {
 			flush();
 			pos = mPos;
 		}
@@ -50,17 +51,18 @@ public class FastXmlSerializer implements XmlSerializer {
 	}
 
 	private void append(char[] buf, int i, final int length) throws IOException {
-		if (length > BUFFER_LEN) {
+		if (length > FastXmlSerializer.BUFFER_LEN) {
 			final int end = i + length;
 			while (i < end) {
-				int next = i + BUFFER_LEN;
-				append(buf, i, next < end ? BUFFER_LEN : end - i);
+				int next = i + FastXmlSerializer.BUFFER_LEN;
+				append(buf, i, next < end ? FastXmlSerializer.BUFFER_LEN : end
+						- i);
 				i = next;
 			}
 			return;
 		}
 		int pos = mPos;
-		if (pos + length > BUFFER_LEN) {
+		if (pos + length > FastXmlSerializer.BUFFER_LEN) {
 			flush();
 			pos = mPos;
 		}
@@ -73,17 +75,18 @@ public class FastXmlSerializer implements XmlSerializer {
 	}
 
 	private void append(String str, int i, final int length) throws IOException {
-		if (length > BUFFER_LEN) {
+		if (length > FastXmlSerializer.BUFFER_LEN) {
 			final int end = i + length;
 			while (i < end) {
-				int next = i + BUFFER_LEN;
-				append(str, i, next < end ? BUFFER_LEN : end - i);
+				int next = i + FastXmlSerializer.BUFFER_LEN;
+				append(str, i, next < end ? FastXmlSerializer.BUFFER_LEN : end
+						- i);
 				i = next;
 			}
 			return;
 		}
 		int pos = mPos;
-		if (pos + length > BUFFER_LEN) {
+		if (pos + length > FastXmlSerializer.BUFFER_LEN) {
 			flush();
 			pos = mPos;
 		}
@@ -157,8 +160,8 @@ public class FastXmlSerializer implements XmlSerializer {
 
 	private void escapeAndAppendString(char[] buf, int start, int len)
 			throws IOException {
-		final char NE = (char) ESCAPE_TABLE.length;
-		final String[] escapes = ESCAPE_TABLE;
+		final char NE = (char) FastXmlSerializer.ESCAPE_TABLE.length;
+		final String[] escapes = FastXmlSerializer.ESCAPE_TABLE;
 		int end = start + len;
 		int lastPos = start;
 		int pos;
@@ -184,8 +187,8 @@ public class FastXmlSerializer implements XmlSerializer {
 
 	private void escapeAndAppendString(final String string) throws IOException {
 		final int N = string.length();
-		final char NE = (char) ESCAPE_TABLE.length;
-		final String[] escapes = ESCAPE_TABLE;
+		final char NE = (char) FastXmlSerializer.ESCAPE_TABLE.length;
+		final String[] escapes = FastXmlSerializer.ESCAPE_TABLE;
 		int lastPos = 0;
 		int pos;
 		for (pos = 0; pos < N; pos++) {

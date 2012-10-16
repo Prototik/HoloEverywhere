@@ -101,7 +101,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 		}
 
 		private Editor putSet(String key, Set<?> value) {
-			editor.putString(key, setToString(value));
+			editor.putString(key, _SharedPreferencesImpl_XML.setToString(value));
 			return this;
 		}
 
@@ -117,7 +117,8 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 			if (VERSION.SDK_INT >= 11) {
 				editor.putStringSet(key, value);
 			} else {
-				editor.putString(key, setToString(value));
+				editor.putString(key,
+						_SharedPreferencesImpl_XML.setToString(value));
 			}
 			return this;
 		}
@@ -136,7 +137,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 		public static BaseOnSharedPreferenceChangeListener obtain(
 				SharedPreferences prefs,
 				OnSharedPreferenceChangeListener listener) {
-			return obtain(prefs, listener,
+			return BaseOnSharedPreferenceChangeListener.obtain(prefs, listener,
 					BaseOnSharedPreferenceChangeListener.class);
 		}
 
@@ -144,15 +145,18 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 		public static <T extends BaseOnSharedPreferenceChangeListener> T obtain(
 				SharedPreferences prefs,
 				OnSharedPreferenceChangeListener listener, Class<T> clazz) {
-			if (!instances.containsKey(listener)) {
-				synchronized (instances) {
-					if (!instances.containsKey(listener)) {
+			if (!BaseOnSharedPreferenceChangeListener.instances
+					.containsKey(listener)) {
+				synchronized (BaseOnSharedPreferenceChangeListener.instances) {
+					if (!BaseOnSharedPreferenceChangeListener.instances
+							.containsKey(listener)) {
 						try {
 							Constructor<T> constructor = clazz.getConstructor(
 									SharedPreferences.class,
 									OnSharedPreferenceChangeListener.class);
 							constructor.setAccessible(true);
-							instances.put(listener,
+							BaseOnSharedPreferenceChangeListener.instances.put(
+									listener,
 									constructor.newInstance(prefs, listener));
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -160,7 +164,8 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 					}
 				}
 			}
-			return (T) instances.get(listener);
+			return (T) BaseOnSharedPreferenceChangeListener.instances
+					.get(listener);
 		}
 
 		private OnSharedPreferenceChangeListener listener;
@@ -285,7 +290,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 		if (s == null) {
 			return defValue;
 		} else {
-			return stringToSet(s, clazz);
+			return _SharedPreferencesImpl_XML.stringToSet(s, clazz);
 		}
 	}
 

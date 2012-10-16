@@ -56,15 +56,16 @@ public class ListFragment extends Fragment {
 			mList = (ListView) root;
 		} else {
 			mStandardEmptyView = (TextView) root
-					.findViewById(INTERNAL_EMPTY_ID);
+					.findViewById(ListFragment.INTERNAL_EMPTY_ID);
 			if (mStandardEmptyView == null) {
 				mEmptyView = root.findViewById(android.R.id.empty);
 			} else {
 				mStandardEmptyView.setVisibility(View.GONE);
 			}
 			mProgressContainer = root
-					.findViewById(INTERNAL_PROGRESS_CONTAINER_ID);
-			mListContainer = root.findViewById(INTERNAL_LIST_CONTAINER_ID);
+					.findViewById(ListFragment.INTERNAL_PROGRESS_CONTAINER_ID);
+			mListContainer = root
+					.findViewById(ListFragment.INTERNAL_LIST_CONTAINER_ID);
 			View rawListView = root.findViewById(android.R.id.list);
 			if (!(rawListView instanceof ListView)) {
 				if (rawListView == null) {
@@ -123,7 +124,7 @@ public class ListFragment extends Fragment {
 		final Context context = getActivity();
 		FrameLayout root = new FrameLayout(context);
 		LinearLayout pframe = new LinearLayout(context);
-		pframe.setId(INTERNAL_PROGRESS_CONTAINER_ID);
+		pframe.setId(ListFragment.INTERNAL_PROGRESS_CONTAINER_ID);
 		pframe.setOrientation(android.widget.LinearLayout.VERTICAL);
 		pframe.setVisibility(View.GONE);
 		pframe.setGravity(Gravity.CENTER);
@@ -136,9 +137,9 @@ public class ListFragment extends Fragment {
 				ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT));
 		FrameLayout lframe = new FrameLayout(context);
-		lframe.setId(INTERNAL_LIST_CONTAINER_ID);
+		lframe.setId(ListFragment.INTERNAL_LIST_CONTAINER_ID);
 		TextView tv = new TextView(getActivity());
-		tv.setId(INTERNAL_EMPTY_ID);
+		tv.setId(ListFragment.INTERNAL_EMPTY_ID);
 		tv.setGravity(Gravity.CENTER);
 		lframe.addView(tv, new FrameLayout.LayoutParams(
 				ViewGroup.LayoutParams.MATCH_PARENT,

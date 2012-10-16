@@ -76,12 +76,14 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 
 		@Override
 		public void setBackgroundDrawable(Drawable bg) {
-			Log.e(TAG, "Cannot set popup background for MODE_DIALOG, ignoring");
+			Log.e(Spinner.TAG,
+					"Cannot set popup background for MODE_DIALOG, ignoring");
 		}
 
 		@Override
 		public void setHorizontalOffset(int px) {
-			Log.e(TAG, "Cannot set horizontal offset for MODE_DIALOG, ignoring");
+			Log.e(Spinner.TAG,
+					"Cannot set horizontal offset for MODE_DIALOG, ignoring");
 		}
 
 		@Override
@@ -91,7 +93,8 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 
 		@Override
 		public void setVerticalOffset(int px) {
-			Log.e(TAG, "Cannot set vertical offset for MODE_DIALOG, ignoring");
+			Log.e(Spinner.TAG,
+					"Cannot set vertical offset for MODE_DIALOG, ignoring");
 		}
 
 		@Override
@@ -206,7 +209,7 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 			super(context, attrs, R.attr.listPopupWindowStyle);
 			setAnchorView(Spinner.this);
 			setModal(true);
-			setPromptPosition(POSITION_PROMPT_ABOVE);
+			setPromptPosition(ListPopupWindow.POSITION_PROMPT_ABOVE);
 			setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
 				@Override
 				public void onItemClick(android.widget.AdapterView<?> parent,
@@ -271,7 +274,7 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 				setContentWidth(mDropDownWidth);
 			}
 			setHorizontalOffset(bgOffset + spinnerPaddingLeft);
-			setInputMethodMode(INPUT_METHOD_NOT_NEEDED);
+			setInputMethodMode(ListPopupWindow.INPUT_METHOD_NOT_NEEDED);
 			super.show();
 			getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 			setSelection(Spinner.this.getSelectedItemPosition());
@@ -328,15 +331,16 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 	}
 
 	public Spinner(Context context, AttributeSet attrs, int defStyle) {
-		this(context, attrs, defStyle, MODE_THEME);
+		this(context, attrs, defStyle, Spinner.MODE_THEME);
 	}
 
 	public Spinner(Context context, AttributeSet attrs, int defStyle, int mode) {
 		super(context, attrs, defStyle);
 		TypedArray a = context.obtainStyledAttributes(attrs,
 				R.styleable.Spinner, defStyle, R.style.Holo_Spinner);
-		if (mode == MODE_THEME) {
-			mode = a.getInt(R.styleable.Spinner_spinnerMode, MODE_DIALOG);
+		if (mode == Spinner.MODE_THEME) {
+			mode = a.getInt(R.styleable.Spinner_spinnerMode,
+					Spinner.MODE_DIALOG);
 		}
 		switch (mode) {
 		case MODE_DIALOG: {
@@ -487,10 +491,10 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 		final int heightMeasureSpec = MeasureSpec.makeMeasureSpec(0,
 				MeasureSpec.UNSPECIFIED);
 		int start = Math.max(0, getSelectedItemPosition());
-		final int end = Math
-				.min(adapter.getCount(), start + MAX_ITEMS_MEASURED);
+		final int end = Math.min(adapter.getCount(), start
+				+ Spinner.MAX_ITEMS_MEASURED);
 		final int count = end - start;
-		start = Math.max(0, start - (MAX_ITEMS_MEASURED - count));
+		start = Math.max(0, start - (Spinner.MAX_ITEMS_MEASURED - count));
 		for (int i = start; i < end; i++) {
 			final int positionType = adapter.getItemViewType(i);
 			if (positionType != itemType) {
@@ -595,7 +599,8 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 
 	public void setDropDownWidth(int pixels) {
 		if (!(mPopup instanceof DropdownPopup)) {
-			Log.e(TAG, "Cannot set dropdown width for MODE_DIALOG, ignoring");
+			Log.e(Spinner.TAG,
+					"Cannot set dropdown width for MODE_DIALOG, ignoring");
 			return;
 		}
 		mDropDownWidth = pixels;
@@ -634,7 +639,7 @@ public class Spinner extends AbsSpinner implements OnClickListener {
 
 	public void setPopupBackgroundDrawable(Drawable background) {
 		if (!(mPopup instanceof DropdownPopup)) {
-			Log.e(TAG,
+			Log.e(Spinner.TAG,
 					"setPopupBackgroundDrawable: incompatible spinner mode; ignoring...");
 			return;
 		}

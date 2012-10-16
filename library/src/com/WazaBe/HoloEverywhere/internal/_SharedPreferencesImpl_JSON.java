@@ -367,11 +367,11 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 	}
 
 	public void notifyOnChange(String key) {
-		synchronized (listeners) {
-			if (!listeners.containsKey(this)) {
+		synchronized (_SharedPreferencesImpl_JSON.listeners) {
+			if (!_SharedPreferencesImpl_JSON.listeners.containsKey(this)) {
 				return;
 			}
-			for (OnSharedPreferenceChangeListener listener : listeners
+			for (OnSharedPreferenceChangeListener listener : _SharedPreferencesImpl_JSON.listeners
 					.get(this)) {
 				listener.onSharedPreferenceChanged(this, key);
 			}
@@ -386,7 +386,8 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 				reader = new InputStreamReader(is, charset);
 			} catch (UnsupportedEncodingException e) {
 				if (DEBUG) {
-					Log.w(TAG, "Encoding unsupport: " + charset);
+					Log.w(_SharedPreferencesImpl_JSON.TAG,
+							"Encoding unsupport: " + charset);
 				}
 				reader = new InputStreamReader(is);
 			}
@@ -409,12 +410,13 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 	@Override
 	public void registerOnSharedPreferenceChangeListener(
 			OnSharedPreferenceChangeListener listener) {
-		synchronized (listeners) {
-			if (!listeners.containsKey(this)) {
-				listeners.put(this,
+		synchronized (_SharedPreferencesImpl_JSON.listeners) {
+			if (!_SharedPreferencesImpl_JSON.listeners.containsKey(this)) {
+				_SharedPreferencesImpl_JSON.listeners.put(this,
 						new HashSet<OnSharedPreferenceChangeListener>());
 			}
-			Set<OnSharedPreferenceChangeListener> set = listeners.get(this);
+			Set<OnSharedPreferenceChangeListener> set = _SharedPreferencesImpl_JSON.listeners
+					.get(this);
 			if (!set.contains(listener)) {
 				set.add(listener);
 			}
@@ -427,7 +429,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 			try {
 				s = data.toString(2);
 			} catch (JSONException e) {
-				Log.e(TAG, "JSONException", e);
+				Log.e(_SharedPreferencesImpl_JSON.TAG, "JSONException", e);
 				s = data.toString();
 			}
 		} else {
@@ -459,14 +461,15 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 	@Override
 	public void unregisterOnSharedPreferenceChangeListener(
 			OnSharedPreferenceChangeListener listener) {
-		synchronized (listeners) {
-			if (listeners.containsKey(this)) {
-				Set<OnSharedPreferenceChangeListener> set = listeners.get(this);
+		synchronized (_SharedPreferencesImpl_JSON.listeners) {
+			if (_SharedPreferencesImpl_JSON.listeners.containsKey(this)) {
+				Set<OnSharedPreferenceChangeListener> set = _SharedPreferencesImpl_JSON.listeners
+						.get(this);
 				if (set.contains(listener)) {
 					set.remove(listener);
 				}
 				if (set.size() == 0) {
-					listeners.remove(this);
+					_SharedPreferencesImpl_JSON.listeners.remove(this);
 				}
 			}
 		}

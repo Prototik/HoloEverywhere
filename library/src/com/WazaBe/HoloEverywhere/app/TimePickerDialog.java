@@ -37,9 +37,9 @@ public class TimePickerDialog extends AlertDialog implements OnClickListener,
 		setIcon(0);
 		setTitle(R.string.time_picker_dialog_title);
 		Context themeContext = getContext();
-		setButton(BUTTON_POSITIVE,
+		setButton(DialogInterface.BUTTON_POSITIVE,
 				themeContext.getText(R.string.date_time_set), this);
-		setButton(BUTTON_NEGATIVE,
+		setButton(DialogInterface.BUTTON_NEGATIVE,
 				themeContext.getText(android.R.string.cancel),
 				(OnClickListener) null);
 		View view = LayoutInflater.inflate(themeContext,
@@ -69,9 +69,10 @@ public class TimePickerDialog extends AlertDialog implements OnClickListener,
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		int hour = savedInstanceState.getInt(HOUR);
-		int minute = savedInstanceState.getInt(MINUTE);
-		mTimePicker.setIs24HourView(savedInstanceState.getBoolean(IS_24_HOUR));
+		int hour = savedInstanceState.getInt(TimePickerDialog.HOUR);
+		int minute = savedInstanceState.getInt(TimePickerDialog.MINUTE);
+		mTimePicker.setIs24HourView(savedInstanceState
+				.getBoolean(TimePickerDialog.IS_24_HOUR));
 		mTimePicker.setCurrentHour(hour);
 		mTimePicker.setCurrentMinute(minute);
 	}
@@ -79,9 +80,10 @@ public class TimePickerDialog extends AlertDialog implements OnClickListener,
 	@Override
 	public Bundle onSaveInstanceState() {
 		Bundle state = super.onSaveInstanceState();
-		state.putInt(HOUR, mTimePicker.getCurrentHour());
-		state.putInt(MINUTE, mTimePicker.getCurrentMinute());
-		state.putBoolean(IS_24_HOUR, mTimePicker.is24HourView());
+		state.putInt(TimePickerDialog.HOUR, mTimePicker.getCurrentHour());
+		state.putInt(TimePickerDialog.MINUTE, mTimePicker.getCurrentMinute());
+		state.putBoolean(TimePickerDialog.IS_24_HOUR,
+				mTimePicker.is24HourView());
 		return state;
 	}
 

@@ -36,8 +36,8 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
 		super(context, theme);
 		mCallBack = callBack;
 		mCalendar = Calendar.getInstance();
-		setButton(BUTTON_POSITIVE, getContext()
-				.getText(R.string.date_time_done), this);
+		setButton(DialogInterface.BUTTON_POSITIVE,
+				getContext().getText(R.string.date_time_done), this);
 		setIcon(0);
 		LayoutInflater inflater = LayoutInflater.from(context);
 		View view = inflater.inflate(R.layout.date_picker_dialog, null);
@@ -70,18 +70,18 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		int year = savedInstanceState.getInt(YEAR);
-		int month = savedInstanceState.getInt(MONTH);
-		int day = savedInstanceState.getInt(DAY);
+		int year = savedInstanceState.getInt(DatePickerDialog.YEAR);
+		int month = savedInstanceState.getInt(DatePickerDialog.MONTH);
+		int day = savedInstanceState.getInt(DatePickerDialog.DAY);
 		mDatePicker.init(year, month, day, this);
 	}
 
 	@Override
 	public Bundle onSaveInstanceState() {
 		Bundle state = super.onSaveInstanceState();
-		state.putInt(YEAR, mDatePicker.getYear());
-		state.putInt(MONTH, mDatePicker.getMonth());
-		state.putInt(DAY, mDatePicker.getDayOfMonth());
+		state.putInt(DatePickerDialog.YEAR, mDatePicker.getYear());
+		state.putInt(DatePickerDialog.MONTH, mDatePicker.getMonth());
+		state.putInt(DatePickerDialog.DAY, mDatePicker.getDayOfMonth());
 		return state;
 	}
 

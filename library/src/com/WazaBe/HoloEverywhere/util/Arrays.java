@@ -5,7 +5,8 @@ import java.lang.reflect.Array;
 public class Arrays {
 	@SuppressWarnings("unchecked")
 	public static <T> T[] copyOfRange(T[] original, int from, int to) {
-		return copyOfRange(original, from, to, (Class<T[]>) original.getClass());
+		return Arrays.copyOfRange(original, from, to,
+				(Class<T[]>) original.getClass());
 	}
 
 	@SuppressWarnings("unchecked")

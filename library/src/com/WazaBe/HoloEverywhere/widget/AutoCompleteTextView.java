@@ -505,7 +505,8 @@ public class AutoCompleteTextView extends EditText implements
 				selectedItem = mAdapter.getItem(position);
 			}
 			if (selectedItem == null) {
-				Log.w(TAG, "performCompletion: no selected item");
+				Log.w(AutoCompleteTextView.TAG,
+						"performCompletion: no selected item");
 				return;
 			}
 			mBlockCompletion = true;
@@ -690,7 +691,7 @@ public class AutoCompleteTextView extends EditText implements
 		}
 		if (!isPopupShowing()) {
 			mPopup.setInputMethodMode(ListPopupWindow.INPUT_METHOD_NEEDED);
-			mPopup.setListItemExpandMax(EXPAND_MAX);
+			mPopup.setListItemExpandMax(AutoCompleteTextView.EXPAND_MAX);
 		}
 		mPopup.show();
 		if (VERSION.SDK_INT >= 9) {

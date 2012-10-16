@@ -45,8 +45,9 @@ public class PreferenceManager {
 	private static final String TAG = "PreferenceManager";
 
 	public static SharedPreferences getDefaultSharedPreferences(Context context) {
-		return wrap(context, getDefaultSharedPreferencesName(context),
-				getDefaultSharedPreferencesMode());
+		return PreferenceManager.wrap(context,
+				PreferenceManager.getDefaultSharedPreferencesName(context),
+				PreferenceManager.getDefaultSharedPreferencesMode());
 	}
 
 	private static int getDefaultSharedPreferencesMode() {
@@ -59,26 +60,29 @@ public class PreferenceManager {
 
 	public static void setDefaultValues(Context context, int resId,
 			boolean readAgain) {
-		setDefaultValues(context, getDefaultSharedPreferencesName(context),
-				getDefaultSharedPreferencesMode(), resId, readAgain);
+		PreferenceManager.setDefaultValues(context,
+				PreferenceManager.getDefaultSharedPreferencesName(context),
+				PreferenceManager.getDefaultSharedPreferencesMode(), resId,
+				readAgain);
 	}
 
 	@SuppressLint("NewApi")
 	public static void setDefaultValues(Context context,
 			String sharedPreferencesName, int sharedPreferencesMode, int resId,
 			boolean readAgain) {
-		final SharedPreferences defaultValueSp = wrap(context,
-				KEY_HAS_SET_DEFAULT_VALUES, Context.MODE_PRIVATE);
+		final SharedPreferences defaultValueSp = PreferenceManager.wrap(
+				context, PreferenceManager.KEY_HAS_SET_DEFAULT_VALUES,
+				Context.MODE_PRIVATE);
 		if (readAgain
-				|| !defaultValueSp
-						.getBoolean(KEY_HAS_SET_DEFAULT_VALUES, false)) {
+				|| !defaultValueSp.getBoolean(
+						PreferenceManager.KEY_HAS_SET_DEFAULT_VALUES, false)) {
 			final PreferenceManager pm = new PreferenceManager(context);
 			pm.setSharedPreferencesName(sharedPreferencesName);
 			pm.setSharedPreferencesMode(sharedPreferencesMode);
 			pm.inflateFromResource(context, resId, null);
 
 			SharedPreferences.Editor editor = defaultValueSp.edit().putBoolean(
-					KEY_HAS_SET_DEFAULT_VALUES, true);
+					PreferenceManager.KEY_HAS_SET_DEFAULT_VALUES, true);
 			try {
 				if (VERSION.SDK_INT < 9) {
 					throw new AbstractMethodError();
@@ -289,8 +293,8 @@ public class PreferenceManager {
 
 	public SharedPreferences getSharedPreferences() {
 		if (mSharedPreferences == null) {
-			mSharedPreferences = wrap(mContext, mSharedPreferencesName,
-					mSharedPreferencesMode);
+			mSharedPreferences = PreferenceManager.wrap(mContext,
+					mSharedPreferencesName, mSharedPreferencesMode);
 		}
 		return mSharedPreferences;
 	}
@@ -313,11 +317,14 @@ public class PreferenceManager {
 			final Bundle metaData = activityInfo.metaData;
 
 			if (metaData == null
-					|| !metaData.containsKey(METADATA_KEY_PREFERENCES)) {
+					|| !metaData
+							.containsKey(PreferenceManager.METADATA_KEY_PREFERENCES)) {
 				continue;
 			}
-			final String uniqueResId = activityInfo.packageName + ":"
-					+ activityInfo.metaData.getInt(METADATA_KEY_PREFERENCES);
+			final String uniqueResId = activityInfo.packageName
+					+ ":"
+					+ activityInfo.metaData
+							.getInt(PreferenceManager.METADATA_KEY_PREFERENCES);
 
 			if (!inflatedRes.contains(uniqueResId)) {
 				inflatedRes.add(uniqueResId);
@@ -327,7 +334,7 @@ public class PreferenceManager {
 					context = mContext.createPackageContext(
 							activityInfo.packageName, 0);
 				} catch (NameNotFoundException e) {
-					Log.w(TAG,
+					Log.w(PreferenceManager.TAG,
 							"Could not create context for "
 									+ activityInfo.packageName + ": "
 									+ Log.getStackTraceString(e));
@@ -337,7 +344,8 @@ public class PreferenceManager {
 				final PreferenceInflater inflater = new PreferenceInflater(
 						context, this);
 				final XmlResourceParser parser = activityInfo.loadXmlMetaData(
-						context.getPackageManager(), METADATA_KEY_PREFERENCES);
+						context.getPackageManager(),
+						PreferenceManager.METADATA_KEY_PREFERENCES);
 				rootPreferences = (PreferenceScreen) inflater.inflate(parser,
 						rootPreferences, true);
 				parser.close();
@@ -369,7 +377,8 @@ public class PreferenceManager {
 	private void init(Context context) {
 		mContext = context;
 
-		setSharedPreferencesName(getDefaultSharedPreferencesName(context));
+		setSharedPreferencesName(PreferenceManager
+				.getDefaultSharedPreferencesName(context));
 	}
 
 	private List<ResolveInfo> queryIntentActivities(Intent queryIntent) {

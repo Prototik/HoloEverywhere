@@ -13,12 +13,16 @@ import com.WazaBe.HoloEverywhere.ThemeManager.ThemedIntentStarter;
 public class Application extends android.app.Application implements
 		ThemedIntentStarter {
 	public static final class Config extends Setting<Config> {
-		private static final String DEFAULT_HOLO_EVERYWHERE_PACKAGE = "com.WazaBe.HoloEverywhere";
-
 		public static enum PreferenceImpl {
 			JSON, XML
 		}
 
+		private static final String DEFAULT_HOLO_EVERYWHERE_PACKAGE = "com.WazaBe.HoloEverywhere";
+
+		@SettingProperty(create = true, defaultBoolean = false)
+		private BooleanProperty alwaysUseParentTheme;
+		@SettingProperty(create = true, defaultBoolean = false)
+		private BooleanProperty debugMode;
 		private final SettingListener<Config> DEFAULT_SETTINGS_LISTENER = new SettingListener<Config>() {
 			@Override
 			public void onAttach(Config config) {
@@ -30,24 +34,20 @@ public class Application extends android.app.Application implements
 			public void onDetach(Config config) {
 			}
 
-			private void onStateChange(Config config) {
-				String p = config.holoEverywherePackage.getValue();
-				config.setWidgetsPackage(p + ".widget");
-				config.setPreferencePackage(p + ".preference");
-			}
-
 			@Override
 			public void onPropertyChange(Config config, Property<?> property) {
 				if (property == config.holoEverywherePackage) {
 					onStateChange(config);
 				}
 			}
+
+			private void onStateChange(Config config) {
+				String p = config.holoEverywherePackage.getValue();
+				config.setWidgetsPackage(p + ".widget");
+				config.setPreferencePackage(p + ".preference");
+			}
 		};
-		@SettingProperty(create = true, defaultBoolean = false)
-		private BooleanProperty alwaysUseParentTheme;
-		@SettingProperty(create = true, defaultBoolean = false)
-		private BooleanProperty debugMode;
-		@SettingProperty(create = true, defaultString = DEFAULT_HOLO_EVERYWHERE_PACKAGE)
+		@SettingProperty(create = true, defaultString = Config.DEFAULT_HOLO_EVERYWHERE_PACKAGE)
 		private StringProperty holoEverywherePackage;
 		@SettingProperty(create = true, defaultEnum = "JSON")
 		private EnumProperty<PreferenceImpl> preferenceImpl;
@@ -64,10 +64,6 @@ public class Application extends android.app.Application implements
 
 		public Config detachDefaultListener() {
 			return removeListener(DEFAULT_SETTINGS_LISTENER);
-		}
-
-		public boolean isDebugMode() {
-			return debugMode.getValue();
 		}
 
 		public String getHoloEverywherePackage() {
@@ -88,6 +84,10 @@ public class Application extends android.app.Application implements
 
 		public boolean isAlwaysUseParentTheme() {
 			return alwaysUseParentTheme.getValue();
+		}
+
+		public boolean isDebugMode() {
+			return debugMode.getValue();
 		}
 
 		public boolean isUseThemeManager() {
@@ -136,20 +136,20 @@ public class Application extends android.app.Application implements
 
 	private static Application lastInstance;
 
-	public static Application getLastInstance() {
-		return lastInstance;
-	}
-
 	public static Config getConfig() {
 		return Setting.get(Config.class);
 	}
 
+	public static Application getLastInstance() {
+		return Application.lastInstance;
+	}
+
 	public static boolean isDebugMode() {
-		return getConfig().isDebugMode();
+		return Application.getConfig().isDebugMode();
 	}
 
 	public Application() {
-		lastInstance = this;
+		Application.lastInstance = this;
 	}
 
 	@Override
@@ -180,7 +180,7 @@ public class Application extends android.app.Application implements
 
 	@Override
 	public void startActivity(Intent intent, Bundle options) {
-		if (getConfig().isAlwaysUseParentTheme()) {
+		if (Application.getConfig().isAlwaysUseParentTheme()) {
 			ThemeManager.startActivity(this, intent, options);
 		} else {
 			superStartActivity(intent, -1, options);

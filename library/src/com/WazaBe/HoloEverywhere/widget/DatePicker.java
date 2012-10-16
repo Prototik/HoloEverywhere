@@ -147,7 +147,7 @@ public class DatePicker extends NineFrameLayout {
 
 	private final Callback callback = new Callback();
 	private final java.text.DateFormat dateFormat = new SimpleDateFormat(
-			DATE_FORMAT);
+			DatePicker.DATE_FORMAT);
 	private final NumberPicker daySpinner, monthSpinner, yearSpinner;
 	private final InputMethodManager inputMethodManager;
 	private Locale locale;
@@ -354,7 +354,8 @@ public class DatePicker extends NineFrameLayout {
 			outDate.setTime(dateFormat.parse(date));
 			return true;
 		} catch (ParseException e) {
-			Log.w(LOG_TAG, "Date: " + date + " not in format: " + DATE_FORMAT);
+			Log.w(DatePicker.LOG_TAG, "Date: " + date + " not in format: "
+					+ DatePicker.DATE_FORMAT);
 			return false;
 		}
 	}
@@ -391,21 +392,21 @@ public class DatePicker extends NineFrameLayout {
 	}
 
 	public void setCalendarViewShown(boolean shown) {
-		mCalendarView.setVisibility(shown ? VISIBLE : GONE);
+		mCalendarView.setVisibility(shown ? View.VISIBLE : View.GONE);
 	}
 
 	private void setContentDescriptions() {
-		setContentDescription(daySpinner, R.id.increment,
+		DatePicker.setContentDescription(daySpinner, R.id.increment,
 				R.string.date_picker_increment_day_button);
-		setContentDescription(daySpinner, R.id.decrement,
+		DatePicker.setContentDescription(daySpinner, R.id.decrement,
 				R.string.date_picker_decrement_day_button);
-		setContentDescription(monthSpinner, R.id.increment,
+		DatePicker.setContentDescription(monthSpinner, R.id.increment,
 				R.string.date_picker_increment_month_button);
-		setContentDescription(monthSpinner, R.id.decrement,
+		DatePicker.setContentDescription(monthSpinner, R.id.decrement,
 				R.string.date_picker_decrement_month_button);
-		setContentDescription(yearSpinner, R.id.increment,
+		DatePicker.setContentDescription(yearSpinner, R.id.increment,
 				R.string.date_picker_increment_year_button);
-		setContentDescription(yearSpinner, R.id.decrement,
+		DatePicker.setContentDescription(yearSpinner, R.id.decrement,
 				R.string.date_picker_decrement_year_button);
 	}
 
@@ -446,10 +447,10 @@ public class DatePicker extends NineFrameLayout {
 			return;
 		}
 		this.locale = locale;
-		tempDate = getCalendarForLocale(tempDate, locale);
-		minDate = getCalendarForLocale(minDate, locale);
-		maxDate = getCalendarForLocale(maxDate, locale);
-		currentDate = getCalendarForLocale(currentDate, locale);
+		tempDate = DatePicker.getCalendarForLocale(tempDate, locale);
+		minDate = DatePicker.getCalendarForLocale(minDate, locale);
+		maxDate = DatePicker.getCalendarForLocale(maxDate, locale);
+		currentDate = DatePicker.getCalendarForLocale(currentDate, locale);
 		numberOfMonths = tempDate.getActualMaximum(Calendar.MONTH) + 1;
 		shortMonths = new String[numberOfMonths];
 		for (int i = 0; i < numberOfMonths; i++) {
@@ -496,7 +497,7 @@ public class DatePicker extends NineFrameLayout {
 	}
 
 	public void setSpinnersShown(boolean shown) {
-		spinners.setVisibility(shown ? VISIBLE : GONE);
+		spinners.setVisibility(shown ? View.VISIBLE : View.GONE);
 	}
 
 	private void updateCalendarView() {

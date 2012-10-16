@@ -41,7 +41,7 @@ public class CharSequences {
 
 			@Override
 			public CharSequence subSequence(int start, int end) {
-				return forAsciiBytes(bytes, start, end);
+				return CharSequences.forAsciiBytes(bytes, start, end);
 			}
 
 			@Override
@@ -53,7 +53,7 @@ public class CharSequences {
 
 	public static CharSequence forAsciiBytes(final byte[] bytes,
 			final int start, final int end) {
-		validate(start, end, bytes.length);
+		CharSequences.validate(start, end, bytes.length);
 		return new CharSequence() {
 			@Override
 			public char charAt(int index) {
@@ -69,8 +69,8 @@ public class CharSequences {
 			public CharSequence subSequence(int newStart, int newEnd) {
 				newStart -= start;
 				newEnd -= start;
-				validate(newStart, newEnd, length());
-				return forAsciiBytes(bytes, newStart, newEnd);
+				CharSequences.validate(newStart, newEnd, length());
+				return CharSequences.forAsciiBytes(bytes, newStart, newEnd);
 			}
 
 			@Override

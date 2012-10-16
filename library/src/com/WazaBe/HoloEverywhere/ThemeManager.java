@@ -21,14 +21,15 @@ public final class ThemeManager {
 	}
 
 	public static final int DARK = 1;
-	private static int defaultTheme = DARK;
+	private static int defaultTheme = ThemeManager.DARK;
 	public static final int FULLSCREEN = 16;
 	public static final int LIGHT = 2;
 	public static final int LIGHT_WITH_DARK_ACTION_BAR = 4;
 	public static final int NO_ACTION_BAR = 8;
 	private static boolean onlyBaseThemes = true;
-	private static final int THEME_MASK = DARK | LIGHT
-			| LIGHT_WITH_DARK_ACTION_BAR | NO_ACTION_BAR | FULLSCREEN;
+	private static final int THEME_MASK = ThemeManager.DARK
+			| ThemeManager.LIGHT | ThemeManager.LIGHT_WITH_DARK_ACTION_BAR
+			| ThemeManager.NO_ACTION_BAR | ThemeManager.FULLSCREEN;
 	private static final String THEME_TAG = "holoeverywhere:theme";
 	private static ThemeGetter themeGetter;
 	private static int themeModifier = 0;
@@ -36,49 +37,52 @@ public final class ThemeManager {
 	public static void applyTheme(Activity activity) {
 		boolean force = activity instanceof Base ? ((Base) activity)
 				.isForceThemeApply() : false;
-		applyTheme(activity, force);
+		ThemeManager.applyTheme(activity, force);
 	}
 
 	public static void applyTheme(Activity activity, boolean force) {
-		if (force || hasSpecifiedTheme(activity)) {
-			activity.setTheme(getThemeResource(activity));
+		if (force || ThemeManager.hasSpecifiedTheme(activity)) {
+			activity.setTheme(ThemeManager.getThemeResource(activity));
 		}
 	}
 
 	public static void cloneTheme(Intent sourceIntent, Intent intent) {
-		cloneTheme(sourceIntent, intent, false);
+		ThemeManager.cloneTheme(sourceIntent, intent, false);
 	}
 
 	public static void cloneTheme(Intent sourceIntent, Intent intent,
 			boolean force) {
-		if (hasSpecifiedTheme(sourceIntent) || force) {
-			if (!hasSpecifiedTheme(intent) || force) {
-				intent.putExtra(THEME_TAG, getTheme(sourceIntent));
+		if (ThemeManager.hasSpecifiedTheme(sourceIntent) || force) {
+			if (!ThemeManager.hasSpecifiedTheme(intent) || force) {
+				intent.putExtra(ThemeManager.THEME_TAG,
+						ThemeManager.getTheme(sourceIntent));
 			} else {
-				intent.putExtra(THEME_TAG, defaultTheme);
+				intent.putExtra(ThemeManager.THEME_TAG,
+						ThemeManager.defaultTheme);
 			}
 		}
 	}
 
 	public static int getDefaultTheme() {
-		return defaultTheme;
+		return ThemeManager.defaultTheme;
 	}
 
 	public static int getModifier() {
-		return themeModifier;
+		return ThemeManager.themeModifier;
 	}
 
 	public static int getTheme(Activity activity) {
-		return getTheme(activity.getIntent());
+		return ThemeManager.getTheme(activity.getIntent());
 	}
 
 	public static int getTheme(Intent intent) {
-		int i = intent.getIntExtra(THEME_TAG, defaultTheme);
-		if (onlyBaseThemes) {
-			i &= THEME_MASK;
+		int i = intent.getIntExtra(ThemeManager.THEME_TAG,
+				ThemeManager.defaultTheme);
+		if (ThemeManager.onlyBaseThemes) {
+			i &= ThemeManager.THEME_MASK;
 		}
-		if (themeModifier > 0) {
-			i |= themeModifier;
+		if (ThemeManager.themeModifier > 0) {
+			i |= ThemeManager.themeModifier;
 		}
 		return i;
 	}
@@ -86,29 +90,32 @@ public final class ThemeManager {
 	public static int getThemeResource(Activity activity) {
 		boolean force = activity instanceof Base ? ((Base) activity)
 				.isABSSupport() : false;
-		return getThemeResource(getTheme(activity), force);
+		return ThemeManager.getThemeResource(ThemeManager.getTheme(activity),
+				force);
 	}
 
 	public static int getThemeResource(int themeTag, boolean abs) {
-		if (themeModifier > 0) {
-			themeTag |= themeModifier;
+		if (ThemeManager.themeModifier > 0) {
+			themeTag |= ThemeManager.themeModifier;
 		}
-		if (themeGetter != null) {
-			int getterResource = themeGetter.getThemeResource(themeTag, abs);
+		if (ThemeManager.themeGetter != null) {
+			int getterResource = ThemeManager.themeGetter.getThemeResource(
+					themeTag, abs);
 			if (getterResource > 0) {
 				return getterResource;
 			}
 		}
-		if (onlyBaseThemes) {
-			themeTag &= THEME_MASK;
+		if (ThemeManager.onlyBaseThemes) {
+			themeTag &= ThemeManager.THEME_MASK;
 		} else if (themeTag >= 0x01000000) {
 			return themeTag;
 		}
-		boolean dark = isDark(themeTag);
-		boolean light = isLight(themeTag);
-		boolean lightWithDarkActionBar = isLightWithDarkActionBar(themeTag);
-		boolean noActionBar = isNoActionBar(themeTag);
-		boolean fullScreen = isFullScreen(themeTag);
+		boolean dark = ThemeManager.isDark(themeTag);
+		boolean light = ThemeManager.isLight(themeTag);
+		boolean lightWithDarkActionBar = ThemeManager
+				.isLightWithDarkActionBar(themeTag);
+		boolean noActionBar = ThemeManager.isNoActionBar(themeTag);
+		boolean fullScreen = ThemeManager.isFullScreen(themeTag);
 		if (dark) {
 			if (noActionBar && fullScreen) {
 				return abs ? R.style.Holo_Theme_Sherlock_NoActionBar_Fullscreen
@@ -155,12 +162,12 @@ public final class ThemeManager {
 	}
 
 	public static boolean hasSpecifiedTheme(Activity activity) {
-		return hasSpecifiedTheme(activity.getIntent());
+		return ThemeManager.hasSpecifiedTheme(activity.getIntent());
 	}
 
 	public static boolean hasSpecifiedTheme(Intent intent) {
-		return intent != null && intent.hasExtra(THEME_TAG)
-				&& intent.getIntExtra(THEME_TAG, 0) > 0;
+		return intent != null && intent.hasExtra(ThemeManager.THEME_TAG)
+				&& intent.getIntExtra(ThemeManager.THEME_TAG, 0) > 0;
 	}
 
 	private static boolean is(int config, int key) {
@@ -168,107 +175,110 @@ public final class ThemeManager {
 	}
 
 	public static boolean isDark(Activity activity) {
-		return isDark(getTheme(activity));
+		return ThemeManager.isDark(ThemeManager.getTheme(activity));
 	}
 
 	public static boolean isDark(int i) {
-		return is(i, DARK);
+		return ThemeManager.is(i, ThemeManager.DARK);
 	}
 
 	public static boolean isDark(Intent intent) {
-		return isDark(getTheme(intent));
+		return ThemeManager.isDark(ThemeManager.getTheme(intent));
 	}
 
 	public static boolean isFullScreen(Activity activity) {
-		return isFullScreen(getTheme(activity));
+		return ThemeManager.isFullScreen(ThemeManager.getTheme(activity));
 	}
 
 	public static boolean isFullScreen(int i) {
-		return is(i, FULLSCREEN);
+		return ThemeManager.is(i, ThemeManager.FULLSCREEN);
 	}
 
 	public static boolean isFullScreen(Intent intent) {
-		return isFullScreen(getTheme(intent));
+		return ThemeManager.isFullScreen(ThemeManager.getTheme(intent));
 	}
 
 	public static boolean isLight(Activity activity) {
-		return isLight(getTheme(activity));
+		return ThemeManager.isLight(ThemeManager.getTheme(activity));
 	}
 
 	public static boolean isLight(int i) {
-		return is(i, LIGHT);
+		return ThemeManager.is(i, ThemeManager.LIGHT);
 	}
 
 	public static boolean isLight(Intent intent) {
-		return isLight(getTheme(intent));
+		return ThemeManager.isLight(ThemeManager.getTheme(intent));
 	}
 
 	public static boolean isLightWithDarkActionBar(Activity activity) {
-		return isLightWithDarkActionBar(getTheme(activity));
+		return ThemeManager.isLightWithDarkActionBar(ThemeManager
+				.getTheme(activity));
 	}
 
 	public static boolean isLightWithDarkActionBar(int i) {
-		return is(i, LIGHT_WITH_DARK_ACTION_BAR);
+		return ThemeManager.is(i, ThemeManager.LIGHT_WITH_DARK_ACTION_BAR);
 	}
 
 	public static boolean isLightWithDarkActionBar(Intent intent) {
-		return isLightWithDarkActionBar(getTheme(intent));
+		return ThemeManager.isLightWithDarkActionBar(ThemeManager
+				.getTheme(intent));
 	}
 
 	public static boolean isNoActionBar(Activity activity) {
-		return isNoActionBar(getTheme(activity));
+		return ThemeManager.isNoActionBar(ThemeManager.getTheme(activity));
 	}
 
 	public static boolean isNoActionBar(int i) {
-		return is(i, NO_ACTION_BAR);
+		return ThemeManager.is(i, ThemeManager.NO_ACTION_BAR);
 	}
 
 	public static boolean isNoActionBar(Intent intent) {
-		return isNoActionBar(getTheme(intent));
+		return ThemeManager.isNoActionBar(ThemeManager.getTheme(intent));
 	}
 
 	public static void modify(int mod) {
-		if (onlyBaseThemes) {
-			mod &= THEME_MASK;
+		if (ThemeManager.onlyBaseThemes) {
+			mod &= ThemeManager.THEME_MASK;
 		}
-		themeModifier |= mod;
+		ThemeManager.themeModifier |= mod;
 	}
 
 	public static void modifyDefaultTheme(int mod) {
-		if (onlyBaseThemes) {
-			mod &= THEME_MASK;
+		if (ThemeManager.onlyBaseThemes) {
+			mod &= ThemeManager.THEME_MASK;
 		}
-		defaultTheme |= mod;
+		ThemeManager.defaultTheme |= mod;
 	}
 
 	public static void restartWithDarkTheme(Activity activity) {
-		restartWithTheme(activity, DARK);
+		ThemeManager.restartWithTheme(activity, ThemeManager.DARK);
 	}
 
 	public static void restartWithLightTheme(Activity activity) {
-		restartWithTheme(activity, LIGHT);
+		ThemeManager.restartWithTheme(activity, ThemeManager.LIGHT);
 	}
 
 	public static void restartWithLightWithDarkActionBarTheme(Activity activity) {
-		restartWithTheme(activity, LIGHT_WITH_DARK_ACTION_BAR);
+		ThemeManager.restartWithTheme(activity,
+				ThemeManager.LIGHT_WITH_DARK_ACTION_BAR);
 	}
 
 	public static void restartWithTheme(Activity activity, int theme) {
-		restartWithTheme(activity, theme, false);
+		ThemeManager.restartWithTheme(activity, theme, false);
 	}
 
 	public static void restartWithTheme(Activity activity, int theme,
 			boolean force) {
-		if (themeModifier > 0) {
-			theme |= themeModifier;
+		if (ThemeManager.themeModifier > 0) {
+			theme |= ThemeManager.themeModifier;
 		}
-		if (onlyBaseThemes) {
-			theme &= THEME_MASK;
+		if (ThemeManager.onlyBaseThemes) {
+			theme &= ThemeManager.THEME_MASK;
 		}
-		if (force || getTheme(activity) != theme) {
+		if (force || ThemeManager.getTheme(activity) != theme) {
 			Intent intent = activity.getIntent();
 			intent.setClass(activity, activity.getClass());
-			intent.putExtra(THEME_TAG, theme);
+			intent.putExtra(ThemeManager.THEME_TAG, theme);
 			if (activity.isRestricted()) {
 				Application app = Application.getLastInstance();
 				if (app != null && !app.isRestricted()) {
@@ -285,10 +295,10 @@ public final class ThemeManager {
 	}
 
 	public static void setDefaultTheme(int theme) {
-		if (onlyBaseThemes) {
-			theme &= THEME_MASK;
+		if (ThemeManager.onlyBaseThemes) {
+			theme &= ThemeManager.THEME_MASK;
 		}
-		defaultTheme = theme;
+		ThemeManager.defaultTheme = theme;
 	}
 
 	public static void setOnlyBaseThemes(boolean onlyBaseThemes) {
@@ -300,24 +310,24 @@ public final class ThemeManager {
 	}
 
 	public static void setThemeModifier(int mod) {
-		if (onlyBaseThemes) {
-			mod &= THEME_MASK;
+		if (ThemeManager.onlyBaseThemes) {
+			mod &= ThemeManager.THEME_MASK;
 		}
-		themeModifier = mod;
+		ThemeManager.themeModifier = mod;
 	}
 
 	public static void startActivity(Context context, Intent intent) {
-		startActivity(context, intent, -1);
+		ThemeManager.startActivity(context, intent, -1);
 	}
 
 	public static void startActivity(Context context, Intent intent,
 			Bundle options) {
-		startActivity(context, intent, -1, options);
+		ThemeManager.startActivity(context, intent, -1, options);
 	}
 
 	public static void startActivity(Context context, Intent intent,
 			int requestCode) {
-		startActivity(context, intent, requestCode, null);
+		ThemeManager.startActivity(context, intent, requestCode, null);
 	}
 
 	@SuppressLint("NewApi")
@@ -326,7 +336,7 @@ public final class ThemeManager {
 		final Activity activity = context instanceof Activity ? (Activity) context
 				: null;
 		if (activity != null) {
-			cloneTheme(activity.getIntent(), intent, true);
+			ThemeManager.cloneTheme(activity.getIntent(), intent, true);
 		}
 		if (context instanceof ThemedIntentStarter) {
 			((ThemedIntentStarter) context).superStartActivity(intent,

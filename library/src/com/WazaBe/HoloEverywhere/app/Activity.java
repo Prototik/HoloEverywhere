@@ -62,6 +62,11 @@ public abstract class Activity extends Watson implements Base {
 		super.addContentView(FontLoader.apply(view), params);
 	}
 
+	@Override
+	public Config getConfig() {
+		return Application.getConfig();
+	}
+
 	public SharedPreferences getDefaultSharedPreferences() {
 		return PreferenceManager.getDefaultSharedPreferences(this);
 	}
@@ -69,11 +74,6 @@ public abstract class Activity extends Watson implements Base {
 	@Override
 	public LayoutInflater getLayoutInflater() {
 		return LayoutInflater.from(this);
-	}
-
-	@Override
-	public Config getSettings() {
-		return Application.getConfig();
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public abstract class Activity extends Watson implements Base {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Holo holo = getClass().isAnnotationPresent(Holo.class) ? getClass()
-				.getAnnotation(Holo.class) : DEFAULT_HOLO;
+				.getAnnotation(Holo.class) : Activity.DEFAULT_HOLO;
 		if (holo.addFactoryToInflater()) {
 			getLayoutInflater().addFactory(this, 0);
 		}
@@ -115,7 +115,7 @@ public abstract class Activity extends Watson implements Base {
 		if (holo.forceThemeApply()) {
 			setForceThemeApply(forceThemeApply = true);
 		}
-		if (forceThemeApply || getSettings().isUseThemeManager()) {
+		if (forceThemeApply || getConfig().isUseThemeManager()) {
 			ThemeManager.applyTheme(this, forceThemeApply);
 		}
 		super.onCreate(savedInstanceState);
@@ -195,7 +195,7 @@ public abstract class Activity extends Watson implements Base {
 	@Override
 	public void startActivityForResult(Intent intent, int requestCode,
 			Bundle options) {
-		if (getSettings().isAlwaysUseParentTheme()) {
+		if (getConfig().isAlwaysUseParentTheme()) {
 			ThemeManager.startActivity(this, intent, requestCode, options);
 		} else {
 			superStartActivity(intent, requestCode, options);

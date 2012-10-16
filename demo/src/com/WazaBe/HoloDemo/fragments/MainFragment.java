@@ -12,14 +12,14 @@ public class MainFragment extends SFragment {
 	private static MainFragment instance;
 
 	public static MainFragment getInstance() {
-		if (instance == null) {
+		if (MainFragment.instance == null) {
 			return new MainFragment();
 		}
-		return instance;
+		return MainFragment.instance;
 	}
 
 	public MainFragment() {
-		instance = this;
+		MainFragment.instance = this;
 	}
 
 	@Override

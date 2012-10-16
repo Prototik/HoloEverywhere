@@ -24,12 +24,12 @@ public class AlertDialog extends Dialog implements DialogInterface {
 		private final AlertController.AlertParams P;
 
 		public Builder(Context context) {
-			this(context, resolveDialogTheme(context, 0));
+			this(context, AlertDialog.resolveDialogTheme(context, 0));
 		}
 
 		public Builder(Context context, int theme) {
 			P = new AlertController.AlertParams(new ContextThemeWrapper(
-					context, resolveDialogTheme(context, theme)));
+					context, AlertDialog.resolveDialogTheme(context, theme)));
 			P.mTheme = theme;
 		}
 
@@ -300,9 +300,9 @@ public class AlertDialog extends Dialog implements DialogInterface {
 	public static final int THEME_HOLO_LIGHT = 2;
 
 	static int resolveDialogTheme(Context context, int resid) {
-		if (resid == THEME_HOLO_DARK) {
+		if (resid == AlertDialog.THEME_HOLO_DARK) {
 			return R.style.Holo_Theme_Dialog_Alert;
-		} else if (resid == THEME_HOLO_LIGHT) {
+		} else if (resid == AlertDialog.THEME_HOLO_LIGHT) {
 			return R.style.Holo_Theme_Dialog_Alert_Light;
 		} else if (resid >= 0x01000000) {
 			return resid;
@@ -317,18 +317,18 @@ public class AlertDialog extends Dialog implements DialogInterface {
 	private final AlertController mAlert;
 
 	protected AlertDialog(Context context) {
-		this(context, false, null, resolveDialogTheme(context, 0));
+		this(context, false, null, AlertDialog.resolveDialogTheme(context, 0));
 	}
 
 	protected AlertDialog(Context context, boolean cancelable,
 			OnCancelListener cancelListener) {
-		this(context, cancelable, cancelListener,
-				resolveDialogTheme(context, 0));
+		this(context, cancelable, cancelListener, AlertDialog
+				.resolveDialogTheme(context, 0));
 	}
 
 	protected AlertDialog(Context context, boolean cancelable,
 			OnCancelListener cancelListener, int theme) {
-		super(context, resolveDialogTheme(context, theme));
+		super(context, AlertDialog.resolveDialogTheme(context, theme));
 		setCancelable(cancelable);
 		setOnCancelListener(cancelListener);
 		mAlert = new AlertController(context, this, getWindow());
@@ -370,12 +370,12 @@ public class AlertDialog extends Dialog implements DialogInterface {
 
 	@Deprecated
 	public void setButton(CharSequence text, Message msg) {
-		setButton(BUTTON_POSITIVE, text, msg);
+		setButton(DialogInterface.BUTTON_POSITIVE, text, msg);
 	}
 
 	@Deprecated
 	public void setButton(CharSequence text, final OnClickListener listener) {
-		setButton(BUTTON_POSITIVE, text, listener);
+		setButton(DialogInterface.BUTTON_POSITIVE, text, listener);
 	}
 
 	public void setButton(int whichButton, CharSequence text, Message msg) {
@@ -389,22 +389,22 @@ public class AlertDialog extends Dialog implements DialogInterface {
 
 	@Deprecated
 	public void setButton2(CharSequence text, Message msg) {
-		setButton(BUTTON_NEGATIVE, text, msg);
+		setButton(DialogInterface.BUTTON_NEGATIVE, text, msg);
 	}
 
 	@Deprecated
 	public void setButton2(CharSequence text, final OnClickListener listener) {
-		setButton(BUTTON_NEGATIVE, text, listener);
+		setButton(DialogInterface.BUTTON_NEGATIVE, text, listener);
 	}
 
 	@Deprecated
 	public void setButton3(CharSequence text, Message msg) {
-		setButton(BUTTON_NEUTRAL, text, msg);
+		setButton(DialogInterface.BUTTON_NEUTRAL, text, msg);
 	}
 
 	@Deprecated
 	public void setButton3(CharSequence text, final OnClickListener listener) {
-		setButton(BUTTON_NEUTRAL, text, listener);
+		setButton(DialogInterface.BUTTON_NEUTRAL, text, listener);
 	}
 
 	public void setCustomTitle(View customTitleView) {

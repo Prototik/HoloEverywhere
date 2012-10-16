@@ -53,10 +53,14 @@ public class PreferenceFrameLayout extends NineFrameLayout {
 		TypedArray a = context.obtainStyledAttributes(attrs,
 				R.styleable.PreferenceFrameLayout, defStyle, 0);
 		float density = context.getResources().getDisplayMetrics().density;
-		int defaultBorderTop = (int) (density * DEFAULT_BORDER_TOP + 0.5f);
-		int defaultBottomPadding = (int) (density * DEFAULT_BORDER_BOTTOM + 0.5f);
-		int defaultLeftPadding = (int) (density * DEFAULT_BORDER_LEFT + 0.5f);
-		int defaultRightPadding = (int) (density * DEFAULT_BORDER_RIGHT + 0.5f);
+		int defaultBorderTop = (int) (density
+				* PreferenceFrameLayout.DEFAULT_BORDER_TOP + 0.5f);
+		int defaultBottomPadding = (int) (density
+				* PreferenceFrameLayout.DEFAULT_BORDER_BOTTOM + 0.5f);
+		int defaultLeftPadding = (int) (density
+				* PreferenceFrameLayout.DEFAULT_BORDER_LEFT + 0.5f);
+		int defaultRightPadding = (int) (density
+				* PreferenceFrameLayout.DEFAULT_BORDER_RIGHT + 0.5f);
 		mBorderTop = a.getDimensionPixelSize(
 				R.styleable.PreferenceFrameLayout_borderTop, defaultBorderTop);
 		mBorderBottom = a.getDimensionPixelSize(

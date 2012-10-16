@@ -17,21 +17,22 @@ public class Scroller {
 	private static final int FLING_MODE = 1;
 	private static final int NB_SAMPLES = 100;
 	private static final int SCROLL_MODE = 0;
-	private static final float[] SPLINE = new float[NB_SAMPLES + 1];
+	private static final float[] SPLINE = new float[Scroller.NB_SAMPLES + 1];
 	private static float START_TENSION = 0.4f;
 	private static float sViscousFluidNormalize;
 	private static float sViscousFluidScale;
 	static {
 		float x_min = 0.0f;
-		for (int i = 0; i <= NB_SAMPLES; i++) {
-			final float t = (float) i / NB_SAMPLES;
+		for (int i = 0; i <= Scroller.NB_SAMPLES; i++) {
+			final float t = (float) i / Scroller.NB_SAMPLES;
 			float x_max = 1.0f;
 			float x, tx, coef;
 			while (true) {
 				x = x_min + (x_max - x_min) / 2.0f;
 				coef = 3.0f * x * (1.0f - x);
-				tx = coef * ((1.0f - x) * START_TENSION + x * END_TENSION) + x
-						* x * x;
+				tx = coef
+						* ((1.0f - x) * Scroller.START_TENSION + x
+								* Scroller.END_TENSION) + x * x * x;
 				if (Math.abs(tx - t) < 1E-5) {
 					break;
 				}
@@ -42,16 +43,16 @@ public class Scroller {
 				}
 			}
 			final float d = coef + x * x * x;
-			SPLINE[i] = d;
+			Scroller.SPLINE[i] = d;
 		}
-		SPLINE[NB_SAMPLES] = 1.0f;
-		sViscousFluidScale = 8.0f;
-		sViscousFluidNormalize = 1.0f;
-		sViscousFluidNormalize = 1.0f / viscousFluid(1.0f);
+		Scroller.SPLINE[Scroller.NB_SAMPLES] = 1.0f;
+		Scroller.sViscousFluidScale = 8.0f;
+		Scroller.sViscousFluidNormalize = 1.0f;
+		Scroller.sViscousFluidNormalize = 1.0f / Scroller.viscousFluid(1.0f);
 	}
 
 	static float viscousFluid(float x) {
-		x *= sViscousFluidScale;
+		x *= Scroller.sViscousFluidScale;
 		if (x < 1.0f) {
 			x -= 1.0f - (float) Math.exp(-x);
 		} else {
@@ -59,7 +60,7 @@ public class Scroller {
 			x = 1.0f - (float) Math.exp(1.0f - x);
 			x = start + x * (1.0f - start);
 		}
-		x *= sViscousFluidNormalize;
+		x *= Scroller.sViscousFluidNormalize;
 		return x;
 	}
 
@@ -129,7 +130,7 @@ public class Scroller {
 			case SCROLL_MODE:
 				float x = timePassed * mDurationReciprocal;
 				if (mInterpolator == null) {
-					x = viscousFluid(x);
+					x = Scroller.viscousFluid(x);
 				} else {
 					x = mInterpolator.getInterpolation(x);
 				}
@@ -138,11 +139,11 @@ public class Scroller {
 				break;
 			case FLING_MODE:
 				final float t = (float) timePassed / mDuration;
-				final int index = (int) (NB_SAMPLES * t);
-				final float t_inf = (float) index / NB_SAMPLES;
-				final float t_sup = (float) (index + 1) / NB_SAMPLES;
-				final float d_inf = SPLINE[index];
-				final float d_sup = SPLINE[index + 1];
+				final int index = (int) (Scroller.NB_SAMPLES * t);
+				final float t_inf = (float) index / Scroller.NB_SAMPLES;
+				final float t_sup = (float) (index + 1) / Scroller.NB_SAMPLES;
+				final float d_inf = Scroller.SPLINE[index];
+				final float d_sup = Scroller.SPLINE[index + 1];
 				final float distanceCoef = d_inf + (t - t_inf)
 						/ (t_sup - t_inf) * (d_sup - d_inf);
 				mCurrX = mStartX
@@ -190,20 +191,23 @@ public class Scroller {
 				velocityY += oldVelocityY;
 			}
 		}
-		mMode = FLING_MODE;
+		mMode = Scroller.FLING_MODE;
 		mFinished = false;
 		float velocity = FloatMath.sqrt(velocityX * velocityX + velocityY
 				* velocityY);
 		mVelocity = velocity;
-		final double l = Math.log(START_TENSION * velocity / ALPHA);
-		mDuration = (int) (1000.0 * Math.exp(l / (DECELERATION_RATE - 1.0)));
+		final double l = Math.log(Scroller.START_TENSION * velocity
+				/ Scroller.ALPHA);
+		mDuration = (int) (1000.0 * Math.exp(l
+				/ (Scroller.DECELERATION_RATE - 1.0)));
 		mStartTime = AnimationUtils.currentAnimationTimeMillis();
 		mStartX = startX;
 		mStartY = startY;
 		float coeffX = velocity == 0 ? 1.0f : velocityX / velocity;
 		float coeffY = velocity == 0 ? 1.0f : velocityY / velocity;
-		int totalDistance = (int) (ALPHA * Math.exp(DECELERATION_RATE
-				/ (DECELERATION_RATE - 1.0) * l));
+		int totalDistance = (int) (Scroller.ALPHA * Math
+				.exp(Scroller.DECELERATION_RATE
+						/ (Scroller.DECELERATION_RATE - 1.0) * l));
 		mMinX = minX;
 		mMaxX = maxX;
 		mMinY = minY;
@@ -279,11 +283,11 @@ public class Scroller {
 	}
 
 	public void startScroll(int startX, int startY, int dx, int dy) {
-		startScroll(startX, startY, dx, dy, DEFAULT_DURATION);
+		startScroll(startX, startY, dx, dy, Scroller.DEFAULT_DURATION);
 	}
 
 	public void startScroll(int startX, int startY, int dx, int dy, int duration) {
-		mMode = SCROLL_MODE;
+		mMode = Scroller.SCROLL_MODE;
 		mFinished = false;
 		mDuration = duration;
 		mStartTime = AnimationUtils.currentAnimationTimeMillis();

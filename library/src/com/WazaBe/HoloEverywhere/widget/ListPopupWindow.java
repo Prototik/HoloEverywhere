@@ -19,6 +19,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.PopupWindow;
@@ -95,7 +96,7 @@ public class ListPopupWindow {
 
 		@Override
 		public void onScrollStateChanged(AbsListView view, int scrollState) {
-			if (scrollState == SCROLL_STATE_TOUCH_SCROLL
+			if (scrollState == OnScrollListener.SCROLL_STATE_TOUCH_SCROLL
 					&& !isInputMethodNotNeeded()
 					&& mPopup.getContentView() != null) {
 				mHandler.removeCallbacks(mResizePopupRunnable);
@@ -113,7 +114,8 @@ public class ListPopupWindow {
 			if (action == MotionEvent.ACTION_DOWN && mPopup != null
 					&& mPopup.isShowing() && x >= 0 && x < mPopup.getWidth()
 					&& y >= 0 && y < mPopup.getHeight()) {
-				mHandler.postDelayed(mResizePopupRunnable, EXPAND_LIST_TIMEOUT);
+				mHandler.postDelayed(mResizePopupRunnable,
+						ListPopupWindow.EXPAND_LIST_TIMEOUT);
 			} else if (action == MotionEvent.ACTION_UP) {
 				mHandler.removeCallbacks(mResizePopupRunnable);
 			}
@@ -163,7 +165,7 @@ public class ListPopupWindow {
 	private boolean mModal;
 	private DataSetObserver mObserver;
 	private PopupWindow mPopup;
-	private int mPromptPosition = POSITION_PROMPT_ABOVE;
+	private int mPromptPosition = ListPopupWindow.POSITION_PROMPT_ABOVE;
 
 	private View mPromptView;
 
@@ -265,7 +267,8 @@ public class ListPopupWindow {
 					hintContainer.addView(dropDownView, hintParams);
 					break;
 				default:
-					Log.e(TAG, "Invalid hint position " + mPromptPosition);
+					Log.e(ListPopupWindow.TAG, "Invalid hint position "
+							+ mPromptPosition);
 					break;
 				}
 				int widthSpec = MeasureSpec.makeMeasureSpec(mDropDownWidth,
@@ -451,7 +454,7 @@ public class ListPopupWindow {
 	}
 
 	public boolean isInputMethodNotNeeded() {
-		return mPopup.getInputMethodMode() == INPUT_METHOD_NOT_NEEDED;
+		return mPopup.getInputMethodMode() == ListPopupWindow.INPUT_METHOD_NOT_NEEDED;
 	}
 
 	public boolean isModal() {
@@ -569,9 +572,9 @@ public class ListPopupWindow {
 					mDropDownList.mListSelectionHidden = false;
 				}
 				consumed = mDropDownList.onKeyDown(keyCode, event);
-				if (DEBUG) {
-					Log.v(TAG, "Key down: code=" + keyCode + " list consumed="
-							+ consumed);
+				if (ListPopupWindow.DEBUG) {
+					Log.v(ListPopupWindow.TAG, "Key down: code=" + keyCode
+							+ " list consumed=" + consumed);
 				}
 
 				if (consumed) {

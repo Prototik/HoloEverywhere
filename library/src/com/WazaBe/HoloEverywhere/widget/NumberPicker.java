@@ -108,7 +108,7 @@ public class NumberPicker extends LinearLayout {
 
 		@Override
 		protected char[] getAcceptedChars() {
-			return DIGIT_CHARACTERS;
+			return NumberPicker.DIGIT_CHARACTERS;
 		}
 
 		@Override
@@ -230,7 +230,7 @@ public class NumberPicker extends LinearLayout {
 	private static final int SELECTOR_ADJUSTMENT_DURATION_MILLIS = 800;
 	private static final int SELECTOR_MAX_FLING_VELOCITY_ADJUSTMENT = 8;
 	private static final int SELECTOR_WHEEL_ITEM_COUNT = 3;
-	private static final int SELECTOR_WHELL_MIDDLE_ITEM_INDEX = SELECTOR_WHEEL_ITEM_COUNT / 2;
+	private static final int SELECTOR_WHELL_MIDDLE_ITEM_INDEX = NumberPicker.SELECTOR_WHEEL_ITEM_COUNT / 2;
 	private static final int SIZE_UNSPECIFIED = -1;
 	private static final int SNAP_SCROLL_DURATION = 300;
 	private static final float TOP_AND_BOTTOM_FADING_EDGE_STRENGTH = 0.9f;
@@ -272,7 +272,7 @@ public class NumberPicker extends LinearLayout {
 	private long mLastDownEventTime;
 	private float mLastDownEventY;
 	private float mLastDownOrMoveEventY;
-	private long mLongPressUpdateInterval = DEFAULT_LONG_PRESS_UPDATE_INTERVAL;
+	private long mLongPressUpdateInterval = NumberPicker.DEFAULT_LONG_PRESS_UPDATE_INTERVAL;
 	private final int mMaxHeight;
 	private int mMaximumFlingVelocity;
 	private int mMaxValue;
@@ -291,7 +291,7 @@ public class NumberPicker extends LinearLayout {
 	private final int mSelectionDividersDistance;
 	private int mSelectorElementHeight;
 	private final SparseArray<String> mSelectorIndexToStringCache = new SparseArray<String>();
-	private final int[] mSelectorIndices = new int[SELECTOR_WHEEL_ITEM_COUNT];
+	private final int[] mSelectorIndices = new int[NumberPicker.SELECTOR_WHEEL_ITEM_COUNT];
 	private int mSelectorTextGapHeight;
 	private final Paint mSelectorWheelPaint;
 	private SetSelectionCommand mSetSelectionCommand;
@@ -320,43 +320,50 @@ public class NumberPicker extends LinearLayout {
 				R.styleable.NumberPicker, defStyle, R.style.Holo_NumberPicker);
 		final int layoutResId = attributesArray.getResourceId(
 				R.styleable.NumberPicker_android_layout,
-				DEFAULT_LAYOUT_RESOURCE_ID);
-		mHasSelectorWheel = layoutResId == DEFAULT_LAYOUT_RESOURCE_ID;
+				NumberPicker.DEFAULT_LAYOUT_RESOURCE_ID);
+		mHasSelectorWheel = layoutResId == NumberPicker.DEFAULT_LAYOUT_RESOURCE_ID;
 		mSolidColor = attributesArray.getColor(
 				R.styleable.NumberPicker_solidColor, 0);
 		mSelectionDivider = attributesArray
 				.getDrawable(R.styleable.NumberPicker_selectionDivider);
 		final int defSelectionDividerHeight = (int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP,
-				UNSCALED_DEFAULT_SELECTION_DIVIDER_HEIGHT, getResources()
-						.getDisplayMetrics());
+				NumberPicker.UNSCALED_DEFAULT_SELECTION_DIVIDER_HEIGHT,
+				getResources().getDisplayMetrics());
 		mSelectionDividerHeight = attributesArray.getDimensionPixelSize(
 				R.styleable.NumberPicker_selectionDividerHeight,
 				defSelectionDividerHeight);
 		final int defSelectionDividerDistance = (int) TypedValue
-				.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-						UNSCALED_DEFAULT_SELECTION_DIVIDERS_DISTANCE,
+				.applyDimension(
+						TypedValue.COMPLEX_UNIT_DIP,
+						NumberPicker.UNSCALED_DEFAULT_SELECTION_DIVIDERS_DISTANCE,
 						getResources().getDisplayMetrics());
 		mSelectionDividersDistance = attributesArray.getDimensionPixelSize(
 				R.styleable.NumberPicker_selectionDividersDistance,
 				defSelectionDividerDistance);
 		mMinHeight = attributesArray.getDimensionPixelSize(
-				R.styleable.NumberPicker_android_minHeight, SIZE_UNSPECIFIED);
+				R.styleable.NumberPicker_android_minHeight,
+				NumberPicker.SIZE_UNSPECIFIED);
 		mMaxHeight = attributesArray.getDimensionPixelSize(
-				R.styleable.NumberPicker_android_maxHeight, SIZE_UNSPECIFIED);
-		if (mMinHeight != SIZE_UNSPECIFIED && mMaxHeight != SIZE_UNSPECIFIED
+				R.styleable.NumberPicker_android_maxHeight,
+				NumberPicker.SIZE_UNSPECIFIED);
+		if (mMinHeight != NumberPicker.SIZE_UNSPECIFIED
+				&& mMaxHeight != NumberPicker.SIZE_UNSPECIFIED
 				&& mMinHeight > mMaxHeight) {
 			throw new IllegalArgumentException("minHeight > maxHeight");
 		}
 		mMinWidth = attributesArray.getDimensionPixelSize(
-				R.styleable.NumberPicker_android_minWidth, SIZE_UNSPECIFIED);
+				R.styleable.NumberPicker_android_minWidth,
+				NumberPicker.SIZE_UNSPECIFIED);
 		mMaxWidth = attributesArray.getDimensionPixelSize(
-				R.styleable.NumberPicker_android_maxWidth, SIZE_UNSPECIFIED);
-		if (mMinWidth != SIZE_UNSPECIFIED && mMaxWidth != SIZE_UNSPECIFIED
+				R.styleable.NumberPicker_android_maxWidth,
+				NumberPicker.SIZE_UNSPECIFIED);
+		if (mMinWidth != NumberPicker.SIZE_UNSPECIFIED
+				&& mMaxWidth != NumberPicker.SIZE_UNSPECIFIED
 				&& mMinWidth > mMaxWidth) {
 			throw new IllegalArgumentException("minWidth > maxWidth");
 		}
-		mComputeMaxWidth = mMaxWidth == SIZE_UNSPECIFIED;
+		mComputeMaxWidth = mMaxWidth == NumberPicker.SIZE_UNSPECIFIED;
 		mVirtualButtonPressedDrawable = attributesArray
 				.getDrawable(R.styleable.NumberPicker_virtualButtonPressedDrawable);
 		attributesArray.recycle();
@@ -425,7 +432,7 @@ public class NumberPicker extends LinearLayout {
 		mTouchSlop = configuration.getScaledTouchSlop();
 		mMinimumFlingVelocity = configuration.getScaledMinimumFlingVelocity();
 		mMaximumFlingVelocity = configuration.getScaledMaximumFlingVelocity()
-				/ SELECTOR_MAX_FLING_VELOCITY_ADJUSTMENT;
+				/ NumberPicker.SELECTOR_MAX_FLING_VELOCITY_ADJUSTMENT;
 		mTextSize = (int) mInputText.getTextSize();
 		Paint paint = new Paint();
 		paint.setAntiAlias(true);
@@ -433,7 +440,8 @@ public class NumberPicker extends LinearLayout {
 		paint.setTextSize(mTextSize);
 		paint.setTypeface(mInputText.getTypeface());
 		ColorStateList colors = mInputText.getTextColors();
-		int color = colors.getColorForState(ENABLED_STATE_SET, Color.WHITE);
+		int color = colors
+				.getColorForState(View.ENABLED_STATE_SET, Color.WHITE);
 		paint.setColor(color);
 		mSelectorWheelPaint = paint;
 		mFlingScroller = new Scroller(getContext(), null, true);
@@ -441,15 +449,15 @@ public class NumberPicker extends LinearLayout {
 				new DecelerateInterpolator(2.5f));
 		updateInputTextView();
 		if (VERSION.SDK_INT >= 16
-				&& getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
-			setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
+				&& getImportantForAccessibility() == View.IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
+			setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
 		}
 	}
 
 	@Override
 	public void addFocusables(ArrayList<View> views, int direction,
 			int focusableMode) {
-		if ((focusableMode & FOCUSABLES_ACCESSIBILITY) == FOCUSABLES_ACCESSIBILITY) {
+		if ((focusableMode & NumberPicker.FOCUSABLES_ACCESSIBILITY) == NumberPicker.FOCUSABLES_ACCESSIBILITY) {
 			views.add(this);
 			return;
 		}
@@ -465,10 +473,10 @@ public class NumberPicker extends LinearLayout {
 			mPreviousScrollerY = 0;
 			if (increment) {
 				mFlingScroller.startScroll(0, 0, 0, -mSelectorElementHeight,
-						SNAP_SCROLL_DURATION);
+						NumberPicker.SNAP_SCROLL_DURATION);
 			} else {
 				mFlingScroller.startScroll(0, 0, 0, mSelectorElementHeight,
-						SNAP_SCROLL_DURATION);
+						NumberPicker.SNAP_SCROLL_DURATION);
 			}
 			invalidate();
 		} else {
@@ -614,7 +622,7 @@ public class NumberPicker extends LinearLayout {
 						: mSelectorElementHeight;
 			}
 			mAdjustScroller.startScroll(0, 0, 0, deltaY,
-					SELECTOR_ADJUSTMENT_DURATION_MILLIS);
+					NumberPicker.SELECTOR_ADJUSTMENT_DURATION_MILLIS);
 			invalidate();
 			return true;
 		}
@@ -640,7 +648,7 @@ public class NumberPicker extends LinearLayout {
 
 	@Override
 	protected float getBottomFadingEdgeStrength() {
-		return TOP_AND_BOTTOM_FADING_EDGE_STRENGTH;
+		return NumberPicker.TOP_AND_BOTTOM_FADING_EDGE_STRENGTH;
 	}
 
 	public String[] getDisplayedValues() {
@@ -682,7 +690,7 @@ public class NumberPicker extends LinearLayout {
 
 	@Override
 	protected float getTopFadingEdgeStrength() {
-		return TOP_AND_BOTTOM_FADING_EDGE_STRENGTH;
+		return NumberPicker.TOP_AND_BOTTOM_FADING_EDGE_STRENGTH;
 	}
 
 	public int getValue() {
@@ -744,7 +752,7 @@ public class NumberPicker extends LinearLayout {
 		int editTextTextPosition = mInputText.getBaseline()
 				+ mInputText.getTop();
 		mInitialScrollOffset = editTextTextPosition - mSelectorElementHeight
-				* SELECTOR_WHELL_MIDDLE_ITEM_INDEX;
+				* NumberPicker.SELECTOR_WHELL_MIDDLE_ITEM_INDEX;
 		mCurrentScrollOffset = mInitialScrollOffset;
 		updateInputTextView();
 	}
@@ -754,7 +762,8 @@ public class NumberPicker extends LinearLayout {
 		int[] selectorIndices = mSelectorIndices;
 		int current = getValue();
 		for (int i = 0; i < mSelectorIndices.length; i++) {
-			int selectorIndex = current + i - SELECTOR_WHELL_MIDDLE_ITEM_INDEX;
+			int selectorIndex = current + i
+					- NumberPicker.SELECTOR_WHELL_MIDDLE_ITEM_INDEX;
 			if (mWrapSelectorWheel) {
 				selectorIndex = getWrappedSelectorIndex(selectorIndex);
 			}
@@ -764,7 +773,7 @@ public class NumberPicker extends LinearLayout {
 	}
 
 	private int makeMeasureSpec(int measureSpec, int maxSize) {
-		if (maxSize == SIZE_UNSPECIFIED) {
+		if (maxSize == NumberPicker.SIZE_UNSPECIFIED) {
 			return measureSpec;
 		}
 		final int size = MeasureSpec.getSize(measureSpec);
@@ -845,8 +854,8 @@ public class NumberPicker extends LinearLayout {
 			int selectorIndex = selectorIndices[i];
 			String scrollSelectorValue = mSelectorIndexToStringCache
 					.get(selectorIndex);
-			if (i != SELECTOR_WHELL_MIDDLE_ITEM_INDEX
-					|| mInputText.getVisibility() != VISIBLE) {
+			if (i != NumberPicker.SELECTOR_WHELL_MIDDLE_ITEM_INDEX
+					|| mInputText.getVisibility() != View.VISIBLE) {
 				canvas.drawText(scrollSelectorValue, x, y, mSelectorWheelPaint);
 			}
 			y += mSelectorElementHeight;
@@ -1044,7 +1053,7 @@ public class NumberPicker extends LinearLayout {
 					} else {
 						int selectorIndexOffset = eventY
 								/ mSelectorElementHeight
-								- SELECTOR_WHELL_MIDDLE_ITEM_INDEX;
+								- NumberPicker.SELECTOR_WHELL_MIDDLE_ITEM_INDEX;
 						if (selectorIndexOffset > 0) {
 							changeValueByOne(true);
 							mPressedStateHelper
@@ -1127,7 +1136,7 @@ public class NumberPicker extends LinearLayout {
 
 	private int resolveSizeAndStateRespectingMinSize(int minSize,
 			int measuredSize, int measureSpec) {
-		if (minSize != SIZE_UNSPECIFIED) {
+		if (minSize != NumberPicker.SIZE_UNSPECIFIED) {
 			final int desiredWidth = Math.max(minSize, measuredSize);
 			return com.WazaBe.HoloEverywhere.widget.View
 					.supportResolveSizeAndState(desiredWidth, measureSpec, 0);
@@ -1141,13 +1150,13 @@ public class NumberPicker extends LinearLayout {
 		int[] selectorIndices = mSelectorIndices;
 		if (!mWrapSelectorWheel
 				&& y > 0
-				&& selectorIndices[SELECTOR_WHELL_MIDDLE_ITEM_INDEX] <= mMinValue) {
+				&& selectorIndices[NumberPicker.SELECTOR_WHELL_MIDDLE_ITEM_INDEX] <= mMinValue) {
 			mCurrentScrollOffset = mInitialScrollOffset;
 			return;
 		}
 		if (!mWrapSelectorWheel
 				&& y < 0
-				&& selectorIndices[SELECTOR_WHELL_MIDDLE_ITEM_INDEX] >= mMaxValue) {
+				&& selectorIndices[NumberPicker.SELECTOR_WHELL_MIDDLE_ITEM_INDEX] >= mMaxValue) {
 			mCurrentScrollOffset = mInitialScrollOffset;
 			return;
 		}
@@ -1155,20 +1164,22 @@ public class NumberPicker extends LinearLayout {
 		while (mCurrentScrollOffset - mInitialScrollOffset > mSelectorTextGapHeight) {
 			mCurrentScrollOffset -= mSelectorElementHeight;
 			decrementSelectorIndices(selectorIndices);
-			setValueInternal(selectorIndices[SELECTOR_WHELL_MIDDLE_ITEM_INDEX],
+			setValueInternal(
+					selectorIndices[NumberPicker.SELECTOR_WHELL_MIDDLE_ITEM_INDEX],
 					true);
 			if (!mWrapSelectorWheel
-					&& selectorIndices[SELECTOR_WHELL_MIDDLE_ITEM_INDEX] <= mMinValue) {
+					&& selectorIndices[NumberPicker.SELECTOR_WHELL_MIDDLE_ITEM_INDEX] <= mMinValue) {
 				mCurrentScrollOffset = mInitialScrollOffset;
 			}
 		}
 		while (mCurrentScrollOffset - mInitialScrollOffset < -mSelectorTextGapHeight) {
 			mCurrentScrollOffset += mSelectorElementHeight;
 			incrementSelectorIndices(selectorIndices);
-			setValueInternal(selectorIndices[SELECTOR_WHELL_MIDDLE_ITEM_INDEX],
+			setValueInternal(
+					selectorIndices[NumberPicker.SELECTOR_WHELL_MIDDLE_ITEM_INDEX],
 					true);
 			if (!mWrapSelectorWheel
-					&& selectorIndices[SELECTOR_WHELL_MIDDLE_ITEM_INDEX] >= mMaxValue) {
+					&& selectorIndices[NumberPicker.SELECTOR_WHELL_MIDDLE_ITEM_INDEX] >= mMaxValue) {
 				mCurrentScrollOffset = mInitialScrollOffset;
 			}
 		}
