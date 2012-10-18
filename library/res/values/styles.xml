@@ -528,7 +528,7 @@
     </style>
     <style name="Holo.Animation.PopupWindow"/>
     <!-- Sherlock themes -->
-    <style name="Holo.Theme.Sherlock" parent="@style/Theme.Sherlock">
+    <style name="Holo.Theme.Sherlock" parent="Theme.Sherlock">
         <item name="android:scrollbarFadeDuration">250</item>
         <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
         <item name="android:scrollbarSize">10dip</item>
@@ -658,7 +658,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowContentOverlay">@null</item>
     </style>
-    <style name="Holo.Theme.Sherlock.Light" parent="@style/Theme.Sherlock.Light">
+    <style name="Holo.Theme.Sherlock.Light" parent="Theme.Sherlock.Light">
         <item name="android:scrollbarFadeDuration">250</item>
         <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
         <item name="android:scrollbarSize">10dip</item>
@@ -788,7 +788,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowContentOverlay">@null</item>
     </style>
-    <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+    <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="Theme.Sherlock.Light.DarkActionBar">
         <item name="android:scrollbarFadeDuration">250</item>
         <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
         <item name="android:scrollbarSize">10dip</item>

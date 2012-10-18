@@ -5,7 +5,9 @@
   <style name="Holo.Theme" parent="android:Theme.Holo">
     <include name="BaseDark" />
   </style>
-  <style name="Holo.Theme.Sherlock" parent="Holo.Theme" />
+  <style name="Holo.Theme.Sherlock" parent="Theme.Sherlock">
+	<include name="BaseDark" />
+  </style>
   <!-- Light themes -->
   <style name="Holo.Theme.Light" parent="android:Theme.Holo.Light">
     <include name="BaseLight" />
@@ -13,6 +15,10 @@
   <style name="Holo.Theme.Light.DarkActionBar" parent="android:Theme.Holo.Light.DarkActionBar">
     <include name="BaseLight" />
   </style>
-  <style name="Holo.Theme.Sherlock.Light" parent="Holo.Theme.Light" />
-  <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="Holo.Theme.Light.DarkActionBar" />
+  <style name="Holo.Theme.Sherlock.Light" parent="Theme.Sherlock.Light">
+    <include name="BaseLight" />
+  </style>
+  <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="Theme.Sherlock.Light.DarkActionBar">
+    <include name="BaseLight" />
+  </style>
 </resources>
