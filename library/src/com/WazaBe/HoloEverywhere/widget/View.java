@@ -13,7 +13,6 @@ import com.actionbarsherlock.view.ActionMode;
 
 public class View extends android.view.View implements Drawable.Callback,
 		KeyEvent.Callback, AccessibilityEventSource {
-
 	public static final int[] PRESSED_STATE_SET, SUPPORT_EMPTY_STATE_SET,
 			SUPPORT_WINDOW_FOCUSED_STATE_SET, SUPPORT_SELECTED_STATE_SET,
 			SUPPORT_SELECTED_WINDOW_FOCUSED_STATE_SET,

@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.WazaBe.HoloEverywhere.app.Application;
+import com.actionbarsherlock.internal.view.menu.ExpandedMenuView;
+import com.actionbarsherlock.internal.view.menu.HoloListMenuItemView;
 
 public class LayoutInflater extends android.view.LayoutInflater implements
 		Cloneable {
@@ -52,6 +54,10 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 		LayoutInflater.remap("android.support.v4.view", "ViewPager",
 				"PagerTitleStrip");
 		LayoutInflater.remap("android.webkit", "WebView");
+		LayoutInflater.remapHard("Internal.ExpandedMenuView",
+				ExpandedMenuView.class.getName());
+		LayoutInflater.remapHard("Internal.HoloListMenuItemView",
+				HoloListMenuItemView.class.getName());
 	}
 
 	public static void clearInstances() {

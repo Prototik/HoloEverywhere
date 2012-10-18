@@ -20,7 +20,7 @@ public class WidgetContainer extends LinearLayout {
 
 	public WidgetContainer(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		setOrientation(LinearLayout.VERTICAL);
+		setOrientation(android.widget.LinearLayout.VERTICAL);
 		TypedArray a = context.obtainStyledAttributes(attrs,
 				R.styleable.WidgetContainer);
 		int layout = a.getResourceId(

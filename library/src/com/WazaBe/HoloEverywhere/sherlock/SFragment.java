@@ -1,9 +1,6 @@
 package com.WazaBe.HoloEverywhere.sherlock;
 
 import android.os.Build.VERSION;
-import android.support.v4.app.Watson.OnCreateOptionsMenuListener;
-import android.support.v4.app.Watson.OnOptionsItemSelectedListener;
-import android.support.v4.app.Watson.OnPrepareOptionsMenuListener;
 
 import com.WazaBe.HoloEverywhere.app.Activity;
 import com.WazaBe.HoloEverywhere.app.Fragment;
@@ -13,10 +10,10 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class SFragment extends Fragment implements OnCreateOptionsMenuListener,
-		OnPrepareOptionsMenuListener, OnOptionsItemSelectedListener {
+public class SFragment extends Fragment implements SBaseFragment {
 	private SBase mBase;
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T extends Activity & SBase> T getSActivity() {
 		return (T) mBase;
@@ -50,6 +47,8 @@ public class SFragment extends Fragment implements OnCreateOptionsMenuListener,
 		if (isABSSupport()) {
 			onCreateOptionsMenu(new MenuWrapper(menu),
 					mBase.getSupportMenuInflater());
+		} else {
+			super.onCreateOptionsMenu(menu, inflater);
 		}
 	}
 

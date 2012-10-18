@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.WazaBe.HoloEverywhere.app.Application;
+import com.WazaBe.HoloEverywhere.app.Application.Config.PreferenceImpl;
 import com.WazaBe.HoloEverywhere.internal._SharedPreferencesImpl_JSON;
 import com.WazaBe.HoloEverywhere.internal._SharedPreferencesImpl_XML;
 
@@ -94,15 +95,20 @@ public class PreferenceManager {
 		}
 	}
 
-	public static SharedPreferences wrap(Context context, String name, int mode) {
-		switch (Application.getConfig().getPreferenceImpl()) {
+	public static SharedPreferences wrap(Context context, PreferenceImpl impl,
+			String name, int mode) {
+		switch (impl) {
 		case XML:
-			return new _SharedPreferencesImpl_XML(context.getSharedPreferences(
-					name, mode));
+			return new _SharedPreferencesImpl_XML(context, name, mode);
 		case JSON:
 		default:
 			return new _SharedPreferencesImpl_JSON(context, name, mode);
 		}
+	}
+
+	public static SharedPreferences wrap(Context context, String name, int mode) {
+		return PreferenceManager.wrap(context, Application.getConfig()
+				.getPreferenceImpl(), name, mode);
 	}
 
 	private Activity mActivity;

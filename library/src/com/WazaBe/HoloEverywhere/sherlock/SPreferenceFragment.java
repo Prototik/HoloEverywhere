@@ -1,9 +1,6 @@
 package com.WazaBe.HoloEverywhere.sherlock;
 
 import android.os.Build.VERSION;
-import android.support.v4.app.Watson.OnCreateOptionsMenuListener;
-import android.support.v4.app.Watson.OnOptionsItemSelectedListener;
-import android.support.v4.app.Watson.OnPrepareOptionsMenuListener;
 
 import com.WazaBe.HoloEverywhere.app.Activity;
 import com.WazaBe.HoloEverywhere.preference.PreferenceFragment;
@@ -14,10 +11,16 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class SPreferenceFragment extends PreferenceFragment implements
-		OnCreateOptionsMenuListener, OnPrepareOptionsMenuListener,
-		OnOptionsItemSelectedListener {
+		SBaseFragment {
 	private SBase mBase;
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T extends Activity & SBase> T getSActivity() {
+		return (T) mBase;
+	}
+
+	@Deprecated
 	public SActivity getSherlockActivity() {
 		return (SActivity) mBase;
 	}
@@ -32,7 +35,7 @@ public class SPreferenceFragment extends PreferenceFragment implements
 		if (isABSSupport()) {
 			if (!(activity instanceof SBase)) {
 				throw new IllegalStateException(getClass().getSimpleName()
-						+ " must be attached to a SActivity.");
+						+ " must be attached to a S***Activity.");
 			}
 			mBase = (SBase) activity;
 		}
@@ -45,6 +48,8 @@ public class SPreferenceFragment extends PreferenceFragment implements
 		if (isABSSupport()) {
 			onCreateOptionsMenu(new MenuWrapper(menu),
 					mBase.getSupportMenuInflater());
+		} else {
+			super.onCreateOptionsMenu(menu, inflater);
 		}
 	}
 

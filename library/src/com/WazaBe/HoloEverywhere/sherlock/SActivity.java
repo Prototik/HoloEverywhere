@@ -26,7 +26,8 @@ public abstract class SActivity extends Activity implements SBase {
 	@Override
 	public void addContentView(View view, LayoutParams params) {
 		if (isABSSupport()) {
-			getSherlock().addContentView(FontLoader.apply(view), params);
+			getSherlock().addContentView(
+					internalDecorView(FontLoader.apply(view)), params);
 		} else {
 			super.addContentView(view, params);
 		}
@@ -245,7 +246,8 @@ public abstract class SActivity extends Activity implements SBase {
 	@Override
 	public void setContentView(int layoutResId) {
 		if (isABSSupport()) {
-			getSherlock().setContentView(FontLoader.inflate(this, layoutResId));
+			getSherlock().setContentView(
+					internalDecorView(FontLoader.inflate(this, layoutResId)));
 		} else {
 			super.setContentView(layoutResId);
 		}
@@ -254,7 +256,8 @@ public abstract class SActivity extends Activity implements SBase {
 	@Override
 	public void setContentView(View view) {
 		if (isABSSupport()) {
-			getSherlock().setContentView(FontLoader.apply(view));
+			getSherlock().setContentView(
+					internalDecorView(FontLoader.apply(view)));
 		} else {
 			super.setContentView(view);
 		}
@@ -263,7 +266,8 @@ public abstract class SActivity extends Activity implements SBase {
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		if (isABSSupport()) {
-			getSherlock().setContentView(FontLoader.apply(view), params);
+			getSherlock().setContentView(
+					internalDecorView(FontLoader.apply(view)), params);
 		} else {
 			super.setContentView(view, params);
 		}

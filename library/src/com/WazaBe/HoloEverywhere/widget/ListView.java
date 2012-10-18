@@ -223,9 +223,6 @@ public class ListView extends android.widget.ListView {
 
 	@Override
 	public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-		if (longClickListenerWrapper == null) {
-			longClickListenerWrapper = new OnItemLongClickListenerWrapper();
-		}
 		longClickListenerWrapper.setWrapped(listener);
 		super.setOnItemLongClickListener(longClickListenerWrapper);
 	}

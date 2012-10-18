@@ -3,6 +3,7 @@ package com.WazaBe.HoloDemo;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +32,7 @@ import com.WazaBe.HoloEverywhere.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
+import com.actionbarsherlock.internal.view.menu.ContextMenu;
 
 @Holo(forceThemeApply = true, layout = R.layout.content)
 public class DemoActivity extends SActivity {
@@ -93,6 +95,12 @@ public class DemoActivity extends SActivity {
 		}
 	}
 
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		getSupportMenuInflater().inflate(R.menu.menu, menu);
+	}
+
 	public void replaceFragment(int resId, Fragment fragment) {
 		replaceFragment(resId, fragment, null);
 	}
@@ -139,6 +147,11 @@ public class DemoActivity extends SActivity {
 	public void showCalendar(View v) {
 		replaceFragment(R.id.content, CalendarFragment.getInstance(),
 				isABSSupport() ? null : "calendar");
+	}
+
+	public void showContextMenu(View v) {
+		registerForContextMenu(v);
+		openContextMenu(v);
 	}
 
 	public void showDatePicker(View v) {

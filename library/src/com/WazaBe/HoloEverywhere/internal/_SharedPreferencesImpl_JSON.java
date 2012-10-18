@@ -409,6 +409,13 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
 	@Override
 	public void registerOnSharedPreferenceChangeListener(
+			android.content.SharedPreferences.OnSharedPreferenceChangeListener listener) {
+		throw new RuntimeException(
+				"android.content.SharedPreferences.OnSharedPreferenceChangeListener don't supported on JSON impl");
+	}
+
+	@Override
+	public void registerOnSharedPreferenceChangeListener(
 			OnSharedPreferenceChangeListener listener) {
 		synchronized (_SharedPreferencesImpl_JSON.listeners) {
 			if (!_SharedPreferencesImpl_JSON.listeners.containsKey(this)) {
@@ -456,6 +463,13 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 			throw new RuntimeException("Illegal charset: " + charset);
 		}
 		this.charset = charset;
+	}
+
+	@Override
+	public void unregisterOnSharedPreferenceChangeListener(
+			android.content.SharedPreferences.OnSharedPreferenceChangeListener listener) {
+		throw new RuntimeException(
+				"android.content.SharedPreferences.OnSharedPreferenceChangeListener don't supported on JSON impl");
 	}
 
 	@Override

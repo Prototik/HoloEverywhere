@@ -12,7 +12,15 @@ import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.preference.PreferenceManager;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
-public class Fragment extends _HoloFragment {
+public class Fragment extends _HoloFragment implements BaseFragment {
+	private Base mBase;
+
+	@Override
+	public SharedPreferences getDefaultSharedPreferences() {
+		return mBase.getDefaultSharedPreferences();
+	}
+
+	@Override
 	public LayoutInflater getLayoutInflater() {
 		return LayoutInflater.from(getActivity());
 	}
@@ -22,20 +30,24 @@ public class Fragment extends _HoloFragment {
 		return LayoutInflater.from(super.getLayoutInflater(savedInstanceState));
 	}
 
-	public Activity getSupportActivity() {
-		return (Activity) getActivity();
+	@Override
+	public SharedPreferences getSharedPreferences(String name, int mode) {
+		return PreferenceManager.wrap(getActivity(), name, mode);
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T extends Activity & Base> T getSupportActivity() {
+		return (T) mBase;
+	}
+
+	@Override
 	public FragmentManager getSupportFragmentManager() {
-		if (getSupportActivity() != null) {
-			return getSupportActivity().getSupportFragmentManager();
+		if (mBase != null) {
+			return mBase.getSupportFragmentManager();
 		} else {
 			return getFragmentManager();
 		}
-	}
-
-	public SharedPreferences getSupportSharedPreferences(String name, int mode) {
-		return PreferenceManager.wrap(getActivity(), name, mode);
 	}
 
 	public Object getSystemService(String name) {
@@ -43,6 +55,7 @@ public class Fragment extends _HoloFragment {
 				name));
 	}
 
+	@Override
 	public boolean isABSSupport() {
 		return false;
 	}
@@ -53,6 +66,11 @@ public class Fragment extends _HoloFragment {
 
 	@Override
 	public final void onAttach(android.app.Activity activity) {
+		if (!(activity instanceof Activity)) {
+			throw new RuntimeException(
+					"HoloEverywhere.Fragment must be attached to HoloEverywhere.Activity");
+		}
+		mBase = (Activity) activity;
 		onAttach((Activity) activity);
 	}
 
@@ -63,11 +81,13 @@ public class Fragment extends _HoloFragment {
 				savedInstanceState);
 	}
 
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
+	@Override
 	public void onInflate(Activity activity, AttributeSet attrs,
 			Bundle savedInstanceState) {
 		super.onInflate(activity, attrs, savedInstanceState);

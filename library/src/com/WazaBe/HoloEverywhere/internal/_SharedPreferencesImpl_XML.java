@@ -11,9 +11,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Build.VERSION;
 import android.util.Log;
 
+import com.WazaBe.HoloEverywhere.app.Base;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
 public final class _SharedPreferencesImpl_XML implements SharedPreferences {
@@ -207,12 +209,12 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 
 	private final android.content.SharedPreferences prefs;
 
-	public _SharedPreferencesImpl_XML(android.content.SharedPreferences prefs) {
-		if (prefs == null) {
-			throw new IllegalArgumentException(
-					"SharedPreferences can't be null");
+	public _SharedPreferencesImpl_XML(Context context, String name, int mode) {
+		if (context instanceof Base) {
+			prefs = ((Base) context).superGetSharedPreferences(name, mode);
+		} else {
+			prefs = context.getSharedPreferences(name, mode);
 		}
-		this.prefs = prefs;
 	}
 
 	@Override
@@ -311,9 +313,21 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 
 	@Override
 	public void registerOnSharedPreferenceChangeListener(
+			android.content.SharedPreferences.OnSharedPreferenceChangeListener listener) {
+		prefs.registerOnSharedPreferenceChangeListener(listener);
+	}
+
+	@Override
+	public void registerOnSharedPreferenceChangeListener(
 			OnSharedPreferenceChangeListener listener) {
 		prefs.registerOnSharedPreferenceChangeListener(BaseOnSharedPreferenceChangeListener
 				.obtain(this, listener));
+	}
+
+	@Override
+	public void unregisterOnSharedPreferenceChangeListener(
+			android.content.SharedPreferences.OnSharedPreferenceChangeListener listener) {
+		prefs.unregisterOnSharedPreferenceChangeListener(listener);
 	}
 
 	@Override
