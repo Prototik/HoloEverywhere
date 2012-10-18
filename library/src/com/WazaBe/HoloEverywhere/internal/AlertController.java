@@ -668,9 +668,11 @@ public class AlertController {
 			if (mListView != null) {
 				contentPanel.removeView(mWindow.findViewById(R.id.scrollView));
 				contentPanel.addView(mListView, new LinearLayout.LayoutParams(
-						LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+						android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+						android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 				contentPanel.setLayoutParams(new LinearLayout.LayoutParams(
-						LayoutParams.MATCH_PARENT, 0, 1.0f));
+						android.view.ViewGroup.LayoutParams.MATCH_PARENT, 0,
+						1.0f));
 			} else {
 				contentPanel.setVisibility(View.GONE);
 			}
@@ -736,8 +738,9 @@ public class AlertController {
 			customPanel = (FrameLayout) mWindow.findViewById(R.id.customPanel);
 			FrameLayout custom = (FrameLayout) mWindow
 					.findViewById(R.id.custom);
-			custom.addView(mView, new LayoutParams(LayoutParams.MATCH_PARENT,
-					LayoutParams.MATCH_PARENT));
+			custom.addView(mView, new LayoutParams(
+					android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+					android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 			if (mViewSpacingSpecified) {
 				custom.setPadding(mViewSpacingLeft, mViewSpacingTop,
 						mViewSpacingRight, mViewSpacingBottom);

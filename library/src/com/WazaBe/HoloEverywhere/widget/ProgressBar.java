@@ -565,7 +565,8 @@ public class ProgressBar extends View {
 	public void onVisibilityChanged(View changedView, int visibility) {
 		super.onVisibilityChanged(changedView, visibility);
 		if (mIndeterminate) {
-			if (visibility == View.GONE || visibility == View.INVISIBLE) {
+			if (visibility == android.view.View.GONE
+					|| visibility == android.view.View.INVISIBLE) {
 				stopAnimation();
 			} else {
 				startAnimation();
@@ -729,7 +730,8 @@ public class ProgressBar extends View {
 		if (getVisibility() != v) {
 			super.setVisibility(v);
 			if (mIndeterminate) {
-				if (v == View.GONE || v == View.INVISIBLE) {
+				if (v == android.view.View.GONE
+						|| v == android.view.View.INVISIBLE) {
 					stopAnimation();
 				} else {
 					startAnimation();
@@ -739,7 +741,7 @@ public class ProgressBar extends View {
 	}
 
 	void startAnimation() {
-		if (getVisibility() != View.VISIBLE) {
+		if (getVisibility() != android.view.View.VISIBLE) {
 			return;
 		}
 		if (mIndeterminateDrawable instanceof Animatable) {

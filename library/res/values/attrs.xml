@@ -2,7 +2,6 @@
 <resources>
 	<!--
     Already defined in ABS 
-	<attr name="progressBarStyle" format="reference" />
 	<attr name="spinnerItemStyle" format="reference" />
 	<attr name="spinnerDropDownItemStyle" format="reference" />
 	<attr name="dropDownListViewStyle" format="reference" />

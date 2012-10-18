@@ -212,7 +212,7 @@ public class LinearLayout extends android.widget.LinearLayout {
 		final int orientation = getOrientation();
 		final LayoutParams params = (LayoutParams) child.getLayoutParams();
 		if (hasDividerBeforeChildAt(index)) {
-			if (orientation == LinearLayout.VERTICAL) {
+			if (orientation == android.widget.LinearLayout.VERTICAL) {
 				params.topMargin = mDividerHeight;
 			} else {
 				params.leftMargin = mDividerWidth;
@@ -221,7 +221,7 @@ public class LinearLayout extends android.widget.LinearLayout {
 		final int count = getChildCount();
 		if (index == count - 1) {
 			if (hasDividerBeforeChildAt(count)) {
-				if (orientation == LinearLayout.VERTICAL) {
+				if (orientation == android.widget.LinearLayout.VERTICAL) {
 					params.bottomMargin = mDividerHeight;
 				} else {
 					params.rightMargin = mDividerWidth;
@@ -235,7 +235,7 @@ public class LinearLayout extends android.widget.LinearLayout {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		if (mDivider != null) {
-			if (getOrientation() == LinearLayout.VERTICAL) {
+			if (getOrientation() == android.widget.LinearLayout.VERTICAL) {
 				drawDividersVertical(canvas);
 			} else {
 				drawDividersHorizontal(canvas);

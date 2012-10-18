@@ -182,7 +182,7 @@ public class View extends android.view.View implements Drawable.Callback,
 
 	public static int supportResolveSize(int size, int measureSpec) {
 		return View.supportResolveSizeAndState(size, measureSpec, 0)
-				& View.MEASURED_SIZE_MASK;
+				& android.view.View.MEASURED_SIZE_MASK;
 	}
 
 	public static int supportResolveSizeAndState(int size, int measureSpec,
@@ -196,7 +196,7 @@ public class View extends android.view.View implements Drawable.Callback,
 			break;
 		case MeasureSpec.AT_MOST:
 			if (specSize < size) {
-				result = specSize | View.MEASURED_STATE_TOO_SMALL;
+				result = specSize | android.view.View.MEASURED_STATE_TOO_SMALL;
 			} else {
 				result = size;
 			}
@@ -205,7 +205,8 @@ public class View extends android.view.View implements Drawable.Callback,
 			result = specSize;
 			break;
 		}
-		return result | childMeasuredState & View.MEASURED_STATE_MASK;
+		return result | childMeasuredState
+				& android.view.View.MEASURED_STATE_MASK;
 	}
 
 	private final AnimatorProxy proxy;
@@ -235,9 +236,10 @@ public class View extends android.view.View implements Drawable.Callback,
 	}
 
 	public int getMeasuredStateInt() {
-		return getMeasuredWidth() & View.MEASURED_STATE_MASK
-				| getMeasuredHeight() >> View.MEASURED_HEIGHT_STATE_SHIFT
-				& View.MEASURED_STATE_MASK >> View.MEASURED_HEIGHT_STATE_SHIFT;
+		return getMeasuredWidth()
+				& android.view.View.MEASURED_STATE_MASK
+				| getMeasuredHeight() >> android.view.View.MEASURED_HEIGHT_STATE_SHIFT
+				& android.view.View.MEASURED_STATE_MASK >> android.view.View.MEASURED_HEIGHT_STATE_SHIFT;
 	}
 
 	@SuppressLint("NewApi")
@@ -293,9 +295,9 @@ public class View extends android.view.View implements Drawable.Callback,
 	@Override
 	public void setVisibility(int visibility) {
 		if (proxy != null) {
-			if (visibility == View.GONE) {
+			if (visibility == android.view.View.GONE) {
 				clearAnimation();
-			} else if (visibility == View.VISIBLE) {
+			} else if (visibility == android.view.View.VISIBLE) {
 				setAnimation(proxy);
 			}
 		}

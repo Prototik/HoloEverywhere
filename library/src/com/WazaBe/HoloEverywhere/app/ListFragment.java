@@ -1,26 +1,19 @@
 package com.WazaBe.HoloEverywhere.app;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
-import com.WazaBe.HoloEverywhere.widget.LinearLayout;
+import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.widget.ListView;
-import com.WazaBe.HoloEverywhere.widget.ProgressBar;
 
 public class ListFragment extends Fragment {
-	static final int INTERNAL_EMPTY_ID = 0x00ff0001;
-	static final int INTERNAL_LIST_CONTAINER_ID = 0x00ff0003;
-	static final int INTERNAL_PROGRESS_CONTAINER_ID = 0x00ff0002;
 	private ListAdapter mAdapter;
 	private CharSequence mEmptyText;
 	private View mEmptyView;
@@ -56,16 +49,14 @@ public class ListFragment extends Fragment {
 			mList = (ListView) root;
 		} else {
 			mStandardEmptyView = (TextView) root
-					.findViewById(ListFragment.INTERNAL_EMPTY_ID);
+					.findViewById(R.id.internalEmpty);
 			if (mStandardEmptyView == null) {
 				mEmptyView = root.findViewById(android.R.id.empty);
 			} else {
 				mStandardEmptyView.setVisibility(View.GONE);
 			}
-			mProgressContainer = root
-					.findViewById(ListFragment.INTERNAL_PROGRESS_CONTAINER_ID);
-			mListContainer = root
-					.findViewById(ListFragment.INTERNAL_LIST_CONTAINER_ID);
+			mProgressContainer = root.findViewById(R.id.progressContainer);
+			mListContainer = root.findViewById(R.id.listContainer);
 			View rawListView = root.findViewById(android.R.id.list);
 			if (!(rawListView instanceof ListView)) {
 				if (rawListView == null) {
@@ -99,6 +90,10 @@ public class ListFragment extends Fragment {
 		mHandler.post(mRequestFocus);
 	}
 
+	protected View getEmptyView() {
+		return mEmptyView;
+	}
+
 	public ListAdapter getListAdapter() {
 		return mAdapter;
 	}
@@ -121,42 +116,7 @@ public class ListFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		final Context context = getActivity();
-		FrameLayout root = new FrameLayout(context);
-		LinearLayout pframe = new LinearLayout(context);
-		pframe.setId(ListFragment.INTERNAL_PROGRESS_CONTAINER_ID);
-		pframe.setOrientation(android.widget.LinearLayout.VERTICAL);
-		pframe.setVisibility(View.GONE);
-		pframe.setGravity(Gravity.CENTER);
-		ProgressBar progress = new ProgressBar(context, null,
-				android.R.attr.progressBarStyleLarge);
-		pframe.addView(progress, new FrameLayout.LayoutParams(
-				ViewGroup.LayoutParams.WRAP_CONTENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT));
-		root.addView(pframe, new FrameLayout.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.MATCH_PARENT));
-		FrameLayout lframe = new FrameLayout(context);
-		lframe.setId(ListFragment.INTERNAL_LIST_CONTAINER_ID);
-		TextView tv = new TextView(getActivity());
-		tv.setId(ListFragment.INTERNAL_EMPTY_ID);
-		tv.setGravity(Gravity.CENTER);
-		lframe.addView(tv, new FrameLayout.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.MATCH_PARENT));
-		ListView lv = new ListView(getActivity());
-		lv.setId(android.R.id.list);
-		lv.setDrawSelectorOnTop(false);
-		lframe.addView(lv, new FrameLayout.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.MATCH_PARENT));
-		root.addView(lframe, new FrameLayout.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.MATCH_PARENT));
-		root.setLayoutParams(new FrameLayout.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.MATCH_PARENT));
-		return root;
+		return inflater.inflate(R.layout.list_content, container, false);
 	}
 
 	@Override
