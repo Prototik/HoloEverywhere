@@ -4,10 +4,10 @@ import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 
-import com.actionbarsherlock.internal.view.menu.ContextMenu;
 import com.actionbarsherlock.internal.view.menu.ContextMenuItemWrapper;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 import com.actionbarsherlock.internal.view.menu.ContextMenuWrapper;
+import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -59,6 +59,7 @@ public abstract class _HoloActivity extends Watson implements
 		onCreateContextMenu(new ContextMenuWrapper(menu), v, menuInfo);
 	}
 
+	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view,
 			ContextMenuInfo menuInfo) {
 		if (menu instanceof ContextMenuWrapper) {

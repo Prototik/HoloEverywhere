@@ -32,7 +32,7 @@ import com.WazaBe.HoloEverywhere.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
-import com.actionbarsherlock.internal.view.menu.ContextMenu;
+import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.MenuItem;
 
 @Holo(forceThemeApply = true, layout = R.layout.content)

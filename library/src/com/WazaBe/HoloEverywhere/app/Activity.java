@@ -25,6 +25,7 @@ import com.WazaBe.HoloEverywhere.preference.PreferenceManager;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
 import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
+import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 
 public abstract class Activity extends _HoloActivity implements Base {
 	@Retention(RetentionPolicy.RUNTIME)
@@ -68,7 +69,7 @@ public abstract class Activity extends _HoloActivity implements Base {
 
 	@Override
 	public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
-			View view) {
+			View view, ContextMenuListener listener) {
 		ContextMenuInfo menuInfo = null;
 		try {
 			Class<?> clazz = view.getClass();
@@ -81,7 +82,7 @@ public abstract class Activity extends _HoloActivity implements Base {
 		} catch (Exception e) {
 			Log.e("createContextMenu", "getContextMenuInfo error", e);
 		}
-		onCreateContextMenu(contextMenuBuilder, view, menuInfo);
+		listener.onCreateContextMenu(contextMenuBuilder, view, menuInfo);
 	}
 
 	@Override

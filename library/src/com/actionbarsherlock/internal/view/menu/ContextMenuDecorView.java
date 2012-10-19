@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 
+import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.MenuItem;
 
 public final class ContextMenuDecorView extends FrameLayout {
@@ -39,15 +40,19 @@ public final class ContextMenuDecorView extends FrameLayout {
 		public boolean onOpenSubMenu(MenuBuilder subMenu) {
 			return false;
 		}
+
+		public ContextMenuListener unwrap() {
+			return listener;
+		}
 	}
 
 	private ContextMenuBuilder contextMenu;
-	private final ContextMenuListener listener;
+	private final InternalWrapper listener;
 	private MenuDialogHelper menuDialogHelper;
 
 	public ContextMenuDecorView(View view, ContextMenuListener listener) {
 		super(view.getContext());
-		this.listener = listener;
+		this.listener = new InternalWrapper(listener);
 		ViewParent parent = view.getParent();
 		if (parent != null && parent instanceof ViewGroup) {
 			((ViewGroup) parent).removeView(view);
@@ -58,17 +63,17 @@ public final class ContextMenuDecorView extends FrameLayout {
 
 	@Override
 	public boolean showContextMenuForChild(View originalView) {
-		InternalWrapper wrapper = new InternalWrapper(listener);
 		if (contextMenu == null) {
-			contextMenu = new ContextMenuBuilder(getContext());
-			contextMenu.setCallback(wrapper);
+			contextMenu = new ContextMenuBuilder(getContext(),
+					listener.unwrap());
+			contextMenu.setCallback(listener);
 		} else {
 			contextMenu.clearAll();
 		}
 		final MenuDialogHelper helper = contextMenu.show(originalView,
 				originalView.getWindowToken());
 		if (helper != null) {
-			helper.setPresenterCallback(wrapper);
+			helper.setPresenterCallback(listener);
 		}
 		menuDialogHelper = helper;
 		return menuDialogHelper != null;

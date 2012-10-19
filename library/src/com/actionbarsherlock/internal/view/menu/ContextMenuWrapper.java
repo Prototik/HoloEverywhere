@@ -3,6 +3,8 @@ package com.actionbarsherlock.internal.view.menu;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
+import com.actionbarsherlock.view.ContextMenu;
+
 public class ContextMenuWrapper extends MenuWrapper implements ContextMenu {
 	private android.view.ContextMenu nativeMenu;
 

@@ -95,7 +95,7 @@ public class ListView extends android.widget.ListView {
 			if (!handled && wrapped != null) {
 				return wrapped.onItemLongClick(view, child, position, id);
 			}
-			return true;
+			return false;
 		}
 
 		public void setWrapped(OnItemLongClickListener listener) {
@@ -107,9 +107,8 @@ public class ListView extends android.widget.ListView {
 	private ActionMode actionMode;
 	private int checkedItemCount;
 	private int choiceMode;
-	private MultiChoiceModeWrapper choiceModeListener;
-	private OnItemLongClickListenerWrapper longClickListenerWrapper;
-
+	private final MultiChoiceModeWrapper choiceModeListener = new MultiChoiceModeWrapper();
+	private final OnItemLongClickListenerWrapper longClickListenerWrapper = new OnItemLongClickListenerWrapper();
 	private SBase sBase;
 
 	public ListView(Context context) {
@@ -149,7 +148,7 @@ public class ListView extends android.widget.ListView {
 	}
 
 	protected void init(Context context) {
-		super.setOnItemLongClickListener(longClickListenerWrapper = new OnItemLongClickListenerWrapper());
+		super.setOnItemLongClickListener(longClickListenerWrapper);
 		if (context instanceof SBase) {
 			sBase = (SBase) context;
 		}
@@ -215,16 +214,12 @@ public class ListView extends android.widget.ListView {
 	}
 
 	public void setMultiChoiceModeListener(MultiChoiceModeListener listener) {
-		if (choiceModeListener == null) {
-			choiceModeListener = new MultiChoiceModeWrapper();
-		}
 		choiceModeListener.setWrapped(listener);
 	}
 
 	@Override
 	public void setOnItemLongClickListener(OnItemLongClickListener listener) {
 		longClickListenerWrapper.setWrapped(listener);
-		super.setOnItemLongClickListener(longClickListenerWrapper);
 	}
 
 	public final void setSBase(SBase sBase) {

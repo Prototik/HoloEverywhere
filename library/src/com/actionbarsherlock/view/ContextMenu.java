@@ -1,9 +1,7 @@
-package com.actionbarsherlock.internal.view.menu;
+package com.actionbarsherlock.view;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;
-
-import com.actionbarsherlock.view.Menu;
 
 public interface ContextMenu extends Menu {
 	public void clearHeader();
