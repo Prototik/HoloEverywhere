@@ -187,7 +187,8 @@ public class DemoActivity extends SActivity {
 
 	public void showContextMenu(View v) {
 		registerForContextMenu(v);
-		openContextMenu(v);
+		v.showContextMenu();
+		unregisterForContextMenu(v);
 	}
 
 	public void showDatePicker(View v) {

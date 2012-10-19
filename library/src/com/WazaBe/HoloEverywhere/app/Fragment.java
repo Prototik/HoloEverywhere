@@ -6,11 +6,13 @@ import android.support.v4.app._HoloFragment;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.preference.PreferenceManager;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
+import com.actionbarsherlock.internal.view.menu.ContextMenu;
 import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
 import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
 

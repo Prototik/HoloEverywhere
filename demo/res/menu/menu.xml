@@ -7,7 +7,6 @@
 		android:title="Item #1"/>
 	<item
 		android:id="@+id/item2"
-		android:icon="@drawable/context_menu"
 		android:title="Item #2"/>
 	<group android:checkableBehavior="single" >
 		<item
