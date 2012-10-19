@@ -116,7 +116,7 @@ public class SeekBarDialogPreference extends DialogPreference {
 
 	@Override
 	protected Integer onGetDefaultValue(TypedArray a, int index) {
-		return Integer.parseInt(a.getString(index));
+		return a.getInt(index, 0);
 	}
 
 	@Override

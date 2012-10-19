@@ -72,5 +72,8 @@
 			holo:key="seek_bar_dialog"
 			holo:max="100"
 			holo:title="SeekBarDialog" />
+		<VolumePreference
+			holo:key="volume"
+			holo:title="Volume" />
 	</PreferenceCategory>
 </PreferenceScreen>

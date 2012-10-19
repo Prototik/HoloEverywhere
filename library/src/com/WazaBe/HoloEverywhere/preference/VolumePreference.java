@@ -82,7 +82,6 @@ public class VolumePreference extends SeekBarDialogPreference implements
 					.getSystemService(Context.AUDIO_SERVICE);
 			mStreamType = streamType;
 			mSeekBar = seekBar;
-
 			initSeekBar(seekBar, defaultUri);
 		}
 
@@ -101,9 +100,9 @@ public class VolumePreference extends SeekBarDialogPreference implements
 
 		@SuppressLint("NewApi")
 		private void initSeekBar(SeekBar seekBar, Uri defaultUri) {
-			seekBar.setMax(mAudioManager.getStreamMaxVolume(mStreamType));
+			setMaxValue(mAudioManager.getStreamMaxVolume(mStreamType));
 			mOriginalStreamVolume = mAudioManager.getStreamVolume(mStreamType);
-			seekBar.setProgress(mOriginalStreamVolume);
+			setValue(mOriginalStreamVolume);
 			seekBar.setOnSeekBarChangeListener(this);
 			// TODO fix content observer
 			/*
@@ -228,7 +227,6 @@ public class VolumePreference extends SeekBarDialogPreference implements
 	}
 
 	private SeekBarVolumizer mSeekBarVolumizer;
-
 	private int mStreamType;
 
 	public VolumePreference(Context context, AttributeSet attrs) {
@@ -241,7 +239,6 @@ public class VolumePreference extends SeekBarDialogPreference implements
 
 	private void cleanup() {
 		getPreferenceManager().unregisterOnActivityStopListener(this);
-
 		if (mSeekBarVolumizer != null) {
 			Dialog dialog = getDialog();
 			if (dialog != null && dialog.isShowing()) {
@@ -255,7 +252,6 @@ public class VolumePreference extends SeekBarDialogPreference implements
 			mSeekBarVolumizer.stop();
 			mSeekBarVolumizer = null;
 		}
-
 	}
 
 	@Override
@@ -268,8 +264,7 @@ public class VolumePreference extends SeekBarDialogPreference implements
 	@Override
 	protected void onBindDialogView(View view) {
 		super.onBindDialogView(view);
-		final SeekBar seekBar = (SeekBar) view.findViewById(R.id.seekbar);
-		mSeekBarVolumizer = new SeekBarVolumizer(getContext(), seekBar,
+		mSeekBarVolumizer = new SeekBarVolumizer(getContext(), getSeekBar(),
 				mStreamType);
 		getPreferenceManager().registerOnActivityStopListener(this);
 		view.setOnKeyListener(this);
@@ -280,11 +275,9 @@ public class VolumePreference extends SeekBarDialogPreference implements
 	@Override
 	protected void onDialogClosed(boolean positiveResult) {
 		super.onDialogClosed(positiveResult);
-
 		if (!positiveResult && mSeekBarVolumizer != null) {
 			mSeekBarVolumizer.revertVolume();
 		}
-
 		cleanup();
 	}
 
@@ -321,7 +314,6 @@ public class VolumePreference extends SeekBarDialogPreference implements
 			super.onRestoreInstanceState(state);
 			return;
 		}
-
 		SavedState myState = (SavedState) state;
 		super.onRestoreInstanceState(myState.getSuperState());
 		if (mSeekBarVolumizer != null) {
