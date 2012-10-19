@@ -163,8 +163,8 @@ public abstract class Activity extends _HoloActivity implements Base {
 
 	protected final View prepareDecorView(View v) {
 		v = FontLoader.apply(v);
-		if (!getConfig().isDisableContextMenu()) {
-			v = new ContextMenuDecorView(v, this);
+		if (!getConfig().isDisableContextMenu() && v != null) {
+			v = new ContextMenuDecorView(this, v, this);
 		}
 		return v;
 	}

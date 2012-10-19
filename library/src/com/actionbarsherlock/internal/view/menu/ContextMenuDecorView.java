@@ -1,5 +1,6 @@
 package com.actionbarsherlock.internal.view.menu;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,15 +66,18 @@ public final class ContextMenuDecorView extends FrameLayout {
 	private MenuDialogHelper menuDialogHelper;
 	private final String TAG = getClass().getSimpleName();
 
-	public ContextMenuDecorView(View view, ContextMenuListener listener) {
-		super(view.getContext());
+	public ContextMenuDecorView(Context context, View view,
+			ContextMenuListener listener) {
+		super(context);
 		this.listener = new InternalWrapper(listener);
-		ViewParent parent = view.getParent();
-		if (parent != null && parent instanceof ViewGroup) {
-			((ViewGroup) parent).removeView(view);
+		if (view != null) {
+			ViewParent parent = view.getParent();
+			if (parent != null && parent instanceof ViewGroup) {
+				((ViewGroup) parent).removeView(view);
+			}
+			addView(view, android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+					android.view.ViewGroup.LayoutParams.MATCH_PARENT);
 		}
-		addView(view, android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT);
 	}
 
 	@Override

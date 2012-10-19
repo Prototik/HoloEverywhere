@@ -6,6 +6,7 @@ import android.support.v4.app._HoloFragment;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
@@ -14,7 +15,9 @@ import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
 import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
+import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 public class Fragment extends _HoloFragment implements BaseFragment {
 	private Base mBase;
@@ -97,6 +100,22 @@ public class Fragment extends _HoloFragment implements BaseFragment {
 	}
 
 	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		mBase.onCreateContextMenu(menu, v, menuInfo);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		return mBase.onContextItemSelected(item);
+	}
+
+	@Override
+	public void onContextMenuClosed(ContextMenu menu) {
+		mBase.onContextMenuClosed(menu);
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		return super.onCreateView(inflater, container, savedInstanceState);
@@ -122,8 +141,8 @@ public class Fragment extends _HoloFragment implements BaseFragment {
 
 	protected View prepareDecorView(View v) {
 		v = FontLoader.apply(v);
-		if (!mBase.getConfig().isDisableContextMenu()) {
-			v = new ContextMenuDecorView(v, this);
+		if (!mBase.getConfig().isDisableContextMenu() && v != null) {
+			v = new ContextMenuDecorView(getSupportActivity(), v, this);
 		}
 		return v;
 	}
