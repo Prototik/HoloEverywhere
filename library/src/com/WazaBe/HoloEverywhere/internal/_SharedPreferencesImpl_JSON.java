@@ -203,13 +203,14 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 		}
 	}
 
-	private static final Map<SharedPreferences, Set<OnSharedPreferenceChangeListener>> listeners = new HashMap<SharedPreferences, Set<OnSharedPreferenceChangeListener>>();
+	private static final Map<String, Set<OnSharedPreferenceChangeListener>> listeners = new HashMap<String, Set<OnSharedPreferenceChangeListener>>();
 	private static final String TAG = _SharedPreferencesImpl_JSON.class
 			.getSimpleName();
 	private String charset;
 	private final JSONObject data;
 	private final boolean DEBUG = Application.isDebugMode();
 	private File file;
+	private final String fileTag;
 
 	@SuppressLint("NewApi")
 	public _SharedPreferencesImpl_JSON(Context context, String name, int mode) {
@@ -257,6 +258,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 				}
 			}
 			file = tempFile;
+			fileTag = file.getAbsolutePath().intern();
 			data = readDataFromFile(file);
 		} catch (IOException e) {
 			throw new RuntimeException("IOException", e);
@@ -368,11 +370,11 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
 	public void notifyOnChange(String key) {
 		synchronized (_SharedPreferencesImpl_JSON.listeners) {
-			if (!_SharedPreferencesImpl_JSON.listeners.containsKey(this)) {
+			if (!_SharedPreferencesImpl_JSON.listeners.containsKey(fileTag)) {
 				return;
 			}
 			for (OnSharedPreferenceChangeListener listener : _SharedPreferencesImpl_JSON.listeners
-					.get(this)) {
+					.get(fileTag)) {
 				listener.onSharedPreferenceChanged(this, key);
 			}
 		}
@@ -418,12 +420,12 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 	public void registerOnSharedPreferenceChangeListener(
 			OnSharedPreferenceChangeListener listener) {
 		synchronized (_SharedPreferencesImpl_JSON.listeners) {
-			if (!_SharedPreferencesImpl_JSON.listeners.containsKey(this)) {
-				_SharedPreferencesImpl_JSON.listeners.put(this,
+			if (!_SharedPreferencesImpl_JSON.listeners.containsKey(fileTag)) {
+				_SharedPreferencesImpl_JSON.listeners.put(fileTag,
 						new HashSet<OnSharedPreferenceChangeListener>());
 			}
 			Set<OnSharedPreferenceChangeListener> set = _SharedPreferencesImpl_JSON.listeners
-					.get(this);
+					.get(fileTag);
 			if (!set.contains(listener)) {
 				set.add(listener);
 			}
@@ -476,14 +478,14 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 	public void unregisterOnSharedPreferenceChangeListener(
 			OnSharedPreferenceChangeListener listener) {
 		synchronized (_SharedPreferencesImpl_JSON.listeners) {
-			if (_SharedPreferencesImpl_JSON.listeners.containsKey(this)) {
+			if (_SharedPreferencesImpl_JSON.listeners.containsKey(fileTag)) {
 				Set<OnSharedPreferenceChangeListener> set = _SharedPreferencesImpl_JSON.listeners
-						.get(this);
+						.get(fileTag);
 				if (set.contains(listener)) {
 					set.remove(listener);
 				}
 				if (set.size() == 0) {
-					_SharedPreferencesImpl_JSON.listeners.remove(this);
+					_SharedPreferencesImpl_JSON.listeners.remove(fileTag);
 				}
 			}
 		}
