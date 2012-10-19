@@ -14,6 +14,7 @@ import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
 import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
+import com.actionbarsherlock.view.MenuInflater;
 
 public class Fragment extends _HoloFragment implements BaseFragment {
 	private Base mBase;
@@ -37,6 +38,10 @@ public class Fragment extends _HoloFragment implements BaseFragment {
 	@Override
 	public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
 		return LayoutInflater.from(super.getLayoutInflater(savedInstanceState));
+	}
+
+	public MenuInflater getMenuInflater() {
+		return mBase.getSupportMenuInflater();
 	}
 
 	@Override

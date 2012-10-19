@@ -1,10 +1,12 @@
 package com.actionbarsherlock.internal.view.menu;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 
+import com.WazaBe.HoloEverywhere.app.Application;
 import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.MenuItem;
 
@@ -12,6 +14,7 @@ public final class ContextMenuDecorView extends FrameLayout {
 	private static final class InternalWrapper implements
 			MenuPresenter.Callback, MenuBuilder.Callback {
 		private final ContextMenuListener listener;
+		private final String TAG = getClass().getSimpleName();
 
 		public InternalWrapper(ContextMenuListener listener) {
 			if (listener == null) {
@@ -19,15 +22,25 @@ public final class ContextMenuDecorView extends FrameLayout {
 						new NullPointerException());
 			}
 			this.listener = listener;
+			if (Application.isDebugMode()) {
+				Log.v(TAG, "Create new InternalWrapper with listener: "
+						+ listener);
+			}
 		}
 
 		@Override
 		public void onCloseMenu(MenuBuilder menu, boolean allMenusAreClosing) {
+			if (Application.isDebugMode()) {
+				Log.v(TAG, "Calling onContextMenuClosed on " + listener);
+			}
 			listener.onContextMenuClosed((ContextMenu) menu);
 		}
 
 		@Override
 		public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
+			if (Application.isDebugMode()) {
+				Log.v(TAG, "Calling onContextItemSelected on " + listener);
+			}
 			return listener.onContextItemSelected(item);
 		}
 
@@ -47,8 +60,10 @@ public final class ContextMenuDecorView extends FrameLayout {
 	}
 
 	private ContextMenuBuilder contextMenu;
+
 	private final InternalWrapper listener;
 	private MenuDialogHelper menuDialogHelper;
+	private final String TAG = getClass().getSimpleName();
 
 	public ContextMenuDecorView(View view, ContextMenuListener listener) {
 		super(view.getContext());

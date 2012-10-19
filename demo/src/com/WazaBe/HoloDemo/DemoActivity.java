@@ -3,7 +3,6 @@ package com.WazaBe.HoloDemo;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,8 +31,6 @@ import com.WazaBe.HoloEverywhere.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
-import com.actionbarsherlock.view.ContextMenu;
-import com.actionbarsherlock.view.MenuItem;
 
 @Holo(forceThemeApply = true, layout = R.layout.content)
 public class DemoActivity extends SActivity {
@@ -69,11 +66,6 @@ public class DemoActivity extends SActivity {
 		}
 	}
 
-	private int[] contextItemIds = new int[] { R.id.item3, R.id.item4,
-			R.id.item5 };
-
-	private int contextItemSelected = 0;
-
 	private void addTab(Class<? extends Fragment> clazz, String title) {
 		Tab tab = getSupportActionBar().newTab();
 		tab.setText(title);
@@ -83,35 +75,6 @@ public class DemoActivity extends SActivity {
 
 	public void closeCalendar(View v) {
 		replaceFragment(R.id.content, MainFragment.getInstance());
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		String text;
-		switch (item.getItemId()) {
-		case R.id.item1:
-			text = "Toast 1";
-			break;
-		case R.id.item2:
-			text = "Toast 2";
-			break;
-		case R.id.item3:
-			text = "Toggle to first item";
-			contextItemSelected = 0;
-			break;
-		case R.id.item4:
-			text = "Toggle to second item";
-			contextItemSelected = 1;
-			break;
-		case R.id.item5:
-			text = "Toggle to third item";
-			contextItemSelected = 2;
-			break;
-		default:
-			return super.onContextItemSelected(item);
-		}
-		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-		return true;
 	}
 
 	@Override
@@ -128,13 +91,6 @@ public class DemoActivity extends SActivity {
 		} else {
 			replaceFragment(R.id.content, MainFragment.getInstance());
 		}
-	}
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		getSupportMenuInflater().inflate(R.menu.menu, menu);
-		menu.findItem(contextItemIds[contextItemSelected]).setChecked(true);
 	}
 
 	public void replaceFragment(int resId, Fragment fragment) {
@@ -186,9 +142,7 @@ public class DemoActivity extends SActivity {
 	}
 
 	public void showContextMenu(View v) {
-		registerForContextMenu(v);
-		v.showContextMenu();
-		unregisterForContextMenu(v);
+		MainFragment.getInstance().showContextMenu(v);
 	}
 
 	public void showDatePicker(View v) {

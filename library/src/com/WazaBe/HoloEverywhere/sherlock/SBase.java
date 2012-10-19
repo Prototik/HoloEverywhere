@@ -20,6 +20,7 @@ public interface SBase extends Base, OnCreatePanelMenuListener,
 
 	public ActionBar getSupportActionBar();
 
+	@Override
 	public MenuInflater getSupportMenuInflater();
 
 	public boolean onCreateOptionsMenu(Menu menu);
