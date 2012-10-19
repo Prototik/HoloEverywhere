@@ -11,9 +11,17 @@ import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.preference.PreferenceManager;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
+import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
+import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
 
 public class Fragment extends _HoloFragment implements BaseFragment {
 	private Base mBase;
+
+	@Override
+	public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
+			View view) {
+		mBase.createContextMenu(contextMenuBuilder, view);
+	}
 
 	@Override
 	public SharedPreferences getDefaultSharedPreferences() {
@@ -77,8 +85,9 @@ public class Fragment extends _HoloFragment implements BaseFragment {
 	@Override
 	public final View onCreateView(android.view.LayoutInflater inflater,
 			ViewGroup container, Bundle savedInstanceState) {
-		return onCreateView(getLayoutInflater(savedInstanceState), container,
-				savedInstanceState);
+		return prepareDecorView(onCreateView(
+				getLayoutInflater(savedInstanceState), container,
+				savedInstanceState));
 	}
 
 	@Override
@@ -103,5 +112,13 @@ public class Fragment extends _HoloFragment implements BaseFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		FontLoader.apply(view);
 		super.onViewCreated(view, savedInstanceState);
+	}
+
+	protected View prepareDecorView(View v) {
+		v = FontLoader.apply(v);
+		if (!mBase.getConfig().isDisableContextMenu()) {
+			v = new ContextMenuDecorView(v, this);
+		}
+		return v;
 	}
 }

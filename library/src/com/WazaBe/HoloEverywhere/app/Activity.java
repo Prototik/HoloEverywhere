@@ -14,10 +14,7 @@ import android.support.v4.app._HoloActivity;
 import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.ViewParent;
-import android.widget.FrameLayout;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
@@ -26,49 +23,10 @@ import com.WazaBe.HoloEverywhere.app.Application.Config;
 import com.WazaBe.HoloEverywhere.app.Application.Config.PreferenceImpl;
 import com.WazaBe.HoloEverywhere.preference.PreferenceManager;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
-import com.actionbarsherlock.internal.view.menu.ContextMenu;
 import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
-import com.actionbarsherlock.internal.view.menu.ContextMenuWrapper;
-import com.actionbarsherlock.internal.view.menu.MenuBuilder;
-import com.actionbarsherlock.internal.view.menu.MenuDialogHelper;
-import com.actionbarsherlock.internal.view.menu.MenuPresenter;
-import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
 
-public abstract class Activity extends _HoloActivity implements Base,
-		MenuBuilder.Callback, MenuPresenter.Callback {
-	private final class DecorView extends FrameLayout {
-		private ContextMenuBuilder contextMenu;
-
-		private MenuDialogHelper menuDialogHelper;
-
-		public DecorView(View view) {
-			super(view.getContext());
-			ViewParent parent = view.getParent();
-			if (parent != null && parent instanceof ViewGroup) {
-				((ViewGroup) parent).removeView(view);
-			}
-			addView(view, android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-					android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-		}
-
-		@Override
-		public boolean showContextMenuForChild(View originalView) {
-			if (contextMenu == null) {
-				contextMenu = new ContextMenuBuilder(Activity.this);
-				contextMenu.setCallback(Activity.this);
-			} else {
-				contextMenu.clearAll();
-			}
-			final MenuDialogHelper helper = contextMenu.show(originalView,
-					originalView.getWindowToken());
-			if (helper != null) {
-				helper.setPresenterCallback(Activity.this);
-			}
-			menuDialogHelper = helper;
-			return menuDialogHelper != null;
-		}
-	}
-
+public abstract class Activity extends _HoloActivity implements Base {
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.TYPE)
 	public static @interface Holo {
@@ -105,7 +63,7 @@ public abstract class Activity extends _HoloActivity implements Base,
 
 	@Override
 	public void addContentView(View view, LayoutParams params) {
-		super.addContentView(internalDecorView(FontLoader.apply(view)), params);
+		super.addContentView(prepareDecorView(view), params);
 	}
 
 	@Override
@@ -157,10 +115,6 @@ public abstract class Activity extends _HoloActivity implements Base,
 		return LayoutInflater.getSystemService(super.getSystemService(name));
 	}
 
-	protected final View internalDecorView(View v) {
-		return new DecorView(v);
-	}
-
 	@Override
 	public boolean isABSSupport() {
 		return false;
@@ -177,11 +131,6 @@ public abstract class Activity extends _HoloActivity implements Base,
 		if (!getSupportFragmentManager().popBackStackImmediate()) {
 			finish();
 		}
-	}
-
-	@Override
-	public void onCloseMenu(MenuBuilder menu, boolean allMenusAreClosing) {
-
 	}
 
 	@Override
@@ -206,50 +155,33 @@ public abstract class Activity extends _HoloActivity implements Base,
 	}
 
 	@Override
-	public final void onCreateContextMenu(android.view.ContextMenu menu,
-			View v, ContextMenuInfo menuInfo) {
-		onCreateContextMenu(new ContextMenuWrapper(menu), v, menuInfo);
-	}
-
-	public void onCreateContextMenu(ContextMenu menu, View view,
-			ContextMenuInfo menuInfo) {
-	}
-
-	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		LayoutInflater.onDestroy(this);
 	}
 
-	@Override
-	public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
-		return false;
-	}
-
-	@Override
-	public void onMenuModeChange(MenuBuilder menu) {
-
-	}
-
-	@Override
-	public boolean onOpenSubMenu(MenuBuilder subMenu) {
-		return false;
+	protected final View prepareDecorView(View v) {
+		v = FontLoader.apply(v);
+		if (!getConfig().isDisableContextMenu()) {
+			v = new ContextMenuDecorView(v, this);
+		}
+		return v;
 	}
 
 	@Override
 	public void setContentView(int layoutResID) {
-		super.setContentView(internalDecorView(FontLoader.inflate(this,
+		super.setContentView(prepareDecorView(getLayoutInflater().inflate(
 				layoutResID)));
 	}
 
 	@Override
 	public void setContentView(View view) {
-		super.setContentView(internalDecorView(FontLoader.apply(view)));
+		super.setContentView(prepareDecorView(view));
 	}
 
 	@Override
 	public void setContentView(View view, LayoutParams params) {
-		super.setContentView(internalDecorView(FontLoader.apply(view)), params);
+		super.setContentView(prepareDecorView(view), params);
 	}
 
 	public void setForceThemeApply(boolean forceThemeApply) {

@@ -9,20 +9,15 @@ import android.util.EventLog;
 import android.view.View;
 
 public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
-	public static interface ContextMenuCreator {
-		public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
-				View view);
-	}
-
-	private final ContextMenuCreator creator;
+	private final ContextMenuListener listener;
 
 	public ContextMenuBuilder(Context context) {
 		super(context);
-		if (!(context instanceof ContextMenuCreator)) {
+		if (!(context instanceof ContextMenuListener)) {
 			throw new IllegalArgumentException(
 					"Context must be implement ContextMenuCreator interface");
 		}
-		creator = (ContextMenuCreator) context;
+		listener = (ContextMenuListener) context;
 	}
 
 	@Override
@@ -52,7 +47,7 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
 
 	@SuppressLint("NewApi")
 	public MenuDialogHelper show(View originalView, IBinder token) {
-		creator.createContextMenu(this, originalView);
+		listener.createContextMenu(this, originalView);
 		if (getVisibleItems().size() > 0) {
 			if (VERSION.SDK_INT >= 8) {
 				EventLog.writeEvent(50001, 1);

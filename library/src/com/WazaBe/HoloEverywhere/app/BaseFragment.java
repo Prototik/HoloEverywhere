@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
+import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 
-public interface BaseFragment {
+public interface BaseFragment extends ContextMenuListener {
 	public SharedPreferences getDefaultSharedPreferences();
 
 	public LayoutInflater getLayoutInflater();

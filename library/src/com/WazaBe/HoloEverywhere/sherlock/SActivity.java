@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 
-import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.app.Activity;
 import com.actionbarsherlock.ActionBarSherlock;
 import com.actionbarsherlock.app.ActionBar;
@@ -26,8 +25,7 @@ public abstract class SActivity extends Activity implements SBase {
 	@Override
 	public void addContentView(View view, LayoutParams params) {
 		if (isABSSupport()) {
-			getSherlock().addContentView(
-					internalDecorView(FontLoader.apply(view)), params);
+			getSherlock().addContentView(prepareDecorView(view), params);
 		} else {
 			super.addContentView(view, params);
 		}
@@ -247,7 +245,7 @@ public abstract class SActivity extends Activity implements SBase {
 	public void setContentView(int layoutResId) {
 		if (isABSSupport()) {
 			getSherlock().setContentView(
-					internalDecorView(FontLoader.inflate(this, layoutResId)));
+					prepareDecorView(getLayoutInflater().inflate(layoutResId)));
 		} else {
 			super.setContentView(layoutResId);
 		}
@@ -256,8 +254,7 @@ public abstract class SActivity extends Activity implements SBase {
 	@Override
 	public void setContentView(View view) {
 		if (isABSSupport()) {
-			getSherlock().setContentView(
-					internalDecorView(FontLoader.apply(view)));
+			getSherlock().setContentView(prepareDecorView(view));
 		} else {
 			super.setContentView(view);
 		}
@@ -266,8 +263,7 @@ public abstract class SActivity extends Activity implements SBase {
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		if (isABSSupport()) {
-			getSherlock().setContentView(
-					internalDecorView(FontLoader.apply(view)), params);
+			getSherlock().setContentView(prepareDecorView(view), params);
 		} else {
 			super.setContentView(view, params);
 		}

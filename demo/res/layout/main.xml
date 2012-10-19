@@ -238,7 +238,7 @@
 			<OtherButton
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:icon="@drawable/toast"
+				android:icon="@drawable/context_menu"
 				android:onClick="showContextMenu"
 				android:text="ContextMenu" />
 			<OtherButton

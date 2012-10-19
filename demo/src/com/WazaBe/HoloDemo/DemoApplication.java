@@ -2,11 +2,11 @@ package com.WazaBe.HoloDemo;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.ThemeManager;
+import com.WazaBe.HoloEverywhere.app.Application;
 
-public class Application extends com.WazaBe.HoloEverywhere.app.Application {
+public class DemoApplication extends Application {
 	static {
-		com.WazaBe.HoloEverywhere.app.Application.getConfig()
-				.setUseThemeManager(true).setAlwaysUseParentTheme(true)
+		getConfig().setUseThemeManager(true).setAlwaysUseParentTheme(true)
 				.setDebugMode(true);
 		LayoutInflater.remap("com.WazaBe.HoloDemo.widget", "WidgetContainer",
 				"OtherButton");

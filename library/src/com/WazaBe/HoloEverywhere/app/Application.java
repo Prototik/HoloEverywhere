@@ -19,11 +19,7 @@ public class Application extends android.app.Application implements
 
 		private static final String DEFAULT_HOLO_EVERYWHERE_PACKAGE = "com.WazaBe.HoloEverywhere";
 
-		@SettingProperty(create = true, defaultBoolean = false)
-		private BooleanProperty alwaysUseParentTheme;
-		@SettingProperty(create = true, defaultBoolean = false)
-		private BooleanProperty debugMode;
-		private final SettingListener<Config> DEFAULT_SETTINGS_LISTENER = new SettingListener<Config>() {
+		private final SettingListener<Config> _DEFAULT_SETTINGS_LISTENER = new SettingListener<Config>() {
 			@Override
 			public void onAttach(Config config) {
 				config.preferenceImpl.setEnumClass(PreferenceImpl.class);
@@ -47,6 +43,12 @@ public class Application extends android.app.Application implements
 				config.setPreferencePackage(p + ".preference");
 			}
 		};
+		@SettingProperty(create = true, defaultBoolean = false)
+		private BooleanProperty alwaysUseParentTheme;
+		@SettingProperty(create = true, defaultBoolean = false)
+		private BooleanProperty debugMode;
+		@SettingProperty(create = true, defaultBoolean = false)
+		private BooleanProperty disableContextMenu;
 		@SettingProperty(create = true, defaultString = Config.DEFAULT_HOLO_EVERYWHERE_PACKAGE)
 		private StringProperty holoEverywherePackage;
 		@SettingProperty(create = true, defaultEnum = "JSON")
@@ -59,11 +61,11 @@ public class Application extends android.app.Application implements
 		private StringProperty widgetsPackage;
 
 		public Config attachDefaultListener() {
-			return addListener(DEFAULT_SETTINGS_LISTENER);
+			return addListener(_DEFAULT_SETTINGS_LISTENER);
 		}
 
 		public Config detachDefaultListener() {
-			return removeListener(DEFAULT_SETTINGS_LISTENER);
+			return removeListener(_DEFAULT_SETTINGS_LISTENER);
 		}
 
 		public String getHoloEverywherePackage() {
@@ -90,6 +92,10 @@ public class Application extends android.app.Application implements
 			return debugMode.getValue();
 		}
 
+		public boolean isDisableContextMenu() {
+			return disableContextMenu.getValue();
+		}
+
 		public boolean isUseThemeManager() {
 			return useThemeManager.getValue();
 		}
@@ -104,8 +110,14 @@ public class Application extends android.app.Application implements
 			return this;
 		}
 
-		public void setDebugMode(boolean debugMode) {
+		public Config setDebugMode(boolean debugMode) {
 			this.debugMode.setValue(debugMode);
+			return this;
+		}
+
+		public Config setDisableContextMenu(boolean disableContextMenu) {
+			this.disableContextMenu.setValue(disableContextMenu);
+			return this;
 		}
 
 		public Config setHoloEverywherePackage(String holoEverywherePackage) {

@@ -283,13 +283,18 @@ public final class ThemeManager {
 				Application app = Application.getLastInstance();
 				if (app != null && !app.isRestricted()) {
 					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					app.startActivity(intent);
+					app.superStartActivity(intent, -1, null);
 				}
 			} else {
 				if (!activity.isFinishing()) {
 					activity.finish();
 				}
-				activity.startActivity(intent);
+				if (activity instanceof ThemedIntentStarter) {
+					((ThemedIntentStarter) activity).superStartActivity(intent,
+							-1, null);
+				} else {
+					activity.startActivity(intent);
+				}
 			}
 		}
 	}

@@ -7,9 +7,9 @@ import com.WazaBe.HoloEverywhere.ThemeManager.ThemedIntentStarter;
 import com.WazaBe.HoloEverywhere.app.Application.Config;
 import com.WazaBe.HoloEverywhere.app.Application.Config.PreferenceImpl;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
-import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder.ContextMenuCreator;
+import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 
-public interface Base extends ThemedIntentStarter, ContextMenuCreator {
+public interface Base extends ThemedIntentStarter, ContextMenuListener {
 	public Config getConfig();
 
 	public SharedPreferences getDefaultSharedPreferences();
