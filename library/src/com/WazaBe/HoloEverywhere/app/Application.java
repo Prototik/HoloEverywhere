@@ -22,8 +22,11 @@ public class Application extends android.app.Application implements
 		private final SettingListener<Config> _DEFAULT_SETTINGS_LISTENER = new SettingListener<Config>() {
 			@Override
 			public void onAttach(Config config) {
-				config.preferenceImpl.setEnumClass(PreferenceImpl.class);
-				onStateChange(config);
+				if (!config.wasInited) {
+					config.wasInited = true;
+					config.disableContextMenu.setValue(VERSION.SDK_INT >= 14);
+					onStateChange(config);
+				}
 			}
 
 			@Override
@@ -47,11 +50,11 @@ public class Application extends android.app.Application implements
 		private BooleanProperty alwaysUseParentTheme;
 		@SettingProperty(create = true, defaultBoolean = false)
 		private BooleanProperty debugMode;
-		@SettingProperty(create = true, defaultBoolean = false)
+		@SettingProperty(create = true)
 		private BooleanProperty disableContextMenu;
 		@SettingProperty(create = true, defaultString = Config.DEFAULT_HOLO_EVERYWHERE_PACKAGE)
 		private StringProperty holoEverywherePackage;
-		@SettingProperty(create = true, defaultEnum = "JSON")
+		@SettingProperty(create = true, defaultEnum = "JSON", enumClass = PreferenceImpl.class)
 		private EnumProperty<PreferenceImpl> preferenceImpl;
 		@SettingProperty(create = true)
 		private StringProperty preferencePackage;
@@ -59,6 +62,7 @@ public class Application extends android.app.Application implements
 		private BooleanProperty useThemeManager;
 		@SettingProperty(create = true)
 		private StringProperty widgetsPackage;
+		private boolean wasInited = false;
 
 		public Config attachDefaultListener() {
 			return addListener(_DEFAULT_SETTINGS_LISTENER);

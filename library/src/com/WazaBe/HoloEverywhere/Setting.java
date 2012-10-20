@@ -24,9 +24,15 @@ public abstract class Setting<T extends Setting<T>> {
 	public static class EnumProperty<T extends Enum<T>> extends Property<T> {
 		private String defaultValue;
 
+		@SuppressWarnings("unchecked")
 		@Override
 		protected void onSetDefaultValue(SettingProperty settingProperty) {
 			defaultValue = settingProperty.defaultEnum();
+			Class<?> t = settingProperty.enumClass();
+			Class<T> clazz = t == NullEnum.class ? null : (Class<T>) t;
+			if (clazz != null) {
+				setEnumClass(clazz);
+			}
 		}
 
 		@SuppressWarnings("unchecked")
@@ -139,6 +145,12 @@ public abstract class Setting<T extends Setting<T>> {
 		public int defaultInt() default 0;
 
 		public String defaultString() default "";
+
+		public Class<? extends Enum<?>> enumClass() default NullEnum.class;
+	}
+
+	private static enum NullEnum {
+
 	}
 
 	public static class StringProperty extends Property<String> {
