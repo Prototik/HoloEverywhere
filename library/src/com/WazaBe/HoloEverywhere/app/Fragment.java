@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app._HoloFragment;
 import android.util.AttributeSet;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ContextMenu.ContextMenuInfo;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
@@ -92,11 +92,13 @@ public class Fragment extends _HoloFragment implements BaseFragment {
 	}
 
 	@Override
-	public final View onCreateView(android.view.LayoutInflater inflater,
-			ViewGroup container, Bundle savedInstanceState) {
-		return prepareDecorView(onCreateView(
-				getLayoutInflater(savedInstanceState), container,
-				savedInstanceState));
+	public boolean onContextItemSelected(MenuItem item) {
+		return mBase.onContextItemSelected(item);
+	}
+
+	@Override
+	public void onContextMenuClosed(ContextMenu menu) {
+		mBase.onContextMenuClosed(menu);
 	}
 
 	@Override
@@ -106,13 +108,11 @@ public class Fragment extends _HoloFragment implements BaseFragment {
 	}
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		return mBase.onContextItemSelected(item);
-	}
-
-	@Override
-	public void onContextMenuClosed(ContextMenu menu) {
-		mBase.onContextMenuClosed(menu);
+	public final View onCreateView(android.view.LayoutInflater inflater,
+			ViewGroup container, Bundle savedInstanceState) {
+		return prepareDecorView(onCreateView(
+				getLayoutInflater(savedInstanceState), container,
+				savedInstanceState));
 	}
 
 	@Override

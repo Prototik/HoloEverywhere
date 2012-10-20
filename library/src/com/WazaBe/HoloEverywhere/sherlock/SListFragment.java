@@ -14,9 +14,8 @@ public class SListFragment extends ListFragment implements SBaseFragment {
 	private SBase mBase;
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <T extends Activity & SBase> T getSActivity() {
-		return (T) mBase;
+	public SBase getSBase() {
+		return mBase;
 	}
 
 	@Deprecated

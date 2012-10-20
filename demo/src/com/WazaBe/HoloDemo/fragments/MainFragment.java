@@ -55,7 +55,7 @@ public class MainFragment extends SFragment {
 		default:
 			return super.onContextItemSelected(item);
 		}
-		Toast.makeText(getSActivity(), text, Toast.LENGTH_SHORT).show();
+		Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
 		return true;
 	}
 
