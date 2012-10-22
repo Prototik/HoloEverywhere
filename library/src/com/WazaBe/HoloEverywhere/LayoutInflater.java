@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.WazaBe.HoloEverywhere.SystemServiceManager.SystemServiceCreator;
+import com.WazaBe.HoloEverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
 import com.WazaBe.HoloEverywhere.app.Application;
 import com.actionbarsherlock.internal.view.menu.ExpandedMenuView;
 import com.actionbarsherlock.internal.view.menu.HoloListMenuItemView;
@@ -36,12 +38,22 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 		}
 	}
 
+	@SystemService(Context.LAYOUT_INFLATER_SERVICE)
+	public static class LayoutInflaterCreator implements
+			SystemServiceCreator<LayoutInflater> {
+		@Override
+		public LayoutInflater createService(Context context) {
+			return LayoutInflater.from(context);
+		}
+	}
+
 	public static interface OnInitInflaterListener {
 		public void onInitInflater(LayoutInflater inflater);
 	}
 
 	private static final Map<Context, LayoutInflater> INSTANCES_MAP = new WeakHashMap<Context, LayoutInflater>();
 	private static OnInitInflaterListener listener;
+
 	private static final Map<String, String> VIEWS_MAP = new HashMap<String, String>();
 
 	static {
@@ -85,17 +97,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
 	public static LayoutInflater from(View view) {
 		return LayoutInflater.from(view.getContext());
-	}
-
-	public static Object getSystemService(Object superService) {
-		if (superService instanceof android.view.LayoutInflater) {
-			if (superService instanceof LayoutInflater) {
-				return superService;
-			}
-			return LayoutInflater
-					.from((android.view.LayoutInflater) superService);
-		}
-		return superService;
 	}
 
 	public static View inflate(Context context, int resource) {

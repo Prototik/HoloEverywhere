@@ -73,7 +73,8 @@ public class MainFragment extends SFragment {
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+	public void onViewCreated(View view) {
+		super.onViewCreated(view);
 		if (isABSSupport()) {
 			view.findViewById(R.id.showPreferences).setVisibility(View.GONE);
 			view.findViewById(R.id.showAbout).setVisibility(View.GONE);

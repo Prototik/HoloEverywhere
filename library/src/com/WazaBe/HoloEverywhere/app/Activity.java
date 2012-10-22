@@ -18,6 +18,7 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
+import com.WazaBe.HoloEverywhere.SystemServiceManager;
 import com.WazaBe.HoloEverywhere.ThemeManager;
 import com.WazaBe.HoloEverywhere.app.Application.Config;
 import com.WazaBe.HoloEverywhere.app.Application.Config.PreferenceImpl;
@@ -113,7 +114,7 @@ public abstract class Activity extends _HoloActivity implements Base {
 
 	@Override
 	public Object getSystemService(String name) {
-		return LayoutInflater.getSystemService(super.getSystemService(name));
+		return SystemServiceManager.getSystemService(this, name);
 	}
 
 	@Override

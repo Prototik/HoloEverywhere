@@ -58,6 +58,7 @@ public class DemoActivity extends SActivity {
 			}
 			ft.replace(R.id.content, fragment);
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			findViewById(R.id.themeButtonsBar).setVisibility(View.VISIBLE);
 		}
 
 		@Override

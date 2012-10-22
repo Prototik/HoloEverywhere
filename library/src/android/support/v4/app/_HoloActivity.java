@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 
+import com.WazaBe.HoloEverywhere.SystemServiceManager.SuperSystemService;
 import com.actionbarsherlock.internal.view.menu.ContextMenuItemWrapper;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 import com.actionbarsherlock.internal.view.menu.ContextMenuWrapper;
@@ -13,7 +14,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class _HoloActivity extends Watson implements
-		ContextMenuListener {
+		ContextMenuListener, SuperSystemService {
 	protected final String TAG = getClass().getSimpleName();
 
 	@Override
@@ -81,5 +82,10 @@ public abstract class _HoloActivity extends Watson implements
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		return false;
+	}
+
+	@Override
+	public Object superGetSystemService(String name) {
+		return super.getSystemService(name);
 	}
 }

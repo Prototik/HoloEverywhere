@@ -6,7 +6,9 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
+import com.WazaBe.HoloEverywhere.LayoutInflater.LayoutInflaterCreator;
 import com.WazaBe.HoloEverywhere.Setting;
+import com.WazaBe.HoloEverywhere.SystemServiceManager;
 import com.WazaBe.HoloEverywhere.ThemeManager;
 import com.WazaBe.HoloEverywhere.ThemeManager.ThemedIntentStarter;
 
@@ -19,14 +21,18 @@ public class Application extends android.app.Application implements
 
 		private static final String DEFAULT_HOLO_EVERYWHERE_PACKAGE = "com.WazaBe.HoloEverywhere";
 
+		private static void onStateChange(Config config) {
+			String p = config.holoEverywherePackage.getValue();
+			if (p != null && p.length() > 0) {
+				config.setWidgetsPackage(p + ".widget");
+				config.setPreferencePackage(p + ".preference");
+			}
+		}
+
 		private final SettingListener<Config> _DEFAULT_SETTINGS_LISTENER = new SettingListener<Config>() {
 			@Override
 			public void onAttach(Config config) {
-				if (!config.wasInited) {
-					config.wasInited = true;
-					config.disableContextMenu.setValue(VERSION.SDK_INT >= 14);
-					onStateChange(config);
-				}
+				onStateChange(config);
 			}
 
 			@Override
@@ -40,11 +46,6 @@ public class Application extends android.app.Application implements
 				}
 			}
 
-			private void onStateChange(Config config) {
-				String p = config.holoEverywherePackage.getValue();
-				config.setWidgetsPackage(p + ".widget");
-				config.setPreferencePackage(p + ".preference");
-			}
 		};
 		@SettingProperty(create = true, defaultBoolean = false)
 		private BooleanProperty alwaysUseParentTheme;
@@ -60,9 +61,9 @@ public class Application extends android.app.Application implements
 		private StringProperty preferencePackage;
 		@SettingProperty(create = true, defaultBoolean = false)
 		private BooleanProperty useThemeManager;
+
 		@SettingProperty(create = true)
 		private StringProperty widgetsPackage;
-		private boolean wasInited = false;
 
 		public Config attachDefaultListener() {
 			return addListener(_DEFAULT_SETTINGS_LISTENER);
@@ -107,6 +108,7 @@ public class Application extends android.app.Application implements
 		@Override
 		protected void onInit() {
 			attachDefaultListener();
+			SystemServiceManager.register(LayoutInflaterCreator.class);
 		}
 
 		public Config setAlwaysUseParentTheme(boolean alwaysUseParentTheme) {

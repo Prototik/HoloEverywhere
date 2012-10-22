@@ -13,6 +13,7 @@
 		android:layout_height="1dp"
 		android:orientation="vertical" />
 	<LinearLayout
+		android:id="@+id/themeButtonsBar"
 		style="?buttonBarStyle"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

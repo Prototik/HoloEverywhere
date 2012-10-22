@@ -68,8 +68,7 @@ public class Fragment extends _HoloFragment implements BaseFragment {
 	}
 
 	public Object getSystemService(String name) {
-		return LayoutInflater.getSystemService(getActivity().getSystemService(
-				name));
+		return getSupportActivity().getSystemService(name);
 	}
 
 	@Override
@@ -133,16 +132,33 @@ public class Fragment extends _HoloFragment implements BaseFragment {
 		onInflate((Activity) activity, attrs, savedInstanceState);
 	}
 
+	private Bundle savedInstanceState;
+
+	protected Bundle getSavedInstanceState() {
+		return savedInstanceState;
+	}
+
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		FontLoader.apply(view);
+	public final void onViewCreated(View view, Bundle savedInstanceState) {
+		View v = view.findViewById(INTERNAL_DECOR_VIEW_ID);
+		if (v != null && v instanceof ContextMenuDecorView) {
+			view = ((ContextMenuDecorView) v).unwrap();
+		}
+		this.savedInstanceState = savedInstanceState;
+		onViewCreated(view);
+	}
+
+	public void onViewCreated(View view) {
 		super.onViewCreated(view, savedInstanceState);
 	}
+
+	private static final int INTERNAL_DECOR_VIEW_ID = 0x7f999999;
 
 	protected View prepareDecorView(View v) {
 		v = FontLoader.apply(v);
 		if (!mBase.getConfig().isDisableContextMenu() && v != null) {
 			v = new ContextMenuDecorView(getSupportActivity(), v, this);
+			v.setId(INTERNAL_DECOR_VIEW_ID);
 		}
 		return v;
 	}

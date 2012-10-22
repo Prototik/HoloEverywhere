@@ -56,6 +56,10 @@ public abstract class Setting<T extends Setting<T>> {
 		}
 	}
 
+	private static enum NullEnum {
+
+	}
+
 	public static class Property<Z> {
 		private Setting<?> setting;
 		private Z value;
@@ -147,10 +151,6 @@ public abstract class Setting<T extends Setting<T>> {
 		public String defaultString() default "";
 
 		public Class<? extends Enum<?>> enumClass() default NullEnum.class;
-	}
-
-	private static enum NullEnum {
-
 	}
 
 	public static class StringProperty extends Property<String> {

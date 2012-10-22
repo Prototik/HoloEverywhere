@@ -64,7 +64,7 @@ public final class ContextMenuDecorView extends FrameLayout {
 
 	private final InternalWrapper listener;
 	private MenuDialogHelper menuDialogHelper;
-	private final String TAG = getClass().getSimpleName();
+	private final View view;
 
 	public ContextMenuDecorView(Context context, View view,
 			ContextMenuListener listener) {
@@ -78,6 +78,7 @@ public final class ContextMenuDecorView extends FrameLayout {
 			addView(view, android.view.ViewGroup.LayoutParams.MATCH_PARENT,
 					android.view.ViewGroup.LayoutParams.MATCH_PARENT);
 		}
+		this.view = view;
 	}
 
 	@Override
@@ -96,5 +97,9 @@ public final class ContextMenuDecorView extends FrameLayout {
 		}
 		menuDialogHelper = helper;
 		return menuDialogHelper != null;
+	}
+
+	public View unwrap() {
+		return view;
 	}
 }
