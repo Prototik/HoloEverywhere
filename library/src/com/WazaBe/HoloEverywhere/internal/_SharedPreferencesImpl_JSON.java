@@ -224,16 +224,20 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 						throw new CouldNotCreateStorage(tempFile,
 								"Сann't create a storage for the preferences.");
 					}
-					tempFile.setWritable(true);
-					tempFile.setReadable(true);
+					if (VERSION.SDK_INT >= 9) {
+						tempFile.setWritable(true);
+						tempFile.setReadable(true);
+					}
 				}
 			} else {
 				if (!tempFile.mkdirs()) {
 					throw new CouldNotCreateStorage(tempFile,
 							"Сann't create a storage for the preferences.");
 				}
-				tempFile.setWritable(true);
-				tempFile.setReadable(true);
+				if (VERSION.SDK_INT >= 9) {
+					tempFile.setWritable(true);
+					tempFile.setReadable(true);
+				}
 			}
 			tempFile = new File(tempFile, name + ".json");
 			if (!tempFile.exists() && !tempFile.createNewFile()) {
