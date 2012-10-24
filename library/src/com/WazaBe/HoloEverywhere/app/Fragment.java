@@ -20,7 +20,11 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class Fragment extends _HoloFragment implements BaseFragment {
+	private static final int INTERNAL_DECOR_VIEW_ID = 0x7f999999;
+
 	private Base mBase;
+
+	private Bundle savedInstanceState;
 
 	@Override
 	public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
@@ -45,6 +49,10 @@ public class Fragment extends _HoloFragment implements BaseFragment {
 
 	public MenuInflater getMenuInflater() {
 		return mBase.getSupportMenuInflater();
+	}
+
+	protected Bundle getSavedInstanceState() {
+		return savedInstanceState;
 	}
 
 	@Override
@@ -132,10 +140,8 @@ public class Fragment extends _HoloFragment implements BaseFragment {
 		onInflate((Activity) activity, attrs, savedInstanceState);
 	}
 
-	private Bundle savedInstanceState;
-
-	protected Bundle getSavedInstanceState() {
-		return savedInstanceState;
+	public void onViewCreated(View view) {
+		super.onViewCreated(view, savedInstanceState);
 	}
 
 	@Override
@@ -147,12 +153,6 @@ public class Fragment extends _HoloFragment implements BaseFragment {
 		this.savedInstanceState = savedInstanceState;
 		onViewCreated(view);
 	}
-
-	public void onViewCreated(View view) {
-		super.onViewCreated(view, savedInstanceState);
-	}
-
-	private static final int INTERNAL_DECOR_VIEW_ID = 0x7f999999;
 
 	protected View prepareDecorView(View v) {
 		v = FontLoader.apply(v);

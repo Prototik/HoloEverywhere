@@ -1,5 +1,9 @@
 package com.WazaBe.HoloEverywhere;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,6 +18,8 @@ public final class SystemServiceManager {
 	}
 
 	public static interface SystemServiceCreator<T> {
+		@Target(ElementType.TYPE)
+		@Retention(RetentionPolicy.RUNTIME)
 		public static @interface SystemService {
 			public String value();
 		}

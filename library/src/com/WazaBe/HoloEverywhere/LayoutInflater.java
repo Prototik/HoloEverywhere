@@ -7,6 +7,7 @@ import java.util.WeakHashMap;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,9 +16,11 @@ import com.WazaBe.HoloEverywhere.SystemServiceManager.SystemServiceCreator.Syste
 import com.WazaBe.HoloEverywhere.app.Application;
 import com.actionbarsherlock.internal.view.menu.ExpandedMenuView;
 import com.actionbarsherlock.internal.view.menu.HoloListMenuItemView;
+import com.actionbarsherlock.internal.widget.ActionBarContainer;
+import com.actionbarsherlock.internal.widget.ActionBarView;
 
 public class LayoutInflater extends android.view.LayoutInflater implements
-		Cloneable {
+		Cloneable, android.view.LayoutInflater.Factory {
 	private final class HoloFactoryMerger extends ArrayList<Factory> implements
 			Factory {
 		private static final long serialVersionUID = -851134244408815411L;
@@ -66,10 +69,8 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 		LayoutInflater.remap("android.support.v4.view", "ViewPager",
 				"PagerTitleStrip");
 		LayoutInflater.remap("android.webkit", "WebView");
-		LayoutInflater.remapHard("Internal.ExpandedMenuView",
-				ExpandedMenuView.class.getName());
-		LayoutInflater.remapHard("Internal.HoloListMenuItemView",
-				HoloListMenuItemView.class.getName());
+		remapInternal(ActionBarView.class, HoloListMenuItemView.class,
+				ExpandedMenuView.class, ActionBarContainer.class);
 	}
 
 	public static void clearInstances() {
@@ -143,7 +144,14 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	}
 
 	public static void remapHard(String from, String to) {
+		Log.v("LayoutInflater", "From: " + from + ". To: " + to);
 		LayoutInflater.VIEWS_MAP.put(from, to);
+	}
+
+	private static void remapInternal(Class<?>... classess) {
+		for (Class<?> clazz : classess) {
+			remapHard("Internal." + clazz.getSimpleName(), clazz.getName());
+		}
 	}
 
 	public static void setOnInitInflaterListener(OnInitInflaterListener listener) {
@@ -192,6 +200,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
 	private void init() {
 		super.setFactory(factoryMerger);
+		factoryMerger.add(this);
 		if (LayoutInflater.listener != null) {
 			LayoutInflater.listener.onInitInflater(this);
 		}
@@ -200,14 +209,24 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	@Override
 	protected View onCreateView(String name, AttributeSet attrs)
 			throws ClassNotFoundException {
-		name = name.intern();
-		if (LayoutInflater.VIEWS_MAP.containsKey(name)) {
-			return createView(LayoutInflater.VIEWS_MAP.get(name), null, attrs);
+		String newName = LayoutInflater.VIEWS_MAP.get(name.intern());
+		if (newName != null) {
+			return createView(newName, null, attrs);
 		}
 		try {
 			return createView(name, "android.widget.", attrs);
 		} catch (ClassNotFoundException e) {
 			return createView(name, "android.view.", attrs);
+		}
+	}
+
+	@Override
+	public View onCreateView(String name, Context context, AttributeSet attrs) {
+		try {
+			return onCreateView(name, attrs);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 

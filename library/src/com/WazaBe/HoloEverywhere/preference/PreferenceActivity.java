@@ -261,6 +261,7 @@ public abstract class PreferenceActivity extends ListActivity implements
 	private final ArrayList<Header> mHeaders = new ArrayList<Header>();
 	private FrameLayout mListFooter;
 	private Button mNextButton;
+
 	private PreferenceManager mPreferenceManager;
 
 	private ViewGroup mPrefsContainer;

@@ -63,6 +63,8 @@ public abstract class Activity extends _HoloActivity implements Base {
 
 	private boolean forceThemeApply = false;
 
+	private int lastThemeResourceId = 0;
+
 	@Override
 	public void addContentView(View view, LayoutParams params) {
 		super.addContentView(prepareDecorView(view), params);
@@ -94,6 +96,10 @@ public abstract class Activity extends _HoloActivity implements Base {
 	@Override
 	public SharedPreferences getDefaultSharedPreferences() {
 		return PreferenceManager.getDefaultSharedPreferences(this);
+	}
+
+	public int getLastThemeResourceId() {
+		return lastThemeResourceId;
 	}
 
 	@Override
@@ -188,6 +194,12 @@ public abstract class Activity extends _HoloActivity implements Base {
 
 	public void setForceThemeApply(boolean forceThemeApply) {
 		this.forceThemeApply = forceThemeApply;
+	}
+
+	@Override
+	public void setTheme(int resid) {
+		lastThemeResourceId = resid;
+		super.setTheme(resid);
 	}
 
 	@Override
