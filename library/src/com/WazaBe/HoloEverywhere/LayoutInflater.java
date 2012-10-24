@@ -1,5 +1,6 @@
 package com.WazaBe.HoloEverywhere;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,9 +55,8 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 		public void onInitInflater(LayoutInflater inflater);
 	}
 
-	private static final Map<Context, LayoutInflater> INSTANCES_MAP = new WeakHashMap<Context, LayoutInflater>();
+	private static final Map<Context, WeakReference<LayoutInflater>> INSTANCES_MAP = new WeakHashMap<Context, WeakReference<LayoutInflater>>();
 	private static OnInitInflaterListener listener;
-
 	private static final Map<String, String> VIEWS_MAP = new HashMap<String, String>();
 
 	static {
@@ -85,15 +85,17 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	}
 
 	public static LayoutInflater from(Context context) {
-		if (!LayoutInflater.INSTANCES_MAP.containsKey(context)) {
-			synchronized (LayoutInflater.INSTANCES_MAP) {
-				if (!LayoutInflater.INSTANCES_MAP.containsKey(context)) {
-					LayoutInflater.INSTANCES_MAP.put(context,
-							new LayoutInflater(context));
-				}
-			}
+		LayoutInflater inflater = null;
+		WeakReference<LayoutInflater> reference = INSTANCES_MAP.get(context);
+		if (reference != null) {
+			inflater = reference.get();
 		}
-		return LayoutInflater.INSTANCES_MAP.get(context);
+		if (inflater == null) {
+			inflater = new LayoutInflater(context);
+			reference = new WeakReference<LayoutInflater>(inflater);
+			INSTANCES_MAP.put(context, reference);
+		}
+		return inflater;
 	}
 
 	public static LayoutInflater from(View view) {
@@ -128,13 +130,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	}
 
 	public static void onDestroy(Context context) {
-		if (LayoutInflater.INSTANCES_MAP.containsKey(context)) {
-			synchronized (LayoutInflater.INSTANCES_MAP) {
-				if (LayoutInflater.INSTANCES_MAP.containsKey(context)) {
-					LayoutInflater.INSTANCES_MAP.remove(context);
-				}
-			}
-		}
+		LayoutInflater.INSTANCES_MAP.remove(context);
 	}
 
 	public static void remap(String prefix, String... classess) {
