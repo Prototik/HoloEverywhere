@@ -60,15 +60,14 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	private static final Map<String, String> VIEWS_MAP = new HashMap<String, String>();
 
 	static {
-		LayoutInflater.remap(Application.getConfig().getWidgetsPackage(),
-				"ProgressBar", "LinearLayout", "Switch", "TextView",
-				"EditText", "AutoCompleteTextView",
-				"MultiAutoCompleteTextView", "CalendarView", "Spinner",
-				"NumberPicker", "DatePicker", "TimePicker", "ListView",
-				"Divider", "SeekBar", "Button", "CheckedTextView");
-		LayoutInflater.remap("android.support.v4.view", "ViewPager",
-				"PagerTitleStrip");
-		LayoutInflater.remap("android.webkit", "WebView");
+		remap(Application.getConfig().getWidgetsPackage(), "ProgressBar",
+				"LinearLayout", "Switch", "TextView", "EditText",
+				"AutoCompleteTextView", "MultiAutoCompleteTextView",
+				"CalendarView", "Spinner", "NumberPicker", "DatePicker",
+				"TimePicker", "ListView", "Divider", "SeekBar", "Button",
+				"CheckedTextView");
+		remap("android.support.v4.view", "ViewPager", "PagerTitleStrip");
+		remap("android.webkit", "WebView");
 		remapInternal(ActionBarView.class, HoloListMenuItemView.class,
 				ExpandedMenuView.class, ActionBarContainer.class);
 	}

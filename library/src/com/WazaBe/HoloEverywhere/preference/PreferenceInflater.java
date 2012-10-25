@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 
 import com.WazaBe.HoloEverywhere.app.Application;
 import com.WazaBe.HoloEverywhere.util.XmlUtils;
+import com.WazaBe.HoloEverywhere.internal.GenericInflater;
 
 class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
 	private static final String EXTRA_TAG_NAME = "extra";

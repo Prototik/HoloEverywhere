@@ -1,4 +1,4 @@
-package com.WazaBe.HoloEverywhere.preference;
+package com.WazaBe.HoloEverywhere.internal;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 import android.util.Xml;
 import android.view.InflateException;
 
-abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
+public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 	public interface Factory<T> {
 		public T onCreateItem(String name, Context context, AttributeSet attrs);
 	}
