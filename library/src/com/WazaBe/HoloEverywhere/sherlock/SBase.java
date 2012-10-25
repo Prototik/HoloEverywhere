@@ -42,4 +42,6 @@ public interface SBase extends Base, OnCreatePanelMenuListener,
 	public void setSupportSecondaryProgress(int secondaryProgress);
 
 	public ActionMode startActionMode(ActionMode.Callback callback);
+
+	public void supportInvalidateOptionsMenu();
 }

@@ -88,4 +88,9 @@ public abstract class _HoloActivity extends Watson implements
 	public Object superGetSystemService(String name) {
 		return super.getSystemService(name);
 	}
+
+	@Override
+	public void supportInvalidateOptionsMenu() {
+		invalidateOptionsMenu();
+	}
 }

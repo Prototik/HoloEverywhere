@@ -319,9 +319,4 @@ public abstract class SPreferenceActivity extends PreferenceActivity implements
 	public ActionMode startActionMode(ActionMode.Callback callback) {
 		return isABSSupport() ? getSherlock().startActionMode(callback) : null;
 	}
-
-	@Override
-	public void supportInvalidateOptionsMenu() {
-		invalidateOptionsMenu();
-	}
 }
