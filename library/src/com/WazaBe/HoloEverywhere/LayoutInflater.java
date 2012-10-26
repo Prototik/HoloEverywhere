@@ -205,14 +205,41 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	protected View onCreateView(String name, AttributeSet attrs)
 			throws ClassNotFoundException {
 		String newName = LayoutInflater.VIEWS_MAP.get(name.intern());
+		View view;
 		if (newName != null) {
-			return createView(newName, null, attrs);
+			view = tryCreateView(newName, null, attrs);
+			if (view != null) {
+				return view;
+			}
 		}
+		if (name.indexOf('.') > 0) {
+			view = tryCreateView(name, null, attrs);
+			if (view != null) {
+				return view;
+			}
+		}
+		view = tryCreateView(name, "android.widget.", attrs);
+		if (view != null) {
+			return view;
+		}
+		view = tryCreateView(name, "android.view.", attrs);
+		if (view != null) {
+			return view;
+		} else {
+			throw new ClassNotFoundException("Could not find class: " + name);
+		}
+	}
+
+	protected View tryCreateView(String name, String prefix, AttributeSet attrs) {
+		String newName = prefix == null ? "" : prefix;
+		newName += name;
 		try {
-			return createView(name, "android.widget.", attrs);
+			if (Class.forName(newName) != null) {
+				return createView(newName, null, attrs);
+			}
 		} catch (ClassNotFoundException e) {
-			return createView(name, "android.view.", attrs);
 		}
+		return null;
 	}
 
 	@Override

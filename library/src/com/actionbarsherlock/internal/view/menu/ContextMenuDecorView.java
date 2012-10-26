@@ -83,6 +83,9 @@ public final class ContextMenuDecorView extends FrameLayout {
 
 	@Override
 	public boolean showContextMenuForChild(View originalView) {
+		if (Application.getConfig().isDisableContextMenu()) {
+			return super.showContextMenuForChild(originalView);
+		}
 		if (contextMenu == null) {
 			contextMenu = new ContextMenuBuilder(getContext(),
 					listener.unwrap());
