@@ -21,15 +21,13 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class Fragment extends _HoloFragment implements BaseFragment {
 	private static final int INTERNAL_DECOR_VIEW_ID = 0x7f999999;
-
 	private Base mBase;
-
 	private Bundle savedInstanceState;
 
 	@Override
 	public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
-			View view, ContextMenuListener listener) {
-		mBase.createContextMenu(contextMenuBuilder, view, listener);
+			View view, ContextMenuInfo menuInfo, ContextMenuListener listener) {
+		mBase.createContextMenu(contextMenuBuilder, view, menuInfo, listener);
 	}
 
 	@Override

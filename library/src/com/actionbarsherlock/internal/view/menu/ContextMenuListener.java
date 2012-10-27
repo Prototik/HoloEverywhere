@@ -8,7 +8,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public interface ContextMenuListener {
 	public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
-			View view, ContextMenuListener listener);
+			View view, ContextMenuInfo menuInfo, ContextMenuListener listener);
 
 	public boolean onContextItemSelected(MenuItem item);
 

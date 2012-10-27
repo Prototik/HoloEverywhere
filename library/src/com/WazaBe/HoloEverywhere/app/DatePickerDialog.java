@@ -38,6 +38,8 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
 		mCalendar = Calendar.getInstance();
 		setButton(DialogInterface.BUTTON_POSITIVE,
 				getContext().getText(R.string.date_time_done), this);
+		setButton(DialogInterface.BUTTON_NEGATIVE,
+				getContext().getText(android.R.string.cancel), this);
 		setIcon(0);
 		LayoutInflater inflater = LayoutInflater.from(context);
 		View view = inflater.inflate(R.layout.date_picker_dialog, null);
@@ -58,7 +60,9 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
 
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
-		tryNotifyDateSet();
+		if (which == DialogInterface.BUTTON_POSITIVE) {
+			tryNotifyDateSet();
+		}
 	}
 
 	@Override

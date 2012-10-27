@@ -1,6 +1,7 @@
 package com.WazaBe.HoloEverywhere.app;
 
 import android.support.v4.app.FragmentManager;
+import android.view.View;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.ThemeManager.ThemedIntentStarter;
@@ -29,6 +30,8 @@ public interface Base extends ThemedIntentStarter, ContextMenuListener {
 	public boolean isABSSupport();
 
 	public boolean isForceThemeApply();
+
+	public View prepareDecorView(View view);
 
 	public android.content.SharedPreferences superGetSharedPreferences(
 			String name, int mode);

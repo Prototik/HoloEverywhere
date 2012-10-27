@@ -4,14 +4,12 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.lang.reflect.Method;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.support.v4.app._HoloActivity;
-import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -62,7 +60,6 @@ public abstract class Activity extends _HoloActivity implements Base {
 	};
 
 	private boolean forceThemeApply = false;
-
 	private int lastThemeResourceId = 0;
 
 	@Override
@@ -72,19 +69,7 @@ public abstract class Activity extends _HoloActivity implements Base {
 
 	@Override
 	public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
-			View view, ContextMenuListener listener) {
-		ContextMenuInfo menuInfo = null;
-		try {
-			Class<?> clazz = view.getClass();
-			while (clazz != View.class) {
-				clazz = clazz.getSuperclass();
-			}
-			Method method = clazz.getDeclaredMethod("getContextMenuInfo");
-			method.setAccessible(true);
-			menuInfo = (ContextMenuInfo) method.invoke(view);
-		} catch (Exception e) {
-			Log.e("createContextMenu", "getContextMenuInfo error", e);
-		}
+			View view, ContextMenuInfo menuInfo, ContextMenuListener listener) {
 		listener.onCreateContextMenu(contextMenuBuilder, view, menuInfo);
 	}
 
@@ -168,7 +153,8 @@ public abstract class Activity extends _HoloActivity implements Base {
 		LayoutInflater.onDestroy(this);
 	}
 
-	protected final View prepareDecorView(View v) {
+	@Override
+	public View prepareDecorView(View v) {
 		v = FontLoader.apply(v);
 		if (!getConfig().isDisableContextMenu() && v != null) {
 			v = new ContextMenuDecorView(this, v, this);

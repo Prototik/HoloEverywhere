@@ -1,17 +1,24 @@
 package com.actionbarsherlock.internal.view.menu;
 
+import java.lang.reflect.Method;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.os.IBinder;
 import android.util.EventLog;
+import android.util.Log;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 
+import com.WazaBe.HoloEverywhere.app.Application;
 import com.actionbarsherlock.view.ContextMenu;
 
 public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
 	private final ContextMenuListener listener;
+
+	private final String TAG = getClass().getSimpleName();
 
 	public ContextMenuBuilder(Context context, ContextMenuListener listener) {
 		super(context);
@@ -20,6 +27,24 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
 					"ContextMenuListener can't be null");
 		}
 		this.listener = listener;
+	}
+
+	private ContextMenuInfo getContextMenuInfo(View view) {
+		ContextMenuInfo menuInfo = null;
+		try {
+			Class<?> clazz = view.getClass();
+			while (clazz != View.class) {
+				clazz = clazz.getSuperclass();
+			}
+			Method method = clazz.getDeclaredMethod("getContextMenuInfo");
+			method.setAccessible(true);
+			menuInfo = (ContextMenuInfo) method.invoke(view);
+		} catch (Exception e) {
+			if (Application.isDebugMode()) {
+				Log.e(TAG, "getContextMenuInfo error", e);
+			}
+		}
+		return menuInfo;
 	}
 
 	@Override
@@ -49,7 +74,8 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
 
 	@SuppressLint("NewApi")
 	public MenuDialogHelper show(View originalView, IBinder token) {
-		listener.createContextMenu(this, originalView, listener);
+		listener.createContextMenu(this, originalView,
+				getContextMenuInfo(originalView), listener);
 		if (getVisibleItems().size() > 0) {
 			if (VERSION.SDK_INT >= 8) {
 				EventLog.writeEvent(50001, 1);

@@ -230,18 +230,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 		}
 	}
 
-	protected View tryCreateView(String name, String prefix, AttributeSet attrs) {
-		String newName = prefix == null ? "" : prefix;
-		newName += name;
-		try {
-			if (Class.forName(newName) != null) {
-				return createView(newName, null, attrs);
-			}
-		} catch (ClassNotFoundException e) {
-		}
-		return null;
-	}
-
 	@Override
 	public View onCreateView(String name, Context context, AttributeSet attrs) {
 		try {
@@ -260,5 +248,17 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 		}
 		addFactory(factory);
 		factorySet = true;
+	}
+
+	protected View tryCreateView(String name, String prefix, AttributeSet attrs) {
+		String newName = prefix == null ? "" : prefix;
+		newName += name;
+		try {
+			if (Class.forName(newName) != null) {
+				return createView(newName, null, attrs);
+			}
+		} catch (ClassNotFoundException e) {
+		}
+		return null;
 	}
 }
