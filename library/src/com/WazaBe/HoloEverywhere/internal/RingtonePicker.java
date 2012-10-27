@@ -199,7 +199,7 @@ public class RingtonePicker implements OnItemSelectedListener, Runnable,
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
-		playRingtone(position, DELAY_MS_SELECTION_PLAYED);
+		playRingtone(position, RingtonePicker.DELAY_MS_SELECTION_PLAYED);
 	}
 
 	@Override

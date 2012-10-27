@@ -9,20 +9,24 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build.VERSION;
 import android.os.Bundle;
-import android.support.v4.app.Watson;
+import android.support.v4.app._HoloActivity;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 import com.WazaBe.HoloEverywhere.FontLoader;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
+import com.WazaBe.HoloEverywhere.SystemServiceManager;
 import com.WazaBe.HoloEverywhere.ThemeManager;
 import com.WazaBe.HoloEverywhere.app.Application.Config;
+import com.WazaBe.HoloEverywhere.app.Application.Config.PreferenceImpl;
 import com.WazaBe.HoloEverywhere.preference.PreferenceManager;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
+import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
+import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 
-public abstract class Activity extends Watson implements Base {
+public abstract class Activity extends _HoloActivity implements Base {
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.TYPE)
 	public static @interface Holo {
@@ -56,14 +60,31 @@ public abstract class Activity extends Watson implements Base {
 	};
 
 	private boolean forceThemeApply = false;
+	private int lastThemeResourceId = 0;
 
 	@Override
 	public void addContentView(View view, LayoutParams params) {
-		super.addContentView(FontLoader.apply(view), params);
+		super.addContentView(prepareDecorView(view), params);
 	}
 
+	@Override
+	public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
+			View view, ContextMenuInfo menuInfo, ContextMenuListener listener) {
+		listener.onCreateContextMenu(contextMenuBuilder, view, menuInfo);
+	}
+
+	@Override
+	public Config getConfig() {
+		return Application.getConfig();
+	}
+
+	@Override
 	public SharedPreferences getDefaultSharedPreferences() {
 		return PreferenceManager.getDefaultSharedPreferences(this);
+	}
+
+	public int getLastThemeResourceId() {
+		return lastThemeResourceId;
 	}
 
 	@Override
@@ -72,18 +93,19 @@ public abstract class Activity extends Watson implements Base {
 	}
 
 	@Override
-	public Config getSettings() {
-		return Application.getConfig();
+	public SharedPreferences getSharedPreferences(PreferenceImpl impl,
+			String name, int mode) {
+		return PreferenceManager.wrap(this, impl, name, mode);
 	}
 
 	@Override
-	public SharedPreferences getSupportSharedPreferences(String name, int mode) {
+	public SharedPreferences getSharedPreferences(String name, int mode) {
 		return PreferenceManager.wrap(this, name, mode);
 	}
 
 	@Override
 	public Object getSystemService(String name) {
-		return LayoutInflater.getSystemService(super.getSystemService(name));
+		return SystemServiceManager.getSystemService(this, name);
 	}
 
 	@Override
@@ -107,7 +129,7 @@ public abstract class Activity extends Watson implements Base {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Holo holo = getClass().isAnnotationPresent(Holo.class) ? getClass()
-				.getAnnotation(Holo.class) : DEFAULT_HOLO;
+				.getAnnotation(Holo.class) : Activity.DEFAULT_HOLO;
 		if (holo.addFactoryToInflater()) {
 			getLayoutInflater().addFactory(this, 0);
 		}
@@ -115,7 +137,7 @@ public abstract class Activity extends Watson implements Base {
 		if (holo.forceThemeApply()) {
 			setForceThemeApply(forceThemeApply = true);
 		}
-		if (forceThemeApply || getSettings().isUseThemeManager()) {
+		if (forceThemeApply || getConfig().isUseThemeManager()) {
 			ThemeManager.applyTheme(this, forceThemeApply);
 		}
 		super.onCreate(savedInstanceState);
@@ -126,43 +148,44 @@ public abstract class Activity extends Watson implements Base {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return false;
-	}
-
-	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		LayoutInflater.onDestroy(this);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		return false;
-	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		return false;
+	public View prepareDecorView(View v) {
+		v = FontLoader.apply(v);
+		if (!getConfig().isDisableContextMenu() && v != null) {
+			v = new ContextMenuDecorView(this, v, this);
+		}
+		return v;
 	}
 
 	@Override
 	public void setContentView(int layoutResID) {
-		super.setContentView(FontLoader.inflate(this, layoutResID));
+		super.setContentView(prepareDecorView(getLayoutInflater().inflate(
+				layoutResID)));
 	}
 
 	@Override
 	public void setContentView(View view) {
-		super.setContentView(FontLoader.apply(view));
+		super.setContentView(prepareDecorView(view));
 	}
 
 	@Override
 	public void setContentView(View view, LayoutParams params) {
-		super.setContentView(FontLoader.apply(view), params);
+		super.setContentView(prepareDecorView(view), params);
 	}
 
 	public void setForceThemeApply(boolean forceThemeApply) {
 		this.forceThemeApply = forceThemeApply;
+	}
+
+	@Override
+	public void setTheme(int resid) {
+		lastThemeResourceId = resid;
+		super.setTheme(resid);
 	}
 
 	@Override
@@ -195,11 +218,17 @@ public abstract class Activity extends Watson implements Base {
 	@Override
 	public void startActivityForResult(Intent intent, int requestCode,
 			Bundle options) {
-		if (getSettings().isAlwaysUseParentTheme()) {
+		if (getConfig().isAlwaysUseParentTheme()) {
 			ThemeManager.startActivity(this, intent, requestCode, options);
 		} else {
 			superStartActivity(intent, requestCode, options);
 		}
+	}
+
+	@Override
+	public android.content.SharedPreferences superGetSharedPreferences(
+			String name, int mode) {
+		return super.getSharedPreferences(name, mode);
 	}
 
 	@Override

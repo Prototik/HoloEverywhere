@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.actionbarsherlock.internal.view.menu.HoloListMenuItemView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="?listPreferredItemHeightSmall" >
+	<RelativeLayout
+		android:layout_width="0dip"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical"
+		android:layout_marginLeft="?listPreferredItemPaddingLeft"
+		android:layout_marginRight="?listPreferredItemPaddingRight"
+		android:layout_weight="1"
+		android:duplicateParentState="true" >
+		<TextView
+			android:id="@+id/title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+			android:duplicateParentState="true"
+			android:ellipsize="marquee"
+			android:fadingEdge="horizontal"
+			android:singleLine="true"
+			android:textAppearance="?textAppearanceListItemSmall" />
+		<TextView
+			android:id="@+id/shortcut"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_below="@id/title"
+			android:duplicateParentState="true"
+			android:singleLine="true"
+			android:textAppearance="?android:attr/textAppearanceSmall" />
+	</RelativeLayout>
+</com.actionbarsherlock.internal.view.menu.HoloListMenuItemView>

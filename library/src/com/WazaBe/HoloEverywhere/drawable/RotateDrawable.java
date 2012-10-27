@@ -281,7 +281,7 @@ public class RotateDrawable extends Drawable {
 
 		mState.mCurrentDegrees = mState.mFromDegrees
 				+ (mState.mToDegrees - mState.mFromDegrees)
-				* (level / MAX_LEVEL);
+				* (level / RotateDrawable.MAX_LEVEL);
 
 		invalidateSelf();
 		return true;

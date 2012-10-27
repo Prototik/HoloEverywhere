@@ -62,8 +62,8 @@ public abstract class AbsSeekBar extends ProgressBar {
 		super.drawableStateChanged();
 		Drawable progressDrawable = getProgressDrawable();
 		if (progressDrawable != null) {
-			progressDrawable.setAlpha(isEnabled() ? NO_ALPHA
-					: (int) (NO_ALPHA * mDisabledAlpha));
+			progressDrawable.setAlpha(isEnabled() ? AbsSeekBar.NO_ALPHA
+					: (int) (AbsSeekBar.NO_ALPHA * mDisabledAlpha));
 		}
 		if (mThumb != null && mThumb.isStateful()) {
 			int[] state = getDrawableState();
@@ -174,8 +174,8 @@ public abstract class AbsSeekBar extends ProgressBar {
 		dw += getPaddingLeft() + getPaddingRight();
 		dh += getPaddingTop() + getPaddingBottom();
 		setMeasuredDimension(
-				supportResolveSizeAndState(dw, widthMeasureSpec, 0),
-				supportResolveSizeAndState(dh, heightMeasureSpec, 0));
+				View.supportResolveSizeAndState(dw, widthMeasureSpec, 0),
+				View.supportResolveSizeAndState(dh, heightMeasureSpec, 0));
 	}
 
 	@Override

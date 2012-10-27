@@ -1,4 +1,4 @@
-package com.WazaBe.HoloEverywhere.preference;
+package com.WazaBe.HoloEverywhere.internal;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 import android.util.Xml;
 import android.view.InflateException;
 
-abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
+public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 	public interface Factory<T> {
 		public T onCreateItem(String name, Context context, AttributeSet attrs);
 	}
@@ -63,14 +63,14 @@ abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 	@SuppressWarnings("unchecked")
 	public final T createItem(String name, String prefix, AttributeSet attrs)
 			throws ClassNotFoundException, InflateException {
-		Constructor<?> constructor = constructorMap.get(name);
+		Constructor<?> constructor = GenericInflater.constructorMap.get(name);
 
 		try {
 			if (constructor == null) {
 				Class<?> clazz = context.getClassLoader().loadClass(
 						prefix != null ? prefix + name : name);
 				constructor = findConstructor(clazz);
-				constructorMap.put(name, constructor);
+				GenericInflater.constructorMap.put(name, constructor);
 			}
 			Object[] args = constructorArgs;
 			args[1] = attrs;
@@ -122,7 +122,7 @@ abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 
 	protected Constructor<?> findConstructor(Class<?> clazz)
 			throws NoSuchMethodException {
-		return clazz.getConstructor(constructorSignature);
+		return clazz.getConstructor(GenericInflater.constructorSignature);
 	}
 
 	public Context getContext() {

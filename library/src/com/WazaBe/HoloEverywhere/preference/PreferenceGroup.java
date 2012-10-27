@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.WazaBe.HoloEverywhere.R;
+import com.WazaBe.HoloEverywhere.internal.GenericInflater;
 
 public abstract class PreferenceGroup extends Preference implements
 		GenericInflater.Parent<Preference> {

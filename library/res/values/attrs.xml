@@ -2,7 +2,6 @@
 <resources>
 	<!--
     Already defined in ABS 
-	<attr name="progressBarStyle" format="reference" />
 	<attr name="spinnerItemStyle" format="reference" />
 	<attr name="spinnerDropDownItemStyle" format="reference" />
 	<attr name="dropDownListViewStyle" format="reference" />
@@ -15,6 +14,7 @@
 	<attr name="textAppearanceLargePopupMenu" format="reference" />
 	<attr name="textAppearanceSmallPopupMenu" format="reference" />
 	<attr name="selectableItemBackground" format="reference" />
+	<attr name="textAppearanceListItemSmall" format="reference" />
 	-->
 	<attr name="preferenceFrameLayoutStyle" format="reference" />
 	<attr name="preferenceScreenStyle" format="reference" />
@@ -53,6 +53,7 @@
 	<attr name="datePickerStyle" format="reference" />
 	<attr name="timePickerStyle" format="reference" />
 	<attr name="autoCompleteTextViewStyle" format="reference" />
+	<attr name="panelMenuListWidth" format="dimension" />
 	<attr name="gravity">
 		<flag name="top" value="0x30" />
 		<flag name="bottom" value="0x50" />
@@ -310,5 +311,22 @@
 		<attr name="android:textStyle" />
 		<attr name="android:textColor" />
 		<attr name="android:textAllCaps" />
+	</declare-styleable>
+	<declare-styleable name="MenuView">
+		<attr name="android:itemTextAppearance" />
+		<attr name="android:horizontalDivider" />
+		<attr name="android:verticalDivider" />
+		<attr name="android:headerBackground" />
+		<attr name="android:itemBackground" />
+		<attr name="android:windowAnimationStyle" />
+		<attr name="android:itemIconDisabledAlpha" />
+		<attr name="android:preserveIconSpacing" />
+	</declare-styleable>
+	<declare-styleable name="IconMenuView">
+		<attr name="android:rowHeight" />
+		<attr name="android:maxRows" />
+		<attr name="android:maxItemsPerRow" />
+		<attr name="android:maxItems" />
+		<attr name="android:moreIcon" />
 	</declare-styleable>
 </resources>

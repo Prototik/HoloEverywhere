@@ -5,7 +5,7 @@ import java.lang.reflect.Array;
 public class ArrayUtils {
 	private static final int CACHE_SIZE = 73;
 	private static Object[] EMPTY = new Object[0];
-	private static Object[] sCache = new Object[CACHE_SIZE];
+	private static Object[] sCache = new Object[ArrayUtils.CACHE_SIZE];
 
 	@SuppressWarnings("unchecked")
 	public static <T> T[] appendElement(Class<T> kind, T[] array, T element) {
@@ -66,14 +66,14 @@ public class ArrayUtils {
 	@SuppressWarnings("unchecked")
 	public static <T> T[] emptyArray(Class<T> kind) {
 		if (kind == Object.class) {
-			return (T[]) EMPTY;
+			return (T[]) ArrayUtils.EMPTY;
 		}
 		int bucket = (System.identityHashCode(kind) / 8 & 0x7FFFFFFF)
-				% CACHE_SIZE;
-		Object cache = sCache[bucket];
+				% ArrayUtils.CACHE_SIZE;
+		Object cache = ArrayUtils.sCache[bucket];
 		if (cache == null || cache.getClass().getComponentType() != kind) {
 			cache = Array.newInstance(kind, 0);
-			sCache[bucket] = cache;
+			ArrayUtils.sCache[bucket] = cache;
 		}
 		return (T[]) cache;
 	}
@@ -95,7 +95,7 @@ public class ArrayUtils {
 	}
 
 	public static int idealBooleanArraySize(int need) {
-		return idealByteArraySize(need);
+		return ArrayUtils.idealByteArraySize(need);
 	}
 
 	public static int idealByteArraySize(int need) {
@@ -109,27 +109,27 @@ public class ArrayUtils {
 	}
 
 	public static int idealCharArraySize(int need) {
-		return idealByteArraySize(need * 2) / 2;
+		return ArrayUtils.idealByteArraySize(need * 2) / 2;
 	}
 
 	public static int idealFloatArraySize(int need) {
-		return idealByteArraySize(need * 4) / 4;
+		return ArrayUtils.idealByteArraySize(need * 4) / 4;
 	}
 
 	public static int idealIntArraySize(int need) {
-		return idealByteArraySize(need * 4) / 4;
+		return ArrayUtils.idealByteArraySize(need * 4) / 4;
 	}
 
 	public static int idealLongArraySize(int need) {
-		return idealByteArraySize(need * 8) / 8;
+		return ArrayUtils.idealByteArraySize(need * 8) / 8;
 	}
 
 	public static int idealObjectArraySize(int need) {
-		return idealByteArraySize(need * 4) / 4;
+		return ArrayUtils.idealByteArraySize(need * 4) / 4;
 	}
 
 	public static int idealShortArraySize(int need) {
-		return idealByteArraySize(need * 2) / 2;
+		return ArrayUtils.idealByteArraySize(need * 2) / 2;
 	}
 
 	@SuppressWarnings("unchecked")

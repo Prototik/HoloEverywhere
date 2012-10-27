@@ -103,7 +103,7 @@ public class TimePicker extends FrameLayout {
 			mAmPmSpinnerInput;
 	private boolean mIs24HourView, mIsAm;
 
-	private boolean mIsEnabled = DEFAULT_ENABLED_STATE;
+	private boolean mIsEnabled = TimePicker.DEFAULT_ENABLED_STATE;
 
 	private OnTimeChangedListener mOnTimeChangedListener;
 
@@ -137,10 +137,10 @@ public class TimePicker extends FrameLayout {
 							int newVal) {
 						updateInputState();
 						if (!is24HourView()) {
-							if (oldVal == HOURS_IN_HALF_DAY - 1
-									&& newVal == HOURS_IN_HALF_DAY
-									|| oldVal == HOURS_IN_HALF_DAY
-									&& newVal == HOURS_IN_HALF_DAY - 1) {
+							if (oldVal == TimePicker.HOURS_IN_HALF_DAY - 1
+									&& newVal == TimePicker.HOURS_IN_HALF_DAY
+									|| oldVal == TimePicker.HOURS_IN_HALF_DAY
+									&& newVal == TimePicker.HOURS_IN_HALF_DAY - 1) {
 								mIsAm = !mIsAm;
 								updateAmPmControl();
 							}
@@ -169,7 +169,8 @@ public class TimePicker extends FrameLayout {
 						int maxValue = mMinuteSpinner.getMaxValue();
 						if (oldVal == maxValue && newVal == minValue) {
 							int newHour = mHourSpinner.getValue() + 1;
-							if (!is24HourView() && newHour == HOURS_IN_HALF_DAY) {
+							if (!is24HourView()
+									&& newHour == TimePicker.HOURS_IN_HALF_DAY) {
 								mIsAm = !mIsAm;
 								updateAmPmControl();
 							}
@@ -177,7 +178,7 @@ public class TimePicker extends FrameLayout {
 						} else if (oldVal == minValue && newVal == maxValue) {
 							int newHour = mHourSpinner.getValue() - 1;
 							if (!is24HourView()
-									&& newHour == HOURS_IN_HALF_DAY - 1) {
+									&& newHour == TimePicker.HOURS_IN_HALF_DAY - 1) {
 								mIsAm = !mIsAm;
 								updateAmPmControl();
 							}
@@ -226,7 +227,7 @@ public class TimePicker extends FrameLayout {
 		}
 		updateHourControl();
 		updateAmPmControl();
-		setOnTimeChangedListener(NO_OP_CHANGE_LISTENER);
+		setOnTimeChangedListener(TimePicker.NO_OP_CHANGE_LISTENER);
 		setCurrentHour(mTempCalendar.get(Calendar.HOUR_OF_DAY));
 		setCurrentMinute(mTempCalendar.get(Calendar.MINUTE));
 		if (!isEnabled()) {
@@ -256,9 +257,10 @@ public class TimePicker extends FrameLayout {
 		if (is24HourView()) {
 			return currentHour;
 		} else if (mIsAm) {
-			return currentHour % HOURS_IN_HALF_DAY;
+			return currentHour % TimePicker.HOURS_IN_HALF_DAY;
 		} else {
-			return currentHour % HOURS_IN_HALF_DAY + HOURS_IN_HALF_DAY;
+			return currentHour % TimePicker.HOURS_IN_HALF_DAY
+					+ TimePicker.HOURS_IN_HALF_DAY;
 		}
 	}
 
@@ -322,18 +324,18 @@ public class TimePicker extends FrameLayout {
 	}
 
 	private void setContentDescriptions() {
-		setContentDescription(mMinuteSpinner, R.id.increment,
+		TimePicker.setContentDescription(mMinuteSpinner, R.id.increment,
 				R.string.time_picker_increment_minute_button);
-		setContentDescription(mMinuteSpinner, R.id.decrement,
+		TimePicker.setContentDescription(mMinuteSpinner, R.id.decrement,
 				R.string.time_picker_decrement_minute_button);
-		setContentDescription(mHourSpinner, R.id.increment,
+		TimePicker.setContentDescription(mHourSpinner, R.id.increment,
 				R.string.time_picker_increment_hour_button);
-		setContentDescription(mHourSpinner, R.id.decrement,
+		TimePicker.setContentDescription(mHourSpinner, R.id.decrement,
 				R.string.time_picker_decrement_hour_button);
 		if (mAmPmSpinner != null) {
-			setContentDescription(mAmPmSpinner, R.id.increment,
+			TimePicker.setContentDescription(mAmPmSpinner, R.id.increment,
 					R.string.time_picker_increment_set_pm_button);
-			setContentDescription(mAmPmSpinner, R.id.decrement,
+			TimePicker.setContentDescription(mAmPmSpinner, R.id.decrement,
 					R.string.time_picker_decrement_set_am_button);
 		}
 	}
@@ -343,15 +345,15 @@ public class TimePicker extends FrameLayout {
 			return;
 		}
 		if (!is24HourView()) {
-			if (currentHour >= HOURS_IN_HALF_DAY) {
+			if (currentHour >= TimePicker.HOURS_IN_HALF_DAY) {
 				mIsAm = false;
-				if (currentHour > HOURS_IN_HALF_DAY) {
-					currentHour = currentHour - HOURS_IN_HALF_DAY;
+				if (currentHour > TimePicker.HOURS_IN_HALF_DAY) {
+					currentHour = currentHour - TimePicker.HOURS_IN_HALF_DAY;
 				}
 			} else {
 				mIsAm = true;
 				if (currentHour == 0) {
-					currentHour = HOURS_IN_HALF_DAY;
+					currentHour = TimePicker.HOURS_IN_HALF_DAY;
 				}
 			}
 			updateAmPmControl();

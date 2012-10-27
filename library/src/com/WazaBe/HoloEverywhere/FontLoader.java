@@ -45,32 +45,32 @@ public final class FontLoader {
 	private static final String TAG = "FontLoader";
 
 	public static View apply(View view) {
-		return applyDefaultStyles(view);
+		return FontLoader.applyDefaultStyles(view);
 	}
 
 	public static View apply(View view, HoloFont font) {
 		if (font.ignore) {
 			return view;
 		}
-		return apply(view, font.font);
+		return FontLoader.apply(view, font.font);
 	}
 
 	@SuppressLint("NewApi")
 	public static View apply(View view, int font) {
 		if (view == null || view.getContext() == null
 				|| view.getContext().isRestricted()) {
-			Log.e(TAG, "View or context is invalid");
+			Log.e(FontLoader.TAG, "View or context is invalid");
 			return view;
 		}
 		if (font < 0) {
-			return applyDefaultStyles(view);
+			return FontLoader.applyDefaultStyles(view);
 		}
-		Typeface typeface = loadTypeface(view.getContext(), font);
+		Typeface typeface = FontLoader.loadTypeface(view.getContext(), font);
 		if (typeface == null) {
-			Log.v(TAG, "Font " + font + " not found in resources");
+			Log.v(FontLoader.TAG, "Font " + font + " not found in resources");
 			return view;
 		} else {
-			return apply(view, typeface);
+			return FontLoader.apply(view, typeface);
 		}
 	}
 
@@ -80,7 +80,7 @@ public final class FontLoader {
 			return view;
 		}
 		if (typeface == null) {
-			Log.v(TAG, "Font is null");
+			Log.v(FontLoader.TAG, "Font is null");
 			return view;
 		}
 		if (view instanceof TextView) {
@@ -89,7 +89,7 @@ public final class FontLoader {
 		if (view instanceof ViewGroup) {
 			ViewGroup group = (ViewGroup) view;
 			for (int i = 0; i < group.getChildCount(); i++) {
-				apply(group.getChildAt(i), typeface);
+				FontLoader.apply(group.getChildAt(i), typeface);
 			}
 		}
 		return view;
@@ -104,7 +104,7 @@ public final class FontLoader {
 			TextView text = (TextView) view;
 			Typeface typeface = text.getTypeface();
 			if (typeface == null) {
-				text.setTypeface(loadTypeface(view.getContext(),
+				text.setTypeface(FontLoader.loadTypeface(view.getContext(),
 						HoloFont.ROBOTO_REGULAR.font));
 				return view;
 			}
@@ -120,7 +120,8 @@ public final class FontLoader {
 				font = HoloFont.ROBOTO_REGULAR;
 			}
 			if (!font.ignore) {
-				typeface = loadTypeface(view.getContext(), font.font);
+				typeface = FontLoader
+						.loadTypeface(view.getContext(), font.font);
 				if (typeface != null) {
 					text.setTypeface(typeface);
 				}
@@ -129,22 +130,22 @@ public final class FontLoader {
 		if (view instanceof ViewGroup) {
 			ViewGroup group = (ViewGroup) view;
 			for (int i = 0; i < group.getChildCount(); i++) {
-				applyDefaultStyles(group.getChildAt(i));
+				FontLoader.applyDefaultStyles(group.getChildAt(i));
 			}
 		}
 		return view;
 	}
 
 	public static View inflate(Context context, int res) {
-		return apply(LayoutInflater.inflate(context, res));
+		return FontLoader.apply(LayoutInflater.inflate(context, res));
 	}
 
 	public static View inflate(Context context, int res, ViewGroup parent) {
-		return apply(LayoutInflater.inflate(context, res, parent));
+		return FontLoader.apply(LayoutInflater.inflate(context, res, parent));
 	}
 
 	public static Typeface loadTypeface(Context context, int font) {
-		if (fontArray.get(font) == null) {
+		if (FontLoader.fontArray.get(font) == null) {
 			try {
 				File file = new File(context.getApplicationInfo().dataDir
 						+ "/fonts");
@@ -166,12 +167,12 @@ public final class FontLoader {
 				os.flush();
 				os.close();
 				is.close();
-				fontArray.put(font, Typeface.createFromFile(file));
+				FontLoader.fontArray.put(font, Typeface.createFromFile(file));
 			} catch (Exception e) {
-				Log.e(TAG, "Error of loading font", e);
+				Log.e(FontLoader.TAG, "Error of loading font", e);
 			}
 		}
-		return fontArray.get(font);
+		return FontLoader.fontArray.get(font);
 	}
 
 	private FontLoader() {

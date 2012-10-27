@@ -58,6 +58,7 @@ public class DemoActivity extends SActivity {
 			}
 			ft.replace(R.id.content, fragment);
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			findViewById(R.id.themeButtonsBar).setVisibility(View.VISIBLE);
 		}
 
 		@Override
@@ -139,6 +140,10 @@ public class DemoActivity extends SActivity {
 	public void showCalendar(View v) {
 		replaceFragment(R.id.content, CalendarFragment.getInstance(),
 				isABSSupport() ? null : "calendar");
+	}
+
+	public void showContextMenu(View v) {
+		MainFragment.getInstance().showContextMenu(v);
 	}
 
 	public void showDatePicker(View v) {

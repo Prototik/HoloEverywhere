@@ -65,10 +65,10 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 			}
 			mOldItemCount = mItemCount;
 			mItemCount = 0;
-			mSelectedPosition = INVALID_POSITION;
-			mSelectedRowId = INVALID_ROW_ID;
-			mNextSelectedPosition = INVALID_POSITION;
-			mNextSelectedRowId = INVALID_ROW_ID;
+			mSelectedPosition = AdapterView.INVALID_POSITION;
+			mSelectedRowId = AdapterView.INVALID_ROW_ID;
+			mNextSelectedPosition = AdapterView.INVALID_POSITION;
+			mNextSelectedRowId = AdapterView.INVALID_ROW_ID;
 			mNeedSync = false;
 			checkFocus();
 			requestLayout();
@@ -125,17 +125,17 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 	private int mLayoutHeight;
 	boolean mNeedSync = false;
 	@ViewDebug.ExportedProperty(category = "list")
-	int mNextSelectedPosition = INVALID_POSITION;
-	long mNextSelectedRowId = INVALID_ROW_ID;
+	int mNextSelectedPosition = AdapterView.INVALID_POSITION;
+	long mNextSelectedRowId = AdapterView.INVALID_ROW_ID;
 	int mOldItemCount;
-	int mOldSelectedPosition = INVALID_POSITION;
-	long mOldSelectedRowId = INVALID_ROW_ID;
+	int mOldSelectedPosition = AdapterView.INVALID_POSITION;
+	long mOldSelectedRowId = AdapterView.INVALID_ROW_ID;
 	OnItemClickListener mOnItemClickListener;
 	OnItemLongClickListener mOnItemLongClickListener;
 	OnItemSelectedListener mOnItemSelectedListener;
 	@ViewDebug.ExportedProperty(category = "list")
-	int mSelectedPosition = INVALID_POSITION;
-	long mSelectedRowId = INVALID_ROW_ID;
+	int mSelectedPosition = AdapterView.INVALID_POSITION;
+	long mSelectedRowId = AdapterView.INVALID_ROW_ID;
 
 	private SelectionNotifier mSelectionNotifier;
 
@@ -147,7 +147,7 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 
 	int mSyncPosition;
 
-	long mSyncRowId = INVALID_ROW_ID;
+	long mSyncRowId = AdapterView.INVALID_ROW_ID;
 
 	public AdapterView(Context context) {
 		super(context);
@@ -161,8 +161,8 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 	public AdapterView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		if (VERSION.SDK_INT >= 16
-				&& getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
-			setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
+				&& getImportantForAccessibility() == View.IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
+			setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
 		}
 	}
 
@@ -220,7 +220,8 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 	@Override
 	public boolean dispatchPopulateAccessibilityEvent(AccessibilityEvent event) {
 		View selectedView = getSelectedView();
-		if (selectedView != null && selectedView.getVisibility() == VISIBLE
+		if (selectedView != null
+				&& selectedView.getVisibility() == View.VISIBLE
 				&& selectedView.dispatchPopulateAccessibilityEvent(event)) {
 			return true;
 		}
@@ -241,16 +242,17 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 	int findSyncPosition() {
 		int count = mItemCount;
 		if (count == 0) {
-			return INVALID_POSITION;
+			return AdapterView.INVALID_POSITION;
 		}
 		long idToMatch = mSyncRowId;
 		int seed = mSyncPosition;
-		if (idToMatch == INVALID_ROW_ID) {
-			return INVALID_POSITION;
+		if (idToMatch == AdapterView.INVALID_ROW_ID) {
+			return AdapterView.INVALID_POSITION;
 		}
 		seed = Math.max(0, seed);
 		seed = Math.min(count - 1, seed);
-		long endTime = SystemClock.uptimeMillis() + SYNC_MAX_DURATION_MILLIS;
+		long endTime = SystemClock.uptimeMillis()
+				+ AdapterView.SYNC_MAX_DURATION_MILLIS;
 		long rowId;
 		int first = seed;
 		int last = seed;
@@ -259,7 +261,7 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 		boolean hitLast;
 		T adapter = getAdapter();
 		if (adapter == null) {
-			return INVALID_POSITION;
+			return AdapterView.INVALID_POSITION;
 		}
 		while (SystemClock.uptimeMillis() <= endTime) {
 			rowId = adapter.getItemId(seed);
@@ -281,7 +283,7 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 				next = true;
 			}
 		}
-		return INVALID_POSITION;
+		return AdapterView.INVALID_POSITION;
 	}
 
 	private void fireOnSelected() {
@@ -321,8 +323,8 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 
 	public long getItemIdAtPosition(int position) {
 		T adapter = getAdapter();
-		return adapter == null || position < 0 ? INVALID_ROW_ID : adapter
-				.getItemId(position);
+		return adapter == null || position < 0 ? AdapterView.INVALID_ROW_ID
+				: adapter.getItemId(position);
 	}
 
 	public int getLastVisiblePosition() {
@@ -349,7 +351,7 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 				listItem = v;
 			}
 		} catch (ClassCastException e) {
-			return INVALID_POSITION;
+			return AdapterView.INVALID_POSITION;
 		}
 		final int childCount = getChildCount();
 		for (int i = 0; i < childCount; i++) {
@@ -357,7 +359,7 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 				return mFirstPosition + i;
 			}
 		}
-		return INVALID_POSITION;
+		return AdapterView.INVALID_POSITION;
 	}
 
 	public Object getSelectedItem() {
@@ -418,10 +420,10 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 			}
 		}
 		if (!found) {
-			mSelectedPosition = INVALID_POSITION;
-			mSelectedRowId = INVALID_ROW_ID;
-			mNextSelectedPosition = INVALID_POSITION;
-			mNextSelectedRowId = INVALID_ROW_ID;
+			mSelectedPosition = AdapterView.INVALID_POSITION;
+			mSelectedRowId = AdapterView.INVALID_ROW_ID;
+			mNextSelectedPosition = AdapterView.INVALID_POSITION;
+			mNextSelectedRowId = AdapterView.INVALID_ROW_ID;
 			mNeedSync = false;
 			checkSelectionChanged();
 		}
@@ -534,20 +536,20 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 				if (v != null) {
 					mSpecificTop = v.getTop();
 				}
-				mSyncMode = SYNC_SELECTED_POSITION;
+				mSyncMode = AdapterView.SYNC_SELECTED_POSITION;
 			} else {
 				View v = getChildAt(0);
 				T adapter = getAdapter();
 				if (mFirstPosition >= 0 && mFirstPosition < adapter.getCount()) {
 					mSyncRowId = adapter.getItemId(mFirstPosition);
 				} else {
-					mSyncRowId = NO_ID;
+					mSyncRowId = View.NO_ID;
 				}
 				mSyncPosition = mFirstPosition;
 				if (v != null) {
 					mSpecificTop = v.getTop();
 				}
-				mSyncMode = SYNC_FIRST_POSITION;
+				mSyncMode = AdapterView.SYNC_FIRST_POSITION;
 			}
 		}
 	}
@@ -591,9 +593,9 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 		mEmptyView = emptyView;
 		if (VERSION.SDK_INT >= 16
 				&& emptyView != null
-				&& emptyView.getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
+				&& emptyView.getImportantForAccessibility() == View.IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
 			emptyView
-					.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
+					.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
 		}
 		final T adapter = getAdapter();
 		final boolean empty = adapter == null || adapter.isEmpty();
@@ -627,7 +629,8 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 	void setNextSelectedPositionInt(int position) {
 		mNextSelectedPosition = position;
 		mNextSelectedRowId = getItemIdAtPosition(position);
-		if (mNeedSync && mSyncMode == SYNC_SELECTED_POSITION && position >= 0) {
+		if (mNeedSync && mSyncMode == AdapterView.SYNC_SELECTED_POSITION
+				&& position >= 0) {
 			mSyncPosition = position;
 			mSyncRowId = mNextSelectedRowId;
 		}

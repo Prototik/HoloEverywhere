@@ -3,6 +3,7 @@ package com.WazaBe.HoloEverywhere.widget;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.actionbarsherlock.internal.nineoldandroids.view.animation.AnimatorProxy;
@@ -88,9 +89,9 @@ public class NineFrameLayout extends FrameLayout {
 	@Override
 	public void setVisibility(int visibility) {
 		if (mProxy != null) {
-			if (visibility == GONE) {
+			if (visibility == View.GONE) {
 				clearAnimation();
-			} else if (visibility == VISIBLE) {
+			} else if (visibility == View.VISIBLE) {
 				setAnimation(mProxy);
 			}
 		}

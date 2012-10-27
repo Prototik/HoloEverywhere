@@ -525,7 +525,7 @@
   </style>
   <style name="Holo.Animation.PopupWindow" />
   <!-- Sherlock themes -->
-  <style name="Holo.Theme.Sherlock" parent="@style/Theme.Sherlock">
+  <style name="Holo.Theme.Sherlock" parent="Theme.Sherlock">
     <include name="DarkThemeData" />
   </style>
   <style name="Holo.Theme.Sherlock.NoActionBar">
@@ -537,7 +537,7 @@
   <style name="Holo.Theme.Sherlock.Fullscreen">
     <include name="Fullscreen" />
   </style>
-  <style name="Holo.Theme.Sherlock.Light" parent="@style/Theme.Sherlock.Light">
+  <style name="Holo.Theme.Sherlock.Light" parent="Theme.Sherlock.Light">
     <include name="LightThemeData" />
   </style>
   <style name="Holo.Theme.Sherlock.Light.NoActionBar">
@@ -549,7 +549,7 @@
   <style name="Holo.Theme.Sherlock.Light.Fullscreen">
     <include name="Fullscreen" />
   </style>
-  <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+  <style name="Holo.Theme.Sherlock.Light.DarkActionBar" parent="Theme.Sherlock.Light.DarkActionBar">
     <include name="LightThemeData" />
   </style>
   <style name="Holo.Theme.Sherlock.Light.DarkActionBar.NoActionBar">

@@ -95,7 +95,7 @@ public class ListView extends android.widget.ListView {
 			if (!handled && wrapped != null) {
 				return wrapped.onItemLongClick(view, child, position, id);
 			}
-			return true;
+			return false;
 		}
 
 		public void setWrapped(OnItemLongClickListener listener) {
@@ -107,9 +107,8 @@ public class ListView extends android.widget.ListView {
 	private ActionMode actionMode;
 	private int checkedItemCount;
 	private int choiceMode;
-	private MultiChoiceModeWrapper choiceModeListener;
-	private OnItemLongClickListenerWrapper longClickListenerWrapper;
-
+	private final MultiChoiceModeWrapper choiceModeListener = new MultiChoiceModeWrapper();
+	private final OnItemLongClickListenerWrapper longClickListenerWrapper = new OnItemLongClickListenerWrapper();
 	private SBase sBase;
 
 	public ListView(Context context) {
@@ -129,7 +128,7 @@ public class ListView extends android.widget.ListView {
 
 	protected boolean doLongPress(final View child,
 			final int longPressPosition, final long longPressId) {
-		if (choiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+		if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
 			if (actionMode == null
 					&& (actionMode = startActionMode(choiceModeListener)) != null) {
 				setItemChecked(longPressPosition, true);
@@ -149,7 +148,7 @@ public class ListView extends android.widget.ListView {
 	}
 
 	protected void init(Context context) {
-		super.setOnItemLongClickListener(longClickListenerWrapper = new OnItemLongClickListenerWrapper());
+		super.setOnItemLongClickListener(longClickListenerWrapper);
 		if (context instanceof SBase) {
 			sBase = (SBase) context;
 		}
@@ -157,7 +156,7 @@ public class ListView extends android.widget.ListView {
 
 	@Override
 	public boolean performItemClick(View view, int position, long id) {
-		if (choiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+		if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
 			boolean newValue = !getCheckedItemPositions().get(position);
 			setItemChecked(position, newValue);
 			if (actionMode != null) {
@@ -179,14 +178,14 @@ public class ListView extends android.widget.ListView {
 			actionMode.finish();
 			actionMode = null;
 		}
-		if (choiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+		if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
 			clearChoices();
 			checkedItemCount = 0;
 			setLongClickable(true);
 			updateOnScreenCheckedViews();
 			requestLayout();
 			invalidate();
-			super.setChoiceMode(CHOICE_MODE_MULTIPLE);
+			super.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 		} else {
 			super.setChoiceMode(choiceMode);
 		}
@@ -194,7 +193,7 @@ public class ListView extends android.widget.ListView {
 
 	@Override
 	public void setItemChecked(int position, boolean value) {
-		if (choiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+		if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
 			if (value && actionMode == null) {
 				actionMode = startActionMode(choiceModeListener);
 			}
@@ -215,19 +214,12 @@ public class ListView extends android.widget.ListView {
 	}
 
 	public void setMultiChoiceModeListener(MultiChoiceModeListener listener) {
-		if (choiceModeListener == null) {
-			choiceModeListener = new MultiChoiceModeWrapper();
-		}
 		choiceModeListener.setWrapped(listener);
 	}
 
 	@Override
 	public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-		if (longClickListenerWrapper == null) {
-			longClickListenerWrapper = new OnItemLongClickListenerWrapper();
-		}
 		longClickListenerWrapper.setWrapped(listener);
-		super.setOnItemLongClickListener(longClickListenerWrapper);
 	}
 
 	public final void setSBase(SBase sBase) {

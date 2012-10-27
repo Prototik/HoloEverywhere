@@ -1,7 +1,5 @@
 package com.WazaBe.HoloEverywhere.internal;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-
 import java.lang.ref.WeakReference;
 
 import android.content.Context;
@@ -306,7 +304,7 @@ public class AlertController {
 		while (i > 0) {
 			i--;
 			v = vg.getChildAt(i);
-			if (canTextInput(v)) {
+			if (AlertController.canTextInput(v)) {
 				return true;
 			}
 		}
@@ -441,7 +439,7 @@ public class AlertController {
 
 	public void installContent() {
 		mWindow.requestFeature(Window.FEATURE_NO_TITLE);
-		if (mView == null || !canTextInput(mView)) {
+		if (mView == null || !AlertController.canTextInput(mView)) {
 			mWindow.setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
 					WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 		}
@@ -643,7 +641,7 @@ public class AlertController {
 
 			whichButtons = whichButtons | BIT_BUTTON_NEUTRAL;
 		}
-		if (shouldCenterSingleButton(mContext)) {
+		if (AlertController.shouldCenterSingleButton(mContext)) {
 			if (whichButtons == BIT_BUTTON_POSITIVE) {
 				centerButton(mButtonPositive);
 			} else if (whichButtons == BIT_BUTTON_NEGATIVE) {
@@ -670,9 +668,11 @@ public class AlertController {
 			if (mListView != null) {
 				contentPanel.removeView(mWindow.findViewById(R.id.scrollView));
 				contentPanel.addView(mListView, new LinearLayout.LayoutParams(
-						MATCH_PARENT, MATCH_PARENT));
+						android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+						android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 				contentPanel.setLayoutParams(new LinearLayout.LayoutParams(
-						MATCH_PARENT, 0, 1.0f));
+						android.view.ViewGroup.LayoutParams.MATCH_PARENT, 0,
+						1.0f));
 			} else {
 				contentPanel.setVisibility(View.GONE);
 			}
@@ -738,7 +738,9 @@ public class AlertController {
 			customPanel = (FrameLayout) mWindow.findViewById(R.id.customPanel);
 			FrameLayout custom = (FrameLayout) mWindow
 					.findViewById(R.id.custom);
-			custom.addView(mView, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+			custom.addView(mView, new LayoutParams(
+					android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+					android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 			if (mViewSpacingSpecified) {
 				custom.setPadding(mViewSpacingLeft, mViewSpacingTop,
 						mViewSpacingRight, mViewSpacingBottom);

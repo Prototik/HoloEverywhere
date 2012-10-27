@@ -32,6 +32,8 @@
     <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
     <item name="datePickerStyle">@style/Holo.DatePicker</item>
     <item name="timePickerStyle">@style/Holo.TimePicker</item>
+    <item name="panelMenuListWidth">250dip</item>
+    <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
   </define>
   <define name="BaseDark">
     <include name="Base" />

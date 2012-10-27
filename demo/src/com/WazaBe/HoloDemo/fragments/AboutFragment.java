@@ -65,8 +65,8 @@ public class AboutFragment extends SFragment {
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
+	public void onViewCreated(View view) {
+		super.onViewCreated(view);
 		view.findViewById(R.id.github).setOnClickListener(githubListener);
 		view.findViewById(R.id.google_plus).setOnClickListener(gplusListener);
 		view.findViewById(R.id.email).setOnClickListener(emailListener);

@@ -11,9 +11,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Build.VERSION;
 import android.util.Log;
 
+import com.WazaBe.HoloEverywhere.app.Base;
 import com.WazaBe.HoloEverywhere.preference.SharedPreferences;
 
 public final class _SharedPreferencesImpl_XML implements SharedPreferences {
@@ -101,7 +103,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 		}
 
 		private Editor putSet(String key, Set<?> value) {
-			editor.putString(key, setToString(value));
+			editor.putString(key, _SharedPreferencesImpl_XML.setToString(value));
 			return this;
 		}
 
@@ -117,7 +119,8 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 			if (VERSION.SDK_INT >= 11) {
 				editor.putStringSet(key, value);
 			} else {
-				editor.putString(key, setToString(value));
+				editor.putString(key,
+						_SharedPreferencesImpl_XML.setToString(value));
 			}
 			return this;
 		}
@@ -136,7 +139,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 		public static BaseOnSharedPreferenceChangeListener obtain(
 				SharedPreferences prefs,
 				OnSharedPreferenceChangeListener listener) {
-			return obtain(prefs, listener,
+			return BaseOnSharedPreferenceChangeListener.obtain(prefs, listener,
 					BaseOnSharedPreferenceChangeListener.class);
 		}
 
@@ -144,15 +147,18 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 		public static <T extends BaseOnSharedPreferenceChangeListener> T obtain(
 				SharedPreferences prefs,
 				OnSharedPreferenceChangeListener listener, Class<T> clazz) {
-			if (!instances.containsKey(listener)) {
-				synchronized (instances) {
-					if (!instances.containsKey(listener)) {
+			if (!BaseOnSharedPreferenceChangeListener.instances
+					.containsKey(listener)) {
+				synchronized (BaseOnSharedPreferenceChangeListener.instances) {
+					if (!BaseOnSharedPreferenceChangeListener.instances
+							.containsKey(listener)) {
 						try {
 							Constructor<T> constructor = clazz.getConstructor(
 									SharedPreferences.class,
 									OnSharedPreferenceChangeListener.class);
 							constructor.setAccessible(true);
-							instances.put(listener,
+							BaseOnSharedPreferenceChangeListener.instances.put(
+									listener,
 									constructor.newInstance(prefs, listener));
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -160,7 +166,8 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 					}
 				}
 			}
-			return (T) instances.get(listener);
+			return (T) BaseOnSharedPreferenceChangeListener.instances
+					.get(listener);
 		}
 
 		private OnSharedPreferenceChangeListener listener;
@@ -202,12 +209,12 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 
 	private final android.content.SharedPreferences prefs;
 
-	public _SharedPreferencesImpl_XML(android.content.SharedPreferences prefs) {
-		if (prefs == null) {
-			throw new IllegalArgumentException(
-					"SharedPreferences can't be null");
+	public _SharedPreferencesImpl_XML(Context context, String name, int mode) {
+		if (context instanceof Base) {
+			prefs = ((Base) context).superGetSharedPreferences(name, mode);
+		} else {
+			prefs = context.getSharedPreferences(name, mode);
 		}
-		this.prefs = prefs;
 	}
 
 	@Override
@@ -285,7 +292,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 		if (s == null) {
 			return defValue;
 		} else {
-			return stringToSet(s, clazz);
+			return _SharedPreferencesImpl_XML.stringToSet(s, clazz);
 		}
 	}
 
@@ -306,9 +313,21 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 
 	@Override
 	public void registerOnSharedPreferenceChangeListener(
+			android.content.SharedPreferences.OnSharedPreferenceChangeListener listener) {
+		prefs.registerOnSharedPreferenceChangeListener(listener);
+	}
+
+	@Override
+	public void registerOnSharedPreferenceChangeListener(
 			OnSharedPreferenceChangeListener listener) {
 		prefs.registerOnSharedPreferenceChangeListener(BaseOnSharedPreferenceChangeListener
 				.obtain(this, listener));
+	}
+
+	@Override
+	public void unregisterOnSharedPreferenceChangeListener(
+			android.content.SharedPreferences.OnSharedPreferenceChangeListener listener) {
+		prefs.unregisterOnSharedPreferenceChangeListener(listener);
 	}
 
 	@Override

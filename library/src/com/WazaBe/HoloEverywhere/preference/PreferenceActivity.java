@@ -7,6 +7,7 @@ import java.util.List;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -30,10 +31,8 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.ArrayAdapter;
 import com.WazaBe.HoloEverywhere.LayoutInflater;
@@ -41,7 +40,9 @@ import com.WazaBe.HoloEverywhere.R;
 import com.WazaBe.HoloEverywhere.app.FragmentBreadCrumbs;
 import com.WazaBe.HoloEverywhere.app.ListActivity;
 import com.WazaBe.HoloEverywhere.util.XmlUtils;
+import com.WazaBe.HoloEverywhere.widget.Button;
 import com.WazaBe.HoloEverywhere.widget.ListView;
+import com.WazaBe.HoloEverywhere.widget.TextView;
 
 public abstract class PreferenceActivity extends ListActivity implements
 		PreferenceManager.OnPreferenceTreeClickListener,
@@ -66,7 +67,7 @@ public abstract class PreferenceActivity extends ListActivity implements
 		public String fragment;
 		public Bundle fragmentArguments;
 		public int iconRes;
-		public long id = HEADER_ID_UNDEFINED;
+		public long id = PreferenceActivity.HEADER_ID_UNDEFINED;
 		public Intent intent;
 		public CharSequence summary;
 		public int summaryRes;
@@ -200,7 +201,6 @@ public abstract class PreferenceActivity extends ListActivity implements
 			} else {
 				holder.summary.setVisibility(View.GONE);
 			}
-
 			return view;
 		}
 	}
@@ -236,8 +236,8 @@ public abstract class PreferenceActivity extends ListActivity implements
 				ArrayList<Header> oldHeaders = new ArrayList<Header>(mHeaders);
 				mHeaders.clear();
 				onBuildHeaders(mHeaders);
-				if (getListAdapter() instanceof BaseAdapter) {
-					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				if (mAdapter instanceof BaseAdapter) {
+					((BaseAdapter) mAdapter).notifyDataSetChanged();
 				}
 				Header header = onGetNewHeader();
 				if (header != null && header.fragment != null) {
@@ -261,6 +261,7 @@ public abstract class PreferenceActivity extends ListActivity implements
 	private final ArrayList<Header> mHeaders = new ArrayList<Header>();
 	private FrameLayout mListFooter;
 	private Button mNextButton;
+
 	private PreferenceManager mPreferenceManager;
 
 	private ViewGroup mPrefsContainer;
@@ -272,7 +273,6 @@ public abstract class PreferenceActivity extends ListActivity implements
 	@Deprecated
 	public void addPreferencesFromIntent(Intent intent) {
 		requirePreferenceManager();
-
 		setPreferenceScreen(mPreferenceManager.inflateFromIntent(intent,
 				getPreferenceScreen()));
 	}
@@ -280,7 +280,6 @@ public abstract class PreferenceActivity extends ListActivity implements
 	@Deprecated
 	public void addPreferencesFromResource(int preferencesResId) {
 		requirePreferenceManager();
-
 		setPreferenceScreen(mPreferenceManager.inflateFromResource(this,
 				preferencesResId, getPreferenceScreen()));
 	}
@@ -300,7 +299,8 @@ public abstract class PreferenceActivity extends ListActivity implements
 		ArrayList<Header> matches = new ArrayList<Header>();
 		for (int j = 0; j < from.size(); j++) {
 			Header oh = from.get(j);
-			if (cur == oh || cur.id != HEADER_ID_UNDEFINED && cur.id == oh.id) {
+			if (cur == oh || cur.id != PreferenceActivity.HEADER_ID_UNDEFINED
+					&& cur.id == oh.id) {
 				matches.clear();
 				matches.add(oh);
 				break;
@@ -354,6 +354,7 @@ public abstract class PreferenceActivity extends ListActivity implements
 			setResult(resultCode, resultData);
 			finish();
 		} else {
+			// XXX be smarter about popping the stack.
 			onBackPressed();
 			if (caller != null) {
 				if (caller.getTargetFragment() != null) {
@@ -396,8 +397,8 @@ public abstract class PreferenceActivity extends ListActivity implements
 	}
 
 	public void invalidateHeaders() {
-		if (!mHandler.hasMessages(MSG_BUILD_HEADERS)) {
-			mHandler.sendEmptyMessage(MSG_BUILD_HEADERS);
+		if (!mHandler.hasMessages(PreferenceActivity.MSG_BUILD_HEADERS)) {
+			mHandler.sendEmptyMessage(PreferenceActivity.MSG_BUILD_HEADERS);
 		}
 	}
 
@@ -410,13 +411,11 @@ public abstract class PreferenceActivity extends ListActivity implements
 		try {
 			parser = getResources().getXml(resid);
 			AttributeSet attrs = Xml.asAttributeSet(parser);
-
 			int type;
 			while ((type = parser.next()) != XmlPullParser.END_DOCUMENT
 					&& type != XmlPullParser.START_TAG) {
-				// Parse next until start tag is found
+				;
 			}
-
 			String nodeName = parser.getName();
 			if (!"preference-headers".equals(nodeName)) {
 				throw new RuntimeException(
@@ -424,25 +423,21 @@ public abstract class PreferenceActivity extends ListActivity implements
 								+ nodeName + " at "
 								+ parser.getPositionDescription());
 			}
-
 			Bundle curBundle = null;
-
 			final int outerDepth = parser.getDepth();
 			while ((type = parser.next()) != XmlPullParser.END_DOCUMENT
 					&& (type != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
 				if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
 					continue;
 				}
-
 				nodeName = parser.getName();
 				if ("header".equals(nodeName)) {
 					Header header = new Header();
-
 					TypedArray sa = getResources().obtainAttributes(attrs,
 							R.styleable.PreferenceHeader);
 					header.id = sa.getResourceId(
 							R.styleable.PreferenceHeader_id,
-							(int) HEADER_ID_UNDEFINED);
+							(int) PreferenceActivity.HEADER_ID_UNDEFINED);
 					TypedValue tv = sa
 							.peekValue(R.styleable.PreferenceHeader_title);
 					if (tv != null && tv.type == TypedValue.TYPE_STRING) {
@@ -481,11 +476,9 @@ public abstract class PreferenceActivity extends ListActivity implements
 					header.fragment = sa
 							.getString(R.styleable.PreferenceHeader_fragment);
 					sa.recycle();
-
 					if (curBundle == null) {
 						curBundle = new Bundle();
 					}
-
 					final int innerDepth = parser.getDepth();
 					while ((type = parser.next()) != XmlPullParser.END_DOCUMENT
 							&& (type != XmlPullParser.END_TAG || parser
@@ -494,33 +487,27 @@ public abstract class PreferenceActivity extends ListActivity implements
 								|| type == XmlPullParser.TEXT) {
 							continue;
 						}
-
 						String innerNodeName = parser.getName();
 						if (innerNodeName.equals("extra")) {
 							getResources().parseBundleExtra("extra", attrs,
 									curBundle);
 							XmlUtils.skipCurrentTag(parser);
-
 						} else if (innerNodeName.equals("intent")) {
 							header.intent = Intent.parseIntent(getResources(),
 									parser, attrs);
-
 						} else {
 							XmlUtils.skipCurrentTag(parser);
 						}
 					}
-
 					if (curBundle.size() > 0) {
 						header.fragmentArguments = curBundle;
 						curBundle = null;
 					}
-
 					target.add(header);
 				} else {
 					XmlUtils.skipCurrentTag(parser);
 				}
 			}
-
 		} catch (XmlPullParserException e) {
 			throw new RuntimeException("Error parsing headers", e);
 		} catch (IOException e) {
@@ -530,13 +517,11 @@ public abstract class PreferenceActivity extends ListActivity implements
 				parser.close();
 			}
 		}
-
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-
 		if (mPreferenceManager != null) {
 			mPreferenceManager.dispatchActivityResult(requestCode, resultCode,
 					data);
@@ -550,18 +535,18 @@ public abstract class PreferenceActivity extends ListActivity implements
 			int titleRes, int shortTitleRes) {
 		Intent intent = new Intent(Intent.ACTION_MAIN);
 		intent.setClass(this, getClass());
-		intent.putExtra(EXTRA_SHOW_FRAGMENT, fragmentName);
-		intent.putExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS, args);
-		intent.putExtra(EXTRA_SHOW_FRAGMENT_TITLE, titleRes);
-		intent.putExtra(EXTRA_SHOW_FRAGMENT_SHORT_TITLE, shortTitleRes);
-		intent.putExtra(EXTRA_NO_HEADERS, true);
+		intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, fragmentName);
+		intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS, args);
+		intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_TITLE, titleRes);
+		intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_SHORT_TITLE,
+				shortTitleRes);
+		intent.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
 		return intent;
 	}
 
 	@Override
 	public void onContentChanged() {
 		super.onContentChanged();
-
 		if (mPreferenceManager != null) {
 			postBindPreferences();
 		}
@@ -575,21 +560,22 @@ public abstract class PreferenceActivity extends ListActivity implements
 		mPrefsContainer = (ViewGroup) findViewById(R.id.prefs_frame);
 		boolean hidingHeaders = onIsHidingHeaders();
 		mSinglePane = hidingHeaders || !onIsMultiPane();
-		String initialFragment = getIntent()
-				.getStringExtra(EXTRA_SHOW_FRAGMENT);
+		String initialFragment = getIntent().getStringExtra(
+				PreferenceActivity.EXTRA_SHOW_FRAGMENT);
 		Bundle initialArguments = getIntent().getBundleExtra(
-				EXTRA_SHOW_FRAGMENT_ARGUMENTS);
-		int initialTitle = getIntent()
-				.getIntExtra(EXTRA_SHOW_FRAGMENT_TITLE, 0);
+				PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS);
+		int initialTitle = getIntent().getIntExtra(
+				PreferenceActivity.EXTRA_SHOW_FRAGMENT_TITLE, 0);
 		int initialShortTitle = getIntent().getIntExtra(
-				EXTRA_SHOW_FRAGMENT_SHORT_TITLE, 0);
+				PreferenceActivity.EXTRA_SHOW_FRAGMENT_SHORT_TITLE, 0);
 		if (savedInstanceState != null) {
 			ArrayList<Header> headers = savedInstanceState
-					.getParcelableArrayList(HEADERS_TAG);
+					.getParcelableArrayList(PreferenceActivity.HEADERS_TAG);
 			if (headers != null) {
 				mHeaders.addAll(headers);
-				int curHeader = savedInstanceState.getInt(CUR_HEADER_TAG,
-						(int) HEADER_ID_UNDEFINED);
+				int curHeader = savedInstanceState.getInt(
+						PreferenceActivity.CUR_HEADER_TAG,
+						(int) PreferenceActivity.HEADER_ID_UNDEFINED);
 				if (curHeader >= 0 && curHeader < mHeaders.size()) {
 					setSelectedHeader(mHeaders.get(curHeader));
 				}
@@ -639,20 +625,19 @@ public abstract class PreferenceActivity extends ListActivity implements
 			setContentView(R.layout.preference_list_content_single);
 			mListFooter = (FrameLayout) findViewById(R.id.list_footer);
 			mPrefsContainer = (ViewGroup) findViewById(R.id.prefs);
-			mPreferenceManager = new PreferenceManager(this, FIRST_REQUEST_CODE);
+			mPreferenceManager = new PreferenceManager(this,
+					PreferenceActivity.FIRST_REQUEST_CODE);
 			mPreferenceManager.setOnPreferenceTreeClickListener(this);
 		}
-
 		Intent intent = getIntent();
-		if (intent.getBooleanExtra(EXTRA_PREFS_SHOW_BUTTON_BAR, false)) {
-
+		if (intent.getBooleanExtra(
+				PreferenceActivity.EXTRA_PREFS_SHOW_BUTTON_BAR, false)) {
 			findViewById(R.id.button_bar).setVisibility(View.VISIBLE);
-
 			Button backButton = (Button) findViewById(R.id.back_button);
 			backButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					setResult(RESULT_CANCELED);
+					setResult(Activity.RESULT_CANCELED);
 					finish();
 				}
 			});
@@ -660,7 +645,7 @@ public abstract class PreferenceActivity extends ListActivity implements
 			skipButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					setResult(RESULT_OK);
+					setResult(Activity.RESULT_OK);
 					finish();
 				}
 			});
@@ -668,30 +653,30 @@ public abstract class PreferenceActivity extends ListActivity implements
 			mNextButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					setResult(RESULT_OK);
+					setResult(Activity.RESULT_OK);
 					finish();
 				}
 			});
-
-			if (intent.hasExtra(EXTRA_PREFS_SET_NEXT_TEXT)) {
+			if (intent.hasExtra(PreferenceActivity.EXTRA_PREFS_SET_NEXT_TEXT)) {
 				String buttonText = intent
-						.getStringExtra(EXTRA_PREFS_SET_NEXT_TEXT);
+						.getStringExtra(PreferenceActivity.EXTRA_PREFS_SET_NEXT_TEXT);
 				if (TextUtils.isEmpty(buttonText)) {
 					mNextButton.setVisibility(View.GONE);
 				} else {
 					mNextButton.setText(buttonText);
 				}
 			}
-			if (intent.hasExtra(EXTRA_PREFS_SET_BACK_TEXT)) {
+			if (intent.hasExtra(PreferenceActivity.EXTRA_PREFS_SET_BACK_TEXT)) {
 				String buttonText = intent
-						.getStringExtra(EXTRA_PREFS_SET_BACK_TEXT);
+						.getStringExtra(PreferenceActivity.EXTRA_PREFS_SET_BACK_TEXT);
 				if (TextUtils.isEmpty(buttonText)) {
 					backButton.setVisibility(View.GONE);
 				} else {
 					backButton.setText(buttonText);
 				}
 			}
-			if (intent.getBooleanExtra(EXTRA_PREFS_SHOW_SKIP, false)) {
+			if (intent.getBooleanExtra(
+					PreferenceActivity.EXTRA_PREFS_SHOW_SKIP, false)) {
 				skipButton.setVisibility(View.VISIBLE);
 			}
 		}
@@ -700,7 +685,6 @@ public abstract class PreferenceActivity extends ListActivity implements
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-
 		if (mPreferenceManager != null) {
 			mPreferenceManager.dispatchActivityDestroy();
 		}
@@ -734,7 +718,8 @@ public abstract class PreferenceActivity extends ListActivity implements
 	}
 
 	public boolean onIsHidingHeaders() {
-		return getIntent().getBooleanExtra(EXTRA_NO_HEADERS, false);
+		return getIntent().getBooleanExtra(PreferenceActivity.EXTRA_NO_HEADERS,
+				false);
 	}
 
 	public boolean onIsMultiPane() {
@@ -746,8 +731,8 @@ public abstract class PreferenceActivity extends ListActivity implements
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		if (getListAdapter() != null) {
-			Object item = getListAdapter().getItem(position);
+		if (mAdapter != null) {
+			Object item = mAdapter.getItem(position);
 			if (item instanceof Header) {
 				onHeaderClick((Header) item, position);
 			}
@@ -779,7 +764,8 @@ public abstract class PreferenceActivity extends ListActivity implements
 	@Override
 	protected void onRestoreInstanceState(Bundle state) {
 		if (mPreferenceManager != null) {
-			Bundle container = state.getBundle(PREFERENCES_TAG);
+			Bundle container = state
+					.getBundle(PreferenceActivity.PREFERENCES_TAG);
 			if (container != null) {
 				final PreferenceScreen preferenceScreen = getPreferenceScreen();
 				if (preferenceScreen != null) {
@@ -795,23 +781,23 @@ public abstract class PreferenceActivity extends ListActivity implements
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-
 		if (mHeaders.size() > 0) {
-			outState.putParcelableArrayList(HEADERS_TAG, mHeaders);
+			outState.putParcelableArrayList(PreferenceActivity.HEADERS_TAG,
+					mHeaders);
 			if (mCurHeader != null) {
 				int index = mHeaders.indexOf(mCurHeader);
 				if (index >= 0) {
-					outState.putInt(CUR_HEADER_TAG, index);
+					outState.putInt(PreferenceActivity.CUR_HEADER_TAG, index);
 				}
 			}
 		}
-
 		if (mPreferenceManager != null) {
 			final PreferenceScreen preferenceScreen = getPreferenceScreen();
 			if (preferenceScreen != null) {
 				Bundle container = new Bundle();
 				preferenceScreen.saveHierarchyState(container);
-				outState.putBundle(PREFERENCES_TAG, container);
+				outState.putBundle(PreferenceActivity.PREFERENCES_TAG,
+						container);
 			}
 		}
 	}
@@ -819,17 +805,17 @@ public abstract class PreferenceActivity extends ListActivity implements
 	@Override
 	protected void onStop() {
 		super.onStop();
-
 		if (mPreferenceManager != null) {
 			mPreferenceManager.dispatchActivityStop();
 		}
 	}
 
 	private void postBindPreferences() {
-		if (mHandler.hasMessages(MSG_BIND_PREFERENCES)) {
+		if (mHandler.hasMessages(PreferenceActivity.MSG_BIND_PREFERENCES)) {
 			return;
 		}
-		mHandler.obtainMessage(MSG_BIND_PREFERENCES).sendToTarget();
+		mHandler.obtainMessage(PreferenceActivity.MSG_BIND_PREFERENCES)
+				.sendToTarget();
 	}
 
 	private void requirePreferenceManager() {
@@ -843,9 +829,6 @@ public abstract class PreferenceActivity extends ListActivity implements
 		}
 	}
 
-	/**
-	 * Set a footer that should be shown at the bottom of the header list.
-	 */
 	public void setListFooter(View view) {
 		mListFooter.removeAllViews();
 		mListFooter.addView(view, new FrameLayout.LayoutParams(
@@ -862,7 +845,6 @@ public abstract class PreferenceActivity extends ListActivity implements
 	@Deprecated
 	public void setPreferenceScreen(PreferenceScreen preferenceScreen) {
 		requirePreferenceManager();
-
 		if (mPreferenceManager.setPreferences(preferenceScreen)
 				&& preferenceScreen != null) {
 			postBindPreferences();
@@ -886,7 +868,7 @@ public abstract class PreferenceActivity extends ListActivity implements
 
 	public void showBreadCrumbs(CharSequence title, CharSequence shortTitle) {
 		if (mFragmentBreadCrumbs == null) {
-			View crumbs = findViewById(R.id.title);
+			View crumbs = findViewById(android.R.id.title);
 			try {
 				mFragmentBreadCrumbs = (FragmentBreadCrumbs) crumbs;
 			} catch (ClassCastException e) {
@@ -928,7 +910,7 @@ public abstract class PreferenceActivity extends ListActivity implements
 		if (push) {
 			transaction
 					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-			transaction.addToBackStack(BACK_STACK_PREFS);
+			transaction.addToBackStack(PreferenceActivity.BACK_STACK_PREFS);
 		} else {
 			transaction
 					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -957,7 +939,7 @@ public abstract class PreferenceActivity extends ListActivity implements
 			}
 			transaction
 					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-			transaction.addToBackStack(BACK_STACK_PREFS);
+			transaction.addToBackStack(PreferenceActivity.BACK_STACK_PREFS);
 			transaction.commitAllowingStateLoss();
 		}
 	}
@@ -981,7 +963,8 @@ public abstract class PreferenceActivity extends ListActivity implements
 
 	public void switchToHeader(Header header) {
 		if (mCurHeader == header) {
-			getSupportFragmentManager().popBackStack(BACK_STACK_PREFS,
+			getSupportFragmentManager().popBackStack(
+					PreferenceActivity.BACK_STACK_PREFS,
 					FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		} else {
 			int direction = mHeaders.indexOf(header)
@@ -999,7 +982,8 @@ public abstract class PreferenceActivity extends ListActivity implements
 
 	private void switchToHeaderInner(String fragmentName, Bundle args,
 			int direction) {
-		getSupportFragmentManager().popBackStack(BACK_STACK_PREFS,
+		getSupportFragmentManager().popBackStack(
+				PreferenceActivity.BACK_STACK_PREFS,
 				FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		Fragment f = Fragment.instantiate(this, fragmentName, args);
 		FragmentTransaction transaction = getSupportFragmentManager()

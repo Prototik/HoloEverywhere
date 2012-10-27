@@ -40,7 +40,8 @@ public class Toast extends android.widget.Toast {
 		try {
 			((TextView) getView()).setText(s);
 		} catch (ClassCastException e) {
-			Log.e(TAG, "This Toast was not created with Toast.makeText", e);
+			Log.e(Toast.TAG, "This Toast was not created with Toast.makeText",
+					e);
 		}
 	}
 }

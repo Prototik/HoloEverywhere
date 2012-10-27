@@ -203,13 +203,14 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 		}
 	}
 
-	private static final Map<SharedPreferences, Set<OnSharedPreferenceChangeListener>> listeners = new HashMap<SharedPreferences, Set<OnSharedPreferenceChangeListener>>();
+	private static final Map<String, Set<OnSharedPreferenceChangeListener>> listeners = new HashMap<String, Set<OnSharedPreferenceChangeListener>>();
 	private static final String TAG = _SharedPreferencesImpl_JSON.class
 			.getSimpleName();
 	private String charset;
 	private final JSONObject data;
 	private final boolean DEBUG = Application.isDebugMode();
 	private File file;
+	private final String fileTag;
 
 	@SuppressLint("NewApi")
 	public _SharedPreferencesImpl_JSON(Context context, String name, int mode) {
@@ -223,16 +224,20 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 						throw new CouldNotCreateStorage(tempFile,
 								"Сann't create a storage for the preferences.");
 					}
-					tempFile.setWritable(true);
-					tempFile.setReadable(true);
+					if (VERSION.SDK_INT >= 9) {
+						tempFile.setWritable(true);
+						tempFile.setReadable(true);
+					}
 				}
 			} else {
 				if (!tempFile.mkdirs()) {
 					throw new CouldNotCreateStorage(tempFile,
 							"Сann't create a storage for the preferences.");
 				}
-				tempFile.setWritable(true);
-				tempFile.setReadable(true);
+				if (VERSION.SDK_INT >= 9) {
+					tempFile.setWritable(true);
+					tempFile.setReadable(true);
+				}
 			}
 			tempFile = new File(tempFile, name + ".json");
 			if (!tempFile.exists() && !tempFile.createNewFile()) {
@@ -257,6 +262,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 				}
 			}
 			file = tempFile;
+			fileTag = file.getAbsolutePath().intern();
 			data = readDataFromFile(file);
 		} catch (IOException e) {
 			throw new RuntimeException("IOException", e);
@@ -367,12 +373,12 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 	}
 
 	public void notifyOnChange(String key) {
-		synchronized (listeners) {
-			if (!listeners.containsKey(this)) {
+		synchronized (_SharedPreferencesImpl_JSON.listeners) {
+			if (!_SharedPreferencesImpl_JSON.listeners.containsKey(fileTag)) {
 				return;
 			}
-			for (OnSharedPreferenceChangeListener listener : listeners
-					.get(this)) {
+			for (OnSharedPreferenceChangeListener listener : _SharedPreferencesImpl_JSON.listeners
+					.get(fileTag)) {
 				listener.onSharedPreferenceChanged(this, key);
 			}
 		}
@@ -386,7 +392,8 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 				reader = new InputStreamReader(is, charset);
 			} catch (UnsupportedEncodingException e) {
 				if (DEBUG) {
-					Log.w(TAG, "Encoding unsupport: " + charset);
+					Log.w(_SharedPreferencesImpl_JSON.TAG,
+							"Encoding unsupport: " + charset);
 				}
 				reader = new InputStreamReader(is);
 			}
@@ -408,13 +415,21 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
 	@Override
 	public void registerOnSharedPreferenceChangeListener(
+			android.content.SharedPreferences.OnSharedPreferenceChangeListener listener) {
+		throw new RuntimeException(
+				"android.content.SharedPreferences.OnSharedPreferenceChangeListener don't supported on JSON impl");
+	}
+
+	@Override
+	public void registerOnSharedPreferenceChangeListener(
 			OnSharedPreferenceChangeListener listener) {
-		synchronized (listeners) {
-			if (!listeners.containsKey(this)) {
-				listeners.put(this,
+		synchronized (_SharedPreferencesImpl_JSON.listeners) {
+			if (!_SharedPreferencesImpl_JSON.listeners.containsKey(fileTag)) {
+				_SharedPreferencesImpl_JSON.listeners.put(fileTag,
 						new HashSet<OnSharedPreferenceChangeListener>());
 			}
-			Set<OnSharedPreferenceChangeListener> set = listeners.get(this);
+			Set<OnSharedPreferenceChangeListener> set = _SharedPreferencesImpl_JSON.listeners
+					.get(fileTag);
 			if (!set.contains(listener)) {
 				set.add(listener);
 			}
@@ -427,7 +442,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 			try {
 				s = data.toString(2);
 			} catch (JSONException e) {
-				Log.e(TAG, "JSONException", e);
+				Log.e(_SharedPreferencesImpl_JSON.TAG, "JSONException", e);
 				s = data.toString();
 			}
 		} else {
@@ -458,15 +473,23 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
 	@Override
 	public void unregisterOnSharedPreferenceChangeListener(
+			android.content.SharedPreferences.OnSharedPreferenceChangeListener listener) {
+		throw new RuntimeException(
+				"android.content.SharedPreferences.OnSharedPreferenceChangeListener don't supported on JSON impl");
+	}
+
+	@Override
+	public void unregisterOnSharedPreferenceChangeListener(
 			OnSharedPreferenceChangeListener listener) {
-		synchronized (listeners) {
-			if (listeners.containsKey(this)) {
-				Set<OnSharedPreferenceChangeListener> set = listeners.get(this);
+		synchronized (_SharedPreferencesImpl_JSON.listeners) {
+			if (_SharedPreferencesImpl_JSON.listeners.containsKey(fileTag)) {
+				Set<OnSharedPreferenceChangeListener> set = _SharedPreferencesImpl_JSON.listeners
+						.get(fileTag);
 				if (set.contains(listener)) {
 					set.remove(listener);
 				}
 				if (set.size() == 0) {
-					listeners.remove(this);
+					_SharedPreferencesImpl_JSON.listeners.remove(fileTag);
 				}
 			}
 		}

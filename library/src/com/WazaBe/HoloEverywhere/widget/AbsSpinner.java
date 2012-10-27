@@ -210,8 +210,8 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
 			if (view == null) {
 				view = mAdapter.getView(selectedPosition, null, this);
 				if (VERSION.SDK_INT >= 16
-						&& view.getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
-					view.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
+						&& view.getImportantForAccessibility() == View.IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
+					view.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
 				}
 			}
 			if (view != null) {
@@ -261,7 +261,7 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
 			mNeedSync = true;
 			mSyncRowId = ss.selectedId;
 			mSyncPosition = ss.position;
-			mSyncMode = SYNC_SELECTED_POSITION;
+			mSyncMode = AdapterView.SYNC_SELECTED_POSITION;
 			requestLayout();
 		}
 	}
@@ -274,7 +274,7 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
 		if (ss.selectedId >= 0) {
 			ss.position = getSelectedItemPosition();
 		} else {
-			ss.position = INVALID_POSITION;
+			ss.position = AdapterView.INVALID_POSITION;
 		}
 		return ss;
 	}
@@ -295,7 +295,7 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
 				}
 			}
 		}
-		return INVALID_POSITION;
+		return AdapterView.INVALID_POSITION;
 	}
 
 	void recycleAllViews() {
@@ -320,10 +320,10 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
 		mDataChanged = false;
 		mNeedSync = false;
 		removeAllViewsInLayout();
-		mOldSelectedPosition = INVALID_POSITION;
-		mOldSelectedRowId = INVALID_ROW_ID;
-		setSelectedPositionInt(INVALID_POSITION);
-		setNextSelectedPositionInt(INVALID_POSITION);
+		mOldSelectedPosition = AdapterView.INVALID_POSITION;
+		mOldSelectedRowId = AdapterView.INVALID_ROW_ID;
+		setSelectedPositionInt(AdapterView.INVALID_POSITION);
+		setNextSelectedPositionInt(AdapterView.INVALID_POSITION);
 		invalidate();
 	}
 
@@ -334,15 +334,15 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
 			resetList();
 		}
 		mAdapter = adapter;
-		mOldSelectedPosition = INVALID_POSITION;
-		mOldSelectedRowId = INVALID_ROW_ID;
+		mOldSelectedPosition = AdapterView.INVALID_POSITION;
+		mOldSelectedRowId = AdapterView.INVALID_ROW_ID;
 		if (mAdapter != null) {
 			mOldItemCount = mItemCount;
 			mItemCount = mAdapter.getCount();
 			checkFocus();
 			mDataSetObserver = new AdapterDataSetObserver();
 			mAdapter.registerDataSetObserver(mDataSetObserver);
-			int position = mItemCount > 0 ? 0 : INVALID_POSITION;
+			int position = mItemCount > 0 ? 0 : AdapterView.INVALID_POSITION;
 			setSelectedPositionInt(position);
 			setNextSelectedPositionInt(position);
 			if (mItemCount == 0) {

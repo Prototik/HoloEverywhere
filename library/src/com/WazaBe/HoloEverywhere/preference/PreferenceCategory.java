@@ -28,8 +28,9 @@ public class PreferenceCategory extends PreferenceGroup {
 	@Override
 	protected boolean onPrepareAddPreference(Preference preference) {
 		if (preference instanceof PreferenceCategory) {
-			throw new IllegalArgumentException("Cannot add a " + TAG
-					+ " directly to a " + TAG);
+			throw new IllegalArgumentException("Cannot add a "
+					+ PreferenceCategory.TAG + " directly to a "
+					+ PreferenceCategory.TAG);
 		}
 		return super.onPrepareAddPreference(preference);
 	}

@@ -61,16 +61,23 @@
 			holo:summary="Nirvana"
 			holo:title="MultiSelectList" />
 	</PreferenceCategory>
-	<PreferenceCategory holo:title="Hidden (in the past)" >
-		<SeekBarPreference
-			holo:defaultValue="25"
-			holo:key="seek_bar"
-			holo:max="100"
-			holo:title="SeekBar" />
-		<SeekBarDialogPreference
-			holo:defaultValue="75"
-			holo:key="seek_bar_dialog"
-			holo:max="100"
-			holo:title="SeekBarDialog" />
+	<PreferenceCategory holo:title="Other" >
+		<PreferenceScreen
+			holo:summary="Unsupported preferences"
+			holo:title="Internal" >
+			<SeekBarPreference
+				holo:defaultValue="25"
+				holo:key="seek_bar"
+				holo:max="100"
+				holo:title="SeekBar" />
+			<SeekBarDialogPreference
+				holo:defaultValue="75"
+				holo:key="seek_bar_dialog"
+				holo:max="100"
+				holo:title="SeekBarDialog" />
+			<VolumePreference
+				holo:key="volume"
+				holo:title="Volume" />
+		</PreferenceScreen>
 	</PreferenceCategory>
 </PreferenceScreen>

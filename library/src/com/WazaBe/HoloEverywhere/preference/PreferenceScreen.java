@@ -1,19 +1,28 @@
 package com.WazaBe.HoloEverywhere.preference;
 
+import java.lang.reflect.Method;
+
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
 import com.WazaBe.HoloEverywhere.R;
-import com.WazaBe.HoloEverywhere.app.AlertDialog;
+import com.WazaBe.HoloEverywhere.app.Activity;
+import com.WazaBe.HoloEverywhere.app.Dialog;
 import com.WazaBe.HoloEverywhere.widget.ListView;
+import com.actionbarsherlock.internal.widget.ActionBarView;
 
 public final class PreferenceScreen extends PreferenceGroup implements
 		AdapterView.OnItemClickListener, DialogInterface.OnDismissListener {
@@ -39,9 +48,11 @@ public final class PreferenceScreen extends PreferenceGroup implements
 		}
 	}
 
-	private AlertDialog mDialog;
+	private Dialog mDialog;
 	private ListView mListView;
 	private ListAdapter mRootAdapter;
+
+	private final String TAG = getClass().getSimpleName();
 
 	public PreferenceScreen(Context context, AttributeSet attrs) {
 		super(context, attrs, R.attr.preferenceScreenStyle);
@@ -53,7 +64,7 @@ public final class PreferenceScreen extends PreferenceGroup implements
 		onAttachedToActivity();
 	}
 
-	public AlertDialog getDialog() {
+	public Dialog getDialog() {
 		return mDialog;
 	}
 
@@ -63,6 +74,27 @@ public final class PreferenceScreen extends PreferenceGroup implements
 		}
 
 		return mRootAdapter;
+	}
+
+	protected int getThemeResId(Context context) {
+		try {
+			if (context instanceof Activity) {
+				int t = ((Activity) context).getLastThemeResourceId();
+				if (t > 0) {
+					return t;
+				}
+			}
+			Class<?> clazz = context.getClass();
+			while (clazz != Context.class) {
+				clazz = clazz.getSuperclass();
+			}
+			Method method = clazz.getDeclaredMethod("getThemeResId");
+			method.setAccessible(true);
+			return (Integer) method.invoke(context);
+		} catch (Exception e) {
+			Log.e(TAG, "Failed getting context theme", e);
+			return R.style.Holo_Theme_Sherlock_NoActionBar;
+		}
 	}
 
 	@Override
@@ -122,7 +154,7 @@ public final class PreferenceScreen extends PreferenceGroup implements
 	@Override
 	protected Parcelable onSaveInstanceState() {
 		final Parcelable superState = super.onSaveInstanceState();
-		final AlertDialog dialog = mDialog;
+		final Dialog dialog = mDialog;
 		if (dialog == null || !dialog.isShowing()) {
 			return superState;
 		}
@@ -138,21 +170,35 @@ public final class PreferenceScreen extends PreferenceGroup implements
 		if (mListView != null) {
 			mListView.setAdapter(null);
 		}
+		final int theme = getThemeResId(context);
 		LayoutInflater inflater = LayoutInflater.from(context);
 		View childPrefScreen = inflater.inflate(
 				R.layout.preference_list_fragment, null);
 		mListView = (ListView) childPrefScreen.findViewById(android.R.id.list);
 		bind(mListView);
 		final CharSequence title = getTitle();
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setTitle(title);
-		builder.setView(childPrefScreen);
-		mDialog = builder.create();
-		mDialog.setOnDismissListener(this);
-		if (state != null) {
-			mDialog.onRestoreInstanceState(state);
+		final boolean titleEmpty = TextUtils.isEmpty(title);
+		Dialog dialog = mDialog = new Dialog(context, theme);
+		if (titleEmpty) {
+			dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		} else {
+			dialog.setTitle(title);
 		}
-		getPreferenceManager().addPreferencesScreen(mDialog);
-		mDialog.show();
+		if (VERSION.SDK_INT >= 11 || titleEmpty) {
+			dialog.setContentView(childPrefScreen);
+		} else {
+			View container = inflater.inflate(R.layout.abs__screen_action_bar);
+			((ActionBarView) container.findViewById(R.id.abs__action_bar))
+					.setTitle(title);
+			((FrameLayout) container.findViewById(R.id.abs__content))
+					.addView(childPrefScreen);
+			dialog.setContentView(container);
+		}
+		dialog.setOnDismissListener(this);
+		if (state != null) {
+			dialog.onRestoreInstanceState(state);
+		}
+		getPreferenceManager().addPreferencesScreen(dialog);
+		dialog.show();
 	}
 }

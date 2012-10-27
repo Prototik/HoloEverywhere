@@ -1,8 +1,6 @@
 package com.WazaBe.HoloEverywhere.app;
 
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
 import android.widget.ExpandableListAdapter;
@@ -69,11 +67,6 @@ public abstract class ExpandableListActivity extends Activity implements
 			setListAdapter(mAdapter);
 		}
 		mFinishedStart = true;
-	}
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
 	}
 
 	@Override

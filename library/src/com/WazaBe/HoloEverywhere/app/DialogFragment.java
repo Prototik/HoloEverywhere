@@ -34,7 +34,7 @@ public class DialogFragment extends Fragment implements
 
 	boolean mShownByMe;
 	boolean mShowsDialog = true;
-	int mStyle = STYLE_NORMAL;
+	int mStyle = DialogFragment.STYLE_NORMAL;
 	int mTheme = 0;
 
 	boolean mViewDestroyed;
@@ -149,7 +149,7 @@ public class DialogFragment extends Fragment implements
 		mDialog.setOnDismissListener(this);
 		if (savedInstanceState != null) {
 			Bundle dialogState = savedInstanceState
-					.getBundle(SAVED_DIALOG_STATE_TAG);
+					.getBundle(DialogFragment.SAVED_DIALOG_STATE_TAG);
 			if (dialogState != null) {
 				mDialog.onRestoreInstanceState(dialogState);
 			}
@@ -173,12 +173,15 @@ public class DialogFragment extends Fragment implements
 		super.onCreate(savedInstanceState);
 		mShowsDialog = getContainerId() == 0;
 		if (savedInstanceState != null) {
-			mStyle = savedInstanceState.getInt(SAVED_STYLE, STYLE_NORMAL);
-			mTheme = savedInstanceState.getInt(SAVED_THEME, 0);
-			mCancelable = savedInstanceState.getBoolean(SAVED_CANCELABLE, true);
-			mShowsDialog = savedInstanceState.getBoolean(SAVED_SHOWS_DIALOG,
-					mShowsDialog);
-			mBackStackId = savedInstanceState.getInt(SAVED_BACK_STACK_ID, -1);
+			mStyle = savedInstanceState.getInt(DialogFragment.SAVED_STYLE,
+					DialogFragment.STYLE_NORMAL);
+			mTheme = savedInstanceState.getInt(DialogFragment.SAVED_THEME, 0);
+			mCancelable = savedInstanceState.getBoolean(
+					DialogFragment.SAVED_CANCELABLE, true);
+			mShowsDialog = savedInstanceState.getBoolean(
+					DialogFragment.SAVED_SHOWS_DIALOG, mShowsDialog);
+			mBackStackId = savedInstanceState.getInt(
+					DialogFragment.SAVED_BACK_STACK_ID, -1);
 		}
 	}
 
@@ -217,23 +220,24 @@ public class DialogFragment extends Fragment implements
 		if (mDialog != null) {
 			Bundle dialogState = mDialog.onSaveInstanceState();
 			if (dialogState != null) {
-				outState.putBundle(SAVED_DIALOG_STATE_TAG, dialogState);
+				outState.putBundle(DialogFragment.SAVED_DIALOG_STATE_TAG,
+						dialogState);
 			}
 		}
-		if (mStyle != STYLE_NORMAL) {
-			outState.putInt(SAVED_STYLE, mStyle);
+		if (mStyle != DialogFragment.STYLE_NORMAL) {
+			outState.putInt(DialogFragment.SAVED_STYLE, mStyle);
 		}
 		if (mTheme != 0) {
-			outState.putInt(SAVED_THEME, mTheme);
+			outState.putInt(DialogFragment.SAVED_THEME, mTheme);
 		}
 		if (!mCancelable) {
-			outState.putBoolean(SAVED_CANCELABLE, mCancelable);
+			outState.putBoolean(DialogFragment.SAVED_CANCELABLE, mCancelable);
 		}
 		if (!mShowsDialog) {
-			outState.putBoolean(SAVED_SHOWS_DIALOG, mShowsDialog);
+			outState.putBoolean(DialogFragment.SAVED_SHOWS_DIALOG, mShowsDialog);
 		}
 		if (mBackStackId != -1) {
-			outState.putInt(SAVED_BACK_STACK_ID, mBackStackId);
+			outState.putInt(DialogFragment.SAVED_BACK_STACK_ID, mBackStackId);
 		}
 	}
 
@@ -286,7 +290,8 @@ public class DialogFragment extends Fragment implements
 
 	public void setStyle(int style, int theme) {
 		mStyle = style;
-		if (mStyle == STYLE_NO_FRAME || mStyle == STYLE_NO_INPUT) {
+		if (mStyle == DialogFragment.STYLE_NO_FRAME
+				|| mStyle == DialogFragment.STYLE_NO_INPUT) {
 			mTheme = android.R.style.Theme_Panel;
 		}
 		if (theme != 0) {

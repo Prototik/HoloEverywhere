@@ -86,11 +86,11 @@ public class LongSparseArray<E> implements Cloneable {
 	}
 
 	public void delete(long key) {
-		int i = binarySearch(mKeys, 0, mSize, key);
+		int i = LongSparseArray.binarySearch(mKeys, 0, mSize, key);
 
 		if (i >= 0) {
-			if (mValues[i] != DELETED) {
-				mValues[i] = DELETED;
+			if (mValues[i] != LongSparseArray.DELETED) {
+				mValues[i] = LongSparseArray.DELETED;
 				mGarbage = true;
 			}
 		}
@@ -103,7 +103,7 @@ public class LongSparseArray<E> implements Cloneable {
 		Object[] values = mValues;
 		for (int i = 0; i < n; i++) {
 			Object val = values[i];
-			if (val != DELETED) {
+			if (val != LongSparseArray.DELETED) {
 				if (i != o) {
 					keys[o] = keys[i];
 					values[o] = val;
@@ -122,9 +122,9 @@ public class LongSparseArray<E> implements Cloneable {
 
 	@SuppressWarnings("unchecked")
 	public E get(long key, E valueIfKeyNotFound) {
-		int i = binarySearch(mKeys, 0, mSize, key);
+		int i = LongSparseArray.binarySearch(mKeys, 0, mSize, key);
 
-		if (i < 0 || mValues[i] == DELETED) {
+		if (i < 0 || mValues[i] == LongSparseArray.DELETED) {
 			return valueIfKeyNotFound;
 		} else {
 			return (E) mValues[i];
@@ -135,7 +135,7 @@ public class LongSparseArray<E> implements Cloneable {
 		if (mGarbage) {
 			gc();
 		}
-		return binarySearch(mKeys, 0, mSize, key);
+		return LongSparseArray.binarySearch(mKeys, 0, mSize, key);
 	}
 
 	public int indexOfValue(E value) {
@@ -159,19 +159,19 @@ public class LongSparseArray<E> implements Cloneable {
 	}
 
 	public void put(long key, E value) {
-		int i = binarySearch(mKeys, 0, mSize, key);
+		int i = LongSparseArray.binarySearch(mKeys, 0, mSize, key);
 		if (i >= 0) {
 			mValues[i] = value;
 		} else {
 			i = ~i;
-			if (i < mSize && mValues[i] == DELETED) {
+			if (i < mSize && mValues[i] == LongSparseArray.DELETED) {
 				mKeys[i] = key;
 				mValues[i] = value;
 				return;
 			}
 			if (mGarbage && mSize >= mKeys.length) {
 				gc();
-				i = ~binarySearch(mKeys, 0, mSize, key);
+				i = ~LongSparseArray.binarySearch(mKeys, 0, mSize, key);
 			}
 			if (mSize >= mKeys.length) {
 				int n = ArrayUtils.idealLongArraySize(mSize + 1);
@@ -197,8 +197,8 @@ public class LongSparseArray<E> implements Cloneable {
 	}
 
 	public void removeAt(int index) {
-		if (mValues[index] != DELETED) {
-			mValues[index] = DELETED;
+		if (mValues[index] != LongSparseArray.DELETED) {
+			mValues[index] = LongSparseArray.DELETED;
 			mGarbage = true;
 		}
 	}

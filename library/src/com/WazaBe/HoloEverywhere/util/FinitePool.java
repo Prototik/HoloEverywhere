@@ -54,7 +54,7 @@ public class FinitePool<T extends Poolable<T>> implements Pool<T> {
 			}
 			mManager.onReleased(element);
 		} else {
-			Log.w(TAG, "Element is already in pool: " + element);
+			Log.w(FinitePool.TAG, "Element is already in pool: " + element);
 		}
 	}
 }

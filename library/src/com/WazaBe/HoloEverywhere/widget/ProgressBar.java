@@ -69,10 +69,10 @@ public class ProgressBar extends View {
 							@Override
 							public void onReleased(RefreshData element) {
 							}
-						}, POOL_MAX));
+						}, RefreshData.POOL_MAX));
 
 		public static RefreshData obtain(int id, int progress, boolean fromUser) {
-			RefreshData rd = sPool.acquire();
+			RefreshData rd = RefreshData.sPool.acquire();
 			rd.id = id;
 			rd.progress = progress;
 			rd.fromUser = fromUser;
@@ -97,7 +97,7 @@ public class ProgressBar extends View {
 		}
 
 		public void recycle() {
-			sPool.release(this);
+			RefreshData.sPool.release(this);
 		}
 
 		@Override
@@ -272,7 +272,7 @@ public class ProgressBar extends View {
 				progressDrawable = ((LayerDrawable) d)
 						.findDrawableByLayerId(id);
 			}
-			final int level = (int) (scale * MAX_LEVEL);
+			final int level = (int) (scale * ProgressBar.MAX_LEVEL);
 			(progressDrawable != null ? progressDrawable : d).setLevel(level);
 		} else {
 			invalidate();
@@ -476,7 +476,7 @@ public class ProgressBar extends View {
 				float scale = mTransformation.getAlpha();
 				try {
 					mInDrawing = true;
-					d.setLevel((int) (scale * MAX_LEVEL));
+					d.setLevel((int) (scale * ProgressBar.MAX_LEVEL));
 				} finally {
 					mInDrawing = false;
 				}
@@ -523,8 +523,8 @@ public class ProgressBar extends View {
 		dw += getPaddingLeft() + getPaddingRight();
 		dh += getPaddingTop() + getPaddingBottom();
 		setMeasuredDimension(
-				supportResolveSizeAndState(dw, widthMeasureSpec, 0),
-				supportResolveSizeAndState(dh, heightMeasureSpec, 0));
+				View.supportResolveSizeAndState(dw, widthMeasureSpec, 0),
+				View.supportResolveSizeAndState(dh, heightMeasureSpec, 0));
 	}
 
 	protected void onProgressRefresh(float scale, boolean fromUser) {
@@ -565,7 +565,8 @@ public class ProgressBar extends View {
 	public void onVisibilityChanged(View changedView, int visibility) {
 		super.onVisibilityChanged(changedView, visibility);
 		if (mIndeterminate) {
-			if (visibility == GONE || visibility == INVISIBLE) {
+			if (visibility == android.view.View.GONE
+					|| visibility == android.view.View.INVISIBLE) {
 				stopAnimation();
 			} else {
 				startAnimation();
@@ -604,7 +605,8 @@ public class ProgressBar extends View {
 		} else {
 			removeCallbacks(mAccessibilityEventSender);
 		}
-		postDelayed(mAccessibilityEventSender, TIMEOUT_SEND_ACCESSIBILITY_EVENT);
+		postDelayed(mAccessibilityEventSender,
+				ProgressBar.TIMEOUT_SEND_ACCESSIBILITY_EVENT);
 	}
 
 	public synchronized void setIndeterminate(boolean indeterminate) {
@@ -728,7 +730,8 @@ public class ProgressBar extends View {
 		if (getVisibility() != v) {
 			super.setVisibility(v);
 			if (mIndeterminate) {
-				if (v == GONE || v == INVISIBLE) {
+				if (v == android.view.View.GONE
+						|| v == android.view.View.INVISIBLE) {
 					stopAnimation();
 				} else {
 					startAnimation();
@@ -738,7 +741,7 @@ public class ProgressBar extends View {
 	}
 
 	void startAnimation() {
-		if (getVisibility() != VISIBLE) {
+		if (getVisibility() != android.view.View.VISIBLE) {
 			return;
 		}
 		if (mIndeterminateDrawable instanceof Animatable) {

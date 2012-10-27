@@ -86,11 +86,11 @@ public class SparseArray<E> implements Cloneable {
 	}
 
 	public void delete(int key) {
-		int i = binarySearch(mKeys, 0, mSize, key);
+		int i = SparseArray.binarySearch(mKeys, 0, mSize, key);
 
 		if (i >= 0) {
-			if (mValues[i] != DELETED) {
-				mValues[i] = DELETED;
+			if (mValues[i] != SparseArray.DELETED) {
+				mValues[i] = SparseArray.DELETED;
 				mGarbage = true;
 			}
 		}
@@ -103,7 +103,7 @@ public class SparseArray<E> implements Cloneable {
 		Object[] values = mValues;
 		for (int i = 0; i < n; i++) {
 			Object val = values[i];
-			if (val != DELETED) {
+			if (val != SparseArray.DELETED) {
 				if (i != o) {
 					keys[o] = keys[i];
 					values[o] = val;
@@ -122,9 +122,9 @@ public class SparseArray<E> implements Cloneable {
 
 	@SuppressWarnings("unchecked")
 	public E get(int key, E valueIfKeyNotFound) {
-		int i = binarySearch(mKeys, 0, mSize, key);
+		int i = SparseArray.binarySearch(mKeys, 0, mSize, key);
 
-		if (i < 0 || mValues[i] == DELETED) {
+		if (i < 0 || mValues[i] == SparseArray.DELETED) {
 			return valueIfKeyNotFound;
 		} else {
 			return (E) mValues[i];
@@ -135,7 +135,7 @@ public class SparseArray<E> implements Cloneable {
 		if (mGarbage) {
 			gc();
 		}
-		return binarySearch(mKeys, 0, mSize, key);
+		return SparseArray.binarySearch(mKeys, 0, mSize, key);
 	}
 
 	public int indexOfValue(E value) {
@@ -158,19 +158,19 @@ public class SparseArray<E> implements Cloneable {
 	}
 
 	public void put(int key, E value) {
-		int i = binarySearch(mKeys, 0, mSize, key);
+		int i = SparseArray.binarySearch(mKeys, 0, mSize, key);
 		if (i >= 0) {
 			mValues[i] = value;
 		} else {
 			i = ~i;
-			if (i < mSize && mValues[i] == DELETED) {
+			if (i < mSize && mValues[i] == SparseArray.DELETED) {
 				mKeys[i] = key;
 				mValues[i] = value;
 				return;
 			}
 			if (mGarbage && mSize >= mKeys.length) {
 				gc();
-				i = ~binarySearch(mKeys, 0, mSize, key);
+				i = ~SparseArray.binarySearch(mKeys, 0, mSize, key);
 			}
 			if (mSize >= mKeys.length) {
 				int n = ArrayUtils.idealIntArraySize(mSize + 1);
@@ -196,8 +196,8 @@ public class SparseArray<E> implements Cloneable {
 	}
 
 	public void removeAt(int index) {
-		if (mValues[index] != DELETED) {
-			mValues[index] = DELETED;
+		if (mValues[index] != SparseArray.DELETED) {
+			mValues[index] = SparseArray.DELETED;
 			mGarbage = true;
 		}
 	}

@@ -1,5 +1,6 @@
 package com.WazaBe.HoloEverywhere;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,13 +8,20 @@ import java.util.WeakHashMap;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.WazaBe.HoloEverywhere.SystemServiceManager.SystemServiceCreator;
+import com.WazaBe.HoloEverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
 import com.WazaBe.HoloEverywhere.app.Application;
+import com.actionbarsherlock.internal.view.menu.ExpandedMenuView;
+import com.actionbarsherlock.internal.view.menu.HoloListMenuItemView;
+import com.actionbarsherlock.internal.widget.ActionBarContainer;
+import com.actionbarsherlock.internal.widget.ActionBarView;
 
 public class LayoutInflater extends android.view.LayoutInflater implements
-		Cloneable {
+		Cloneable, android.view.LayoutInflater.Factory {
 	private final class HoloFactoryMerger extends ArrayList<Factory> implements
 			Factory {
 		private static final long serialVersionUID = -851134244408815411L;
@@ -34,11 +42,20 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 		}
 	}
 
+	@SystemService(Context.LAYOUT_INFLATER_SERVICE)
+	public static class LayoutInflaterCreator implements
+			SystemServiceCreator<LayoutInflater> {
+		@Override
+		public LayoutInflater createService(Context context) {
+			return LayoutInflater.from(context);
+		}
+	}
+
 	public static interface OnInitInflaterListener {
 		public void onInitInflater(LayoutInflater inflater);
 	}
 
-	private static final Map<Context, LayoutInflater> INSTANCES_MAP = new WeakHashMap<Context, LayoutInflater>();
+	private static final Map<Context, WeakReference<LayoutInflater>> INSTANCES_MAP = new WeakHashMap<Context, WeakReference<LayoutInflater>>();
 	private static OnInitInflaterListener listener;
 	private static final Map<String, String> VIEWS_MAP = new HashMap<String, String>();
 
@@ -51,10 +68,12 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 				"CheckedTextView");
 		remap("android.support.v4.view", "ViewPager", "PagerTitleStrip");
 		remap("android.webkit", "WebView");
+		remapInternal(ActionBarView.class, HoloListMenuItemView.class,
+				ExpandedMenuView.class, ActionBarContainer.class);
 	}
 
 	public static void clearInstances() {
-		INSTANCES_MAP.clear();
+		LayoutInflater.INSTANCES_MAP.clear();
 	}
 
 	public static LayoutInflater from(android.view.LayoutInflater inflater) {
@@ -65,75 +84,69 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 	}
 
 	public static LayoutInflater from(Context context) {
-		if (!INSTANCES_MAP.containsKey(context)) {
-			synchronized (INSTANCES_MAP) {
-				if (!INSTANCES_MAP.containsKey(context)) {
-					INSTANCES_MAP.put(context, new LayoutInflater(context));
-				}
-			}
+		LayoutInflater inflater = null;
+		WeakReference<LayoutInflater> reference = INSTANCES_MAP.get(context);
+		if (reference != null) {
+			inflater = reference.get();
 		}
-		return INSTANCES_MAP.get(context);
+		if (inflater == null) {
+			inflater = new LayoutInflater(context);
+			reference = new WeakReference<LayoutInflater>(inflater);
+			INSTANCES_MAP.put(context, reference);
+		}
+		return inflater;
 	}
 
 	public static LayoutInflater from(View view) {
-		return from(view.getContext());
-	}
-
-	public static Object getSystemService(Object superService) {
-		if (superService instanceof android.view.LayoutInflater) {
-			if (superService instanceof LayoutInflater) {
-				return superService;
-			}
-			return LayoutInflater
-					.from((android.view.LayoutInflater) superService);
-		}
-		return superService;
+		return LayoutInflater.from(view.getContext());
 	}
 
 	public static View inflate(Context context, int resource) {
-		return from(context).inflate(resource, null);
+		return LayoutInflater.from(context).inflate(resource, null);
 	}
 
 	public static View inflate(Context context, int resource, ViewGroup root) {
-		return from(context).inflate(resource, root);
+		return LayoutInflater.from(context).inflate(resource, root);
 	}
 
 	public static View inflate(Context context, int resource, ViewGroup root,
 			boolean attachToRoot) {
-		return from(context).inflate(resource, root, attachToRoot);
+		return LayoutInflater.from(context).inflate(resource, root,
+				attachToRoot);
 	}
 
 	public static View inflate(View view, int resource) {
-		return from(view).inflate(resource, null);
+		return LayoutInflater.from(view).inflate(resource, null);
 	}
 
 	public static View inflate(View view, int resource, ViewGroup root) {
-		return from(view).inflate(resource, root);
+		return LayoutInflater.from(view).inflate(resource, root);
 	}
 
 	public static View inflate(View view, int resource, ViewGroup root,
 			boolean attachToRoot) {
-		return from(view).inflate(resource, root, attachToRoot);
+		return LayoutInflater.from(view).inflate(resource, root, attachToRoot);
 	}
 
 	public static void onDestroy(Context context) {
-		if (INSTANCES_MAP.containsKey(context)) {
-			synchronized (INSTANCES_MAP) {
-				if (INSTANCES_MAP.containsKey(context)) {
-					INSTANCES_MAP.remove(context);
-				}
-			}
-		}
+		LayoutInflater.INSTANCES_MAP.remove(context);
 	}
 
 	public static void remap(String prefix, String... classess) {
 		for (String clazz : classess) {
-			VIEWS_MAP.put(clazz, prefix + "." + clazz);
+			LayoutInflater.VIEWS_MAP.put(clazz, prefix + "." + clazz);
 		}
 	}
 
 	public static void remapHard(String from, String to) {
-		VIEWS_MAP.put(from, to);
+		Log.v("LayoutInflater", "From: " + from + ". To: " + to);
+		LayoutInflater.VIEWS_MAP.put(from, to);
+	}
+
+	private static void remapInternal(Class<?>... classess) {
+		for (Class<?> clazz : classess) {
+			remapHard("Internal." + clazz.getSimpleName(), clazz.getName());
+		}
 	}
 
 	public static void setOnInitInflaterListener(OnInitInflaterListener listener) {
@@ -182,22 +195,48 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
 	private void init() {
 		super.setFactory(factoryMerger);
-		if (listener != null) {
-			listener.onInitInflater(this);
+		factoryMerger.add(this);
+		if (LayoutInflater.listener != null) {
+			LayoutInflater.listener.onInitInflater(this);
 		}
 	}
 
 	@Override
 	protected View onCreateView(String name, AttributeSet attrs)
 			throws ClassNotFoundException {
-		name = name.intern();
-		if (VIEWS_MAP.containsKey(name)) {
-			return createView(VIEWS_MAP.get(name), null, attrs);
+		String newName = LayoutInflater.VIEWS_MAP.get(name.intern());
+		View view;
+		if (newName != null) {
+			view = tryCreateView(newName, null, attrs);
+			if (view != null) {
+				return view;
+			}
 		}
+		if (name.indexOf('.') > 0) {
+			view = tryCreateView(name, null, attrs);
+			if (view != null) {
+				return view;
+			}
+		}
+		view = tryCreateView(name, "android.widget.", attrs);
+		if (view != null) {
+			return view;
+		}
+		view = tryCreateView(name, "android.view.", attrs);
+		if (view != null) {
+			return view;
+		} else {
+			throw new ClassNotFoundException("Could not find class: " + name);
+		}
+	}
+
+	@Override
+	public View onCreateView(String name, Context context, AttributeSet attrs) {
 		try {
-			return createView(name, "android.widget.", attrs);
+			return onCreateView(name, attrs);
 		} catch (ClassNotFoundException e) {
-			return createView(name, "android.view.", attrs);
+			e.printStackTrace();
+			return null;
 		}
 	}
 
@@ -209,5 +248,17 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 		}
 		addFactory(factory);
 		factorySet = true;
+	}
+
+	protected View tryCreateView(String name, String prefix, AttributeSet attrs) {
+		String newName = prefix == null ? "" : prefix;
+		newName += name;
+		try {
+			if (Class.forName(newName) != null) {
+				return createView(newName, null, attrs);
+			}
+		} catch (ClassNotFoundException e) {
+		}
+		return null;
 	}
 }

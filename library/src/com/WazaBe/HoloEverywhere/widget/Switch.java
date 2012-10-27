@@ -20,6 +20,7 @@ import android.util.FloatMath;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
+import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.CompoundButton;
@@ -187,7 +188,7 @@ public class Switch extends CompoundButton {
 	protected int[] onCreateDrawableState(int extraSpace) {
 		final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
 		if (isChecked()) {
-			mergeDrawableStates(drawableState, CHECKED_STATE_SET);
+			View.mergeDrawableStates(drawableState, Switch.CHECKED_STATE_SET);
 		}
 		return drawableState;
 	}
@@ -339,7 +340,7 @@ public class Switch extends CompoundButton {
 			final float x = ev.getX();
 			final float y = ev.getY();
 			if (isEnabled() && hitThumb(x, y)) {
-				mTouchMode = TOUCH_MODE_DOWN;
+				mTouchMode = Switch.TOUCH_MODE_DOWN;
 				mTouchX = x;
 				mTouchY = y;
 			}
@@ -355,7 +356,7 @@ public class Switch extends CompoundButton {
 				final float y = ev.getY();
 				if (Math.abs(x - mTouchX) > mTouchSlop
 						|| Math.abs(y - mTouchY) > mTouchSlop) {
-					mTouchMode = TOUCH_MODE_DRAGGING;
+					mTouchMode = Switch.TOUCH_MODE_DRAGGING;
 					getParent().requestDisallowInterceptTouchEvent(true);
 					mTouchX = x;
 					mTouchY = y;
@@ -380,11 +381,11 @@ public class Switch extends CompoundButton {
 		}
 		case MotionEvent.ACTION_UP:
 		case MotionEvent.ACTION_CANCEL: {
-			if (mTouchMode == TOUCH_MODE_DRAGGING) {
+			if (mTouchMode == Switch.TOUCH_MODE_DRAGGING) {
 				stopDrag(ev);
 				return true;
 			}
-			mTouchMode = TOUCH_MODE_IDLE;
+			mTouchMode = Switch.TOUCH_MODE_IDLE;
 			mVelocityTracker.clear();
 			break;
 		}
@@ -483,7 +484,7 @@ public class Switch extends CompoundButton {
 	}
 
 	private void stopDrag(MotionEvent ev) {
-		mTouchMode = TOUCH_MODE_IDLE;
+		mTouchMode = Switch.TOUCH_MODE_IDLE;
 		boolean commitChange = ev.getAction() == MotionEvent.ACTION_UP
 				&& isEnabled();
 		cancelSuperTouch(ev);

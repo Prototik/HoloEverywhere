@@ -135,7 +135,8 @@ public abstract class PreferenceFragment extends Fragment implements
 		}
 		mInitDone = true;
 		if (savedInstanceState != null) {
-			Bundle container = savedInstanceState.getBundle(PREFERENCES_TAG);
+			Bundle container = savedInstanceState
+					.getBundle(PreferenceFragment.PREFERENCES_TAG);
 			if (container != null) {
 				final PreferenceScreen preferenceScreen = getPreferenceScreen();
 				if (preferenceScreen != null) {
@@ -156,7 +157,7 @@ public abstract class PreferenceFragment extends Fragment implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mPreferenceManager = new PreferenceManager(getActivity(),
-				FIRST_REQUEST_CODE);
+				PreferenceFragment.FIRST_REQUEST_CODE);
 		mPreferenceManager.setFragment(this);
 	}
 
@@ -177,7 +178,7 @@ public abstract class PreferenceFragment extends Fragment implements
 	public void onDestroyView() {
 		mList = null;
 		mHandler.removeCallbacks(mRequestFocus);
-		mHandler.removeMessages(MSG_BIND_PREFERENCES);
+		mHandler.removeMessages(PreferenceFragment.MSG_BIND_PREFERENCES);
 		super.onDestroyView();
 	}
 
@@ -199,7 +200,7 @@ public abstract class PreferenceFragment extends Fragment implements
 		if (preferenceScreen != null) {
 			Bundle container = new Bundle();
 			preferenceScreen.saveHierarchyState(container);
-			outState.putBundle(PREFERENCES_TAG, container);
+			outState.putBundle(PreferenceFragment.PREFERENCES_TAG, container);
 		}
 	}
 
@@ -217,10 +218,11 @@ public abstract class PreferenceFragment extends Fragment implements
 	}
 
 	private void postBindPreferences() {
-		if (mHandler.hasMessages(MSG_BIND_PREFERENCES)) {
+		if (mHandler.hasMessages(PreferenceFragment.MSG_BIND_PREFERENCES)) {
 			return;
 		}
-		mHandler.obtainMessage(MSG_BIND_PREFERENCES).sendToTarget();
+		mHandler.obtainMessage(PreferenceFragment.MSG_BIND_PREFERENCES)
+				.sendToTarget();
 	}
 
 	private void requirePreferenceManager() {

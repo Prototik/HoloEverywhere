@@ -61,7 +61,7 @@
 				android:layout_gravity="center"
 				android:numStars="5"
 				android:rating="2.5"
-				android:stepSize="0.5" />
+				android:stepSize="0.1" />
 			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -235,6 +235,12 @@
 				android:icon="@drawable/list_popup_window"
 				android:onClick="showListPopupWindow"
 				android:text="ListPopupWindow" />
+			<OtherButton
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/context_menu"
+				android:onClick="showContextMenu"
+				android:text="ContextMenu" />
 			<OtherButton
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"

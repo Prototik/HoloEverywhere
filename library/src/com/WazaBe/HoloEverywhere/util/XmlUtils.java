@@ -113,7 +113,7 @@ public class XmlUtils {
 			return defaultValue;
 		}
 
-		return parseUnsignedIntAttribute(value);
+		return XmlUtils.parseUnsignedIntAttribute(value);
 	}
 
 	public static final void nextElement(XmlPullParser parser)
@@ -175,21 +175,21 @@ public class XmlUtils {
 			throws XmlPullParserException, java.io.IOException {
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(in, null);
-		return (ArrayList) readValueXml(parser, new String[1]);
+		return (ArrayList) XmlUtils.readValueXml(parser, new String[1]);
 	}
 
 	public static final HashMap readMapXml(InputStream in)
 			throws XmlPullParserException, java.io.IOException {
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(in, null);
-		return (HashMap) readValueXml(parser, new String[1]);
+		return (HashMap) XmlUtils.readValueXml(parser, new String[1]);
 	}
 
 	public static final HashSet readSetXml(InputStream in)
 			throws XmlPullParserException, java.io.IOException {
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(in, null);
-		return (HashSet) readValueXml(parser, new String[1]);
+		return (HashSet) XmlUtils.readValueXml(parser, new String[1]);
 	}
 
 	public static final int[] readThisIntArrayXml(XmlPullParser parser,
@@ -252,7 +252,7 @@ public class XmlUtils {
 		int eventType = parser.getEventType();
 		do {
 			if (eventType == XmlPullParser.START_TAG) {
-				Object val = readThisValueXml(parser, name);
+				Object val = XmlUtils.readThisValueXml(parser, name);
 				list.add(val);
 				// System.out.println("Adding to list: " + val);
 			} else if (eventType == XmlPullParser.END_TAG) {
@@ -277,7 +277,7 @@ public class XmlUtils {
 		int eventType = parser.getEventType();
 		do {
 			if (eventType == XmlPullParser.START_TAG) {
-				Object val = readThisValueXml(parser, name);
+				Object val = XmlUtils.readThisValueXml(parser, name);
 				if (name[0] != null) {
 					map.put(name[0], val);
 				} else {
@@ -307,7 +307,7 @@ public class XmlUtils {
 		int eventType = parser.getEventType();
 		do {
 			if (eventType == XmlPullParser.START_TAG) {
-				Object val = readThisValueXml(parser, name);
+				Object val = XmlUtils.readThisValueXml(parser, name);
 				set.add(val);
 				// System.out.println("Adding to set: " + val);
 			} else if (eventType == XmlPullParser.END_TAG) {
@@ -368,22 +368,22 @@ public class XmlUtils {
 			res = Boolean.valueOf(parser.getAttributeValue(null, "value"));
 		} else if (tagName.equals("int-array")) {
 			parser.next();
-			res = readThisIntArrayXml(parser, "int-array", name);
+			res = XmlUtils.readThisIntArrayXml(parser, "int-array", name);
 			name[0] = valueName;
 			return res;
 		} else if (tagName.equals("map")) {
 			parser.next();
-			res = readThisMapXml(parser, "map", name);
+			res = XmlUtils.readThisMapXml(parser, "map", name);
 			name[0] = valueName;
 			return res;
 		} else if (tagName.equals("list")) {
 			parser.next();
-			res = readThisListXml(parser, "list", name);
+			res = XmlUtils.readThisListXml(parser, "list", name);
 			name[0] = valueName;
 			return res;
 		} else if (tagName.equals("set")) {
 			parser.next();
-			res = readThisSetXml(parser, "set", name);
+			res = XmlUtils.readThisSetXml(parser, "set", name);
 			name[0] = valueName;
 			return res;
 		} else {
@@ -416,7 +416,7 @@ public class XmlUtils {
 		int eventType = parser.getEventType();
 		do {
 			if (eventType == XmlPullParser.START_TAG) {
-				return readThisValueXml(parser, name);
+				return XmlUtils.readThisValueXml(parser, name);
 			} else if (eventType == XmlPullParser.END_TAG) {
 				throw new XmlPullParserException("Unexpected end tag at: "
 						+ parser.getName());
@@ -505,7 +505,7 @@ public class XmlUtils {
 		serializer.startDocument(null, true);
 		serializer.setFeature(
 				"http://xmlpull.org/v1/doc/features.html#indent-output", true);
-		writeListXml(val, null, serializer);
+		XmlUtils.writeListXml(val, null, serializer);
 		serializer.endDocument();
 	}
 
@@ -526,7 +526,7 @@ public class XmlUtils {
 		int N = val.size();
 		int i = 0;
 		while (i < N) {
-			writeValueXml(val.get(i), null, out);
+			XmlUtils.writeValueXml(val.get(i), null, out);
 			i++;
 		}
 
@@ -540,7 +540,7 @@ public class XmlUtils {
 		serializer.startDocument(null, true);
 		serializer.setFeature(
 				"http://xmlpull.org/v1/doc/features.html#indent-output", true);
-		writeMapXml(val, null, serializer);
+		XmlUtils.writeMapXml(val, null, serializer);
 		serializer.endDocument();
 	}
 
@@ -562,7 +562,7 @@ public class XmlUtils {
 
 		while (i.hasNext()) {
 			Map.Entry e = (Map.Entry) i.next();
-			writeValueXml(e.getValue(), (String) e.getKey(), out);
+			XmlUtils.writeValueXml(e.getValue(), (String) e.getKey(), out);
 		}
 
 		out.endTag(null, "map");
@@ -582,7 +582,7 @@ public class XmlUtils {
 		}
 
 		for (Object v : val) {
-			writeValueXml(v, null, out);
+			XmlUtils.writeValueXml(v, null, out);
 		}
 
 		out.endTag(null, "set");
@@ -618,19 +618,19 @@ public class XmlUtils {
 		} else if (v instanceof Boolean) {
 			typeStr = "boolean";
 		} else if (v instanceof byte[]) {
-			writeByteArrayXml((byte[]) v, name, out);
+			XmlUtils.writeByteArrayXml((byte[]) v, name, out);
 			return;
 		} else if (v instanceof int[]) {
-			writeIntArrayXml((int[]) v, name, out);
+			XmlUtils.writeIntArrayXml((int[]) v, name, out);
 			return;
 		} else if (v instanceof Map) {
-			writeMapXml((Map) v, name, out);
+			XmlUtils.writeMapXml((Map) v, name, out);
 			return;
 		} else if (v instanceof List) {
-			writeListXml((List) v, name, out);
+			XmlUtils.writeListXml((List) v, name, out);
 			return;
 		} else if (v instanceof Set) {
-			writeSetXml((Set) v, name, out);
+			XmlUtils.writeSetXml((Set) v, name, out);
 			return;
 		} else if (v instanceof CharSequence) {
 			out.startTag(null, "string");
