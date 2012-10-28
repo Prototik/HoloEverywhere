@@ -66,13 +66,6 @@ public abstract class SActivity extends Activity implements SBase {
 	}
 
 	@Override
-	public void invalidateOptionsMenu() {
-		if (isABSSupport()) {
-			getSherlock().dispatchInvalidateOptionsMenu();
-		}
-	}
-
-	@Override
 	public boolean isABSSupport() {
 		return VERSION.SDK_INT >= 7;
 	}
@@ -317,5 +310,14 @@ public abstract class SActivity extends Activity implements SBase {
 	@Override
 	public ActionMode startActionMode(ActionMode.Callback callback) {
 		return isABSSupport() ? getSherlock().startActionMode(callback) : null;
+	}
+
+	@Override
+	public void supportInvalidateOptionsMenu() {
+		if (isABSSupport()) {
+			getSherlock().dispatchInvalidateOptionsMenu();
+		} else {
+			super.supportInvalidateOptionsMenu();
+		}
 	}
 }

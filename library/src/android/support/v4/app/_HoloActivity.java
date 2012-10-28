@@ -1,5 +1,6 @@
 package android.support.v4.app;
 
+import android.os.Build.VERSION;
 import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
@@ -20,6 +21,11 @@ public abstract class _HoloActivity extends Watson implements
 	@Override
 	public MenuInflater getSupportMenuInflater() {
 		return null;
+	}
+
+	@Override
+	public void invalidateOptionsMenu() {
+		supportInvalidateOptionsMenu();
 	}
 
 	@Override
@@ -91,6 +97,8 @@ public abstract class _HoloActivity extends Watson implements
 
 	@Override
 	public void supportInvalidateOptionsMenu() {
-		invalidateOptionsMenu();
+		if (VERSION.SDK_INT >= 11) {
+			super.invalidateOptionsMenu();
+		}
 	}
 }
