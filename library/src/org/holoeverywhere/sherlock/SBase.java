@@ -1,3 +1,4 @@
+
 package org.holoeverywhere.sherlock;
 
 import org.holoeverywhere.app.Base;
@@ -15,34 +16,34 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public interface SBase extends Base, OnCreatePanelMenuListener,
-		OnPreparePanelListener, OnMenuItemSelectedListener,
-		OnActionModeStartedListener, OnActionModeFinishedListener {
-	public ActionBarSherlock getSherlock();
+        OnPreparePanelListener, OnMenuItemSelectedListener,
+        OnActionModeStartedListener, OnActionModeFinishedListener {
+    public ActionBarSherlock getSherlock();
 
-	public ActionBar getSupportActionBar();
+    public ActionBar getSupportActionBar();
 
-	@Override
-	public MenuInflater getSupportMenuInflater();
+    @Override
+    public MenuInflater getSupportMenuInflater();
 
-	public boolean onCreateOptionsMenu(Menu menu);
+    public boolean onCreateOptionsMenu(Menu menu);
 
-	public boolean onOptionsItemSelected(MenuItem item);
+    public boolean onOptionsItemSelected(MenuItem item);
 
-	public boolean onPrepareOptionsMenu(Menu menu);
+    public boolean onPrepareOptionsMenu(Menu menu);
 
-	public void requestWindowFeature(long featureId);
+    public void requestWindowFeature(long featureId);
 
-	public void setSupportProgress(int progress);
+    public void setSupportProgress(int progress);
 
-	public void setSupportProgressBarIndeterminate(boolean indeterminate);
+    public void setSupportProgressBarIndeterminate(boolean indeterminate);
 
-	public void setSupportProgressBarIndeterminateVisibility(boolean visible);
+    public void setSupportProgressBarIndeterminateVisibility(boolean visible);
 
-	public void setSupportProgressBarVisibility(boolean visible);
+    public void setSupportProgressBarVisibility(boolean visible);
 
-	public void setSupportSecondaryProgress(int secondaryProgress);
+    public void setSupportSecondaryProgress(int secondaryProgress);
 
-	public ActionMode startActionMode(ActionMode.Callback callback);
+    public ActionMode startActionMode(ActionMode.Callback callback);
 
-	public void supportInvalidateOptionsMenu();
+    public void supportInvalidateOptionsMenu();
 }

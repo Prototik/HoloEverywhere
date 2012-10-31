@@ -1,9 +1,10 @@
+
 package org.holoeverywhere.util;
 
 public interface PoolableManager<T extends Poolable<T>> {
-	T newInstance();
+    T newInstance();
 
-	void onAcquired(T element);
+    void onAcquired(T element);
 
-	void onReleased(T element);
+    void onReleased(T element);
 }

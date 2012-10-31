@@ -1,3 +1,4 @@
+
 package org.holoeverywhere.app;
 
 import org.holoeverywhere.FontLoader;
@@ -7,43 +8,42 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
-
 public class Dialog extends android.app.Dialog {
-	public Dialog(Context context) {
-		super(context);
-	}
+    public Dialog(Context context) {
+        super(context);
+    }
 
-	public Dialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
-		super(context, cancelable, cancelListener);
-	}
+    public Dialog(Context context, boolean cancelable,
+            OnCancelListener cancelListener) {
+        super(context, cancelable, cancelListener);
+    }
 
-	public Dialog(Context context, int theme) {
-		super(context, theme);
-	}
+    public Dialog(Context context, int theme) {
+        super(context, theme);
+    }
 
-	@Override
-	public void addContentView(View view, LayoutParams params) {
-		super.addContentView(FontLoader.apply(view), params);
-	}
+    @Override
+    public void addContentView(View view, LayoutParams params) {
+        super.addContentView(FontLoader.apply(view), params);
+    }
 
-	@Override
-	public LayoutInflater getLayoutInflater() {
-		return LayoutInflater.from(getContext());
-	}
+    @Override
+    public LayoutInflater getLayoutInflater() {
+        return LayoutInflater.from(getContext());
+    }
 
-	@Override
-	public void setContentView(int layoutResID) {
-		super.setContentView(FontLoader.inflate(getContext(), layoutResID));
-	}
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(FontLoader.inflate(getContext(), layoutResID));
+    }
 
-	@Override
-	public void setContentView(View view) {
-		super.setContentView(FontLoader.apply(view));
-	}
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(FontLoader.apply(view));
+    }
 
-	@Override
-	public void setContentView(View view, LayoutParams params) {
-		super.setContentView(FontLoader.apply(view), params);
-	}
+    @Override
+    public void setContentView(View view, LayoutParams params) {
+        super.setContentView(FontLoader.apply(view), params);
+    }
 }

@@ -1,3 +1,4 @@
+
 package org.holoeverywhere.app;
 
 import org.holoeverywhere.LayoutInflater;
@@ -12,23 +13,23 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 
 public interface BaseFragment extends ContextMenuListener {
-	public SharedPreferences getDefaultSharedPreferences();
+    public SharedPreferences getDefaultSharedPreferences();
 
-	public LayoutInflater getLayoutInflater();
+    public LayoutInflater getLayoutInflater();
 
-	public LayoutInflater getLayoutInflater(Bundle savedInstanceState);
+    public LayoutInflater getLayoutInflater(Bundle savedInstanceState);
 
-	public SharedPreferences getSharedPreferences(String name, int mode);
+    public SharedPreferences getSharedPreferences(String name, int mode);
 
-	public <T extends Activity & Base> T getSupportActivity();
+    public <T extends Activity & Base> T getSupportActivity();
 
-	public FragmentManager getSupportFragmentManager();
+    public FragmentManager getSupportFragmentManager();
 
-	public boolean isABSSupport();
+    public boolean isABSSupport();
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState);
 
-	public void onInflate(Activity activity, AttributeSet attrs,
-			Bundle savedInstanceState);
+    public void onInflate(Activity activity, AttributeSet attrs,
+            Bundle savedInstanceState);
 }
