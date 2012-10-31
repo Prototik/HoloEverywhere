@@ -198,11 +198,11 @@ public class ProgressBar extends View {
 	}
 
 	public ProgressBar(Context context, AttributeSet attrs) {
-		this(context, attrs, R.attr.progressBarStyle);
+		this(context, attrs, android.R.attr.progressBarStyle);
 	}
 
 	public ProgressBar(Context context, AttributeSet attrs, int defStyle) {
-		this(context, attrs, defStyle, 0);
+		this(context, attrs, defStyle, R.style.Holo_ProgressBar);
 	}
 
 	public ProgressBar(Context context, AttributeSet attrs, int defStyle,
