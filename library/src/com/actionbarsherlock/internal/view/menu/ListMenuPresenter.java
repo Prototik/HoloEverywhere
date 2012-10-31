@@ -2,6 +2,9 @@ package com.actionbarsherlock.internal.view.menu;
 
 import java.util.ArrayList;
 
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.R;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -12,9 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
-
-import com.WazaBe.HoloEverywhere.LayoutInflater;
-import com.WazaBe.HoloEverywhere.R;
 
 public class ListMenuPresenter implements MenuPresenter,
 		AdapterView.OnItemClickListener {

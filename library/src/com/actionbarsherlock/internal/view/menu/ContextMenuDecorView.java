@@ -1,5 +1,7 @@
 package com.actionbarsherlock.internal.view.menu;
 
+import org.holoeverywhere.app.Application;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -7,7 +9,6 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 
-import com.WazaBe.HoloEverywhere.app.Application;
 import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.MenuItem;
 

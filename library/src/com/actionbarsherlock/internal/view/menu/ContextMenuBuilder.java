@@ -2,6 +2,8 @@ package com.actionbarsherlock.internal.view.menu;
 
 import java.lang.reflect.Method;
 
+import org.holoeverywhere.app.Application;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -12,7 +14,6 @@ import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 
-import com.WazaBe.HoloEverywhere.app.Application;
 import com.actionbarsherlock.view.ContextMenu;
 
 public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {

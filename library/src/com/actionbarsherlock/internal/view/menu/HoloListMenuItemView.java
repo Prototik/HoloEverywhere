@@ -1,5 +1,10 @@
 package com.actionbarsherlock.internal.view.menu;
 
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.R;
+import org.holoeverywhere.widget.LinearLayout;
+import org.holoeverywhere.widget.TextView;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -10,11 +15,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-
-import com.WazaBe.HoloEverywhere.LayoutInflater;
-import com.WazaBe.HoloEverywhere.R;
-import com.WazaBe.HoloEverywhere.widget.LinearLayout;
-import com.WazaBe.HoloEverywhere.widget.TextView;
 
 public class HoloListMenuItemView extends LinearLayout implements
 		MenuView.ItemView {

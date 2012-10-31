@@ -1,14 +1,14 @@
 package com.actionbarsherlock.internal.view.menu;
 
+import org.holoeverywhere.R;
+import org.holoeverywhere.app.AlertDialog;
+
 import android.content.DialogInterface;
 import android.os.IBinder;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-
-import com.WazaBe.HoloEverywhere.R;
-import com.WazaBe.HoloEverywhere.app.AlertDialog;
 
 public class MenuDialogHelper implements DialogInterface.OnKeyListener,
 		DialogInterface.OnClickListener, DialogInterface.OnDismissListener,

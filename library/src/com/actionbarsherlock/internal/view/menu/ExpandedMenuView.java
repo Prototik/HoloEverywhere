@@ -1,5 +1,7 @@
 package com.actionbarsherlock.internal.view.menu;
 
+import org.holoeverywhere.widget.ListView;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -7,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.WazaBe.HoloEverywhere.widget.ListView;
 import com.actionbarsherlock.internal.view.menu.MenuBuilder.ItemInvoker;
 
 public final class ExpandedMenuView extends ListView implements ItemInvoker,
