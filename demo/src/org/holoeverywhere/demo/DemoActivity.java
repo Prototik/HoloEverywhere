@@ -1,6 +1,8 @@
 
 package org.holoeverywhere.demo;
 
+import java.lang.ref.WeakReference;
+
 import org.holoeverywhere.ArrayAdapter;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
@@ -11,6 +13,7 @@ import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.app.ProgressDialog;
 import org.holoeverywhere.app.TimePickerDialog;
 import org.holoeverywhere.demo.fragments.AboutFragment;
+import org.holoeverywhere.demo.fragments.AlertDialogFragment;
 import org.holoeverywhere.demo.fragments.CalendarFragment;
 import org.holoeverywhere.demo.fragments.MainFragment;
 import org.holoeverywhere.demo.fragments.PreferenceFragment;
@@ -127,16 +130,15 @@ public class DemoActivity extends SActivity {
         replaceFragment(R.id.content, new AboutFragment(), "about");
     }
 
+    private WeakReference<AlertDialogFragment> alertDialog;
+
     public void showAlertDialog(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("AlertDialog");
-        builder.setIcon(R.drawable.alert_dialog);
-        builder.setMessage("Is fully-working port of AlertDialog from Android Jelly Bean\n"
-                + "Yes, I know it's a long text. At the same time check that part.");
-        builder.setPositiveButton("Positive", null);
-        builder.setNegativeButton("Negative", null);
-        builder.setNeutralButton("Neutral", null);
-        builder.show();
+        AlertDialogFragment fragment;
+        if (alertDialog == null || (fragment = alertDialog.get()) == null) {
+            alertDialog = new WeakReference<AlertDialogFragment>(
+                    fragment = new AlertDialogFragment());
+        }
+        fragment.show(this);
     }
 
     public void showCalendar(View v) {
