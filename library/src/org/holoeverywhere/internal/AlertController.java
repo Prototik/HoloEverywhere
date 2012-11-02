@@ -4,6 +4,7 @@ package org.holoeverywhere.internal;
 import java.lang.ref.WeakReference;
 
 import org.holoeverywhere.ArrayAdapter;
+import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 import org.holoeverywhere.widget.LinearLayout;
@@ -40,6 +41,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class AlertController {
+    public static interface AlertDecorViewInstaller {
+        public void installDecorView(Context context, int layout);
+    }
+
     public static class AlertParams {
         public interface OnPrepareListViewListener {
             void onPrepareListView(ListView listView);
@@ -323,6 +328,7 @@ public class AlertController {
         return outValue.data != 0;
     }
 
+    private final AlertDecorViewInstaller decorViewInstaller;
     private ListAdapter mAdapter;
     private int mAlertDialogLayout;
     View.OnClickListener mButtonHandler = new View.OnClickListener() {
@@ -372,13 +378,9 @@ public class AlertController {
     private CharSequence mTitle;
     private TextView mTitleView;
     private View mView;
-
     private int mViewSpacingBottom;
-
     private int mViewSpacingLeft;
-
     private int mViewSpacingRight;
-
     private boolean mViewSpacingSpecified = false;
 
     private int mViewSpacingTop;
@@ -386,6 +388,12 @@ public class AlertController {
     private final Window mWindow;
 
     public AlertController(Context context, DialogInterface di, Window window) {
+        this(context, di, window, null);
+    }
+
+    public AlertController(Context context, DialogInterface di, Window window,
+            AlertDecorViewInstaller decorViewInstaller) {
+        this.decorViewInstaller = decorViewInstaller;
         mContext = context;
         mDialogInterface = di;
         mWindow = window;
@@ -448,8 +456,12 @@ public class AlertController {
             mWindow.setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                     WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         }
-        mWindow.setContentView(LayoutInflater.inflate(mWindow.getContext(),
-                mAlertDialogLayout));
+        if (decorViewInstaller == null) {
+            mWindow.setContentView(FontLoader.inflate(mWindow.getContext(),
+                    mAlertDialogLayout));
+        } else {
+            decorViewInstaller.installDecorView(mContext, mAlertDialogLayout);
+        }
         setupView();
     }
 

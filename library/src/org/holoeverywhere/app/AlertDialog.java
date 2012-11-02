@@ -3,6 +3,7 @@ package org.holoeverywhere.app;
 
 import org.holoeverywhere.R;
 import org.holoeverywhere.internal.AlertController;
+import org.holoeverywhere.internal.AlertController.AlertDecorViewInstaller;
 import org.holoeverywhere.internal.AlertController.AlertParams.OnPrepareListViewListener;
 import org.holoeverywhere.widget.ListView;
 
@@ -20,7 +21,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 
-public class AlertDialog extends Dialog implements DialogInterface {
+public class AlertDialog extends Dialog implements DialogInterface, AlertDecorViewInstaller {
     public static class Builder {
         private final AlertController.AlertParams P;
 
@@ -332,7 +333,7 @@ public class AlertDialog extends Dialog implements DialogInterface {
         super(context, AlertDialog.resolveDialogTheme(context, theme));
         setCancelable(cancelable);
         setOnCancelListener(cancelListener);
-        mAlert = new AlertController(context, this, getWindow());
+        mAlert = new AlertController(context, this, getWindow(), this);
     }
 
     protected AlertDialog(Context context, int theme) {
@@ -345,6 +346,11 @@ public class AlertDialog extends Dialog implements DialogInterface {
 
     public ListView getListView() {
         return mAlert.getListView();
+    }
+
+    @Override
+    public void installDecorView(Context context, int layout) {
+        setContentView(layout);
     }
 
     @Override

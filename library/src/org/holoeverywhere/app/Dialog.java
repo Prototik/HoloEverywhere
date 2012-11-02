@@ -37,33 +37,19 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
     }
 
     @Override
+    public void createContextMenu(ContextMenuBuilder contextMenuBuilder, View view,
+            ContextMenuInfo menuInfo, ContextMenuListener listener) {
+        listener.onCreateContextMenu(contextMenuBuilder, view, menuInfo);
+    }
+
+    @Override
     public LayoutInflater getLayoutInflater() {
         return LayoutInflater.from(getContext());
     }
 
     @Override
-    public void setContentView(int layoutResID) {
-        setContentView(getLayoutInflater().inflate(layoutResID));
-    }
-
-    @Override
-    public void setContentView(View view) {
-        super.setContentView(prepareDecorView(view));
-    }
-
-    @Override
-    public void setContentView(View view, LayoutParams params) {
-        super.setContentView(prepareDecorView(view), params);
-    }
-
-    public View prepareDecorView(View v) {
-        return ContextMenuDecorView.prepareDecorView(getContext(), v, this, 0);
-    }
-
-    @Override
-    public void createContextMenu(ContextMenuBuilder contextMenuBuilder, View view,
-            ContextMenuInfo menuInfo, ContextMenuListener listener) {
-        listener.onCreateContextMenu(contextMenuBuilder, view, menuInfo);
+    public final boolean onContextItemSelected(android.view.MenuItem item) {
+        return onContextItemSelected(new ContextMenuItemWrapper(item));
     }
 
     @Override
@@ -72,11 +58,6 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
             return super.onContextItemSelected(((ContextMenuItemWrapper) item).unwrap());
         }
         return false;
-    }
-
-    @Override
-    public final boolean onContextItemSelected(android.view.MenuItem item) {
-        return onContextItemSelected(new ContextMenuItemWrapper(item));
     }
 
     @Override
@@ -96,15 +77,34 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
     }
 
     @Override
+    public final void onCreateContextMenu(android.view.ContextMenu menu, View view,
+            ContextMenuInfo menuInfo) {
+        onCreateContextMenu(new ContextMenuWrapper(menu), view, menuInfo);
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo) {
         if (menu instanceof ContextMenuWrapper) {
             super.onCreateContextMenu(((ContextMenuWrapper) menu).unwrap(), view, menuInfo);
         }
     }
 
+    public View prepareDecorView(View v) {
+        return ContextMenuDecorView.prepareDecorView(getContext(), v, this, 0);
+    }
+
     @Override
-    public final void onCreateContextMenu(android.view.ContextMenu menu, View view,
-            ContextMenuInfo menuInfo) {
-        onCreateContextMenu(new ContextMenuWrapper(menu), view, menuInfo);
+    public void setContentView(int layoutResID) {
+        setContentView(getLayoutInflater().inflate(layoutResID));
+    }
+
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(prepareDecorView(view));
+    }
+
+    @Override
+    public void setContentView(View view, LayoutParams params) {
+        super.setContentView(prepareDecorView(view), params);
     }
 }

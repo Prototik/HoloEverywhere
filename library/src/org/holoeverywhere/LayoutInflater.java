@@ -40,7 +40,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
                     if (view != null) {
                         return view;
                     }
-                } catch (RuntimeException e) {
+                } catch (Exception e) {
                 }
             }
             return null;
