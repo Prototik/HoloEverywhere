@@ -1,6 +1,7 @@
 
 package com.actionbarsherlock.internal.view.menu;
 
+import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.app.Application;
 
 import android.content.Context;
@@ -62,8 +63,19 @@ public final class ContextMenuDecorView extends FrameLayout {
         }
     }
 
-    private ContextMenuBuilder contextMenu;
+    public static View prepareDecorView(Context context, View v, ContextMenuListener listener,
+            int decorViewId) {
+        v = FontLoader.apply(v);
+        if (!Application.getConfig().isDisableContextMenu() && v != null) {
+            v = new ContextMenuDecorView(context, v, listener);
+            if (decorViewId > 0) {
+                v.setId(decorViewId);
+            }
+        }
+        return v;
+    }
 
+    private ContextMenuBuilder contextMenu;
     private final InternalWrapper listener;
     private MenuDialogHelper menuDialogHelper;
     private final View view;

@@ -1,14 +1,23 @@
 
 package org.holoeverywhere.app;
 
-import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.LayoutInflater;
 
 import android.content.Context;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
-public class Dialog extends android.app.Dialog {
+import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
+import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
+import com.actionbarsherlock.internal.view.menu.ContextMenuItemWrapper;
+import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
+import com.actionbarsherlock.internal.view.menu.ContextMenuWrapper;
+import com.actionbarsherlock.view.ContextMenu;
+import com.actionbarsherlock.view.MenuItem;
+
+public class Dialog extends android.app.Dialog implements ContextMenuListener {
     public Dialog(Context context) {
         super(context);
     }
@@ -24,7 +33,7 @@ public class Dialog extends android.app.Dialog {
 
     @Override
     public void addContentView(View view, LayoutParams params) {
-        super.addContentView(FontLoader.apply(view), params);
+        super.addContentView(prepareDecorView(view), params);
     }
 
     @Override
@@ -34,16 +43,68 @@ public class Dialog extends android.app.Dialog {
 
     @Override
     public void setContentView(int layoutResID) {
-        super.setContentView(FontLoader.inflate(getContext(), layoutResID));
+        setContentView(getLayoutInflater().inflate(layoutResID));
     }
 
     @Override
     public void setContentView(View view) {
-        super.setContentView(FontLoader.apply(view));
+        super.setContentView(prepareDecorView(view));
     }
 
     @Override
     public void setContentView(View view, LayoutParams params) {
-        super.setContentView(FontLoader.apply(view), params);
+        super.setContentView(prepareDecorView(view), params);
+    }
+
+    public View prepareDecorView(View v) {
+        return ContextMenuDecorView.prepareDecorView(getContext(), v, this, 0);
+    }
+
+    @Override
+    public void createContextMenu(ContextMenuBuilder contextMenuBuilder, View view,
+            ContextMenuInfo menuInfo, ContextMenuListener listener) {
+        listener.onCreateContextMenu(contextMenuBuilder, view, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item instanceof ContextMenuItemWrapper) {
+            return super.onContextItemSelected(((ContextMenuItemWrapper) item).unwrap());
+        }
+        return false;
+    }
+
+    @Override
+    public final boolean onContextItemSelected(android.view.MenuItem item) {
+        return onContextItemSelected(new ContextMenuItemWrapper(item));
+    }
+
+    @Override
+    public void onContextMenuClosed(ContextMenu menu) {
+        if (menu instanceof ContextMenuWrapper) {
+            super.onContextMenuClosed(((ContextMenuWrapper) menu).unwrap());
+        }
+    }
+
+    @Override
+    public final void onContextMenuClosed(Menu menu) {
+        if (menu instanceof android.view.ContextMenu) {
+            onContextMenuClosed(new ContextMenuWrapper((android.view.ContextMenu) menu));
+        } else {
+            super.onContextMenuClosed(menu);
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo) {
+        if (menu instanceof ContextMenuWrapper) {
+            super.onCreateContextMenu(((ContextMenuWrapper) menu).unwrap(), view, menuInfo);
+        }
+    }
+
+    @Override
+    public final void onCreateContextMenu(android.view.ContextMenu menu, View view,
+            ContextMenuInfo menuInfo) {
+        onCreateContextMenu(new ContextMenuWrapper(menu), view, menuInfo);
     }
 }

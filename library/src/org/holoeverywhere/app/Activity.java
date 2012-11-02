@@ -6,7 +6,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.SystemServiceManager;
 import org.holoeverywhere.ThemeManager;
@@ -157,17 +156,13 @@ public abstract class Activity extends _HoloActivity implements Base {
 
     @Override
     public View prepareDecorView(View v) {
-        v = FontLoader.apply(v);
-        if (!getConfig().isDisableContextMenu() && v != null) {
-            v = new ContextMenuDecorView(this, v, this);
-        }
-        return v;
+        return ContextMenuDecorView.prepareDecorView(this, v, this, 0);
     }
 
     @Override
     public void setContentView(int layoutResID) {
-        super.setContentView(prepareDecorView(getLayoutInflater().inflate(
-                layoutResID)));
+        setContentView(getLayoutInflater().inflate(
+                layoutResID));
     }
 
     @Override

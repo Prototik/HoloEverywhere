@@ -1,7 +1,6 @@
 
 package org.holoeverywhere.app;
 
-import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.preference.PreferenceManager;
 import org.holoeverywhere.preference.SharedPreferences;
@@ -155,11 +154,7 @@ public class Fragment extends _HoloFragment implements BaseFragment {
     }
 
     protected View prepareDecorView(View v) {
-        v = FontLoader.apply(v);
-        if (!mBase.getConfig().isDisableContextMenu() && v != null) {
-            v = new ContextMenuDecorView(getSupportActivity(), v, this);
-            v.setId(INTERNAL_DECOR_VIEW_ID);
-        }
-        return v;
+        return ContextMenuDecorView.prepareDecorView(getSupportActivity(), v, this,
+                INTERNAL_DECOR_VIEW_ID);
     }
 }

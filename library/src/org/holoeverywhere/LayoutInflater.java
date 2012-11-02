@@ -163,7 +163,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements
     }
 
     private final HoloFactoryMerger factoryMerger = new HoloFactoryMerger();
-
     private boolean factorySet = false;
 
     protected LayoutInflater(android.view.LayoutInflater original,
@@ -255,7 +254,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
             throw new IllegalStateException(
                     "A factory has already been set on this inflater");
         }
-        addFactory(factory);
+        addFactory(factory, 0);
         factorySet = true;
     }
 
