@@ -18,6 +18,10 @@ import android.view.View;
 import com.actionbarsherlock.view.ContextMenu;
 
 public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
+    public static interface ContextMenuInfoGetter {
+        public ContextMenuInfo getContextMenuInfo();
+    }
+
     private final ContextMenuListener listener;
 
     private final String TAG = getClass().getSimpleName();
@@ -32,6 +36,9 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
     }
 
     private ContextMenuInfo getContextMenuInfo(View view) {
+        if (view instanceof ContextMenuInfoGetter) {
+            return ((ContextMenuInfoGetter) view).getContextMenuInfo();
+        }
         ContextMenuInfo menuInfo = null;
         try {
             Class<?> clazz = view.getClass();

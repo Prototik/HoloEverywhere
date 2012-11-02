@@ -7,17 +7,20 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build.VERSION;
 import android.util.AttributeSet;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Checkable;
 import android.widget.ListAdapter;
 
+import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder.ContextMenuInfoGetter;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class ListView extends android.widget.ListView {
+public class ListView extends android.widget.ListView implements ContextMenuInfoGetter {
     public interface MultiChoiceModeListener extends ActionMode.Callback {
         public void onItemCheckedStateChanged(ActionMode mode, int position,
                 long id, boolean checked);
@@ -87,21 +90,27 @@ public class ListView extends android.widget.ListView {
         }
     }
 
-    class OnItemLongClickListenerWrapper implements OnItemLongClickListener {
-        private OnItemLongClickListener wrapped;
+    private class OnItemLongClickListenerWrapper implements OnItemLongClickListener {
+        protected OnItemLongClickListener wrapped;
 
         @Override
         public boolean onItemLongClick(AdapterView<?> view, View child,
                 int position, long id) {
             boolean handled = doLongPress(child, position, id);
-            if (!handled && wrapped != null) {
-                return wrapped.onItemLongClick(view, child, position, id);
+            if (!handled) {
+                if (wrapped != null) {
+                    if (wrapped.onItemLongClick(view, child, position, id)) {
+                        return true;
+                    }
+                }
+                contextMenuInfo = createContextMenuInfo(view, position, id);
+                handled = ListView.super.showContextMenuForChild(ListView.this);
+                if (handled) {
+                    performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                    return true;
+                }
             }
             return false;
-        }
-
-        public void setWrapped(OnItemLongClickListener listener) {
-            wrapped = listener;
         }
     }
 
@@ -110,6 +119,7 @@ public class ListView extends android.widget.ListView {
     private int checkedItemCount;
     private int choiceMode;
     private final MultiChoiceModeWrapper choiceModeListener = new MultiChoiceModeWrapper();
+    private ContextMenuInfo contextMenuInfo;
     private final OnItemLongClickListenerWrapper longClickListenerWrapper = new OnItemLongClickListenerWrapper();
     private SBase sBase;
 
@@ -128,12 +138,17 @@ public class ListView extends android.widget.ListView {
         init(context);
     }
 
+    protected ContextMenuInfo createContextMenuInfo(View view, int position, long id) {
+        return new AdapterContextMenuInfo(view, position, id);
+    }
+
     protected boolean doLongPress(final View child,
             final int longPressPosition, final long longPressId) {
         if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
             if (actionMode == null
                     && (actionMode = startActionMode(choiceModeListener)) != null) {
                 setItemChecked(longPressPosition, true);
+                performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             }
             return true;
         }
@@ -143,6 +158,11 @@ public class ListView extends android.widget.ListView {
     @Override
     public int getChoiceMode() {
         return choiceMode;
+    }
+
+    @Override
+    public ContextMenuInfo getContextMenuInfo() {
+        return contextMenuInfo;
     }
 
     public final SBase getSBase() {
@@ -181,6 +201,7 @@ public class ListView extends android.widget.ListView {
             actionMode = null;
         }
         if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
+            super.setOnItemLongClickListener(longClickListenerWrapper);
             clearChoices();
             checkedItemCount = 0;
             setLongClickable(true);
@@ -221,7 +242,7 @@ public class ListView extends android.widget.ListView {
 
     @Override
     public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-        longClickListenerWrapper.setWrapped(listener);
+        longClickListenerWrapper.wrapped = listener;
     }
 
     public final void setSBase(SBase sBase) {
