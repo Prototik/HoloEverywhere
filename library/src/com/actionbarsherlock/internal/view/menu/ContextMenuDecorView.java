@@ -45,6 +45,9 @@ public final class ContextMenuDecorView extends FrameLayout {
             if (Application.isDebugMode()) {
                 Log.v(TAG, "Calling onContextItemSelected on " + listener);
             }
+            if (menu instanceof ContextMenuBuilder && item instanceof MenuItemImpl) {
+                ((MenuItemImpl) item).setMenuInfo(((ContextMenuBuilder) menu).getContextMenuInfo());
+            }
             return listener.onContextItemSelected(item);
         }
 
