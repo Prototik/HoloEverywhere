@@ -9,16 +9,40 @@ import java.util.WeakHashMap;
 
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator;
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
-import org.holoeverywhere.app.Application;
 import org.holoeverywhere.internal.AlertController.RecycleListView;
 import org.holoeverywhere.internal.DialogTitle;
 import org.holoeverywhere.internal.NumberPickerEditText;
+import org.holoeverywhere.preference.PreferenceFrameLayout;
+import org.holoeverywhere.widget.AutoCompleteTextView;
+import org.holoeverywhere.widget.Button;
+import org.holoeverywhere.widget.CalendarView;
+import org.holoeverywhere.widget.CheckBox;
+import org.holoeverywhere.widget.CheckedTextView;
+import org.holoeverywhere.widget.DatePicker;
+import org.holoeverywhere.widget.Divider;
+import org.holoeverywhere.widget.EditText;
+import org.holoeverywhere.widget.FragmentBreadCrumbs;
+import org.holoeverywhere.widget.LinearLayout;
+import org.holoeverywhere.widget.ListView;
+import org.holoeverywhere.widget.MultiAutoCompleteTextView;
+import org.holoeverywhere.widget.NumberPicker;
+import org.holoeverywhere.widget.ProgressBar;
+import org.holoeverywhere.widget.RadioButton;
+import org.holoeverywhere.widget.SeekBar;
+import org.holoeverywhere.widget.Spinner;
+import org.holoeverywhere.widget.Switch;
+import org.holoeverywhere.widget.TextView;
+import org.holoeverywhere.widget.TimePicker;
+import org.holoeverywhere.widget.ToggleButton;
 
 import android.content.Context;
+import android.support.v4.view.PagerTitleStrip;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import com.actionbarsherlock.internal.view.menu.ExpandedMenuView;
 import com.actionbarsherlock.internal.view.menu.HoloListMenuItemView;
@@ -65,16 +89,31 @@ public class LayoutInflater extends android.view.LayoutInflater implements
     private static final Map<String, String> VIEWS_MAP = new HashMap<String, String>();
 
     static {
-        remap(Application.getConfig().getWidgetsPackage(), "ProgressBar",
-                "LinearLayout", "Switch", "TextView", "EditText",
-                "AutoCompleteTextView", "MultiAutoCompleteTextView",
-                "CalendarView", "Spinner", "NumberPicker", "DatePicker",
-                "TimePicker", "ListView", "Divider", "SeekBar", "Button",
-                "CheckedTextView", "FragmentBreadCrumbs");
-        remap(Application.getConfig().getPreferencePackage(),
-                "PreferenceFrameLayout");
-        remap("android.support.v4.view", "ViewPager", "PagerTitleStrip");
-        remap("android.webkit", "WebView");
+        remapWidget(ProgressBar.class);
+        remapWidget(LinearLayout.class);
+        remapWidget(Switch.class);
+        remapWidget(TextView.class);
+        remapWidget(EditText.class);
+        remapWidget(AutoCompleteTextView.class);
+        remapWidget(MultiAutoCompleteTextView.class);
+        remapWidget(CalendarView.class);
+        remapWidget(Spinner.class);
+        remapWidget(NumberPicker.class);
+        remapWidget(DatePicker.class);
+        remapWidget(TimePicker.class);
+        remapWidget(ListView.class);
+        remapWidget(Divider.class);
+        remapWidget(SeekBar.class);
+        remapWidget(Button.class);
+        remapWidget(CheckedTextView.class);
+        remapWidget(FragmentBreadCrumbs.class);
+        remapWidget(ToggleButton.class);
+        remapWidget(RadioButton.class);
+        remapWidget(CheckBox.class);
+        remapWidget(PreferenceFrameLayout.class);
+        remapWidget(ViewPager.class);
+        remapWidget(PagerTitleStrip.class);
+        remapWidget(WebView.class);
         remapInternal(ActionBarView.class, HoloListMenuItemView.class,
                 ExpandedMenuView.class, ActionBarContainer.class,
                 RecycleListView.class, DialogTitle.class,
@@ -83,6 +122,12 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
     public static void clearInstances() {
         LayoutInflater.INSTANCES_MAP.clear();
+    }
+
+    public static void remapWidget(Class<? extends View> clazz) {
+        if (clazz != null) {
+            remap(clazz.getPackage().getName(), clazz.getSimpleName());
+        }
     }
 
     public static LayoutInflater from(android.view.LayoutInflater inflater) {
