@@ -1,7 +1,7 @@
 
-package org.holoeverywhere.widget;
+package org.holoeverywhere.internal;
 
-import org.holoeverywhere.sherlock.SBase;
+import org.holoeverywhere.app.Base;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,7 +13,7 @@ import android.view.accessibility.AccessibilityEventSource;
 import com.actionbarsherlock.internal.nineoldandroids.view.animation.AnimatorProxy;
 import com.actionbarsherlock.view.ActionMode;
 
-public class View extends android.view.View implements Drawable.Callback,
+public class _View extends android.view.View implements Drawable.Callback,
         KeyEvent.Callback, AccessibilityEventSource {
     public static final int[] PRESSED_STATE_SET, SUPPORT_EMPTY_STATE_SET,
             SUPPORT_WINDOW_FOCUSED_STATE_SET, SUPPORT_SELECTED_STATE_SET,
@@ -69,36 +69,36 @@ public class View extends android.view.View implements Drawable.Callback,
     };
     static final int[] Z_VIEW_STATE_IDS = new int[] {
             android.R.attr.state_window_focused,
-            View.VIEW_STATE_WINDOW_FOCUSED, android.R.attr.state_selected,
-            View.VIEW_STATE_SELECTED, android.R.attr.state_focused,
-            View.VIEW_STATE_FOCUSED, android.R.attr.state_enabled,
-            View.VIEW_STATE_ENABLED, android.R.attr.state_pressed,
-            View.VIEW_STATE_PRESSED, android.R.attr.state_activated,
-            View.VIEW_STATE_ACTIVATED, android.R.attr.state_accelerated,
-            View.VIEW_STATE_ACCELERATED, android.R.attr.state_hovered,
-            View.VIEW_STATE_HOVERED, android.R.attr.state_drag_can_accept,
-            View.VIEW_STATE_DRAG_CAN_ACCEPT, android.R.attr.state_drag_hovered,
-            View.VIEW_STATE_DRAG_HOVERED
+            _View.VIEW_STATE_WINDOW_FOCUSED, android.R.attr.state_selected,
+            _View.VIEW_STATE_SELECTED, android.R.attr.state_focused,
+            _View.VIEW_STATE_FOCUSED, android.R.attr.state_enabled,
+            _View.VIEW_STATE_ENABLED, android.R.attr.state_pressed,
+            _View.VIEW_STATE_PRESSED, android.R.attr.state_activated,
+            _View.VIEW_STATE_ACTIVATED, android.R.attr.state_accelerated,
+            _View.VIEW_STATE_ACCELERATED, android.R.attr.state_hovered,
+            _View.VIEW_STATE_HOVERED, android.R.attr.state_drag_can_accept,
+            _View.VIEW_STATE_DRAG_CAN_ACCEPT, android.R.attr.state_drag_hovered,
+            _View.VIEW_STATE_DRAG_HOVERED
     };
 
     static {
-        if (View.Z_VIEW_STATE_IDS.length / 2 != View.ViewDrawableStates.length) {
+        if (_View.Z_VIEW_STATE_IDS.length / 2 != _View.ViewDrawableStates.length) {
             throw new IllegalStateException(
                     "VIEW_STATE_IDs array length does not match ViewDrawableStates style array");
         }
-        int[] orderedIds = new int[View.Z_VIEW_STATE_IDS.length];
-        for (int i = 0; i < View.ViewDrawableStates.length; i++) {
-            int viewState = View.ViewDrawableStates[i];
-            for (int j = 0; j < View.Z_VIEW_STATE_IDS.length; j += 2) {
-                if (View.Z_VIEW_STATE_IDS[j] == viewState) {
+        int[] orderedIds = new int[_View.Z_VIEW_STATE_IDS.length];
+        for (int i = 0; i < _View.ViewDrawableStates.length; i++) {
+            int viewState = _View.ViewDrawableStates[i];
+            for (int j = 0; j < _View.Z_VIEW_STATE_IDS.length; j += 2) {
+                if (_View.Z_VIEW_STATE_IDS[j] == viewState) {
                     orderedIds[i * 2] = viewState;
-                    orderedIds[i * 2 + 1] = View.Z_VIEW_STATE_IDS[j + 1];
+                    orderedIds[i * 2 + 1] = _View.Z_VIEW_STATE_IDS[j + 1];
                 }
             }
         }
-        final int NUM_BITS = View.Z_VIEW_STATE_IDS.length / 2;
+        final int NUM_BITS = _View.Z_VIEW_STATE_IDS.length / 2;
         VIEW_STATE_SETS = new int[1 << NUM_BITS][];
-        for (int i = 0; i < View.VIEW_STATE_SETS.length; i++) {
+        for (int i = 0; i < _View.VIEW_STATE_SETS.length; i++) {
             int numBits = Integer.bitCount(i);
             int[] set = new int[numBits];
             int pos = 0;
@@ -107,84 +107,84 @@ public class View extends android.view.View implements Drawable.Callback,
                     set[pos++] = orderedIds[j];
                 }
             }
-            View.VIEW_STATE_SETS[i] = set;
+            _View.VIEW_STATE_SETS[i] = set;
         }
 
-        SUPPORT_EMPTY_STATE_SET = View.VIEW_STATE_SETS[0];
-        SUPPORT_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED];
-        SUPPORT_SELECTED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_SELECTED];
-        SUPPORT_SELECTED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_SELECTED];
-        SUPPORT_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_FOCUSED];
-        SUPPORT_FOCUSED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_FOCUSED];
-        SUPPORT_FOCUSED_SELECTED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_SELECTED
-                | View.VIEW_STATE_FOCUSED];
-        SUPPORT_FOCUSED_SELECTED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_SELECTED | View.VIEW_STATE_FOCUSED];
-        SUPPORT_ENABLED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_ENABLED];
-        SUPPORT_ENABLED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_ENABLED];
-        SUPPORT_ENABLED_SELECTED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_SELECTED
-                | View.VIEW_STATE_ENABLED];
-        SUPPORT_ENABLED_SELECTED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_SELECTED | View.VIEW_STATE_ENABLED];
-        SUPPORT_ENABLED_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_FOCUSED
-                | View.VIEW_STATE_ENABLED];
-        SUPPORT_ENABLED_FOCUSED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_FOCUSED | View.VIEW_STATE_ENABLED];
-        SUPPORT_ENABLED_FOCUSED_SELECTED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_SELECTED
-                | View.VIEW_STATE_FOCUSED | View.VIEW_STATE_ENABLED];
-        SUPPORT_ENABLED_FOCUSED_SELECTED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_SELECTED
-                | View.VIEW_STATE_FOCUSED
-                | View.VIEW_STATE_ENABLED];
+        SUPPORT_EMPTY_STATE_SET = _View.VIEW_STATE_SETS[0];
+        SUPPORT_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED];
+        SUPPORT_SELECTED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_SELECTED];
+        SUPPORT_SELECTED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_SELECTED];
+        SUPPORT_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_FOCUSED];
+        SUPPORT_FOCUSED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_FOCUSED];
+        SUPPORT_FOCUSED_SELECTED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_SELECTED
+                | _View.VIEW_STATE_FOCUSED];
+        SUPPORT_FOCUSED_SELECTED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_SELECTED | _View.VIEW_STATE_FOCUSED];
+        SUPPORT_ENABLED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_ENABLED];
+        SUPPORT_ENABLED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_ENABLED];
+        SUPPORT_ENABLED_SELECTED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_SELECTED
+                | _View.VIEW_STATE_ENABLED];
+        SUPPORT_ENABLED_SELECTED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_SELECTED | _View.VIEW_STATE_ENABLED];
+        SUPPORT_ENABLED_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_FOCUSED
+                | _View.VIEW_STATE_ENABLED];
+        SUPPORT_ENABLED_FOCUSED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_FOCUSED | _View.VIEW_STATE_ENABLED];
+        SUPPORT_ENABLED_FOCUSED_SELECTED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_SELECTED
+                | _View.VIEW_STATE_FOCUSED | _View.VIEW_STATE_ENABLED];
+        SUPPORT_ENABLED_FOCUSED_SELECTED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_SELECTED
+                | _View.VIEW_STATE_FOCUSED
+                | _View.VIEW_STATE_ENABLED];
 
-        SUPPORT_PRESSED_STATE_SET = PRESSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_SELECTED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_SELECTED
-                | View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_SELECTED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_SELECTED | View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_FOCUSED
-                | View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_FOCUSED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_FOCUSED | View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_FOCUSED_SELECTED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_SELECTED
-                | View.VIEW_STATE_FOCUSED | View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_FOCUSED_SELECTED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_SELECTED
-                | View.VIEW_STATE_FOCUSED
-                | View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_ENABLED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_ENABLED
-                | View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_ENABLED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_ENABLED | View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_ENABLED_SELECTED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_SELECTED
-                | View.VIEW_STATE_ENABLED | View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_ENABLED_SELECTED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_SELECTED
-                | View.VIEW_STATE_ENABLED
-                | View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_ENABLED_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_FOCUSED
-                | View.VIEW_STATE_ENABLED | View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_ENABLED_FOCUSED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_FOCUSED
-                | View.VIEW_STATE_ENABLED
-                | View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_ENABLED_FOCUSED_SELECTED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_SELECTED
-                | View.VIEW_STATE_FOCUSED
-                | View.VIEW_STATE_ENABLED
-                | View.VIEW_STATE_PRESSED];
-        SUPPORT_PRESSED_ENABLED_FOCUSED_SELECTED_WINDOW_FOCUSED_STATE_SET = View.VIEW_STATE_SETS[View.VIEW_STATE_WINDOW_FOCUSED
-                | View.VIEW_STATE_SELECTED
-                | View.VIEW_STATE_FOCUSED
-                | View.VIEW_STATE_ENABLED | View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_STATE_SET = PRESSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_SELECTED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_SELECTED
+                | _View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_SELECTED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_SELECTED | _View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_FOCUSED
+                | _View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_FOCUSED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_FOCUSED | _View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_FOCUSED_SELECTED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_SELECTED
+                | _View.VIEW_STATE_FOCUSED | _View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_FOCUSED_SELECTED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_SELECTED
+                | _View.VIEW_STATE_FOCUSED
+                | _View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_ENABLED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_ENABLED
+                | _View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_ENABLED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_ENABLED | _View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_ENABLED_SELECTED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_SELECTED
+                | _View.VIEW_STATE_ENABLED | _View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_ENABLED_SELECTED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_SELECTED
+                | _View.VIEW_STATE_ENABLED
+                | _View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_ENABLED_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_FOCUSED
+                | _View.VIEW_STATE_ENABLED | _View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_ENABLED_FOCUSED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_FOCUSED
+                | _View.VIEW_STATE_ENABLED
+                | _View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_ENABLED_FOCUSED_SELECTED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_SELECTED
+                | _View.VIEW_STATE_FOCUSED
+                | _View.VIEW_STATE_ENABLED
+                | _View.VIEW_STATE_PRESSED];
+        SUPPORT_PRESSED_ENABLED_FOCUSED_SELECTED_WINDOW_FOCUSED_STATE_SET = _View.VIEW_STATE_SETS[_View.VIEW_STATE_WINDOW_FOCUSED
+                | _View.VIEW_STATE_SELECTED
+                | _View.VIEW_STATE_FOCUSED
+                | _View.VIEW_STATE_ENABLED | _View.VIEW_STATE_PRESSED];
     }
 
     public static int supportResolveSize(int size, int measureSpec) {
-        return View.supportResolveSizeAndState(size, measureSpec, 0)
+        return _View.supportResolveSizeAndState(size, measureSpec, 0)
                 & android.view.View.MEASURED_SIZE_MASK;
     }
 
@@ -214,17 +214,17 @@ public class View extends android.view.View implements Drawable.Callback,
 
     private final AnimatorProxy proxy;
 
-    public View(Context context) {
+    public _View(Context context) {
         super(context);
         proxy = AnimatorProxy.NEEDS_PROXY ? AnimatorProxy.wrap(this) : null;
     }
 
-    public View(Context context, AttributeSet attrs) {
+    public _View(Context context, AttributeSet attrs) {
         super(context, attrs);
         proxy = AnimatorProxy.NEEDS_PROXY ? AnimatorProxy.wrap(this) : null;
     }
 
-    public View(Context context, AttributeSet attrs, int defStyle) {
+    public _View(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         proxy = AnimatorProxy.NEEDS_PROXY ? AnimatorProxy.wrap(this) : null;
     }
@@ -264,7 +264,7 @@ public class View extends android.view.View implements Drawable.Callback,
     }
 
     @SuppressLint("NewApi")
-    public void onVisibilityChanged(View changedView, int visibility) {
+    public void onVisibilityChanged(_View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
     }
 
@@ -308,6 +308,6 @@ public class View extends android.view.View implements Drawable.Callback,
     }
 
     public ActionMode startActionMode(ActionMode.Callback actionModeCallback) {
-        return ((SBase) getContext()).startActionMode(actionModeCallback);
+        return ((Base) getContext()).startActionMode(actionModeCallback);
     }
 }

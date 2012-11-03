@@ -2,8 +2,8 @@
 package org.holoeverywhere.demo.fragments;
 
 import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.demo.R;
-import org.holoeverywhere.sherlock.SFragment;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
-public class AboutFragment extends SFragment {
+public class AboutFragment extends Fragment {
     private final class EmailListener implements OnClickListener {
         private final String subject, to;
 
@@ -26,7 +26,7 @@ public class AboutFragment extends SFragment {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("message/rfc822");
             intent.putExtra(Intent.EXTRA_EMAIL, new String[] {
-                to
+                    to
             });
             intent.putExtra(Intent.EXTRA_SUBJECT, subject);
             intent = Intent.createChooser(intent, "Select a email program");

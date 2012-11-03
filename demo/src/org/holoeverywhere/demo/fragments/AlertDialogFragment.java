@@ -3,12 +3,12 @@ package org.holoeverywhere.demo.fragments;
 
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.Dialog;
+import org.holoeverywhere.app.DialogFragment;
 import org.holoeverywhere.demo.R;
-import org.holoeverywhere.sherlock.SDialogFragment;
 
 import android.os.Bundle;
 
-public class AlertDialogFragment extends SDialogFragment {
+public class AlertDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

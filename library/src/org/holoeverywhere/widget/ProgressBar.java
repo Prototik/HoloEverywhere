@@ -4,6 +4,7 @@ package org.holoeverywhere.widget;
 import java.util.ArrayList;
 
 import org.holoeverywhere.R;
+import org.holoeverywhere.internal._View;
 import org.holoeverywhere.util.Pool;
 import org.holoeverywhere.util.Poolable;
 import org.holoeverywhere.util.PoolableManager;
@@ -45,7 +46,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
 
-public class ProgressBar extends View {
+public class ProgressBar extends _View {
     private class AccessibilityEventSender implements Runnable {
         @Override
         public void run() {
@@ -526,8 +527,8 @@ public class ProgressBar extends View {
         dw += getPaddingLeft() + getPaddingRight();
         dh += getPaddingTop() + getPaddingBottom();
         setMeasuredDimension(
-                View.supportResolveSizeAndState(dw, widthMeasureSpec, 0),
-                View.supportResolveSizeAndState(dh, heightMeasureSpec, 0));
+                _View.supportResolveSizeAndState(dw, widthMeasureSpec, 0),
+                _View.supportResolveSizeAndState(dh, heightMeasureSpec, 0));
     }
 
     protected void onProgressRefresh(float scale, boolean fromUser) {
@@ -565,7 +566,7 @@ public class ProgressBar extends View {
     }
 
     @Override
-    public void onVisibilityChanged(View changedView, int visibility) {
+    public void onVisibilityChanged(_View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
         if (mIndeterminate) {
             if (visibility == android.view.View.GONE

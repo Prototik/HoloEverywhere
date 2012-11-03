@@ -1,241 +1,324 @@
 
 package org.holoeverywhere.app;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.SystemServiceManager;
-import org.holoeverywhere.ThemeManager;
-import org.holoeverywhere.app.Application.Config;
-import org.holoeverywhere.app.Application.Config.PreferenceImpl;
-import org.holoeverywhere.preference.PreferenceManager;
-import org.holoeverywhere.preference.SharedPreferences;
-
-import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.support.v4.app._HoloActivity;
-import android.view.ContextMenu.ContextMenuInfo;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 
-import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
-import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
-import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
+import com.actionbarsherlock.ActionBarSherlock;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.ActionMode;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
-public abstract class Activity extends _HoloActivity implements Base {
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.TYPE)
-    public static @interface Holo {
-        public boolean addFactoryToInflater() default true;
-
-        public boolean forceThemeApply() default false;
-
-        public int layout() default -1;
-    }
-
-    private static final Holo DEFAULT_HOLO = new Holo() {
-        @Override
-        public boolean addFactoryToInflater() {
-            return true;
-        }
-
-        @Override
-        public Class<Holo> annotationType() {
-            return Holo.class;
-        }
-
-        @Override
-        public boolean forceThemeApply() {
-            return false;
-        }
-
-        @Override
-        public int layout() {
-            return 0;
-        }
-    };
-
-    private boolean forceThemeApply = false;
-    private int lastThemeResourceId = 0;
+public abstract class Activity extends _HoloActivity {
+    private boolean mIgnoreNativeCreate = false;
+    private boolean mIgnoreNativePrepare = false;
+    private boolean mIgnoreNativeSelected = false;
+    private ActionBarSherlock mSherlock;
 
     @Override
     public void addContentView(View view, LayoutParams params) {
-        super.addContentView(prepareDecorView(view), params);
+        if (isABSSupport()) {
+            getSherlock().addContentView(prepareDecorView(view), params);
+        } else {
+            super.addContentView(view, params);
+        }
     }
 
     @Override
-    public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
-            View view, ContextMenuInfo menuInfo, ContextMenuListener listener) {
-        listener.onCreateContextMenu(contextMenuBuilder, view, menuInfo);
+    public void closeOptionsMenu() {
+        if (!isABSSupport() || !getSherlock().dispatchCloseOptionsMenu()) {
+            super.closeOptionsMenu();
+        }
     }
 
     @Override
-    public Config getConfig() {
-        return Application.getConfig();
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (isABSSupport() && getSherlock().dispatchKeyEvent(event)) {
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
     }
 
     @Override
-    public SharedPreferences getDefaultSharedPreferences() {
-        return PreferenceManager.getDefaultSharedPreferences(this);
-    }
-
-    public int getLastThemeResourceId() {
-        return lastThemeResourceId;
-    }
-
-    @Override
-    public LayoutInflater getLayoutInflater() {
-        return LayoutInflater.from(this);
+    public final ActionBarSherlock getSherlock() {
+        if (isABSSupport() && mSherlock == null) {
+            mSherlock = ActionBarSherlock.wrap(this,
+                    ActionBarSherlock.FLAG_DELEGATE);
+        }
+        return mSherlock;
     }
 
     @Override
-    public SharedPreferences getSharedPreferences(PreferenceImpl impl,
-            String name, int mode) {
-        return PreferenceManager.wrap(this, impl, name, mode);
+    public ActionBar getSupportActionBar() {
+        return isABSSupport() ? getSherlock().getActionBar() : null;
     }
 
     @Override
-    public SharedPreferences getSharedPreferences(String name, int mode) {
-        return PreferenceManager.wrap(this, name, mode);
-    }
-
-    @Override
-    public Object getSystemService(String name) {
-        return SystemServiceManager.getSystemService(this, name);
+    public MenuInflater getSupportMenuInflater() {
+        return isABSSupport() ? getSherlock().getMenuInflater() : null;
     }
 
     @Override
     public boolean isABSSupport() {
-        return false;
+        return VERSION.SDK_INT >= 7;
     }
 
     @Override
-    public boolean isForceThemeApply() {
-        return forceThemeApply;
+    public void onActionModeFinished(ActionMode mode) {
     }
 
     @Override
-    @SuppressLint("NewApi")
-    public void onBackPressed() {
-        if (!getSupportFragmentManager().popBackStackImmediate()) {
-            finish();
+    public void onActionModeStarted(ActionMode mode) {
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (isABSSupport()) {
+            getSherlock().dispatchConfigurationChanged(newConfig);
         }
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Holo holo = getClass().isAnnotationPresent(Holo.class) ? getClass()
-                .getAnnotation(Holo.class) : Activity.DEFAULT_HOLO;
-        if (holo.addFactoryToInflater()) {
-            getLayoutInflater().addFactory(this, 0);
+    public final boolean onCreateOptionsMenu(android.view.Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public final boolean onCreatePanelMenu(int featureId, android.view.Menu menu) {
+        if (isABSSupport() && featureId == Window.FEATURE_OPTIONS_PANEL
+                && !mIgnoreNativeCreate) {
+            mIgnoreNativeCreate = true;
+            boolean result = getSherlock().dispatchCreateOptionsMenu(menu);
+            mIgnoreNativeCreate = false;
+            return result;
         }
-        boolean forceThemeApply = isForceThemeApply();
-        if (holo.forceThemeApply()) {
-            setForceThemeApply(forceThemeApply = true);
-        }
-        if (forceThemeApply || getConfig().isUseThemeManager()) {
-            ThemeManager.applyTheme(this, forceThemeApply);
-        }
-        super.onCreate(savedInstanceState);
-        final int layout = holo.layout();
-        if (layout > 0) {
-            setContentView(layout);
-        }
+        return super.onCreatePanelMenu(featureId, menu);
     }
 
     @Override
     protected void onDestroy() {
+        if (isABSSupport()) {
+            getSherlock().dispatchDestroy();
+        }
         super.onDestroy();
-        LayoutInflater.onDestroy(this);
     }
 
     @Override
-    public View prepareDecorView(View v) {
-        return ContextMenuDecorView.prepareDecorView(this, v, this, 0);
+    public final boolean onMenuItemSelected(int featureId,
+            android.view.MenuItem item) {
+        if (isABSSupport() && featureId == Window.FEATURE_OPTIONS_PANEL
+                && !mIgnoreNativeSelected) {
+            mIgnoreNativeSelected = true;
+            boolean result = getSherlock().dispatchOptionsItemSelected(item);
+            mIgnoreNativeSelected = false;
+            return result;
+        }
+        return super.onMenuItemSelected(featureId, item);
     }
 
     @Override
-    public void setContentView(int layoutResID) {
-        setContentView(getLayoutInflater().inflate(
-                layoutResID));
+    public final boolean onMenuOpened(int featureId, android.view.Menu menu) {
+        if (isABSSupport() && getSherlock().dispatchMenuOpened(featureId, menu)) {
+            return true;
+        }
+        return super.onMenuOpened(featureId, menu);
+    }
+
+    @Override
+    public final boolean onOptionsItemSelected(android.view.MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public void onPanelClosed(int featureId, android.view.Menu menu) {
+        if (isABSSupport()) {
+            getSherlock().dispatchPanelClosed(featureId, menu);
+        }
+        super.onPanelClosed(featureId, menu);
+    }
+
+    @Override
+    protected void onPause() {
+        if (isABSSupport()) {
+            getSherlock().dispatchPause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        if (isABSSupport()) {
+            getSherlock().dispatchPostCreate(savedInstanceState);
+        }
+        super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        if (isABSSupport()) {
+            getSherlock().dispatchPostResume();
+        }
+    }
+
+    @Override
+    public final boolean onPrepareOptionsMenu(android.view.Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public final boolean onPreparePanel(int featureId, View view,
+            android.view.Menu menu) {
+        if (isABSSupport() && featureId == Window.FEATURE_OPTIONS_PANEL
+                && !mIgnoreNativePrepare) {
+            mIgnoreNativePrepare = true;
+            boolean result = getSherlock().dispatchPrepareOptionsMenu(menu);
+            mIgnoreNativePrepare = false;
+            return result;
+        }
+        return super.onPreparePanel(featureId, view, menu);
+    }
+
+    @Override
+    protected void onStop() {
+        if (isABSSupport()) {
+            getSherlock().dispatchStop();
+        }
+        super.onStop();
+    }
+
+    @Override
+    protected void onTitleChanged(CharSequence title, int color) {
+        if (isABSSupport()) {
+            getSherlock().dispatchTitleChanged(title, color);
+        }
+        super.onTitleChanged(title, color);
+    }
+
+    @Override
+    public void openOptionsMenu() {
+        if (!isABSSupport() || !getSherlock().dispatchOpenOptionsMenu()) {
+            super.openOptionsMenu();
+        }
+    }
+
+    @Override
+    public void requestWindowFeature(long featureId) {
+        if (isABSSupport()) {
+            getSherlock().requestFeature((int) featureId);
+        } else {
+            requestWindowFeature((int) featureId);
+        }
+    }
+
+    @Override
+    public void setContentView(int layoutResId) {
+        if (isABSSupport()) {
+            getSherlock().setContentView(
+                    prepareDecorView(getLayoutInflater().inflate(layoutResId)));
+        } else {
+            super.setContentView(layoutResId);
+        }
     }
 
     @Override
     public void setContentView(View view) {
-        super.setContentView(prepareDecorView(view));
+        if (isABSSupport()) {
+            getSherlock().setContentView(prepareDecorView(view));
+        } else {
+            super.setContentView(view);
+        }
     }
 
     @Override
     public void setContentView(View view, LayoutParams params) {
-        super.setContentView(prepareDecorView(view), params);
-    }
-
-    public void setForceThemeApply(boolean forceThemeApply) {
-        this.forceThemeApply = forceThemeApply;
-    }
-
-    @Override
-    public void setTheme(int resid) {
-        lastThemeResourceId = resid;
-        super.setTheme(resid);
-    }
-
-    @Override
-    public void startActivities(Intent[] intents) {
-        startActivities(intents, null);
-    }
-
-    @Override
-    public void startActivities(Intent[] intents, Bundle options) {
-        for (Intent intent : intents) {
-            startActivity(intent, options);
+        if (isABSSupport()) {
+            getSherlock().setContentView(prepareDecorView(view), params);
+        } else {
+            super.setContentView(view, params);
         }
     }
 
     @Override
-    public void startActivity(Intent intent) {
-        startActivity(intent, null);
-    }
-
-    @Override
-    public void startActivity(Intent intent, Bundle options) {
-        startActivityForResult(intent, -1, options);
-    }
-
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode) {
-        startActivityForResult(intent, requestCode, null);
-    }
-
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode,
-            Bundle options) {
-        if (getConfig().isAlwaysUseParentTheme()) {
-            ThemeManager.startActivity(this, intent, requestCode, options);
+    public void setSupportProgress(int progress) {
+        if (isABSSupport()) {
+            getSherlock().setProgress(progress);
         } else {
-            superStartActivity(intent, requestCode, options);
+            setProgress(progress);
         }
     }
 
     @Override
-    public android.content.SharedPreferences superGetSharedPreferences(
-            String name, int mode) {
-        return super.getSharedPreferences(name, mode);
+    public void setSupportProgressBarIndeterminate(boolean indeterminate) {
+        if (isABSSupport()) {
+            getSherlock().setProgressBarIndeterminate(indeterminate);
+        } else {
+            setProgressBarIndeterminate(indeterminate);
+        }
     }
 
     @Override
-    @SuppressLint("NewApi")
-    public void superStartActivity(Intent intent, int requestCode,
-            Bundle options) {
-        if (VERSION.SDK_INT >= 16) {
-            super.startActivityForResult(intent, requestCode, options);
+    public void setSupportProgressBarIndeterminateVisibility(boolean visible) {
+        if (isABSSupport()) {
+            getSherlock().setProgressBarIndeterminateVisibility(visible);
         } else {
-            super.startActivityForResult(intent, requestCode);
+            setProgressBarIndeterminateVisibility(visible);
+        }
+    }
+
+    @Override
+    public void setSupportProgressBarVisibility(boolean visible) {
+        if (isABSSupport()) {
+            getSherlock().setProgressBarVisibility(visible);
+        } else {
+            setProgressBarVisibility(visible);
+        }
+    }
+
+    @Override
+    public void setSupportSecondaryProgress(int secondaryProgress) {
+        if (isABSSupport()) {
+            getSherlock().setSecondaryProgress(secondaryProgress);
+        } else {
+            setSecondaryProgress(secondaryProgress);
+        }
+    }
+
+    @Override
+    public ActionMode startActionMode(ActionMode.Callback callback) {
+        return isABSSupport() ? getSherlock().startActionMode(callback) : null;
+    }
+
+    @Override
+    public void supportInvalidateOptionsMenu() {
+        if (isABSSupport()) {
+            getSherlock().dispatchInvalidateOptionsMenu();
+        } else {
+            super.supportInvalidateOptionsMenu();
         }
     }
 }

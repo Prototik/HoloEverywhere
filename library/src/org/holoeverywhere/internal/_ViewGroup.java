@@ -1,7 +1,7 @@
 
-package org.holoeverywhere.widget;
+package org.holoeverywhere.internal;
 
-import org.holoeverywhere.sherlock.SBase;
+import org.holoeverywhere.app.Base;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -11,7 +11,7 @@ import android.view.accessibility.AccessibilityManager;
 import com.actionbarsherlock.internal.nineoldandroids.view.NineViewGroup;
 import com.actionbarsherlock.view.ActionMode;
 
-public abstract class ViewGroup extends NineViewGroup {
+public abstract class _ViewGroup extends NineViewGroup {
     public static final int ACCESSIBILITY_FOCUS_BACKWARD = View.FOCUS_BACKWARD | 0x00000002;
     public static final int ACCESSIBILITY_FOCUS_FORWARD = View.FOCUS_FORWARD | 0x00000002;
     public static final int FLAG_DISALLOW_INTERCEPT = 0x80000;
@@ -29,23 +29,23 @@ public abstract class ViewGroup extends NineViewGroup {
         return enabled;
     }
 
-    public ViewGroup(Context context) {
+    public _ViewGroup(Context context) {
         super(context);
     }
 
-    public ViewGroup(Context context, AttributeSet attrs) {
+    public _ViewGroup(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ViewGroup(Context context, AttributeSet attrs, int defStyle) {
+    public _ViewGroup(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
     public boolean isAccessibilityManagerEnabled() {
-        return ViewGroup.isAccessibilityManagerEnabled(getContext());
+        return _ViewGroup.isAccessibilityManagerEnabled(getContext());
     }
 
     public ActionMode startActionMode(ActionMode.Callback actionModeCallback) {
-        return ((SBase) getContext()).startActionMode(actionModeCallback);
+        return ((Base) getContext()).startActionMode(actionModeCallback);
     }
 }

@@ -2,8 +2,8 @@
 package org.holoeverywhere.demo.fragments;
 
 import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.demo.R;
-import org.holoeverywhere.sherlock.SFragment;
 import org.holoeverywhere.widget.Toast;
 
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class MainFragment extends SFragment {
+public class MainFragment extends Fragment {
     private static MainFragment instance;
 
     public static MainFragment getInstance() {
@@ -24,7 +24,7 @@ public class MainFragment extends SFragment {
         return MainFragment.instance;
     }
 
-    private int[] contextItemIds = new int[] {
+    private int[] contextItemIds = {
             R.id.item3, R.id.item4,
             R.id.item5
     };

@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.widget;
 
+import org.holoeverywhere.internal._ViewGroup;
 import org.holoeverywhere.util.ReflectHelper;
 
 import android.annotation.SuppressLint;
@@ -19,7 +20,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Adapter;
 
-public abstract class AdapterView<T extends Adapter> extends ViewGroup {
+public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
     public static class AdapterContextMenuInfo implements
             ContextMenu.ContextMenuInfo {
         public long id;

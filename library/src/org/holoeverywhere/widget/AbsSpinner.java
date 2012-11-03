@@ -241,10 +241,10 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
         preferredHeight = Math
                 .max(preferredHeight, getSuggestedMinimumHeight());
         preferredWidth = Math.max(preferredWidth, getSuggestedMinimumWidth());
-        heightSize = org.holoeverywhere.widget.View
+        heightSize = org.holoeverywhere.internal._View
                 .supportResolveSizeAndState(preferredHeight, heightMeasureSpec,
                         0);
-        widthSize = org.holoeverywhere.widget.View
+        widthSize = org.holoeverywhere.internal._View
                 .supportResolveSizeAndState(preferredWidth, widthMeasureSpec, 0);
         setMeasuredDimension(widthSize, heightSize);
         mHeightMeasureSpec = heightMeasureSpec;

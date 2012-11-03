@@ -2,6 +2,7 @@
 package org.holoeverywhere.widget;
 
 import org.holoeverywhere.R;
+import org.holoeverywhere.internal._View;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -175,8 +176,8 @@ public abstract class AbsSeekBar extends ProgressBar {
         dw += getPaddingLeft() + getPaddingRight();
         dh += getPaddingTop() + getPaddingBottom();
         setMeasuredDimension(
-                View.supportResolveSizeAndState(dw, widthMeasureSpec, 0),
-                View.supportResolveSizeAndState(dh, heightMeasureSpec, 0));
+                _View.supportResolveSizeAndState(dw, widthMeasureSpec, 0),
+                _View.supportResolveSizeAndState(dh, heightMeasureSpec, 0));
     }
 
     @Override

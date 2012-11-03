@@ -1,7 +1,7 @@
 
 package org.holoeverywhere.widget;
 
-import org.holoeverywhere.sherlock.SBase;
+import org.holoeverywhere.app.Base;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -121,7 +121,7 @@ public class ListView extends android.widget.ListView implements ContextMenuInfo
     private final MultiChoiceModeWrapper choiceModeListener = new MultiChoiceModeWrapper();
     private ContextMenuInfo contextMenuInfo;
     private final OnItemLongClickListenerWrapper longClickListenerWrapper = new OnItemLongClickListenerWrapper();
-    private SBase sBase;
+    private Base mBase;
 
     public ListView(Context context) {
         super(context);
@@ -155,6 +155,10 @@ public class ListView extends android.widget.ListView implements ContextMenuInfo
         return false;
     }
 
+    public final Base getBase() {
+        return mBase;
+    }
+
     @Override
     public int getChoiceMode() {
         return choiceMode;
@@ -165,14 +169,10 @@ public class ListView extends android.widget.ListView implements ContextMenuInfo
         return contextMenuInfo;
     }
 
-    public final SBase getSBase() {
-        return sBase;
-    }
-
     protected void init(Context context) {
         super.setOnItemLongClickListener(longClickListenerWrapper);
-        if (context instanceof SBase) {
-            sBase = (SBase) context;
+        if (context instanceof Base) {
+            mBase = (Base) context;
         }
     }
 
@@ -188,6 +188,10 @@ public class ListView extends android.widget.ListView implements ContextMenuInfo
             return true;
         }
         return super.performItemClick(view, position, id);
+    }
+
+    public final void setBase(Base mBase) {
+        this.mBase = mBase;
     }
 
     @Override
@@ -245,16 +249,12 @@ public class ListView extends android.widget.ListView implements ContextMenuInfo
         longClickListenerWrapper.wrapped = listener;
     }
 
-    public final void setSBase(SBase sBase) {
-        this.sBase = sBase;
-    }
-
     public ActionMode startActionMode(ActionMode.Callback callback) {
         if (actionMode != null) {
             return actionMode;
         }
-        if (sBase != null) {
-            actionMode = sBase.startActionMode(callback);
+        if (mBase != null) {
+            actionMode = mBase.startActionMode(callback);
         } else {
             throw new RuntimeException(
                     "ListView must have SBase (setSBase(SBase))");

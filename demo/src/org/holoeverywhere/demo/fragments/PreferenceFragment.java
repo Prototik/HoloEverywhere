@@ -2,11 +2,10 @@
 package org.holoeverywhere.demo.fragments;
 
 import org.holoeverywhere.demo.R;
-import org.holoeverywhere.sherlock.SPreferenceFragment;
 
 import android.os.Bundle;
 
-public class PreferenceFragment extends SPreferenceFragment {
+public class PreferenceFragment extends org.holoeverywhere.preference.PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

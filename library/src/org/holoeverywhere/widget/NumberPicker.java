@@ -841,14 +841,14 @@ public class NumberPicker extends LinearLayout {
             if (mDecrementVirtualButtonPressed) {
 
                 mVirtualButtonPressedDrawable
-                        .setState(org.holoeverywhere.widget.View.PRESSED_STATE_SET);
+                        .setState(org.holoeverywhere.internal._View.PRESSED_STATE_SET);
                 mVirtualButtonPressedDrawable.setBounds(0, 0, getRight(),
                         mTopSelectionDividerTop);
                 mVirtualButtonPressedDrawable.draw(canvas);
             }
             if (mIncrementVirtualButtonPressed) {
                 mVirtualButtonPressedDrawable
-                        .setState(org.holoeverywhere.widget.View.PRESSED_STATE_SET);
+                        .setState(org.holoeverywhere.internal._View.PRESSED_STATE_SET);
                 mVirtualButtonPressedDrawable.setBounds(0,
                         mBottomSelectionDividerBottom, getRight(), getBottom());
                 mVirtualButtonPressedDrawable.draw(canvas);
@@ -1143,7 +1143,7 @@ public class NumberPicker extends LinearLayout {
             int measuredSize, int measureSpec) {
         if (minSize != NumberPicker.SIZE_UNSPECIFIED) {
             final int desiredWidth = Math.max(minSize, measuredSize);
-            return org.holoeverywhere.widget.View
+            return org.holoeverywhere.internal._View
                     .supportResolveSizeAndState(desiredWidth, measureSpec, 0);
         } else {
             return measuredSize;

@@ -6,7 +6,7 @@ import java.lang.ref.WeakReference;
 import org.holoeverywhere.ArrayAdapter;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
-import org.holoeverywhere.app.Activity.Holo;
+import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.DatePickerDialog;
 import org.holoeverywhere.app.Fragment;
@@ -17,7 +17,6 @@ import org.holoeverywhere.demo.fragments.AlertDialogFragment;
 import org.holoeverywhere.demo.fragments.CalendarFragment;
 import org.holoeverywhere.demo.fragments.MainFragment;
 import org.holoeverywhere.demo.fragments.PreferenceFragment;
-import org.holoeverywhere.sherlock.SActivity;
 import org.holoeverywhere.widget.ListPopupWindow;
 import org.holoeverywhere.widget.NumberPicker;
 import org.holoeverywhere.widget.Toast;
@@ -25,6 +24,7 @@ import org.holoeverywhere.widget.Toast;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app._HoloActivity.Holo;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -38,7 +38,7 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 
 @Holo(forceThemeApply = true, layout = R.layout.content)
-public class DemoActivity extends SActivity {
+public class DemoActivity extends Activity {
     private final class FragmentListener implements TabListener {
         private final Class<? extends Fragment> clazz;
         private Fragment fragment;
@@ -71,6 +71,8 @@ public class DemoActivity extends SActivity {
 
         }
     }
+
+    private WeakReference<AlertDialogFragment> alertDialog;
 
     private void addTab(Class<? extends Fragment> clazz, String title) {
         Tab tab = getSupportActionBar().newTab();
@@ -129,8 +131,6 @@ public class DemoActivity extends SActivity {
     public void showAbout(View v) {
         replaceFragment(R.id.content, new AboutFragment(), "about");
     }
-
-    private WeakReference<AlertDialogFragment> alertDialog;
 
     public void showAlertDialog(View v) {
         AlertDialogFragment fragment;
