@@ -227,6 +227,12 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:icon="@drawable/popup_window"
+				android:onClick="showPopupMenu"
+				android:text="PopupMenu" />
+			<OtherButton
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/popup_window"
 				android:onClick="showPopupWindow"
 				android:text="PopupWindow" />
 			<OtherButton

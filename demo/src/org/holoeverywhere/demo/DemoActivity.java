@@ -184,6 +184,10 @@ public class DemoActivity extends Activity {
         builder.show();
     }
 
+    public void showPopupMenu(View v) {
+        MainFragment.getInstance().showPopupMenu(v);
+    }
+
     public void showPopupWindow(View v) {
         View content = LayoutInflater.inflate(this, R.layout.popup_window);
         final PopupWindow w = new PopupWindow(content,

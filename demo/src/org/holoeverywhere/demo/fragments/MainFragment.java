@@ -4,6 +4,8 @@ package org.holoeverywhere.demo.fragments;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.demo.R;
+import org.holoeverywhere.widget.PopupMenu;
+import org.holoeverywhere.widget.PopupMenu.OnMenuItemClickListener;
 import org.holoeverywhere.widget.Toast;
 
 import android.os.Bundle;
@@ -12,9 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.actionbarsherlock.view.ContextMenu;
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements OnMenuItemClickListener {
     private static MainFragment instance;
 
     public static MainFragment getInstance() {
@@ -67,13 +70,18 @@ public class MainFragment extends Fragment {
     public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
         getMenuInflater().inflate(R.menu.menu, menu);
-        menu.findItem(contextItemIds[contextItemSelected]).setChecked(true);
+        prepareMenu(menu);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.main);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        return onContextItemSelected(item);
     }
 
     @Override
@@ -85,9 +93,21 @@ public class MainFragment extends Fragment {
         }
     }
 
+    private void prepareMenu(Menu menu) {
+        menu.findItem(contextItemIds[contextItemSelected]).setChecked(true);
+    }
+
     public void showContextMenu(View v) {
         registerForContextMenu(v);
         openContextMenu(v);
         unregisterForContextMenu(v);
+    }
+
+    public void showPopupMenu(View v) {
+        PopupMenu menu = new PopupMenu(getActivity(), v);
+        menu.inflate(R.menu.menu);
+        prepareMenu(menu.getMenu());
+        menu.setOnMenuItemClickListener(this);
+        menu.show();
     }
 }
