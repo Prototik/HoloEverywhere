@@ -18,15 +18,13 @@ import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 public interface IHoloFragment extends ContextMenuListener, OnCreateOptionsMenuListener,
         OnPrepareOptionsMenuListener,
         OnOptionsItemSelectedListener {
-    public IHoloActivity getHoloActivity();
-
     public SharedPreferences getDefaultSharedPreferences();
+
+    public IHoloActivity getHoloActivity();
 
     public LayoutInflater getLayoutInflater();
 
     public LayoutInflater getLayoutInflater(Bundle savedInstanceState);
-
-    public View prepareDecorView(View view);
 
     public SharedPreferences getSharedPreferences(String name, int mode);
 
@@ -41,4 +39,6 @@ public interface IHoloFragment extends ContextMenuListener, OnCreateOptionsMenuL
 
     public void onInflate(Activity activity, AttributeSet attrs,
             Bundle savedInstanceState);
+
+    public View prepareDecorView(View view);
 }

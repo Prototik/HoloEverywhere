@@ -49,8 +49,9 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
         @Override
         public void apply() {
-            try {
-                synchronized (data) {
+            JSONObject data = getData();
+            synchronized (data) {
+                try {
                     for (FutureJSONManipulate m : manipulate) {
                         if (!m.onJSONManipulate(data)) {
                             throw new RuntimeException(m.getClass()
@@ -58,11 +59,11 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
                         }
                     }
                     saveDataToFile(file, data);
+                } catch (Exception e) {
+                    Log.e(TAG, "Error while save preferences data", e);
+                } finally {
+                    manipulate.clear();
                 }
-                manipulate.clear();
-            } catch (RuntimeException e) {
-                manipulate.clear();
-                throw e;
             }
         }
 
@@ -160,6 +161,11 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
         public boolean onJSONManipulate(JSONObject object);
     }
 
+    private static final class ImplReference {
+        private JSONObject data;
+        private Set<OnSharedPreferenceChangeListener> listeners;
+    }
+
     private class PutValueJSONManipulate implements FutureJSONManipulate {
         private String key;
         private Object t;
@@ -203,14 +209,12 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
         }
     }
 
-    private static final Map<String, Set<OnSharedPreferenceChangeListener>> listeners = new HashMap<String, Set<OnSharedPreferenceChangeListener>>();
-    private static final String TAG = _SharedPreferencesImpl_JSON.class
-            .getSimpleName();
+    private static final Map<String, ImplReference> refs = new HashMap<String, ImplReference>();
     private String charset;
-    private final JSONObject data;
     private final boolean DEBUG = Application.isDebugMode();
     private File file;
     private final String fileTag;
+    private final String TAG = getClass().getSimpleName();
 
     @SuppressLint("NewApi")
     public _SharedPreferencesImpl_JSON(Context context, String name, int mode) {
@@ -263,17 +267,17 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
             }
             file = tempFile;
             fileTag = file.getAbsolutePath().intern();
-            data = readDataFromFile(file);
+            if (getReference().data == null) {
+                getReference().data = readDataFromFile(file);
+            }
         } catch (IOException e) {
             throw new RuntimeException("IOException", e);
         }
     }
 
     @Override
-    public boolean contains(String key) {
-        synchronized (data) {
-            return data.has(key);
-        }
+    public synchronized boolean contains(String key) {
+        return getData().has(key);
     }
 
     @Override
@@ -282,34 +286,36 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
     }
 
     @Override
-    public Map<String, ?> getAll() {
-        synchronized (data) {
-            Map<String, Object> map = new HashMap<String, Object>(data.length());
-            Iterator<?> i = data.keys();
-            while (i.hasNext()) {
-                Object o = i.next();
-                String key = o instanceof String ? (String) o : o.toString();
-                try {
-                    map.put(key, data.get(key));
-                } catch (JSONException e) {
-                }
+    public synchronized Map<String, ?> getAll() {
+        Map<String, Object> map = new HashMap<String, Object>(getData().length());
+        Iterator<?> i = getData().keys();
+        while (i.hasNext()) {
+            Object o = i.next();
+            String key = o instanceof String ? (String) o : o.toString();
+            try {
+                map.put(key, getData().get(key));
+            } catch (JSONException e) {
             }
-            return map;
         }
+        return map;
     }
 
     @Override
     public boolean getBoolean(String key, boolean defValue) {
-        return data.optBoolean(key, defValue);
+        return getData().optBoolean(key, defValue);
     }
 
     public String getCharset() {
         return charset;
     }
 
+    protected JSONObject getData() {
+        return getReference().data;
+    }
+
     @Override
     public float getFloat(String key, float defValue) {
-        return (float) data.optDouble(key, defValue);
+        return (float) getData().optDouble(key, defValue);
     }
 
     @Override
@@ -319,7 +325,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
     @Override
     public int getInt(String key, int defValue) {
-        return data.optInt(key, defValue);
+        return getData().optInt(key, defValue);
     }
 
     @Override
@@ -329,19 +335,19 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
     @Override
     public JSONArray getJSONArray(String key, JSONArray defValue) {
-        JSONArray a = data.optJSONArray(key);
+        JSONArray a = getData().optJSONArray(key);
         return a == null ? defValue : a;
     }
 
     @Override
     public JSONObject getJSONObject(String key, JSONObject defValue) {
-        JSONObject a = data.optJSONObject(key);
+        JSONObject a = getData().optJSONObject(key);
         return a == null ? defValue : a;
     }
 
     @Override
     public long getLong(String key, long defValue) {
-        return data.optLong(key, defValue);
+        return getData().optLong(key, defValue);
     }
 
     @Override
@@ -349,9 +355,18 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
         return getSet(key, defValue);
     }
 
+    protected synchronized ImplReference getReference() {
+        ImplReference ref = refs.get(fileTag);
+        if (ref == null) {
+            ref = new ImplReference();
+            refs.put(fileTag, ref);
+        }
+        return ref;
+    }
+
     @SuppressWarnings("unchecked")
     private <T> Set<T> getSet(String key, Set<T> defValue) {
-        JSONArray a = data.optJSONArray(key);
+        JSONArray a = getData().optJSONArray(key);
         if (a == null) {
             return defValue;
         }
@@ -364,7 +379,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
     @Override
     public String getString(String key, String defValue) {
-        return data.optString(key, defValue);
+        return getData().optString(key, defValue);
     }
 
     @Override
@@ -373,12 +388,12 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
     }
 
     public void notifyOnChange(String key) {
-        synchronized (_SharedPreferencesImpl_JSON.listeners) {
-            if (!_SharedPreferencesImpl_JSON.listeners.containsKey(fileTag)) {
-                return;
-            }
-            for (OnSharedPreferenceChangeListener listener : _SharedPreferencesImpl_JSON.listeners
-                    .get(fileTag)) {
+        Set<OnSharedPreferenceChangeListener> listeners = getReference().listeners;
+        if (listeners == null) {
+            return;
+        }
+        synchronized (listeners) {
+            for (OnSharedPreferenceChangeListener listener : listeners) {
                 listener.onSharedPreferenceChanged(this, key);
             }
         }
@@ -392,7 +407,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
                 reader = new InputStreamReader(is, charset);
             } catch (UnsupportedEncodingException e) {
                 if (DEBUG) {
-                    Log.w(_SharedPreferencesImpl_JSON.TAG,
+                    Log.w(TAG,
                             "Encoding unsupport: " + charset);
                 }
                 reader = new InputStreamReader(is);
@@ -421,18 +436,14 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
     }
 
     @Override
-    public void registerOnSharedPreferenceChangeListener(
+    public synchronized void registerOnSharedPreferenceChangeListener(
             OnSharedPreferenceChangeListener listener) {
-        synchronized (_SharedPreferencesImpl_JSON.listeners) {
-            if (!_SharedPreferencesImpl_JSON.listeners.containsKey(fileTag)) {
-                _SharedPreferencesImpl_JSON.listeners.put(fileTag,
-                        new HashSet<OnSharedPreferenceChangeListener>());
-            }
-            Set<OnSharedPreferenceChangeListener> set = _SharedPreferencesImpl_JSON.listeners
-                    .get(fileTag);
-            if (!set.contains(listener)) {
-                set.add(listener);
-            }
+        Set<OnSharedPreferenceChangeListener> listeners = getReference().listeners;
+        if (listeners == null) {
+            getReference().listeners = listeners = new HashSet<SharedPreferences.OnSharedPreferenceChangeListener>();
+        }
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
         }
     }
 
@@ -442,7 +453,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
             try {
                 s = data.toString(2);
             } catch (JSONException e) {
-                Log.e(_SharedPreferencesImpl_JSON.TAG, "JSONException", e);
+                Log.e(TAG, "JSONException", e);
                 s = data.toString();
             }
         } else {
@@ -479,19 +490,17 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
     }
 
     @Override
-    public void unregisterOnSharedPreferenceChangeListener(
+    public synchronized void unregisterOnSharedPreferenceChangeListener(
             OnSharedPreferenceChangeListener listener) {
-        synchronized (_SharedPreferencesImpl_JSON.listeners) {
-            if (_SharedPreferencesImpl_JSON.listeners.containsKey(fileTag)) {
-                Set<OnSharedPreferenceChangeListener> set = _SharedPreferencesImpl_JSON.listeners
-                        .get(fileTag);
-                if (set.contains(listener)) {
-                    set.remove(listener);
-                }
-                if (set.size() == 0) {
-                    _SharedPreferencesImpl_JSON.listeners.remove(fileTag);
-                }
-            }
+        Set<OnSharedPreferenceChangeListener> listeners = getReference().listeners;
+        if (listeners == null) {
+            return;
+        }
+        if (listeners.contains(listener)) {
+            listeners.remove(listener);
+        }
+        if (listeners.size() == 0) {
+            getReference().listeners = null;
         }
     }
 

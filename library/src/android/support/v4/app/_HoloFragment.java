@@ -38,11 +38,6 @@ public abstract class _HoloFragment extends Fragment implements
         holoActivity.createContextMenu(contextMenuBuilder, view, menuInfo, listener);
     }
 
-    @Override
-    public IHoloActivity getHoloActivity() {
-        return holoActivity;
-    }
-
     protected int getContainerId() {
         return mContainerId;
     }
@@ -50,6 +45,11 @@ public abstract class _HoloFragment extends Fragment implements
     @Override
     public SharedPreferences getDefaultSharedPreferences() {
         return holoActivity.getDefaultSharedPreferences();
+    }
+
+    @Override
+    public IHoloActivity getHoloActivity() {
+        return holoActivity;
     }
 
     @Override

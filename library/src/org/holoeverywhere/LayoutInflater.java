@@ -124,12 +124,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements
         LayoutInflater.INSTANCES_MAP.clear();
     }
 
-    public static void remapWidget(Class<? extends View> clazz) {
-        if (clazz != null) {
-            remap(clazz.getPackage().getName(), clazz.getSimpleName());
-        }
-    }
-
     public static LayoutInflater from(android.view.LayoutInflater inflater) {
         if (inflater instanceof LayoutInflater) {
             return (LayoutInflater) inflater;
@@ -200,6 +194,12 @@ public class LayoutInflater extends android.view.LayoutInflater implements
     private static void remapInternal(Class<?>... classess) {
         for (Class<?> clazz : classess) {
             remapHard("Internal." + clazz.getSimpleName(), clazz.getName());
+        }
+    }
+
+    public static void remapWidget(Class<? extends View> clazz) {
+        if (clazz != null) {
+            remap(clazz.getPackage().getName(), clazz.getSimpleName());
         }
     }
 

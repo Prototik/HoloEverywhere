@@ -120,8 +120,8 @@ public class ListView extends android.widget.ListView implements ContextMenuInfo
     private int choiceMode;
     private final MultiChoiceModeWrapper choiceModeListener = new MultiChoiceModeWrapper();
     private ContextMenuInfo contextMenuInfo;
-    private final OnItemLongClickListenerWrapper longClickListenerWrapper = new OnItemLongClickListenerWrapper();
     private IHoloActivity holoActivity;
+    private final OnItemLongClickListenerWrapper longClickListenerWrapper = new OnItemLongClickListenerWrapper();
 
     public ListView(Context context) {
         super(context);
@@ -191,7 +191,7 @@ public class ListView extends android.widget.ListView implements ContextMenuInfo
     }
 
     public final void setBase(IHoloActivity mBase) {
-        this.holoActivity = mBase;
+        holoActivity = mBase;
     }
 
     @Override
