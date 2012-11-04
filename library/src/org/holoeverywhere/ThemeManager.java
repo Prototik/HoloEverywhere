@@ -18,7 +18,7 @@ public final class ThemeManager {
     }
 
     public static interface ThemeGetter {
-        public int getThemeResource(int themeTag, boolean abs);
+        public int getThemeResource(int themeTag);
     }
 
     public static final int DARK = 1;
@@ -89,19 +89,16 @@ public final class ThemeManager {
     }
 
     public static int getThemeResource(Activity activity) {
-        boolean force = activity instanceof IHoloActivity ? ((IHoloActivity) activity)
-                .isABSSupport() : false;
-        return ThemeManager.getThemeResource(ThemeManager.getTheme(activity),
-                force);
+        return ThemeManager.getThemeResource(ThemeManager.getTheme(activity));
     }
 
-    public static int getThemeResource(int themeTag, boolean abs) {
+    public static int getThemeResource(int themeTag) {
         if (ThemeManager.themeModifier > 0) {
             themeTag |= ThemeManager.themeModifier;
         }
         if (ThemeManager.themeGetter != null) {
             int getterResource = ThemeManager.themeGetter.getThemeResource(
-                    themeTag, abs);
+                    themeTag);
             if (getterResource > 0) {
                 return getterResource;
             }
@@ -119,44 +116,33 @@ public final class ThemeManager {
         boolean fullScreen = ThemeManager.isFullScreen(themeTag);
         if (dark) {
             if (noActionBar && fullScreen) {
-                return abs ? R.style.Holo_Theme_Sherlock_NoActionBar_Fullscreen
-                        : R.style.Holo_Theme_NoActionBar_Fullscreen;
+                return R.style.Holo_Theme_NoActionBar_Fullscreen;
             } else if (noActionBar && !fullScreen) {
-                return abs ? R.style.Holo_Theme_Sherlock_NoActionBar
-                        : R.style.Holo_Theme_NoActionBar;
+                return R.style.Holo_Theme_NoActionBar;
             } else if (!noActionBar && fullScreen) {
-                return abs ? R.style.Holo_Theme_Sherlock_Fullscreen
-                        : R.style.Holo_Theme_Fullscreen;
+                return R.style.Holo_Theme_Fullscreen;
             } else {
-                return abs ? R.style.Holo_Theme_Sherlock : R.style.Holo_Theme;
+                return R.style.Holo_Theme;
             }
         } else if (light) {
             if (noActionBar && fullScreen) {
-                return abs ? R.style.Holo_Theme_Sherlock_Light_NoActionBar_Fullscreen
-                        : R.style.Holo_Theme_Light_NoActionBar_Fullscreen;
+                return R.style.Holo_Theme_Light_NoActionBar_Fullscreen;
             } else if (noActionBar && !fullScreen) {
-                return abs ? R.style.Holo_Theme_Sherlock_Light_NoActionBar
-                        : R.style.Holo_Theme_Light_NoActionBar;
+                return R.style.Holo_Theme_Light_NoActionBar;
             } else if (!noActionBar && fullScreen) {
-                return abs ? R.style.Holo_Theme_Sherlock_Light_Fullscreen
-                        : R.style.Holo_Theme_Light_Fullscreen;
+                return R.style.Holo_Theme_Light_Fullscreen;
             } else {
-                return abs ? R.style.Holo_Theme_Sherlock_Light
-                        : R.style.Holo_Theme_Light;
+                return R.style.Holo_Theme_Light;
             }
         } else if (lightWithDarkActionBar) {
             if (noActionBar && fullScreen) {
-                return abs ? R.style.Holo_Theme_Sherlock_Light_DarkActionBar_NoActionBar_Fullscreen
-                        : R.style.Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen;
+                return R.style.Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen;
             } else if (noActionBar && !fullScreen) {
-                return abs ? R.style.Holo_Theme_Sherlock_Light_DarkActionBar_NoActionBar
-                        : R.style.Holo_Theme_Light_DarkActionBar_NoActionBar;
+                return R.style.Holo_Theme_Light_DarkActionBar_NoActionBar;
             } else if (!noActionBar && fullScreen) {
-                return abs ? R.style.Holo_Theme_Sherlock_Light_DarkActionBar_Fullscreen
-                        : R.style.Holo_Theme_Light_DarkActionBar_Fullscreen;
+                return R.style.Holo_Theme_Light_DarkActionBar_Fullscreen;
             } else {
-                return abs ? R.style.Holo_Theme_Sherlock_Light_DarkActionBar
-                        : R.style.Holo_Theme_Light_DarkActionBar;
+                return R.style.Holo_Theme_Light_DarkActionBar;
             }
         }
         return themeTag;

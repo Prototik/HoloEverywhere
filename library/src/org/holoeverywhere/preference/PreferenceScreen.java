@@ -95,7 +95,7 @@ public final class PreferenceScreen extends PreferenceGroup implements
             return (Integer) method.invoke(context);
         } catch (Exception e) {
             Log.e(TAG, "Failed getting context theme", e);
-            return R.style.Holo_Theme_Sherlock_NoActionBar;
+            return R.style.Holo_Theme_NoActionBar;
         }
     }
 

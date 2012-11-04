@@ -180,6 +180,18 @@ public class LayoutInflater extends android.view.LayoutInflater implements
         LayoutInflater.INSTANCES_MAP.remove(context);
     }
 
+    public static void remap(Class<? extends View>... classes) {
+        for (Class<? extends View> clazz : classes) {
+            remap(clazz);
+        }
+    }
+
+    public static void remap(Class<? extends View> clazz) {
+        if (clazz != null) {
+            LayoutInflater.VIEWS_MAP.put(clazz.getSimpleName(), clazz.getName());
+        }
+    }
+
     @Deprecated
     public static void remap(String prefix, String... classess) {
         for (String clazz : classess) {
@@ -195,18 +207,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements
     private static void remapInternal(Class<?>... classess) {
         for (Class<?> clazz : classess) {
             remapHard("Internal." + clazz.getSimpleName(), clazz.getName());
-        }
-    }
-
-    public static void remap(Class<? extends View>... classes) {
-        for (Class<? extends View> clazz : classes) {
-            remap(clazz);
-        }
-    }
-
-    public static void remap(Class<? extends View> clazz) {
-        if (clazz != null) {
-            LayoutInflater.VIEWS_MAP.put(clazz.getSimpleName(), clazz.getName());
         }
     }
 
