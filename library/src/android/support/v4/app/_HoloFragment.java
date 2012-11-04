@@ -3,8 +3,8 @@ package android.support.v4.app;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.Base;
-import org.holoeverywhere.app.BaseFragment;
+import org.holoeverywhere.app.IHoloActivity;
+import org.holoeverywhere.app.IHoloFragment;
 import org.holoeverywhere.preference.PreferenceManager;
 import org.holoeverywhere.preference.SharedPreferences;
 
@@ -27,22 +27,20 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class _HoloFragment extends Fragment implements
-        BaseFragment {
+        IHoloFragment {
     private static final int INTERNAL_DECOR_VIEW_ID = 0x7f999999;
-
-    private Base mBase;
-
+    private IHoloActivity holoActivity;
     private Bundle savedInstanceState;
 
     @Override
     public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
             View view, ContextMenuInfo menuInfo, ContextMenuListener listener) {
-        mBase.createContextMenu(contextMenuBuilder, view, menuInfo, listener);
+        holoActivity.createContextMenu(contextMenuBuilder, view, menuInfo, listener);
     }
 
     @Override
-    public Base getBase() {
-        return mBase;
+    public IHoloActivity getHoloActivity() {
+        return holoActivity;
     }
 
     protected int getContainerId() {
@@ -51,7 +49,7 @@ public abstract class _HoloFragment extends Fragment implements
 
     @Override
     public SharedPreferences getDefaultSharedPreferences() {
-        return mBase.getDefaultSharedPreferences();
+        return holoActivity.getDefaultSharedPreferences();
     }
 
     @Override
@@ -65,7 +63,7 @@ public abstract class _HoloFragment extends Fragment implements
     }
 
     public MenuInflater getMenuInflater() {
-        return mBase.getSupportMenuInflater();
+        return holoActivity.getSupportMenuInflater();
     }
 
     protected Bundle getSavedInstanceState() {
@@ -79,14 +77,14 @@ public abstract class _HoloFragment extends Fragment implements
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends Activity & Base> T getSupportActivity() {
-        return (T) mBase;
+    public <T extends Activity & IHoloActivity> T getSupportActivity() {
+        return (T) holoActivity;
     }
 
     @Override
     public FragmentManager getSupportFragmentManager() {
-        if (mBase != null) {
-            return mBase.getSupportFragmentManager();
+        if (holoActivity != null) {
+            return holoActivity.getSupportFragmentManager();
         } else {
             return getFragmentManager();
         }
@@ -111,7 +109,7 @@ public abstract class _HoloFragment extends Fragment implements
             throw new RuntimeException(
                     "HoloEverywhere.Fragment must be attached to HoloEverywhere.Activity");
         }
-        mBase = (Activity) activity;
+        holoActivity = (Activity) activity;
         onAttach((Activity) activity);
     }
 
@@ -122,12 +120,12 @@ public abstract class _HoloFragment extends Fragment implements
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        return mBase.onContextItemSelected(item);
+        return holoActivity.onContextItemSelected(item);
     }
 
     @Override
     public void onContextMenuClosed(ContextMenu menu) {
-        mBase.onContextMenuClosed(menu);
+        holoActivity.onContextMenuClosed(menu);
     }
 
     @Override
@@ -139,14 +137,14 @@ public abstract class _HoloFragment extends Fragment implements
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
-        mBase.onCreateContextMenu(menu, v, menuInfo);
+        holoActivity.onCreateContextMenu(menu, v, menuInfo);
     }
 
     @Override
     public final void onCreateOptionsMenu(android.view.Menu menu, android.view.MenuInflater inflater) {
         if (isABSSupport()) {
             onCreateOptionsMenu(new MenuWrapper(menu),
-                    mBase.getSupportMenuInflater());
+                    holoActivity.getSupportMenuInflater());
         } else {
             super.onCreateOptionsMenu(menu, inflater);
         }
@@ -154,7 +152,7 @@ public abstract class _HoloFragment extends Fragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        mBase.onCreateOptionsMenu(menu);
+        holoActivity.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -194,7 +192,7 @@ public abstract class _HoloFragment extends Fragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return mBase.onOptionsItemSelected(item);
+        return holoActivity.onOptionsItemSelected(item);
     }
 
     @Override
@@ -208,7 +206,7 @@ public abstract class _HoloFragment extends Fragment implements
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        mBase.onPrepareOptionsMenu(menu);
+        holoActivity.onPrepareOptionsMenu(menu);
     }
 
     public void onViewCreated(View view) {
@@ -229,7 +227,8 @@ public abstract class _HoloFragment extends Fragment implements
         return v.showContextMenu();
     }
 
-    protected View prepareDecorView(View v) {
+    @Override
+    public View prepareDecorView(View v) {
         return ContextMenuDecorView.prepareDecorView(getSupportActivity(), v, this,
                 INTERNAL_DECOR_VIEW_ID);
     }

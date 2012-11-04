@@ -12,7 +12,7 @@ import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Application;
 import org.holoeverywhere.app.Application.Config;
 import org.holoeverywhere.app.Application.Config.PreferenceImpl;
-import org.holoeverywhere.app.Base;
+import org.holoeverywhere.app.IHoloActivity;
 import org.holoeverywhere.preference.PreferenceManager;
 import org.holoeverywhere.preference.SharedPreferences;
 
@@ -36,7 +36,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class _HoloActivity extends Watson implements
-        Base {
+        IHoloActivity {
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
     public static @interface Holo {
@@ -70,10 +70,8 @@ public abstract class _HoloActivity extends Watson implements
     };
 
     private boolean forceThemeApply = false;
-
     private int lastThemeResourceId = 0;
-
-    protected final String TAG = getClass().getSimpleName();
+    private final String TAG = getClass().getSimpleName();
 
     @Override
     public void addContentView(View view, LayoutParams params) {

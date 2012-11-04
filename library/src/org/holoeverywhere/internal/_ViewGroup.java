@@ -1,7 +1,7 @@
 
 package org.holoeverywhere.internal;
 
-import org.holoeverywhere.app.Base;
+import org.holoeverywhere.app.IHoloActivity;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -46,6 +46,6 @@ public abstract class _ViewGroup extends NineViewGroup {
     }
 
     public ActionMode startActionMode(ActionMode.Callback actionModeCallback) {
-        return ((Base) getContext()).startActionMode(actionModeCallback);
+        return ((IHoloActivity) getContext()).startActionMode(actionModeCallback);
     }
 }

@@ -15,10 +15,10 @@ import android.view.ViewGroup;
 
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 
-public interface BaseFragment extends ContextMenuListener, OnCreateOptionsMenuListener,
+public interface IHoloFragment extends ContextMenuListener, OnCreateOptionsMenuListener,
         OnPrepareOptionsMenuListener,
         OnOptionsItemSelectedListener {
-    public Base getBase();
+    public IHoloActivity getHoloActivity();
 
     public SharedPreferences getDefaultSharedPreferences();
 
@@ -26,9 +26,11 @@ public interface BaseFragment extends ContextMenuListener, OnCreateOptionsMenuLi
 
     public LayoutInflater getLayoutInflater(Bundle savedInstanceState);
 
+    public View prepareDecorView(View view);
+
     public SharedPreferences getSharedPreferences(String name, int mode);
 
-    public <T extends Activity & Base> T getSupportActivity();
+    public <T extends Activity & IHoloActivity> T getSupportActivity();
 
     public FragmentManager getSupportFragmentManager();
 

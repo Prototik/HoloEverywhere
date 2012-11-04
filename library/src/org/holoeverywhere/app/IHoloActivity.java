@@ -24,7 +24,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public interface Base extends ThemedIntentStarter, ContextMenuListener, OnCreatePanelMenuListener,
+public interface IHoloActivity extends ThemedIntentStarter, ContextMenuListener,
+        OnCreatePanelMenuListener,
         OnPreparePanelListener, OnMenuItemSelectedListener,
         OnActionModeStartedListener, OnActionModeFinishedListener,
         SuperSystemService {
@@ -77,5 +78,4 @@ public interface Base extends ThemedIntentStarter, ContextMenuListener, OnCreate
             String name, int mode);
 
     public void supportInvalidateOptionsMenu();
-
 }

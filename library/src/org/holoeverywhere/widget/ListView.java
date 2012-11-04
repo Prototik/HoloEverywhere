@@ -1,7 +1,7 @@
 
 package org.holoeverywhere.widget;
 
-import org.holoeverywhere.app.Base;
+import org.holoeverywhere.app.IHoloActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -121,7 +121,7 @@ public class ListView extends android.widget.ListView implements ContextMenuInfo
     private final MultiChoiceModeWrapper choiceModeListener = new MultiChoiceModeWrapper();
     private ContextMenuInfo contextMenuInfo;
     private final OnItemLongClickListenerWrapper longClickListenerWrapper = new OnItemLongClickListenerWrapper();
-    private Base mBase;
+    private IHoloActivity holoActivity;
 
     public ListView(Context context) {
         super(context);
@@ -155,8 +155,8 @@ public class ListView extends android.widget.ListView implements ContextMenuInfo
         return false;
     }
 
-    public final Base getBase() {
-        return mBase;
+    public final IHoloActivity getBase() {
+        return holoActivity;
     }
 
     @Override
@@ -171,8 +171,8 @@ public class ListView extends android.widget.ListView implements ContextMenuInfo
 
     protected void init(Context context) {
         super.setOnItemLongClickListener(longClickListenerWrapper);
-        if (context instanceof Base) {
-            mBase = (Base) context;
+        if (context instanceof IHoloActivity) {
+            holoActivity = (IHoloActivity) context;
         }
     }
 
@@ -190,8 +190,8 @@ public class ListView extends android.widget.ListView implements ContextMenuInfo
         return super.performItemClick(view, position, id);
     }
 
-    public final void setBase(Base mBase) {
-        this.mBase = mBase;
+    public final void setBase(IHoloActivity mBase) {
+        this.holoActivity = mBase;
     }
 
     @Override
@@ -253,8 +253,8 @@ public class ListView extends android.widget.ListView implements ContextMenuInfo
         if (actionMode != null) {
             return actionMode;
         }
-        if (mBase != null) {
-            actionMode = mBase.startActionMode(callback);
+        if (holoActivity != null) {
+            actionMode = holoActivity.startActionMode(callback);
         } else {
             throw new RuntimeException(
                     "ListView must have SBase (setSBase(SBase))");

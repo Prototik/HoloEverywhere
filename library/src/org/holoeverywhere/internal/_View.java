@@ -1,7 +1,7 @@
 
 package org.holoeverywhere.internal;
 
-import org.holoeverywhere.app.Base;
+import org.holoeverywhere.app.IHoloActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -308,6 +308,6 @@ public class _View extends android.view.View implements Drawable.Callback,
     }
 
     public ActionMode startActionMode(ActionMode.Callback actionModeCallback) {
-        return ((Base) getContext()).startActionMode(actionModeCallback);
+        return ((IHoloActivity) getContext()).startActionMode(actionModeCallback);
     }
 }

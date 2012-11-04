@@ -2,7 +2,7 @@
 package org.holoeverywhere;
 
 import org.holoeverywhere.app.Application;
-import org.holoeverywhere.app.Base;
+import org.holoeverywhere.app.IHoloActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -36,7 +36,7 @@ public final class ThemeManager {
     private static int themeModifier = 0;
 
     public static void applyTheme(Activity activity) {
-        boolean force = activity instanceof Base ? ((Base) activity)
+        boolean force = activity instanceof IHoloActivity ? ((IHoloActivity) activity)
                 .isForceThemeApply() : false;
         ThemeManager.applyTheme(activity, force);
     }
@@ -89,7 +89,7 @@ public final class ThemeManager {
     }
 
     public static int getThemeResource(Activity activity) {
-        boolean force = activity instanceof Base ? ((Base) activity)
+        boolean force = activity instanceof IHoloActivity ? ((IHoloActivity) activity)
                 .isABSSupport() : false;
         return ThemeManager.getThemeResource(ThemeManager.getTheme(activity),
                 force);
