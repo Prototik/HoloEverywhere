@@ -89,31 +89,31 @@ public class LayoutInflater extends android.view.LayoutInflater implements
     private static final Map<String, String> VIEWS_MAP = new HashMap<String, String>();
 
     static {
-        remapWidget(ProgressBar.class);
-        remapWidget(LinearLayout.class);
-        remapWidget(Switch.class);
-        remapWidget(TextView.class);
-        remapWidget(EditText.class);
-        remapWidget(AutoCompleteTextView.class);
-        remapWidget(MultiAutoCompleteTextView.class);
-        remapWidget(CalendarView.class);
-        remapWidget(Spinner.class);
-        remapWidget(NumberPicker.class);
-        remapWidget(DatePicker.class);
-        remapWidget(TimePicker.class);
-        remapWidget(ListView.class);
-        remapWidget(Divider.class);
-        remapWidget(SeekBar.class);
-        remapWidget(Button.class);
-        remapWidget(CheckedTextView.class);
-        remapWidget(FragmentBreadCrumbs.class);
-        remapWidget(ToggleButton.class);
-        remapWidget(RadioButton.class);
-        remapWidget(CheckBox.class);
-        remapWidget(PreferenceFrameLayout.class);
-        remapWidget(ViewPager.class);
-        remapWidget(PagerTitleStrip.class);
-        remapWidget(WebView.class);
+        remap(ProgressBar.class);
+        remap(LinearLayout.class);
+        remap(Switch.class);
+        remap(TextView.class);
+        remap(EditText.class);
+        remap(AutoCompleteTextView.class);
+        remap(MultiAutoCompleteTextView.class);
+        remap(CalendarView.class);
+        remap(Spinner.class);
+        remap(NumberPicker.class);
+        remap(DatePicker.class);
+        remap(TimePicker.class);
+        remap(ListView.class);
+        remap(Divider.class);
+        remap(SeekBar.class);
+        remap(Button.class);
+        remap(CheckedTextView.class);
+        remap(FragmentBreadCrumbs.class);
+        remap(ToggleButton.class);
+        remap(RadioButton.class);
+        remap(CheckBox.class);
+        remap(PreferenceFrameLayout.class);
+        remap(ViewPager.class);
+        remap(PagerTitleStrip.class);
+        remap(WebView.class);
         remapInternal(ActionBarView.class, HoloListMenuItemView.class,
                 ExpandedMenuView.class, ActionBarContainer.class,
                 RecycleListView.class, DialogTitle.class,
@@ -180,6 +180,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
         LayoutInflater.INSTANCES_MAP.remove(context);
     }
 
+    @Deprecated
     public static void remap(String prefix, String... classess) {
         for (String clazz : classess) {
             LayoutInflater.VIEWS_MAP.put(clazz, prefix + "." + clazz);
@@ -197,9 +198,15 @@ public class LayoutInflater extends android.view.LayoutInflater implements
         }
     }
 
-    public static void remapWidget(Class<? extends View> clazz) {
+    public static void remap(Class<? extends View>... classes) {
+        for (Class<? extends View> clazz : classes) {
+            remap(clazz);
+        }
+    }
+
+    public static void remap(Class<? extends View> clazz) {
         if (clazz != null) {
-            remap(clazz.getPackage().getName(), clazz.getSimpleName());
+            LayoutInflater.VIEWS_MAP.put(clazz.getSimpleName(), clazz.getName());
         }
     }
 
