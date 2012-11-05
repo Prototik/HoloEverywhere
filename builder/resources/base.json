@@ -1,6 +1,7 @@
 {
     "blocks": {
         "Base": {
+            "android:dialogTheme": "?dialogTheme", 
             "android:dividerHorizontal": "?dividerHorizontal", 
             "android:dividerVertical": "?dividerVertical", 
             "buttonBarButtonStyle": "?borderlessButtonStyle", 
@@ -38,12 +39,12 @@
         "BaseDark": {
             "alertDialogStyle": "@style/Holo.AlertDialog", 
             "alertDialogTheme": "@style/Holo.Theme.Dialog.Alert", 
-            "android:dialogTheme": "@style/Holo.Theme.Dialog", 
             "android:popupWindowStyle": "@style/Holo.PopupWindow", 
             "android:windowBackground": "@drawable/background_holo_dark", 
             "autoCompleteTextViewStyle": "@style/Holo.AutoCompleteTextView", 
             "borderlessButtonStyle": "@style/Holo.Button.Borderless", 
             "calendarViewStyle": "@style/Holo.CalendarView", 
+            "dialogTheme": "@style/Holo.Theme.Dialog", 
             "dropDownListViewStyle": "@style/Holo.ListView.DropDown", 
             "include": [
                 "Base"
@@ -64,12 +65,12 @@
         "BaseLight": {
             "alertDialogStyle": "@style/Holo.AlertDialog.Light", 
             "alertDialogTheme": "@style/Holo.Theme.Dialog.Alert.Light", 
-            "android:dialogTheme": "@style/Holo.Theme.Dialog.Light", 
             "android:popupWindowStyle": "@style/Holo.PopupWindow.Light", 
             "android:windowBackground": "@drawable/background_holo_light", 
             "autoCompleteTextViewStyle": "@style/Holo.AutoCompleteTextView.Light", 
             "borderlessButtonStyle": "@style/Holo.Button.Borderless.Light", 
             "calendarViewStyle": "@style/Holo.CalendarView.Light", 
+            "dialogTheme": "@style/Holo.Theme.Dialog.Light", 
             "dropDownListViewStyle": "@style/Holo.ListView.DropDown.Light", 
             "include": [
                 "Base"

@@ -25,9 +25,10 @@
         <item name="preferenceLayoutChild">@layout/preference_child_holo</item>
         <item name="ringtonePreferenceStyle">@style/Holo.PreferenceRingtone</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
-        <item name="preferencePanelStyle">@style/Holo.PreferencePanel</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
+        <item name="preferencePanelStyle">@style/Holo.PreferencePanel</item>
         <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
+        <item name="android:dialogTheme">?dialogTheme</item>
         <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
         <item name="panelMenuListWidth">250dp</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
@@ -47,8 +48,8 @@
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_dark</item>
         <item name="spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
-        <item name="android:dialogTheme">@style/Holo.Theme.Dialog</item>
         <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Large</item>
+        <item name="dialogTheme">@style/Holo.Theme.Dialog</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
         <item name="android:popupWindowStyle">@style/Holo.PopupWindow</item>
         <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
@@ -81,9 +82,10 @@
         <item name="preferenceLayoutChild">@layout/preference_child_holo</item>
         <item name="ringtonePreferenceStyle">@style/Holo.PreferenceRingtone</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
-        <item name="preferencePanelStyle">@style/Holo.PreferencePanel</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
+        <item name="preferencePanelStyle">@style/Holo.PreferencePanel</item>
         <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
+        <item name="android:dialogTheme">?dialogTheme</item>
         <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
         <item name="panelMenuListWidth">250dp</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
@@ -103,8 +105,8 @@
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
         <item name="spinnerItemStyle">@style/Holo.TextView.SpinnerItem.Light</item>
-        <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
+        <item name="dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
         <item name="android:popupWindowStyle">@style/Holo.PopupWindow.Light</item>
         <item name="segmentedButtonStyle">@style/Holo.SegmentedButton.Light</item>
@@ -137,9 +139,10 @@
         <item name="preferenceLayoutChild">@layout/preference_child_holo</item>
         <item name="ringtonePreferenceStyle">@style/Holo.PreferenceRingtone</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
-        <item name="preferencePanelStyle">@style/Holo.PreferencePanel</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
+        <item name="preferencePanelStyle">@style/Holo.PreferencePanel</item>
         <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
+        <item name="android:dialogTheme">?dialogTheme</item>
         <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
         <item name="panelMenuListWidth">250dp</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
@@ -159,8 +162,8 @@
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
         <item name="spinnerItemStyle">@style/Holo.TextView.SpinnerItem.Light</item>
-        <item name="android:dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
+        <item name="dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
         <item name="android:popupWindowStyle">@style/Holo.PopupWindow.Light</item>
         <item name="segmentedButtonStyle">@style/Holo.SegmentedButton.Light</item>

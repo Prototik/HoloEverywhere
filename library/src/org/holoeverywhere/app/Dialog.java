@@ -2,8 +2,10 @@
 package org.holoeverywhere.app;
 
 import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.R;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.View;
@@ -18,17 +20,31 @@ import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class Dialog extends android.app.Dialog implements ContextMenuListener {
+    private static final int checkTheme(Context context, int theme) {
+        if (theme >= 0x01000000) {
+            return theme;
+        }
+        TypedValue value = new TypedValue();
+        context.getTheme().resolveAttribute(R.attr.dialogTheme, value, true);
+        if (value.resourceId > 0) {
+            return value.resourceId;
+        }
+        return R.style.Holo_Theme_Dialog;
+    }
+
     public Dialog(Context context) {
-        super(context);
+        this(context, 0);
     }
 
     public Dialog(Context context, boolean cancelable,
             OnCancelListener cancelListener) {
-        super(context, cancelable, cancelListener);
+        this(context);
+        setCancelable(cancelable);
+        setOnCancelListener(cancelListener);
     }
 
     public Dialog(Context context, int theme) {
-        super(context, theme);
+        super(context, checkTheme(context, theme));
     }
 
     @Override

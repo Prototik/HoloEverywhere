@@ -44,6 +44,7 @@
 	<attr name="listDividerAlertDialog" format="reference" />
 	<attr name="alertDialogStyle" format="reference" />
 	<attr name="alertDialogTheme" format="reference" />
+	<attr name="dialogTheme" format="reference" />
 	<attr name="textColorAlertDialogListItem" format="reference" />
 	<attr name="spinnerStyle" format="reference" />
 	<attr name="numberPickerStyle" format="reference" />
