@@ -29,7 +29,7 @@ public class Builder {
     }
 
     public static void main(String[] args) {
-        System.out.println("HoloEverywhere Builder v0.1");
+        System.out.println("HoloEverywhere Builder v0.0.1");
         CommandLine cmd;
         try {
             cmd = parser.parse(options, args);
