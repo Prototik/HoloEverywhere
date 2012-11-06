@@ -126,7 +126,11 @@ public class DialogFragment extends Fragment
                 throw new IllegalStateException(
                         "DialogFragment can not be attached to a container view");
             }
-            mDialog.setContentView(view);
+            if (mDialog instanceof AlertDialog) {
+                ((AlertDialog) mDialog).setView(view);
+            } else {
+                mDialog.setContentView(view);
+            }
         }
         mDialog.setOwnerActivity(getActivity());
         mDialog.setCancelable(mCancelable);
@@ -166,7 +170,7 @@ public class DialogFragment extends Fragment
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return new Dialog(getActivity(), getTheme());
+        return new AlertDialog(getActivity(), getTheme());
     }
 
     @Override
