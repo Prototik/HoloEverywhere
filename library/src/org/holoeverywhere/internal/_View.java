@@ -1,7 +1,7 @@
 
 package org.holoeverywhere.internal;
 
-import org.holoeverywhere.app.IHoloActivity;
+import org.holoeverywhere.IHoloActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -71,6 +71,9 @@
 		<flag name="start" value="0x00800003" />
 		<flag name="end" value="0x00800005" />
 	</attr>
+	<declare-styleable name="HoloActivity">
+		<attr name="holoTheme" format="boolean" />
+	</declare-styleable>
 	<declare-styleable name="RotateDrawable">
 		<attr name="android:visible" />
 		<attr name="android:fromDegrees" />

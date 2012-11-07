@@ -1,5 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-	<string name="app_name">HoloEverywhere Demo</string>
-	<string name="spinner_prompt">Spinner sample</string>
+<?xml version="1.0" encoding="utf-8"?><resources>
+    <string name="datepicker">DatePicker</string>
+    <string name="other">Other</string>
+    <string name="timepicker">TimePicker</string>
+    <string name="radiobutton">Radio-button</string>
+    <string name="settings">Settings</string>
+    <string name="edittext">Input field</string>
+    <string name="about">About</string>
+    <string name="autocompletetextview">Auto complete input field</string>
+    <string name="progressdialog">ProgressDialog</string>
+    <string name="progress_bars">Progress bars</string>
+    <string name="toast">Toast</string>
+    <string name="app_name">HoloEverywhere Demo</string>
+    <string name="popupmenu">PopupMenu</string>
+    <string name="library_name">HoloEverywhere</string>
+    <string name="contextmenu">ContextMenu</string>
+    <string name="alertdialog">AlertDialog</string>
+    <string name="base_widgets">Base widgets</string>
+    <string name="button">Button</string>
+    <string name="checkbox">Checkbox</string>
+    <string name="listpopupwindow">ListPopupWindow</string>
+    <string name="checkable_buttons">Checkable buttons</string>
+    <string name="numberpicker">NumberPicker</string>
+    <string name="calendar">Calendar</string>
 </resources>

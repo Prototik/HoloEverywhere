@@ -27,11 +27,17 @@ public class MainFragment extends Fragment implements OnMenuItemClickListener {
         return MainFragment.instance;
     }
 
-    private int[] contextItemIds = {
-            R.id.item3, R.id.item4,
-            R.id.item5
-    };
-    private int contextItemSelected = 0;
+    private static final class ContextMenuState {
+        public static final int[] TOGGLE_ITEM_IDS = {
+                R.id.item1,
+                R.id.item2,
+                R.id.item3
+        };
+        public boolean checkedItemState = true;
+        public int selectedItemId = 0;
+    }
+
+    private final ContextMenuState contextMenuState = new ContextMenuState();
 
     public MainFragment() {
         MainFragment.instance = this;
@@ -42,22 +48,26 @@ public class MainFragment extends Fragment implements OnMenuItemClickListener {
         String text;
         switch (item.getItemId()) {
             case R.id.item1:
-                text = "Toast 1";
+                text = "Toggle to first item";
+                contextMenuState.selectedItemId = 0;
                 break;
             case R.id.item2:
-                text = "Toast 2";
+                text = "Toggle to second item";
+                contextMenuState.selectedItemId = 1;
                 break;
             case R.id.item3:
-                text = "Toggle to first item";
-                contextItemSelected = 0;
+                text = "Toggle to third item";
+                contextMenuState.selectedItemId = 2;
                 break;
             case R.id.item4:
-                text = "Toggle to second item";
-                contextItemSelected = 1;
+                text = "Simple item";
                 break;
             case R.id.item5:
-                text = "Toggle to third item";
-                contextItemSelected = 2;
+                if (contextMenuState.checkedItemState = !contextMenuState.checkedItemState) {
+                    text = "Item checked";
+                } else {
+                    text = "Item unchecked";
+                }
                 break;
             default:
                 return super.onContextItemSelected(item);
@@ -94,7 +104,9 @@ public class MainFragment extends Fragment implements OnMenuItemClickListener {
     }
 
     private void prepareMenu(Menu menu) {
-        menu.findItem(contextItemIds[contextItemSelected]).setChecked(true);
+        menu.findItem(ContextMenuState.TOGGLE_ITEM_IDS[contextMenuState.selectedItemId])
+                .setChecked(true);
+        menu.findItem(R.id.item5).setChecked(contextMenuState.checkedItemState);
     }
 
     public void showContextMenu(View v) {

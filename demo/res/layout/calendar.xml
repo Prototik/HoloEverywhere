@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<CalendarView xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical" >
-	<Button
-		style="?borderlessButtonStyle"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:onClick="closeCalendar"
-		android:text="Back" />
-	<Divider
-		android:layout_width="match_parent"
-		android:layout_height="1dp" />
-	<CalendarView
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1" />
-</LinearLayout>
+	android:layout_height="match_parent" />

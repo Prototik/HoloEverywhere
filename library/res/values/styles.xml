@@ -193,6 +193,7 @@
     <style name="Holo.Animation.PopupWindow"/>
     <style name="Holo.Theme" parent="Theme.Sherlock">
         <item name="checkBoxPreferenceStyle">@style/Holo.PreferenceCheckBox</item>
+        <item name="holoTheme">true</item>
         <item name="editTextPreferenceStyle">@style/Holo.PreferenceDialog.EditTextPreference</item>
         <item name="preferenceInformationStyle">@style/Holo.PreferenceInformation</item>
         <item name="seekBarPreferenceStyle">@style/Holo.PreferenceSeekBar</item>
@@ -202,8 +203,8 @@
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="listPreferredItemHeight">64dip</item>
-        <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
+        <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="switchPreferenceStyle">@style/Holo.PreferenceSwitch</item>
         <item name="seekBarDialogPreferenceStyle">@style/Holo.PreferenceDialog.SeekBarDialogPreference</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
@@ -464,6 +465,7 @@
     </style>
     <style name="Holo.Theme.Light.DarkActionBar" parent="Theme.Sherlock.Light.DarkActionBar">
         <item name="checkBoxPreferenceStyle">@style/Holo.PreferenceCheckBox</item>
+        <item name="holoTheme">true</item>
         <item name="editTextPreferenceStyle">@style/Holo.PreferenceDialog.EditTextPreference</item>
         <item name="preferenceInformationStyle">@style/Holo.PreferenceInformation</item>
         <item name="seekBarPreferenceStyle">@style/Holo.PreferenceSeekBar</item>
@@ -473,8 +475,8 @@
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="listPreferredItemHeight">64dip</item>
-        <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
+        <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="switchPreferenceStyle">@style/Holo.PreferenceSwitch</item>
         <item name="seekBarDialogPreferenceStyle">@style/Holo.PreferenceDialog.SeekBarDialogPreference</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
@@ -638,6 +640,7 @@
     </style>
     <style name="Holo.Theme.Light" parent="Theme.Sherlock.Light">
         <item name="checkBoxPreferenceStyle">@style/Holo.PreferenceCheckBox</item>
+        <item name="holoTheme">true</item>
         <item name="editTextPreferenceStyle">@style/Holo.PreferenceDialog.EditTextPreference</item>
         <item name="preferenceInformationStyle">@style/Holo.PreferenceInformation</item>
         <item name="seekBarPreferenceStyle">@style/Holo.PreferenceSeekBar</item>
@@ -647,8 +650,8 @@
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="listPreferredItemHeight">64dip</item>
-        <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
+        <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="switchPreferenceStyle">@style/Holo.PreferenceSwitch</item>
         <item name="seekBarDialogPreferenceStyle">@style/Holo.PreferenceDialog.SeekBarDialogPreference</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>

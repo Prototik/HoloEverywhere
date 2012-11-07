@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><resources>
+    <string name="other">Прочее</string>
+    <string name="radiobutton">Радио-кнопка</string>
+    <string name="settings">Настройки</string>
+    <string name="edittext">Поле ввода</string>
+    <string name="about">О проекте</string>
+    <string name="autocompletetextview">Дополняемое поле ввода</string>
+    <string name="progress_bars">Индикаторы прогресса</string>
+    <string name="app_name">HoloEverywhere Демо</string>
+    <string name="base_widgets">Базовые виджеты</string>
+    <string name="button">Кнопка</string>
+    <string name="checkbox">Флажки</string>
+    <string name="checkable_buttons">Кнопки-переключатели</string>
+</resources>

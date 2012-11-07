@@ -39,7 +39,6 @@ import android.content.Context;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -200,7 +199,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements
     }
 
     public static void remapHard(String from, String to) {
-        Log.v("LayoutInflater", "From: " + from + ". To: " + to);
         LayoutInflater.VIEWS_MAP.put(from, to);
     }
 

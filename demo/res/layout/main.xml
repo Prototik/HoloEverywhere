@@ -17,7 +17,7 @@
 			android:gravity="center"
 			android:lines="1"
 			android:padding="6dp"
-			android:text="HoloEverywhere"
+			android:text="@string/library_name"
 			android:textSize="30sp"
 			android:textStyle="bold" />
 		<Divider
@@ -26,7 +26,7 @@
 		<WidgetContainer
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="Base widgets" >
+			android:text="@string/base_widgets" >
 			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:layout_weight="1"
-					android:text="Button" />
+					android:text="@string/button" />
 				<ToggleButton
 					android:layout_width="80dp"
 					android:layout_height="match_parent" />
@@ -43,18 +43,17 @@
 			<EditText
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:hint="EditText" />
+				android:hint="@string/edittext" />
 			<AutoCompleteTextView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:entries="@array/countries"
-				android:hint="AutoCompleteTextView" />
+				android:hint="@string/autocompletetextview" />
 			<Spinner
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:drawSelectorOnTop="true"
-				android:entries="@array/countries"
-				android:prompt="@string/spinner_prompt" />
+				android:entries="@array/countries" />
 			<RatingBar
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
@@ -81,7 +80,7 @@
 		<WidgetContainer
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="Progress bars" >
+			android:text="@string/progress_bars" >
 			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -125,7 +124,7 @@
 		<WidgetContainer
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="Checkable buttons" >
+			android:text="@string/checkable_buttons" >
 			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content" >
@@ -136,15 +135,15 @@
 					<RadioButton
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="RadioButton" />
+						android:text="@string/radiobutton" />
 					<RadioButton
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="RadioButton" />
+						android:text="@string/radiobutton" />
 					<RadioButton
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="RadioButton" />
+						android:text="@string/radiobutton" />
 				</RadioGroup>
 				<LinearLayout
 					android:layout_width="0dp"
@@ -154,15 +153,15 @@
 					<CheckBox
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="CheckBox" />
+						android:text="@string/checkbox" />
 					<CheckBox
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="CheckBox" />
+						android:text="@string/checkbox" />
 					<CheckBox
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="CheckBox" />
+						android:text="@string/checkbox" />
 				</LinearLayout>
 			</LinearLayout>
 		</WidgetContainer>
@@ -171,7 +170,7 @@
 			android:layout_height="wrap_content"
 			android:divider="?dividerVertical"
 			android:showDividers="middle"
-			android:text="Other"
+			android:text="@string/other"
 			holo:showDividers="middle" >
 			<OtherButton
 				android:id="@+id/showAbout"
@@ -179,80 +178,74 @@
 				android:layout_height="wrap_content"
 				android:icon="@drawable/toast"
 				android:onClick="showAbout"
-				android:text="About" />
-			<OtherButton
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/alert_dialog"
-				android:onClick="showAlertDialog"
-				android:text="AlertDialog" />
-			<OtherButton
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/progress_dialog"
-				android:onClick="showProgressDialog"
-				android:text="ProgressDialog" />
+				android:text="@string/about" />
 			<OtherButton
 				android:id="@+id/showPreferences"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:icon="@drawable/prefs_icon"
 				android:onClick="showPreferences"
-				android:text="Preferences" />
+				android:text="@string/settings" />
+			<OtherButton
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/alert_dialog"
+				android:onClick="showAlertDialog"
+				android:text="@string/alertdialog" />
+			<OtherButton
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:icon="@drawable/progress_dialog"
+				android:onClick="showProgressDialog"
+				android:text="@string/progressdialog" />
 			<OtherButton
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:icon="@drawable/calendar"
 				android:onClick="showCalendar"
-				android:text="Calendar" />
+				android:text="@string/calendar" />
 			<OtherButton
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:icon="@drawable/number_picker"
 				android:onClick="showNumberPicker"
-				android:text="NumberPicker" />
+				android:text="@string/numberpicker" />
 			<OtherButton
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:icon="@drawable/date_picker"
 				android:onClick="showDatePicker"
-				android:text="DatePicker" />
+				android:text="@string/datepicker" />
 			<OtherButton
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:icon="@drawable/time_picker"
 				android:onClick="showTimePicker"
-				android:text="TimePicker" />
+				android:text="@string/timepicker" />
 			<OtherButton
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:icon="@drawable/popup_window"
+				android:icon="@drawable/popup_menu"
 				android:onClick="showPopupMenu"
-				android:text="PopupMenu" />
-			<OtherButton
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/popup_window"
-				android:onClick="showPopupWindow"
-				android:text="PopupWindow" />
+				android:text="@string/popupmenu" />
 			<OtherButton
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:icon="@drawable/list_popup_window"
 				android:onClick="showListPopupWindow"
-				android:text="ListPopupWindow" />
+				android:text="@string/listpopupwindow" />
 			<OtherButton
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:icon="@drawable/context_menu"
 				android:onClick="showContextMenu"
-				android:text="ContextMenu" />
+				android:text="@string/contextmenu" />
 			<OtherButton
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:icon="@drawable/toast"
 				android:onClick="showToast"
-				android:text="Toast" />
+				android:text="@string/toast" />
 		</WidgetContainer>
 	</LinearLayout>
 </ScrollView>

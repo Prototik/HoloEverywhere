@@ -1,12 +1,8 @@
 
-package org.holoeverywhere.app;
+package org.holoeverywhere;
 
-import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.SystemServiceManager.SuperSystemService;
 import org.holoeverywhere.ThemeManager.ThemedIntentStarter;
-import org.holoeverywhere.app.Application.Config;
-import org.holoeverywhere.app.Application.Config.PreferenceImpl;
-import org.holoeverywhere.preference.SharedPreferences;
 
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -18,28 +14,15 @@ import com.actionbarsherlock.ActionBarSherlock.OnCreatePanelMenuListener;
 import com.actionbarsherlock.ActionBarSherlock.OnMenuItemSelectedListener;
 import com.actionbarsherlock.ActionBarSherlock.OnPreparePanelListener;
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public interface IHoloActivity extends ThemedIntentStarter, ContextMenuListener,
+public interface IHoloActivity extends IHolo, ThemedIntentStarter,
         OnCreatePanelMenuListener,
         OnPreparePanelListener, OnMenuItemSelectedListener,
-        OnActionModeStartedListener, OnActionModeFinishedListener,
-        SuperSystemService {
-    public Config getConfig();
-
-    public SharedPreferences getDefaultSharedPreferences();
-
-    public LayoutInflater getLayoutInflater();
-
-    public SharedPreferences getSharedPreferences(PreferenceImpl impl,
-            String name, int mode);
-
-    public SharedPreferences getSharedPreferences(String name, int mode);
-
+        OnActionModeStartedListener, OnActionModeFinishedListener, SuperSystemService {
     public ActionBarSherlock getSherlock();
 
     public ActionBar getSupportActionBar();
@@ -47,8 +30,6 @@ public interface IHoloActivity extends ThemedIntentStarter, ContextMenuListener,
     public FragmentManager getSupportFragmentManager();
 
     public MenuInflater getSupportMenuInflater();
-
-    public boolean isABSSupport();
 
     public boolean isForceThemeApply();
 

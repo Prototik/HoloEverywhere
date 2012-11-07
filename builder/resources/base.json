@@ -13,6 +13,7 @@
             "dividerVertical": "?android:listDivider", 
             "dropdownListPreferredItemHeight": "?listPreferredItemHeight", 
             "editTextPreferenceStyle": "@style/Holo.PreferenceDialog.EditTextPreference", 
+            "holoTheme": true, 
             "listPreferredItemHeight": "64dip", 
             "listPreferredItemHeightLarge": "80dp", 
             "listPreferredItemHeightSmall": "48dp", 

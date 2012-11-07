@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.holoeverywhere.app.IHoloActivity;
+import org.holoeverywhere.IHoloActivity;
 import org.holoeverywhere.preference.SharedPreferences;
 import org.json.JSONArray;
 import org.json.JSONException;

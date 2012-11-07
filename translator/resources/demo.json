@@ -1,0 +1,85 @@
+{
+	"data": {
+		"app_name": {
+			"en": "HoloEverywhere Demo",
+			"ru": "HoloEverywhere Демо"
+		},
+		"library_name": {
+			"en": "HoloEverywhere"
+		},
+		"base_widgets": {
+			"en": "Base widgets",
+			"ru": "Базовые виджеты"
+		},
+		"button": {
+			"en": "Button",
+			"ru": "Кнопка"
+		},
+		"edittext": {
+			"en": "Input field",
+			"ru": "Поле ввода"
+		},
+		"autocompletetextview": {
+			"en": "Auto complete input field",
+			"ru": "Дополняемое поле ввода"
+		},
+		"progress_bars": {
+			"en": "Progress bars",
+			"ru": "Индикаторы прогресса"
+		},
+		"checkable_buttons": {
+			"en": "Checkable buttons",
+			"ru": "Кнопки-переключатели"
+		},
+		"radiobutton": {
+			"en": "Radio-button",
+			"ru": "Радио-кнопка"
+		},
+		"checkbox": {
+			"en": "Checkbox",
+			"ru": "Флажок"
+		},
+		"other": {
+			"en": "Other",
+			"ru": "Прочее"
+		},
+		"about": {
+			"en": "About",
+			"ru": "О проекте"
+		},
+		"settings": {
+			"en": "Settings",
+			"ru": "Настройки"
+		},
+		"alertdialog": {
+			"en": "AlertDialog"
+		},
+		"progressdialog": {
+			"en": "ProgressDialog"
+		},
+		"calendar": {
+			"en": "Calendar"
+		},
+		"numberpicker": {
+			"en": "NumberPicker"
+		},
+		"datepicker": {
+			"en": "DatePicker"
+		},
+		"timepicker": {
+			"en": "TimePicker"
+		},
+		"popupmenu": {
+			"en": "PopupMenu"
+		},
+		"listpopupwindow": {
+			"en": "ListPopupWindow"
+		},
+		"contextmenu": {
+			"en": "ContextMenu"
+		},
+		"toast": {
+			"en": "Toast"
+		}
+	}
+}

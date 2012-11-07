@@ -1,7 +1,7 @@
 
-package org.holoeverywhere.app;
+package org.holoeverywhere;
 
-import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.preference.SharedPreferences;
 
 import android.os.Bundle;
@@ -13,26 +13,20 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
-
-public interface IHoloFragment extends ContextMenuListener, OnCreateOptionsMenuListener,
-        OnPrepareOptionsMenuListener,
+public interface IHoloFragment extends IHolo, OnPrepareOptionsMenuListener,
+        OnCreateOptionsMenuListener,
         OnOptionsItemSelectedListener {
+    @Override
     public SharedPreferences getDefaultSharedPreferences();
-
-    public IHoloActivity getHoloActivity();
-
-    public LayoutInflater getLayoutInflater();
 
     public LayoutInflater getLayoutInflater(Bundle savedInstanceState);
 
+    @Override
     public SharedPreferences getSharedPreferences(String name, int mode);
 
-    public <T extends Activity & IHoloActivity> T getSupportActivity();
+    public Activity getSupportActivity();
 
     public FragmentManager getSupportFragmentManager();
-
-    public boolean isABSSupport();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState);

@@ -6,23 +6,27 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.holoeverywhere.IHoloActivity;
 import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.R;
 import org.holoeverywhere.SystemServiceManager;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Application;
 import org.holoeverywhere.app.Application.Config;
 import org.holoeverywhere.app.Application.Config.PreferenceImpl;
-import org.holoeverywhere.app.IHoloActivity;
 import org.holoeverywhere.preference.PreferenceManager;
 import org.holoeverywhere.preference.SharedPreferences;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Build.VERSION;
 import android.os.Bundle;
+import android.support.v4.view.ViewConfigurationCompat;
 import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup.LayoutParams;
 
 import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
@@ -115,6 +119,11 @@ public abstract class _HoloActivity extends Watson implements
     }
 
     @Override
+    public Application getSupportApplication() {
+        return Application.getLastInstance();
+    }
+
+    @Override
     public MenuInflater getSupportMenuInflater() {
         return null;
     }
@@ -179,9 +188,19 @@ public abstract class _HoloActivity extends Watson implements
         }
     }
 
+    private static final class HoloThemeException extends RuntimeException {
+        private static final long serialVersionUID = -2346897999325868420L;
+
+        public HoloThemeException(_HoloActivity activity) {
+            super("You must apply Holo.Theme, Holo.Theme.Light or " +
+                    "Holo.Theme.Light.DarkActionBar theme on the activity ("
+                    + activity.getClass().getSimpleName() + ") for using HoloEverywhere");
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Holo holo = getClass().isAnnotationPresent(Holo.class) ? getClass()
+        final Holo holo = getClass().isAnnotationPresent(Holo.class) ? getClass()
                 .getAnnotation(Holo.class) : DEFAULT_HOLO;
         if (holo.addFactoryToInflater()) {
             getLayoutInflater().addFactory(this, 0);
@@ -197,6 +216,17 @@ public abstract class _HoloActivity extends Watson implements
         final int layout = holo.layout();
         if (layout > 0) {
             setContentView(layout);
+        }
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        TypedArray a = obtainStyledAttributes(R.styleable.HoloActivity);
+        final boolean holoTheme = a.getBoolean(R.styleable.HoloActivity_holoTheme, false);
+        a.recycle();
+        if (!holoTheme) {
+            throw new HoloThemeException(this);
         }
     }
 

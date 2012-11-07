@@ -2,7 +2,6 @@
 package org.holoeverywhere;
 
 import org.holoeverywhere.app.Application;
-import org.holoeverywhere.app.IHoloActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build.VERSION;
 import android.os.Bundle;
+import android.util.SparseIntArray;
 
 public final class ThemeManager {
     public static interface ThemedIntentStarter {
@@ -18,22 +18,63 @@ public final class ThemeManager {
     }
 
     public static interface ThemeGetter {
-        public int getThemeResource(int themeTag);
+        public int getThemeResource(ThemeTag themeTag);
+    }
+
+    public static final class ThemeTag {
+        public final boolean dark;
+        public final boolean fullscreen;
+        public final boolean light;
+        public final boolean mixed;
+        public final boolean noActionBar;
+        public final int themeTag;
+
+        private ThemeTag(int themeTag) {
+            this.themeTag = themeTag;
+            dark = isDark(themeTag);
+            light = isLight(themeTag);
+            mixed = isMixed(themeTag);
+            noActionBar = isNoActionBar(themeTag);
+            fullscreen = isFullScreen(themeTag);
+        }
     }
 
     public static final int DARK = 1;
     private static int defaultTheme = ThemeManager.DARK;
     public static final int FULLSCREEN = 16;
     public static final int LIGHT = 2;
+    /**
+     * @deprecated Use {@link #MIXED} instead
+     */
+    @Deprecated
     public static final int LIGHT_WITH_DARK_ACTION_BAR = 4;
+    public static final int MIXED = 4;
     public static final int NO_ACTION_BAR = 8;
-    private static boolean onlyBaseThemes = true;
     private static final int THEME_MASK = ThemeManager.DARK
-            | ThemeManager.LIGHT | ThemeManager.LIGHT_WITH_DARK_ACTION_BAR
+            | ThemeManager.LIGHT | ThemeManager.MIXED
             | ThemeManager.NO_ACTION_BAR | ThemeManager.FULLSCREEN;
     private static final String THEME_TAG = "holoeverywhere:theme";
     private static ThemeGetter themeGetter;
     private static int themeModifier = 0;
+    private static final SparseIntArray THEMES = new SparseIntArray();
+
+    static {
+        map(DARK, R.style.Holo_Theme);
+        map(DARK | FULLSCREEN, R.style.Holo_Theme_Fullscreen);
+        map(DARK | NO_ACTION_BAR, R.style.Holo_Theme_NoActionBar);
+        map(DARK | NO_ACTION_BAR | FULLSCREEN, R.style.Holo_Theme_NoActionBar_Fullscreen);
+        map(LIGHT, R.style.Holo_Theme);
+        map(LIGHT | FULLSCREEN, R.style.Holo_Theme_Light_Fullscreen);
+        map(LIGHT | NO_ACTION_BAR, R.style.Holo_Theme_Light_NoActionBar);
+        map(LIGHT | NO_ACTION_BAR | FULLSCREEN, R.style.Holo_Theme_Light_NoActionBar_Fullscreen);
+        map(MIXED, R.style.Holo_Theme_Light_DarkActionBar);
+        map(MIXED | FULLSCREEN,
+                R.style.Holo_Theme_Light_DarkActionBar_Fullscreen);
+        map(MIXED | NO_ACTION_BAR,
+                R.style.Holo_Theme_Light_DarkActionBar_NoActionBar);
+        map(MIXED | NO_ACTION_BAR | FULLSCREEN,
+                R.style.Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen);
+    }
 
     public static void applyTheme(Activity activity) {
         boolean force = activity instanceof IHoloActivity ? ((IHoloActivity) activity)
@@ -79,77 +120,38 @@ public final class ThemeManager {
     public static int getTheme(Intent intent) {
         int i = intent.getIntExtra(ThemeManager.THEME_TAG,
                 ThemeManager.defaultTheme);
-        if (ThemeManager.onlyBaseThemes) {
-            i &= ThemeManager.THEME_MASK;
-        }
         if (ThemeManager.themeModifier > 0) {
             i |= ThemeManager.themeModifier;
         }
-        return i;
+        return i & ThemeManager.THEME_MASK;
     }
 
     public static int getThemeResource(Activity activity) {
         return ThemeManager.getThemeResource(ThemeManager.getTheme(activity));
     }
 
+    private static final int START_RESOURCES_ID = 0x01000000;
+
     public static int getThemeResource(int themeTag) {
+        if (themeTag >= START_RESOURCES_ID) {
+            return themeTag;
+        }
         if (ThemeManager.themeModifier > 0) {
             themeTag |= ThemeManager.themeModifier;
         }
+        themeTag &= ThemeManager.THEME_MASK;
         if (ThemeManager.themeGetter != null) {
-            int getterResource = ThemeManager.themeGetter.getThemeResource(
-                    themeTag);
+            final int getterResource = ThemeManager.themeGetter.getThemeResource(
+                    new ThemeTag(themeTag));
             if (getterResource > 0) {
                 return getterResource;
             }
         }
-        if (ThemeManager.onlyBaseThemes) {
-            themeTag &= ThemeManager.THEME_MASK;
-        } else if (themeTag >= 0x01000000) {
-            return themeTag;
-        }
-        boolean dark = ThemeManager.isDark(themeTag);
-        boolean light = ThemeManager.isLight(themeTag);
-        boolean lightWithDarkActionBar = ThemeManager
-                .isLightWithDarkActionBar(themeTag);
-        boolean noActionBar = ThemeManager.isNoActionBar(themeTag);
-        boolean fullScreen = ThemeManager.isFullScreen(themeTag);
-        if (dark) {
-            if (noActionBar && fullScreen) {
-                return R.style.Holo_Theme_NoActionBar_Fullscreen;
-            } else if (noActionBar && !fullScreen) {
-                return R.style.Holo_Theme_NoActionBar;
-            } else if (!noActionBar && fullScreen) {
-                return R.style.Holo_Theme_Fullscreen;
-            } else {
-                return R.style.Holo_Theme;
-            }
-        } else if (light) {
-            if (noActionBar && fullScreen) {
-                return R.style.Holo_Theme_Light_NoActionBar_Fullscreen;
-            } else if (noActionBar && !fullScreen) {
-                return R.style.Holo_Theme_Light_NoActionBar;
-            } else if (!noActionBar && fullScreen) {
-                return R.style.Holo_Theme_Light_Fullscreen;
-            } else {
-                return R.style.Holo_Theme_Light;
-            }
-        } else if (lightWithDarkActionBar) {
-            if (noActionBar && fullScreen) {
-                return R.style.Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen;
-            } else if (noActionBar && !fullScreen) {
-                return R.style.Holo_Theme_Light_DarkActionBar_NoActionBar;
-            } else if (!noActionBar && fullScreen) {
-                return R.style.Holo_Theme_Light_DarkActionBar_Fullscreen;
-            } else {
-                return R.style.Holo_Theme_Light_DarkActionBar;
-            }
-        }
-        return themeTag;
+        return THEMES.get(themeTag, THEMES.get(defaultTheme));
     }
 
     public static boolean hasSpecifiedTheme(Activity activity) {
-        return ThemeManager.hasSpecifiedTheme(activity.getIntent());
+        return activity == null ? false : ThemeManager.hasSpecifiedTheme(activity.getIntent());
     }
 
     public static boolean hasSpecifiedTheme(Intent intent) {
@@ -197,17 +199,41 @@ public final class ThemeManager {
         return ThemeManager.isLight(ThemeManager.getTheme(intent));
     }
 
+    /**
+     * @deprecated Use {@link #isMixed(Activity)} instead
+     */
+    @Deprecated
     public static boolean isLightWithDarkActionBar(Activity activity) {
-        return ThemeManager.isLightWithDarkActionBar(ThemeManager
+        return isMixed(activity);
+    }
+
+    /**
+     * @deprecated Use {@link #isMixed(int)} instead
+     */
+    @Deprecated
+    public static boolean isLightWithDarkActionBar(int i) {
+        return isMixed(i);
+    }
+
+    /**
+     * @deprecated Use {@link #isMixed(Intent)} instead
+     */
+    @Deprecated
+    public static boolean isLightWithDarkActionBar(Intent intent) {
+        return isMixed(intent);
+    }
+
+    public static boolean isMixed(Activity activity) {
+        return ThemeManager.isMixed(ThemeManager
                 .getTheme(activity));
     }
 
-    public static boolean isLightWithDarkActionBar(int i) {
-        return ThemeManager.is(i, ThemeManager.LIGHT_WITH_DARK_ACTION_BAR);
+    public static boolean isMixed(int i) {
+        return ThemeManager.is(i, ThemeManager.MIXED);
     }
 
-    public static boolean isLightWithDarkActionBar(Intent intent) {
-        return ThemeManager.isLightWithDarkActionBar(ThemeManager
+    public static boolean isMixed(Intent intent) {
+        return ThemeManager.isMixed(ThemeManager
                 .getTheme(intent));
     }
 
@@ -223,18 +249,16 @@ public final class ThemeManager {
         return ThemeManager.isNoActionBar(ThemeManager.getTheme(intent));
     }
 
+    public static void map(int flags, int theme) {
+        THEMES.put(flags & THEME_MASK, theme);
+    }
+
     public static void modify(int mod) {
-        if (ThemeManager.onlyBaseThemes) {
-            mod &= ThemeManager.THEME_MASK;
-        }
-        ThemeManager.themeModifier |= mod;
+        ThemeManager.themeModifier |= mod & ThemeManager.THEME_MASK;
     }
 
     public static void modifyDefaultTheme(int mod) {
-        if (ThemeManager.onlyBaseThemes) {
-            mod &= ThemeManager.THEME_MASK;
-        }
-        ThemeManager.defaultTheme |= mod;
+        ThemeManager.defaultTheme |= mod & ThemeManager.THEME_MASK;
     }
 
     public static void restartWithDarkTheme(Activity activity) {
@@ -245,9 +269,16 @@ public final class ThemeManager {
         ThemeManager.restartWithTheme(activity, ThemeManager.LIGHT);
     }
 
+    /**
+     * @deprecated Use {@link #restartWithMixedTheme(Activity)} instead
+     */
+    @Deprecated
     public static void restartWithLightWithDarkActionBarTheme(Activity activity) {
-        ThemeManager.restartWithTheme(activity,
-                ThemeManager.LIGHT_WITH_DARK_ACTION_BAR);
+        restartWithMixedTheme(activity);
+    }
+
+    public static void restartWithMixedTheme(Activity activity) {
+        ThemeManager.restartWithTheme(activity, ThemeManager.MIXED);
     }
 
     public static void restartWithTheme(Activity activity, int theme) {
@@ -256,10 +287,10 @@ public final class ThemeManager {
 
     public static void restartWithTheme(Activity activity, int theme,
             boolean force) {
-        if (ThemeManager.themeModifier > 0) {
-            theme |= ThemeManager.themeModifier;
-        }
-        if (ThemeManager.onlyBaseThemes) {
+        if (theme < START_RESOURCES_ID) {
+            if (ThemeManager.themeModifier > 0) {
+                theme |= ThemeManager.themeModifier;
+            }
             theme &= ThemeManager.THEME_MASK;
         }
         if (force || ThemeManager.getTheme(activity) != theme) {
@@ -287,14 +318,10 @@ public final class ThemeManager {
     }
 
     public static void setDefaultTheme(int theme) {
-        if (ThemeManager.onlyBaseThemes) {
-            theme &= ThemeManager.THEME_MASK;
-        }
         ThemeManager.defaultTheme = theme;
-    }
-
-    public static void setOnlyBaseThemes(boolean onlyBaseThemes) {
-        ThemeManager.onlyBaseThemes = onlyBaseThemes;
+        if (theme < START_RESOURCES_ID) {
+            ThemeManager.defaultTheme &= ThemeManager.THEME_MASK;
+        }
     }
 
     public static void setThemeGetter(ThemeGetter themeGetter) {
@@ -302,10 +329,7 @@ public final class ThemeManager {
     }
 
     public static void setThemeModifier(int mod) {
-        if (ThemeManager.onlyBaseThemes) {
-            mod &= ThemeManager.THEME_MASK;
-        }
-        ThemeManager.themeModifier = mod;
+        ThemeManager.themeModifier = mod & ThemeManager.THEME_MASK;
     }
 
     public static void startActivity(Context context, Intent intent) {

@@ -125,7 +125,7 @@ public class DemoActivity extends Activity {
     }
 
     public void setMixedTheme(View v) {
-        ThemeManager.restartWithLightWithDarkActionBarTheme(this);
+        ThemeManager.restartWithMixedTheme(this);
     }
 
     public void showAbout(View v) {
@@ -143,7 +143,7 @@ public class DemoActivity extends Activity {
 
     public void showCalendar(View v) {
         replaceFragment(R.id.content, CalendarFragment.getInstance(),
-                isABSSupport() ? null : "calendar");
+                 "calendar");
     }
 
     public void showContextMenu(View v) {
