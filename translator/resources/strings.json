@@ -18,7 +18,6 @@
 		"time_picker_decrement_hour_button",
 		"time_picker_increment_set_pm_button",
 		"time_picker_decrement_set_am_button",
-		"time_picker_separator",
 		"date_picker_dialog_title",
 		"date_picker_increment_day_button",
 		"date_picker_decrement_day_button",
@@ -31,5 +30,10 @@
 		"ringtone_picker_title",
 		"ringtone_default",
 		"ringtone_silent"
-	]
+	],
+	"data": {
+		"time_picker_separator": {
+			"en": ":"
+		}
+	}
 }
