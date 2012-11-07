@@ -34,8 +34,7 @@ public class ListPreference extends DialogPreference {
     private int mClickedDialogEntryIndex;
     private CharSequence[] mEntries;
     private CharSequence[] mEntryValues;
-    private String mSummary;
-
+    private CharSequence mSummary;
     private String mValue;
 
     public ListPreference(Context context) {
@@ -49,9 +48,7 @@ public class ListPreference extends DialogPreference {
         mEntries = a.getTextArray(R.styleable.ListPreference_entries);
         mEntryValues = a.getTextArray(R.styleable.ListPreference_entryValues);
         a.recycle();
-        a = context.obtainStyledAttributes(attrs, R.styleable.Preference, 0, 0);
-        mSummary = a.getString(R.styleable.Preference_summary);
-        a.recycle();
+        mSummary = super.getSummary();
     }
 
     public int findIndexOfValue(String value) {
@@ -84,7 +81,7 @@ public class ListPreference extends DialogPreference {
         if (mSummary == null || entry == null) {
             return super.getSummary();
         } else {
-            return String.format(mSummary, entry);
+            return String.format(mSummary.toString(), entry);
         }
     }
 
@@ -158,8 +155,8 @@ public class ListPreference extends DialogPreference {
 
     @Override
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        setValue(restoreValue ? getPersistedString(mValue)
-                : (String) defaultValue);
+        mValue = restoreValue ? getPersistedString(mValue)
+                : (String) defaultValue;
     }
 
     public void setEntries(CharSequence[] entries) {
@@ -185,7 +182,7 @@ public class ListPreference extends DialogPreference {
         if (summary == null && mSummary != null) {
             mSummary = null;
         } else if (summary != null && !summary.equals(mSummary)) {
-            mSummary = summary.toString();
+            mSummary = summary;
         }
     }
 

@@ -16,7 +16,7 @@ import org.holoeverywhere.demo.fragments.AboutFragment;
 import org.holoeverywhere.demo.fragments.AlertDialogFragment;
 import org.holoeverywhere.demo.fragments.CalendarFragment;
 import org.holoeverywhere.demo.fragments.MainFragment;
-import org.holoeverywhere.demo.fragments.PreferenceFragment;
+import org.holoeverywhere.demo.fragments.SettingsFragment;
 import org.holoeverywhere.widget.ListPopupWindow;
 import org.holoeverywhere.widget.NumberPicker;
 import org.holoeverywhere.widget.Toast;
@@ -94,7 +94,7 @@ public class DemoActivity extends Activity {
             getSupportActionBar().setNavigationMode(
                     ActionBar.NAVIGATION_MODE_TABS);
             addTab(MainFragment.class, "Holo Demo");
-            addTab(PreferenceFragment.class, "Settings");
+            addTab(SettingsFragment.class, "Settings");
             addTab(AboutFragment.class, "About");
         } else {
             replaceFragment(R.id.content, MainFragment.getInstance());
@@ -207,7 +207,7 @@ public class DemoActivity extends Activity {
     }
 
     public void showPreferences(View v) {
-        replaceFragment(android.R.id.content, new PreferenceFragment(), "prefs");
+        replaceFragment(android.R.id.content, new SettingsFragment(), "prefs");
     }
 
     public void showProgressDialog(View v) {
