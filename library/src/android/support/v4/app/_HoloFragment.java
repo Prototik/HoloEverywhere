@@ -27,8 +27,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public abstract class _HoloFragment extends Fragment implements
-        IHoloFragment {
+public abstract class _HoloFragment extends Fragment implements IHoloFragment {
     private static final int INTERNAL_DECOR_VIEW_ID = 0x7f999999;
     private Activity activity;
     private Bundle savedInstanceState;
@@ -72,7 +71,8 @@ public abstract class _HoloFragment extends Fragment implements
     }
 
     @Override
-    public SharedPreferences getSharedPreferences(PreferenceImpl impl, String name, int mode) {
+    public SharedPreferences getSharedPreferences(PreferenceImpl impl,
+            String name, int mode) {
         return activity.getSharedPreferences(impl, name, mode);
     }
 
@@ -151,7 +151,8 @@ public abstract class _HoloFragment extends Fragment implements
     }
 
     @Override
-    public final void onCreateOptionsMenu(android.view.Menu menu, android.view.MenuInflater inflater) {
+    public final void onCreateOptionsMenu(android.view.Menu menu,
+            android.view.MenuInflater inflater) {
         if (isABSSupport()) {
             onCreateOptionsMenu(new MenuWrapper(menu),
                     activity.getSupportMenuInflater());
@@ -239,7 +240,7 @@ public abstract class _HoloFragment extends Fragment implements
 
     @Override
     public View prepareDecorView(View v) {
-        return ContextMenuDecorView.prepareDecorView(getSupportActivity(), v, this,
-                INTERNAL_DECOR_VIEW_ID);
+        return ContextMenuDecorView.prepareDecorView(getSupportActivity(), v,
+                this, INTERNAL_DECOR_VIEW_ID);
     }
 }

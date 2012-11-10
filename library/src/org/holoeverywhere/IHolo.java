@@ -6,9 +6,7 @@ import org.holoeverywhere.app.Application.Config;
 import org.holoeverywhere.app.Application.Config.PreferenceImpl;
 import org.holoeverywhere.preference.SharedPreferences;
 
-import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
-
-public interface IHolo extends ContextMenuListener {
+public interface IHolo {
     public Config getConfig();
 
     public SharedPreferences getDefaultSharedPreferences();

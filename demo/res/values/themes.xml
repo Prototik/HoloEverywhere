@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="Holo.Demo.Theme.Fullscreen" parent="Holo.Theme.Fullscreen">
+		<item name="restartMusicIcon">@drawable/restart_music_dark</item>
+	</style>
+	<style name="Holo.Demo.Theme.Light.Fullscreen" parent="Holo.Theme.Light.Fullscreen">
+		<item name="restartMusicIcon">@drawable/restart_music_light</item>
+	</style>
+	<style name="Holo.Demo.Theme.Light.DarkActionBar.Fullscreen" parent="Holo.Theme.Light.DarkActionBar.Fullscreen">
+		<item name="restartMusicIcon">@drawable/restart_music_dark</item>
+	</style>
+</resources>

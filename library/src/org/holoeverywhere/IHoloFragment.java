@@ -13,9 +13,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
+
 public interface IHoloFragment extends IHolo, OnPrepareOptionsMenuListener,
-        OnCreateOptionsMenuListener,
-        OnOptionsItemSelectedListener {
+        OnCreateOptionsMenuListener, OnOptionsItemSelectedListener, ContextMenuListener {
     @Override
     public SharedPreferences getDefaultSharedPreferences();
 

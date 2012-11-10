@@ -287,7 +287,8 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
     @Override
     public synchronized Map<String, ?> getAll() {
-        Map<String, Object> map = new HashMap<String, Object>(getData().length());
+        Map<String, Object> map = new HashMap<String, Object>(getData()
+                .length());
         Iterator<?> i = getData().keys();
         while (i.hasNext()) {
             Object o = i.next();
@@ -407,8 +408,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
                 reader = new InputStreamReader(is, charset);
             } catch (UnsupportedEncodingException e) {
                 if (DEBUG) {
-                    Log.w(TAG,
-                            "Encoding unsupport: " + charset);
+                    Log.w(TAG, "Encoding unsupport: " + charset);
                 }
                 reader = new InputStreamReader(is);
             }

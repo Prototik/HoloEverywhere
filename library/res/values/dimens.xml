@@ -26,4 +26,5 @@
 	<dimen name="fastscroll_thumb_width">64dp</dimen>
 	<dimen name="fastscroll_thumb_height">52dp</dimen>
 	<dimen name="fastscroll_overlay_size">104dp</dimen>
+	<dimen name="demo_menu_width">200dp</dimen>
 </resources>

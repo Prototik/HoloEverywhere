@@ -62,6 +62,9 @@ If you make changes in styles.xml - use the Builder, otherwise pull request will
 ![Screenshot 7](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/screen7.png "Screenshot 7")
 ![Screenshot 8](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/screen8.png "Screenshot 8")
 
+### Demo notice
+In demo using music "Winter Dawn" by machinimasound.com. Licensed under Creative Commons "Attribution 3.0"
+
 ### License
 
 Copyright (c) 2012 Christophe Versieux, Sergey Shatunov

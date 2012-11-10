@@ -13,6 +13,11 @@ import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemServic
 
 import android.content.Context;
 
+/**
+ * Manager of system services
+ * 
+ * @author prok (prototypegamez@gmail.com)
+ */
 public final class SystemServiceManager {
     public static interface SuperSystemService {
         public Object superGetSystemService(String name);
@@ -28,7 +33,8 @@ public final class SystemServiceManager {
         public T createService(Context context);
     }
 
-    private static final Map<String, SystemServiceCreator<?>> MAP = new HashMap<String, SystemServiceCreator<?>>();
+    private static final Map<Class<? extends SystemServiceCreator<?>>, SystemServiceCreator<?>> CREATORS_MAP = new HashMap<Class<? extends SystemServiceCreator<?>>, SystemServiceManager.SystemServiceCreator<?>>();
+    private static final Map<String, Class<? extends SystemServiceCreator<?>>> MAP = new HashMap<String, Class<? extends SystemServiceCreator<?>>>();
 
     public static Object getSystemService(Context context, String name) {
         if (context == null || context.isRestricted()) {
@@ -36,7 +42,16 @@ public final class SystemServiceManager {
         } else if (name == null || name.length() == 0) {
             return null;
         }
-        SystemServiceCreator<?> creator = MAP.get(name);
+        Class<? extends SystemServiceCreator<?>> clazz = MAP.get(name);
+        SystemServiceCreator<?> creator = CREATORS_MAP.get(clazz);
+        if (creator == null) {
+            try {
+                creator = clazz.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            CREATORS_MAP.put(clazz, creator);
+        }
         if (creator != null) {
             Object o = creator.createService(context);
             if (o != null) {
@@ -51,15 +66,6 @@ public final class SystemServiceManager {
     }
 
     public static void register(Class<? extends SystemServiceCreator<?>> clazz) {
-        try {
-            register(clazz.newInstance());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void register(SystemServiceCreator<?> creator) {
-        Class<?> clazz = creator.getClass();
         if (!clazz.isAnnotationPresent(SystemService.class)) {
             throw new RuntimeException(
                     "SystemServiceCreator must be implement SystemService");
@@ -69,19 +75,23 @@ public final class SystemServiceManager {
         if (name == null || name.length() == 0) {
             throw new RuntimeException("SystemService has incorrect name");
         }
-        MAP.put(name, creator);
+        MAP.put(name, clazz);
     }
 
-    public static void unregister(SystemServiceCreator<?> creator) {
-        for (Entry<String, SystemServiceCreator<?>> entry : MAP.entrySet()) {
-            if (entry.getValue() == creator) {
-                MAP.remove(entry.getKey());
-                return;
+    public static synchronized void unregister(
+            Class<? extends SystemServiceCreator<?>> clazz) {
+        if (MAP.containsValue(clazz)) {
+            for (Entry<String, Class<? extends SystemServiceCreator<?>>> e : MAP
+                    .entrySet()) {
+                if (e.getValue() == clazz) {
+                    MAP.remove(e.getKey());
+                    break;
+                }
             }
         }
+        CREATORS_MAP.remove(clazz);
     }
 
     private SystemServiceManager() {
-
     }
 }

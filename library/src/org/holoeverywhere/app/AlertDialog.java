@@ -21,7 +21,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 
-public class AlertDialog extends Dialog implements DialogInterface, AlertDecorViewInstaller {
+public class AlertDialog extends Dialog implements DialogInterface,
+        AlertDecorViewInstaller {
     public static class Builder {
         private final AlertController.AlertParams P;
 

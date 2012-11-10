@@ -211,7 +211,8 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 
     public _SharedPreferencesImpl_XML(Context context, String name, int mode) {
         if (context instanceof IHoloActivity) {
-            prefs = ((IHoloActivity) context).superGetSharedPreferences(name, mode);
+            prefs = ((IHoloActivity) context).superGetSharedPreferences(name,
+                    mode);
         } else {
             prefs = context.getSharedPreferences(name, mode);
         }

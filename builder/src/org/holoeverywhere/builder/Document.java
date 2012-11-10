@@ -2,11 +2,14 @@
 package org.holoeverywhere.builder;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -15,8 +18,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Document implements Parseable<JSONObject, Document> {
+    private static final Comparator<String> COMPARATOR = new Comparator<String>() {
+        @Override
+        public int compare(String o1, String o2) {
+            return o1.compareTo(o2);
+        }
+    };
     public Map<String, Block> blocks = new HashMap<String, Block>();
     public Map<String, Block> data = new HashMap<String, Block>();
+
     public List<IncludeRow> include = new ArrayList<IncludeRow>();
 
     @SuppressWarnings("unchecked")
@@ -33,7 +43,7 @@ public class Document implements Parseable<JSONObject, Document> {
         }
         if (json.has("blocks")) {
             JSONObject blocks = json.optJSONObject("blocks");
-            Iterator<String> keys = blocks.keys();
+            Iterator<String> keys = blocks.sortedKeys();
             while (keys.hasNext()) {
                 String key = keys.next();
                 this.blocks.put(key, new Block().parse(blocks.optJSONObject(key)));
@@ -41,7 +51,7 @@ public class Document implements Parseable<JSONObject, Document> {
         }
         if (json.has("data")) {
             JSONObject data = json.optJSONObject("data");
-            Iterator<String> keys = data.keys();
+            Iterator<String> keys = data.sortedKeys();
             while (keys.hasNext()) {
                 String key = keys.next();
                 this.data.put(key, new Block().parse(data.optJSONObject(key)));
@@ -52,10 +62,12 @@ public class Document implements Parseable<JSONObject, Document> {
 
     public synchronized void process(XMLStreamWriter writer) throws XMLStreamException {
         Map<String, Block> blocks = new HashMap<String, Block>(this.blocks);
-        Map<String, Block> data = new HashMap<String, Block>(this.data);
+        Map<String, Block> dataS = new HashMap<String, Block>(data);
         for (IncludeRow i : include) {
-            i.process(blocks, data);
+            i.process(blocks, dataS);
         }
+        SortedMap<String, Block> data = new TreeMap<String, Block>(COMPARATOR);
+        data.putAll(dataS);
         for (Entry<String, Block> entry : data.entrySet()) {
             writer.writeStartElement("style");
             writer.writeAttribute("name", entry.getKey());

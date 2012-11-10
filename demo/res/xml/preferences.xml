@@ -32,7 +32,6 @@
 			holo:title="Switch" />
 		<NumberPickerPreference
 			holo:defaultValue="10"
-			holo:dialogIcon="@drawable/number_picker"
 			holo:dialogMessage="Play NumberPicker roulette!"
 			holo:key="number_picker"
 			holo:max="25"

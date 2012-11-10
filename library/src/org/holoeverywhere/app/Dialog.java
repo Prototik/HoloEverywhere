@@ -53,8 +53,8 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
     }
 
     @Override
-    public void createContextMenu(ContextMenuBuilder contextMenuBuilder, View view,
-            ContextMenuInfo menuInfo, ContextMenuListener listener) {
+    public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
+            View view, ContextMenuInfo menuInfo, ContextMenuListener listener) {
         listener.onCreateContextMenu(contextMenuBuilder, view, menuInfo);
     }
 
@@ -71,7 +71,8 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (item instanceof ContextMenuItemWrapper) {
-            return super.onContextItemSelected(((ContextMenuItemWrapper) item).unwrap());
+            return super.onContextItemSelected(((ContextMenuItemWrapper) item)
+                    .unwrap());
         }
         return false;
     }
@@ -86,22 +87,25 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
     @Override
     public final void onContextMenuClosed(Menu menu) {
         if (menu instanceof android.view.ContextMenu) {
-            onContextMenuClosed(new ContextMenuWrapper((android.view.ContextMenu) menu));
+            onContextMenuClosed(new ContextMenuWrapper(
+                    (android.view.ContextMenu) menu));
         } else {
             super.onContextMenuClosed(menu);
         }
     }
 
     @Override
-    public final void onCreateContextMenu(android.view.ContextMenu menu, View view,
-            ContextMenuInfo menuInfo) {
+    public final void onCreateContextMenu(android.view.ContextMenu menu,
+            View view, ContextMenuInfo menuInfo) {
         onCreateContextMenu(new ContextMenuWrapper(menu), view, menuInfo);
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(ContextMenu menu, View view,
+            ContextMenuInfo menuInfo) {
         if (menu instanceof ContextMenuWrapper) {
-            super.onCreateContextMenu(((ContextMenuWrapper) menu).unwrap(), view, menuInfo);
+            super.onCreateContextMenu(((ContextMenuWrapper) menu).unwrap(),
+                    view, menuInfo);
         }
     }
 

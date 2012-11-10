@@ -22,11 +22,9 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Build.VERSION;
 import android.os.Bundle;
-import android.support.v4.view.ViewConfigurationCompat;
 import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup.LayoutParams;
 
 import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
@@ -39,8 +37,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public abstract class _HoloActivity extends Watson implements
-        IHoloActivity {
+public abstract class _HoloActivity extends Watson implements IHoloActivity {
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
     public static @interface Holo {
@@ -48,7 +45,20 @@ public abstract class _HoloActivity extends Watson implements
 
         public boolean forceThemeApply() default false;
 
+        public boolean ignoreThemeCheck() default false;
+
         public int layout() default -1;
+    }
+
+    private static final class HoloThemeException extends RuntimeException {
+        private static final long serialVersionUID = -2346897999325868420L;
+
+        public HoloThemeException(_HoloActivity activity) {
+            super("You must apply Holo.Theme, Holo.Theme.Light or "
+                    + "Holo.Theme.Light.DarkActionBar theme on the activity ("
+                    + activity.getClass().getSimpleName()
+                    + ") for using HoloEverywhere");
+        }
     }
 
     private static final Holo DEFAULT_HOLO = new Holo() {
@@ -68,13 +78,18 @@ public abstract class _HoloActivity extends Watson implements
         }
 
         @Override
+        public boolean ignoreThemeCheck() {
+            return false;
+        }
+
+        @Override
         public int layout() {
             return 0;
         }
     };
-
     private boolean forceThemeApply = false;
     private int lastThemeResourceId = 0;
+
     private final String TAG = getClass().getSimpleName();
 
     @Override
@@ -90,7 +105,7 @@ public abstract class _HoloActivity extends Watson implements
 
     @Override
     public Config getConfig() {
-        return Application.getConfig();
+        return Application.config();
     }
 
     @Override
@@ -188,16 +203,6 @@ public abstract class _HoloActivity extends Watson implements
         }
     }
 
-    private static final class HoloThemeException extends RuntimeException {
-        private static final long serialVersionUID = -2346897999325868420L;
-
-        public HoloThemeException(_HoloActivity activity) {
-            super("You must apply Holo.Theme, Holo.Theme.Light or " +
-                    "Holo.Theme.Light.DarkActionBar theme on the activity ("
-                    + activity.getClass().getSimpleName() + ") for using HoloEverywhere");
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         final Holo holo = getClass().isAnnotationPresent(Holo.class) ? getClass()
@@ -209,24 +214,23 @@ public abstract class _HoloActivity extends Watson implements
         if (holo.forceThemeApply()) {
             setForceThemeApply(forceThemeApply = true);
         }
-        if (forceThemeApply || getConfig().isUseThemeManager()) {
-            ThemeManager.applyTheme(this, forceThemeApply);
+        if (lastThemeResourceId == 0) {
+            forceThemeApply = true;
+        }
+        ThemeManager.applyTheme(this, forceThemeApply);
+        if (!holo.ignoreThemeCheck()) {
+            TypedArray a = obtainStyledAttributes(R.styleable.HoloActivity);
+            final boolean holoTheme = a.getBoolean(
+                    R.styleable.HoloActivity_holoTheme, false);
+            a.recycle();
+            if (!holoTheme) {
+                throw new HoloThemeException(this);
+            }
         }
         super.onCreate(savedInstanceState);
         final int layout = holo.layout();
         if (layout > 0) {
             setContentView(layout);
-        }
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        TypedArray a = obtainStyledAttributes(R.styleable.HoloActivity);
-        final boolean holoTheme = a.getBoolean(R.styleable.HoloActivity_holoTheme, false);
-        a.recycle();
-        if (!holoTheme) {
-            throw new HoloThemeException(this);
         }
     }
 
@@ -273,8 +277,7 @@ public abstract class _HoloActivity extends Watson implements
 
     @Override
     public void setContentView(int layoutResID) {
-        setContentView(getLayoutInflater().inflate(
-                layoutResID));
+        setContentView(getLayoutInflater().inflate(layoutResID));
     }
 
     @Override

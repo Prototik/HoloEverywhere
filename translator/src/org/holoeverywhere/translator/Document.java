@@ -47,7 +47,7 @@ public class Document {
         }
         if (object.has("data")) {
             JSONObject data = object.optJSONObject("data");
-            Iterator<String> keys = data.keys();
+            Iterator<String> keys = data.sortedKeys();
             while (keys.hasNext()) {
                 final String key = keys.next();
                 if (key == null || key.length() == 0) {
@@ -56,7 +56,7 @@ public class Document {
                 Map<String, String> map = new HashMap<String, String>();
                 this.data.put(key, map);
                 JSONObject translates = data.optJSONObject(key);
-                Iterator<String> locales = translates.keys();
+                Iterator<String> locales = translates.sortedKeys();
                 while (locales.hasNext()) {
                     final String locale = locales.next();
                     if (locale == null || locale.length() == 0) {

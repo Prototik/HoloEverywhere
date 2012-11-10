@@ -6,53 +6,27 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:orientation="vertical" >
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:drawableLeft="@drawable/icon"
-			android:ellipsize="marquee"
-			android:gravity="center"
-			android:lines="1"
-			android:padding="6dp"
-			android:text="HoloEverywhere"
-			android:textSize="30sp"
-			android:textStyle="bold" />
-		<Divider
-			android:layout_width="match_parent"
-			android:layout_height="1dp" />
-		<Button
+		android:divider="?android:listDivider"
+		android:orientation="vertical"
+		android:showDividers="middle|beginning"
+		holo:showDividers="middle|beginning" >
+		<DemoNavigationItem
 			android:id="@+id/github"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?selectableItemBackground"
-			android:drawableLeft="@drawable/github"
-			android:gravity="center"
-			android:maxLines="2"
-			android:padding="6dp"
 			android:text="Fork me on GitHub"
-			android:textSize="26sp" />
-		<Button
+			android:color="@color/holo_blue_light" />
+		<DemoNavigationItem
 			android:id="@+id/google_plus"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?selectableItemBackground"
-			android:drawableRight="@drawable/gplus"
-			android:gravity="center"
-			android:maxLines="2"
-			android:padding="6dp"
 			android:text="Write to Christophe"
-			android:textSize="26sp" />
-		<Button
+			android:color="@color/holo_green_light" />
+		<DemoNavigationItem
 			android:id="@+id/email"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?selectableItemBackground"
-			android:drawableLeft="@drawable/email"
-			android:gravity="center"
-			android:maxLines="2"
-			android:padding="6dp"
 			android:text="Write to Sergey"
-			android:textSize="26sp" />
+			android:color="@color/holo_red_light" />
 	</LinearLayout>
 </ScrollView>

@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class DialogFragment extends Fragment
-        implements DialogInterface.OnCancelListener, DialogInterface.OnDismissListener {
+public class DialogFragment extends Fragment implements
+        DialogInterface.OnCancelListener, DialogInterface.OnDismissListener {
     public static final class DialogTransaction {
         public String dialogTag;
         public FragmentManager fragmentManager;
@@ -90,8 +90,8 @@ public class DialogFragment extends Fragment
         switch (mStyle) {
             case STYLE_NO_INPUT:
                 mDialog.getWindow().addFlags(
-                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
-                                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             case STYLE_NO_FRAME:
             case STYLE_NO_TITLE:
                 mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -137,7 +137,8 @@ public class DialogFragment extends Fragment
         mDialog.setOnCancelListener(this);
         mDialog.setOnDismissListener(this);
         if (savedInstanceState != null) {
-            Bundle dialogState = savedInstanceState.getBundle(SAVED_DIALOG_STATE_TAG);
+            Bundle dialogState = savedInstanceState
+                    .getBundle(SAVED_DIALOG_STATE_TAG);
             if (dialogState != null) {
                 mDialog.onRestoreInstanceState(dialogState);
             }
@@ -164,7 +165,8 @@ public class DialogFragment extends Fragment
             mStyle = savedInstanceState.getInt(SAVED_STYLE, STYLE_NORMAL);
             mTheme = savedInstanceState.getInt(SAVED_THEME, 0);
             mCancelable = savedInstanceState.getBoolean(SAVED_CANCELABLE, true);
-            mShowsDialog = savedInstanceState.getBoolean(SAVED_SHOWS_DIALOG, mShowsDialog);
+            mShowsDialog = savedInstanceState.getBoolean(SAVED_SHOWS_DIALOG,
+                    mShowsDialog);
             mBackStackId = savedInstanceState.getInt(SAVED_BACK_STACK_ID, -1);
         }
     }
@@ -267,7 +269,8 @@ public class DialogFragment extends Fragment
     }
 
     public DialogTransaction show(Activity activity) {
-        return show(activity == null ? null : activity.getSupportFragmentManager());
+        return show(activity == null ? null : activity
+                .getSupportFragmentManager());
     }
 
     public DialogTransaction show(FragmentManager fm) {

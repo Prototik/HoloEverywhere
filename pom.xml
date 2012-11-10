@@ -21,6 +21,7 @@
 	<modules>
 		<module>library</module>
 		<module>demo</module>
+		<module>slidingmenu</module>
 	</modules>
 
 	<scm>

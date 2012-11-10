@@ -4,25 +4,12 @@
 	android:layout_width="match_parent"
 	android:layout_height="0dip"
 	android:layout_weight="1"
-	android:descendantFocusability="beforeDescendants" >
+	android:descendantFocusability="beforeDescendants"
+	android:scrollbars="none" >
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical" >
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:drawableLeft="@drawable/icon"
-			android:ellipsize="marquee"
-			android:gravity="center"
-			android:lines="1"
-			android:padding="6dp"
-			android:text="@string/library_name"
-			android:textSize="30sp"
-			android:textStyle="bold" />
-		<Divider
-			android:layout_width="match_parent"
-			android:layout_height="1dp" />
 		<WidgetContainer
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -164,88 +151,6 @@
 						android:text="@string/checkbox" />
 				</LinearLayout>
 			</LinearLayout>
-		</WidgetContainer>
-		<WidgetContainer
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:divider="?dividerVertical"
-			android:showDividers="middle"
-			android:text="@string/other"
-			holo:showDividers="middle" >
-			<OtherButton
-				android:id="@+id/showAbout"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/toast"
-				android:onClick="showAbout"
-				android:text="@string/about" />
-			<OtherButton
-				android:id="@+id/showPreferences"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/prefs_icon"
-				android:onClick="showPreferences"
-				android:text="@string/settings" />
-			<OtherButton
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/alert_dialog"
-				android:onClick="showAlertDialog"
-				android:text="@string/alertdialog" />
-			<OtherButton
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/progress_dialog"
-				android:onClick="showProgressDialog"
-				android:text="@string/progressdialog" />
-			<OtherButton
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/calendar"
-				android:onClick="showCalendar"
-				android:text="@string/calendar" />
-			<OtherButton
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/number_picker"
-				android:onClick="showNumberPicker"
-				android:text="@string/numberpicker" />
-			<OtherButton
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/date_picker"
-				android:onClick="showDatePicker"
-				android:text="@string/datepicker" />
-			<OtherButton
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/time_picker"
-				android:onClick="showTimePicker"
-				android:text="@string/timepicker" />
-			<OtherButton
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/popup_menu"
-				android:onClick="showPopupMenu"
-				android:text="@string/popupmenu" />
-			<OtherButton
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/list_popup_window"
-				android:onClick="showListPopupWindow"
-				android:text="@string/listpopupwindow" />
-			<OtherButton
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/context_menu"
-				android:onClick="showContextMenu"
-				android:text="@string/contextmenu" />
-			<OtherButton
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:icon="@drawable/toast"
-				android:onClick="showToast"
-				android:text="@string/toast" />
 		</WidgetContainer>
 	</LinearLayout>
 </ScrollView>

@@ -34,6 +34,7 @@ import org.holoeverywhere.widget.Switch;
 import org.holoeverywhere.widget.TextView;
 import org.holoeverywhere.widget.TimePicker;
 import org.holoeverywhere.widget.ToggleButton;
+import org.xmlpull.v1.XmlPullParser;
 
 import android.content.Context;
 import android.support.v4.view.PagerTitleStrip;
@@ -187,7 +188,8 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
     public static void remap(Class<? extends View> clazz) {
         if (clazz != null) {
-            LayoutInflater.VIEWS_MAP.put(clazz.getSimpleName(), clazz.getName());
+            LayoutInflater.VIEWS_MAP
+                    .put(clazz.getSimpleName(), clazz.getName());
         }
     }
 
@@ -249,6 +251,35 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
     public View inflate(int resource) {
         return inflate(resource, null);
+    }
+
+    @Override
+    public View inflate(int resource, ViewGroup root) {
+        return inflate(resource, root, root != null);
+    }
+
+    @Override
+    public View inflate(int resource, ViewGroup root, boolean attachToRoot) {
+        View view = super.inflate(resource, root, attachToRoot);
+        if (view != null) {
+            view = FontLoader.applyDefaultStyles(view);
+        }
+        return view;
+    }
+
+    @Override
+    public View inflate(XmlPullParser parser, ViewGroup root) {
+        return inflate(parser, root, root != null);
+    }
+
+    @Override
+    public View inflate(XmlPullParser parser, ViewGroup root,
+            boolean attachToRoot) {
+        View view = super.inflate(parser, root, attachToRoot);
+        if (view != null) {
+            view = FontLoader.applyDefaultStyles(view);
+        }
+        return view;
     }
 
     private void init() {

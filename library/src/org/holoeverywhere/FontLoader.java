@@ -137,12 +137,21 @@ public final class FontLoader {
         return view;
     }
 
+    /**
+     * @deprecated Use {@link LayoutInflater#inflate(Context, int)} instead
+     */
+    @Deprecated
     public static View inflate(Context context, int res) {
-        return FontLoader.apply(LayoutInflater.inflate(context, res));
+        return LayoutInflater.inflate(context, res);
     }
 
+    /**
+     * @deprecated Use {@link LayoutInflater#inflate(Context, int, ViewGroup)}
+     *             instead
+     */
+    @Deprecated
     public static View inflate(Context context, int res, ViewGroup parent) {
-        return FontLoader.apply(LayoutInflater.inflate(context, res, parent));
+        return LayoutInflater.inflate(context, res, parent);
     }
 
     public static Typeface loadTypeface(Context context, int font) {

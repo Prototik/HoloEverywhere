@@ -46,6 +46,7 @@ public abstract class _ViewGroup extends NineViewGroup {
     }
 
     public ActionMode startActionMode(ActionMode.Callback actionModeCallback) {
-        return ((IHoloActivity) getContext()).startActionMode(actionModeCallback);
+        return ((IHoloActivity) getContext())
+                .startActionMode(actionModeCallback);
     }
 }

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<attr name="restartMusicIcon" />
 	<declare-styleable name="WidgetContainer">
 		<attr name="android:text" />
 		<attr name="android:layout" />
 		<attr name="titleLayout" format="reference" />
 	</declare-styleable>
-	<declare-styleable name="OtherButton">
+	<declare-styleable name="DemoNavigationItem">
 		<attr name="android:text" />
-		<attr name="android:icon" />
+		<attr name="android:color" />
 	</declare-styleable>
 </resources>

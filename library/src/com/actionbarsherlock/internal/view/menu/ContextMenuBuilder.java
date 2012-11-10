@@ -89,8 +89,8 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
     @SuppressLint("NewApi")
     public MenuDialogHelper show(View originalView, IBinder token) {
         contextMenuInfo = getContextMenuInfo(originalView);
-        listener.createContextMenu(this, originalView,
-                contextMenuInfo, listener);
+        listener.createContextMenu(this, originalView, contextMenuInfo,
+                listener);
         if (getVisibleItems().size() > 0) {
             if (VERSION.SDK_INT >= 8) {
                 EventLog.writeEvent(50001, 1);

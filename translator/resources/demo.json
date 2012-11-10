@@ -7,6 +7,10 @@
 		"library_name": {
 			"en": "HoloEverywhere"
 		},
+		"demo": {
+			"en": "Demo",
+			"ru": "Демо"
+		},
 		"base_widgets": {
 			"en": "Base widgets",
 			"ru": "Базовые виджеты"
@@ -80,6 +84,14 @@
 		},
 		"toast": {
 			"en": "Toast"
+		},
+		"select_number": {
+			"en": "Select number",
+			"ru": "Выберите число"
+		},
+		"very_very_long_operation": {
+			"en": "Very-very long operation...",
+			"ru": "Очень долгая операция..."
 		}
 	}
 }

@@ -1,7 +1,6 @@
 
 package com.actionbarsherlock.internal.view.menu;
 
-import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.app.Application;
 
 import android.content.Context;
@@ -45,8 +44,10 @@ public final class ContextMenuDecorView extends FrameLayout {
             if (Application.isDebugMode()) {
                 Log.v(TAG, "Calling onContextItemSelected on " + listener);
             }
-            if (menu instanceof ContextMenuBuilder && item instanceof MenuItemImpl) {
-                ((MenuItemImpl) item).setMenuInfo(((ContextMenuBuilder) menu).getContextMenuInfo());
+            if (menu instanceof ContextMenuBuilder
+                    && item instanceof MenuItemImpl) {
+                ((MenuItemImpl) item).setMenuInfo(((ContextMenuBuilder) menu)
+                        .getContextMenuInfo());
             }
             return listener.onContextItemSelected(item);
         }
@@ -66,10 +67,9 @@ public final class ContextMenuDecorView extends FrameLayout {
         }
     }
 
-    public static View prepareDecorView(Context context, View v, ContextMenuListener listener,
-            int decorViewId) {
-        v = FontLoader.apply(v);
-        if (!Application.getConfig().isDisableContextMenu() && v != null) {
+    public static View prepareDecorView(Context context, View v,
+            ContextMenuListener listener, int decorViewId) {
+        if (v != null && !Application.config().isDisableContextMenu()) {
             v = new ContextMenuDecorView(context, v, listener);
             if (decorViewId > 0) {
                 v.setId(decorViewId);
@@ -100,7 +100,7 @@ public final class ContextMenuDecorView extends FrameLayout {
 
     @Override
     public boolean showContextMenuForChild(View originalView) {
-        if (Application.getConfig().isDisableContextMenu()) {
+        if (Application.config().isDisableContextMenu()) {
             return super.showContextMenuForChild(originalView);
         }
         if (contextMenu == null) {

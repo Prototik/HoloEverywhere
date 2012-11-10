@@ -1,12 +1,16 @@
 
 package org.holoeverywhere.app;
 
+import org.holoeverywhere.IHolo;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.LayoutInflater.LayoutInflaterCreator;
 import org.holoeverywhere.Setting;
 import org.holoeverywhere.SystemServiceManager;
 import org.holoeverywhere.ThemeManager;
-import org.holoeverywhere.ThemeManager.ThemedIntentStarter;
+import org.holoeverywhere.ThemeManager.SuperStartActivity;
+import org.holoeverywhere.app.Application.Config.PreferenceImpl;
+import org.holoeverywhere.preference.PreferenceManager;
+import org.holoeverywhere.preference.SharedPreferences;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -14,7 +18,7 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 
 public class Application extends android.app.Application implements
-        ThemedIntentStarter {
+        IHolo, SuperStartActivity {
     public static final class Config extends Setting<Config> {
         public static enum PreferenceImpl {
             JSON, XML
@@ -60,8 +64,6 @@ public class Application extends android.app.Application implements
         private EnumProperty<PreferenceImpl> preferenceImpl;
         @SettingProperty(create = true)
         private StringProperty preferencePackage;
-        @SettingProperty(create = true, defaultBoolean = false)
-        private BooleanProperty useThemeManager;
 
         @SettingProperty(create = true)
         private StringProperty widgetsPackage;
@@ -102,8 +104,12 @@ public class Application extends android.app.Application implements
             return disableContextMenu.getValue();
         }
 
+        /**
+         * @deprecated This property always true
+         */
+        @Deprecated
         public boolean isUseThemeManager() {
-            return useThemeManager.getValue();
+            return true;
         }
 
         @Override
@@ -142,8 +148,14 @@ public class Application extends android.app.Application implements
             return this;
         }
 
+        /**
+         * @deprecated This property always true
+         */
+        @Deprecated
         public Config setUseThemeManager(boolean useThemeManager) {
-            this.useThemeManager.setValue(useThemeManager);
+            if (!useThemeManager) {
+                throw new RuntimeException("This property always true");
+            }
             return this;
         }
 
@@ -155,7 +167,7 @@ public class Application extends android.app.Application implements
 
     private static Application lastInstance;
 
-    public static Config getConfig() {
+    public static Config config() {
         return Setting.get(Config.class);
     }
 
@@ -164,11 +176,46 @@ public class Application extends android.app.Application implements
     }
 
     public static boolean isDebugMode() {
-        return Application.getConfig().isDebugMode();
+        return Application.config().isDebugMode();
     }
 
     public Application() {
         Application.lastInstance = this;
+    }
+
+    @Override
+    public Config getConfig() {
+        return config();
+    }
+
+    @Override
+    public SharedPreferences getDefaultSharedPreferences() {
+        return PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
+    @Override
+    public LayoutInflater getLayoutInflater() {
+        return LayoutInflater.from(this);
+    }
+
+    @Override
+    public SharedPreferences getSharedPreferences(PreferenceImpl impl, String name, int mode) {
+        return PreferenceManager.wrap(this, impl, name, mode);
+    }
+
+    @Override
+    public SharedPreferences getSharedPreferences(String name, int mode) {
+        return PreferenceManager.wrap(this, name, mode);
+    }
+
+    @Override
+    public Application getSupportApplication() {
+        return this;
+    }
+
+    @Override
+    public boolean isABSSupport() {
+        return true;
     }
 
     @Override
@@ -199,7 +246,7 @@ public class Application extends android.app.Application implements
 
     @Override
     public void startActivity(Intent intent, Bundle options) {
-        if (Application.getConfig().isAlwaysUseParentTheme()) {
+        if (config().isAlwaysUseParentTheme()) {
             ThemeManager.startActivity(this, intent, options);
         } else {
             superStartActivity(intent, -1, options);

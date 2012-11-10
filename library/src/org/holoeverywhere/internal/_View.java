@@ -77,8 +77,8 @@ public class _View extends android.view.View implements Drawable.Callback,
             _View.VIEW_STATE_ACTIVATED, android.R.attr.state_accelerated,
             _View.VIEW_STATE_ACCELERATED, android.R.attr.state_hovered,
             _View.VIEW_STATE_HOVERED, android.R.attr.state_drag_can_accept,
-            _View.VIEW_STATE_DRAG_CAN_ACCEPT, android.R.attr.state_drag_hovered,
-            _View.VIEW_STATE_DRAG_HOVERED
+            _View.VIEW_STATE_DRAG_CAN_ACCEPT,
+            android.R.attr.state_drag_hovered, _View.VIEW_STATE_DRAG_HOVERED
     };
 
     static {
@@ -308,6 +308,7 @@ public class _View extends android.view.View implements Drawable.Callback,
     }
 
     public ActionMode startActionMode(ActionMode.Callback actionModeCallback) {
-        return ((IHoloActivity) getContext()).startActionMode(actionModeCallback);
+        return ((IHoloActivity) getContext())
+                .startActionMode(actionModeCallback);
     }
 }

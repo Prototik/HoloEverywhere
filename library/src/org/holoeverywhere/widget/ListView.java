@@ -20,7 +20,8 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class ListView extends android.widget.ListView implements ContextMenuInfoGetter {
+public class ListView extends android.widget.ListView implements
+        ContextMenuInfoGetter {
     public interface MultiChoiceModeListener extends ActionMode.Callback {
         public void onItemCheckedStateChanged(ActionMode mode, int position,
                 long id, boolean checked);
@@ -90,7 +91,8 @@ public class ListView extends android.widget.ListView implements ContextMenuInfo
         }
     }
 
-    private class OnItemLongClickListenerWrapper implements OnItemLongClickListener {
+    private class OnItemLongClickListenerWrapper implements
+            OnItemLongClickListener {
         protected OnItemLongClickListener wrapped;
 
         @Override
@@ -138,7 +140,8 @@ public class ListView extends android.widget.ListView implements ContextMenuInfo
         init(context);
     }
 
-    protected ContextMenuInfo createContextMenuInfo(View view, int position, long id) {
+    protected ContextMenuInfo createContextMenuInfo(View view, int position,
+            long id) {
         return new AdapterContextMenuInfo(view, position, id);
     }
 

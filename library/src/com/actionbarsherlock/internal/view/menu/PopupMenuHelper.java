@@ -26,9 +26,10 @@ import com.actionbarsherlock.internal.view.View_HasStateListenerSupport;
 import com.actionbarsherlock.internal.view.View_OnAttachStateChangeListener;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PopupMenuHelper implements AdapterView.OnItemClickListener, View.OnKeyListener,
-        ViewTreeObserver.OnGlobalLayoutListener, PopupWindow.OnDismissListener,
-        View_OnAttachStateChangeListener, MenuPresenter {
+public class PopupMenuHelper implements AdapterView.OnItemClickListener,
+        View.OnKeyListener, ViewTreeObserver.OnGlobalLayoutListener,
+        PopupWindow.OnDismissListener, View_OnAttachStateChangeListener,
+        MenuPresenter {
     private class ExpandedIndexObserver extends DataSetObserver {
         @Override
         public void onChanged() {
@@ -114,8 +115,7 @@ public class PopupMenuHelper implements AdapterView.OnItemClickListener, View.On
 
     private ViewTreeObserver mTreeObserver;
 
-    public PopupMenuHelper(Context context, MenuBuilder menu,
-            View decorView) {
+    public PopupMenuHelper(Context context, MenuBuilder menu, View decorView) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mMenu = menu;
@@ -154,7 +154,8 @@ public class PopupMenuHelper implements AdapterView.OnItemClickListener, View.On
 
     @Override
     public MenuView getMenuView(ViewGroup root) {
-        throw new UnsupportedOperationException("MenuPopupHelpers manage their own views");
+        throw new UnsupportedOperationException(
+                "MenuPopupHelpers manage their own views");
     }
 
     @Override
@@ -169,10 +170,10 @@ public class PopupMenuHelper implements AdapterView.OnItemClickListener, View.On
         int width = 0;
         View itemView = null;
         int itemType = 0;
-        final int widthMeasureSpec =
-                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-        final int heightMeasureSpec =
-                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+        final int widthMeasureSpec = MeasureSpec.makeMeasureSpec(0,
+                MeasureSpec.UNSPECIFIED);
+        final int heightMeasureSpec = MeasureSpec.makeMeasureSpec(0,
+                MeasureSpec.UNSPECIFIED);
         final int count = adapter.getCount();
         for (int i = 0; i < count; i++) {
             final int positionType = adapter.getItemViewType(i);
@@ -214,7 +215,8 @@ public class PopupMenuHelper implements AdapterView.OnItemClickListener, View.On
             mTreeObserver = null;
         }
         if (mAnchorView instanceof View_HasStateListenerSupport) {
-            ((View_HasStateListenerSupport) mAnchorView).removeOnAttachStateChangeListener(this);
+            ((View_HasStateListenerSupport) mAnchorView)
+                    .removeOnAttachStateChangeListener(this);
         }
     }
 
@@ -231,14 +233,16 @@ public class PopupMenuHelper implements AdapterView.OnItemClickListener, View.On
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+            long id) {
         MenuAdapter adapter = mAdapter;
         adapter.mAdapterMenu.performItemAction(adapter.getItem(position), 0);
     }
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_MENU) {
+        if (event.getAction() == KeyEvent.ACTION_UP
+                && keyCode == KeyEvent.KEYCODE_MENU) {
             dismiss();
             return true;
         }
@@ -257,7 +261,8 @@ public class PopupMenuHelper implements AdapterView.OnItemClickListener, View.On
     @Override
     public boolean onSubMenuSelected(SubMenuBuilder subMenu) {
         if (subMenu.hasVisibleItems()) {
-            PopupMenuHelper subPopup = new PopupMenuHelper(mContext, subMenu, mAnchorView);
+            PopupMenuHelper subPopup = new PopupMenuHelper(mContext, subMenu,
+                    mAnchorView);
             subPopup.setCallback(mPresenterCallback);
             boolean preserveIconSpacing = false;
             final int count = subMenu.size();
@@ -293,7 +298,8 @@ public class PopupMenuHelper implements AdapterView.OnItemClickListener, View.On
             mTreeObserver.removeGlobalOnLayoutListener(this);
         }
         if (v instanceof View_HasStateListenerSupport) {
-            ((View_HasStateListenerSupport) v).removeOnAttachStateChangeListener(this);
+            ((View_HasStateListenerSupport) v)
+                    .removeOnAttachStateChangeListener(this);
         }
     }
 
@@ -308,7 +314,8 @@ public class PopupMenuHelper implements AdapterView.OnItemClickListener, View.On
 
     public void show() {
         if (!tryShow()) {
-            throw new IllegalStateException("PopupMenuHelper cannot be used without an anchor");
+            throw new IllegalStateException(
+                    "PopupMenuHelper cannot be used without an anchor");
         }
     }
 
@@ -326,14 +333,16 @@ public class PopupMenuHelper implements AdapterView.OnItemClickListener, View.On
             if (addGlobalListener) {
                 mTreeObserver.addOnGlobalLayoutListener(this);
                 if (anchor instanceof View_HasStateListenerSupport) {
-                    ((View_HasStateListenerSupport) anchor).addOnAttachStateChangeListener(this);
+                    ((View_HasStateListenerSupport) anchor)
+                            .addOnAttachStateChangeListener(this);
                 }
             }
             mPopup.setAnchorView(anchor);
         } else {
             return false;
         }
-        mPopup.setContentWidth(Math.min(measureContentWidth(mAdapter), mPopupMaxWidth));
+        mPopup.setContentWidth(Math.min(measureContentWidth(mAdapter),
+                mPopupMaxWidth));
         mPopup.setInputMethodMode(PopupWindow.INPUT_METHOD_NOT_NEEDED);
         mPopup.show();
         mPopup.getListView().setOnKeyListener(this);

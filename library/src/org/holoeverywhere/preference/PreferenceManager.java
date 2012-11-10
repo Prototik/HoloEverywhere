@@ -108,7 +108,7 @@ public class PreferenceManager {
     }
 
     public static SharedPreferences wrap(Context context, String name, int mode) {
-        return PreferenceManager.wrap(context, Application.getConfig()
+        return PreferenceManager.wrap(context, Application.config()
                 .getPreferenceImpl(), name, mode);
     }
 

@@ -18,15 +18,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class MainFragment extends Fragment implements OnMenuItemClickListener {
-    private static MainFragment instance;
-
-    public static MainFragment getInstance() {
-        if (MainFragment.instance == null) {
-            return new MainFragment();
-        }
-        return MainFragment.instance;
-    }
-
     private static final class ContextMenuState {
         public static final int[] TOGGLE_ITEM_IDS = {
                 R.id.item1,
@@ -35,6 +26,15 @@ public class MainFragment extends Fragment implements OnMenuItemClickListener {
         };
         public boolean checkedItemState = true;
         public int selectedItemId = 0;
+    }
+
+    private static MainFragment instance;
+
+    public static MainFragment getInstance() {
+        if (MainFragment.instance == null) {
+            return new MainFragment();
+        }
+        return MainFragment.instance;
     }
 
     private final ContextMenuState contextMenuState = new ContextMenuState();
@@ -77,6 +77,12 @@ public class MainFragment extends Fragment implements OnMenuItemClickListener {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -92,15 +98,6 @@ public class MainFragment extends Fragment implements OnMenuItemClickListener {
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         return onContextItemSelected(item);
-    }
-
-    @Override
-    public void onViewCreated(View view) {
-        super.onViewCreated(view);
-        if (isABSSupport()) {
-            view.findViewById(R.id.showPreferences).setVisibility(View.GONE);
-            view.findViewById(R.id.showAbout).setVisibility(View.GONE);
-        }
     }
 
     private void prepareMenu(Menu menu) {

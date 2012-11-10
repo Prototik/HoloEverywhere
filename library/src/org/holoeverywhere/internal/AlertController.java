@@ -4,7 +4,6 @@ package org.holoeverywhere.internal;
 import java.lang.ref.WeakReference;
 
 import org.holoeverywhere.ArrayAdapter;
-import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 import org.holoeverywhere.widget.LinearLayout;
@@ -457,7 +456,7 @@ public class AlertController {
                     WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         }
         if (decorViewInstaller == null) {
-            mWindow.setContentView(FontLoader.inflate(mWindow.getContext(),
+            mWindow.setContentView(LayoutInflater.inflate(mWindow.getContext(),
                     mAlertDialogLayout));
         } else {
             decorViewInstaller.installDecorView(mContext, mAlertDialogLayout);

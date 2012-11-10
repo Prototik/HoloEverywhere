@@ -7,9 +7,12 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -26,6 +29,13 @@ public class Processer {
         public StringWriter stringWriter;
         public XMLStreamWriter writer;
     }
+
+    private static final Comparator<String> COMPARATOR = new Comparator<String>() {
+        @Override
+        public int compare(String o1, String o2) {
+            return o1.compareTo(o2);
+        }
+    };
 
     private static final String DEFAULT_LOCALE = "en";
 
@@ -56,7 +66,9 @@ public class Processer {
 
     public static void process(Document document, Grabber grabber, File outputDir) {
         final Map<String, ProcesserState> writers = new HashMap<String, ProcesserState>();
-        final Map<String, Map<String, String>> data = document.mergeData(grabber);
+        final SortedMap<String, Map<String, String>> data = new TreeMap<String, Map<String, String>>(
+                COMPARATOR);
+        data.putAll(document.mergeData(grabber));
         for (Entry<String, Map<String, String>> entry : data.entrySet()) {
             final String name = entry.getKey();
             try {
