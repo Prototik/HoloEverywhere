@@ -25,7 +25,6 @@ import org.holoeverywhere.slidingmenu.SlidingActivity;
 import org.holoeverywhere.slidingmenu.SlidingMenu;
 import org.holoeverywhere.slidingmenu.SlidingMenu.CanvasTransformer;
 import org.holoeverywhere.widget.ListPopupWindow;
-import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.NumberPicker;
 import org.holoeverywhere.widget.Toast;
 
@@ -36,6 +35,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -43,7 +43,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class DemoActivity extends SlidingActivity {
     private final class ListNavigationAdapter extends ArrayAdapter<NavigationItem> implements
-            android.widget.AdapterView.OnItemClickListener {
+            OnItemClickListener {
 
         private int lastSelectedItem = 0;
 
@@ -61,7 +61,6 @@ public class DemoActivity extends SlidingActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup container) {
-            NavigationItem item = getItem(position);
             DemoNavigationItem view;
             if (convertView == null) {
                 view = new DemoNavigationItem(DemoActivity.this);
@@ -69,6 +68,7 @@ public class DemoActivity extends SlidingActivity {
             } else {
                 view = (DemoNavigationItem) convertView;
             }
+            NavigationItem item = getItem(position);
             view.setLabel(item.title);
             view.setSelectionHandlerVisiblity(lastSelectedItem == position ? View.VISIBLE
                     : View.INVISIBLE);
@@ -78,14 +78,12 @@ public class DemoActivity extends SlidingActivity {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int itemPosition,
                 long itemId) {
-            NavigationItem item = getItem(itemPosition);
-
             lastSelectedItem = itemPosition;
             notifyDataSetInvalidated();
             getIntent().putExtra(LIST_NAVIGATION_PAGE, itemPosition);
 
-            replaceFragment(R.id.content, item.getFragment());
-
+            NavigationItem item = getItem(itemPosition);
+            replaceFragment(item.getFragment());
             getSupportActionBar().setSubtitle(item.title);
 
             getSlidingMenu().showAbove(true);
@@ -115,14 +113,8 @@ public class DemoActivity extends SlidingActivity {
     }
 
     private static final String LIST_NAVIGATION_PAGE = "listNavigationPage";
-
     private WeakReference<AlertDialogFragment> alertDialog;
-
     private ListNavigationAdapter lastListNavigationAdapter;
-
-    public void closeCalendar(View v) {
-        replaceFragment(R.id.content, MainFragment.getInstance(), "content");
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -138,21 +130,8 @@ public class DemoActivity extends SlidingActivity {
                 R.string.about);
 
         DemoNavigationWidget navigationWidget = new DemoNavigationWidget(this);
-        ListView list = navigationWidget.getListView();
-        list.setAdapter(lastListNavigationAdapter);
-        list.setOnItemClickListener(lastListNavigationAdapter);
-        list.performItemClick(null, 0, 0);
-        final int themePicker;
-        int theme = ThemeManager.getTheme(this);
-        if (ThemeManager.isDark(theme)) {
-            themePicker = R.id.themePickerDark;
-        } else if (ThemeManager.isLight(this)) {
-            themePicker = R.id.themePickerLight;
-        } else {
-            themePicker = R.id.themePickerMixed;
-        }
-        ((DemoNavigationItem) navigationWidget.findViewById(themePicker))
-                .setSelectionHandlerColorResource(R.color.holo_orange_light);
+        navigationWidget.init(lastListNavigationAdapter, lastListNavigationAdapter,
+                ThemeManager.getTheme(this));
         setBehindContentView(navigationWidget);
 
         setContentView(R.layout.content);
@@ -218,14 +197,14 @@ public class DemoActivity extends SlidingActivity {
         PlaybackService.onResume(this);
     }
 
-    public void replaceFragment(int resId, Fragment fragment) {
-        replaceFragment(resId, fragment, null);
+    public void replaceFragment(Fragment fragment) {
+        replaceFragment(fragment, null);
     }
 
-    public void replaceFragment(int resId, Fragment fragment,
+    public void replaceFragment(Fragment fragment,
             String backStackName) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(resId, fragment);
+        ft.replace(R.id.content, fragment);
         if (backStackName != null) {
             ft.addToBackStack(backStackName);
         }
@@ -247,10 +226,6 @@ public class DemoActivity extends SlidingActivity {
         ThemeManager.restartWithMixedTheme(this);
     }
 
-    public void showAbout(View v) {
-        replaceFragment(R.id.content, new AboutFragment(), "about");
-    }
-
     public void showAlertDialog(View v) {
         AlertDialogFragment fragment;
         if (alertDialog == null || (fragment = alertDialog.get()) == null) {
@@ -261,12 +236,12 @@ public class DemoActivity extends SlidingActivity {
     }
 
     public void showCalendar(View v) {
-        replaceFragment(R.id.content, CalendarFragment.getInstance(),
+        replaceFragment(CalendarFragment.getInstance(),
                 "calendar");
     }
 
     public void showContextMenu(View v) {
-        MainFragment.getInstance().showContextMenu(v);
+        OtherFragment.getInstance().showContextMenu(v);
     }
 
     public void showDatePicker(View v) {
@@ -304,11 +279,7 @@ public class DemoActivity extends SlidingActivity {
     }
 
     public void showPopupMenu(View v) {
-        MainFragment.getInstance().showPopupMenu(v);
-    }
-
-    public void showPreferences(View v) {
-        replaceFragment(R.id.content, new SettingsFragment(), "prefs");
+        OtherFragment.getInstance().showPopupMenu(v);
     }
 
     public void showProgressDialog(View v) {

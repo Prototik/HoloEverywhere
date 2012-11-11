@@ -67,6 +67,19 @@ public class AboutFragment extends Fragment {
         setRetainInstance(true);
     }
 
+    private static AboutFragment instance;
+
+    public static AboutFragment getInstance() {
+        if (AboutFragment.instance == null) {
+            return new AboutFragment();
+        }
+        return AboutFragment.instance;
+    }
+
+    public AboutFragment() {
+        AboutFragment.instance = this;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {

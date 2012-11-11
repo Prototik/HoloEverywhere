@@ -20,21 +20,25 @@ public class DemoNavigationItem extends LinearLayout {
     }
 
     public DemoNavigationItem(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs, R.attr.demoNavigationItemStyle);
     }
 
+    @SuppressWarnings("deprecation")
     public DemoNavigationItem(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.inflate(context, R.layout.demo_navigation_item, this, true);
         selectionHandler = findViewById(R.id.selectionHandler);
         label = (TextView) findViewById(android.R.id.text1);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DemoNavigationItem,
-                defStyleAttr, 0);
+                defStyleAttr, R.style.Holo_Demo_NavigationItem);
         if (a.hasValue(R.styleable.DemoNavigationItem_android_text)) {
             setLabel(a.getText(R.styleable.DemoNavigationItem_android_text));
         }
         if (a.hasValue(R.styleable.DemoNavigationItem_android_color)) {
             setSelectionHandlerColor(a.getColor(R.styleable.DemoNavigationItem_android_color, 0));
+        }
+        if (a.hasValue(R.styleable.DemoNavigationItem_android_background)) {
+            setBackgroundDrawable(a.getDrawable(R.styleable.DemoNavigationItem_android_background));
         }
         a.recycle();
     }

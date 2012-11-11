@@ -6,8 +6,11 @@
     <string name="button">Кнопка</string>
     <string name="checkable_buttons">Кнопки-переключатели</string>
     <string name="checkbox">Флажок</string>
+    <string name="dark">Темная</string>
     <string name="demo">Демо</string>
     <string name="edittext">Поле ввода</string>
+    <string name="light">Светлая</string>
+    <string name="mixed">Смешанная</string>
     <string name="other">Прочее</string>
     <string name="progress_bars">Индикаторы прогресса</string>
     <string name="radiobutton">Радио-кнопка</string>

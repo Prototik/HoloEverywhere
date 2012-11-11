@@ -92,6 +92,18 @@
 		"very_very_long_operation": {
 			"en": "Very-very long operation...",
 			"ru": "Очень долгая операция..."
+		},
+		"dark": {
+			"en": "Dark",
+			"ru": "Темная"
+		},
+		"light": {
+			"en": "Light",
+			"ru": "Светлая"
+		},
+		"mixed": {
+			"en": "Mixed",
+			"ru": "Смешанная"
 		}
 	}
 }

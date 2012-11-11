@@ -9,11 +9,14 @@
     <string name="checkable_buttons">Checkable buttons</string>
     <string name="checkbox">Checkbox</string>
     <string name="contextmenu">ContextMenu</string>
+    <string name="dark">Dark</string>
     <string name="datepicker">DatePicker</string>
     <string name="demo">Demo</string>
     <string name="edittext">Input field</string>
     <string name="library_name">HoloEverywhere</string>
+    <string name="light">Light</string>
     <string name="listpopupwindow">ListPopupWindow</string>
+    <string name="mixed">Mixed</string>
     <string name="numberpicker">NumberPicker</string>
     <string name="other">Other</string>
     <string name="popupmenu">PopupMenu</string>

@@ -14,9 +14,7 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_gravity="center_vertical"
 		android:divider="?android:listDivider"
-		android:gravity="center_vertical"
 		android:orientation="vertical"
 		android:showDividers="middle"
 		holo:showDividers="middle" >
@@ -24,25 +22,19 @@
 			android:id="@+id/themePickerDark"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?selectableItemBackground"
 			android:onClick="setDarkTheme"
-			android:text="Dark"
-			android:color="@color/holo_green_light" />
+			android:text="@string/dark" />
 		<DemoNavigationItem
 			android:id="@+id/themePickerLight"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?selectableItemBackground"
 			android:onClick="setLightTheme"
-			android:text="Light"
-			android:color="@color/holo_green_light" />
+			android:text="@string/light" />
 		<DemoNavigationItem
 			android:id="@+id/themePickerMixed"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?selectableItemBackground"
 			android:onClick="setMixedTheme"
-			android:text="Mixed"
-			android:color="@color/holo_green_light" />
+			android:text="@string/mixed" />
 	</LinearLayout>
 </LinearLayout>

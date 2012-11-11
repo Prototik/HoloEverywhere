@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<attr name="restartMusicIcon" />
+	<attr name="demoNavigationItemStyle" />
 	<declare-styleable name="WidgetContainer">
 		<attr name="android:text" />
 		<attr name="android:layout" />
@@ -9,5 +10,6 @@
 	<declare-styleable name="DemoNavigationItem">
 		<attr name="android:text" />
 		<attr name="android:color" />
+		<attr name="android:background" />
 	</declare-styleable>
 </resources>
