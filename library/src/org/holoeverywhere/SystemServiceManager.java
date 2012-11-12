@@ -43,6 +43,9 @@ public final class SystemServiceManager {
             return null;
         }
         Class<? extends SystemServiceCreator<?>> clazz = MAP.get(name);
+        if (clazz == null) {
+            return getSuperSystemService(context, name);
+        }
         SystemServiceCreator<?> creator = CREATORS_MAP.get(clazz);
         if (creator == null) {
             try {
@@ -58,6 +61,10 @@ public final class SystemServiceManager {
                 return o;
             }
         }
+        return getSuperSystemService(context, name);
+    }
+
+    private static Object getSuperSystemService(Context context, String name) {
         if (context instanceof SuperSystemService) {
             return ((SuperSystemService) context).superGetSystemService(name);
         } else {

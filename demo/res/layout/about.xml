@@ -14,19 +14,13 @@
 			android:id="@+id/github"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="Fork me on GitHub"
+			android:text="@string/github"
 			android:color="@color/holo_blue_light" />
 		<DemoNavigationItem
-			android:id="@+id/google_plus"
+			android:id="@+id/developers"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="Write to Christophe"
+			android:text="@string/write_to_developers"
 			android:color="@color/holo_green_light" />
-		<DemoNavigationItem
-			android:id="@+id/email"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="Write to Sergey"
-			android:color="@color/holo_red_light" />
 	</LinearLayout>
 </ScrollView>

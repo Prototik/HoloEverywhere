@@ -60,7 +60,7 @@ public class NumberPickerPreference extends DialogPreference {
     private OnValueChangeListener mOnValueChangeListener;
     private int mValue = Integer.MIN_VALUE, mMinValue = Integer.MIN_VALUE,
             mMaxValue = Integer.MIN_VALUE;
-    private boolean mWrapSelectorWheel = true;
+    private boolean mWrapSelectorWheel = false;
 
     public NumberPickerPreference(Context context) {
         this(context, null);
@@ -79,7 +79,7 @@ public class NumberPickerPreference extends DialogPreference {
         int minValue = a.getInt(R.styleable.NumberPickerPreference_min, 1);
         int maxValue = a.getInt(R.styleable.NumberPickerPreference_max, 10);
         boolean wrapSelectorWheel = a.getBoolean(
-                R.styleable.NumberPickerPreference_wrapSelectorWheel, true);
+                R.styleable.NumberPickerPreference_wrapSelectorWheel, false);
         a.recycle();
         mNumberPicker = onCreateNumberPicker();
         setMinValue(minValue);

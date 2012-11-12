@@ -3,80 +3,73 @@
 	<Preference
 		holo:icon="@drawable/prefs_icon"
 		holo:selectable="false"
-		holo:summary="Preference Demo"
-		holo:title="HoloEverywhere" />
-	<PreferenceCategory holo:title="Base" >
+		holo:summary="@string/preference_summary"
+		holo:title="@string/preference_title" />
+	<PreferenceCategory holo:title="@string/preference_base" >
 		<EditTextPreference
 			holo:dialogIcon="@drawable/icon"
-			holo:dialogTitle="Enter message:"
+			holo:dialogTitle="@string/preference_edit_text_dialog_title"
 			holo:key="edit_text"
-			holo:summary="Tap me!"
-			holo:title="EditText" />
+			holo:summary="@string/preference_edit_text_summary"
+			holo:title="@string/preference_edit_text_title" />
 		<CheckBoxPreference
 			holo:defaultValue="false"
 			holo:key="check_box"
-			holo:summaryOff="I not checked ;("
-			holo:summaryOn="I checked! :)"
-			holo:title="CheckBox" />
+			holo:summaryOff="@string/preference_check_box_summary_off"
+			holo:summaryOn="@string/preference_check_box_summary_on"
+			holo:title="@string/preference_check_box_title" />
 		<RingtonePreference
 			holo:key="ringtone"
 			holo:ringtoneType="all"
-			holo:summary="I love music!"
-			holo:title="Ringtone" />
+			holo:summary="@string/preference_ringtone_summary"
+			holo:title="@string/preference_ringtone_title" />
 		<SwitchPreference
 			holo:key="switch"
-			holo:summaryOff="Noooooo! ;("
-			holo:summaryOn="Yes, man! :)"
-			holo:switchTextOff="OFF"
-			holo:switchTextOn="ON"
-			holo:title="Switch" />
+			holo:summaryOff="@string/preference_switch_summary_off"
+			holo:summaryOn="@string/preference_switch_summary_on"
+			holo:title="@string/preference_switch_title" />
 		<NumberPickerPreference
 			holo:defaultValue="10"
-			holo:dialogMessage="Play NumberPicker roulette!"
+			holo:dialogMessage="@string/preference_number_picker_dialog_title"
 			holo:key="number_picker"
 			holo:max="25"
 			holo:min="5"
-			holo:summary="Bring up a dialog!"
-			holo:title="NumberPicker"
-			holo:wrapSelectorWheel="true" />
+			holo:summary="@string/preference_number_picker_summary"
+			holo:title="@string/preference_number_picker_title" />
 	</PreferenceCategory>
-	<PreferenceCategory holo:title="Lists" >
+	<PreferenceCategory holo:title="@string/preference_lists" >
 		<ListPreference
 			holo:dialogIcon="@drawable/icon"
-			holo:dialogTitle="Skillet"
+			holo:dialogTitle="@string/preference_list_dialog_title"
 			holo:entries="@array/skillet"
 			holo:entryValues="@array/skillet"
 			holo:key="list"
-			holo:negativeButtonText="I love Skillet!"
-			holo:summary="Skillet"
-			holo:title="List" />
+			holo:summary="@string/preference_list_summary"
+			holo:title="@string/preference_list_title" />
 		<MultiSelectListPreference
 			holo:dialogIcon="@drawable/icon"
-			holo:dialogTitle="Nirvana"
+			holo:dialogTitle="@string/preference_multi_list_dialog_title"
 			holo:entries="@array/nirvana"
 			holo:entryValues="@array/nirvana"
 			holo:key="multi_select_list"
-			holo:positiveButtonText="I love Nirvana!"
-			holo:summary="Nirvana"
-			holo:title="MultiSelectList" />
+			holo:summary="@string/preference_multi_list_summary"
+			holo:title="@string/preference_multi_list_title" />
 	</PreferenceCategory>
-	<PreferenceCategory holo:title="Other" >
-		<PreferenceScreen
-			holo:summary="Unsupported preferences"
-			holo:title="Internal" >
+	<PreferenceCategory holo:title="@string/preference_other" >
+		<PreferenceScreen holo:title="@string/preference_unsupported" >
 			<SeekBarPreference
 				holo:defaultValue="25"
 				holo:key="seek_bar"
 				holo:max="100"
-				holo:title="SeekBar" />
+				holo:title="@string/preference_seek_bar" />
 			<SeekBarDialogPreference
 				holo:defaultValue="75"
 				holo:key="seek_bar_dialog"
 				holo:max="100"
-				holo:title="SeekBarDialog" />
+				holo:title="@string/preference_seek_bar_dialog" />
 			<VolumePreference
 				holo:key="volume"
-				holo:title="Volume" />
+				holo:title="@string/preference_volume" />
 		</PreferenceScreen>
 	</PreferenceCategory>
 </PreferenceScreen>

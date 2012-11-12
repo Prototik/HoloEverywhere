@@ -8,34 +8,12 @@ import org.holoeverywhere.demo.R;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 public class AboutFragment extends Fragment {
-    private final class EmailListener implements OnClickListener {
-        private final String subject, to;
-
-        public EmailListener(String to, String subject) {
-            this.to = to;
-            this.subject = subject;
-        }
-
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("message/rfc822");
-            intent.putExtra(Intent.EXTRA_EMAIL, new String[] {
-                    to
-            });
-            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-            intent = Intent.createChooser(intent, "Select a email program");
-            if (intent != null) {
-                getActivity().startActivity(intent);
-            }
-        }
-    }
-
     private final class UrlListener implements OnClickListener {
         private final Uri uri;
 
@@ -46,7 +24,7 @@ public class AboutFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            intent = Intent.createChooser(intent, "Select a browser");
+            intent = Intent.createChooser(intent, getText(R.string.select_browser));
             if (intent != null) {
                 getActivity().startActivity(intent);
             }
@@ -54,12 +32,17 @@ public class AboutFragment extends Fragment {
 
     }
 
-    private final OnClickListener emailListener = new EmailListener(
-            "prototypegamez@gmail.com", "HoloEverywhere");
     private final OnClickListener githubListener = new UrlListener(
             "https://github.com/ChristopheVersieux/HoloEverywhere");
-    private final OnClickListener gplusListener = new UrlListener(
-            "https://plus.google.com/108315424589085456181");
+    private final OnClickListener developersListener = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content, DevelopersFragment.getInstance());
+            ft.addToBackStack("developers");
+            ft.commit();
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,7 +73,6 @@ public class AboutFragment extends Fragment {
     public void onViewCreated(View view) {
         super.onViewCreated(view);
         view.findViewById(R.id.github).setOnClickListener(githubListener);
-        view.findViewById(R.id.google_plus).setOnClickListener(gplusListener);
-        view.findViewById(R.id.email).setOnClickListener(emailListener);
+        view.findViewById(R.id.developers).setOnClickListener(developersListener);
     }
 }

@@ -14,16 +14,9 @@ public class PlaybackService {
     }
 
     public static void onCreate() {
-        if (seek == -1) {
+        if (!disable && seek == -1) {
             seek = 0;
         }
-    }
-
-    public static void onDestroy() {
-        if (ignore) {
-            return;
-        }
-        // seek = 0;
     }
 
     public static void onPause() {
@@ -47,21 +40,31 @@ public class PlaybackService {
             ignore = false;
             return;
         }
-        if (seek < 0) {
+        if (disable || seek < 0) {
             return;
         }
         mediaPlayer = MediaPlayer.create(context, R.raw.winter_dawn);
+        mediaPlayer.setLooping(true);
         if (seek > 0) {
             mediaPlayer.seekTo(seek);
         }
         mediaPlayer.start();
     }
 
-    public static void restart(Context context) {
-        seek = 0;
-        onResume(context);
+    private PlaybackService() {
     }
 
-    private PlaybackService() {
+    private static boolean disable = false;
+
+    public static boolean isDisable() {
+        return disable;
+    }
+
+    public static void disable() {
+        disable = true;
+        ignore = false;
+        onPause();
+        ignore = true;
+        seek = -1;
     }
 }

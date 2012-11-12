@@ -8,16 +8,17 @@
 		android:id="@+id/navigationListView"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		android:layout_weight="2"
+		android:layout_weight="1"
 		android:listChoiceBackgroundIndicator="?selectableItemBackground"
-		android:listSelector="?selectableItemBackground" />
+		android:listSelector="?selectableItemBackground"
+		android:scrollbars="none" />
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:divider="?android:listDivider"
 		android:orientation="vertical"
-		android:showDividers="middle"
-		holo:showDividers="middle" >
+		android:showDividers="middle|beginning"
+		holo:showDividers="middle|beginning" >
 		<DemoNavigationItem
 			android:id="@+id/themePickerDark"
 			android:layout_width="match_parent"

@@ -15,12 +15,13 @@ public class DemoApplication extends SlidingApplication {
         LayoutInflater.remap(DemoFrame.class);
         LayoutInflater.remap(DemoNavigationItem.class);
         ThemeManager.setDefaultTheme(ThemeManager.MIXED);
-        ThemeManager.modify(ThemeManager.FULLSCREEN);
-        ThemeManager.map(ThemeManager.DARK | ThemeManager.FULLSCREEN,
-                R.style.Holo_Demo_Theme_Fullscreen);
-        ThemeManager.map(ThemeManager.LIGHT | ThemeManager.FULLSCREEN,
-                R.style.Holo_Demo_Theme_Light_Fullscreen);
-        ThemeManager.map(ThemeManager.MIXED | ThemeManager.FULLSCREEN,
-                R.style.Holo_Demo_Theme_Light_DarkActionBar_Fullscreen);
+        // Android 2.1 incorrect process FULLSCREEN flag
+        // ThemeManager.modify(ThemeManager.FULLSCREEN);
+        ThemeManager.map(ThemeManager.DARK,
+                R.style.Holo_Demo_Theme);
+        ThemeManager.map(ThemeManager.LIGHT,
+                R.style.Holo_Demo_Theme_Light);
+        ThemeManager.map(ThemeManager.MIXED,
+                R.style.Holo_Demo_Theme_Light_DarkActionBar);
     }
 }

@@ -9,6 +9,7 @@ import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Dialog;
 import org.holoeverywhere.widget.ListView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build.VERSION;
@@ -24,10 +25,13 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.internal.widget.ActionBarView;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window.Callback;
 
 public final class PreferenceScreen extends PreferenceGroup implements
-        AdapterView.OnItemClickListener, DialogInterface.OnDismissListener {
+        AdapterView.OnItemClickListener, DialogInterface.OnDismissListener, Callback {
     private static class SavedState extends BaseSavedState {
         Bundle dialogBundle;
         boolean isDialogShowing;
@@ -167,6 +171,12 @@ public final class PreferenceScreen extends PreferenceGroup implements
         return myState;
     }
 
+    public void setDisplayOptions(ActionBarView view, int options, int mask) {
+        final int current = view.getDisplayOptions();
+        view.setDisplayOptions((options & mask) | (current & ~mask));
+    }
+
+    @SuppressLint("NewApi")
     private void showDialog(Bundle state) {
         Context context = getContext();
         if (mListView != null) {
@@ -185,16 +195,19 @@ public final class PreferenceScreen extends PreferenceGroup implements
             dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         } else {
             dialog.setTitle(title);
-        }
-        if (VERSION.SDK_INT >= 11 || titleEmpty) {
-            dialog.setContentView(childPrefScreen);
-        } else {
-            View container = inflater.inflate(R.layout.abs__screen_action_bar);
-            ((ActionBarView) container.findViewById(R.id.abs__action_bar))
-                    .setTitle(title);
-            ((FrameLayout) container.findViewById(R.id.abs__content))
-                    .addView(childPrefScreen);
-            dialog.setContentView(container);
+            if (VERSION.SDK_INT >= 11) {
+                dialog.setContentView(childPrefScreen);
+                onPrepareActionBar(dialog.getActionBar());
+            } else {
+                View container = inflater.inflate(R.layout.abs__screen_action_bar);
+                ActionBarView actionBarView = ((ActionBarView) container
+                        .findViewById(R.id.abs__action_bar));
+                actionBarView.setTitle(title);
+                onPrepareActionBar(actionBarView);
+                ((FrameLayout) container.findViewById(R.id.abs__content))
+                        .addView(childPrefScreen);
+                dialog.setContentView(container);
+            }
         }
         dialog.setOnDismissListener(this);
         if (state != null) {
@@ -202,5 +215,26 @@ public final class PreferenceScreen extends PreferenceGroup implements
         }
         getPreferenceManager().addPreferencesScreen(dialog);
         dialog.show();
+    }
+
+    protected void onPrepareActionBar(ActionBarView actionBarView) {
+        actionBarView.setWindowCallback(this);
+        setDisplayOptions(actionBarView, ActionBar.DISPLAY_HOME_AS_UP,
+                ActionBar.DISPLAY_HOME_AS_UP);
+    }
+
+    @SuppressLint("NewApi")
+    protected void onPrepareActionBar(android.app.ActionBar actionBar) {
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        if (featureId == Window.FEATURE_OPTIONS_PANEL && item.getItemId() == android.R.id.home
+                && mDialog != null) {
+            mDialog.dismiss();
+            return true;
+        }
+        return false;
     }
 }

@@ -6,6 +6,7 @@ import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.LayoutInflater.LayoutInflaterCreator;
 import org.holoeverywhere.Setting;
 import org.holoeverywhere.SystemServiceManager;
+import org.holoeverywhere.SystemServiceManager.SuperSystemService;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.ThemeManager.SuperStartActivity;
 import org.holoeverywhere.app.Application.Config.PreferenceImpl;
@@ -18,7 +19,17 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 
 public class Application extends android.app.Application implements
-        IHolo, SuperStartActivity {
+        IHolo, SuperStartActivity, SuperSystemService {
+    @Override
+    public Object superGetSystemService(String name) {
+        return super.getSystemService(name);
+    }
+
+    public android.content.SharedPreferences superGetSharedPreferences(
+            String name, int mode) {
+        return super.getSharedPreferences(name, mode);
+    }
+
     public static final class Config extends Setting<Config> {
         public static enum PreferenceImpl {
             JSON, XML

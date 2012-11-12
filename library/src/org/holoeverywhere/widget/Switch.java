@@ -323,13 +323,13 @@ public class Switch extends CompoundButton {
         if (isChecked()) {
             CharSequence text = mOnLayout.getText();
             if (TextUtils.isEmpty(text)) {
-                text = getContext().getString(R.string.switch_on);
+                text = getContext().getString(R.string.capital_on);
             }
             event.getText().add(text);
         } else {
             CharSequence text = mOffLayout.getText();
             if (TextUtils.isEmpty(text)) {
-                text = getContext().getString(R.string.switch_off);
+                text = getContext().getString(R.string.capital_off);
             }
             event.getText().add(text);
         }

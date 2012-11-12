@@ -23,13 +23,11 @@ import org.holoeverywhere.demo.widget.DemoNavigationItem;
 import org.holoeverywhere.demo.widget.DemoNavigationWidget;
 import org.holoeverywhere.slidingmenu.SlidingActivity;
 import org.holoeverywhere.slidingmenu.SlidingMenu;
-import org.holoeverywhere.slidingmenu.SlidingMenu.CanvasTransformer;
 import org.holoeverywhere.widget.ListPopupWindow;
 import org.holoeverywhere.widget.NumberPicker;
 import org.holoeverywhere.widget.Toast;
 
 import android.annotation.SuppressLint;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -140,12 +138,6 @@ public class DemoActivity extends SlidingActivity {
         si.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         si.setBehindWidthRes(R.dimen.demo_menu_width);
         si.setShadowWidth(0);
-        si.setBehindCanvasTransformer(new CanvasTransformer() {
-            @Override
-            public void transformCanvas(Canvas canvas, float percentOpen) {
-
-            }
-        });
 
         final ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.library_name);
@@ -154,24 +146,23 @@ public class DemoActivity extends SlidingActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    protected void onDestroy() {
-        PlaybackService.onDestroy();
-        super.onDestroy();
+        if (!PlaybackService.isDisable()) {
+            getSupportMenuInflater().inflate(R.menu.main, menu);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.restartMusic:
-                PlaybackService.restart(this);
-                break;
             case android.R.id.home:
                 toggle();
+                break;
+            case R.id.disableMusic:
+                PlaybackService.disable();
+                supportInvalidateOptionsMenu();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
