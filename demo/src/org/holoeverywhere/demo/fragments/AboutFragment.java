@@ -32,8 +32,15 @@ public class AboutFragment extends Fragment {
 
     }
 
-    private final OnClickListener githubListener = new UrlListener(
-            "https://github.com/ChristopheVersieux/HoloEverywhere");
+    private static AboutFragment instance;
+
+    public static AboutFragment getInstance() {
+        if (AboutFragment.instance == null) {
+            return new AboutFragment();
+        }
+        return AboutFragment.instance;
+    }
+
     private final OnClickListener developersListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -44,23 +51,17 @@ public class AboutFragment extends Fragment {
         }
     };
 
+    private final OnClickListener githubListener = new UrlListener(
+            "https://github.com/ChristopheVersieux/HoloEverywhere");
+
+    public AboutFragment() {
+        AboutFragment.instance = this;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-    }
-
-    private static AboutFragment instance;
-
-    public static AboutFragment getInstance() {
-        if (AboutFragment.instance == null) {
-            return new AboutFragment();
-        }
-        return AboutFragment.instance;
-    }
-
-    public AboutFragment() {
-        AboutFragment.instance = this;
     }
 
     @Override

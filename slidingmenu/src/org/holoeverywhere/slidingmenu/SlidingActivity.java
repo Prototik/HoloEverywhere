@@ -10,6 +10,9 @@ import android.view.ViewGroup.LayoutParams;
 
 public class SlidingActivity extends Activity implements SlidingActivityBase {
 
+    static {
+        SlidingActivityHelper.init();
+    }
     private SlidingActivityHelper mHelper;
 
     /*
@@ -27,7 +30,7 @@ public class SlidingActivity extends Activity implements SlidingActivityBase {
 
     /*
      * (non-Javadoc)
-     * @see com.slidingmenu.lib.app.SlidingActivityBase#getSlidingMenu()
+     * @see org.holoeverywhere.slidingmenu.SlidingActivityBase#getSlidingMenu()
      */
     @Override
     public SlidingMenu getSlidingMenu() {
@@ -81,7 +84,8 @@ public class SlidingActivity extends Activity implements SlidingActivityBase {
     /*
      * (non-Javadoc)
      * @see
-     * com.slidingmenu.lib.app.SlidingActivityBase#setBehindContentView(int)
+     * org.holoeverywhere.slidingmenu.SlidingActivityBase#setBehindContentView
+     * (int)
      */
     @Override
     public void setBehindContentView(int id) {
@@ -91,8 +95,8 @@ public class SlidingActivity extends Activity implements SlidingActivityBase {
     /*
      * (non-Javadoc)
      * @see
-     * com.slidingmenu.lib.app.SlidingActivityBase#setBehindContentView(android
-     * .view.View)
+     * org.holoeverywhere.slidingmenu.SlidingActivityBase#setBehindContentView
+     * (android .view.View)
      */
     @Override
     public void setBehindContentView(View v) {
@@ -103,8 +107,8 @@ public class SlidingActivity extends Activity implements SlidingActivityBase {
     /*
      * (non-Javadoc)
      * @see
-     * com.slidingmenu.lib.app.SlidingActivityBase#setBehindContentView(android
-     * .view.View, android.view.ViewGroup.LayoutParams)
+     * org.holoeverywhere.slidingmenu.SlidingActivityBase#setBehindContentView
+     * (android .view.View, android.view.ViewGroup.LayoutParams)
      */
     @Override
     public void setBehindContentView(View v, LayoutParams params) {
@@ -143,7 +147,7 @@ public class SlidingActivity extends Activity implements SlidingActivityBase {
     /*
      * (non-Javadoc)
      * @see
-     * com.slidingmenu.lib.app.SlidingActivityBase#setSlidingActionBarEnabled
+     * org.holoeverywhere.slidingmenu.SlidingActivityBase#setSlidingActionBarEnabled
      * (boolean)
      */
     @Override
@@ -153,7 +157,7 @@ public class SlidingActivity extends Activity implements SlidingActivityBase {
 
     /*
      * (non-Javadoc)
-     * @see com.slidingmenu.lib.app.SlidingActivityBase#showAbove()
+     * @see org.holoeverywhere.slidingmenu.SlidingActivityBase#showAbove()
      */
     @Override
     public void showAbove() {
@@ -162,7 +166,7 @@ public class SlidingActivity extends Activity implements SlidingActivityBase {
 
     /*
      * (non-Javadoc)
-     * @see com.slidingmenu.lib.app.SlidingActivityBase#showBehind()
+     * @see org.holoeverywhere.slidingmenu.SlidingActivityBase#showBehind()
      */
     @Override
     public void showBehind() {
@@ -171,7 +175,7 @@ public class SlidingActivity extends Activity implements SlidingActivityBase {
 
     /*
      * (non-Javadoc)
-     * @see com.slidingmenu.lib.app.SlidingActivityBase#toggle()
+     * @see org.holoeverywhere.slidingmenu.SlidingActivityBase#toggle()
      */
     @Override
     public void toggle() {

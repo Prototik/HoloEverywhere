@@ -47,9 +47,13 @@ public class PreferenceManager {
     private static final String TAG = "PreferenceManager";
 
     public static SharedPreferences getDefaultSharedPreferences(Context context) {
-        return PreferenceManager.wrap(context,
-                PreferenceManager.getDefaultSharedPreferencesName(context),
-                PreferenceManager.getDefaultSharedPreferencesMode());
+        return getDefaultSharedPreferences(context, Application.config().getPreferenceImpl());
+    }
+
+    public static SharedPreferences getDefaultSharedPreferences(Context context,
+            PreferenceImpl impl) {
+        return wrap(context, impl, getDefaultSharedPreferencesName(context),
+                getDefaultSharedPreferencesMode());
     }
 
     private static int getDefaultSharedPreferencesMode() {

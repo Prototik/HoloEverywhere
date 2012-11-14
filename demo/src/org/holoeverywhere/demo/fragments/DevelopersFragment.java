@@ -15,13 +15,35 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 public class DevelopersFragment extends ListFragment {
-    private static DevelopersFragment instance;
+    private static final class Developer {
+        private final int name, description;
 
-    public static DevelopersFragment getInstance() {
-        if (DevelopersFragment.instance == null) {
-            return new DevelopersFragment();
+        private final OnClickListener onClickListener;
+
+        public Developer(int name, int description, OnClickListener onClickListener) {
+            this.name = name;
+            this.description = description;
+            this.onClickListener = onClickListener;
         }
-        return DevelopersFragment.instance;
+    }
+
+    private final class DevelopersAdapter extends ArrayAdapter<Developer> {
+        public DevelopersAdapter() {
+            super(getSupportActivity(), android.R.id.text1);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = getLayoutInflater().inflate(R.layout.developer);
+            }
+            TextView name = (TextView) convertView.findViewById(R.id.developerName);
+            TextView description = (TextView) convertView.findViewById(R.id.developerDescription);
+            Developer developer = getItem(position);
+            name.setText(developer.name);
+            description.setText(developer.description);
+            return convertView;
+        }
     }
 
     private final class EmailListener implements OnClickListener {
@@ -65,47 +87,23 @@ public class DevelopersFragment extends ListFragment {
 
     }
 
+    private static DevelopersFragment instance;
+
+    public static DevelopersFragment getInstance() {
+        if (DevelopersFragment.instance == null) {
+            return new DevelopersFragment();
+        }
+        return DevelopersFragment.instance;
+    }
+
     public DevelopersFragment() {
         DevelopersFragment.instance = this;
     }
 
-    private static final class Developer {
-        private final OnClickListener onClickListener;
-
-        public Developer(int name, int description, OnClickListener onClickListener) {
-            this.name = name;
-            this.description = description;
-            this.onClickListener = onClickListener;
-        }
-
-        private final int name, description;
-    }
-
-    private final class DevelopersAdapter extends ArrayAdapter<Developer> {
-        public DevelopersAdapter() {
-            super(getSupportActivity(), android.R.id.text1);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.developer);
-            }
-            TextView name = (TextView) convertView.findViewById(R.id.developerName);
-            TextView description = (TextView) convertView.findViewById(R.id.developerDescription);
-            Developer developer = getItem(position);
-            name.setText(developer.name);
-            description.setText(developer.description);
-            return convertView;
-        }
-    }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Developer developer = (Developer) getListAdapter().getItem(position);
-        if (developer.onClickListener != null) {
-            developer.onClickListener.onClick(v);
-        }
+    private DevelopersAdapter createDevelopersAdapter() {
+        DevelopersAdapter adapter = new DevelopersAdapter();
+        prepareAdapter(adapter);
+        return adapter;
     }
 
     @Override
@@ -114,10 +112,12 @@ public class DevelopersFragment extends ListFragment {
         setListAdapter(createDevelopersAdapter());
     }
 
-    private DevelopersAdapter createDevelopersAdapter() {
-        DevelopersAdapter adapter = new DevelopersAdapter();
-        prepareAdapter(adapter);
-        return adapter;
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Developer developer = (Developer) getListAdapter().getItem(position);
+        if (developer.onClickListener != null) {
+            developer.onClickListener.onClick(v);
+        }
     }
 
     private void prepareAdapter(DevelopersAdapter adapter) {

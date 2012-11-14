@@ -5,12 +5,26 @@ import android.content.Context;
 import android.media.MediaPlayer;
 
 public class PlaybackService {
+    private static boolean disable = false;
     private static boolean ignore = false;
     private static MediaPlayer mediaPlayer;
+
     private static int seek = 0;
+
+    public static void disable() {
+        disable = true;
+        ignore = false;
+        onPause();
+        ignore = true;
+        seek = -1;
+    }
 
     public static void ignore() {
         ignore = true;
+    }
+
+    public static boolean isDisable() {
+        return disable;
     }
 
     public static void onCreate() {
@@ -52,19 +66,5 @@ public class PlaybackService {
     }
 
     private PlaybackService() {
-    }
-
-    private static boolean disable = false;
-
-    public static boolean isDisable() {
-        return disable;
-    }
-
-    public static void disable() {
-        disable = true;
-        ignore = false;
-        onPause();
-        ignore = true;
-        seek = -1;
     }
 }

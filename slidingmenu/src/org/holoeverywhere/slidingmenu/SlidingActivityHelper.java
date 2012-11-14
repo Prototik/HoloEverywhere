@@ -12,6 +12,14 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
 public class SlidingActivityHelper {
+    static {
+        LayoutInflater.remap(SlidingMenu.class);
+    }
+
+    // NOP for execute static code block
+    public static void init() {
+
+    }
 
     private Activity mActivity;
 

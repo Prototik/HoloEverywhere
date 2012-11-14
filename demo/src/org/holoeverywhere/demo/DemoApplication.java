@@ -3,12 +3,12 @@ package org.holoeverywhere.demo;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
+import org.holoeverywhere.app.Application;
 import org.holoeverywhere.demo.widget.DemoFrame;
 import org.holoeverywhere.demo.widget.DemoNavigationItem;
 import org.holoeverywhere.demo.widget.WidgetContainer;
-import org.holoeverywhere.slidingmenu.SlidingApplication;
 
-public class DemoApplication extends SlidingApplication {
+public class DemoApplication extends Application {
     static {
         config().setAlwaysUseParentTheme(true).setDebugMode(true);
         LayoutInflater.remap(WidgetContainer.class);

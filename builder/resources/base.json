@@ -60,6 +60,8 @@
             "switchStyle": "@style/Holo.Switch", 
             "switchStyleOld": "@style/Holo.Switch.Old", 
             "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.PopupMenu.Large", 
+            "textAppearanceListItem": "?android:textAppearanceLarge", 
+            "textAppearanceListItemSmall": "?android:textAppearanceMedium", 
             "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.PopupMenu.Small", 
             "textColorAlertDialogListItem": "@color/primary_text_holo_dark"
         }, 

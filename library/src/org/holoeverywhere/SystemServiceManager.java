@@ -36,6 +36,14 @@ public final class SystemServiceManager {
     private static final Map<Class<? extends SystemServiceCreator<?>>, SystemServiceCreator<?>> CREATORS_MAP = new HashMap<Class<? extends SystemServiceCreator<?>>, SystemServiceManager.SystemServiceCreator<?>>();
     private static final Map<String, Class<? extends SystemServiceCreator<?>>> MAP = new HashMap<String, Class<? extends SystemServiceCreator<?>>>();
 
+    private static Object getSuperSystemService(Context context, String name) {
+        if (context instanceof SuperSystemService) {
+            return ((SuperSystemService) context).superGetSystemService(name);
+        } else {
+            return context.getSystemService(name);
+        }
+    }
+
     public static Object getSystemService(Context context, String name) {
         if (context == null || context.isRestricted()) {
             throw new RuntimeException("Invalid context");
@@ -62,14 +70,6 @@ public final class SystemServiceManager {
             }
         }
         return getSuperSystemService(context, name);
-    }
-
-    private static Object getSuperSystemService(Context context, String name) {
-        if (context instanceof SuperSystemService) {
-            return ((SuperSystemService) context).superGetSystemService(name);
-        } else {
-            return context.getSystemService(name);
-        }
     }
 
     public static void register(Class<? extends SystemServiceCreator<?>> clazz) {

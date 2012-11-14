@@ -146,7 +146,7 @@ public class AlertController {
             if (mIsMultiChoice) {
                 if (mCursor == null) {
                     adapter = new ArrayAdapter<CharSequence>(mContext,
-                            dialog.mMultiChoiceItemLayout, R.id.text1, mItems) {
+                            dialog.mMultiChoiceItemLayout, android.R.id.text1, mItems) {
                         @Override
                         public View getView(int position, View convertView,
                                 ViewGroup parent) {
@@ -178,7 +178,7 @@ public class AlertController {
                         public void bindView(View view, Context context,
                                 Cursor cursor) {
                             CheckedTextView text = (CheckedTextView) view
-                                    .findViewById(R.id.text1);
+                                    .findViewById(android.R.id.text1);
                             text.setText(cursor.getString(mLabelIndex));
                             listView.setItemChecked(cursor.getPosition(),
                                     cursor.getInt(mIsCheckedIndex) == 1);
@@ -200,14 +200,14 @@ public class AlertController {
                 if (mCursor == null) {
                     adapter = mAdapter != null ? mAdapter
                             : new ArrayAdapter<CharSequence>(mContext, layout,
-                                    R.id.text1, mItems);
+                                    android.R.id.text1, mItems);
                 } else {
                     adapter = new SimpleCursorAdapter(mContext, layout,
                             mCursor, new String[] {
                                     mLabelColumn
                             },
                             new int[] {
-                                    R.id.text1
+                                    android.R.id.text1
                             },
                             CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
                 }

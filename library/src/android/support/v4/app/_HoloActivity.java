@@ -1,11 +1,6 @@
 
 package android.support.v4.app;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 import org.holoeverywhere.IHoloActivity;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
@@ -38,16 +33,30 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class _HoloActivity extends Watson implements IHoloActivity {
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.TYPE)
-    public static @interface Holo {
-        public boolean addFactoryToInflater() default true;
+    public static class Holo {
+        public static Holo defaultConfig() {
+            return new Holo();
+        }
 
-        public boolean forceThemeApply() default false;
+        public static Holo wrap(Holo holo) {
+            return defaultConfig().onWrap(holo);
+        }
 
-        public boolean ignoreThemeCheck() default false;
+        public boolean addFactoryToInflater = true;
 
-        public int layout() default -1;
+        public boolean forceThemeApply = false;
+
+        public boolean ignoreThemeCheck = false;
+
+        public int layout = -1;
+
+        protected Holo onWrap(Holo holo) {
+            addFactoryToInflater = holo.addFactoryToInflater;
+            forceThemeApply = holo.forceThemeApply;
+            ignoreThemeCheck = holo.ignoreThemeCheck;
+            layout = holo.layout;
+            return this;
+        }
     }
 
     private static final class HoloThemeException extends RuntimeException {
@@ -61,36 +70,14 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         }
     }
 
-    private static final Holo DEFAULT_HOLO = new Holo() {
-        @Override
-        public boolean addFactoryToInflater() {
-            return true;
-        }
-
-        @Override
-        public Class<Holo> annotationType() {
-            return Holo.class;
-        }
-
-        @Override
-        public boolean forceThemeApply() {
-            return false;
-        }
-
-        @Override
-        public boolean ignoreThemeCheck() {
-            return false;
-        }
-
-        @Override
-        public int layout() {
-            return 0;
-        }
-    };
+    private Holo config;
     private boolean forceThemeApply = false;
+
     private int lastThemeResourceId = 0;
 
     private final String TAG = getClass().getSimpleName();
+
+    private boolean wasInited = false;
 
     @Override
     public void addContentView(View view, LayoutParams params) {
@@ -111,6 +98,15 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     @Override
     public SharedPreferences getDefaultSharedPreferences() {
         return PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
+    @Override
+    public SharedPreferences getDefaultSharedPreferences(PreferenceImpl impl) {
+        return PreferenceManager.getDefaultSharedPreferences(this, impl);
+    }
+
+    public Holo getHolo() {
+        return config;
     }
 
     public int getLastThemeResourceId() {
@@ -146,6 +142,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     @Override
     public Object getSystemService(String name) {
         return SystemServiceManager.getSystemService(this, name);
+    }
+
+    protected void init(Holo config) {
+        this.config = config;
     }
 
     @Override
@@ -205,33 +205,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final Holo holo = getClass().isAnnotationPresent(Holo.class) ? getClass()
-                .getAnnotation(Holo.class) : DEFAULT_HOLO;
-        if (holo.addFactoryToInflater()) {
-            getLayoutInflater().addFactory(this, 0);
-        }
-        boolean forceThemeApply = isForceThemeApply();
-        if (holo.forceThemeApply()) {
-            setForceThemeApply(forceThemeApply = true);
-        }
-        if (lastThemeResourceId == 0) {
-            forceThemeApply = true;
-        }
-        ThemeManager.applyTheme(this, forceThemeApply);
-        if (!holo.ignoreThemeCheck()) {
-            TypedArray a = obtainStyledAttributes(R.styleable.HoloActivity);
-            final boolean holoTheme = a.getBoolean(
-                    R.styleable.HoloActivity_holoTheme, false);
-            a.recycle();
-            if (!holoTheme) {
-                throw new HoloThemeException(this);
-            }
-        }
+        onPreInit();
+        onInit(config);
         super.onCreate(savedInstanceState);
-        final int layout = holo.layout();
-        if (layout > 0) {
-            setContentView(layout);
-        }
+        onPostInit(config);
     }
 
     @Override
@@ -260,9 +237,49 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         LayoutInflater.onDestroy(this);
     }
 
+    protected void onInit(Holo config) {
+        if (config.addFactoryToInflater) {
+            getLayoutInflater().addFactory(this, 0);
+        }
+        boolean forceThemeApply = isForceThemeApply();
+        if (config.forceThemeApply) {
+            setForceThemeApply(forceThemeApply = true);
+        }
+        if (lastThemeResourceId == 0) {
+            forceThemeApply = true;
+        }
+        ThemeManager.applyTheme(this, forceThemeApply);
+        if (!config.ignoreThemeCheck) {
+            TypedArray a = obtainStyledAttributes(R.styleable.HoloActivity);
+            final boolean holoTheme = a.getBoolean(
+                    R.styleable.HoloActivity_holoTheme, false);
+            a.recycle();
+            if (!holoTheme) {
+                throw new HoloThemeException(this);
+            }
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return false;
+    }
+
+    protected void onPostInit(Holo config) {
+        final int layout = config.layout;
+        if (layout > 0) {
+            setContentView(layout);
+        }
+    }
+
+    protected void onPreInit() {
+        if (wasInited) {
+            return;
+        }
+        wasInited = true;
+        if (config == null) {
+            config = Holo.defaultConfig();
+        }
     }
 
     @Override

@@ -53,6 +53,11 @@ public abstract class _HoloFragment extends Fragment implements IHoloFragment {
     }
 
     @Override
+    public SharedPreferences getDefaultSharedPreferences(PreferenceImpl impl) {
+        return activity.getDefaultSharedPreferences(impl);
+    }
+
+    @Override
     public LayoutInflater getLayoutInflater() {
         return activity.getLayoutInflater();
     }
@@ -163,7 +168,7 @@ public abstract class _HoloFragment extends Fragment implements IHoloFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        activity.onCreateOptionsMenu(menu);
+
     }
 
     @Override
@@ -203,7 +208,7 @@ public abstract class _HoloFragment extends Fragment implements IHoloFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return activity.onOptionsItemSelected(item);
+        return false;
     }
 
     @Override
@@ -217,7 +222,6 @@ public abstract class _HoloFragment extends Fragment implements IHoloFragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        activity.onPrepareOptionsMenu(menu);
     }
 
     public void onViewCreated(View view) {

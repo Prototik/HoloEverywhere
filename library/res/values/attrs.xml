@@ -55,6 +55,7 @@
 	<attr name="timePickerStyle" format="reference" />
 	<attr name="autoCompleteTextViewStyle" format="reference" />
 	<attr name="panelMenuListWidth" format="dimension" />
+	<attr name="textAppearanceListItem" format="reference" />
 	<attr name="gravity">
 		<flag name="top" value="0x30" />
 		<flag name="bottom" value="0x50" />

@@ -11,6 +11,8 @@ public interface IHolo {
 
     public SharedPreferences getDefaultSharedPreferences();
 
+    public SharedPreferences getDefaultSharedPreferences(PreferenceImpl impl);
+
     public LayoutInflater getLayoutInflater();
 
     public SharedPreferences getSharedPreferences(PreferenceImpl impl,

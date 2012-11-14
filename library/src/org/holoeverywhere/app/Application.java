@@ -20,16 +20,6 @@ import android.os.Bundle;
 
 public class Application extends android.app.Application implements
         IHolo, SuperStartActivity, SuperSystemService {
-    @Override
-    public Object superGetSystemService(String name) {
-        return super.getSystemService(name);
-    }
-
-    public android.content.SharedPreferences superGetSharedPreferences(
-            String name, int mode) {
-        return super.getSharedPreferences(name, mode);
-    }
-
     public static final class Config extends Setting<Config> {
         public static enum PreferenceImpl {
             JSON, XML
@@ -205,6 +195,11 @@ public class Application extends android.app.Application implements
     }
 
     @Override
+    public SharedPreferences getDefaultSharedPreferences(PreferenceImpl impl) {
+        return PreferenceManager.getDefaultSharedPreferences(this, impl);
+    }
+
+    @Override
     public LayoutInflater getLayoutInflater() {
         return LayoutInflater.from(this);
     }
@@ -262,6 +257,16 @@ public class Application extends android.app.Application implements
         } else {
             superStartActivity(intent, -1, options);
         }
+    }
+
+    public android.content.SharedPreferences superGetSharedPreferences(
+            String name, int mode) {
+        return super.getSharedPreferences(name, mode);
+    }
+
+    @Override
+    public Object superGetSystemService(String name) {
+        return super.getSystemService(name);
     }
 
     @Override

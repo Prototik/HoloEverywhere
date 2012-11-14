@@ -144,6 +144,27 @@ public final class PreferenceScreen extends PreferenceGroup implements
     }
 
     @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        if (featureId == Window.FEATURE_OPTIONS_PANEL && item.getItemId() == android.R.id.home
+                && mDialog != null) {
+            mDialog.dismiss();
+            return true;
+        }
+        return false;
+    }
+
+    protected void onPrepareActionBar(ActionBarView actionBarView) {
+        actionBarView.setWindowCallback(this);
+        setDisplayOptions(actionBarView, ActionBar.DISPLAY_HOME_AS_UP,
+                ActionBar.DISPLAY_HOME_AS_UP);
+    }
+
+    @SuppressLint("NewApi")
+    protected void onPrepareActionBar(android.app.ActionBar actionBar) {
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
     protected void onRestoreInstanceState(Parcelable state) {
         if (state == null || !state.getClass().equals(SavedState.class)) {
             super.onRestoreInstanceState(state);
@@ -173,7 +194,7 @@ public final class PreferenceScreen extends PreferenceGroup implements
 
     public void setDisplayOptions(ActionBarView view, int options, int mask) {
         final int current = view.getDisplayOptions();
-        view.setDisplayOptions((options & mask) | (current & ~mask));
+        view.setDisplayOptions(options & mask | current & ~mask);
     }
 
     @SuppressLint("NewApi")
@@ -200,8 +221,8 @@ public final class PreferenceScreen extends PreferenceGroup implements
                 onPrepareActionBar(dialog.getActionBar());
             } else {
                 View container = inflater.inflate(R.layout.abs__screen_action_bar);
-                ActionBarView actionBarView = ((ActionBarView) container
-                        .findViewById(R.id.abs__action_bar));
+                ActionBarView actionBarView = (ActionBarView) container
+                        .findViewById(R.id.abs__action_bar);
                 actionBarView.setTitle(title);
                 onPrepareActionBar(actionBarView);
                 ((FrameLayout) container.findViewById(R.id.abs__content))
@@ -215,26 +236,5 @@ public final class PreferenceScreen extends PreferenceGroup implements
         }
         getPreferenceManager().addPreferencesScreen(dialog);
         dialog.show();
-    }
-
-    protected void onPrepareActionBar(ActionBarView actionBarView) {
-        actionBarView.setWindowCallback(this);
-        setDisplayOptions(actionBarView, ActionBar.DISPLAY_HOME_AS_UP,
-                ActionBar.DISPLAY_HOME_AS_UP);
-    }
-
-    @SuppressLint("NewApi")
-    protected void onPrepareActionBar(android.app.ActionBar actionBar) {
-        actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        if (featureId == Window.FEATURE_OPTIONS_PANEL && item.getItemId() == android.R.id.home
-                && mDialog != null) {
-            mDialog.dismiss();
-            return true;
-        }
-        return false;
     }
 }
