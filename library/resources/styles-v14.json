@@ -21,7 +21,8 @@
     }, 
     "include": [
         {
-            "name": "resources/base.json"
+            "name": "base.json"
         }
-    ]
+    ], 
+    "output": "values-v14/styles.xml"
 }

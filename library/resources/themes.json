@@ -73,7 +73,7 @@
     }, 
     "include": [
         {
-            "name": "resources/textcolors.json"
+            "name": "textcolors.json"
         }
     ]
 }

@@ -4,59 +4,64 @@ package org.holoeverywhere.builder;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.PosixParser;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 
-public class Builder {
-    private static final HelpFormatter helpFormatter = new HelpFormatter();
-    private static final Options options = new Options();
-    private static final CommandLineParser parser = new PosixParser();
-    static {
-        Option option;
-        option = new Option("s", "source", true, "Source file for build");
-        option.setRequired(true);
-        options.addOption(option);
+/**
+ * @goal build
+ */
+public class Builder extends AbstractMojo {
+    /**
+     * @parameter
+     */
+    private String[] input;
+    /**
+     * @parameter
+     */
+    private File outputDir;
+    /**
+     * @parameter
+     */
+    private File includeDir;
 
-        option = new Option("o", "output", true, "Output file");
-        option.setRequired(true);
-        options.addOption(option);
-    }
-
-    public static void main(String[] args) {
-        System.out.println("HoloEverywhere Builder v0.0.1");
-        CommandLine cmd;
-        try {
-            cmd = parser.parse(options, args);
-        } catch (ParseException e) {
-            printHelp();
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        if (input.length == 0) {
+            getLog().info("Not need to generate resources");
             return;
         }
-        String sourceName = cmd.getOptionValue('s');
-        String outputName = cmd.getOptionValue('o');
-        process(new File(sourceName), new File(outputName));
+        Parser.setSourcePath(includeDir);
+        try {
+            getLog().info("");
+            for (String file : input) {
+                process(file);
+                getLog().info("");
+            }
+        } catch (IOException e) {
+            throw new MojoExecutionException("IOException", e);
+        }
     }
 
-    private static void printHelp() {
-        helpFormatter.printHelp("java -jar builder.jar", options, true);
-    }
-
-    public static void process(File source, File output) {
+    public void process(String sourceName) throws MojoExecutionException, MojoFailureException,
+            IOException {
+        File source = new File(includeDir, sourceName);
         if (!validFile(source)) {
-            System.err.println("Source " + source.getAbsolutePath() + " doesn't exists");
-            printHelp();
-            return;
+            throw new MojoFailureException("Source " + source.getAbsolutePath() + " doesn't exists");
         }
         Document document = Parser.parse(source);
+        if (document.output == null) {
+            getLog().warn(source.getCanonicalPath() + " don't has output file, ignore");
+            return;
+        }
+        File output = new File(outputDir, document.output);
+        getLog().info("Compile " + source.getName() + " => " + output.getCanonicalPath());
         try {
             Processer.process(document, new FileOutputStream(output));
         } catch (FileNotFoundException e) {
-            System.err.println("Error while processing: " + e.getMessage());
+            getLog().error("Error while processing " + source.getCanonicalPath(), e);
         }
     }
 

@@ -26,8 +26,8 @@ public class Document implements Parseable<JSONObject, Document> {
     };
     public Map<String, Block> blocks = new HashMap<String, Block>();
     public Map<String, Block> data = new HashMap<String, Block>();
-
     public List<IncludeRow> include = new ArrayList<IncludeRow>();
+    public String output;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -35,6 +35,7 @@ public class Document implements Parseable<JSONObject, Document> {
         include.clear();
         blocks.clear();
         data.clear();
+        output = null;
         if (json.has("include")) {
             JSONArray include = json.optJSONArray("include");
             for (int i = 0; i < include.length(); i++) {
@@ -56,6 +57,9 @@ public class Document implements Parseable<JSONObject, Document> {
                 String key = keys.next();
                 this.data.put(key, new Block().parse(data.optJSONObject(key)));
             }
+        }
+        if (json.has("output")) {
+            output = json.optString("output");
         }
         return this;
     }

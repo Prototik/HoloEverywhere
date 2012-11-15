@@ -1,6 +1,6 @@
-# HoloEverywhere v1.3
+# HoloEverywhere v1.4
 ## What is it?
-Bringing Holo Theme from Android 4.1 to 1.6 and above.
+Bringing Holo Theme from Android 4.1 to 2.1 and above.
 ## How to use?
 
 * You should clone git repo, init and update submodules:
@@ -8,49 +8,29 @@ Bringing Holo Theme from Android 4.1 to 1.6 and above.
 ```
 git clone git://github.com/ChristopheVersieux/HoloEverywhere.git HoloEverywhere
 cd HoloEverywhere
-git submodule update --init
+git submodule --init --recursive update
 ```
-
 You also may use git GUI programs
-* Import HoloEverywhere from root folder and ActionBarSherlock from contrib folder into Eclipse
+
+* Import HoloEverywhere from `library` folder and ActionBarSherlock from `contrib/ActionBarSherlock/library` folder into Eclipse
 
 * Add HoloEverywhere project as library into your project (Properties/Android/Library/Add)
 
-* Add next theme declaration:
-
-```
-android:theme="@style/Holo.Theme.Sherlock"
-```
-
-in your application manifest
-Example:
-
-```
-<application
-  android:name=".Application"
-  android:icon="@drawable/icon"
-  android:label="@string/app_name"
-  android:theme="@style/Holo.Theme.Sherlock" >
-```
-
-Also you can use Holo.Theme.Sherlock.Light for light theme and Holo.Theme.Sherlock.Light.DarkActionBar for light theme with dark action bar.
-
-* Extend the Activities from com.WazaBe.HoloEverywhere.sherlock.S***Activity
+* Extend the Activities from `org.holoeverywhere.app.***Activity`
 
 Example:
 
 ```
-public class MainActivity extends com.WazaBe.HoloEverywhere.sherlock.SListActivity { ...
+import org.holoeverywhere.app.ListActivity;
+
+public class MainActivity extends ListActivity { ...
 ```
-Also you should cast view to with the same name from package com.WazaBe.HoloEverywhere.widget, if possible. This, for example, ProgressBar and Spinner.
+Also you should cast view to with the same name from package `org.holoeverywhere.widget`, if possible. This, for example, ProgressBar and Spinner:
+```
+import org.holoeverywhere.widget.ProgressBar;
 
-## Contact
-Christophe: [Google Plus](https://plus.google.com/108315424589085456181/posts "Google Plus")
-
-Sergey: [GMail](mailto:prototypegamez@gmail.com "Send email to Sergey")
-
-## Notice for developers
-If you make changes in styles.xml - use the Builder, otherwise pull request will not be accepted.
+ProgressBar bar = (ProgressBar) findViewById(R.id.progress_bar);
+```
 
 ## Screenshots
 ![Screenshot 1](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/screen1.png "Screenshot 1")
@@ -61,6 +41,14 @@ If you make changes in styles.xml - use the Builder, otherwise pull request will
 ![Screenshot 6](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/screen6.png "Screenshot 6")
 ![Screenshot 7](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/screen7.png "Screenshot 7")
 ![Screenshot 8](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/screen8.png "Screenshot 8")
+
+## Contact
+[Christophe](https://plus.google.com/108315424589085456181/posts "Google Plus")
+
+[Sergey](mailto:prototypegamez@gmail.com "Send email to Sergey")
+
+### Notice for developers
+If you make changes in styles.xml - use the [Builder](https://github.com/ChristopheVersieux/HoloEverywhere/tree/master/builder), otherwise pull request will not be accepted.
 
 ### Demo notice
 In demo using music "Winter Dawn" by machinimasound.com. Licensed under Creative Commons "Attribution 3.0"

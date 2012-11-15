@@ -14,13 +14,13 @@
     }, 
     "include": [
         {
-            "name": "resources/base.json"
+            "name": "base.json"
         }, 
         {
-            "name": "resources/themes.json"
+            "name": "themes.json"
         }, 
         {
-            "name": "resources/widgets.json"
+            "name": "widgets.json"
         }
     ]
 }

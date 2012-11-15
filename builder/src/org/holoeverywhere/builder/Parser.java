@@ -47,7 +47,7 @@ public class Parser {
         return parse(new File(name));
     }
 
-    public static void setSourcePath(String path) {
-        Parser.path = new File(path);
+    public static void setSourcePath(File path) {
+        Parser.path = path;
     }
 }

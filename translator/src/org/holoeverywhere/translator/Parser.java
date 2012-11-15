@@ -11,6 +11,8 @@ import java.io.Reader;
 import org.json.JSONObject;
 
 public class Parser {
+    private static File path;
+
     public static Document parse(File file) {
         try {
             InputStream is = new FileInputStream(file);
@@ -36,6 +38,16 @@ public class Parser {
     }
 
     public static Document parse(String name) {
+        if (path != null) {
+            File child = new File(path, name);
+            if (child.exists()) {
+                return parse(child);
+            }
+        }
         return parse(new File(name));
+    }
+
+    public static void setSourcePath(File path) {
+        Parser.path = path;
     }
 }
