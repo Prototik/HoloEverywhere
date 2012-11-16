@@ -26,12 +26,13 @@ import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.internal.view.menu.MenuItemWrapper;
 import com.actionbarsherlock.internal.widget.ActionBarView;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window.Callback;
 
 public final class PreferenceScreen extends PreferenceGroup implements
-        AdapterView.OnItemClickListener, DialogInterface.OnDismissListener, Callback {
+        AdapterView.OnItemClickListener, DialogInterface.OnDismissListener {
     private static class SavedState extends BaseSavedState {
         Bundle dialogBundle;
         boolean isDialogShowing;
@@ -54,10 +55,9 @@ public final class PreferenceScreen extends PreferenceGroup implements
         }
     }
 
-    private Dialog mDialog;
+    private PreferenceDialog mDialog;
     private ListView mListView;
     private ListAdapter mRootAdapter;
-
     private final String TAG = getClass().getSimpleName();
 
     public PreferenceScreen(Context context, AttributeSet attrs) {
@@ -143,25 +143,92 @@ public final class PreferenceScreen extends PreferenceGroup implements
         preference.performClick(this);
     }
 
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        if (featureId == Window.FEATURE_OPTIONS_PANEL && item.getItemId() == android.R.id.home
-                && mDialog != null) {
-            mDialog.dismiss();
-            return true;
+    private final class PreferenceDialog extends Dialog implements Callback {
+        public PreferenceDialog(int theme) {
+            super(PreferenceScreen.this.getContext(), theme);
         }
-        return false;
-    }
 
-    protected void onPrepareActionBar(ActionBarView actionBarView) {
-        actionBarView.setWindowCallback(this);
-        setDisplayOptions(actionBarView, ActionBar.DISPLAY_HOME_AS_UP,
-                ActionBar.DISPLAY_HOME_AS_UP);
-    }
+        @Override
+        public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
+            return onMenuItemSelected(featureId, new MenuItemWrapper(item));
+        }
 
-    @SuppressLint("NewApi")
-    protected void onPrepareActionBar(android.app.ActionBar actionBar) {
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            prepareActionBar();
+        }
+
+        @SuppressLint("NewApi")
+        private void prepareActionBar() {
+            if (VERSION.SDK_INT >= 11) {
+                onPrepareActionBar(getActionBar());
+            } else {
+                onPrepareActionBar((ActionBarView) findViewById(R.id.abs__action_bar));
+            }
+        }
+
+        @Override
+        public boolean onMenuItemSelected(int featureId, MenuItem item) {
+            if (featureId == Window.FEATURE_OPTIONS_PANEL && item.getItemId() == android.R.id.home
+                    && mDialog != null) {
+                mDialog.dismiss();
+                return true;
+            }
+            return false;
+        }
+
+        protected void onPrepareActionBar(ActionBarView actionBarView) {
+            if (actionBarView == null) {
+                return;
+            }
+            actionBarView.setWindowCallback(mDialog);
+            actionBarView.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP
+                    | actionBarView.getDisplayOptions()
+                    & ~ActionBar.DISPLAY_HOME_AS_UP);
+        }
+
+        @SuppressLint("NewApi")
+        protected void onPrepareActionBar(android.app.ActionBar actionBar) {
+            if (actionBar == null) {
+                return;
+            }
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        @Override
+        public void setTitle(CharSequence title) {
+            super.setTitle(title);
+            if (VERSION.SDK_INT < 11) {
+                ((ActionBarView) findViewById(R.id.abs__action_bar)).setTitle(title);
+            }
+        }
+
+        public void setTitle(int titleId) {
+            setTitle(getContext().getText(titleId));
+        }
+
+        @Override
+        public void onAttachedToWindow() {
+            super.onAttachedToWindow();
+            prepareActionBar();
+        }
+
+        @Override
+        public void setContentView(View view) {
+            if (VERSION.SDK_INT >= 11) {
+                super.setContentView(view);
+            } else {
+                FrameLayout content = (FrameLayout) findViewById(R.id.abs__content);
+                if (content == null) {
+                    View container = getLayoutInflater().inflate(R.layout.abs__screen_action_bar);
+                    content = (FrameLayout) container.findViewById(R.id.abs__content);
+                    super.setContentView(container);
+                }
+                content.removeAllViews();
+                content.addView(view);
+            }
+        }
     }
 
     @Override
@@ -192,11 +259,6 @@ public final class PreferenceScreen extends PreferenceGroup implements
         return myState;
     }
 
-    public void setDisplayOptions(ActionBarView view, int options, int mask) {
-        final int current = view.getDisplayOptions();
-        view.setDisplayOptions(options & mask | current & ~mask);
-    }
-
     @SuppressLint("NewApi")
     private void showDialog(Bundle state) {
         Context context = getContext();
@@ -211,24 +273,15 @@ public final class PreferenceScreen extends PreferenceGroup implements
         bind(mListView);
         final CharSequence title = getTitle();
         final boolean titleEmpty = TextUtils.isEmpty(title);
-        Dialog dialog = mDialog = new Dialog(context, theme);
+        Dialog dialog = mDialog = new PreferenceDialog(theme);
         if (titleEmpty) {
-            dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         } else {
-            dialog.setTitle(title);
             if (VERSION.SDK_INT >= 11) {
-                dialog.setContentView(childPrefScreen);
-                onPrepareActionBar(dialog.getActionBar());
-            } else {
-                View container = inflater.inflate(R.layout.abs__screen_action_bar);
-                ActionBarView actionBarView = (ActionBarView) container
-                        .findViewById(R.id.abs__action_bar);
-                actionBarView.setTitle(title);
-                onPrepareActionBar(actionBarView);
-                ((FrameLayout) container.findViewById(R.id.abs__content))
-                        .addView(childPrefScreen);
-                dialog.setContentView(container);
+                dialog.requestWindowFeature(Window.FEATURE_ACTION_BAR);
             }
+            dialog.setContentView(childPrefScreen);
+            dialog.setTitle(title);
         }
         dialog.setOnDismissListener(this);
         if (state != null) {

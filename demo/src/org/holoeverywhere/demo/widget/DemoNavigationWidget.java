@@ -13,7 +13,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 
 public class DemoNavigationWidget extends LinearLayout {
-
     private final ListView list;
 
     public DemoNavigationWidget(Context context) {

@@ -42,7 +42,6 @@ import com.actionbarsherlock.view.MenuItem;
 public class DemoActivity extends SlidingActivity {
     private final class ListNavigationAdapter extends ArrayAdapter<NavigationItem> implements
             OnItemClickListener {
-
         private int lastSelectedItem = 0;
 
         public ListNavigationAdapter() {
@@ -111,24 +110,26 @@ public class DemoActivity extends SlidingActivity {
     }
 
     private static final String LIST_NAVIGATION_PAGE = "listNavigationPage";
+    private ListNavigationAdapter adapter;
     private WeakReference<AlertDialogFragment> alertDialog;
-    private ListNavigationAdapter lastListNavigationAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PlaybackService.onCreate();
 
-        lastListNavigationAdapter = new ListNavigationAdapter();
-        lastListNavigationAdapter.add(MainFragment.class,
-                R.string.demo);
-        lastListNavigationAdapter.add(SettingsFragment.class, R.string.settings);
-        lastListNavigationAdapter.add(OtherFragment.class, R.string.other);
-        lastListNavigationAdapter.add(AboutFragment.class,
-                R.string.about);
+        if (adapter == null) {
+            adapter = new ListNavigationAdapter();
+        } else {
+            adapter.clear();
+        }
+        adapter.add(MainFragment.class, R.string.demo);
+        adapter.add(SettingsFragment.class, R.string.settings);
+        adapter.add(OtherFragment.class, R.string.other);
+        adapter.add(AboutFragment.class, R.string.about);
 
         DemoNavigationWidget navigationWidget = new DemoNavigationWidget(this);
-        navigationWidget.init(lastListNavigationAdapter, lastListNavigationAdapter,
+        navigationWidget.init(adapter, adapter,
                 ThemeManager.getTheme(this));
         setBehindContentView(navigationWidget);
 

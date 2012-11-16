@@ -664,7 +664,8 @@
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
         <!--End of block BaseDark-->
         <!--Include block: Holo-->
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
+        <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
+        <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
         <item name="android:divider">?android:listDivider</item>
         <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
         <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
@@ -851,7 +852,8 @@
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block BaseLight-->
         <!--Include block: Holo-->
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
+        <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
+        <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
         <item name="android:divider">?android:listDivider</item>
         <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
         <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
@@ -981,7 +983,8 @@
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block BaseLight-->
         <!--Include block: Holo-->
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo</item>
+        <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
+        <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
         <item name="android:divider">?android:listDivider</item>
         <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
         <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>

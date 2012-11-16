@@ -10,7 +10,7 @@ import org.holoeverywhere.demo.widget.WidgetContainer;
 
 public class DemoApplication extends Application {
     static {
-        config().setAlwaysUseParentTheme(true).setDebugMode(true);
+        config().setAlwaysUseParentTheme(false).setDebugMode(true);
         LayoutInflater.remap(WidgetContainer.class);
         LayoutInflater.remap(DemoFrame.class);
         LayoutInflater.remap(DemoNavigationItem.class);

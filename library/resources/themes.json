@@ -1,7 +1,8 @@
 {
     "blocks": {
         "Holo": {
-            "android:activatedBackgroundIndicator": "@drawable/activated_background_holo", 
+            "activatedBackgroundIndicator": "@drawable/activated_background_holo", 
+            "android:activatedBackgroundIndicator": "?activatedBackgroundIndicator", 
             "android:divider": "?android:listDivider", 
             "android:dropDownItemStyle": "@style/Holo.DropDownItem", 
             "android:progressBarStyle": "@style/Holo.ProgressBar", 
