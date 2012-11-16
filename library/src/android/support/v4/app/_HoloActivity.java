@@ -14,9 +14,12 @@ import org.holoeverywhere.preference.SharedPreferences;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Build.VERSION;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
@@ -82,6 +85,29 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     @Override
     public void addContentView(View view, LayoutParams params) {
         super.addContentView(prepareDecorView(view), params);
+    }
+
+    private void checkWindowSizes() {
+        View view = getWindow().getDecorView();
+        if (VERSION.SDK_INT < 11 && view != null) {
+            DisplayMetrics dm = getResources().getDisplayMetrics();
+            TypedArray a = obtainStyledAttributes(R.styleable.HoloActivity);
+            final int windowMinWidthMajor = (int) a.getFraction(
+                    R.styleable.HoloActivity_windowMinWidthMajor, dm.widthPixels, 1, 0);
+            final int windowMinWidthMinor = (int) a.getFraction(
+                    R.styleable.HoloActivity_windowMinWidthMinor, dm.widthPixels, 1, 0);
+            a.recycle();
+            switch (getRequestedOrientation()) {
+                case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
+                case ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE:
+                    view.setMinimumWidth(windowMinWidthMajor);
+                    break;
+                case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
+                case ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT:
+                    view.setMinimumWidth(windowMinWidthMinor);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -169,6 +195,18 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         if (!getSupportFragmentManager().popBackStackImmediate()) {
             finish();
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        checkWindowSizes();
+    }
+
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+        checkWindowSizes();
     }
 
     @Override

@@ -741,6 +741,8 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
+        <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
+        <item name="android:windowMinWidthMinor">?windowMinWidthMinor</item>
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
         <item name="android:windowTitleStyle">@style/Holo.DialogWindowTitle</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Small</item>
@@ -751,16 +753,14 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="windowAnimationStyle">@style/Holo.Animation.Dialog</item>
         <item name="windowContentOverlay">@null</item>
+        <item name="windowMinWidthMajor">@dimen/dialog_min_width_major</item>
+        <item name="windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
     </style>
     <style name="Holo.Theme.Dialog.Alert">
-        <item name="android:windowBackground">@drawable/transparent</item>
-        <item name="android:windowMinWidthMajor">@dimen/dialog_min_width_major</item>
-        <item name="android:windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
+        <item name="android:windowBackground">@null</item>
     </style>
     <style name="Holo.Theme.Dialog.Alert.Light" parent="Holo.Theme.Dialog.Light">
-        <item name="android:windowBackground">@drawable/transparent</item>
-        <item name="android:windowMinWidthMajor">@dimen/dialog_min_width_major</item>
-        <item name="android:windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
+        <item name="android:windowBackground">@null</item>
     </style>
     <style name="Holo.Theme.Dialog.Light" parent="Holo.Theme.Light">
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -771,6 +771,8 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
+        <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
+        <item name="android:windowMinWidthMinor">?windowMinWidthMinor</item>
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
         <item name="android:windowTitleStyle">@style/Holo.DialogWindowTitle.Light</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Small</item>
@@ -781,6 +783,8 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="windowAnimationStyle">@style/Holo.Animation.Dialog</item>
         <item name="windowContentOverlay">@null</item>
+        <item name="windowMinWidthMajor">@dimen/dialog_min_width_major</item>
+        <item name="windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
     </style>
     <style name="Holo.Theme.Fullscreen">
         <!--Include block: Fullscreen-->

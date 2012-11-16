@@ -74,6 +74,8 @@
 	</attr>
 	<declare-styleable name="HoloActivity">
 		<attr name="holoTheme" format="boolean" />
+		<attr name="windowMinWidthMajor" />
+		<attr name="windowMinWidthMinor" />
 	</declare-styleable>
 	<declare-styleable name="RotateDrawable">
 		<attr name="android:visible" />
