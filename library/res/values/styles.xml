@@ -756,11 +756,11 @@
         <item name="windowMinWidthMajor">@dimen/dialog_min_width_major</item>
         <item name="windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
     </style>
-    <style name="Holo.Theme.Dialog.Alert">
-        <item name="android:windowBackground">@null</item>
+    <style name="Holo.Theme.Dialog.Alert" parent="Holo.Theme.Dialog">
+        <item name="android:windowBackground">@drawable/transparent</item>
     </style>
     <style name="Holo.Theme.Dialog.Alert.Light" parent="Holo.Theme.Dialog.Light">
-        <item name="android:windowBackground">@null</item>
+        <item name="android:windowBackground">@drawable/transparent</item>
     </style>
     <style name="Holo.Theme.Dialog.Light" parent="Holo.Theme.Light">
         <item name="android:colorBackgroundCacheHint">@null</item>

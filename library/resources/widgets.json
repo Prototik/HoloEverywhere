@@ -612,6 +612,8 @@
             "android:windowContentOverlay": "@null", 
             "android:windowFrame": "@null", 
             "android:windowIsFloating": "true", 
+            "android:windowMinWidthMajor": "?windowMinWidthMajor", 
+            "android:windowMinWidthMinor": "?windowMinWidthMinor", 
             "android:windowSoftInputMode": "stateUnspecified|adjustPan", 
             "android:windowTitleStyle": "@style/Holo.DialogWindowTitle", 
             "borderlessButtonStyle": "@style/Holo.Button.Borderless.Small", 
@@ -621,17 +623,16 @@
             "windowActionBar": "false", 
             "windowActionModeOverlay": "true", 
             "windowAnimationStyle": "@style/Holo.Animation.Dialog", 
-            "windowContentOverlay": "@null",
+            "windowContentOverlay": "@null", 
             "windowMinWidthMajor": "@dimen/dialog_min_width_major", 
-            "windowMinWidthMinor": "@dimen/dialog_min_width_minor",
-            "android:windowMinWidthMajor": "?windowMinWidthMajor", 
-            "android:windowMinWidthMinor": "?windowMinWidthMinor"
+            "windowMinWidthMinor": "@dimen/dialog_min_width_minor"
         }, 
         "Holo.Theme.Dialog.Alert": {
-            "android:windowBackground": "@null", 
+            "android:windowBackground": "@drawable/transparent", 
+            "parent": "Holo.Theme.Dialog"
         }, 
         "Holo.Theme.Dialog.Alert.Light": {
-            "android:windowBackground": "@null", 
+            "android:windowBackground": "@drawable/transparent", 
             "parent": "Holo.Theme.Dialog.Light"
         }, 
         "Holo.Theme.Dialog.Light": {
@@ -643,6 +644,8 @@
             "android:windowContentOverlay": "@null", 
             "android:windowFrame": "@null", 
             "android:windowIsFloating": "true", 
+            "android:windowMinWidthMajor": "?windowMinWidthMajor", 
+            "android:windowMinWidthMinor": "?windowMinWidthMinor", 
             "android:windowSoftInputMode": "stateUnspecified|adjustPan", 
             "android:windowTitleStyle": "@style/Holo.DialogWindowTitle.Light", 
             "borderlessButtonStyle": "@style/Holo.Button.Borderless.Small", 
@@ -653,11 +656,9 @@
             "windowActionBar": "false", 
             "windowActionModeOverlay": "true", 
             "windowAnimationStyle": "@style/Holo.Animation.Dialog", 
-            "windowContentOverlay": "@null",
+            "windowContentOverlay": "@null", 
             "windowMinWidthMajor": "@dimen/dialog_min_width_major", 
-            "windowMinWidthMinor": "@dimen/dialog_min_width_minor",
-            "android:windowMinWidthMajor": "?windowMinWidthMajor", 
-            "android:windowMinWidthMinor": "?windowMinWidthMinor"
+            "windowMinWidthMinor": "@dimen/dialog_min_width_minor"
         }, 
         "Holo.TimePicker": {
             "internalLayout": "@layout/time_picker_holo"
