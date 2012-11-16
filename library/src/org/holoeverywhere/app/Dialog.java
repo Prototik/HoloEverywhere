@@ -4,7 +4,13 @@ package org.holoeverywhere.app;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.content.res.TypedArray;
+import android.os.Build.VERSION;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -52,6 +58,46 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
         super.addContentView(prepareDecorView(view), params);
     }
 
+    private void checkWindowSizes() {
+        View view = findViewById(R.id.custom);
+        if (view == null) {
+            view = getWindow().getDecorView();
+        }
+        if (VERSION.SDK_INT < 11 && view != null) {
+            DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
+            TypedArray a = getContext().obtainStyledAttributes(R.styleable.HoloActivity);
+            final int windowMinWidthMajor = (int) a.getFraction(
+                    R.styleable.HoloActivity_windowMinWidthMajor, dm.widthPixels, 1, 0);
+            final int windowMinWidthMinor = (int) a.getFraction(
+                    R.styleable.HoloActivity_windowMinWidthMinor, dm.widthPixels, 1, 0);
+            a.recycle();
+            final int orientation;
+            if (getContext() instanceof Activity) {
+                orientation = ((Activity) getContext()).getRequestedOrientation();
+                switch (orientation) {
+                    case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
+                    case ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE:
+                        view.setMinimumWidth(windowMinWidthMajor);
+                        break;
+                    case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
+                    case ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT:
+                        view.setMinimumWidth(windowMinWidthMinor);
+                        break;
+                }
+            } else {
+                orientation = getContext().getResources().getConfiguration().orientation;
+                switch (orientation) {
+                    case Configuration.ORIENTATION_LANDSCAPE:
+                        view.setMinimumWidth(windowMinWidthMajor);
+                        break;
+                    case Configuration.ORIENTATION_PORTRAIT:
+                        view.setMinimumWidth(windowMinWidthMinor);
+                        break;
+                }
+            }
+        }
+    }
+
     @Override
     public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
             View view, ContextMenuInfo menuInfo, ContextMenuListener listener) {
@@ -61,6 +107,12 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
     @Override
     public LayoutInflater getLayoutInflater() {
         return LayoutInflater.from(getContext());
+    }
+
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+        checkWindowSizes();
     }
 
     @Override

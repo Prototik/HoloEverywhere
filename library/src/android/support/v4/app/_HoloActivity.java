@@ -75,11 +75,8 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
 
     private Holo config;
     private boolean forceThemeApply = false;
-
     private int lastThemeResourceId = 0;
-
     private final String TAG = getClass().getSimpleName();
-
     private boolean wasInited = false;
 
     @Override
