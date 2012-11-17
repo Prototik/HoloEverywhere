@@ -34,10 +34,10 @@ public class DemoNavigationWidget extends LinearLayout {
     }
 
     public void init(ListAdapter adapter,
-            OnItemClickListener onItemClickListener, int theme) {
+            OnItemClickListener onItemClickListener, int theme, int page) {
         list.setAdapter(adapter);
         list.setOnItemClickListener(onItemClickListener);
-        list.performItemClick(null, 0, 0);
+        list.performItemClick(null, page, 0);
         final int themePicker;
         if (ThemeManager.isDark(theme)) {
             themePicker = R.id.themePickerDark;

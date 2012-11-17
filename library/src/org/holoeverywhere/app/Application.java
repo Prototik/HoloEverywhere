@@ -25,7 +25,7 @@ public class Application extends android.app.Application implements
             JSON, XML
         }
 
-        private static final String DEFAULT_HOLO_EVERYWHERE_PACKAGE = "org.holoeverywhere";
+        private static final String HOLO_EVERYWHERE_PACKAGE = "org.holoeverywhere";
 
         private static void onStateChange(Config config) {
             String p = config.holoEverywherePackage.getValue();
@@ -59,9 +59,9 @@ public class Application extends android.app.Application implements
         private BooleanProperty debugMode;
         @SettingProperty(create = true)
         private BooleanProperty disableContextMenu;
-        @SettingProperty(create = true, defaultString = Config.DEFAULT_HOLO_EVERYWHERE_PACKAGE)
+        @SettingProperty(create = true, defaultString = Config.HOLO_EVERYWHERE_PACKAGE)
         private StringProperty holoEverywherePackage;
-        @SettingProperty(create = true, defaultEnum = "JSON", enumClass = PreferenceImpl.class)
+        @SettingProperty(create = true, defaultEnum = "XML", enumClass = PreferenceImpl.class)
         private EnumProperty<PreferenceImpl> preferenceImpl;
         @SettingProperty(create = true)
         private StringProperty preferencePackage;

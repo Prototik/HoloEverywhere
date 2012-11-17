@@ -130,7 +130,7 @@ public class DemoActivity extends SlidingActivity {
 
         DemoNavigationWidget navigationWidget = new DemoNavigationWidget(this);
         navigationWidget.init(adapter, adapter,
-                ThemeManager.getTheme(this));
+                ThemeManager.getTheme(this), getIntent().getIntExtra(LIST_NAVIGATION_PAGE, 0));
         setBehindContentView(navigationWidget);
 
         setContentView(R.layout.content);

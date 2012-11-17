@@ -1,7 +1,6 @@
 
 package org.holoeverywhere.internal;
 
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -104,7 +103,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
         }
 
         private Editor putSet(String key, Set<?> value) {
-            editor.putString(key, _SharedPreferencesImpl_XML.setToString(value));
+            editor.putString(key, setToString(value));
             return this;
         }
 
@@ -121,7 +120,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
                 editor.putStringSet(key, value);
             } else {
                 editor.putString(key,
-                        _SharedPreferencesImpl_XML.setToString(value));
+                        setToString(value));
             }
             return this;
         }
@@ -137,30 +136,19 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
             android.content.SharedPreferences.OnSharedPreferenceChangeListener {
         private static final Map<OnSharedPreferenceChangeListener, BaseOnSharedPreferenceChangeListener> instances = new HashMap<SharedPreferences.OnSharedPreferenceChangeListener, BaseOnSharedPreferenceChangeListener>();
 
-        public static BaseOnSharedPreferenceChangeListener obtain(
-                SharedPreferences prefs,
-                OnSharedPreferenceChangeListener listener) {
-            return BaseOnSharedPreferenceChangeListener.obtain(prefs, listener,
-                    BaseOnSharedPreferenceChangeListener.class);
-        }
-
         @SuppressWarnings("unchecked")
         public static <T extends BaseOnSharedPreferenceChangeListener> T obtain(
                 SharedPreferences prefs,
-                OnSharedPreferenceChangeListener listener, Class<T> clazz) {
+                OnSharedPreferenceChangeListener listener) {
             if (!BaseOnSharedPreferenceChangeListener.instances
                     .containsKey(listener)) {
                 synchronized (BaseOnSharedPreferenceChangeListener.instances) {
                     if (!BaseOnSharedPreferenceChangeListener.instances
                             .containsKey(listener)) {
                         try {
-                            Constructor<T> constructor = clazz.getConstructor(
-                                    SharedPreferences.class,
-                                    OnSharedPreferenceChangeListener.class);
-                            constructor.setAccessible(true);
                             BaseOnSharedPreferenceChangeListener.instances.put(
                                     listener,
-                                    constructor.newInstance(prefs, listener));
+                                    new BaseOnSharedPreferenceChangeListener(prefs, listener));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -196,11 +184,11 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
             JSONArray array = new JSONArray(string);
             Set<T> set = new HashSet<T>(array.length());
             for (int i = 0; i < array.length(); i++) {
-                set.add(clazz.cast(array.get(i)));
+                set.add(clazz.cast(array.opt(i)));
             }
             return set;
         } catch (ClassCastException e) {
-            Log.e("SupportSharedPreferences", "Error of cast", e);
+            Log.e(_SharedPreferencesImpl_XML.class.getSimpleName(), "Error of cast", e);
             return null;
         } catch (JSONException e) {
             return null;
@@ -296,7 +284,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
         if (s == null) {
             return defValue;
         } else {
-            return _SharedPreferencesImpl_XML.stringToSet(s, clazz);
+            return stringToSet(s, clazz);
         }
     }
 
@@ -324,7 +312,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
     @Override
     public void registerOnSharedPreferenceChangeListener(
             OnSharedPreferenceChangeListener listener) {
-        prefs.registerOnSharedPreferenceChangeListener(BaseOnSharedPreferenceChangeListener
+        registerOnSharedPreferenceChangeListener(BaseOnSharedPreferenceChangeListener
                 .obtain(this, listener));
     }
 
@@ -337,7 +325,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
     @Override
     public void unregisterOnSharedPreferenceChangeListener(
             OnSharedPreferenceChangeListener listener) {
-        prefs.unregisterOnSharedPreferenceChangeListener(BaseOnSharedPreferenceChangeListener
+        unregisterOnSharedPreferenceChangeListener(BaseOnSharedPreferenceChangeListener
                 .obtain(this, listener));
     }
 }

@@ -2,6 +2,7 @@
 package org.holoeverywhere.demo;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 
 public class PlaybackService {
@@ -58,6 +59,7 @@ public class PlaybackService {
             return;
         }
         mediaPlayer = MediaPlayer.create(context, R.raw.winter_dawn);
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mediaPlayer.setLooping(true);
         if (seek > 0) {
             mediaPlayer.seekTo(seek);

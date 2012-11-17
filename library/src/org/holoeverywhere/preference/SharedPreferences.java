@@ -52,8 +52,7 @@ public interface SharedPreferences extends android.content.SharedPreferences {
     }
 
     public static interface OnSharedPreferenceChangeListener {
-        void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-                String key);
+        public void onSharedPreferenceChanged(SharedPreferences prefs, String key);
     }
 
     @Override

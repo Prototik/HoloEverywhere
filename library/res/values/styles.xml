@@ -677,6 +677,8 @@
         <item name="android:scrollbarTrackHorizontal">@null</item>
         <item name="android:scrollbarTrackVertical">@null</item>
         <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
+        <item name="listPreferredItemPaddingLeft">8dp</item>
+        <item name="listPreferredItemPaddingRight">8dp</item>
         <!--End of block Holo-->
         <!--Include block: TextDark-->
         <!--Include block: Text-->
@@ -869,6 +871,8 @@
         <item name="android:scrollbarTrackHorizontal">@null</item>
         <item name="android:scrollbarTrackVertical">@null</item>
         <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
+        <item name="listPreferredItemPaddingLeft">8dp</item>
+        <item name="listPreferredItemPaddingRight">8dp</item>
         <!--End of block Holo-->
         <!--Include block: TextLight-->
         <!--Include block: Text-->
@@ -1000,6 +1004,8 @@
         <item name="android:scrollbarTrackHorizontal">@null</item>
         <item name="android:scrollbarTrackVertical">@null</item>
         <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
+        <item name="listPreferredItemPaddingLeft">8dp</item>
+        <item name="listPreferredItemPaddingRight">8dp</item>
         <!--End of block Holo-->
         <!--Include block: TextLight-->
         <!--Include block: Text-->

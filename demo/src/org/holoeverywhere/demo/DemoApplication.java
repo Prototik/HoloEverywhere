@@ -4,13 +4,14 @@ package org.holoeverywhere.demo;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Application;
+import org.holoeverywhere.app.Application.Config.PreferenceImpl;
 import org.holoeverywhere.demo.widget.DemoFrame;
 import org.holoeverywhere.demo.widget.DemoNavigationItem;
 import org.holoeverywhere.demo.widget.WidgetContainer;
 
 public class DemoApplication extends Application {
     static {
-        config().setAlwaysUseParentTheme(false).setDebugMode(true);
+        config().setDebugMode(true).setPreferenceImpl(PreferenceImpl.JSON);
         LayoutInflater.remap(WidgetContainer.class);
         LayoutInflater.remap(DemoFrame.class);
         LayoutInflater.remap(DemoNavigationItem.class);
