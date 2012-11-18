@@ -3,12 +3,12 @@ package org.holoeverywhere.demo.fragments;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Fragment;
+import org.holoeverywhere.demo.DemoActivity;
 import org.holoeverywhere.demo.R;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -44,10 +44,8 @@ public class AboutFragment extends Fragment {
     private final OnClickListener developersListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content, DevelopersFragment.getInstance());
-            ft.addToBackStack("developers");
-            ft.commit();
+            ((DemoActivity) getSupportActivity()).replaceFragment(DevelopersFragment.getInstance(),
+                    "developers");
         }
     };
 

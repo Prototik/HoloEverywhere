@@ -21,6 +21,10 @@ public class DialogFragment extends Fragment implements
         public int transactionId;
     }
 
+    public static enum DialogType {
+        AlertDialog, Dialog
+    }
+
     private static final String SAVED_BACK_STACK_ID = "android:backStackId";
     private static final String SAVED_CANCELABLE = "android:cancelable";
     private static final String SAVED_DIALOG_STATE_TAG = "android:savedDialogState";
@@ -42,6 +46,7 @@ public class DialogFragment extends Fragment implements
     int mStyle = STYLE_NORMAL;
     int mTheme = 0;
     boolean mViewDestroyed;
+    private DialogType type = DialogType.Dialog;
 
     public void dismiss() {
         dismissInternal(false);
@@ -79,6 +84,10 @@ public class DialogFragment extends Fragment implements
 
     public Dialog getDialog() {
         return mDialog;
+    }
+
+    public DialogType getDialogType() {
+        return type;
     }
 
     @Override
@@ -172,7 +181,13 @@ public class DialogFragment extends Fragment implements
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return new AlertDialog(getActivity(), getTheme());
+        switch (type) {
+            case AlertDialog:
+                return new AlertDialog(getActivity(), getTheme());
+            case Dialog:
+            default:
+                return new Dialog(getActivity(), getTheme());
+        }
     }
 
     @Override
@@ -248,6 +263,10 @@ public class DialogFragment extends Fragment implements
         if (mDialog != null) {
             mDialog.setCancelable(cancelable);
         }
+    }
+
+    public void setDialogType(DialogType type) {
+        this.type = type;
     }
 
     public void setShowsDialog(boolean showsDialog) {

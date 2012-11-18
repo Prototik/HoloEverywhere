@@ -133,8 +133,6 @@ public class DemoActivity extends SlidingActivity {
                 ThemeManager.getTheme(this), getIntent().getIntExtra(LIST_NAVIGATION_PAGE, 0));
         setBehindContentView(navigationWidget);
 
-        setContentView(R.layout.content);
-
         final SlidingMenu si = getSlidingMenu();
         si.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         si.setBehindWidthRes(R.dimen.demo_menu_width);
@@ -196,7 +194,8 @@ public class DemoActivity extends SlidingActivity {
     public void replaceFragment(Fragment fragment,
             String backStackName) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content, fragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.replace(android.R.id.content, fragment);
         if (backStackName != null) {
             ft.addToBackStack(backStackName);
         }

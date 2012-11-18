@@ -3,6 +3,7 @@ package org.holoeverywhere.slidingmenu;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.widget.FrameLayout;
 
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -104,9 +105,8 @@ public class SlidingActivityHelper {
      * @param savedInstanceState the saved instance state (unused)
      */
     public void onPostCreate(Bundle savedInstanceState) {
-        if (mViewBehind == null || mViewAbove == null) {
-            throw new IllegalStateException("Both setBehindContentView must be called " +
-                    "in onCreate in addition to setContentView.");
+        if (mViewBehind == null) {
+            throw new IllegalStateException("Both setBehindContentView must be called in onCreate");
         }
 
         mOnPostCreateCalled = true;
@@ -128,6 +128,9 @@ public class SlidingActivityHelper {
             mSlidingMenu.setContent(decorChild);
             decor.addView(mSlidingMenu);
         } else {
+            if (mViewAbove == null) {
+                mViewAbove = new View(mActivity);
+            }
             // take the above view out of
             ViewGroup parent = (ViewGroup) mViewAbove.getParent();
             if (parent != null) {
