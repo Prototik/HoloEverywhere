@@ -1,0 +1,73 @@
+{
+    "data": {
+        "Holo.Theme": {
+            "include": [
+                "HoloDark"
+            ], 
+            "parent": "Theme.Sherlock"
+        }, 
+        "Holo.Theme.Fullscreen": {
+            "include": [
+                "Fullscreen"
+            ]
+        }, 
+        "Holo.Theme.Light": {
+            "include": [
+                "HoloLight"
+            ], 
+            "parent": "Theme.Sherlock.Light"
+        }, 
+        "Holo.Theme.Light.DarkActionBar": {
+            "include": [
+                "HoloLight"
+            ], 
+            "parent": "Theme.Sherlock.Light.DarkActionBar"
+        }, 
+        "Holo.Theme.Light.DarkActionBar.Fullscreen": {
+            "include": [
+                "Fullscreen"
+            ]
+        }, 
+        "Holo.Theme.Light.DarkActionBar.NoActionBar": {
+            "include": [
+                "NoActionBar"
+            ]
+        }, 
+        "Holo.Theme.Light.DarkActionBar.NoActionBar.Fullscreen": {
+            "include": [
+                "Fullscreen"
+            ]
+        }, 
+        "Holo.Theme.Light.Fullscreen": {
+            "include": [
+                "Fullscreen"
+            ]
+        }, 
+        "Holo.Theme.Light.NoActionBar": {
+            "include": [
+                "NoActionBar"
+            ]
+        }, 
+        "Holo.Theme.Light.NoActionBar.Fullscreen": {
+            "include": [
+                "Fullscreen"
+            ]
+        }, 
+        "Holo.Theme.NoActionBar": {
+            "include": [
+                "NoActionBar"
+            ]
+        }, 
+        "Holo.Theme.NoActionBar.Fullscreen": {
+            "include": [
+                "Fullscreen"
+            ]
+        }
+    }, 
+    "include": [
+        {
+            "name": "blocks.json"
+        }
+    ], 
+    "output": "values/styles.xml"
+}

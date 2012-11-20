@@ -1,0 +1,26 @@
+{
+    "blocks": {
+        "Fullscreen": {
+            "android:windowContentOverlay": "@null", 
+            "android:windowFullscreen": true, 
+            "windowContentOverlay": "@null"
+        }, 
+        "NoActionBar": {
+            "android:windowActionBar": false, 
+            "android:windowNoTitle": true, 
+            "windowActionBar": false, 
+            "windowNoTitle": true
+        }
+    }, 
+    "include": [
+        {
+            "name": "base.json"
+        }, 
+        {
+            "name": "themes.json"
+        }, 
+        {
+            "name": "widgets.json"
+        }
+    ]
+}

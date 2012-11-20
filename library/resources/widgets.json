@@ -1,0 +1,667 @@
+{
+    "blocks": {
+        "ColorsDark": {
+            "android:textColor": "@color/primary_text_holo_dark", 
+            "android:textColorHighlight": "@color/highlighted_text_holo_dark", 
+            "android:textColorHint": "@color/hint_foreground_holo_dark"
+        }, 
+        "ColorsLight": {
+            "android:textColor": "@color/primary_text_holo_light", 
+            "android:textColorHighlight": "@color/highlighted_text_holo_light", 
+            "android:textColorHint": "@color/hint_foreground_holo_light"
+        }
+    }, 
+    "data": {
+        "Holo": {}, 
+        "Holo.AlertDialog": {
+            "bottomBright": "@drawable/dialog_bottom_holo_dark", 
+            "bottomDark": "@drawable/dialog_bottom_holo_dark", 
+            "bottomMedium": "@drawable/dialog_bottom_holo_dark", 
+            "centerBright": "@drawable/dialog_middle_holo_dark", 
+            "centerDark": "@drawable/dialog_middle_holo_dark", 
+            "centerMedium": "@drawable/dialog_middle_holo_dark", 
+            "fullBright": "@drawable/dialog_full_holo_dark", 
+            "fullDark": "@drawable/dialog_full_holo_dark", 
+            "horizontalProgressLayout": "@layout/alert_dialog_progress_holo", 
+            "layout": "@layout/alert_dialog_holo", 
+            "listItemLayout": "@layout/select_dialog_item_holo", 
+            "listLayout": "@layout/select_dialog_holo", 
+            "multiChoiceItemLayout": "@layout/select_dialog_multichoice_holo", 
+            "progressLayout": "@layout/progress_dialog_holo", 
+            "singleChoiceItemLayout": "@layout/select_dialog_singlechoice_holo", 
+            "topDark": "@drawable/dialog_top_holo_dark"
+        }, 
+        "Holo.AlertDialog.Light": {
+            "bottomBright": "@drawable/dialog_bottom_holo_light", 
+            "bottomDark": "@drawable/dialog_bottom_holo_light", 
+            "bottomMedium": "@drawable/dialog_bottom_holo_light", 
+            "centerBright": "@drawable/dialog_middle_holo_light", 
+            "centerDark": "@drawable/dialog_middle_holo_light", 
+            "centerMedium": "@drawable/dialog_middle_holo_light", 
+            "fullBright": "@drawable/dialog_full_holo_light", 
+            "fullDark": "@drawable/dialog_full_holo_light", 
+            "topDark": "@drawable/dialog_top_holo_light"
+        }, 
+        "Holo.Animation": {}, 
+        "Holo.Animation.Dialog": {
+            "android:windowEnterAnimation": "@anim/dialog_enter", 
+            "android:windowExitAnimation": "@anim/dialog_exit"
+        }, 
+        "Holo.Animation.DropDownDown": {
+            "android:windowEnterAnimation": "@anim/grow_fade_in", 
+            "android:windowExitAnimation": "@anim/shrink_fade_out"
+        }, 
+        "Holo.Animation.DropDownUp": {
+            "android:windowEnterAnimation": "@anim/grow_fade_in_from_bottom", 
+            "android:windowExitAnimation": "@anim/shrink_fade_out_from_bottom"
+        }, 
+        "Holo.Animation.PopupWindow": {}, 
+        "Holo.AutoCompleteTextView": {
+            "android:completionHintView": "@layout/simple_dropdown_hint", 
+            "android:completionThreshold": "2", 
+            "android:dropDownSelector": "@drawable/list_selector_holo_dark", 
+            "android:dropDownWidth": "wrap_content", 
+            "android:popupBackground": "@drawable/menu_dropdown_panel_holo_dark", 
+            "dropDownHorizontalOffset": "0dip", 
+            "dropDownVerticalOffset": "-6dip", 
+            "parent": "@style/Holo.EditText"
+        }, 
+        "Holo.AutoCompleteTextView.Light": {
+            "android:completionHintView": "@layout/simple_dropdown_hint", 
+            "android:completionThreshold": "2", 
+            "android:dropDownSelector": "@drawable/list_selector_holo_light", 
+            "android:dropDownWidth": "wrap_content", 
+            "android:popupBackground": "@drawable/menu_dropdown_panel_holo_light", 
+            "dropDownHorizontalOffset": "0dip", 
+            "dropDownVerticalOffset": "-6dip", 
+            "parent": "@style/Holo.EditText.Light"
+        }, 
+        "Holo.Button": {
+            "android:background": "@drawable/btn_default_holo_dark", 
+            "android:clickable": "true", 
+            "android:focusable": "true", 
+            "android:gravity": "center", 
+            "android:minHeight": "48dip", 
+            "android:minWidth": "64dip", 
+            "android:textAppearance": "?android:attr/textAppearanceMedium", 
+            "android:textColor": "?android:textColorPrimary"
+        }, 
+        "Holo.Button.Borderless": {
+            "android:background": "?selectableItemBackground", 
+            "android:paddingLeft": "4dip", 
+            "android:paddingRight": "4dip"
+        }, 
+        "Holo.Button.Borderless.Light": {
+            "android:background": "?selectableItemBackground", 
+            "android:paddingLeft": "4dip", 
+            "android:paddingRight": "4dip", 
+            "parent": "Holo.Button.Light"
+        }, 
+        "Holo.Button.Borderless.Small": {
+            "android:textSize": "14sp"
+        }, 
+        "Holo.Button.Borderless.Small.Light": {
+            "android:textSize": "14sp", 
+            "parent": "Holo.Button.Borderless.Light"
+        }, 
+        "Holo.Button.Light": {
+            "android:background": "@drawable/btn_default_holo_light"
+        }, 
+        "Holo.Button.Small": {
+            "android:background": "@drawable/btn_default_holo_dark", 
+            "android:minHeight": "48dip", 
+            "android:minWidth": "48dip", 
+            "android:textAppearance": "?android:textAppearanceSmall", 
+            "android:textColor": "@color/primary_text_holo_dark"
+        }, 
+        "Holo.Button.Small.Light": {
+            "android:background": "@drawable/btn_default_holo_light", 
+            "android:minHeight": "48dip", 
+            "android:minWidth": "48dip", 
+            "android:textAppearance": "?android:textAppearanceSmall", 
+            "android:textColor": "@color/primary_text_holo_light", 
+            "parent": "Holo.Button.Light"
+        }, 
+        "Holo.Button.Toggle": {
+            "android:background": "@drawable/btn_toggle_holo_dark", 
+            "android:textOff": "@string/capital_off", 
+            "android:textOn": "@string/capital_on"
+        }, 
+        "Holo.Button.Toggle.Light": {
+            "android:background": "@drawable/btn_toggle_holo_light", 
+            "android:textOff": "@string/capital_off", 
+            "android:textOn": "@string/capital_on", 
+            "parent": "Holo.Button.Light"
+        }, 
+        "Holo.ButtonBar": {
+            "android:background": "@null", 
+            "android:divider": "?dividerVertical", 
+            "android:dividerPadding": "12dip", 
+            "android:paddingBottom": "0dip", 
+            "android:paddingLeft": "0dip", 
+            "android:paddingRight": "0dip", 
+            "android:paddingTop": "0dip", 
+            "android:showDividers": "middle", 
+            "dividerPadding": "12dip", 
+            "showDividers": "middle"
+        }, 
+        "Holo.ButtonBar.AlertDialog": {
+            "android:dividerPadding": "0dip", 
+            "dividerPadding": "0dip"
+        }, 
+        "Holo.CompoundButton": {
+            "android:clickable": "true", 
+            "android:focusable": "true", 
+            "android:gravity": "center_vertical|left", 
+            "android:textAppearance": "?android:attr/textAppearance", 
+            "android:textColor": "?android:attr/textColorPrimaryDisableOnly"
+        }, 
+        "Holo.CompoundButton.CheckBox": {
+            "android:background": "@drawable/btn_check_label_background", 
+            "android:button": "?android:attr/listChoiceIndicatorMultiple"
+        }, 
+        "Holo.CompoundButton.CheckBox.Light": {}, 
+        "Holo.CompoundButton.RadioButton": {
+            "android:background": "@drawable/btn_radio_label_background", 
+            "android:button": "?android:attr/listChoiceIndicatorSingle"
+        }, 
+        "Holo.CompoundButton.RadioButton.Light": {}, 
+        "Holo.DatePicker": {
+            "calendarViewShown": "false", 
+            "endYear": "2100", 
+            "forceShownState": "false", 
+            "internalLayout": "@layout/date_picker_holo", 
+            "spinnersShown": "true", 
+            "startYear": "1900"
+        }, 
+        "Holo.DialogWindowTitle": {
+            "android:maxLines": "1", 
+            "android:scrollHorizontally": "true", 
+            "android:textAppearance": "@style/Holo.TextAppearance.DialogWindowTitle"
+        }, 
+        "Holo.DialogWindowTitle.Light": {
+            "android:textAppearance": "@style/Holo.TextAppearance.DialogWindowTitle.Light"
+        }, 
+        "Holo.DropDownItem": {
+            "android:gravity": "center_vertical", 
+            "android:paddingLeft": "8dp", 
+            "android:paddingRight": "8dp", 
+            "android:textAppearance": "@style/Holo.TextAppearance.DropDownItem"
+        }, 
+        "Holo.EditText": {
+            "android:background": "@drawable/edit_text_holo_dark", 
+            "android:clickable": "true", 
+            "android:focusable": "true", 
+            "android:focusableInTouchMode": "true", 
+            "android:gravity": "center_vertical", 
+            "android:textAppearance": "?android:textAppearanceMediumInverse", 
+            "android:textColor": "?android:textColorPrimary"
+        }, 
+        "Holo.EditText.Light": {
+            "android:background": "@drawable/edit_text_holo_light"
+        }, 
+        "Holo.EditText.NumberPickerInputText": {
+            "android:background": "@null", 
+            "android:gravity": "center", 
+            "android:paddingBottom": "13sp", 
+            "android:paddingLeft": "2sp", 
+            "android:paddingRight": "2sp", 
+            "android:paddingTop": "13sp", 
+            "android:singleLine": "true", 
+            "android:textSize": "18sp"
+        }, 
+        "Holo.ExpandableListView": {
+            "android:childDivider": "?android:attr/listDivider", 
+            "android:groupIndicator": "@drawable/expander_group_holo_dark", 
+            "android:indicatorLeft": "?android:attr/expandableListPreferredItemIndicatorLeft", 
+            "android:indicatorRight": "?android:attr/expandableListPreferredItemIndicatorRight", 
+            "parent": "Holo.ListView"
+        }, 
+        "Holo.ExpandableListView.Light": {
+            "android:childDivider": "?android:attr/listDivider", 
+            "android:groupIndicator": "@drawable/expander_group_holo_light", 
+            "android:indicatorLeft": "?android:attr/expandableListPreferredItemIndicatorLeft", 
+            "android:indicatorRight": "?android:attr/expandableListPreferredItemIndicatorRight", 
+            "parent": "Holo.ListView.Light"
+        }, 
+        "Holo.ImageButton": {
+            "android:background": "@drawable/btn_default_holo_dark", 
+            "android:clickable": "true", 
+            "android:focusable": "true", 
+            "android:scaleType": "center"
+        }, 
+        "Holo.ImageButton.Light": {
+            "android:background": "@drawable/btn_default_holo_light"
+        }, 
+        "Holo.ListPopupWindow": {
+            "android:dropDownSelector": "@drawable/list_selector_holo_dark", 
+            "android:dropDownWidth": "wrap_content", 
+            "android:popupBackground": "@drawable/menu_dropdown_panel_holo_dark", 
+            "dropDownHorizontalOffset": "0dip", 
+            "dropDownVerticalOffset": "0dip"
+        }, 
+        "Holo.ListPopupWindow.Light": {
+            "android:dropDownSelector": "@drawable/list_selector_holo_light", 
+            "android:popupBackground": "@drawable/menu_dropdown_panel_holo_light"
+        }, 
+        "Holo.ListView": {
+            "android:cacheColorHint": "@drawable/background_cache_hint_selector_holo_dark", 
+            "android:divider": "@drawable/list_divider_holo_dark", 
+            "android:fadingEdge": "vertical", 
+            "android:listDivider": "@drawable/list_divider_holo_dark", 
+            "android:listSelector": "@drawable/list_selector_holo_dark", 
+            "android:scrollbars": "vertical", 
+            "parent": "@android:style/Widget.AbsListView"
+        }, 
+        "Holo.ListView.DropDown": {}, 
+        "Holo.ListView.DropDown.Light": {
+            "parent": "Holo.ListView.Light"
+        }, 
+        "Holo.ListView.Light": {
+            "android:cacheColorHint": "@drawable/background_cache_hint_selector_holo_light", 
+            "android:divider": "@drawable/list_divider_holo_light", 
+            "android:listDivider": "@drawable/list_divider_holo_light", 
+            "android:listSelector": "@drawable/list_selector_holo_light"
+        }, 
+        "Holo.NumberPicker": {
+            "android:fadingEdge": "vertical", 
+            "android:fadingEdgeLength": "50dip", 
+            "android:layout": "@layout/number_picker_with_selector_wheel", 
+            "android:maxHeight": "180dip", 
+            "android:minWidth": "64dip", 
+            "android:orientation": "vertical", 
+            "android:solidColor": "@android:color/transparent", 
+            "selectionDivider": "@drawable/numberpicker_selection_divider", 
+            "selectionDividerHeight": "2dip", 
+            "selectionDividersDistance": "48dip", 
+            "virtualButtonPressedDrawable": "?selectableItemBackground"
+        }, 
+        "Holo.PopupWindow": {
+            "android:popupAnimationStyle": "@style/Holo.Animation.PopupWindow"
+        }, 
+        "Holo.PopupWindow.Light": {}, 
+        "Holo.Preference": {
+            "layout": "@layout/preference_holo"
+        }, 
+        "Holo.PreferenceCategory": {
+            "layout": "@layout/preference_category_holo", 
+            "selectable": "false", 
+            "shouldDisableView": "false"
+        }, 
+        "Holo.PreferenceCheckBox": {
+            "widgetLayout": "@layout/preference_widget_checkbox"
+        }, 
+        "Holo.PreferenceDialog": {
+            "negativeButtonText": "@android:string/cancel", 
+            "positiveButtonText": "@android:string/ok"
+        }, 
+        "Holo.PreferenceDialog.EditTextPreference": {
+            "dialogLayout": "@layout/preference_dialog_edittext"
+        }, 
+        "Holo.PreferenceDialog.NumberPickerPreference": {
+            "dialogLayout": "@layout/preference_dialog_numberpicker", 
+            "max": "10", 
+            "min": "0", 
+            "wrapSelectorWheel": "true"
+        }, 
+        "Holo.PreferenceDialog.SeekBarDialogPreference": {
+            "dialogLayout": "@layout/preference_dialog_seekbar"
+        }, 
+        "Holo.PreferenceDialog.YesNoPreference": {
+            "negativeButtonText": "@android:string/no", 
+            "positiveButtonText": "@android:string/yes"
+        }, 
+        "Holo.PreferenceFragment": {
+            "android:paddingLeft": "@dimen/preference_fragment_padding_side", 
+            "android:paddingRight": "@dimen/preference_fragment_padding_side"
+        }, 
+        "Holo.PreferenceFrameLayout": {
+            "borderBottom": "@dimen/preference_fragment_padding_bottom", 
+            "borderLeft": "@dimen/preference_fragment_padding_side", 
+            "borderRight": "@dimen/preference_fragment_padding_side", 
+            "borderTop": "0dip"
+        }, 
+        "Holo.PreferenceInformation": {
+            "enabled": "false", 
+            "layout": "@layout/preference_information_holo", 
+            "shouldDisableView": "false"
+        }, 
+        "Holo.PreferencePanel": {}, 
+        "Holo.PreferenceRingtone": {
+            "ringtoneType": "ringtone", 
+            "showDefault": "true", 
+            "showSilent": "true"
+        }, 
+        "Holo.PreferenceScreen": {}, 
+        "Holo.PreferenceSeekBar": {
+            "layout": "@layout/preference_widget_seekbar"
+        }, 
+        "Holo.PreferenceSwitch": {
+            "switchTextOff": "@string/capital_off", 
+            "switchTextOn": "@string/capital_on", 
+            "widgetLayout": "@layout/preference_widget_switch"
+        }, 
+        "Holo.ProgressBar": {
+            "android:indeterminateDrawable": "@drawable/progress_medium_holo", 
+            "parent": "@android:style/Widget.ProgressBar"
+        }, 
+        "Holo.ProgressBar.Horizontal": {
+            "android:indeterminateDrawable": "@drawable/progress_indeterminate_horizontal_holo", 
+            "android:maxHeight": "16dip", 
+            "android:minHeight": "16dip", 
+            "android:progressDrawable": "@drawable/progress_horizontal_holo_dark", 
+            "parent": "@android:style/Widget.ProgressBar.Horizontal"
+        }, 
+        "Holo.ProgressBar.Horizontal.Light": {
+            "android:progressDrawable": "@drawable/progress_horizontal_holo_light"
+        }, 
+        "Holo.ProgressBar.Large": {
+            "android:indeterminateDrawable": "@drawable/progress_large_holo", 
+            "parent": "@android:style/Widget.ProgressBar.Large"
+        }, 
+        "Holo.ProgressBar.Small": {
+            "android:indeterminateDrawable": "@drawable/progress_small_holo", 
+            "parent": "@android:style/Widget.ProgressBar.Small"
+        }, 
+        "Holo.RatingBar": {
+            "android:indeterminateDrawable": "@drawable/ratingbar_full_holo_dark", 
+            "android:indeterminateOnly": "false", 
+            "android:maxHeight": "57dip", 
+            "android:minHeight": "57dip", 
+            "android:progressDrawable": "@drawable/ratingbar_full_holo_dark", 
+            "android:thumb": "@null", 
+            "parent": "@android:style/Widget.RatingBar"
+        }, 
+        "Holo.RatingBar.Indicator": {
+            "android:indeterminateDrawable": "@drawable/ratingbar_holo_dark", 
+            "android:indeterminateOnly": "false", 
+            "android:isIndicator": "true", 
+            "android:maxHeight": "35dip", 
+            "android:minHeight": "35dip", 
+            "android:progressDrawable": "@drawable/ratingbar_holo_dark", 
+            "android:thumb": "@null"
+        }, 
+        "Holo.RatingBar.Indicator.Light": {
+            "android:indeterminateDrawable": "@drawable/ratingbar_holo_light", 
+            "android:progressDrawable": "@drawable/ratingbar_holo_light"
+        }, 
+        "Holo.RatingBar.Light": {
+            "android:indeterminateDrawable": "@drawable/ratingbar_full_holo_light", 
+            "android:progressDrawable": "@drawable/ratingbar_full_holo_light"
+        }, 
+        "Holo.RatingBar.Small": {
+            "android:indeterminateDrawable": "@drawable/ratingbar_small_holo_dark", 
+            "android:maxHeight": "16dip", 
+            "android:minHeight": "16dip", 
+            "android:progressDrawable": "@drawable/ratingbar_small_holo_dark"
+        }, 
+        "Holo.RatingBar.Small.Light": {
+            "android:indeterminateDrawable": "@drawable/ratingbar_small_holo_light", 
+            "android:progressDrawable": "@drawable/ratingbar_small_holo_light"
+        }, 
+        "Holo.SeekBar": {
+            "android:focusable": "true", 
+            "android:indeterminateDrawable": "@drawable/scrubber_progress_horizontal_holo_dark", 
+            "android:indeterminateOnly": "false", 
+            "android:maxHeight": "13dip", 
+            "android:minHeight": "13dip", 
+            "android:paddingLeft": "16dip", 
+            "android:paddingRight": "16dip", 
+            "android:progressDrawable": "@drawable/scrubber_progress_horizontal_holo_dark", 
+            "android:thumb": "@drawable/scrubber_control_selector_holo", 
+            "android:thumbOffset": "16dip", 
+            "parent": "@android:Widget.SeekBar"
+        }, 
+        "Holo.SeekBar.Light": {
+            "android:indeterminateDrawable": "@drawable/scrubber_progress_horizontal_holo_light", 
+            "android:progressDrawable": "@drawable/scrubber_progress_horizontal_holo_light"
+        }, 
+        "Holo.SegmentedButton": {
+            "android:background": "@drawable/btn_group_holo_dark", 
+            "android:divider": "?dividerVertical", 
+            "android:showDividers": "middle", 
+            "showDividers": "middle"
+        }, 
+        "Holo.SegmentedButton.Light": {
+            "android:background": "@drawable/btn_group_holo_light"
+        }, 
+        "Holo.Spinner": {
+            "android:background": "@drawable/spinner_background_holo_dark", 
+            "android:clickable": "true", 
+            "android:dropDownSelector": "@drawable/list_selector_holo_dark", 
+            "android:dropDownWidth": "wrap_content", 
+            "android:gravity": "left|center_vertical", 
+            "android:popupBackground": "@drawable/menu_dropdown_panel_holo_dark", 
+            "dropDownHorizontalOffset": "0dip", 
+            "dropDownVerticalOffset": "0dip", 
+            "spinnerMode": "dropdown"
+        }, 
+        "Holo.Spinner.Light": {
+            "android:background": "@drawable/spinner_background_holo_light", 
+            "android:dropDownSelector": "@drawable/list_selector_holo_light", 
+            "android:popupBackground": "@drawable/menu_dropdown_panel_holo_light"
+        }, 
+        "Holo.TextAppearance": {
+            "android:textColorLink": "@color/holo_blue_light", 
+            "android:textSize": "16sp", 
+            "android:textStyle": "normal", 
+            "include": [
+                "ColorsDark"
+            ]
+        }, 
+        "Holo.TextAppearance.DialogWindowTitle": {
+            "android:textColor": "@color/holo_blue_light", 
+            "android:textSize": "22sp"
+        }, 
+        "Holo.TextAppearance.DialogWindowTitle.Light": {
+            "android:textColor": "@color/holo_blue_light", 
+            "android:textSize": "22sp", 
+            "parent": "Holo.TextAppearance.Light"
+        }, 
+        "Holo.TextAppearance.DropDownItem": {
+            "android:textColor": "?android:textColorPrimaryDisableOnly"
+        }, 
+        "Holo.TextAppearance.Inverse": {
+            "include": [
+                "ColorsLight"
+            ]
+        }, 
+        "Holo.TextAppearance.Inverse.Light": {
+            "include": [
+                "ColorsDark"
+            ]
+        }, 
+        "Holo.TextAppearance.Large": {
+            "android:textSize": "22sp"
+        }, 
+        "Holo.TextAppearance.Large.Inverse": {
+            "include": [
+                "ColorsLight"
+            ]
+        }, 
+        "Holo.TextAppearance.Large.Inverse.Light": {
+            "include": [
+                "ColorsDark"
+            ]
+        }, 
+        "Holo.TextAppearance.Large.Light": {
+            "include": [
+                "ColorsLight"
+            ]
+        }, 
+        "Holo.TextAppearance.Light": {
+            "include": [
+                "ColorsLight"
+            ]
+        }, 
+        "Holo.TextAppearance.Medium": {
+            "android:textSize": "18sp"
+        }, 
+        "Holo.TextAppearance.Medium.Inverse": {
+            "include": [
+                "ColorsLight"
+            ]
+        }, 
+        "Holo.TextAppearance.Medium.Inverse.Light": {
+            "include": [
+                "ColorsDark"
+            ]
+        }, 
+        "Holo.TextAppearance.Medium.Light": {
+            "include": [
+                "ColorsLight"
+            ]
+        }, 
+        "Holo.TextAppearance.PopupMenu": {
+            "include": [
+                "ColorsDark"
+            ]
+        }, 
+        "Holo.TextAppearance.PopupMenu.Large": {
+            "android:textSize": "18sp"
+        }, 
+        "Holo.TextAppearance.PopupMenu.Light": {
+            "include": [
+                "ColorsLight"
+            ]
+        }, 
+        "Holo.TextAppearance.PopupMenu.Light.Large": {
+            "android:textSize": "18sp"
+        }, 
+        "Holo.TextAppearance.PopupMenu.Light.Small": {
+            "android:textSize": "14sp"
+        }, 
+        "Holo.TextAppearance.PopupMenu.Small": {
+            "android:textSize": "14sp"
+        }, 
+        "Holo.TextAppearance.Small": {
+            "android:textColor": "@color/secondary_text_holo_dark", 
+            "android:textColorHighlight": "@color/highlighted_text_holo_dark", 
+            "android:textColorHint": "@color/hint_foreground_holo_dark", 
+            "android:textSize": "14sp"
+        }, 
+        "Holo.TextAppearance.Small.Inverse": {
+            "android:textColor": "@color/secondary_text_holo_light", 
+            "android:textColorHighlight": "@color/highlighted_text_holo_light", 
+            "android:textColorHint": "@color/hint_foreground_holo_light"
+        }, 
+        "Holo.TextAppearance.Small.Inverse.Light": {
+            "android:textColor": "@color/secondary_text_holo_dark", 
+            "android:textColorHighlight": "@color/highlighted_text_holo_dark", 
+            "android:textColorHint": "@color/hint_foreground_holo_dark"
+        }, 
+        "Holo.TextAppearance.Small.Light": {
+            "android:textColor": "@color/secondary_text_holo_light", 
+            "android:textColorHighlight": "@color/highlighted_text_holo_light", 
+            "android:textColorHint": "@color/hint_foreground_holo_light"
+        }, 
+        "Holo.TextAppearance.TextView": {}, 
+        "Holo.TextAppearance.TextView.SpinnerItem": {
+            "include": [
+                "ColorsDark"
+            ]
+        }, 
+        "Holo.TextAppearance.TextView.SpinnerItem.Light": {
+            "include": [
+                "ColorsLight"
+            ]
+        }, 
+        "Holo.TextView": {
+            "android:textAppearance": "?android:attr/textAppearanceSmall"
+        }, 
+        "Holo.TextView.ListSeparator": {
+            "android:background": "@drawable/list_section_divider_holo_dark", 
+            "android:gravity": "center_vertical", 
+            "android:layout_height": "wrap_content", 
+            "android:layout_width": "match_parent", 
+            "android:paddingLeft": "8dip", 
+            "android:textAllCaps": "true", 
+            "android:textColor": "?android:textColorSecondary", 
+            "android:textSize": "14sp", 
+            "android:textStyle": "bold", 
+            "textAllCaps": "true"
+        }, 
+        "Holo.TextView.ListSeparator.Light": {
+            "android:background": "@drawable/list_section_divider_holo_light"
+        }, 
+        "Holo.TextView.SpinnerItem": {
+            "android:gravity": "left|center_vertical", 
+            "android:paddingLeft": "8dp", 
+            "android:paddingRight": "8dp", 
+            "android:textAppearance": "@style/Holo.TextAppearance.TextView.SpinnerItem", 
+            "gravity": "left|center_vertical"
+        }, 
+        "Holo.TextView.SpinnerItem.DropDown": {
+            "android:paddingLeft": "8dp", 
+            "android:paddingRight": "8dp"
+        }, 
+        "Holo.TextView.SpinnerItem.DropDown.Light": {
+            "android:paddingLeft": "8dp", 
+            "android:paddingRight": "8dp", 
+            "parent": "Holo.TextView.SpinnerItem.Light"
+        }, 
+        "Holo.TextView.SpinnerItem.Light": {
+            "android:textAppearance": "@style/Holo.TextAppearance.TextView.SpinnerItem.Light"
+        }, 
+        "Holo.Theme.Dialog": {
+            "android:colorBackgroundCacheHint": "@null", 
+            "android:windowActionBar": "false", 
+            "android:windowActionModeOverlay": "true", 
+            "android:windowAnimationStyle": "@style/Holo.Animation.Dialog", 
+            "android:windowBackground": "@drawable/dialog_full_holo_dark", 
+            "android:windowContentOverlay": "@null", 
+            "android:windowFrame": "@null", 
+            "android:windowIsFloating": "true", 
+            "android:windowMinWidthMajor": "?windowMinWidthMajor", 
+            "android:windowMinWidthMinor": "?windowMinWidthMinor", 
+            "android:windowSoftInputMode": "stateUnspecified|adjustPan", 
+            "android:windowTitleStyle": "@style/Holo.DialogWindowTitle", 
+            "borderlessButtonStyle": "@style/Holo.Button.Borderless.Small", 
+            "buttonBarStyle": "@style/Holo.ButtonBar.AlertDialog", 
+            "listPreferredItemPaddingLeft": "16dip", 
+            "listPreferredItemPaddingRight": "16dip", 
+            "windowActionBar": "false", 
+            "windowActionModeOverlay": "true", 
+            "windowAnimationStyle": "@style/Holo.Animation.Dialog", 
+            "windowContentOverlay": "@null", 
+            "windowMinWidthMajor": "@dimen/dialog_min_width_major", 
+            "windowMinWidthMinor": "@dimen/dialog_min_width_minor"
+        }, 
+        "Holo.Theme.Dialog.Alert": {
+            "android:windowBackground": "@drawable/transparent", 
+            "parent": "Holo.Theme.Dialog"
+        }, 
+        "Holo.Theme.Dialog.Alert.Light": {
+            "android:windowBackground": "@drawable/transparent", 
+            "parent": "Holo.Theme.Dialog.Light"
+        }, 
+        "Holo.Theme.Dialog.Light": {
+            "android:colorBackgroundCacheHint": "@null", 
+            "android:windowActionBar": "false", 
+            "android:windowActionModeOverlay": "true", 
+            "android:windowAnimationStyle": "@style/Holo.Animation.Dialog", 
+            "android:windowBackground": "@drawable/dialog_full_holo_light", 
+            "android:windowContentOverlay": "@null", 
+            "android:windowFrame": "@null", 
+            "android:windowIsFloating": "true", 
+            "android:windowMinWidthMajor": "?windowMinWidthMajor", 
+            "android:windowMinWidthMinor": "?windowMinWidthMinor", 
+            "android:windowSoftInputMode": "stateUnspecified|adjustPan", 
+            "android:windowTitleStyle": "@style/Holo.DialogWindowTitle.Light", 
+            "borderlessButtonStyle": "@style/Holo.Button.Borderless.Small", 
+            "buttonBarStyle": "@style/Holo.ButtonBar.AlertDialog", 
+            "listPreferredItemPaddingLeft": "16dip", 
+            "listPreferredItemPaddingRight": "16dip", 
+            "parent": "Holo.Theme.Light", 
+            "windowActionBar": "false", 
+            "windowActionModeOverlay": "true", 
+            "windowAnimationStyle": "@style/Holo.Animation.Dialog", 
+            "windowContentOverlay": "@null", 
+            "windowMinWidthMajor": "@dimen/dialog_min_width_major", 
+            "windowMinWidthMinor": "@dimen/dialog_min_width_minor"
+        }, 
+        "Holo.TimePicker": {
+            "internalLayout": "@layout/time_picker_holo"
+        }
+    }
+}

@@ -46,7 +46,7 @@
 			android:orientation="vertical"
 			android:visibility="gone" >
 			<include layout="@layout/breadcrumbs_in_fragment" />
-			<com.WazaBe.HoloEverywhere.preference.PreferenceFrameLayout
+			<PreferenceFrameLayout
 				android:id="@+id/prefs"
 				android:layout_width="match_parent"
 				android:layout_height="0dip"

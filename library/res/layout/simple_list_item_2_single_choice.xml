@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:gravity="center_vertical"
+	android:minHeight="?listPreferredItemHeightSmall"
+	android:orientation="horizontal"
+	android:paddingLeft="16dip"
+	android:paddingRight="12dip" >
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:gravity="center_vertical"
+		android:orientation="vertical" >
+		<TextView
+			android:id="@android:id/text1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:ellipsize="marquee"
+			android:gravity="center_vertical|left"
+			android:singleLine="true"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:textColor="?textColorAlertDialogListItem" />
+		<TextView
+			android:id="@android:id/text2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:ellipsize="marquee"
+			android:gravity="center_vertical|left"
+			android:singleLine="true"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="?textColorAlertDialogListItem" />
+	</LinearLayout>
+	<RadioButton
+		android:id="@+id/radio"
+		android:layout_width="35dip"
+		android:layout_height="wrap_content"
+		android:clickable="false"
+		android:focusable="false"
+		android:gravity="center_vertical"
+		android:paddingRight="12dip" />
+</LinearLayout>

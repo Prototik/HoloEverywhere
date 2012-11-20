@@ -33,7 +33,7 @@
 				android:layout_height="wrap_content"
 				android:contentDescription="@string/loading"
 				android:paddingRight="8dip" />
-			<com.WazaBe.HoloEverywhere.internal.DialogTitle
+			<Internal.DialogTitle
 				android:id="@+id/alertTitle"
 				style="?android:attr/windowTitleStyle"
 				android:layout_width="match_parent"

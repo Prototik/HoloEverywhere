@@ -1,0 +1,39 @@
+{
+    "data": {
+        "time_picker_separator": {
+            "en": ":"
+        }
+    }, 
+    "grab": [
+        "back_button_label", 
+        "skip_button_label", 
+        "next_button_label", 
+        "loading", 
+        "capital_on", 
+        "capital_off", 
+        "candidates_style", 
+        "number_picker_increment_scroll_mode", 
+        "number_picker_increment_scroll_action", 
+        "number_picker_increment_button", 
+        "number_picker_decrement_button", 
+        "time_picker_dialog_title", 
+        "time_picker_increment_minute_button", 
+        "time_picker_decrement_minute_button", 
+        "time_picker_increment_hour_button", 
+        "time_picker_decrement_hour_button", 
+        "time_picker_increment_set_pm_button", 
+        "time_picker_decrement_set_am_button", 
+        "date_picker_dialog_title", 
+        "date_picker_increment_day_button", 
+        "date_picker_decrement_day_button", 
+        "date_picker_increment_month_button", 
+        "date_picker_decrement_month_button", 
+        "date_picker_increment_year_button", 
+        "date_picker_decrement_year_button", 
+        "date_time_done", 
+        "date_time_set", 
+        "ringtone_picker_title", 
+        "ringtone_default", 
+        "ringtone_silent"
+    ]
+}

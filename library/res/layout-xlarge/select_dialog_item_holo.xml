@@ -9,4 +9,4 @@
 	android:paddingLeft="16dip"
 	android:paddingRight="16dip"
 	android:textAppearance="?android:attr/textAppearanceMedium"
-	android:textColor="?android:attr/textColorAlertDialogListItem" />
+	android:textColor="?textColorAlertDialogListItem" />

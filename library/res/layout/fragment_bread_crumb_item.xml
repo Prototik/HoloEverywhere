@@ -10,12 +10,12 @@
 		android:layout_marginBottom="12dip"
 		android:layout_marginTop="12dip"
 		android:scaleType="fitXY"
-		android:src="?android:attr/dividerVertical" />
+		android:src="?dividerVertical" />
 	<TextView
 		android:id="@+id/title"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
-		android:background="?android:attr/selectableItemBackground"
+		android:background="?selectableItemBackground"
 		android:gravity="center_vertical"
 		android:paddingLeft="8dip"
 		android:paddingRight="8dip"

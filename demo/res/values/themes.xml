@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+	<style name="Holo.Demo" />
+	<style name="Holo.Demo.NavigationItem">
+		<item name="android:background">?selectableItemBackground</item>
+	</style>
+	<style name="Holo.Demo.Theme" parent="Holo.Theme">
+		<item name="disableMusicIcon">@drawable/disable_music_dark</item>
+		<item name="demoNavigationItemStyle">@style/Holo.Demo.NavigationItem</item>
+	</style>
+	<style name="Holo.Demo.Theme.Light" parent="Holo.Theme.Light">
+		<item name="disableMusicIcon">@drawable/disable_music_light</item>
+		<item name="demoNavigationItemStyle">@style/Holo.Demo.NavigationItem</item>
+	</style>
+	<style name="Holo.Demo.Theme.Light.DarkActionBar" parent="Holo.Theme.Light.DarkActionBar">
+		<item name="disableMusicIcon">@drawable/disable_music_dark</item>
+		<item name="demoNavigationItemStyle">@style/Holo.Demo.NavigationItem</item>
+	</style>
+</resources>

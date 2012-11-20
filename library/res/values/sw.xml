@@ -22,8 +22,8 @@
 		<item name="track">@drawable/switch_track_holo_dark</item>
 		<item name="thumb">@drawable/switch_inner_holo_dark</item>
 		<item name="switchTextAppearance">@style/Holo.Switch.TextAppearance</item>
-		<item name="textOn">@string/switch_on</item>
-		<item name="textOff">@string/switch_off</item>
+		<item name="textOn">@string/capital_on</item>
+		<item name="textOff">@string/capital_off</item>
 		<item name="thumbTextPadding">12dip</item>
 		<item name="switchMinWidth">96dip</item>
 		<item name="switchPadding">16dip</item>
@@ -40,6 +40,4 @@
 		<item name="thumb">@drawable/old_switch_inner_holo_light</item>
 		<item name="switchTextAppearance">@style/Holo.Switch.TextAppearance.Light</item>
 	</style>
-	<string name="switch_on">ON</string>
-	<string name="switch_off">OFF</string>
 </resources>

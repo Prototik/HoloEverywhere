@@ -44,6 +44,7 @@
 	<attr name="listDividerAlertDialog" format="reference" />
 	<attr name="alertDialogStyle" format="reference" />
 	<attr name="alertDialogTheme" format="reference" />
+	<attr name="dialogTheme" format="reference" />
 	<attr name="textColorAlertDialogListItem" format="reference" />
 	<attr name="spinnerStyle" format="reference" />
 	<attr name="numberPickerStyle" format="reference" />
@@ -54,6 +55,7 @@
 	<attr name="timePickerStyle" format="reference" />
 	<attr name="autoCompleteTextViewStyle" format="reference" />
 	<attr name="panelMenuListWidth" format="dimension" />
+	<attr name="textAppearanceListItem" format="reference" />
 	<attr name="gravity">
 		<flag name="top" value="0x30" />
 		<flag name="bottom" value="0x50" />
@@ -70,6 +72,11 @@
 		<flag name="start" value="0x00800003" />
 		<flag name="end" value="0x00800005" />
 	</attr>
+	<declare-styleable name="HoloActivity">
+		<attr name="holoTheme" format="boolean" />
+		<attr name="windowMinWidthMajor" />
+		<attr name="windowMinWidthMinor" />
+	</declare-styleable>
 	<declare-styleable name="RotateDrawable">
 		<attr name="android:visible" />
 		<attr name="android:fromDegrees" />

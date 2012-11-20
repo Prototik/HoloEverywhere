@@ -5,7 +5,7 @@
 	android:layout_marginLeft="@dimen/preference_fragment_padding_side"
 	android:layout_marginRight="@dimen/preference_fragment_padding_side"
 	android:orientation="vertical" >
-	<com.WazaBe.HoloEverywhere.app.FragmentBreadCrumbs
+	<FragmentBreadCrumbs
 		android:id="@+id/title"
 		android:layout_width="match_parent"
 		android:layout_height="72dip"
