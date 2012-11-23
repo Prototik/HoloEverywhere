@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
@@ -25,6 +26,10 @@ public class AlertDialog extends Dialog implements DialogInterface,
         AlertDecorViewInstaller {
     public static class Builder {
         private final AlertController.AlertParams P;
+        private Class<? extends AlertDialog> clazz;
+        private static final Class<?>[] CONSTRUCTOR_SIGNATURE = {
+                Context.class, int.class
+        };
 
         public Builder(Context context) {
             this(context, AlertDialog.resolveDialogTheme(context, 0));
@@ -36,8 +41,22 @@ public class AlertDialog extends Dialog implements DialogInterface,
             P.mTheme = theme;
         }
 
+        private final String TAG = getClass().getSimpleName();
+
         public AlertDialog create() {
-            final AlertDialog dialog = new AlertDialog(P.mContext, P.mTheme);
+            AlertDialog dialog = null;
+            if (clazz != null) {
+                try {
+                    dialog = clazz.getConstructor(CONSTRUCTOR_SIGNATURE).newInstance(P.mContext,
+                            P.mTheme);
+                } catch (Exception e) {
+                    Log.e(TAG, "Cannot create AlertDialog instance from clazz " + clazz.getName()
+                            + ", use default", e);
+                }
+            }
+            if (dialog == null) {
+                dialog = new AlertDialog(P.mContext, P.mTheme);
+            }
             P.apply(dialog.mAlert);
             dialog.setCancelable(P.mCancelable);
             if (P.mCancelable) {
@@ -53,6 +72,11 @@ public class AlertDialog extends Dialog implements DialogInterface,
                 dialog.setOnDismissListener(P.mOnDismissListener);
             }
             return dialog;
+        }
+
+        public Builder setAlertDialogClass(Class<? extends AlertDialog> clazz) {
+            this.clazz = clazz;
+            return this;
         }
 
         public Context getContext() {
