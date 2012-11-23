@@ -43,9 +43,14 @@ public class AlertDialog extends Dialog implements DialogInterface,
             if (P.mCancelable) {
                 dialog.setCanceledOnTouchOutside(true);
             }
-            dialog.setOnCancelListener(P.mOnCancelListener);
+            if (P.mOnCancelListener != null) {
+                dialog.setOnCancelListener(P.mOnCancelListener);
+            }
             if (P.mOnKeyListener != null) {
                 dialog.setOnKeyListener(P.mOnKeyListener);
+            }
+            if (P.mOnDismissListener != null) {
+                dialog.setOnDismissListener(P.mOnDismissListener);
             }
             return dialog;
         }
@@ -189,6 +194,11 @@ public class AlertDialog extends Dialog implements DialogInterface,
 
         public Builder setOnCancelListener(OnCancelListener onCancelListener) {
             P.mOnCancelListener = onCancelListener;
+            return this;
+        }
+
+        public Builder setOnDismissListener(OnDismissListener onDismissListener) {
+            P.mOnDismissListener = onDismissListener;
             return this;
         }
 

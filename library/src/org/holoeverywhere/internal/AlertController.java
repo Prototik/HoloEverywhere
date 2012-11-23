@@ -73,6 +73,7 @@ public class AlertController {
         public DialogInterface.OnCancelListener mOnCancelListener;
         public DialogInterface.OnMultiChoiceClickListener mOnCheckboxClickListener;
         public DialogInterface.OnClickListener mOnClickListener;
+        public DialogInterface.OnDismissListener mOnDismissListener;
         public AdapterView.OnItemSelectedListener mOnItemSelectedListener;
         public DialogInterface.OnKeyListener mOnKeyListener;
         public OnPrepareListViewListener mOnPrepareListViewListener;

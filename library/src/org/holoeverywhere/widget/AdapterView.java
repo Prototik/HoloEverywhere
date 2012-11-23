@@ -12,7 +12,6 @@ import android.os.Parcelable;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.SparseArray;
-import android.view.ContextMenu;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewDebug;
@@ -21,20 +20,6 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Adapter;
 
 public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
-    public static class AdapterContextMenuInfo implements
-            ContextMenu.ContextMenuInfo {
-        public long id;
-
-        public int position;
-        public View targetView;
-
-        public AdapterContextMenuInfo(View targetView, int position, long id) {
-            this.targetView = targetView;
-            this.position = position;
-            this.id = id;
-        }
-    }
-
     class AdapterDataSetObserver extends DataSetObserver {
         private Parcelable mInstanceState = null;
 
@@ -671,7 +656,6 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
         if (isInFilterMode()) {
             empty = false;
         }
-
         if (empty) {
             if (mEmptyView != null) {
                 mEmptyView.setVisibility(View.VISIBLE);
