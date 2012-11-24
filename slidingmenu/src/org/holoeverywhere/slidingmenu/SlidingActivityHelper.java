@@ -3,7 +3,6 @@ package org.holoeverywhere.slidingmenu;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.widget.FrameLayout;
 
 import android.content.res.TypedArray;
 import android.os.Bundle;

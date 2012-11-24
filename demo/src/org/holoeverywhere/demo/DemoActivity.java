@@ -8,6 +8,7 @@ import java.util.List;
 import org.holoeverywhere.ArrayAdapter;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
+import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.DatePickerDialog;
 import org.holoeverywhere.app.Fragment;
@@ -21,7 +22,8 @@ import org.holoeverywhere.demo.fragments.OtherFragment;
 import org.holoeverywhere.demo.fragments.SettingsFragment;
 import org.holoeverywhere.demo.widget.DemoNavigationItem;
 import org.holoeverywhere.demo.widget.DemoNavigationWidget;
-import org.holoeverywhere.slidingmenu.SlidingActivity;
+import org.holoeverywhere.slidingmenu.AddonSlidingMenu;
+import org.holoeverywhere.slidingmenu.AddonSlidingMenu.SlidingMenuA;
 import org.holoeverywhere.slidingmenu.SlidingMenu;
 import org.holoeverywhere.widget.ListPopupWindow;
 import org.holoeverywhere.widget.NumberPicker;
@@ -39,7 +41,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class DemoActivity extends SlidingActivity {
+public class DemoActivity extends Activity {
     private final class ListNavigationAdapter extends ArrayAdapter<NavigationItem> implements
             OnItemClickListener {
         private int lastSelectedItem = 0;
@@ -83,8 +85,12 @@ public class DemoActivity extends SlidingActivity {
             replaceFragment(item.getFragment());
             getSupportActionBar().setSubtitle(item.title);
 
-            getSlidingMenu().showAbove(true);
+            requireSlidingMenu().getSlidingMenu().showAbove(true);
         }
+    }
+
+    public SlidingMenuA requireSlidingMenu() {
+        return requireAddon(AddonSlidingMenu.class).activity(this);
     }
 
     private static final class NavigationItem {
@@ -115,6 +121,8 @@ public class DemoActivity extends SlidingActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        requireSlidingMenu();
+        requireSherlock();
         super.onCreate(savedInstanceState);
         PlaybackService.onCreate();
 
@@ -131,9 +139,9 @@ public class DemoActivity extends SlidingActivity {
         DemoNavigationWidget navigationWidget = new DemoNavigationWidget(this);
         navigationWidget.init(adapter, adapter,
                 ThemeManager.getTheme(this), getIntent().getIntExtra(LIST_NAVIGATION_PAGE, 0));
-        setBehindContentView(navigationWidget);
+        requireSlidingMenu().setBehindContentView(navigationWidget);
 
-        final SlidingMenu si = getSlidingMenu();
+        final SlidingMenu si = requireSlidingMenu().getSlidingMenu();
         si.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         si.setBehindWidthRes(R.dimen.demo_menu_width);
         si.setShadowWidth(0);
@@ -157,7 +165,7 @@ public class DemoActivity extends SlidingActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                toggle();
+                requireSlidingMenu().toggle();
                 break;
             case R.id.disableMusic:
                 PlaybackService.disable();

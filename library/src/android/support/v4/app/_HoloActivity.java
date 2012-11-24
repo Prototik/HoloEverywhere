@@ -177,11 +177,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     }
 
     @Override
-    public boolean isABSSupport() {
-        return false;
-    }
-
-    @Override
     public boolean isForceThemeApply() {
         return forceThemeApply;
     }

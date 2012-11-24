@@ -220,11 +220,6 @@ public class Application extends android.app.Application implements
     }
 
     @Override
-    public boolean isABSSupport() {
-        return true;
-    }
-
-    @Override
     public void onTerminate() {
         LayoutInflater.clearInstances();
         super.onTerminate();

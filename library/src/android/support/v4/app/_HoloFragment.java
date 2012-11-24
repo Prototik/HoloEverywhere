@@ -109,11 +109,6 @@ public abstract class _HoloFragment extends Fragment implements IHoloFragment {
         return activity.getSystemService(name);
     }
 
-    @Override
-    public boolean isABSSupport() {
-        return false;
-    }
-
     public void onAttach(Activity activity) {
         super.onAttach(activity);
     }
@@ -158,12 +153,8 @@ public abstract class _HoloFragment extends Fragment implements IHoloFragment {
     @Override
     public final void onCreateOptionsMenu(android.view.Menu menu,
             android.view.MenuInflater inflater) {
-        if (isABSSupport()) {
-            onCreateOptionsMenu(new MenuWrapper(menu),
-                    activity.getSupportMenuInflater());
-        } else {
-            super.onCreateOptionsMenu(menu, inflater);
-        }
+        onCreateOptionsMenu(new MenuWrapper(menu),
+                activity.getSupportMenuInflater());
     }
 
     @Override
@@ -199,11 +190,7 @@ public abstract class _HoloFragment extends Fragment implements IHoloFragment {
 
     @Override
     public final boolean onOptionsItemSelected(android.view.MenuItem item) {
-        if (isABSSupport()) {
-            return onOptionsItemSelected(new MenuItemWrapper(item));
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
+        return onOptionsItemSelected(new MenuItemWrapper(item));
     }
 
     @Override
@@ -213,11 +200,7 @@ public abstract class _HoloFragment extends Fragment implements IHoloFragment {
 
     @Override
     public final void onPrepareOptionsMenu(android.view.Menu menu) {
-        if (isABSSupport()) {
-            onPrepareOptionsMenu(new MenuWrapper(menu));
-        } else {
-            super.onPrepareOptionsMenu(menu);
-        }
+        onPrepareOptionsMenu(new MenuWrapper(menu));
     }
 
     @Override

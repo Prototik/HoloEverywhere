@@ -21,6 +21,4 @@ public interface IHolo {
     public SharedPreferences getSharedPreferences(String name, int mode);
 
     public Application getSupportApplication();
-
-    public boolean isABSSupport();
 }
