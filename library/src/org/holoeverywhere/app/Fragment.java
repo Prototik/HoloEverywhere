@@ -11,11 +11,6 @@ import org.holoeverywhere.addons.IAddon;
 import android.support.v4.app._HoloFragment;
 
 public class Fragment extends _HoloFragment {
-    @Deprecated
-    public Activity getSherlockActivity() {
-        return (Activity) getActivity();
-    }
-
     private final List<IAddon<?, ?>> addons = new ArrayList<IAddon<?, ?>>();
 
     public void attachAddon(IAddon<?, ?> addon) {
@@ -36,6 +31,11 @@ public class Fragment extends _HoloFragment {
             }
         }
         return null;
+    }
+
+    @Deprecated
+    public Activity getSherlockActivity() {
+        return (Activity) getActivity();
     }
 
     public <T extends IAddon<?, ?>> T requireAddon(Class<T> clazz) {

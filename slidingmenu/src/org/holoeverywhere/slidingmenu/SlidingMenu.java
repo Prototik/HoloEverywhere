@@ -1,13 +1,13 @@
 
 package org.holoeverywhere.slidingmenu;
 
-import java.lang.reflect.Method;
-
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.slidingmenu.CustomViewAbove.OnPageChangeListener;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,9 +15,11 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build.VERSION;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -362,6 +364,23 @@ public class SlidingMenu extends RelativeLayout {
         return mViewAbove.getScrollScale();
     }
 
+    @SuppressLint("NewApi")
+    @SuppressWarnings("deprecation")
+    private int getDisplayWidth() {
+        int width;
+        final Display display = ((WindowManager) getContext().getSystemService(
+                Context.WINDOW_SERVICE))
+                .getDefaultDisplay();
+        if (VERSION.SDK_INT >= 13) {
+            Point point = new Point();
+            display.getSize(point);
+            width = point.x;
+        } else {
+            width = display.getWidth();
+        }
+        return width;
+    }
+
     /**
      * Gets the touch mode above.
      * 
@@ -520,24 +539,8 @@ public class SlidingMenu extends RelativeLayout {
      * 
      * @param i The width the Sliding Menu will open to, in pixels
      */
-    @SuppressWarnings("deprecation")
     public void setBehindWidth(int i) {
-        int width;
-        Display display = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE))
-                .getDefaultDisplay();
-        try {
-            Class<?> cls = Display.class;
-            Class<?>[] parameterTypes = {
-                    Point.class
-            };
-            Point parameter = new Point();
-            Method method = cls.getMethod("getSize", parameterTypes);
-            method.invoke(display, parameter);
-            width = parameter.x;
-        } catch (Exception e) {
-            width = display.getWidth();
-        }
-        setBehindOffset(width - i);
+        setBehindOffset(getDisplayWidth() - i);
     }
 
     /**
@@ -546,9 +549,18 @@ public class SlidingMenu extends RelativeLayout {
      * @param res The dimension resource id to be set as the behind width
      *            offset. The menu, when open, will open this wide.
      */
-    public void setBehindWidthRes(int res) {
-        int i = (int) getContext().getResources().getDimension(res);
-        setBehindWidth(i);
+    public void setBehindWidthRes(int id) {
+        Resources res = getContext().getResources();
+        TypedValue value = new TypedValue();
+        res.getValue(id, value, true);
+        switch (value.type) {
+            case TypedValue.TYPE_DIMENSION:
+                setBehindWidth(res.getDimensionPixelSize(id));
+                break;
+            case TypedValue.TYPE_FRACTION:
+                setBehindWidth((int) res.getFraction(id, getDisplayWidth(), 0));
+                break;
+        }
     }
 
     /**

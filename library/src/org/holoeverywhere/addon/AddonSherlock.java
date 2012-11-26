@@ -1,13 +1,13 @@
 
 package org.holoeverywhere.addon;
 
+import org.holoeverywhere.addon.AddonSherlock.SherlockA;
+import org.holoeverywhere.addon.AddonSherlock.SherlockF;
 import org.holoeverywhere.addons.IAddon;
 import org.holoeverywhere.addons.IAddonActivity;
 import org.holoeverywhere.addons.IAddonFragment;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Fragment;
-import org.holoeverywhere.addon.AddonSherlock.SherlockA;
-import org.holoeverywhere.addon.AddonSherlock.SherlockF;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -15,47 +15,26 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 
 import com.actionbarsherlock.ActionBarSherlock;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.ActionMode.Callback;
+import com.actionbarsherlock.view.MenuInflater;
 
 public class AddonSherlock extends IAddon<SherlockA, SherlockF> {
-    public static class SherlockF extends IAddonFragment {
-        public SherlockF(Fragment fragment) {
-            super(fragment);
-        }
-    }
-
     public static class SherlockA extends IAddonActivity {
-        public SherlockA(Activity activity) {
-            super(activity);
-        }
-
-        @Override
-        public void onPostCreate(Bundle savedInstanceState) {
-            getSherlock().dispatchPostCreate(savedInstanceState);
-        }
-
         private boolean mIgnoreNativeCreate = false;
+
         private boolean mIgnoreNativePrepare = false;
+
         private boolean mIgnoreNativeSelected = false;
         private ActionBarSherlock mSherlock;
 
-        protected ActionBarSherlock getSherlock() {
-            if (mSherlock == null) {
-                mSherlock = ActionBarSherlock.wrap(getActivity(),
-                        ActionBarSherlock.FLAG_DELEGATE);
-            }
-            return mSherlock;
-        }
-
-        public ActionBar getActionBar() {
-            return getSherlock().getActionBar();
+        public SherlockA(Activity activity) {
+            super(activity);
         }
 
         @Override
@@ -74,8 +53,26 @@ public class AddonSherlock extends IAddon<SherlockA, SherlockF> {
             return getSherlock().dispatchKeyEvent(event);
         }
 
+        public ActionBar getActionBar() {
+            return getSherlock().getActionBar();
+        }
+
         public MenuInflater getMenuInflater() {
             return getSherlock().getMenuInflater();
+        }
+
+        protected ActionBarSherlock getSherlock() {
+            if (mSherlock == null) {
+                mSherlock = ActionBarSherlock.wrap(getActivity(),
+                        ActionBarSherlock.FLAG_DELEGATE);
+            }
+            return mSherlock;
+        }
+
+        @Override
+        public boolean invalidateOptionsMenu() {
+            getSherlock().dispatchInvalidateOptionsMenu();
+            return true;
         }
 
         @Override
@@ -112,6 +109,7 @@ public class AddonSherlock extends IAddon<SherlockA, SherlockF> {
             return false;
         }
 
+        @Override
         public boolean onMenuOpened(int featureId, Menu menu) {
             return getSherlock().dispatchMenuOpened(featureId, menu);
         }
@@ -124,6 +122,11 @@ public class AddonSherlock extends IAddon<SherlockA, SherlockF> {
         @Override
         public void onPause() {
             getSherlock().dispatchPause();
+        }
+
+        @Override
+        public void onPostCreate(Bundle savedInstanceState) {
+            getSherlock().dispatchPostCreate(savedInstanceState);
         }
 
         @Override
@@ -159,6 +162,11 @@ public class AddonSherlock extends IAddon<SherlockA, SherlockF> {
         }
 
         @Override
+        public boolean requestWindowFeature(int featureId) {
+            return getSherlock().requestFeature(featureId);
+        }
+
+        @Override
         public boolean setContentView(View view, LayoutParams params) {
             getSherlock().setContentView(view, params);
             return true;
@@ -187,16 +195,11 @@ public class AddonSherlock extends IAddon<SherlockA, SherlockF> {
         public ActionMode startActionMode(Callback callback) {
             return getSherlock().startActionMode(callback);
         }
+    }
 
-        @Override
-        public boolean invalidateOptionsMenu() {
-            getSherlock().dispatchInvalidateOptionsMenu();
-            return true;
-        }
-
-        @Override
-        public boolean requestWindowFeature(int featureId) {
-            return getSherlock().requestFeature(featureId);
+    public static class SherlockF extends IAddonFragment {
+        public SherlockF(Fragment fragment) {
+            super(fragment);
         }
     }
 

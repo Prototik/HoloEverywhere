@@ -25,11 +25,13 @@ import android.widget.ListAdapter;
 public class AlertDialog extends Dialog implements DialogInterface,
         AlertDecorViewInstaller {
     public static class Builder {
-        private final AlertController.AlertParams P;
-        private Class<? extends AlertDialog> clazz;
         private static final Class<?>[] CONSTRUCTOR_SIGNATURE = {
                 Context.class, int.class
         };
+        private Class<? extends AlertDialog> clazz;
+        private final AlertController.AlertParams P;
+
+        private final String TAG = getClass().getSimpleName();
 
         public Builder(Context context) {
             this(context, AlertDialog.resolveDialogTheme(context, 0));
@@ -40,8 +42,6 @@ public class AlertDialog extends Dialog implements DialogInterface,
                     context, AlertDialog.resolveDialogTheme(context, theme)));
             P.mTheme = theme;
         }
-
-        private final String TAG = getClass().getSimpleName();
 
         public AlertDialog create() {
             AlertDialog dialog = null;
@@ -74,11 +74,6 @@ public class AlertDialog extends Dialog implements DialogInterface,
             return dialog;
         }
 
-        public Builder setAlertDialogClass(Class<? extends AlertDialog> clazz) {
-            this.clazz = clazz;
-            return this;
-        }
-
         public Context getContext() {
             return P.mContext;
         }
@@ -87,6 +82,11 @@ public class AlertDialog extends Dialog implements DialogInterface,
                 final OnClickListener listener) {
             P.mAdapter = adapter;
             P.mOnClickListener = listener;
+            return this;
+        }
+
+        public Builder setAlertDialogClass(Class<? extends AlertDialog> clazz) {
+            this.clazz = clazz;
             return this;
         }
 

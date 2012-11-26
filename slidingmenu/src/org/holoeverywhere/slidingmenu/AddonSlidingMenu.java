@@ -25,6 +25,11 @@ public class AddonSlidingMenu extends IAddon<SlidingMenuA, SlidingMenuF> {
             super(activity);
         }
 
+        @Override
+        public View findViewById(int id) {
+            return getHelper().findViewById(id);
+        }
+
         protected SlidingActivityHelper getHelper() {
             if (mHelper == null) {
                 mHelper = new SlidingActivityHelper(getActivity());
@@ -33,18 +38,18 @@ public class AddonSlidingMenu extends IAddon<SlidingMenuA, SlidingMenuF> {
         }
 
         @Override
-        public boolean onKeyUp(int keyCode, KeyEvent event) {
-            return getHelper().onKeyUp(keyCode, event);
-        }
-
-        @Override
-        public View findViewById(int id) {
-            return getHelper().findViewById(id);
+        public SlidingMenu getSlidingMenu() {
+            return getHelper().getSlidingMenu();
         }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             getHelper().onCreate(savedInstanceState);
+        }
+
+        @Override
+        public boolean onKeyUp(int keyCode, KeyEvent event) {
+            return getHelper().onKeyUp(keyCode, event);
         }
 
         @Override
@@ -55,21 +60,6 @@ public class AddonSlidingMenu extends IAddon<SlidingMenuA, SlidingMenuF> {
         @Override
         public void onSaveInstanceState(Bundle outState) {
             getHelper().onSaveInstanceState(outState);
-        }
-
-        @Override
-        public boolean setContentView(View view, LayoutParams params) {
-            getHelper().registerAboveContentView(view, params);
-            return super.setContentView(view, params);
-        }
-
-        public void toggle() {
-            getHelper().toggle();
-        }
-
-        @Override
-        public SlidingMenu getSlidingMenu() {
-            return getHelper().getSlidingMenu();
         }
 
         @Override
@@ -89,6 +79,12 @@ public class AddonSlidingMenu extends IAddon<SlidingMenuA, SlidingMenuF> {
         }
 
         @Override
+        public boolean setContentView(View view, LayoutParams params) {
+            getHelper().registerAboveContentView(view, params);
+            return super.setContentView(view, params);
+        }
+
+        @Override
         public void setSlidingActionBarEnabled(boolean slidingActionBarEnabled) {
             getHelper().setSlidingActionBarEnabled(slidingActionBarEnabled);
         }
@@ -101,6 +97,11 @@ public class AddonSlidingMenu extends IAddon<SlidingMenuA, SlidingMenuF> {
         @Override
         public void showBehind() {
             getHelper().showBehind();
+        }
+
+        @Override
+        public void toggle() {
+            getHelper().toggle();
         }
     }
 

@@ -85,12 +85,8 @@ public class DemoActivity extends Activity {
             replaceFragment(item.getFragment());
             getSupportActionBar().setSubtitle(item.title);
 
-            requireSlidingMenu().getSlidingMenu().showAbove(true);
+            slidingMenu.showAbove(true);
         }
-    }
-
-    public SlidingMenuA requireSlidingMenu() {
-        return requireAddon(AddonSlidingMenu.class).activity(this);
     }
 
     private static final class NavigationItem {
@@ -116,15 +112,23 @@ public class DemoActivity extends Activity {
     }
 
     private static final String LIST_NAVIGATION_PAGE = "listNavigationPage";
+
     private ListNavigationAdapter adapter;
     private WeakReference<AlertDialogFragment> alertDialog;
+    private SlidingMenu slidingMenu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        requireSlidingMenu();
-        requireSherlock();
+        Holo config = Holo.defaultConfig();
+        config.requireSlidingMenu = true;
+        init(config);
         super.onCreate(savedInstanceState);
         PlaybackService.onCreate();
+
+        slidingMenu = requireSlidingMenu().getSlidingMenu();
+        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+        slidingMenu.setBehindWidthRes(R.dimen.demo_menu_width);
+        slidingMenu.setShadowWidth(0);
 
         if (adapter == null) {
             adapter = new ListNavigationAdapter();
@@ -137,14 +141,9 @@ public class DemoActivity extends Activity {
         adapter.add(AboutFragment.class, R.string.about);
 
         DemoNavigationWidget navigationWidget = new DemoNavigationWidget(this);
+        requireSlidingMenu().setBehindContentView(navigationWidget);
         navigationWidget.init(adapter, adapter,
                 ThemeManager.getTheme(this), getIntent().getIntExtra(LIST_NAVIGATION_PAGE, 0));
-        requireSlidingMenu().setBehindContentView(navigationWidget);
-
-        final SlidingMenu si = requireSlidingMenu().getSlidingMenu();
-        si.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-        si.setBehindWidthRes(R.dimen.demo_menu_width);
-        si.setShadowWidth(0);
 
         final ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.library_name);
@@ -208,6 +207,10 @@ public class DemoActivity extends Activity {
             ft.addToBackStack(backStackName);
         }
         ft.commit();
+    }
+
+    public SlidingMenuA requireSlidingMenu() {
+        return requireAddon(AddonSlidingMenu.class).activity(this);
     }
 
     public void setDarkTheme(View v) {

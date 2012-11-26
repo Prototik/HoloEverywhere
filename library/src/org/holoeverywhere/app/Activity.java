@@ -26,55 +26,6 @@ import com.actionbarsherlock.view.MenuItem;
 public abstract class Activity extends _HoloActivity {
     private final List<IAddon<?, ?>> addons = new ArrayList<IAddon<?, ?>>();
 
-    public void attachAddon(IAddon<?, ?> addon) {
-        if (!addons.contains(addon)) {
-            addons.add(addon);
-        }
-    }
-
-    public void detachAddon(IAddon<?, ?> addon) {
-        addons.remove(addon);
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T extends IAddon<?, ?>> T findAddon(Class<T> clazz) {
-        for (IAddon<?, ?> addon : addons) {
-            if (addon.getClass().isAssignableFrom(clazz)) {
-                return (T) addon;
-            }
-        }
-        return null;
-    }
-
-    public <T extends IAddon<?, ?>> T requireAddon(Class<T> clazz) {
-        T t = findAddon(clazz);
-        if (t == null) {
-            try {
-                t = clazz.newInstance();
-                t.addon(this);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return t;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        for (IAddon<?, ?> addon : addons) {
-            addon.activity(this).onCreate(savedInstanceState);
-        }
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        for (IAddon<?, ?> addon : addons) {
-            addon.activity(this).onPostCreate(savedInstanceState);
-        }
-        super.onPostCreate(savedInstanceState);
-    }
-
     @Override
     public void addContentView(View view, LayoutParams params) {
         view = prepareDecorView(view);
@@ -84,6 +35,12 @@ public abstract class Activity extends _HoloActivity {
             }
         }
         super.addContentView(view, params);
+    }
+
+    public void attachAddon(IAddon<?, ?> addon) {
+        if (!addons.contains(addon)) {
+            addons.add(addon);
+        }
     }
 
     @Override
@@ -96,6 +53,10 @@ public abstract class Activity extends _HoloActivity {
         super.closeOptionsMenu();
     }
 
+    public void detachAddon(IAddon<?, ?> addon) {
+        addons.remove(addon);
+    }
+
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         for (IAddon<?, ?> addon : addons) {
@@ -106,13 +67,30 @@ public abstract class Activity extends _HoloActivity {
         return super.dispatchKeyEvent(event);
     }
 
+    @SuppressWarnings("unchecked")
+    public <T extends IAddon<?, ?>> T findAddon(Class<T> clazz) {
+        for (IAddon<?, ?> addon : addons) {
+            if (addon.getClass().isAssignableFrom(clazz)) {
+                return (T) addon;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public View findViewById(int id) {
+        View view;
+        for (IAddon<?, ?> addon : addons) {
+            if ((view = addon.activity(this).findViewById(id)) != null) {
+                return view;
+            }
+        }
+        return super.findViewById(id);
+    }
+
     @Override
     public ActionBar getSupportActionBar() {
         return requireSherlock().getActionBar();
-    }
-
-    public SherlockA requireSherlock() {
-        return requireAddon(AddonSherlock.class).activity(this);
     }
 
     @Override
@@ -137,42 +115,21 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        for (IAddon<?, ?> addon : addons) {
+            addon.activity(this).onCreate(savedInstanceState);
+        }
+    }
+
+    @Override
     public final boolean onCreateOptionsMenu(android.view.Menu menu) {
         return onCreateOptionsMenu(new MenuWrapper(menu));
     }
 
     @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        for (IAddon<?, ?> addon : addons) {
-            if (addon.activity(this).onKeyUp(keyCode, event)) {
-                return true;
-            }
-        }
-        return super.onKeyUp(keyCode, event);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        for (IAddon<?, ?> addon : addons) {
-            addon.activity(this).onSaveInstanceState(outState);
-        }
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
-    }
-
-    @Override
-    public View findViewById(int id) {
-        View view;
-        for (IAddon<?, ?> addon : addons) {
-            if ((view = addon.activity(this).findViewById(id)) != null) {
-                return view;
-            }
-        }
-        return super.findViewById(id);
     }
 
     @Override
@@ -191,6 +148,16 @@ public abstract class Activity extends _HoloActivity {
             addon.activity(this).onDestroy();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        for (IAddon<?, ?> addon : addons) {
+            if (addon.activity(this).onKeyUp(keyCode, event)) {
+                return true;
+            }
+        }
+        return super.onKeyUp(keyCode, event);
     }
 
     @Override
@@ -241,6 +208,14 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        for (IAddon<?, ?> addon : addons) {
+            addon.activity(this).onPostCreate(savedInstanceState);
+        }
+        super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
     protected void onPostResume() {
         super.onPostResume();
         for (IAddon<?, ?> addon : addons) {
@@ -267,6 +242,14 @@ public abstract class Activity extends _HoloActivity {
             }
         }
         return super.onPreparePanel(featureId, view, menu);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        for (IAddon<?, ?> addon : addons) {
+            addon.activity(this).onSaveInstanceState(outState);
+        }
     }
 
     @Override
@@ -304,6 +287,23 @@ public abstract class Activity extends _HoloActivity {
             }
         }
         requestWindowFeature(featureId);
+    }
+
+    public <T extends IAddon<?, ?>> T requireAddon(Class<T> clazz) {
+        T t = findAddon(clazz);
+        if (t == null) {
+            try {
+                t = clazz.newInstance();
+                t.addon(this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return t;
+    }
+
+    public SherlockA requireSherlock() {
+        return requireAddon(AddonSherlock.class).activity(this);
     }
 
     @Override

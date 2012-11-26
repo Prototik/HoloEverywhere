@@ -6,6 +6,8 @@ import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 import org.holoeverywhere.SystemServiceManager;
 import org.holoeverywhere.ThemeManager;
+import org.holoeverywhere.addons.IAddon;
+import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
 import org.holoeverywhere.app.Application.Config;
 import org.holoeverywhere.app.Application.Config.PreferenceImpl;
@@ -46,18 +48,19 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         }
 
         public boolean addFactoryToInflater = true;
-
+        public boolean disableSherlock = false;
         public boolean forceThemeApply = false;
-
         public boolean ignoreThemeCheck = false;
-
         public int layout = -1;
+        public boolean requireSlidingMenu = false;
 
         protected Holo onWrap(Holo holo) {
             addFactoryToInflater = holo.addFactoryToInflater;
             forceThemeApply = holo.forceThemeApply;
             ignoreThemeCheck = holo.ignoreThemeCheck;
             layout = holo.layout;
+            disableSherlock = holo.disableSherlock;
+            requireSlidingMenu = holo.requireSlidingMenu;
             return this;
         }
     }
@@ -267,9 +270,25 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         LayoutInflater.onDestroy(this);
     }
 
+    @SuppressWarnings("unchecked")
     protected void onInit(Holo config) {
         if (config.addFactoryToInflater) {
             getLayoutInflater().addFactory(this, 0);
+        }
+        if (this instanceof Activity) {
+            Activity activity = (Activity) this;
+            if (config.requireSlidingMenu) {
+                String className = getConfig().getHoloEverywherePackage()
+                        + ".slidingmenu.AddonSlidingMenu";
+                try {
+                    activity.requireAddon((Class<? extends IAddon<?, ?>>) Class.forName(className));
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException("Failed to init SlidingMenu addon", e);
+                }
+            }
+            if (!config.disableSherlock) {
+                activity.requireSherlock();
+            }
         }
         boolean forceThemeApply = isForceThemeApply();
         if (config.forceThemeApply) {
