@@ -4,19 +4,22 @@
             "include": [
                 "BaseDark"
             ], 
-            "parent": "Theme.Sherlock"
+            "parent": "Theme.Sherlock",
+            "holoActionBarTheme": "@style/Holo.Theme"
         }, 
         "Holo.Theme.Light": {
             "include": [
                 "BaseLight"
             ], 
-            "parent": "Theme.Sherlock.Light"
+            "parent": "Theme.Sherlock.Light",
+            "holoActionBarTheme": "@style/Holo.Theme.Light"
         }, 
         "Holo.Theme.Light.DarkActionBar": {
             "include": [
                 "BaseLight"
             ], 
-            "parent": "Theme.Sherlock.Light.DarkActionBar"
+            "parent": "Theme.Sherlock.Light.DarkActionBar",
+            "holoActionBarTheme": "@style/Holo.Theme"
         }
     }, 
     "include": [

@@ -733,6 +733,7 @@
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_dark</item>
         <item name="android:seekBarStyle">@style/Holo.SeekBar</item>
         <!--End of block HoloDark-->
+        <item name="holoActionBarTheme">@style/Holo.Theme</item>
     </style>
     <style name="Holo.Theme.Dialog">
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -927,6 +928,7 @@
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
         <item name="android:seekBarStyle">@style/Holo.SeekBar.Light</item>
         <!--End of block HoloLight-->
+        <item name="holoActionBarTheme">@style/Holo.Theme.Light</item>
     </style>
     <style name="Holo.Theme.Light.DarkActionBar" parent="Theme.Sherlock.Light.DarkActionBar">
         <!--Include block: HoloLight-->
@@ -1060,6 +1062,7 @@
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
         <item name="android:seekBarStyle">@style/Holo.SeekBar.Light</item>
         <!--End of block HoloLight-->
+        <item name="holoActionBarTheme">@style/Holo.Theme</item>
     </style>
     <style name="Holo.Theme.Light.DarkActionBar.Fullscreen">
         <!--Include block: Fullscreen-->

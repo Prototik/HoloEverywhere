@@ -15,6 +15,7 @@ import org.holoeverywhere.preference.PreferenceManager;
 import org.holoeverywhere.preference.SharedPreferences;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -23,7 +24,9 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
@@ -48,10 +51,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         }
 
         public boolean addFactoryToInflater = true;
-        public boolean disableSherlock = false;
         public boolean forceThemeApply = false;
         public boolean ignoreThemeCheck = false;
         public int layout = -1;
+        public boolean requireSherlock = true;
         public boolean requireSlidingMenu = false;
 
         protected Holo onWrap(Holo holo) {
@@ -59,7 +62,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
             forceThemeApply = holo.forceThemeApply;
             ignoreThemeCheck = holo.ignoreThemeCheck;
             layout = holo.layout;
-            disableSherlock = holo.disableSherlock;
+            requireSherlock = holo.requireSherlock;
             requireSlidingMenu = holo.requireSlidingMenu;
             return this;
         }
@@ -76,10 +79,12 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         }
     }
 
+    private Context actionBarContext;
     private Holo config;
     private boolean forceThemeApply = false;
     private int lastThemeResourceId = 0;
     private final String TAG = getClass().getSimpleName();
+
     private boolean wasInited = false;
 
     @Override
@@ -153,6 +158,15 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode) {
         return PreferenceManager.wrap(this, name, mode);
+    }
+
+    public Context getSupportActionBarContext() {
+        if (actionBarContext == null) {
+            TypedValue value = new TypedValue();
+            getTheme().resolveAttribute(R.attr.holoActionBarTheme, value, true);
+            actionBarContext = new ContextThemeWrapper(this, value.resourceId);
+        }
+        return actionBarContext;
     }
 
     @Override
@@ -286,7 +300,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
                     throw new RuntimeException("Failed to init SlidingMenu addon", e);
                 }
             }
-            if (!config.disableSherlock) {
+            if (config.requireSherlock) {
                 activity.requireSherlock();
             }
         }
@@ -363,6 +377,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     @Override
     public void setTheme(int resid) {
         lastThemeResourceId = resid;
+        actionBarContext = null;
         super.setTheme(resid);
     }
 
