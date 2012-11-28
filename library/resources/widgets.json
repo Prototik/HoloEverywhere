@@ -224,6 +224,10 @@
             "android:indicatorRight": "?android:attr/expandableListPreferredItemIndicatorRight", 
             "parent": "Holo.ListView.Light"
         }, 
+        "Holo.GridView": {
+            "android:listSelector": "?selectableItemBackground", 
+            "parent": "@android:style/Widget.AbsListView"
+        }, 
         "Holo.ImageButton": {
             "android:background": "@drawable/btn_default_holo_dark", 
             "android:clickable": "true", 

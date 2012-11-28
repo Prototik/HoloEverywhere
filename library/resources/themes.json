@@ -5,6 +5,7 @@
             "android:activatedBackgroundIndicator": "?activatedBackgroundIndicator", 
             "android:divider": "?android:listDivider", 
             "android:dropDownItemStyle": "@style/Holo.DropDownItem", 
+            "android:gridViewStyle": "@style/Holo.GridView", 
             "android:progressBarStyle": "@style/Holo.ProgressBar", 
             "android:progressBarStyleLarge": "@style/Holo.ProgressBar.Large", 
             "android:progressBarStyleSmall": "@style/Holo.ProgressBar.Small", 

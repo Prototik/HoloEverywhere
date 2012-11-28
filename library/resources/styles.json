@@ -1,11 +1,11 @@
 {
     "data": {
         "Holo.Theme": {
+            "holoActionBarTheme": "@style/Holo.Theme", 
             "include": [
                 "HoloDark"
             ], 
-            "parent": "Theme.Sherlock",
-            "holoActionBarTheme": "@style/Holo.Theme"
+            "parent": "Theme.Sherlock"
         }, 
         "Holo.Theme.Fullscreen": {
             "include": [
@@ -13,18 +13,18 @@
             ]
         }, 
         "Holo.Theme.Light": {
+            "holoActionBarTheme": "@style/Holo.Theme.Light", 
             "include": [
                 "HoloLight"
             ], 
-            "parent": "Theme.Sherlock.Light",
-            "holoActionBarTheme": "@style/Holo.Theme.Light"
+            "parent": "Theme.Sherlock.Light"
         }, 
         "Holo.Theme.Light.DarkActionBar": {
+            "holoActionBarTheme": "@style/Holo.Theme", 
             "include": [
                 "HoloLight"
             ], 
-            "parent": "Theme.Sherlock.Light.DarkActionBar",
-            "holoActionBarTheme": "@style/Holo.Theme"
+            "parent": "Theme.Sherlock.Light.DarkActionBar"
         }, 
         "Holo.Theme.Light.DarkActionBar.Fullscreen": {
             "include": [
