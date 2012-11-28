@@ -1,20 +1,23 @@
 
-package org.holoeverywhere.slidingmenu;
+package org.holoeverywhere.addon;
 
+import org.holoeverywhere.addon.SlidingMenu.SlidingMenuA;
+import org.holoeverywhere.addon.SlidingMenu.SlidingMenuF;
 import org.holoeverywhere.addons.IAddon;
 import org.holoeverywhere.addons.IAddonActivity;
 import org.holoeverywhere.addons.IAddonFragment;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Fragment;
-import org.holoeverywhere.slidingmenu.AddonSlidingMenu.SlidingMenuA;
-import org.holoeverywhere.slidingmenu.AddonSlidingMenu.SlidingMenuF;
+import org.holoeverywhere.slidingmenu.SlidingActivityBase;
+import org.holoeverywhere.slidingmenu.SlidingActivityHelper;
+import org.holoeverywhere.slidingmenu.SlidingMenuView;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
-public class AddonSlidingMenu extends IAddon<SlidingMenuA, SlidingMenuF> {
+public class SlidingMenu extends IAddon<SlidingMenuA, SlidingMenuF> {
     public static class SlidingMenuA extends IAddonActivity implements SlidingActivityBase {
         static {
             SlidingActivityHelper.init();
@@ -38,7 +41,7 @@ public class AddonSlidingMenu extends IAddon<SlidingMenuA, SlidingMenuF> {
         }
 
         @Override
-        public SlidingMenu getSlidingMenu() {
+        public SlidingMenuView getSlidingMenu() {
             return getHelper().getSlidingMenu();
         }
 

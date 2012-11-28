@@ -6,7 +6,6 @@ import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 import org.holoeverywhere.SystemServiceManager;
 import org.holoeverywhere.ThemeManager;
-import org.holoeverywhere.addons.IAddon;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
 import org.holoeverywhere.app.Application.Config;
@@ -284,7 +283,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         LayoutInflater.onDestroy(this);
     }
 
-    @SuppressWarnings("unchecked")
     protected void onInit(Holo config) {
         if (config.addFactoryToInflater) {
             getLayoutInflater().addFactory(this, 0);
@@ -292,13 +290,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         if (this instanceof Activity) {
             Activity activity = (Activity) this;
             if (config.requireSlidingMenu) {
-                String className = getConfig().getHoloEverywherePackage()
-                        + ".slidingmenu.AddonSlidingMenu";
-                try {
-                    activity.requireAddon((Class<? extends IAddon<?, ?>>) Class.forName(className));
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException("Failed to init SlidingMenu addon", e);
-                }
+                activity.requireAddon(Activity.ADDON_SLIDING_MENU);
             }
             if (config.requireSherlock) {
                 activity.requireSherlock();

@@ -1,7 +1,7 @@
 
 package org.holoeverywhere.slidingmenu;
 
-import org.holoeverywhere.slidingmenu.SlidingMenu.CanvasTransformer;
+import org.holoeverywhere.slidingmenu.SlidingMenuView.CanvasTransformer;
 
 import android.graphics.Canvas;
 import android.view.animation.Interpolator;

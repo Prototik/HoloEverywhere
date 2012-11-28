@@ -13,7 +13,7 @@ import android.view.ViewGroup.LayoutParams;
 
 public class SlidingActivityHelper {
     static {
-        LayoutInflater.remap(SlidingMenu.class);
+        LayoutInflater.remap(SlidingMenuView.class);
     }
 
     // NOP for execute static code block
@@ -29,7 +29,7 @@ public class SlidingActivityHelper {
 
     private boolean mOnPostCreateCalled = false;
 
-    private SlidingMenu mSlidingMenu;
+    private SlidingMenuView mSlidingMenu;
 
     private View mViewAbove;
 
@@ -67,7 +67,7 @@ public class SlidingActivityHelper {
      * 
      * @return the SlidingMenu associated with this activity.
      */
-    public SlidingMenu getSlidingMenu() {
+    public SlidingMenuView getSlidingMenu() {
         return mSlidingMenu;
     }
 
@@ -78,7 +78,7 @@ public class SlidingActivityHelper {
      * @param savedInstanceState the saved instance state (unused)
      */
     public void onCreate(Bundle savedInstanceState) {
-        mSlidingMenu = (SlidingMenu) LayoutInflater.from(mActivity).inflate(
+        mSlidingMenu = (SlidingMenuView) LayoutInflater.from(mActivity).inflate(
                 R.layout.slidingmenumain, null);
     }
 

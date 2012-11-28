@@ -11,7 +11,7 @@ public interface SlidingActivityBase {
      * 
      * @return the SlidingMenu associated with this activity.
      */
-    public SlidingMenu getSlidingMenu();
+    public SlidingMenuView getSlidingMenu();
 
     /**
      * Set the behind view content from a layout resource. The resource will be

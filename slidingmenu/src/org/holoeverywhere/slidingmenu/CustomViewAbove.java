@@ -2,8 +2,8 @@
 package org.holoeverywhere.slidingmenu;
 
 import org.holoeverywhere.internal._ViewGroup;
-import org.holoeverywhere.slidingmenu.SlidingMenu.OnClosedListener;
-import org.holoeverywhere.slidingmenu.SlidingMenu.OnOpenedListener;
+import org.holoeverywhere.slidingmenu.SlidingMenuView.OnClosedListener;
+import org.holoeverywhere.slidingmenu.SlidingMenuView.OnOpenedListener;
 import org.holoeverywhere.widget.FrameLayout;
 import org.holoeverywhere.widget.LinearLayout;
 import org.holoeverywhere.widget.Scroller;
@@ -213,9 +213,9 @@ public class CustomViewAbove extends _ViewGroup {
 
     private final int mSlidingMenuThreshold = 20;
 
-    protected int mTouchMode = SlidingMenu.TOUCHMODE_MARGIN;
+    protected int mTouchMode = SlidingMenuView.TOUCHMODE_MARGIN;
 
-    private int mTouchModeBehind = SlidingMenu.TOUCHMODE_MARGIN;
+    private int mTouchModeBehind = SlidingMenuView.TOUCHMODE_MARGIN;
 
     // private boolean mIsUnableToDrag;
     private int mTouchSlop;
@@ -1311,22 +1311,22 @@ public class CustomViewAbove extends _ViewGroup {
         int x = (int) (ev.getX() + mScrollX);
         if (isMenuOpen()) {
             switch (mTouchModeBehind) {
-                case SlidingMenu.TOUCHMODE_FULLSCREEN:
+                case SlidingMenuView.TOUCHMODE_FULLSCREEN:
                     return true;
-                case SlidingMenu.TOUCHMODE_NONE:
+                case SlidingMenuView.TOUCHMODE_NONE:
                     return false;
-                case SlidingMenu.TOUCHMODE_MARGIN:
+                case SlidingMenuView.TOUCHMODE_MARGIN:
                     return x >= getContentLeft();
                 default:
                     return false;
             }
         } else {
             switch (mTouchMode) {
-                case SlidingMenu.TOUCHMODE_FULLSCREEN:
+                case SlidingMenuView.TOUCHMODE_FULLSCREEN:
                     return true;
-                case SlidingMenu.TOUCHMODE_NONE:
+                case SlidingMenuView.TOUCHMODE_NONE:
                     return false;
-                case SlidingMenu.TOUCHMODE_MARGIN:
+                case SlidingMenuView.TOUCHMODE_MARGIN:
                     int pixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                             mSlidingMenuThreshold, getResources().getDisplayMetrics());
                     int left = getContentLeft();

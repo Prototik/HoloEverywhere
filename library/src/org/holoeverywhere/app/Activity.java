@@ -4,8 +4,8 @@ package org.holoeverywhere.app;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.holoeverywhere.addon.AddonSherlock;
-import org.holoeverywhere.addon.AddonSherlock.SherlockA;
+import org.holoeverywhere.addon.Sherlock;
+import org.holoeverywhere.addon.Sherlock.SherlockA;
 import org.holoeverywhere.addons.IAddon;
 
 import android.content.res.Configuration;
@@ -24,6 +24,9 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class Activity extends _HoloActivity {
+    public static final String ADDON_SHERLOCK = "Sherlock";
+
+    public static final String ADDON_SLIDING_MENU = "SlidingMenu";
     private final List<IAddon<?, ?>> addons = new ArrayList<IAddon<?, ?>>();
 
     @Override
@@ -302,8 +305,22 @@ public abstract class Activity extends _HoloActivity {
         return t;
     }
 
+    @SuppressWarnings("unchecked")
+    public void requireAddon(String name) {
+        if (name == null) {
+            return;
+        }
+        String className = getConfig().getHoloEverywherePackage()
+                + ".addon." + name;
+        try {
+            requireAddon((Class<? extends IAddon<?, ?>>) Class.forName(className));
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Failed to init SlidingMenu addon", e);
+        }
+    }
+
     public SherlockA requireSherlock() {
-        return requireAddon(AddonSherlock.class).activity(this);
+        return requireAddon(Sherlock.class).activity(this);
     }
 
     @Override

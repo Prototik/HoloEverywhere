@@ -1,8 +1,8 @@
 
 package org.holoeverywhere.addon;
 
-import org.holoeverywhere.addon.AddonSherlock.SherlockA;
-import org.holoeverywhere.addon.AddonSherlock.SherlockF;
+import org.holoeverywhere.addon.Sherlock.SherlockA;
+import org.holoeverywhere.addon.Sherlock.SherlockF;
 import org.holoeverywhere.addons.IAddon;
 import org.holoeverywhere.addons.IAddonActivity;
 import org.holoeverywhere.addons.IAddonFragment;
@@ -24,7 +24,7 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.ActionMode.Callback;
 import com.actionbarsherlock.view.MenuInflater;
 
-public class AddonSherlock extends IAddon<SherlockA, SherlockF> {
+public class Sherlock extends IAddon<SherlockA, SherlockF> {
     public static class SherlockA extends IAddonActivity {
         private boolean mIgnoreNativeCreate = false;
 

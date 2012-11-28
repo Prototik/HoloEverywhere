@@ -8,6 +8,8 @@ import java.util.List;
 import org.holoeverywhere.ArrayAdapter;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
+import org.holoeverywhere.addon.SlidingMenu;
+import org.holoeverywhere.addon.SlidingMenu.SlidingMenuA;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.DatePickerDialog;
@@ -22,9 +24,7 @@ import org.holoeverywhere.demo.fragments.OtherFragment;
 import org.holoeverywhere.demo.fragments.SettingsFragment;
 import org.holoeverywhere.demo.widget.DemoNavigationItem;
 import org.holoeverywhere.demo.widget.DemoNavigationWidget;
-import org.holoeverywhere.slidingmenu.AddonSlidingMenu;
-import org.holoeverywhere.slidingmenu.AddonSlidingMenu.SlidingMenuA;
-import org.holoeverywhere.slidingmenu.SlidingMenu;
+import org.holoeverywhere.slidingmenu.SlidingMenuView;
 import org.holoeverywhere.widget.ListPopupWindow;
 import org.holoeverywhere.widget.NumberPicker;
 import org.holoeverywhere.widget.Toast;
@@ -115,7 +115,7 @@ public class DemoActivity extends Activity {
 
     private ListNavigationAdapter adapter;
     private WeakReference<AlertDialogFragment> alertDialog;
-    private SlidingMenu slidingMenu;
+    private SlidingMenuView slidingMenu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,7 +126,7 @@ public class DemoActivity extends Activity {
         PlaybackService.onCreate();
 
         slidingMenu = requireSlidingMenu().getSlidingMenu();
-        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+        slidingMenu.setTouchModeAbove(SlidingMenuView.TOUCHMODE_MARGIN);
         slidingMenu.setBehindWidthRes(R.dimen.demo_menu_width);
         slidingMenu.setShadowWidth(0);
 
@@ -210,7 +210,7 @@ public class DemoActivity extends Activity {
     }
 
     public SlidingMenuA requireSlidingMenu() {
-        return requireAddon(AddonSlidingMenu.class).activity(this);
+        return requireAddon(SlidingMenu.class).activity(this);
     }
 
     public void setDarkTheme(View v) {

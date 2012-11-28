@@ -28,7 +28,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
-public class SlidingMenu extends RelativeLayout {
+public class SlidingMenuView extends RelativeLayout {
 
     /**
      * The Interface CanvasTransformer.
@@ -177,7 +177,7 @@ public class SlidingMenu extends RelativeLayout {
      * @param sm the SlidingMenu to be attached
      * @param slidingTitle whether the title is slid with the above view
      */
-    public static void attachSlidingMenu(Activity activity, SlidingMenu sm, boolean slidingTitle) {
+    public static void attachSlidingMenu(Activity activity, SlidingMenuView sm, boolean slidingTitle) {
 
         if (sm.getParent() != null) {
             throw new IllegalStateException("SlidingMenu cannot be attached to another view when" +
@@ -223,7 +223,7 @@ public class SlidingMenu extends RelativeLayout {
      * 
      * @param context the associated Context
      */
-    public SlidingMenu(Context context) {
+    public SlidingMenuView(Context context) {
         this(context, null);
     }
 
@@ -233,7 +233,7 @@ public class SlidingMenu extends RelativeLayout {
      * @param context the associated Context
      * @param attrs the attrs
      */
-    public SlidingMenu(Context context, AttributeSet attrs) {
+    public SlidingMenuView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
@@ -244,7 +244,7 @@ public class SlidingMenu extends RelativeLayout {
      * @param attrs the attrs
      * @param defStyle the def style
      */
-    public SlidingMenu(Context context, AttributeSet attrs, int defStyle) {
+    public SlidingMenuView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         LayoutParams behindParams = new LayoutParams(
