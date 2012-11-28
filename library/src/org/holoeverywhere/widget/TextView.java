@@ -74,6 +74,10 @@ public class TextView extends android.widget.TextView {
     }
 
     private void updateTextState() {
+        if (originalText == null) {
+            super.setText(null, originalType);
+            return;
+        }
         super.setText(allCaps ? originalText.toString().toUpperCase()
                 : originalText, originalType);
     }
