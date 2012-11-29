@@ -18,6 +18,8 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
         <item name="listPreferredItemHeightSmall">48dp</item>
+        <item name="listPreferredItemPaddingLeft">8dp</item>
+        <item name="listPreferredItemPaddingRight">8dp</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
@@ -83,6 +85,8 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
         <item name="listPreferredItemHeightSmall">48dp</item>
+        <item name="listPreferredItemPaddingLeft">8dp</item>
+        <item name="listPreferredItemPaddingRight">8dp</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
@@ -146,6 +150,8 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
         <item name="listPreferredItemHeightSmall">48dp</item>
+        <item name="listPreferredItemPaddingLeft">8dp</item>
+        <item name="listPreferredItemPaddingRight">8dp</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>

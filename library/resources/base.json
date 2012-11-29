@@ -17,6 +17,8 @@
             "listPreferredItemHeight": "64dip", 
             "listPreferredItemHeightLarge": "80dp", 
             "listPreferredItemHeightSmall": "48dp", 
+            "listPreferredItemPaddingLeft": "8dp", 
+            "listPreferredItemPaddingRight": "8dp", 
             "numberPickerInputTextStyle": "@style/Holo.EditText.NumberPickerInputText", 
             "numberPickerPreferenceStyle": "@style/Holo.PreferenceDialog.NumberPickerPreference", 
             "numberPickerStyle": "@style/Holo.NumberPicker", 

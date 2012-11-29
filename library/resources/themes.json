@@ -14,9 +14,7 @@
             "android:scrollbarSize": "10dp", 
             "android:scrollbarTrackHorizontal": "@null", 
             "android:scrollbarTrackVertical": "@null", 
-            "android:spinnerItemStyle": "@style/Holo.TextView.SpinnerItem", 
-            "listPreferredItemPaddingLeft": "8dp", 
-            "listPreferredItemPaddingRight": "8dp"
+            "android:spinnerItemStyle": "@style/Holo.TextView.SpinnerItem"
         }, 
         "HoloDark": {
             "android:buttonStyle": "@style/Holo.Button", 

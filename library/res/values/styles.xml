@@ -622,6 +622,8 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
         <item name="listPreferredItemHeightSmall">48dp</item>
+        <item name="listPreferredItemPaddingLeft">8dp</item>
+        <item name="listPreferredItemPaddingRight">8dp</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
@@ -681,8 +683,6 @@
         <item name="android:scrollbarTrackHorizontal">@null</item>
         <item name="android:scrollbarTrackVertical">@null</item>
         <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
-        <item name="listPreferredItemPaddingLeft">8dp</item>
-        <item name="listPreferredItemPaddingRight">8dp</item>
         <!--End of block Holo-->
         <!--Include block: TextDark-->
         <!--Include block: Text-->
@@ -820,6 +820,8 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
         <item name="listPreferredItemHeightSmall">48dp</item>
+        <item name="listPreferredItemPaddingLeft">8dp</item>
+        <item name="listPreferredItemPaddingRight">8dp</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
@@ -877,8 +879,6 @@
         <item name="android:scrollbarTrackHorizontal">@null</item>
         <item name="android:scrollbarTrackVertical">@null</item>
         <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
-        <item name="listPreferredItemPaddingLeft">8dp</item>
-        <item name="listPreferredItemPaddingRight">8dp</item>
         <!--End of block Holo-->
         <!--Include block: TextLight-->
         <!--Include block: Text-->
@@ -955,6 +955,8 @@
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
         <item name="listPreferredItemHeightSmall">48dp</item>
+        <item name="listPreferredItemPaddingLeft">8dp</item>
+        <item name="listPreferredItemPaddingRight">8dp</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
         <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
@@ -1012,8 +1014,6 @@
         <item name="android:scrollbarTrackHorizontal">@null</item>
         <item name="android:scrollbarTrackVertical">@null</item>
         <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
-        <item name="listPreferredItemPaddingLeft">8dp</item>
-        <item name="listPreferredItemPaddingRight">8dp</item>
         <!--End of block Holo-->
         <!--Include block: TextLight-->
         <!--Include block: Text-->

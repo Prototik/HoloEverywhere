@@ -62,7 +62,7 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         }
 
         @Override
-        public void onClick(DialogInterface dialog, int which) {
+        public void onClick(DialogInterface dialog, final int which) {
             setSelection(which);
             if (mOnItemClickListener != null) {
                 performItemClick(null, which, mListAdapter.getItemId(which));
@@ -214,7 +214,7 @@ public class Spinner extends AbsSpinner implements OnClickListener {
             setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(android.widget.AdapterView<?> parent,
-                        View v, int position, long id) {
+                        final View v, final int position, long id) {
                     Spinner.this.setSelection(position);
                     if (mOnItemClickListener != null) {
                         Spinner.this.performItemClick(v, position,
@@ -428,6 +428,10 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         return mPopup.getHintText();
     }
 
+    public void internalSetOnItemClickListener(OnItemClickListener l) {
+        super.setOnItemClickListener(l);
+    }
+
     @Override
     public void layout(int delta, boolean animate) {
         int childrenLeft = mSpinnerPadding.left;
@@ -632,10 +636,6 @@ public class Spinner extends AbsSpinner implements OnClickListener {
     public void setOnItemClickListener(OnItemClickListener l) {
         throw new RuntimeException(
                 "setOnItemClickListener cannot be used with a spinner.");
-    }
-
-    public void setOnItemClickListenerInt(OnItemClickListener l) {
-        super.setOnItemClickListener(l);
     }
 
     public void setPopupBackgroundDrawable(Drawable background) {
