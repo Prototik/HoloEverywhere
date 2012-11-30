@@ -23,6 +23,12 @@ public interface IHoloActivity extends IHolo, SuperStartActivity,
         OnCreatePanelMenuListener, OnPreparePanelListener,
         OnMenuItemSelectedListener, OnActionModeStartedListener,
         OnActionModeFinishedListener, SuperSystemService, ContextMenuListener {
+    public static interface OnWindowFocusChangeListener {
+        public void onWindowFocusChanged(boolean hasFocus);
+    }
+
+    public void addOnWindowFocusChangeListener(OnWindowFocusChangeListener listener);
+
     public ActionBar getSupportActionBar();
 
     public FragmentManager getSupportFragmentManager();

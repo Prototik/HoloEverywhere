@@ -1,6 +1,11 @@
 
 package android.support.v4.app;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.holoeverywhere.IHoloActivity;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
@@ -83,8 +88,56 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     private boolean forceThemeApply = false;
     private int lastThemeResourceId = 0;
     private final String TAG = getClass().getSimpleName();
-
     private boolean wasInited = false;
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        synchronized (onWindowFocusChangeListeners) {
+            Iterator<WeakReference<OnWindowFocusChangeListener>> i = onWindowFocusChangeListeners
+                    .iterator();
+            while (i.hasNext()) {
+                WeakReference<OnWindowFocusChangeListener> reference = i.next();
+                if (reference == null) {
+                    i.remove();
+                    continue;
+                }
+                OnWindowFocusChangeListener iListener = reference.get();
+                if (iListener == null) {
+                    i.remove();
+                    continue;
+                }
+                iListener.onWindowFocusChanged(hasFocus);
+            }
+        }
+    }
+
+    private final List<WeakReference<OnWindowFocusChangeListener>> onWindowFocusChangeListeners = new ArrayList<WeakReference<OnWindowFocusChangeListener>>();
+
+    @Override
+    public void addOnWindowFocusChangeListener(OnWindowFocusChangeListener listener) {
+        synchronized (onWindowFocusChangeListeners) {
+            Iterator<WeakReference<OnWindowFocusChangeListener>> i = onWindowFocusChangeListeners
+                    .iterator();
+            while (i.hasNext()) {
+                WeakReference<OnWindowFocusChangeListener> reference = i.next();
+                if (reference == null) {
+                    i.remove();
+                    continue;
+                }
+                OnWindowFocusChangeListener iListener = reference.get();
+                if (iListener == null) {
+                    i.remove();
+                    continue;
+                }
+                if (iListener == listener) {
+                    return;
+                }
+            }
+            onWindowFocusChangeListeners
+                    .add(new WeakReference<OnWindowFocusChangeListener>(listener));
+        }
+    }
 
     @Override
     public void addContentView(View view, LayoutParams params) {

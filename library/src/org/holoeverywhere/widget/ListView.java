@@ -2,6 +2,7 @@
 package org.holoeverywhere.widget;
 
 import org.holoeverywhere.IHoloActivity;
+import org.holoeverywhere.IHoloActivity.OnWindowFocusChangeListener;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -21,7 +22,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class ListView extends android.widget.ListView implements
-        ContextMenuInfoGetter {
+        ContextMenuInfoGetter, OnWindowFocusChangeListener {
     public interface MultiChoiceModeListener extends ActionMode.Callback {
         public void onItemCheckedStateChanged(ActionMode mode, int position,
                 long id, boolean checked);
@@ -113,6 +114,15 @@ public class ListView extends android.widget.ListView implements
                 }
             }
             return false;
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        super.onWindowFocusChanged(hasWindowFocus);
+        if (hasWindowFocus) {
+            invalidate();
+            invalidateViews();
         }
     }
 
@@ -212,6 +222,9 @@ public class ListView extends android.widget.ListView implements
 
     public final void setHoloActivity(IHoloActivity iHoloActivity) {
         holoActivity = iHoloActivity;
+        if (holoActivity != null) {
+            holoActivity.addOnWindowFocusChangeListener(this);
+        }
     }
 
     @Override
