@@ -67,10 +67,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         private static final long serialVersionUID = -2346897999325868420L;
 
         public HoloThemeException(_HoloActivity activity) {
-            super("You must apply Holo.Theme, Holo.Theme.Light or "
-                    + "Holo.Theme.Light.DarkActionBar theme on the activity ("
-                    + activity.getClass().getSimpleName()
-                    + ") for using HoloEverywhere");
+            super(new StringBuilder("You must apply Holo.Theme, Holo.Theme.Light or ")
+                    .append("Holo.Theme.Light.DarkActionBar theme on the activity (")
+                    .append(activity.getClass().getSimpleName()).append(") for using HoloEverywhere")
+                    .toString());
         }
     }
 
