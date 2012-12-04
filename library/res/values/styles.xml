@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
     <style name="Holo"/>
     <style name="Holo.AlertDialog">
         <item name="bottomBright">@drawable/dialog_bottom_holo_dark</item>
