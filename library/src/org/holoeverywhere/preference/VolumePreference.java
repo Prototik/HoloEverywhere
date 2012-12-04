@@ -15,6 +15,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -117,7 +118,7 @@ public class VolumePreference extends SeekBarDialogPreference implements
                 } else if (mStreamType == AudioManager.STREAM_NOTIFICATION) {
                     defaultUri = Settings.System.DEFAULT_NOTIFICATION_URI;
                 } else {
-                    if (VERSION.SDK_INT >= 5) {
+                    if (VERSION.SDK_INT >= VERSION_CODES.ECLAIR) {
                         defaultUri = Settings.System.DEFAULT_ALARM_ALERT_URI;
                     } else {
                         defaultUri = Settings.System.DEFAULT_RINGTONE_URI;

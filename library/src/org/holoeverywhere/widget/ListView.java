@@ -6,6 +6,7 @@ import org.holoeverywhere.IHoloActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.HapticFeedbackConstants;
@@ -275,7 +276,7 @@ public class ListView extends android.widget.ListView implements
             boolean state = getCheckedItemPositions().get(position);
             if (child instanceof Checkable) {
                 ((Checkable) child).setChecked(state);
-            } else if (VERSION.SDK_INT >= 11) {
+            } else if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
                 child.setActivated(state);
             }
         }

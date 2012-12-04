@@ -31,6 +31,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -302,7 +303,7 @@ public class ProgressBar extends _View {
             int id = a.getResourceId(attr, 0);
             if ((id == R.drawable.progress_small_holo
                     || id == R.drawable.progress_medium_holo || id == R.drawable.progress_large_holo)
-                    && VERSION.SDK_INT < 14) {
+                    && VERSION.SDK_INT < VERSION_CODES.ICE_CREAM_SANDWICH) {
                 LayerDrawable layers = (LayerDrawable) d;
                 int layersCount = layers.getNumberOfLayers();
                 Drawable[] newLayers = new Drawable[layersCount];

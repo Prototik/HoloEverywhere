@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -135,7 +136,7 @@ public abstract class TwoStatePreference extends Preference {
                     && accessibilityManager.isEnabled()) {
                 AccessibilityEvent event = AccessibilityEvent.obtain();
                 event.setEventType(AccessibilityEvent.TYPE_VIEW_CLICKED);
-                if (VERSION.SDK_INT >= 14) {
+                if (VERSION.SDK_INT >= VERSION_CODES.ICE_CREAM_SANDWICH) {
                     view.onInitializeAccessibilityEvent(event);
                 }
                 view.dispatchPopulateAccessibilityEvent(event);

@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.util.Log;
 
 public final class _SharedPreferencesImpl_XML implements SharedPreferences {
@@ -33,7 +34,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
         @Override
         @SuppressLint("NewApi")
         public void apply() {
-            if (VERSION.SDK_INT >= 9) {
+            if (VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) {
                 editor.apply();
             } else {
                 editor.commit();
@@ -116,7 +117,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
         @Override
         @SuppressLint("NewApi")
         public Editor putStringSet(String key, Set<String> value) {
-            if (VERSION.SDK_INT >= 11) {
+            if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
                 editor.putStringSet(key, value);
             } else {
                 editor.putString(key,
@@ -296,7 +297,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
     @SuppressLint("NewApi")
     @Override
     public Set<String> getStringSet(String key, Set<String> defValue) {
-        if (VERSION.SDK_INT >= 11) {
+        if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
             return prefs.getStringSet(key, defValue);
         } else {
             return getSet(key, defValue, String.class);

@@ -14,6 +14,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -78,7 +79,7 @@ public class Switch extends CompoundButton {
         super(context, attrs, defStyle);
         mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         Resources res = getResources();
-        if (VERSION.SDK_INT >= 5) {
+        if (VERSION.SDK_INT >= VERSION_CODES.ECLAIR) {
             mTextPaint.density = res.getDisplayMetrics().density;
         } else {
             mTextPaint.setTextSize(res.getDisplayMetrics().density * 16);

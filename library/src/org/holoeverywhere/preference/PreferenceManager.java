@@ -21,6 +21,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.res.XmlResourceParser;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -90,7 +91,7 @@ public class PreferenceManager {
             SharedPreferences.Editor editor = defaultValueSp.edit().putBoolean(
                     PreferenceManager.KEY_HAS_SET_DEFAULT_VALUES, true);
             try {
-                if (VERSION.SDK_INT < 9) {
+                if (VERSION.SDK_INT < VERSION_CODES.GINGERBREAD) {
                     throw new AbstractMethodError();
                 }
                 editor.apply();
@@ -452,7 +453,7 @@ public class PreferenceManager {
     private void setNoCommit(boolean noCommit) {
         if (!noCommit && mEditor != null) {
             try {
-                if (VERSION.SDK_INT < 9) {
+                if (VERSION.SDK_INT < VERSION_CODES.GINGERBREAD) {
                     throw new AbstractMethodError();
                 }
                 mEditor.apply();

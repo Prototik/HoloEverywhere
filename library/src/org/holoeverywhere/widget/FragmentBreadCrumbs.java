@@ -8,6 +8,7 @@ import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.BackStackEntry;
@@ -153,7 +154,7 @@ public class FragmentBreadCrumbs extends ViewGroup implements
                 measureChild(child, widthMeasureSpec, heightMeasureSpec);
                 maxWidth = Math.max(maxWidth, child.getMeasuredWidth());
                 maxHeight = Math.max(maxHeight, child.getMeasuredHeight());
-                if (VERSION.SDK_INT >= 11) {
+                if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
                     measuredChildState = View.combineMeasuredStates(
                             measuredChildState, child.getMeasuredState());
                 } else {
@@ -181,7 +182,7 @@ public class FragmentBreadCrumbs extends ViewGroup implements
         addView(mContainer);
         a.getSupportFragmentManager().addOnBackStackChangedListener(this);
         updateCrumbs();
-        if (VERSION.SDK_INT >= 11) {
+        if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
             setLayoutTransition(new LayoutTransition());
         }
     }

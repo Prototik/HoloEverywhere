@@ -10,6 +10,7 @@ import android.database.DataSetObserver;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -195,7 +196,7 @@ public class ListPopupWindow {
     public ListPopupWindow(Context context, AttributeSet attrs,
             int defStyleAttr, int defStyleRes) {
         mContext = context;
-        if (VERSION.SDK_INT >= 11) {
+        if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
             mPopup = new PopupWindow(mContext, attrs, defStyleAttr, defStyleRes);
         } else {
             mPopup = new PopupWindow(new ContextThemeWrapper(context,
@@ -605,7 +606,7 @@ public class ListPopupWindow {
 
     @SuppressLint("NewApi")
     public boolean onKeyPreIme(int keyCode, KeyEvent event) {
-        if (VERSION.SDK_INT < 5) {
+        if (VERSION.SDK_INT < VERSION_CODES.ECLAIR) {
             return false;
         }
         if (keyCode == KeyEvent.KEYCODE_BACK && isShowing()) {

@@ -15,6 +15,7 @@ import android.graphics.ColorFilter;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -37,7 +38,7 @@ public class RotateDrawable extends Drawable {
         public RotateState(RotateState source, RotateDrawable owner,
                 Resources res) {
             if (source != null) {
-                if (res != null && VERSION.SDK_INT >= 5) {
+                if (res != null && VERSION.SDK_INT >= VERSION_CODES.ECLAIR) {
                     mDrawable = source.mDrawable.getConstantState()
                             .newDrawable(res);
                 } else {

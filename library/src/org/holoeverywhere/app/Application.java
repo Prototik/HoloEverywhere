@@ -16,6 +16,7 @@ import org.holoeverywhere.preference.SharedPreferences;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 
 public class Application extends android.app.Application implements
@@ -273,7 +274,7 @@ public class Application extends android.app.Application implements
     @SuppressLint("NewApi")
     public void superStartActivity(Intent intent, int requestCode,
             Bundle options) {
-        if (VERSION.SDK_INT >= 16) {
+        if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
             super.startActivity(intent, options);
         } else {
             super.startActivity(intent);

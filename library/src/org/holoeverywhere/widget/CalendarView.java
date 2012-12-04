@@ -22,6 +22,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
@@ -66,7 +67,7 @@ public class CalendarView extends FrameLayout {
                 int dist = child.getBottom() - mListScrollTopOffset;
                 if (dist > mListScrollTopOffset) {
                     int y = dist - (mIsScrollingUp ? child.getHeight() : 0);
-                    if (VERSION.SDK_INT >= 11) {
+                    if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
                         mView.smoothScrollBy(y,
                                 CalendarView.ADJUSTMENT_SCROLL_DURATION);
                     } else {
@@ -628,7 +629,7 @@ public class CalendarView extends FrameLayout {
                 position = getWeeksSinceMinDate(mFirstDayOfMonth);
             }
             mPreviousScrollState = OnScrollListener.SCROLL_STATE_FLING;
-            if (animate && VERSION.SDK_INT >= 11) {
+            if (animate && VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
                 mListView
                         .smoothScrollToPositionFromTop(position,
                                 mListScrollTopOffset,
@@ -898,7 +899,7 @@ public class CalendarView extends FrameLayout {
                 CalendarView.this.onScrollStateChanged(view, scrollState);
             }
         });
-        if (VERSION.SDK_INT >= 11) {
+        if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
             mListView.setFriction(mFriction);
             mListView.setVelocityScale(mVelocityScale);
         }
