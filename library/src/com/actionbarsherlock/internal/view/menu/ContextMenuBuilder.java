@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.IBinder;
 import android.util.EventLog;
 import android.util.Log;
@@ -92,7 +93,7 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
         listener.createContextMenu(this, originalView, contextMenuInfo,
                 listener);
         if (getVisibleItems().size() > 0) {
-            if (VERSION.SDK_INT >= 8) {
+            if (VERSION.SDK_INT >= VERSION_CODES.FROYO) {
                 EventLog.writeEvent(50001, 1);
             }
             MenuDialogHelper helper = new MenuDialogHelper(this);

@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.format.DateUtils;
@@ -240,7 +241,7 @@ public class TimePicker extends FrameLayout {
     @SuppressLint("NewApi")
     @Override
     public boolean dispatchPopulateAccessibilityEvent(AccessibilityEvent event) {
-        if (VERSION.SDK_INT >= 14) {
+        if (VERSION.SDK_INT >= VERSION_CODES.ICE_CREAM_SANDWICH) {
             onPopulateAccessibilityEvent(event);
             return true;
         } else {

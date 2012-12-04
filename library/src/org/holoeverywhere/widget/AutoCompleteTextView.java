@@ -12,6 +12,7 @@ import android.database.DataSetObserver;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.Selection;
@@ -410,13 +411,13 @@ public class AutoCompleteTextView extends EditText implements
         if (!isPopupShowing()) {
             switch (keyCode) {
                 case KeyEvent.KEYCODE_DPAD_DOWN:
-                    if (VERSION.SDK_INT < 11 || event.hasNoModifiers()) {
+                    if (VERSION.SDK_INT < VERSION_CODES.HONEYCOMB || event.hasNoModifiers()) {
                         performValidation();
                     }
             }
         }
         if (isPopupShowing() && keyCode == KeyEvent.KEYCODE_TAB
-                && (VERSION.SDK_INT < 11 || event.hasNoModifiers())) {
+                && (VERSION.SDK_INT < VERSION_CODES.HONEYCOMB || event.hasNoModifiers())) {
             return true;
         }
         mLastKeyCode = keyCode;
@@ -431,7 +432,7 @@ public class AutoCompleteTextView extends EditText implements
     @Override
     @SuppressLint("NewApi")
     public boolean onKeyPreIme(int keyCode, KeyEvent event) {
-        if (VERSION.SDK_INT < 5) {
+        if (VERSION.SDK_INT < VERSION_CODES.ECLAIR) {
             return false;
         }
         if (keyCode == KeyEvent.KEYCODE_BACK && isPopupShowing()
@@ -466,14 +467,14 @@ public class AutoCompleteTextView extends EditText implements
                 case KeyEvent.KEYCODE_ENTER:
                 case KeyEvent.KEYCODE_DPAD_CENTER:
                 case KeyEvent.KEYCODE_TAB:
-                    if (VERSION.SDK_INT < 11 || event.hasNoModifiers()) {
+                    if (VERSION.SDK_INT < VERSION_CODES.HONEYCOMB || event.hasNoModifiers()) {
                         performCompletion();
                     }
                     return true;
             }
         }
         if (isPopupShowing() && keyCode == KeyEvent.KEYCODE_TAB
-                && (VERSION.SDK_INT < 11 || event.hasNoModifiers())) {
+                && (VERSION.SDK_INT < VERSION_CODES.HONEYCOMB || event.hasNoModifiers())) {
             performCompletion();
             return true;
         }
@@ -695,7 +696,7 @@ public class AutoCompleteTextView extends EditText implements
             mPopup.setListItemExpandMax(AutoCompleteTextView.EXPAND_MAX);
         }
         mPopup.show();
-        if (VERSION.SDK_INT >= 9) {
+        if (VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) {
             mPopup.getListView().setOverScrollMode(View.OVER_SCROLL_ALWAYS);
         }
     }

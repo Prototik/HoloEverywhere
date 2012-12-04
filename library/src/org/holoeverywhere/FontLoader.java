@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -33,7 +34,7 @@ public final class FontLoader {
         protected final boolean ignore;
 
         private HoloFont(int font) {
-            this(font, VERSION.SDK_INT >= 11);
+            this(font, VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB);
         }
 
         private HoloFont(int font, boolean ignore) {

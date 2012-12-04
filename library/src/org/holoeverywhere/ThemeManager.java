@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.util.SparseIntArray;
 
@@ -660,14 +661,14 @@ public final class ThemeManager {
                     requestCode, options);
         } else {
             if (activity != null) {
-                if (VERSION.SDK_INT >= 16) {
+                if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
                     activity.startActivityForResult(intent, requestCode,
                             options);
                 } else {
                     activity.startActivityForResult(intent, requestCode);
                 }
             } else {
-                if (VERSION.SDK_INT >= 16) {
+                if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
                     context.startActivity(intent, options);
                 } else {
                     context.startActivity(intent);

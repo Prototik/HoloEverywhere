@@ -17,6 +17,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spanned;
@@ -453,7 +454,7 @@ public class NumberPicker extends LinearLayout {
         mAdjustScroller = new Scroller(getContext(),
                 new DecelerateInterpolator(2.5f));
         updateInputTextView();
-        if (VERSION.SDK_INT >= 16
+        if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN
                 && getImportantForAccessibility() == View.IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
             setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
         }
@@ -539,7 +540,7 @@ public class NumberPicker extends LinearLayout {
             switch (event.getAction() & MotionEvent.ACTION_MASK) {
                 case MotionEvent.ACTION_HOVER_ENTER: {
                     sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER);
-                    if (VERSION.SDK_INT >= 16) {
+                    if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
                         performAccessibilityAction(
                                 AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS,
                                 null);
@@ -549,7 +550,7 @@ public class NumberPicker extends LinearLayout {
                 case MotionEvent.ACTION_HOVER_MOVE: {
                     sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT);
                     sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER);
-                    if (VERSION.SDK_INT >= 16) {
+                    if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
                         performAccessibilityAction(
                                 AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS,
                                 null);

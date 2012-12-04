@@ -18,6 +18,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -86,7 +87,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
 
     private void checkWindowSizes() {
         View view = getWindow().getDecorView();
-        if (VERSION.SDK_INT < 11 && view != null) {
+        if (VERSION.SDK_INT < VERSION_CODES.HONEYCOMB && view != null) {
             DisplayMetrics dm = getResources().getDisplayMetrics();
             TypedArray a = obtainStyledAttributes(R.styleable.HoloActivity);
             final int windowMinWidthMajor = (int) a.getFraction(
@@ -404,7 +405,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     @SuppressLint("NewApi")
     public void superStartActivity(Intent intent, int requestCode,
             Bundle options) {
-        if (VERSION.SDK_INT >= 16) {
+        if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
             super.startActivityForResult(intent, requestCode, options);
         } else {
             super.startActivityForResult(intent, requestCode);
@@ -413,7 +414,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
 
     @Override
     public void supportInvalidateOptionsMenu() {
-        if (VERSION.SDK_INT >= 11) {
+        if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
             super.invalidateOptionsMenu();
         }
     }

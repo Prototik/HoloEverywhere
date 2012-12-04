@@ -29,6 +29,7 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.util.Log;
 
 public class _SharedPreferencesImpl_JSON implements SharedPreferences {
@@ -228,7 +229,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
                         throw new CouldNotCreateStorage(tempFile,
                                 "Сann't create a storage for the preferences.");
                     }
-                    if (VERSION.SDK_INT >= 9) {
+                    if (VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) {
                         tempFile.setWritable(true);
                         tempFile.setReadable(true);
                     }
@@ -238,7 +239,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
                     throw new CouldNotCreateStorage(tempFile,
                             "Сann't create a storage for the preferences.");
                 }
-                if (VERSION.SDK_INT >= 9) {
+                if (VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) {
                     tempFile.setWritable(true);
                     tempFile.setReadable(true);
                 }
@@ -248,7 +249,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
                 throw new CouldNotCreateStorage(tempFile,
                         "Сann't create a storage for the preferences.");
             }
-            if (VERSION.SDK_INT >= 9) {
+            if (VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) {
                 switch (mode) {
                     case Context.MODE_WORLD_WRITEABLE:
                         tempFile.setWritable(true, false);

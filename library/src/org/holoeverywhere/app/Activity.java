@@ -3,6 +3,7 @@ package org.holoeverywhere.app;
 
 import android.content.res.Configuration;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v4.app._HoloActivity;
 import android.view.KeyEvent;
@@ -68,7 +69,7 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     public boolean isABSSupport() {
-        return VERSION.SDK_INT >= 7;
+        return VERSION.SDK_INT >= VERSION_CODES.ECLAIR_MR1;
     }
 
     @Override

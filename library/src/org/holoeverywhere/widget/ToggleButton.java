@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 
 public class ToggleButton extends android.widget.ToggleButton {
@@ -55,7 +56,7 @@ public class ToggleButton extends android.widget.ToggleButton {
     @Override
     @SuppressLint("NewApi")
     protected void onDisplayHint(int hint) {
-        if (VERSION.SDK_INT >= 8) {
+        if (VERSION.SDK_INT >= VERSION_CODES.FROYO) {
             super.onDisplayHint(hint);
         }
     }

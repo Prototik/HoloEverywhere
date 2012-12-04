@@ -10,6 +10,7 @@ import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.graphics.Rect;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -210,7 +211,7 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
             View view = mRecycler.get(selectedPosition);
             if (view == null) {
                 view = mAdapter.getView(selectedPosition, null, this);
-                if (VERSION.SDK_INT >= 16
+                if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN
                         && view.getImportantForAccessibility() == View.IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
                     view.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
                 }

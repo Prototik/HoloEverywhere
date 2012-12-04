@@ -10,6 +10,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -63,7 +64,7 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
         if (view == null) {
             view = getWindow().getDecorView();
         }
-        if (VERSION.SDK_INT < 11 && view != null) {
+        if (VERSION.SDK_INT < VERSION_CODES.HONEYCOMB && view != null) {
             DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
             TypedArray a = getContext().obtainStyledAttributes(R.styleable.HoloActivity);
             final int windowMinWidthMajor = (int) a.getFraction(

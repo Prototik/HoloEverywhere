@@ -13,6 +13,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -85,7 +86,7 @@ public final class PreferenceScreen extends PreferenceGroup implements
 
         @SuppressLint("NewApi")
         private void prepareActionBar() {
-            if (VERSION.SDK_INT >= 11) {
+            if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
                 onPrepareActionBar(getActionBar());
             } else {
                 onPrepareActionBar((ActionBarView) findViewById(R.id.abs__action_bar));
@@ -94,7 +95,7 @@ public final class PreferenceScreen extends PreferenceGroup implements
 
         @Override
         public void setContentView(View view) {
-            if (VERSION.SDK_INT >= 11) {
+            if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
                 super.setContentView(view);
             } else {
                 FrameLayout content = (FrameLayout) findViewById(R.id.abs__content);
@@ -111,7 +112,7 @@ public final class PreferenceScreen extends PreferenceGroup implements
         @Override
         public void setTitle(CharSequence title) {
             super.setTitle(title);
-            if (VERSION.SDK_INT < 11) {
+            if (VERSION.SDK_INT < VERSION_CODES.HONEYCOMB) {
                 ((ActionBarView) findViewById(R.id.abs__action_bar)).setTitle(title);
             }
         }
@@ -279,7 +280,7 @@ public final class PreferenceScreen extends PreferenceGroup implements
         if (titleEmpty) {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         } else {
-            if (VERSION.SDK_INT >= 11) {
+            if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
                 dialog.requestWindowFeature(Window.FEATURE_ACTION_BAR);
             }
             dialog.setContentView(childPrefScreen);

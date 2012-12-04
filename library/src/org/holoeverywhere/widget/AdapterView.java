@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Parcelable;
 import android.os.SystemClock;
 import android.util.AttributeSet;
@@ -162,7 +163,7 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
     @SuppressLint("NewApi")
     public AdapterView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        if (VERSION.SDK_INT >= 16
+        if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN
                 && getImportantForAccessibility() == View.IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
             setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
         }
@@ -593,7 +594,7 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
     @SuppressLint("NewApi")
     public void setEmptyView(View emptyView) {
         mEmptyView = emptyView;
-        if (VERSION.SDK_INT >= 16
+        if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN
                 && emptyView != null
                 && emptyView.getImportantForAccessibility() == View.IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
             emptyView
