@@ -213,45 +213,42 @@
 						<skip>true</skip>
 					</configuration>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jarsigner-plugin</artifactId>
+					<version>1.2</version>
+					<inherited>true</inherited>
+					<executions>
+						<execution>
+							<goals>
+								<goal>sign</goal>
+								<goal>verify</goal>
+							</goals>
+							<phase>package</phase>
+							<inherited>true</inherited>
+						</execution>
+					</executions>
+					<configuration>
+						<removeExistingSignatures>true</removeExistingSignatures>
+						<includes>
+							<include>${project.build.directory}/*.apk</include>
+							<include>${project.build.directory}/*.jar</include>
+						</includes>
+						<certs>true</certs>
+						<keystore>${holo.sign.keystore}</keystore>
+						<alias>${holo.sign.alias}</alias>
+						<storepass>${holo.sign.storepass}</storepass>
+						<keypass>${holo.sign.keypass}</keypass>
+						<arguments>
+							<argument>-sigalg</argument>
+							<argument>MD5withRSA</argument>
+							<argument>-digestalg</argument>
+							<argument>SHA1</argument>
+						</arguments>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
-
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jarsigner-plugin</artifactId>
-				<version>1.2</version>
-				<inherited>true</inherited>
-				<executions>
-					<execution>
-						<goals>
-							<goal>sign</goal>
-							<goal>verify</goal>
-						</goals>
-						<phase>package</phase>
-						<inherited>true</inherited>
-					</execution>
-				</executions>
-				<configuration>
-					<removeExistingSignatures>true</removeExistingSignatures>
-					<includes>
-						<include>${project.build.directory}/*.apk</include>
-						<include>${project.build.directory}/*.jar</include>
-					</includes>
-					<certs>true</certs>
-					<keystore>${holo.sign.keystore}</keystore>
-					<alias>${holo.sign.alias}</alias>
-					<storepass>${holo.sign.storepass}</storepass>
-					<keypass>${holo.sign.keypass}</keypass>
-					<arguments>
-						<argument>-sigalg</argument>
-						<argument>MD5withRSA</argument>
-						<argument>-digestalg</argument>
-						<argument>SHA1</argument>
-					</arguments>
-				</configuration>
-			</plugin>
-		</plugins>
 	</build>
 
 	<profiles>
