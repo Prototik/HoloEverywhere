@@ -135,6 +135,7 @@
 		<attr name="icon" format="reference" />
 		<attr name="title" format="string" />
 		-->
+		<attr name="id" />
 		<attr name="icon" />
 		<attr name="title" />
 		<attr name="key" format="string" />
@@ -146,6 +147,7 @@
 		<attr name="enabled" format="boolean" />
 		<attr name="selectable" format="boolean" />
 		<attr name="dependency" format="string" />
+		<attr name="depends" format="reference" />
 		<attr name="persistent" format="boolean" />
 		<attr name="defaultValue" format="string|boolean|integer|reference|float" />
 		<attr name="shouldDisableView" format="boolean" />

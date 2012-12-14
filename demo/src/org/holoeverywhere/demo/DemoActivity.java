@@ -2,29 +2,20 @@
 package org.holoeverywhere.demo;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.holoeverywhere.ArrayAdapter;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
-import org.holoeverywhere.addon.SlidingMenu;
-import org.holoeverywhere.addon.SlidingMenu.SlidingMenuA;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.DatePickerDialog;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.app.ProgressDialog;
 import org.holoeverywhere.app.TimePickerDialog;
-import org.holoeverywhere.demo.fragments.AboutFragment;
 import org.holoeverywhere.demo.fragments.AlertDialogFragment;
 import org.holoeverywhere.demo.fragments.CalendarFragment;
-import org.holoeverywhere.demo.fragments.MainFragment;
 import org.holoeverywhere.demo.fragments.OtherFragment;
-import org.holoeverywhere.demo.fragments.SettingsFragment;
-import org.holoeverywhere.demo.widget.DemoNavigationItem;
-import org.holoeverywhere.demo.widget.DemoNavigationWidget;
-import org.holoeverywhere.slidingmenu.SlidingMenuView;
+import org.holoeverywhere.demo.fragments.PagerFragment;
 import org.holoeverywhere.widget.ListPopupWindow;
 import org.holoeverywhere.widget.NumberPicker;
 import org.holoeverywhere.widget.Toast;
@@ -33,139 +24,39 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class DemoActivity extends Activity {
-    private final class ListNavigationAdapter extends ArrayAdapter<NavigationItem> implements
-            OnItemClickListener {
-        private int lastSelectedItem = 0;
-
-        public ListNavigationAdapter() {
-            this(new ArrayList<NavigationItem>());
-        }
-
-        public ListNavigationAdapter(List<NavigationItem> list) {
-            super(DemoActivity.this, android.R.id.text1, list);
-        }
-
-        public void add(Class<? extends Fragment> clazz, int title) {
-            add(new NavigationItem(clazz, title));
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup container) {
-            DemoNavigationItem view;
-            if (convertView == null) {
-                view = new DemoNavigationItem(DemoActivity.this);
-                view.setSelectionHandlerColorResource(R.color.holo_blue_light);
-            } else {
-                view = (DemoNavigationItem) convertView;
-            }
-            NavigationItem item = getItem(position);
-            view.setLabel(item.title);
-            view.setSelectionHandlerVisiblity(lastSelectedItem == position ? View.VISIBLE
-                    : View.INVISIBLE);
-            return view;
-        }
-
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int itemPosition,
-                long itemId) {
-            lastSelectedItem = itemPosition;
-            notifyDataSetInvalidated();
-            getIntent().putExtra(LIST_NAVIGATION_PAGE, itemPosition);
-
-            NavigationItem item = getItem(itemPosition);
-            replaceFragment(item.getFragment());
-            getSupportActionBar().setSubtitle(item.title);
-
-            slidingMenu.showAbove(true);
-        }
-    }
-
-    private static final class NavigationItem {
-        public final Class<? extends Fragment> clazz;
-        private Fragment fragment;
-        public final int title;
-
-        public NavigationItem(Class<? extends Fragment> clazz, int title) {
-            this.clazz = clazz;
-            this.title = title;
-        }
-
-        public Fragment getFragment() {
-            if (fragment == null) {
-                try {
-                    fragment = clazz.newInstance();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            return fragment;
-        }
-    }
-
-    private static final String LIST_NAVIGATION_PAGE = "listNavigationPage";
-
-    private ListNavigationAdapter adapter;
     private WeakReference<AlertDialogFragment> alertDialog;
-    private SlidingMenuView slidingMenu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Holo config = Holo.defaultConfig();
-        config.requireSlidingMenu = true;
-        init(config);
         super.onCreate(savedInstanceState);
         PlaybackService.onCreate();
 
-        slidingMenu = requireSlidingMenu().getSlidingMenu();
-        slidingMenu.setTouchModeAbove(SlidingMenuView.TOUCHMODE_MARGIN);
-        slidingMenu.setBehindWidthRes(R.dimen.demo_menu_width);
-        slidingMenu.setShadowWidth(0);
-
-        if (adapter == null) {
-            adapter = new ListNavigationAdapter();
-        } else {
-            adapter.clear();
-        }
-        adapter.add(MainFragment.class, R.string.demo);
-        adapter.add(SettingsFragment.class, R.string.settings);
-        adapter.add(OtherFragment.class, R.string.other);
-        adapter.add(AboutFragment.class, R.string.about);
-
-        DemoNavigationWidget navigationWidget = new DemoNavigationWidget(this);
-        requireSlidingMenu().setBehindContentView(navigationWidget);
-        navigationWidget.init(adapter, adapter,
-                ThemeManager.getTheme(this), getIntent().getIntExtra(LIST_NAVIGATION_PAGE, 0));
+        setContentView(R.layout.content);
 
         final ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.library_name);
-        ab.setDisplayHomeAsUpEnabled(true);
+
+        replaceFragment(new PagerFragment());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!PlaybackService.isDisable()) {
-            getSupportMenuInflater().inflate(R.menu.main, menu);
-            return true;
-        } else {
-            return false;
+        getSupportMenuInflater().inflate(R.menu.main, menu);
+        if (PlaybackService.isDisable()) {
+            menu.findItem(R.id.disableMusic).setVisible(false);
         }
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                requireSlidingMenu().toggle();
-                break;
             case R.id.disableMusic:
                 PlaybackService.disable();
                 supportInvalidateOptionsMenu();
@@ -202,15 +93,11 @@ public class DemoActivity extends Activity {
             String backStackName) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.replace(android.R.id.content, fragment);
+        ft.replace(R.id.content, fragment);
         if (backStackName != null) {
             ft.addToBackStack(backStackName);
         }
         ft.commit();
-    }
-
-    public SlidingMenuA requireSlidingMenu() {
-        return requireAddon(SlidingMenu.class).activity(this);
     }
 
     public void setDarkTheme(View v) {

@@ -5,4 +5,17 @@
 		android:icon="?disableMusicIcon"
 		android:showAsAction="always"
 		android:title="@string/disable_music"/>
+	<group
+		android:icon="@drawable/icon"
+		android:menuCategory="alternative" >
+		<item
+			android:id="@+id/changeTheme1"
+			android:title="CH1"/>
+		<item
+			android:id="@+id/changeTheme2"
+			android:title="CH2"/>
+		<item
+			android:id="@+id/changeTheme3"
+			android:title="CH3"/>
+	</group>
 </menu>

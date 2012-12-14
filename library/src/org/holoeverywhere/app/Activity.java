@@ -82,13 +82,16 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     public View findViewById(int id) {
-        View view;
+        View view = super.findViewById(id);
+        if (view != null) {
+            return view;
+        }
         for (IAddon<?, ?> addon : addons) {
             if ((view = addon.activity(this).findViewById(id)) != null) {
                 return view;
             }
         }
-        return super.findViewById(id);
+        return null;
     }
 
     @Override
@@ -352,7 +355,6 @@ public abstract class Activity extends _HoloActivity {
     @Override
     public void setSupportProgressBarIndeterminate(boolean indeterminate) {
         requireSherlock().setProgressBarIndeterminate(indeterminate);
-
     }
 
     @Override

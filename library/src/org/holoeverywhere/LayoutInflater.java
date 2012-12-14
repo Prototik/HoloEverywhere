@@ -9,6 +9,7 @@ import java.util.WeakHashMap;
 
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator;
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
+import org.holoeverywhere.app.Application;
 import org.holoeverywhere.internal.AlertController.RecycleListView;
 import org.holoeverywhere.internal.DialogTitle;
 import org.holoeverywhere.internal.NumberPickerEditText;
@@ -28,6 +29,7 @@ import org.holoeverywhere.widget.LinearLayout;
 import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.MultiAutoCompleteTextView;
 import org.holoeverywhere.widget.NumberPicker;
+import org.holoeverywhere.widget.Pager;
 import org.holoeverywhere.widget.ProgressBar;
 import org.holoeverywhere.widget.RadioButton;
 import org.holoeverywhere.widget.SeekBar;
@@ -38,7 +40,9 @@ import org.holoeverywhere.widget.TimePicker;
 import org.holoeverywhere.widget.ToggleButton;
 import org.xmlpull.v1.XmlPullParser;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build.VERSION;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -118,6 +122,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
         remap(WebView.class);
         remap(FrameLayout.class);
         remap(GridView.class);
+        remap(Pager.class);
         remapInternal(ActionBarView.class, HoloListMenuItemView.class,
                 ExpandedMenuView.class, ActionBarContainer.class,
                 RecycleListView.class, DialogTitle.class,
@@ -302,22 +307,22 @@ public class LayoutInflater extends android.view.LayoutInflater implements
         if (newName != null) {
             view = tryCreateView(newName, null, attrs);
             if (view != null) {
-                return view;
+                return prepareView(view);
             }
         }
         if (name.indexOf('.') > 0) {
             view = tryCreateView(name, null, attrs);
             if (view != null) {
-                return view;
+                return prepareView(view);
             }
         }
         view = tryCreateView(name, "android.widget.", attrs);
         if (view != null) {
-            return view;
+            return prepareView(view);
         }
         view = tryCreateView(name, "android.view.", attrs);
         if (view != null) {
-            return view;
+            return prepareView(view);
         } else {
             throw new ClassNotFoundException("Could not find class: " + name);
         }
@@ -331,6 +336,14 @@ public class LayoutInflater extends android.view.LayoutInflater implements
             e.printStackTrace();
             return null;
         }
+    }
+
+    @SuppressLint("NewApi")
+    private View prepareView(View view) {
+        if (Application.config().isDisableOverscrollEffects() && VERSION.SDK_INT >= 9) {
+            view.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        }
+        return view;
     }
 
     @Override

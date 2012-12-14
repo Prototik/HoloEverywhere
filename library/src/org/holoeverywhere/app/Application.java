@@ -59,13 +59,14 @@ public class Application extends android.app.Application implements
         private BooleanProperty debugMode;
         @SettingProperty(create = true)
         private BooleanProperty disableContextMenu;
+        @SettingProperty(create = true, defaultBoolean = true)
+        private BooleanProperty disableOverscrollEffects;
         @SettingProperty(create = true, defaultString = Config.HOLO_EVERYWHERE_PACKAGE)
         private StringProperty holoEverywherePackage;
         @SettingProperty(create = true, defaultEnum = "XML", enumClass = PreferenceImpl.class)
         private EnumProperty<PreferenceImpl> preferenceImpl;
         @SettingProperty(create = true)
         private StringProperty preferencePackage;
-
         @SettingProperty(create = true)
         private StringProperty widgetsPackage;
 
@@ -105,6 +106,10 @@ public class Application extends android.app.Application implements
             return disableContextMenu.getValue();
         }
 
+        public boolean isDisableOverscrollEffects() {
+            return disableOverscrollEffects.getValue();
+        }
+
         /**
          * @deprecated This property always true
          */
@@ -116,7 +121,6 @@ public class Application extends android.app.Application implements
         @Override
         protected void onInit() {
             attachDefaultListener();
-            SystemServiceManager.register(LayoutInflaterCreator.class);
         }
 
         public Config setAlwaysUseParentTheme(boolean alwaysUseParentTheme) {
@@ -131,6 +135,11 @@ public class Application extends android.app.Application implements
 
         public Config setDisableContextMenu(boolean disableContextMenu) {
             this.disableContextMenu.setValue(disableContextMenu);
+            return this;
+        }
+
+        public Config setDisableOverscrollEffects(boolean disableOverscrollEffects) {
+            this.disableOverscrollEffects.setValue(disableOverscrollEffects);
             return this;
         }
 
@@ -167,6 +176,12 @@ public class Application extends android.app.Application implements
     }
 
     private static Application lastInstance;
+
+    static {
+        SystemServiceManager.register(LayoutInflaterCreator.class);
+        config().setDisableContextMenu(VERSION.SDK_INT >= 14);
+        config().setDisableOverscrollEffects(VERSION.SDK_INT <= 10);
+    }
 
     public static Config config() {
         return Setting.get(Config.class);

@@ -64,6 +64,14 @@ public class PreferenceManager {
         return context.getPackageName() + "_preferences";
     }
 
+    public static String makeNameById(int id) {
+        if (id > 0) {
+            return "preference_0x" + Integer.toHexString(id);
+        } else {
+            return null;
+        }
+    }
+
     public static void setDefaultValues(Context context, int resId,
             boolean readAgain) {
         PreferenceManager.setDefaultValues(context,
@@ -121,6 +129,7 @@ public class PreferenceManager {
     private List<OnActivityResultListener> mActivityResultListeners;
     private List<OnActivityStopListener> mActivityStopListeners;
     private Context mContext;
+
     private SharedPreferences.Editor mEditor;
 
     private PreferenceFragment mFragment;
@@ -255,6 +264,14 @@ public class PreferenceManager {
         }
 
         return mPreferenceScreen.findPreference(key);
+    }
+
+    public Preference findPreference(int id) {
+        if (mPreferenceScreen == null) {
+            return null;
+        }
+
+        return mPreferenceScreen.findPreference(id);
     }
 
     Activity getActivity() {

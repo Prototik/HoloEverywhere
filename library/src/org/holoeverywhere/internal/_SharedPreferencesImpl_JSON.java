@@ -13,6 +13,7 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -31,7 +32,7 @@ import android.content.Context;
 import android.os.Build.VERSION;
 import android.util.Log;
 
-public class _SharedPreferencesImpl_JSON implements SharedPreferences {
+public class _SharedPreferencesImpl_JSON extends _SharedPreferencesBase {
     private final class CouldNotCreateStorage extends RuntimeException {
         private static final long serialVersionUID = -8602981054023098742L;
 
@@ -40,7 +41,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
         }
     }
 
-    private final class EditorImpl implements Editor {
+    private final class EditorImpl extends _BaseEditor {
         private final List<FutureJSONManipulate> manipulate = new ArrayList<FutureJSONManipulate>();
 
         private void add(FutureJSONManipulate t) {
@@ -303,7 +304,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
     @Override
     public boolean getBoolean(String key, boolean defValue) {
-        return getData().optBoolean(key, defValue);
+        return getData().optBoolean(key, d().getBoolean(key, defValue));
     }
 
     public String getCharset() {
@@ -316,7 +317,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
     @Override
     public float getFloat(String key, float defValue) {
-        return (float) getData().optDouble(key, defValue);
+        return (float) getData().optDouble(key, d().getFloat(key, defValue));
     }
 
     @Override
@@ -326,7 +327,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
     @Override
     public int getInt(String key, int defValue) {
-        return getData().optInt(key, defValue);
+        return getData().optInt(key, d().getInt(key, defValue));
     }
 
     @Override
@@ -348,7 +349,7 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
     @Override
     public long getLong(String key, long defValue) {
-        return getData().optLong(key, defValue);
+        return getData().optLong(key, d().getLong(key, defValue));
     }
 
     @Override
@@ -369,6 +370,13 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
     private <T> Set<T> getSet(String key, Set<T> defValue) {
         JSONArray a = getData().optJSONArray(key);
         if (a == null) {
+            try {
+                Object o = d().get(key);
+                if (o != null) {
+                    return new HashSet<T>(Arrays.asList((T[]) o));
+                }
+            } catch (Exception e) {
+            }
             return defValue;
         }
         Set<T> set = new HashSet<T>(Math.max(a.length(), 0));
@@ -380,7 +388,8 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
 
     @Override
     public String getString(String key, String defValue) {
-        return getData().optString(key, defValue);
+        String defValue2 = d().getString(key);
+        return getData().optString(key, defValue2 == null ? defValue : defValue2);
     }
 
     @Override
@@ -503,5 +512,4 @@ public class _SharedPreferencesImpl_JSON implements SharedPreferences {
             getReference().listeners = null;
         }
     }
-
 }

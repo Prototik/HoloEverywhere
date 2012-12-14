@@ -61,7 +61,6 @@ public class Switch extends CompoundButton {
     private int mTouchMode;
     private int mTouchSlop;
     private float mTouchX;
-    private float mTouchY;
     private Drawable mTrackDrawable;
     private VelocityTracker mVelocityTracker = VelocityTracker.obtain();
 
@@ -345,7 +344,6 @@ public class Switch extends CompoundButton {
                 if (isEnabled() && hitThumb(x, y)) {
                     mTouchMode = Switch.TOUCH_MODE_DOWN;
                     mTouchX = x;
-                    mTouchY = y;
                 }
                 return true;
             }
@@ -356,16 +354,15 @@ public class Switch extends CompoundButton {
                         break;
                     case TOUCH_MODE_DOWN: {
                         final float x = ev.getX();
-                        final float y = ev.getY();
-                        if (Math.abs(x - mTouchX) > mTouchSlop
-                                || Math.abs(y - mTouchY) > mTouchSlop) {
-                            mTouchMode = Switch.TOUCH_MODE_DRAGGING;
-                            getParent().requestDisallowInterceptTouchEvent(true);
-                            mTouchX = x;
-                            mTouchY = y;
-                            return true;
-                        }
-                        break;
+                        ev.getY();
+                        // if (Math.abs(x - mTouchX) > mTouchSlop
+                        // || Math.abs(y - mTouchY) > mTouchSlop) {
+                        mTouchMode = Switch.TOUCH_MODE_DRAGGING;
+                        getParent().requestDisallowInterceptTouchEvent(true);
+                        mTouchX = x;
+                        return true;
+                        // }
+                        // break;
                     }
                     case TOUCH_MODE_DRAGGING: {
                         final float x = ev.getX();

@@ -115,6 +115,13 @@ public abstract class PreferenceFragment extends Fragment implements
         return mPreferenceManager.findPreference(key);
     }
 
+    public Preference findPreference(int id) {
+        if (mPreferenceManager == null) {
+            return null;
+        }
+        return mPreferenceManager.findPreference(id);
+    }
+
     public ListView getListView() {
         ensureList();
         return mList;

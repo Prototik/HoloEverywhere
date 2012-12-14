@@ -22,7 +22,6 @@
 	<modules>
 		<module>library</module>
 		<module>demo</module>
-		<module>slidingmenu</module>
 		<module>builder</module>
 		<module>translator</module>
 	</modules>
@@ -75,24 +74,19 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<apk.prefix>holoeverywhere</apk.prefix>
-
-		<java.version>1.6</java.version>
-		<android.version>4.1.1.4</android.version>
-		<android.platform>16</android.platform>
-		<android-support.version>r7</android-support.version>
-		<abs.version>4.2.0</abs.version>
-
-		<android-maven.version>3.3.2</android-maven.version>
-
-		<github.downloads.repositoryOwner>ChristopheVersieux</github.downloads.repositoryOwner>
-		<github.downloads.repositoryName>HoloEverywhere</github.downloads.repositoryName>
-
 		<project.repo.release.id>holoeverywhere-repo</project.repo.release.id>
 		<project.release.repository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2</project.release.repository.url>
 
 		<project.repo.snapshots.id>holoeverywhere-repo-snapshots</project.repo.snapshots.id>
 		<project.snapshots.repository.url>https://oss.sonatype.org/content/repositories/snapshots</project.snapshots.repository.url>
+
+		<java.version>1.6</java.version>
+		<abs.version>4.2.0</abs.version>
+		<android.version>4.1.1.4</android.version>
+		<android.platform>16</android.platform>
+
+		<github.downloads.repositoryOwner>ChristopheVersieux</github.downloads.repositoryOwner>
+		<github.downloads.repositoryName>HoloEverywhere</github.downloads.repositoryName>
 
 		<holo.resources>${project.basedir}/resources</holo.resources>
 	</properties>
@@ -135,6 +129,7 @@
 						<includeDir>${holo.resources}</includeDir>
 					</configuration>
 				</plugin>
+
 				<plugin>
 					<groupId>org.holoeverywhere</groupId>
 					<artifactId>translator</artifactId>
@@ -157,7 +152,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.5.1</version>
+					<version>3.0</version>
 					<inherited>true</inherited>
 					<configuration>
 						<source>${java.version}</source>
@@ -168,14 +163,14 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.8.1</version>
+					<version>2.9</version>
 					<inherited>true</inherited>
 				</plugin>
 
 				<plugin>
 					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 					<artifactId>android-maven-plugin</artifactId>
-					<version>${android-maven.version}</version>
+					<version>3.4.1</version>
 					<inherited>true</inherited>
 					<extensions>true</extensions>
 					<configuration>
@@ -202,12 +197,13 @@
 					<version>2.3.2</version>
 					<configuration>
 						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<tagNameFormat>holoeverywhere-${project.version}</tagNameFormat>
 					</configuration>
 				</plugin>
 
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.12.3</version>
+					<version>2.12.4</version>
 					<inherited>true</inherited>
 					<configuration>
 						<skip>true</skip>

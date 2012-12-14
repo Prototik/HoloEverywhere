@@ -18,11 +18,54 @@ import android.content.Context;
 import android.os.Build.VERSION;
 import android.util.Log;
 
-public final class _SharedPreferencesImpl_XML implements SharedPreferences {
-    private static final class BaseEditor implements Editor {
+public final class _SharedPreferencesImpl_XML extends _SharedPreferencesBase {
+    public static class BaseOnSharedPreferenceChangeListener implements
+            android.content.SharedPreferences.OnSharedPreferenceChangeListener {
+        private static final Map<OnSharedPreferenceChangeListener, BaseOnSharedPreferenceChangeListener> instances = new HashMap<SharedPreferences.OnSharedPreferenceChangeListener, BaseOnSharedPreferenceChangeListener>();
+
+        @SuppressWarnings("unchecked")
+        public static <T extends BaseOnSharedPreferenceChangeListener> T obtain(
+                SharedPreferences prefs,
+                OnSharedPreferenceChangeListener listener) {
+            if (!BaseOnSharedPreferenceChangeListener.instances
+                    .containsKey(listener)) {
+                synchronized (BaseOnSharedPreferenceChangeListener.instances) {
+                    if (!BaseOnSharedPreferenceChangeListener.instances
+                            .containsKey(listener)) {
+                        try {
+                            BaseOnSharedPreferenceChangeListener.instances.put(
+                                    listener,
+                                    new BaseOnSharedPreferenceChangeListener(prefs, listener));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            return (T) BaseOnSharedPreferenceChangeListener.instances
+                    .get(listener);
+        }
+
+        private OnSharedPreferenceChangeListener listener;
+        private SharedPreferences prefs;
+
+        public BaseOnSharedPreferenceChangeListener(SharedPreferences prefs,
+                OnSharedPreferenceChangeListener listener) {
+            this.prefs = prefs;
+            this.listener = listener;
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(
+                android.content.SharedPreferences sharedPreferences, String key) {
+            listener.onSharedPreferenceChanged(prefs, key);
+        }
+    }
+
+    private final class EditorImpl extends _BaseEditor {
         private android.content.SharedPreferences.Editor editor;
 
-        public BaseEditor(android.content.SharedPreferences.Editor editor) {
+        public EditorImpl(android.content.SharedPreferences.Editor editor) {
             if (editor == null) {
                 throw new IllegalArgumentException(
                         "SharedPreferences.Editor can't be null");
@@ -132,49 +175,6 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
         }
     }
 
-    public static class BaseOnSharedPreferenceChangeListener implements
-            android.content.SharedPreferences.OnSharedPreferenceChangeListener {
-        private static final Map<OnSharedPreferenceChangeListener, BaseOnSharedPreferenceChangeListener> instances = new HashMap<SharedPreferences.OnSharedPreferenceChangeListener, BaseOnSharedPreferenceChangeListener>();
-
-        @SuppressWarnings("unchecked")
-        public static <T extends BaseOnSharedPreferenceChangeListener> T obtain(
-                SharedPreferences prefs,
-                OnSharedPreferenceChangeListener listener) {
-            if (!BaseOnSharedPreferenceChangeListener.instances
-                    .containsKey(listener)) {
-                synchronized (BaseOnSharedPreferenceChangeListener.instances) {
-                    if (!BaseOnSharedPreferenceChangeListener.instances
-                            .containsKey(listener)) {
-                        try {
-                            BaseOnSharedPreferenceChangeListener.instances.put(
-                                    listener,
-                                    new BaseOnSharedPreferenceChangeListener(prefs, listener));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-            return (T) BaseOnSharedPreferenceChangeListener.instances
-                    .get(listener);
-        }
-
-        private OnSharedPreferenceChangeListener listener;
-        private SharedPreferences prefs;
-
-        public BaseOnSharedPreferenceChangeListener(SharedPreferences prefs,
-                OnSharedPreferenceChangeListener listener) {
-            this.prefs = prefs;
-            this.listener = listener;
-        }
-
-        @Override
-        public void onSharedPreferenceChanged(
-                android.content.SharedPreferences sharedPreferences, String key) {
-            listener.onSharedPreferenceChanged(prefs, key);
-        }
-    }
-
     private static String setToString(Set<?> set) {
         return new JSONArray(set).toString();
     }
@@ -216,7 +216,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 
     @Override
     public Editor edit() {
-        return new BaseEditor(prefs.edit());
+        return new EditorImpl(prefs.edit());
     }
 
     @Override
@@ -226,12 +226,12 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 
     @Override
     public boolean getBoolean(String key, boolean defValue) {
-        return prefs.getBoolean(key, defValue);
+        return prefs.getBoolean(key, d().getBoolean(key, defValue));
     }
 
     @Override
     public float getFloat(String key, float defValue) {
-        return prefs.getFloat(key, defValue);
+        return prefs.getFloat(key, d().getFloat(key, defValue));
     }
 
     @Override
@@ -241,7 +241,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 
     @Override
     public int getInt(String key, int defValue) {
-        return prefs.getInt(key, defValue);
+        return prefs.getInt(key, d().getInt(key, defValue));
     }
 
     @Override
@@ -271,7 +271,7 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 
     @Override
     public long getLong(String key, long defValue) {
-        return prefs.getLong(key, defValue);
+        return prefs.getLong(key, d().getLong(key, defValue));
     }
 
     @Override
@@ -290,7 +290,8 @@ public final class _SharedPreferencesImpl_XML implements SharedPreferences {
 
     @Override
     public String getString(String key, String defValue) {
-        return prefs.getString(key, defValue);
+        String defValue2 = d().getString(key);
+        return prefs.getString(key, defValue2 == null ? defValue : defValue2);
     }
 
     @SuppressLint("NewApi")

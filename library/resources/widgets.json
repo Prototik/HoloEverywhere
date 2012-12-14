@@ -226,7 +226,7 @@
         }, 
         "Holo.GridView": {
             "android:listSelector": "?selectableItemBackground", 
-            "parent": "@android:style/Widget.AbsListView"
+            "parent": "@android:style/Widget.GridView"
         }, 
         "Holo.ImageButton": {
             "android:background": "@drawable/btn_default_holo_dark", 
@@ -255,7 +255,7 @@
             "android:listDivider": "@drawable/list_divider_holo_dark", 
             "android:listSelector": "@drawable/list_selector_holo_dark", 
             "android:scrollbars": "vertical", 
-            "parent": "@android:style/Widget.AbsListView"
+            "parent": "@android:style/Widget.ListView"
         }, 
         "Holo.ListView.DropDown": {}, 
         "Holo.ListView.DropDown.Light": {

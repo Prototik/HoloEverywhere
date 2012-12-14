@@ -35,6 +35,7 @@
             "seekBarDialogPreferenceStyle": "@style/Holo.PreferenceDialog.SeekBarDialogPreference", 
             "seekBarPreferenceStyle": "@style/Holo.PreferenceSeekBar", 
             "switchPreferenceStyle": "@style/Holo.PreferenceSwitch", 
+            "textAppearanceListItem": "?android:textAppearanceLarge", 
             "textAppearanceListItemSmall": "?android:attr/textAppearanceMedium", 
             "timePickerStyle": "@style/Holo.TimePicker", 
             "yesNoPreferenceStyle": "@style/Holo.PreferenceDialog.YesNoPreference"
@@ -62,8 +63,6 @@
             "switchStyle": "@style/Holo.Switch", 
             "switchStyleOld": "@style/Holo.Switch.Old", 
             "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.PopupMenu.Large", 
-            "textAppearanceListItem": "?android:textAppearanceLarge", 
-            "textAppearanceListItemSmall": "?android:textAppearanceMedium", 
             "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.PopupMenu.Small", 
             "textColorAlertDialogListItem": "@color/primary_text_holo_dark"
         }, 

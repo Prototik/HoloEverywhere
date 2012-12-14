@@ -125,6 +125,32 @@ public abstract class PreferenceGroup extends Preference implements
         return null;
     }
 
+    public Preference findPreference(int id) {
+        if (getResId() == id) {
+            return this;
+        }
+        final int preferenceCount = getPreferenceCount();
+        for (int i = 0; i < preferenceCount; i++) {
+            final Preference preference = getPreference(i);
+            final int curId = preference.getResId();
+
+            if (curId > 0 && curId == id) {
+                return preference;
+            }
+
+            if (preference instanceof PreferenceGroup) {
+                final Preference returnedPreference = ((PreferenceGroup) preference)
+                        .findPreference(id);
+                if (returnedPreference != null) {
+                    return returnedPreference;
+                }
+            }
+        }
+
+        return null;
+
+    }
+
     public Preference getPreference(int index) {
         return mPreferenceList.get(index);
     }

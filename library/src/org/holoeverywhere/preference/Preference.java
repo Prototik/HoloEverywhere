@@ -70,6 +70,7 @@ public class Preference implements Comparable<Preference>,
     private boolean mBaseMethodCalled;
     private Context mContext;
     private Object mDefaultValue;
+    private int mDependencyId;
     private String mDependencyKey;
     private boolean mDependencyMet = true;
     private List<Preference> mDependents;
@@ -90,6 +91,7 @@ public class Preference implements Comparable<Preference>,
     private boolean mPersistent = true;
     private PreferenceManager mPreferenceManager;
     private boolean mRequiresKey;
+    private int mResId;
     private boolean mSelectable = true;
     private boolean mShouldDisableView = true;
     private CharSequence mSummary;
@@ -109,8 +111,9 @@ public class Preference implements Comparable<Preference>,
         mContext = context;
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.Preference, defStyle, 0);
-        mIconResId = a.getResourceId(R.styleable.Preference_icon, 0);
         mKey = a.getString(R.styleable.Preference_key);
+        setResId(a.getResourceId(R.styleable.Preference_id, 0));
+        mIconResId = a.getResourceId(R.styleable.Preference_icon, 0);
         mTitleRes = a.getResourceId(R.styleable.Preference_title, 0);
         mTitle = a.getString(R.styleable.Preference_title);
         mSummary = a.getString(R.styleable.Preference_summary);
@@ -125,6 +128,7 @@ public class Preference implements Comparable<Preference>,
         mPersistent = a.getBoolean(R.styleable.Preference_persistent,
                 mPersistent);
         mDependencyKey = a.getString(R.styleable.Preference_dependency);
+        mDependencyId = a.getResourceId(R.styleable.Preference_depends, 0);
         mDefaultValue = onGetDefaultValue(a,
                 R.styleable.Preference_defaultValue);
         mShouldDisableView = a.getBoolean(
@@ -196,6 +200,14 @@ public class Preference implements Comparable<Preference>,
         }
     }
 
+    protected Preference findPreferenceInHierarchy(int id) {
+        if (id <= 0 || mPreferenceManager == null) {
+            return null;
+        }
+
+        return mPreferenceManager.findPreference(id);
+    }
+
     protected Preference findPreferenceInHierarchy(String key) {
         if (TextUtils.isEmpty(key) || mPreferenceManager == null) {
             return null;
@@ -210,6 +222,10 @@ public class Preference implements Comparable<Preference>,
 
     public String getDependency() {
         return mDependencyKey;
+    }
+
+    public int getDependencyId() {
+        return mDependencyId;
     }
 
     public SharedPreferences.Editor getEditor() {
@@ -374,6 +390,10 @@ public class Preference implements Comparable<Preference>,
 
     public PreferenceManager getPreferenceManager() {
         return mPreferenceManager;
+    }
+
+    public int getResId() {
+        return mResId;
     }
 
     public SharedPreferences getSharedPreferences() {
@@ -752,17 +772,25 @@ public class Preference implements Comparable<Preference>,
     }
 
     private void registerDependency() {
-        if (TextUtils.isEmpty(mDependencyKey)) {
-            return;
+        if (!TextUtils.isEmpty(mDependencyKey)) {
+            Preference preference = findPreferenceInHierarchy(mDependencyKey);
+            if (preference != null) {
+                preference.registerDependent(this);
+            } else {
+                throw new IllegalStateException("Dependency \"" + mDependencyKey
+                        + "\" not found for preference \"" + mKey + "\" (title: \""
+                        + mTitle + "\"");
+            }
         }
-
-        Preference preference = findPreferenceInHierarchy(mDependencyKey);
-        if (preference != null) {
-            preference.registerDependent(this);
-        } else {
-            throw new IllegalStateException("Dependency \"" + mDependencyKey
-                    + "\" not found for preference \"" + mKey + "\" (title: \""
-                    + mTitle + "\"");
+        if (mDependencyId > 0) {
+            Preference preference = findPreferenceInHierarchy(mDependencyId);
+            if (preference != null) {
+                preference.registerDependent(this);
+            } else {
+                throw new IllegalStateException("Dependency \"" + mDependencyKey
+                        + "\" not found for preference \"" + mKey + "\" (title: \""
+                        + mTitle + "\"");
+            }
         }
     }
 
@@ -797,9 +825,17 @@ public class Preference implements Comparable<Preference>,
         mDefaultValue = defaultValue;
     }
 
+    public void setDependency(int dependencyId) {
+        unregisterDependency();
+        mDependencyKey = null;
+        mDependencyId = dependencyId;
+        registerDependency();
+    }
+
     public void setDependency(String dependencyKey) {
         unregisterDependency();
         mDependencyKey = dependencyKey;
+        mDependencyId = 0;
         registerDependency();
     }
 
@@ -888,6 +924,13 @@ public class Preference implements Comparable<Preference>,
         mPersistent = persistent;
     }
 
+    public void setResId(int resId) {
+        mResId = resId;
+        if (TextUtils.isEmpty(mKey) && resId > 0) {
+            mKey = "preference_0x" + Integer.toHexString(mResId);
+        }
+    }
+
     public void setSelectable(boolean selectable) {
         if (mSelectable != selectable) {
             mSelectable = selectable;
@@ -967,6 +1010,12 @@ public class Preference implements Comparable<Preference>,
     private void unregisterDependency() {
         if (mDependencyKey != null) {
             final Preference oldDependency = findPreferenceInHierarchy(mDependencyKey);
+            if (oldDependency != null) {
+                oldDependency.unregisterDependent(this);
+            }
+        }
+        if (mDependencyId > 0) {
+            final Preference oldDependency = findPreferenceInHierarchy(mDependencyId);
             if (oldDependency != null) {
                 oldDependency.unregisterDependent(this);
             }

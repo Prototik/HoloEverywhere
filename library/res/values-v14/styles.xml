@@ -36,6 +36,7 @@
         <item name="seekBarDialogPreferenceStyle">@style/Holo.PreferenceDialog.SeekBarDialogPreference</item>
         <item name="seekBarPreferenceStyle">@style/Holo.PreferenceSeekBar</item>
         <item name="switchPreferenceStyle">@style/Holo.PreferenceSwitch</item>
+        <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <item name="yesNoPreferenceStyle">@style/Holo.PreferenceDialog.YesNoPreference</item>
@@ -59,8 +60,6 @@
         <item name="switchStyle">@style/Holo.Switch</item>
         <item name="switchStyleOld">@style/Holo.Switch.Old</item>
         <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Large</item>
-        <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
-        <item name="textAppearanceListItemSmall">?android:textAppearanceMedium</item>
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Small</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
         <!--End of block BaseDark-->
@@ -103,6 +102,7 @@
         <item name="seekBarDialogPreferenceStyle">@style/Holo.PreferenceDialog.SeekBarDialogPreference</item>
         <item name="seekBarPreferenceStyle">@style/Holo.PreferenceSeekBar</item>
         <item name="switchPreferenceStyle">@style/Holo.PreferenceSwitch</item>
+        <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <item name="yesNoPreferenceStyle">@style/Holo.PreferenceDialog.YesNoPreference</item>
@@ -168,6 +168,7 @@
         <item name="seekBarDialogPreferenceStyle">@style/Holo.PreferenceDialog.SeekBarDialogPreference</item>
         <item name="seekBarPreferenceStyle">@style/Holo.PreferenceSeekBar</item>
         <item name="switchPreferenceStyle">@style/Holo.PreferenceSwitch</item>
+        <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <item name="yesNoPreferenceStyle">@style/Holo.PreferenceDialog.YesNoPreference</item>

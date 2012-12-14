@@ -348,6 +348,14 @@ public abstract class PreferenceActivity extends ListActivity implements
         return mPreferenceManager.findPreference(key);
     }
 
+    @Deprecated
+    public Preference findPreference(int id) {
+        if (mPreferenceManager == null) {
+            return null;
+        }
+        return mPreferenceManager.findPreference(id);
+    }
+
     public void finishPreferencePanel(Fragment caller, int resultCode,
             Intent resultData) {
         if (mSinglePane) {

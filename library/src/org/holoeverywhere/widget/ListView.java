@@ -3,6 +3,7 @@ package org.holoeverywhere.widget;
 
 import org.holoeverywhere.IHoloActivity;
 import org.holoeverywhere.IHoloActivity.OnWindowFocusChangeListener;
+import org.holoeverywhere.app.Application;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -117,15 +118,6 @@ public class ListView extends android.widget.ListView implements
         }
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
-        super.onWindowFocusChanged(hasWindowFocus);
-        if (hasWindowFocus) {
-            invalidate();
-            invalidateViews();
-        }
-    }
-
     public static final int CHOICE_MODE_MULTIPLE_MODAL = AbsListView.CHOICE_MODE_MULTIPLE_MODAL;
     private ActionMode actionMode;
     private int checkedItemCount;
@@ -143,11 +135,14 @@ public class ListView extends android.widget.ListView implements
         this(context, attrs, android.R.attr.listViewStyle);
     }
 
+    @SuppressLint("NewApi")
     public ListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        super.setOnItemLongClickListener(longClickListenerWrapper);
         if (context instanceof IHoloActivity) {
             setHoloActivity((IHoloActivity) context);
+        }
+        if (Application.config().isDisableOverscrollEffects() && VERSION.SDK_INT >= 9) {
+            setOverScrollMode(OVER_SCROLL_NEVER);
         }
     }
 
@@ -184,6 +179,15 @@ public class ListView extends android.widget.ListView implements
     }
 
     @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        super.onWindowFocusChanged(hasWindowFocus);
+        if (hasWindowFocus) {
+            invalidate();
+            invalidateViews();
+        }
+    }
+
+    @Override
     public boolean performItemClick(View view, int position, long id) {
         if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
             boolean newValue = !getCheckedItemPositions().get(position);
@@ -215,8 +219,14 @@ public class ListView extends android.widget.ListView implements
             requestLayout();
             invalidate();
             super.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+            if (super.getOnItemLongClickListener() != null) {
+                setOnItemLongClickListener(super.getOnItemLongClickListener());
+            }
         } else {
             super.setChoiceMode(choiceMode);
+            if (super.getOnItemLongClickListener() == longClickListenerWrapper) {
+                super.setOnItemLongClickListener(longClickListenerWrapper.wrapped);
+            }
         }
     }
 
@@ -255,7 +265,12 @@ public class ListView extends android.widget.ListView implements
 
     @Override
     public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-        longClickListenerWrapper.wrapped = listener;
+        if (choiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+            longClickListenerWrapper.wrapped = listener;
+            super.setOnItemLongClickListener(longClickListenerWrapper);
+        } else {
+            super.setOnItemLongClickListener(listener);
+        }
     }
 
     public ActionMode startActionMode(ActionMode.Callback callback) {
