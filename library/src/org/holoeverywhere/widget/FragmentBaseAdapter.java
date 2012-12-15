@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.widget;
 
+import org.holoeverywhere.R;
 import org.holoeverywhere.widget.AdapterView.OnItemClickListener;
 import org.holoeverywhere.widget.AdapterView.OnItemLongClickListener;
 import org.holoeverywhere.widget.AdapterView.OnItemSelectedListener;
@@ -75,6 +76,10 @@ public abstract class FragmentBaseAdapter extends BaseAdapter implements PagerAd
         }
     }
 
+    public boolean fullDetachFragment() {
+        return false;
+    }
+
     public Iterable<View> cached() {
         return pagerDataSetObserver == null ? null : pagerDataSetObserver.cached();
     }
@@ -106,8 +111,10 @@ public abstract class FragmentBaseAdapter extends BaseAdapter implements PagerAd
         if (!fragment.isDetached()) {
             ft.detach(fragment);
         }
-        if (fragment.isAdded()) {
-            ft.remove(fragment);
+        if (fullDetachFragment()) {
+            if (fragment.isAdded()) {
+                ft.remove(fragment);
+            }
         }
     }
 
@@ -122,7 +129,7 @@ public abstract class FragmentBaseAdapter extends BaseAdapter implements PagerAd
     }
 
     public FragmentInfo getFragmentInfo(View view) {
-        return view == null ? null : (FragmentInfo) view.getTag();
+        return view == null ? null : (FragmentInfo) view.getTag(PAGER_TAG_ID);
     }
 
     @Override
@@ -164,9 +171,11 @@ public abstract class FragmentBaseAdapter extends BaseAdapter implements PagerAd
                 view = fragment.getView();
             }
         }
-        view.setTag(makeInfo(fragment, position));
+        view.setTag(PAGER_TAG_ID, makeInfo(fragment, position));
         return view;
     }
+
+    private static final int PAGER_TAG_ID = R.id.pagerTag;
 
     @Override
     public int getViewTypeCount() {

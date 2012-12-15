@@ -320,7 +320,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
 
     protected void onInit(Holo config) {
         if (config.addFactoryToInflater) {
-            getLayoutInflater().addFactory(this, 0);
+            getLayoutInflater().setFactory(this);
         }
         if (this instanceof Activity) {
             Activity activity = (Activity) this;

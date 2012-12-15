@@ -290,8 +290,7 @@ public class Pager extends AdapterView<ListAdapter> {
     protected void onRestoreInstanceState(Parcelable s) {
         SavedState state = (SavedState) s;
         super.onRestoreInstanceState(state.getSuperState());
-        setSelectedPositionInt(state.selection);
-        checkSelectionChanged();
+        setSelection(state.selection, false);
     }
 
     @Override
@@ -320,7 +319,8 @@ public class Pager extends AdapterView<ListAdapter> {
                 requestLayout();
             }
         }
-        final int needPosition = mPagerScroller.getPositionForScroll(l, t, true);
+        final int needPosition = mPagerScroller.getPositionForScroll(l, t,
+                true);
         if (mSelectedPosition != needPosition) {
             setSelectedPositionInt(needPosition);
             checkSelectionChanged();
@@ -438,10 +438,11 @@ public class Pager extends AdapterView<ListAdapter> {
         if (animate) {
             smoothScrollTo(selection);
         } else {
-            scrollTo(selection);
+            setNextSelectedPositionInt(selection);
             setSelectedPositionInt(selection);
             checkSelectionChanged();
             requestLayout();
+            scrollTo(selection);
         }
     }
 
