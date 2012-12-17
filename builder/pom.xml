@@ -35,6 +35,12 @@
 					<goalPrefix>builder</goalPrefix>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jarsigner-plugin</artifactId>
+				<inherited>true</inherited>
+			</plugin>
 		</plugins>
 	</build>
 </project>
