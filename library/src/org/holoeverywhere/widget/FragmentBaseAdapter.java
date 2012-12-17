@@ -28,12 +28,15 @@ public abstract class FragmentBaseAdapter extends BaseAdapter implements PagerAd
         }
     }
 
+    private static final int PAGER_TAG_ID = R.id.pagerTag;
+
     private static final String makeTagName(int container, int position) {
         return "fragmentbaseadapter:" + container + ":" + position;
     }
 
     private final FragmentManager fm;
     private PagerDataSetObserver pagerDataSetObserver;
+
     private int selection = -1;
 
     public FragmentBaseAdapter(FragmentManager fm) {
@@ -76,10 +79,6 @@ public abstract class FragmentBaseAdapter extends BaseAdapter implements PagerAd
         }
     }
 
-    public boolean fullDetachFragment() {
-        return false;
-    }
-
     public Iterable<View> cached() {
         return pagerDataSetObserver == null ? null : pagerDataSetObserver.cached();
     }
@@ -116,6 +115,10 @@ public abstract class FragmentBaseAdapter extends BaseAdapter implements PagerAd
                 ft.remove(fragment);
             }
         }
+    }
+
+    public boolean fullDetachFragment() {
+        return false;
     }
 
     @Override
@@ -174,8 +177,6 @@ public abstract class FragmentBaseAdapter extends BaseAdapter implements PagerAd
         view.setTag(PAGER_TAG_ID, makeInfo(fragment, position));
         return view;
     }
-
-    private static final int PAGER_TAG_ID = R.id.pagerTag;
 
     @Override
     public int getViewTypeCount() {

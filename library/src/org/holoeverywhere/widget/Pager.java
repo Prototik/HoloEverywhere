@@ -37,6 +37,20 @@ public class Pager extends AdapterView<ListAdapter> {
         public void onSelectionChanged(int selection);
     }
 
+    public final class PagerDataSetObserver extends AdapterDataSetObserver {
+        public Iterable<View> cached() {
+            return Pager.this.cached();
+        }
+
+        public void post(Runnable runnable) {
+            Pager.this.post(runnable);
+        }
+
+        public Iterable<View> visible() {
+            return Pager.this.visible();
+        }
+    }
+
     private static final class SavedState extends BaseSavedState {
         @SuppressWarnings("unused")
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
@@ -93,7 +107,6 @@ public class Pager extends AdapterView<ListAdapter> {
 
         }
     };
-
     private ListAdapter mAdapter;
     private final PagerDataSetObserver mDataSetObserver;
     private int mLastPosition;
@@ -103,6 +116,9 @@ public class Pager extends AdapterView<ListAdapter> {
     private OnPageScrollListener mOnPageScrollListener;
     private PagerScroller mPagerScroller;
     private final _Pager_Recycler mRecycler;
+
+    private final int[] mVisiblePositions = new int[2];
+
     private int mWidthMeasureSpec, mHeightMeasureSpec;
 
     public Pager(Context context) {
@@ -122,34 +138,6 @@ public class Pager extends AdapterView<ListAdapter> {
 
     public Iterable<View> cached() {
         return mRecycler.cached();
-    }
-
-    public final class PagerDataSetObserver extends AdapterDataSetObserver {
-        public Iterable<View> cached() {
-            return Pager.this.cached();
-        }
-
-        public void post(Runnable runnable) {
-            Pager.this.post(runnable);
-        }
-
-        public Iterable<View> visible() {
-            return Pager.this.visible();
-        }
-    }
-
-    @Override
-    void selectionChanged() {
-        mPagerScroller.onItemSelected(mSelectedPosition);
-        getPagerAdapter().onSelectionChanged(mSelectedPosition);
-        if (mOnItemSelectedListener != null) {
-            if (mSelectedPosition >= 0) {
-                mOnItemSelectedListener.onItemSelected(this, getSelectedView(), mSelectedPosition,
-                        getItemIdAtPosition(mSelectedPosition));
-            } else {
-                mOnItemSelectedListener.onNothingSelected(this);
-            }
-        }
     }
 
     @Override
@@ -300,8 +288,6 @@ public class Pager extends AdapterView<ListAdapter> {
         return state;
     }
 
-    private final int[] mVisiblePositions = new int[2];
-
     @Override
     public void onScrollChanged(int l, int t, int oldl, int oldt) {
         if (mLastScrollVisiblePositions == null) {
@@ -321,23 +307,9 @@ public class Pager extends AdapterView<ListAdapter> {
         }
         final int needPosition = mPagerScroller.getPositionForScroll(l, t,
                 true);
-        if (mSelectedPosition != needPosition) {
+        if (mSelectedPosition != needPosition && !mPagerScroller.isScrolling()) {
             setSelectedPositionInt(needPosition);
             checkSelectionChanged();
-        }
-    }
-
-    @Override
-    public void scrollBy(int x, int y) {
-        scrollTo(getScrollX() + x, getScrollY() + y);
-    }
-
-    @Override
-    public void scrollTo(int x, int y) {
-        final int oldX = getScrollX(), oldY = getScrollY();
-        if (oldX != x || oldY != y) {
-            super.scrollTo(x, y);
-            onScrollChanged(x, y, oldX, oldY);
         }
     }
 
@@ -352,8 +324,36 @@ public class Pager extends AdapterView<ListAdapter> {
         super.removeDetachedView(child, animate);
     }
 
+    @Override
+    public void scrollBy(int x, int y) {
+        scrollTo(getScrollX() + x, getScrollY() + y);
+    }
+
     public void scrollTo(int position) {
         mPagerScroller.scrollTo(position);
+    }
+
+    @Override
+    public void scrollTo(int x, int y) {
+        final int oldX = getScrollX(), oldY = getScrollY();
+        if (oldX != x || oldY != y) {
+            super.scrollTo(x, y);
+            onScrollChanged(x, y, oldX, oldY);
+        }
+    }
+
+    @Override
+    void selectionChanged() {
+        mPagerScroller.onItemSelected(mSelectedPosition);
+        getPagerAdapter().onSelectionChanged(mSelectedPosition);
+        if (mOnItemSelectedListener != null) {
+            if (mSelectedPosition >= 0) {
+                mOnItemSelectedListener.onItemSelected(this, getSelectedView(), mSelectedPosition,
+                        getItemIdAtPosition(mSelectedPosition));
+            } else {
+                mOnItemSelectedListener.onNothingSelected(this);
+            }
+        }
     }
 
     @Override

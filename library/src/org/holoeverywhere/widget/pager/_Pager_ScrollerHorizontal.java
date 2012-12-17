@@ -107,6 +107,11 @@ public class _Pager_ScrollerHorizontal extends PagerScroller implements
     }
 
     @Override
+    public boolean isScrolling() {
+        return !scroller.isFinished();
+    }
+
+    @Override
     public void layout(View view, int page, int left, int top, int right, int bottom) {
         view.layout(left + page * getSide(), top, right + page * getSide(), bottom);
     }

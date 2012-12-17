@@ -21,7 +21,7 @@
 
 		<dependency>
 			<groupId>org.holoeverywhere</groupId>
-			<artifactId>slider</artifactId>
+			<artifactId>library</artifactId>
 			<version>1.4.1-SNAPSHOT</version>
 			<type>apklib</type>
 		</dependency>

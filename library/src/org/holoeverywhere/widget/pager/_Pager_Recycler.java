@@ -13,14 +13,15 @@ import android.widget.Adapter;
 
 public final class _Pager_Recycler {
     private final class RecyclerIterable implements Iterable<View> {
+        private int[] pages = new int[2];
+
+        private int position;
+
         private ViewType type;
 
         public RecyclerIterable(ViewType type) {
             this.type = type;
         }
-
-        private int[] pages = new int[2];
-        private int position;
 
         @Override
         public Iterator<View> iterator() {

@@ -39,6 +39,10 @@ public abstract class PagerScroller {
         return null;
     }
 
+    public boolean isScrolling() {
+        return false;
+    }
+
     public void layout(View view, int page, int left, int top, int right, int bottom) {
 
     }
