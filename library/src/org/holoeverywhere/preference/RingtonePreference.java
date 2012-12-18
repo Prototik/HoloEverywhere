@@ -110,7 +110,7 @@ public class RingtonePreference extends Preference implements
             Object defaultValueObj) {
         String defaultValue = (String) defaultValueObj;
         if (restorePersistedValue) {
-            return;
+            defaultValue = getPersistedString(defaultValue);
         }
         if (!TextUtils.isEmpty(defaultValue)) {
             onSaveRingtone(Uri.parse(defaultValue));

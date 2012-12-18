@@ -181,13 +181,16 @@
 							<debug>false</debug>
 						</sign>
 						<zipalign>
-							<verbose>true</verbose>
+							<skip>false</skip>
+							<verbose>false</verbose>
 						</zipalign>
 						<undeployBeforeDeploy>true</undeployBeforeDeploy>
 						<proguard>
 							<skip>true</skip>
 						</proguard>
-						<testSkip>true</testSkip>
+						<test>
+							<skip>true</skip>
+						</test>
 					</configuration>
 				</plugin>
 
@@ -198,8 +201,25 @@
 					<configuration>
 						<autoVersionSubmodules>true</autoVersionSubmodules>
 						<tagNameFormat>holoeverywhere-${project.version}</tagNameFormat>
+						<scmCommentPrefix>Release:</scmCommentPrefix>
 					</configuration>
 				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.4</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
 
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
@@ -246,34 +266,4 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>release</id>
-			<activation>
-				<property>
-					<name>performRelease</name>
-					<value>true</value>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.4</version>
-						<executions>
-							<execution>
-								<id>sign-artifacts</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 </project>

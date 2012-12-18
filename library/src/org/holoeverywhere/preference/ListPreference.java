@@ -155,8 +155,8 @@ public class ListPreference extends DialogPreference {
 
     @Override
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        mValue = restoreValue ? getPersistedString(mValue)
-                : (String) defaultValue;
+        setValue(restoreValue ? getPersistedString(mValue)
+                : (String) defaultValue);
     }
 
     public void setEntries(CharSequence[] entries) {

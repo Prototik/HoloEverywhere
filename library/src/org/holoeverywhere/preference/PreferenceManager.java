@@ -94,17 +94,9 @@ public class PreferenceManager {
             pm.setSharedPreferencesName(sharedPreferencesName);
             pm.setSharedPreferencesMode(sharedPreferencesMode);
             pm.inflateFromResource(context, resId, null);
-
             SharedPreferences.Editor editor = defaultValueSp.edit().putBoolean(
                     PreferenceManager.KEY_HAS_SET_DEFAULT_VALUES, true);
-            try {
-                if (VERSION.SDK_INT < 9) {
-                    throw new AbstractMethodError();
-                }
-                editor.apply();
-            } catch (AbstractMethodError unused) {
-                editor.commit();
-            }
+            editor.apply();
         }
     }
 
