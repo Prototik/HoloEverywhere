@@ -14,7 +14,6 @@ import static org.holoeverywhere.R.style.Holo_Theme_Light_NoActionBar_Fullscreen
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar;
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Fullscreen;
 
-import org.holoeverywhere.ThemeManager.ThemeGetter;
 import org.holoeverywhere.ThemeManager.ThemeGetter.ThemeTag;
 import org.holoeverywhere.app.Application;
 

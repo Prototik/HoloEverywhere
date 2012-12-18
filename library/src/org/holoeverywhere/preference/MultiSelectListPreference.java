@@ -162,8 +162,7 @@ public class MultiSelectListPreference extends DialogPreference {
     @SuppressWarnings("unchecked")
     @Override
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        mValues.clear();
-        mValues.addAll(restoreValue ? getPersistedStringSet(mValues)
+        setValues(restoreValue ? getPersistedStringSet(mValues)
                 : (Set<String>) defaultValue);
     }
 

@@ -93,7 +93,12 @@
 							</zipalign>
 							<manifest>
 								<versionName>${project.version}</versionName>
+								<versionCodeAutoIncrement>true</versionCodeAutoIncrement>
 							</manifest>
+							<proguard>
+								<skip>false</skip>
+								<config>${project.baseDir}/proguard.cfg</config>
+							</proguard>
 							<sign>
 								<debug>false</debug>
 							</sign>

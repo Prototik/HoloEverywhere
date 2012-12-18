@@ -149,7 +149,7 @@ public class SeekBarDialogPreference extends DialogPreference {
         int def = defaultValue instanceof Integer ? (Integer) defaultValue
                 : defaultValue == null ? 0 : Integer.parseInt(defaultValue
                         .toString());
-        mSeekBar.setProgress(restoreValue ? getPersistedInt(def) : def);
+        setValue(restoreValue ? getPersistedInt(def) : def);
     }
 
     public void setMaxValue(int maxValue) {
