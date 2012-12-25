@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:background="?selectableItemBackground" >
+	android:layout_height="?listPreferredItemHeightSmall"
+	android:background="?selectableItemBackground"
+	android:minHeight="?listPreferredItemHeightSmall" >
 	<View
 		android:id="@+id/selectionHandler"
 		android:layout_width="6dp"
@@ -10,9 +11,8 @@
 	<TextView
 		android:id="@android:id/text1"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="match_parent"
 		android:gravity="center_vertical"
-		android:minHeight="?listPreferredItemHeightSmall"
 		android:paddingLeft="16dp"
 		android:textAppearance="?android:textAppearanceMedium" />
 </LinearLayout>
