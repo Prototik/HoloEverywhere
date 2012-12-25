@@ -37,14 +37,6 @@ public class ListPopupWindow {
             mHijackFocus = hijackFocus;
         }
 
-        /*
-         * TODO
-         * @Override View obtainView(int position, boolean[] isScrap) { View
-         * view = super.obtainView(position, isScrap); if (view instanceof
-         * TextView) { ((TextView) view).setHorizontallyScrolling(true); }
-         * return view; }
-         */
-
         @Override
         public boolean hasFocus() {
             return mHijackFocus || super.hasFocus();
@@ -71,6 +63,78 @@ public class ListPopupWindow {
         @Override
         public void run() {
             clearListSelection();
+        }
+    }
+
+    private static final class PopupAdapterWrapper implements ListAdapter {
+        private ListAdapter adapter;
+
+        public PopupAdapterWrapper(ListAdapter adapter) {
+            this.adapter = adapter;
+        }
+
+        @Override
+        public boolean areAllItemsEnabled() {
+            return adapter.areAllItemsEnabled();
+        }
+
+        @Override
+        public int getCount() {
+            return adapter.getCount();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return adapter.getItem(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return adapter.getItemId(position);
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return adapter.getItemViewType(position);
+        }
+
+        @Override
+        public View getView(int position, View view, ViewGroup container) {
+            view = adapter.getView(position, view, container);
+            if (view instanceof TextView) {
+                ((TextView) view).setHorizontallyScrolling(true);
+            }
+            return view;
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return adapter.getViewTypeCount();
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return adapter.hasStableIds();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return adapter.isEmpty();
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            return adapter.isEnabled(position);
+        }
+
+        @Override
+        public void registerDataSetObserver(DataSetObserver observer) {
+            adapter.registerDataSetObserver(observer);
+        }
+
+        @Override
+        public void unregisterDataSetObserver(DataSetObserver observer) {
+            adapter.unregisterDataSetObserver(observer);
         }
     }
 
@@ -165,6 +229,7 @@ public class ListPopupWindow {
     private boolean mModal;
     private DataSetObserver mObserver;
     private PopupWindow mPopup;
+
     private int mPromptPosition = ListPopupWindow.POSITION_PROMPT_ABOVE;
 
     private View mPromptView;
@@ -684,9 +749,9 @@ public class ListPopupWindow {
         } else if (mAdapter != null) {
             mAdapter.unregisterDataSetObserver(mObserver);
         }
-        mAdapter = adapter;
+        mAdapter = adapter == null ? null : new PopupAdapterWrapper(adapter);
         if (mAdapter != null) {
-            adapter.registerDataSetObserver(mObserver);
+            mAdapter.registerDataSetObserver(mObserver);
         }
         if (mDropDownList != null) {
             mDropDownList.setAdapter(mAdapter);

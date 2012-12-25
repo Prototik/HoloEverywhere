@@ -2,6 +2,8 @@
     <style name="Holo.Theme" parent="Theme.Sherlock">
         <!--Include block: BaseDark-->
         <!--Include block: Base-->
+        <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
+        <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
         <item name="android:dialogTheme">?dialogTheme</item>
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
@@ -68,6 +70,8 @@
     <style name="Holo.Theme.Light" parent="Theme.Sherlock.Light">
         <!--Include block: BaseLight-->
         <!--Include block: Base-->
+        <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
+        <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
         <item name="android:dialogTheme">?dialogTheme</item>
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
@@ -134,6 +138,8 @@
     <style name="Holo.Theme.Light.DarkActionBar" parent="Theme.Sherlock.Light.DarkActionBar">
         <!--Include block: BaseLight-->
         <!--Include block: Base-->
+        <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
+        <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
         <item name="android:dialogTheme">?dialogTheme</item>
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>

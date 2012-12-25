@@ -7,18 +7,15 @@ import java.util.List;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.demo.R;
-import org.holoeverywhere.widget.AdapterView;
-import org.holoeverywhere.widget.AdapterView.OnItemSelectedListener;
-import org.holoeverywhere.widget.FragmentBaseAdapter;
-import org.holoeverywhere.widget.Pager;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
 public class PagerFragment extends Fragment {
-    private final class ListNavigationAdapter extends FragmentBaseAdapter implements
-            OnItemSelectedListener {
+    private final class ListNavigationAdapter extends FragmentPagerAdapter {
         private final List<NavigationItem> list;
 
         public ListNavigationAdapter() {
@@ -40,14 +37,9 @@ public class PagerFragment extends Fragment {
         }
 
         @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view,
-                int position, long id) {
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            super.setPrimaryItem(container, position, object);
             getSupportActivity().getSupportActionBar().setSubtitle(list.get(position).title);
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-            getSupportActivity().getSupportActionBar().setSubtitle(null);
         }
 
         @Override
@@ -79,16 +71,17 @@ public class PagerFragment extends Fragment {
     }
 
     private ListNavigationAdapter adapter;
-    private Pager pager;
+    private ViewPager pager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return pager = new Pager(getActivity());
+        return pager = new ViewPager(getActivity());
     }
 
     @Override
     public void onViewCreated(View view) {
         super.onViewCreated(view);
+
         adapter = new ListNavigationAdapter();
         adapter.add(MainFragment.class, R.string.demo);
         adapter.add(SettingsFragment.class, R.string.settings);
@@ -96,7 +89,5 @@ public class PagerFragment extends Fragment {
         adapter.add(AboutFragment.class, R.string.about);
 
         pager.setAdapter(adapter);
-        pager.setOnItemSelectedListener(adapter);
     }
-
 }

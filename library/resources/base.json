@@ -1,6 +1,8 @@
 {
     "blocks": {
         "Base": {
+            "activatedBackgroundIndicator": "@drawable/activated_background_holo", 
+            "android:activatedBackgroundIndicator": "?activatedBackgroundIndicator", 
             "android:dialogTheme": "?dialogTheme", 
             "android:dividerHorizontal": "?dividerHorizontal", 
             "android:dividerVertical": "?dividerVertical", 

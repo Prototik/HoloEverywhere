@@ -1,8 +1,6 @@
 
 package org.holoeverywhere.app;
 
-import java.util.Random;
-
 import org.holoeverywhere.LayoutInflater;
 
 import android.content.DialogInterface;
@@ -35,8 +33,34 @@ public class DialogFragment extends Fragment implements
     public static final int STYLE_NO_INPUT = 3;
     public static final int STYLE_NO_TITLE = 1;
     public static final int STYLE_NORMAL = 0;
-    private final String DIALOG_TAG = getClass().getName() + "@"
-            + Integer.toHexString(new Random().nextInt(Integer.MAX_VALUE));
+
+    public static final <T extends DialogFragment> T findInstance(Activity activity, Class<T> clazz) {
+        return findInstance(activity, clazz, false);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static final <T extends DialogFragment> T findInstance(Activity activity,
+            Class<T> clazz, boolean makeIfNeed) {
+        if (activity == null || clazz == null) {
+            throw new IllegalArgumentException("Activity of DialogFragment class is null");
+        }
+        T fragment;
+        try {
+            fragment = (T) activity.getSupportFragmentManager().findFragmentByTag(makeTag(clazz));
+            if (fragment == null) {
+                fragment = (T) android.support.v4.app.Fragment.instantiate(activity,
+                        clazz.getName());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error of finding DialogFragment instance", e);
+        }
+        return fragment;
+    }
+
+    private static final String makeTag(Class<? extends DialogFragment> clazz) {
+        return clazz.getName() + "@" + clazz.hashCode();
+    }
+
     int mBackStackId = -1;
     boolean mCancelable = true;
     Dialog mDialog;
@@ -313,18 +337,14 @@ public class DialogFragment extends Fragment implements
         }
         DialogTransaction dialogTransaction = new DialogTransaction();
         dialogTransaction.fragmentManager = fm;
-        dialogTransaction.dialogTag = DIALOG_TAG;
-        dialogTransaction.transactionId = show(ft, DIALOG_TAG);
+        dialogTransaction.dialogTag = makeTag(getClass());
+        dialogTransaction.transactionId = show(ft, dialogTransaction.dialogTag);
         return dialogTransaction;
     }
 
     @Deprecated
-    public void show(FragmentManager manager, String tag) {
-        mDismissed = false;
-        mShownByMe = true;
-        FragmentTransaction ft = manager.beginTransaction();
-        ft.add(this, tag);
-        ft.commit();
+    public int show(FragmentManager manager, String tag) {
+        return show(manager.beginTransaction(), tag);
     }
 
     public DialogTransaction show(FragmentTransaction ft) {
@@ -337,7 +357,6 @@ public class DialogFragment extends Fragment implements
         mShownByMe = true;
         transaction.add(this, tag);
         mViewDestroyed = false;
-        mBackStackId = transaction.commit();
-        return mBackStackId;
+        return mBackStackId = transaction.commit();
     }
 }

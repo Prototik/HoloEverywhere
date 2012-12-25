@@ -606,6 +606,8 @@
         <!--Include block: HoloDark-->
         <!--Include block: BaseDark-->
         <!--Include block: Base-->
+        <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
+        <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
         <item name="android:dialogTheme">?dialogTheme</item>
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
@@ -668,8 +670,6 @@
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
         <!--End of block BaseDark-->
         <!--Include block: Holo-->
-        <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
-        <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
         <item name="android:divider">?android:listDivider</item>
         <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
         <item name="android:gridViewStyle">@style/Holo.GridView</item>
@@ -803,6 +803,8 @@
         <!--Include block: HoloLight-->
         <!--Include block: BaseLight-->
         <!--Include block: Base-->
+        <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
+        <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
         <item name="android:dialogTheme">?dialogTheme</item>
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
@@ -865,8 +867,6 @@
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block BaseLight-->
         <!--Include block: Holo-->
-        <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
-        <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
         <item name="android:divider">?android:listDivider</item>
         <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
         <item name="android:gridViewStyle">@style/Holo.GridView</item>
@@ -939,6 +939,8 @@
         <!--Include block: HoloLight-->
         <!--Include block: BaseLight-->
         <!--Include block: Base-->
+        <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
+        <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
         <item name="android:dialogTheme">?dialogTheme</item>
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
@@ -1001,8 +1003,6 @@
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block BaseLight-->
         <!--Include block: Holo-->
-        <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
-        <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
         <item name="android:divider">?android:listDivider</item>
         <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
         <item name="android:gridViewStyle">@style/Holo.GridView</item>
