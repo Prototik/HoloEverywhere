@@ -1,4 +1,4 @@
-# HoloEverywhere v1.4
+# HoloEverywhere v1.4.1
 ## What is it?
 Bringing Holo Theme from Android 4.1 to 2.1 and above.
 ## How to use?
