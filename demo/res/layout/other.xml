@@ -23,6 +23,11 @@
 		<DemoNavigationItem
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:onClick="showListViewModal"
+			android:text="@string/listviewModal" />
+		<DemoNavigationItem
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
 			android:onClick="showCalendar"
 			android:text="@string/calendar" />
 		<DemoNavigationItem

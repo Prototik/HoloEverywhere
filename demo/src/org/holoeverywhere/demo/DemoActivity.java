@@ -15,6 +15,7 @@ import org.holoeverywhere.app.TimePickerDialog;
 import org.holoeverywhere.demo.fragments.AboutFragment;
 import org.holoeverywhere.demo.fragments.AlertDialogFragment;
 import org.holoeverywhere.demo.fragments.CalendarFragment;
+import org.holoeverywhere.demo.fragments.ListModalFragment;
 import org.holoeverywhere.demo.fragments.MainFragment;
 import org.holoeverywhere.demo.fragments.OtherFragment;
 import org.holoeverywhere.demo.fragments.SettingsFragment;
@@ -42,8 +43,11 @@ public class DemoActivity extends Activity {
     private final class NavigationAdapter extends ArrayAdapter<NavigationItem> implements
             OnItemClickListener {
         private int lastSelection;
-
         private ListPopupWindow popupWindow;
+
+        public int getLastSelection() {
+            return lastSelection;
+        }
 
         public NavigationAdapter() {
             super(DemoActivity.this, 0);
@@ -71,6 +75,7 @@ public class DemoActivity extends Activity {
         public void onItemSelected(int position) {
             if (getItem(position).onClick()) {
                 lastSelection = position;
+                getIntent().putExtra(PAGE, position);
             }
             if (popupWindow != null) {
                 popupWindow.dismiss();
@@ -103,7 +108,7 @@ public class DemoActivity extends Activity {
             DemoNavigationItem view;
             if (convertView == null) {
                 view = new DemoNavigationItem(DemoActivity.this);
-                view.setSelectionHandlerColorResource(R.color.holo_orange_dark);
+                view.setSelectionHandlerColorResource(R.color.holo_blue_light);
             } else {
                 view = (DemoNavigationItem) convertView;
             }
@@ -180,12 +185,10 @@ public class DemoActivity extends Activity {
     }
 
     private WeakReference<AlertDialogFragment> alertDialog;
-
     private View bottomView;
-
     private NavigationAdapter navigationAdapter;
-
     private ListPopupWindow navigationPopupWindow;
+    private static final String PAGE = "page";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -205,7 +208,7 @@ public class DemoActivity extends Activity {
         navigationAdapter.add(OtherFragment.class, R.string.other);
         navigationAdapter.add(AboutFragment.class, R.string.about);
         navigationAdapter.add(new ThemeNavigationItem());
-        navigationAdapter.onItemSelected(0);
+        navigationAdapter.onItemSelected(getIntent().getIntExtra(PAGE, 0));
     }
 
     @Override
@@ -237,6 +240,10 @@ public class DemoActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    public void showListViewModal(View v) {
+        replaceFragment(ListModalFragment.getInstance(), "listviewmodal");
     }
 
     @Override

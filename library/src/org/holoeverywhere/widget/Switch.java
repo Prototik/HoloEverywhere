@@ -59,12 +59,12 @@ public class Switch extends CompoundButton {
     private float mThumbPosition;
     private int mThumbTextPadding;
     private int mThumbWidth;
+    private boolean mToggleWhenClick;
     private int mTouchMode;
     private int mTouchSlop;
     private float mTouchX;
     private float mTouchY;
     private Drawable mTrackDrawable;
-
     private VelocityTracker mVelocityTracker = VelocityTracker.obtain();
 
     public Switch(Context context) {
@@ -94,6 +94,7 @@ public class Switch extends CompoundButton {
                 R.styleable.Switch_switchMinWidth, 0);
         mSwitchPadding = a.getDimensionPixelSize(
                 R.styleable.Switch_switchPadding, 0);
+        mToggleWhenClick = a.getBoolean(R.styleable.Switch_toggleWhenClick, true);
         int appearance = a.getResourceId(R.styleable.Switch_switchTextAppearance, 0);
         if (appearance != 0) {
             setSwitchTextAppearance(context, appearance);
@@ -190,6 +191,10 @@ public class Switch extends CompoundButton {
                 mTempRect.left + mTempRect.right + mTouchSlop;
         final int thumbBottom = mSwitchBottom + mTouchSlop;
         return x > thumbLeft && x < thumbRight && y > thumbTop && y < thumbBottom;
+    }
+
+    public boolean isToggleWhenClick() {
+        return mToggleWhenClick;
     }
 
     @Override
@@ -408,6 +413,13 @@ public class Switch extends CompoundButton {
             }
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL: {
+                if (mTouchMode == TOUCH_MODE_DOWN && mToggleWhenClick) {
+                    toggle();
+                    cancelSuperTouch(ev);
+                    mTouchMode = TOUCH_MODE_IDLE;
+                    mVelocityTracker.clear();
+                    return true;
+                }
                 if (mTouchMode == TOUCH_MODE_DRAGGING) {
                     stopDrag(ev);
                     return true;
@@ -540,6 +552,10 @@ public class Switch extends CompoundButton {
     public void setThumbTextPadding(int pixels) {
         mThumbTextPadding = pixels;
         requestLayout();
+    }
+
+    public void setToggleWhenClick(boolean mToggleWhenClick) {
+        this.mToggleWhenClick = mToggleWhenClick;
     }
 
     public void setTrackDrawable(Drawable track) {

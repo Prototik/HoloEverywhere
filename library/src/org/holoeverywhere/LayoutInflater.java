@@ -10,7 +10,6 @@ import java.util.WeakHashMap;
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator;
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
 import org.holoeverywhere.app.Application;
-import org.holoeverywhere.internal.AlertController.RecycleListView;
 import org.holoeverywhere.internal.DialogTitle;
 import org.holoeverywhere.internal.NumberPickerEditText;
 import org.holoeverywhere.preference.PreferenceFrameLayout;
@@ -27,6 +26,7 @@ import org.holoeverywhere.widget.FrameLayout;
 import org.holoeverywhere.widget.GridView;
 import org.holoeverywhere.widget.LinearLayout;
 import org.holoeverywhere.widget.ListView;
+import org.holoeverywhere.widget.ModalBackgroundWrapper;
 import org.holoeverywhere.widget.MultiAutoCompleteTextView;
 import org.holoeverywhere.widget.NumberPicker;
 import org.holoeverywhere.widget.ProgressBar;
@@ -122,9 +122,9 @@ public class LayoutInflater extends android.view.LayoutInflater implements
         remap(FrameLayout.class);
         remap(GridView.class);
         remap(ViewPager.class);
+        remap(ModalBackgroundWrapper.class);
         remapInternal(ActionBarView.class, HoloListMenuItemView.class,
-                ExpandedMenuView.class, ActionBarContainer.class,
-                RecycleListView.class, DialogTitle.class,
+                ExpandedMenuView.class, ActionBarContainer.class, DialogTitle.class,
                 NumberPickerEditText.class);
     }
 

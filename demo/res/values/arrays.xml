@@ -23,4 +23,25 @@
 		<item>Germany</item>
 		<item>Spain</item>
 	</string-array>
+	<string-array name="adjectives">
+		<item>Kind</item>
+		<item>Enthusiastic</item>
+		<item>Yummy</item>
+		<item>Lucky</item>
+		<item>Immense</item>
+		<item>Miniature</item>
+		<item>Elated</item>
+		<item>Perfect</item>
+		<item>Incredible</item>
+		<item>Exuberant</item>
+		<item>Beautiful</item>
+		<item>Great</item>
+		<item>Stunning</item>
+		<item>Helpful</item>
+		<item>Startling</item>
+		<item>Fantastic</item>
+		<item>Colossal</item>
+		<item>Mysterious</item>
+		<item>Crazy</item>
+	</string-array>
 </resources>

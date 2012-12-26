@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
     <string name="about">About</string>
+    <string name="about_text">Just Holo.
+Just Everywhere.</string>
     <string name="alertdialog">AlertDialog</string>
     <string name="app_name">HoloEverywhere Demo</string>
     <string name="autocompletetextview">Auto complete input field</string>
@@ -22,6 +24,7 @@
     <string name="library_name">HoloEverywhere</string>
     <string name="light">Light</string>
     <string name="listpopupwindow">ListPopupWindow</string>
+    <string name="listviewModal">ListView Modal</string>
     <string name="mixed">Mixed</string>
     <string name="numberpicker">NumberPicker</string>
     <string name="other">Other</string>

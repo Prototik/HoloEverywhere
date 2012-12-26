@@ -19,7 +19,6 @@ import android.os.Message;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.TextUtils;
-import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -79,7 +78,6 @@ public class AlertController {
         public OnPrepareListViewListener mOnPrepareListViewListener;
         public DialogInterface.OnClickListener mPositiveButtonListener;
         public CharSequence mPositiveButtonText;
-        public boolean mRecycleOnMeasure = true;
         public int mTheme;
         public CharSequence mTitle;
         public View mView;
@@ -141,7 +139,7 @@ public class AlertController {
         }
 
         private void createListView(final AlertController dialog) {
-            final RecycleListView listView = (RecycleListView) mInflater
+            final ListView listView = (ListView) mInflater
                     .inflate(dialog.mListLayout, null);
             ListAdapter adapter;
             if (mIsMultiChoice) {
@@ -253,7 +251,6 @@ public class AlertController {
             } else if (mIsMultiChoice) {
                 listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
             }
-            listView.mRecycleOnMeasure = mRecycleOnMeasure;
             dialog.mListView = listView;
         }
     }
@@ -279,26 +276,6 @@ public class AlertController {
                 case MSG_DISMISS_DIALOG:
                     ((DialogInterface) msg.obj).dismiss();
             }
-        }
-    }
-
-    public static class RecycleListView extends ListView {
-        boolean mRecycleOnMeasure = true;
-
-        public RecycleListView(Context context) {
-            super(context);
-        }
-
-        public RecycleListView(Context context, AttributeSet attrs) {
-            super(context, attrs);
-        }
-
-        public RecycleListView(Context context, AttributeSet attrs, int defStyle) {
-            super(context, attrs, defStyle);
-        }
-
-        public boolean recycleOnMeasure() {
-            return mRecycleOnMeasure;
         }
     }
 

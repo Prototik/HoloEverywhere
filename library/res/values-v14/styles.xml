@@ -54,6 +54,7 @@
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_dark</item>
         <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow</item>
+        <item name="modalBackgroundWrapper">@drawable/modal_background_holo_dark</item>
         <item name="segmentedButtonStyle">@style/Holo.SegmentedButton</item>
         <item name="selectableItemBackground">@drawable/item_background_holo_dark</item>
         <item name="spinnerDropDownItemStyle">@style/Holo.TextView.SpinnerItem.DropDown</item>
@@ -122,6 +123,7 @@
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
         <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow.Light</item>
+        <item name="modalBackgroundWrapper">@drawable/modal_background_holo_light</item>
         <item name="segmentedButtonStyle">@style/Holo.SegmentedButton.Light</item>
         <item name="selectableItemBackground">@drawable/item_background_holo_light</item>
         <item name="spinnerDropDownItemStyle">@style/Holo.TextView.SpinnerItem.DropDown.Light</item>
@@ -190,6 +192,7 @@
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
         <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow.Light</item>
+        <item name="modalBackgroundWrapper">@drawable/modal_background_holo_light</item>
         <item name="segmentedButtonStyle">@style/Holo.SegmentedButton.Light</item>
         <item name="selectableItemBackground">@drawable/item_background_holo_light</item>
         <item name="spinnerDropDownItemStyle">@style/Holo.TextView.SpinnerItem.DropDown.Light</item>

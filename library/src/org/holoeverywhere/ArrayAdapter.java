@@ -92,11 +92,8 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
     private LayoutInflater mInflater;
     private final Object mLock = new Object();
     private boolean mNotifyOnChange = true;
-
     private List<T> mObjects;
-
     private ArrayList<T> mOriginalValues;
-
     private int mResource;
 
     public ArrayAdapter(Context context, int textViewResourceId) {
@@ -190,6 +187,8 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
             if (view != null) {
                 if (mFieldId > 0) {
                     text = (TextView) view.findViewById(mFieldId);
+                } else {
+                    text = (TextView) view.findViewById(android.R.id.text1);
                 }
                 if (text == null && view instanceof TextView) {
                     text = (TextView) view;

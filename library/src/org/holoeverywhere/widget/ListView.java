@@ -1,17 +1,23 @@
 
 package org.holoeverywhere.widget;
 
-import org.holoeverywhere.IHoloActivity;
 import org.holoeverywhere.IHoloActivity.OnWindowFocusChangeListener;
+import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
+import org.holoeverywhere.util.LongSparseArray;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
+import android.util.SparseBooleanArray;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.HapticFeedbackConstants;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Checkable;
@@ -22,30 +28,24 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class ListView extends android.widget.ListView implements
-        ContextMenuInfoGetter, OnWindowFocusChangeListener {
+public class ListView extends android.widget.ListView implements OnWindowFocusChangeListener,
+        ContextMenuInfoGetter {
     public interface MultiChoiceModeListener extends ActionMode.Callback {
         public void onItemCheckedStateChanged(ActionMode mode, int position,
                 long id, boolean checked);
     }
 
-    protected class MultiChoiceModeWrapper implements MultiChoiceModeListener {
-        protected MultiChoiceModeListener wrapped;
+    private class MultiChoiceModeWrapper implements MultiChoiceModeListener {
+        private MultiChoiceModeListener mWrapped;
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            if (wrapped == null) {
-                return false;
-            }
-            return wrapped.onActionItemClicked(mode, item);
+            return mWrapped.onActionItemClicked(mode, item);
         }
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            if (wrapped == null) {
-                return false;
-            }
-            if (wrapped.onCreateActionMode(mode, menu)) {
+            if (mWrapped.onCreateActionMode(mode, menu)) {
                 setLongClickable(false);
                 return true;
             }
@@ -54,78 +54,71 @@ public class ListView extends android.widget.ListView implements
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
-            if (wrapped == null) {
-                return;
-            }
-            wrapped.onDestroyActionMode(mode);
-            actionMode = null;
+            mWrapped.onDestroyActionMode(mode);
+            mChoiceActionMode = null;
             clearChoices();
-            checkedItemCount = 0;
-            updateOnScreenCheckedViews();
             invalidateViews();
             setLongClickable(true);
-            requestLayout();
-            invalidate();
         }
 
         @Override
-        public void onItemCheckedStateChanged(ActionMode mode, int position,
-                long id, boolean checked) {
-            if (wrapped == null) {
-                return;
-            }
-            wrapped.onItemCheckedStateChanged(mode, position, id, checked);
-            if (checkedItemCount == 0) {
+        public void onItemCheckedStateChanged(ActionMode mode,
+                int position, long id, boolean checked) {
+            mWrapped.onItemCheckedStateChanged(mode, position, id, checked);
+            if (getCheckedItemCount() == 0) {
                 mode.finish();
             }
         }
 
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            if (wrapped == null) {
-                return false;
-            }
-            return wrapped.onPrepareActionMode(mode, menu);
+            return mWrapped.onPrepareActionMode(mode, menu);
         }
 
         public void setWrapped(MultiChoiceModeListener wrapped) {
-            this.wrapped = wrapped;
+            mWrapped = wrapped;
         }
     }
 
-    private class OnItemLongClickListenerWrapper implements
-            OnItemLongClickListener {
-        protected OnItemLongClickListener wrapped;
+    private final class OnItemLongClickListenerWrapper implements OnItemLongClickListener {
+        private OnItemLongClickListener wrapped;
 
         @Override
-        public boolean onItemLongClick(AdapterView<?> view, View child,
-                int position, long id) {
-            boolean handled = doLongPress(child, position, id);
-            if (!handled) {
-                if (wrapped != null) {
-                    if (wrapped.onItemLongClick(view, child, position, id)) {
-                        return true;
-                    }
-                }
-                contextMenuInfo = createContextMenuInfo(view, position, id);
-                handled = ListView.super.showContextMenuForChild(ListView.this);
-                if (handled) {
-                    performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                    return true;
-                }
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+            return performItemLongClick(view, position, id);
+        }
+
+        public void setWrapped(OnItemLongClickListener wrapped) {
+            this.wrapped = wrapped;
+            if (wrapped != null) {
+                setLongClickable(true);
             }
-            return false;
         }
     }
 
     public static final int CHOICE_MODE_MULTIPLE_MODAL = AbsListView.CHOICE_MODE_MULTIPLE_MODAL;
-    private ActionMode actionMode;
-    private int checkedItemCount;
-    private int choiceMode;
-    private final MultiChoiceModeWrapper choiceModeListener = new MultiChoiceModeWrapper();
-    private ContextMenuInfo contextMenuInfo;
-    private IHoloActivity holoActivity;
-    private final OnItemLongClickListenerWrapper longClickListenerWrapper = new OnItemLongClickListenerWrapper();
+    private Activity mActivity;
+    private ListAdapterWrapper mAdapter;
+    private boolean mAdapterHasStableIds;
+    private LongSparseArray<Integer> mCheckedIdStates;
+    private int mCheckedItemCount;
+    private SparseBooleanArray mCheckStates;
+    private ActionMode mChoiceActionMode;
+    private int mChoiceMode;
+    private ContextMenuInfo mContextMenuInfo;
+    private MultiChoiceModeWrapper mMultiChoiceModeCallback;
+    private final OnItemLongClickListenerWrapper mOnItemLongClickListenerWrapper;
+    private boolean mEnableModalBackgroundWrapper;
+
+    public void setEnableModalBackgroundWrapper(boolean enableModalBackgroundWrapper) {
+        if (enableModalBackgroundWrapper == this.mEnableModalBackgroundWrapper) {
+            return;
+        }
+        this.mEnableModalBackgroundWrapper = enableModalBackgroundWrapper;
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
+    }
 
     public ListView(Context context) {
         this(context, null);
@@ -138,12 +131,26 @@ public class ListView extends android.widget.ListView implements
     @SuppressLint("NewApi")
     public ListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        if (context instanceof IHoloActivity) {
-            setHoloActivity((IHoloActivity) context);
+        if (context instanceof Activity) {
+            setActivity((Activity) context);
         }
         if (Application.config().isDisableOverscrollEffects() && VERSION.SDK_INT >= 9) {
             setOverScrollMode(OVER_SCROLL_NEVER);
         }
+        mOnItemLongClickListenerWrapper = new OnItemLongClickListenerWrapper();
+        super.setOnItemLongClickListener(mOnItemLongClickListenerWrapper);
+        setLongClickable(false);
+    }
+
+    @Override
+    public void clearChoices() {
+        if (mCheckStates != null) {
+            mCheckStates.clear();
+        }
+        if (mCheckedIdStates != null) {
+            mCheckedIdStates.clear();
+        }
+        mCheckedItemCount = 0;
     }
 
     protected ContextMenuInfo createContextMenuInfo(View view, int position,
@@ -151,31 +158,92 @@ public class ListView extends android.widget.ListView implements
         return new AdapterContextMenuInfo(view, position, id);
     }
 
-    protected boolean doLongPress(final View child,
-            final int longPressPosition, final long longPressId) {
-        if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
-            if (actionMode == null
-                    && (actionMode = startActionMode(choiceModeListener)) != null) {
-                setItemChecked(longPressPosition, true);
-                performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-            }
-            return true;
-        }
-        return false;
+    public Activity getActivity() {
+        return mActivity;
     }
 
-    public final IHoloActivity getBase() {
-        return holoActivity;
+    @Override
+    public int getCheckedItemCount() {
+        return mCheckedItemCount;
+    }
+
+    @Override
+    public long[] getCheckedItemIds() {
+        if (mChoiceMode == CHOICE_MODE_NONE || mCheckedIdStates == null || mAdapter == null) {
+            return new long[0];
+        }
+        final LongSparseArray<Integer> idStates = mCheckedIdStates;
+        final int count = idStates.size();
+        final long[] ids = new long[count];
+        for (int i = 0; i < count; i++) {
+            ids[i] = idStates.keyAt(i);
+        }
+        return ids;
+    }
+
+    @Override
+    public int getCheckedItemPosition() {
+        if (mChoiceMode == CHOICE_MODE_SINGLE && mCheckStates != null && mCheckStates.size() == 1) {
+            return mCheckStates.keyAt(0);
+        }
+        return INVALID_POSITION;
+    }
+
+    @Override
+    public SparseBooleanArray getCheckedItemPositions() {
+        if (mChoiceMode != CHOICE_MODE_NONE) {
+            return mCheckStates;
+        }
+        return null;
+    }
+
+    @Override
+    @Deprecated
+    public long[] getCheckItemIds() {
+        return getCheckedItemIds();
     }
 
     @Override
     public int getChoiceMode() {
-        return choiceMode;
+        return mChoiceMode;
     }
 
     @Override
     public ContextMenuInfo getContextMenuInfo() {
-        return contextMenuInfo;
+        return mContextMenuInfo;
+    }
+
+    @Override
+    public boolean isItemChecked(int position) {
+        if (mChoiceMode != CHOICE_MODE_NONE && mCheckStates != null) {
+            return mCheckStates.get(position);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_CENTER:
+            case KeyEvent.KEYCODE_ENTER:
+                if (!isEnabled()) {
+                    return true;
+                }
+                if (isClickable() && isPressed() &&
+                        getSelectedItemPosition() >= 0 && mAdapter != null &&
+                        getSelectedItemPosition() < mAdapter.getCount()) {
+                    final View view = getChildAt(getSelectedItemPosition()
+                            - getFirstVisiblePosition());
+                    if (view != null) {
+                        performItemClick(view, getSelectedItemPosition(), getSelectedItemId());
+                        view.setPressed(false);
+                    }
+                    setPressed(false);
+                    return true;
+                }
+                break;
+        }
+        return super.onKeyUp(keyCode, event);
     }
 
     @Override
@@ -189,116 +257,338 @@ public class ListView extends android.widget.ListView implements
 
     @Override
     public boolean performItemClick(View view, int position, long id) {
-        if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
-            boolean newValue = !getCheckedItemPositions().get(position);
-            setItemChecked(position, newValue);
-            if (actionMode != null) {
-                choiceModeListener.onItemCheckedStateChanged(actionMode,
-                        position, id, newValue);
+        boolean handled = false;
+        boolean dispatchItemClick = true;
+        if (mChoiceMode != CHOICE_MODE_NONE) {
+            handled = true;
+            boolean checkedStateChanged = false;
+            if (mChoiceMode == CHOICE_MODE_MULTIPLE ||
+                    mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL && mChoiceActionMode != null) {
+                boolean newValue = !mCheckStates.get(position, false);
+                mCheckStates.put(position, newValue);
+                if (mCheckedIdStates != null && mAdapter.hasStableIds()) {
+                    if (newValue) {
+                        mCheckedIdStates.put(mAdapter.getItemId(position), position);
+                    } else {
+                        mCheckedIdStates.delete(mAdapter.getItemId(position));
+                    }
+                }
+                if (newValue) {
+                    mCheckedItemCount++;
+                } else {
+                    mCheckedItemCount--;
+                }
+                if (mChoiceActionMode != null) {
+                    mMultiChoiceModeCallback.onItemCheckedStateChanged(mChoiceActionMode,
+                            position, id, newValue);
+                    dispatchItemClick = false;
+                }
+                checkedStateChanged = true;
+            } else if (mChoiceMode == CHOICE_MODE_SINGLE) {
+                boolean newValue = !mCheckStates.get(position, false);
+                if (newValue) {
+                    mCheckStates.clear();
+                    mCheckStates.put(position, true);
+                    if (mCheckedIdStates != null && mAdapter.hasStableIds()) {
+                        mCheckedIdStates.clear();
+                        mCheckedIdStates.put(mAdapter.getItemId(position), position);
+                    }
+                    mCheckedItemCount = 1;
+                } else if (mCheckStates.size() == 0 || !mCheckStates.valueAt(0)) {
+                    mCheckedItemCount = 0;
+                }
+                checkedStateChanged = true;
+            }
+            if (checkedStateChanged) {
+                updateOnScreenCheckedViews();
+            }
+        }
+        if (dispatchItemClick) {
+            handled |= super.performItemClick(view, position, id);
+        }
+        return handled;
+    }
+
+    private final class ListAdapterWrapper implements ListAdapter {
+        private final ListAdapter wrapped;
+
+        public ListAdapterWrapper(ListAdapter wrapped) {
+            this.wrapped = wrapped;
+        }
+
+        @Override
+        public int getCount() {
+            return wrapped.getCount();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return wrapped.getItem(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return wrapped.getItemId(position);
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return wrapped.getItemViewType(position);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return onPrepareView(wrapped.getView(position, convertView, parent), position);
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return wrapped.getViewTypeCount();
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return wrapped.hasStableIds();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return wrapped.isEmpty();
+        }
+
+        private DataSetObserver lastDataSetObserver;
+
+        public void notifyDataSetChanged() {
+            if (lastDataSetObserver != null) {
+                lastDataSetObserver.onChanged();
+            }
+        }
+
+        @Override
+        public void registerDataSetObserver(DataSetObserver dataSetObserver) {
+            wrapped.registerDataSetObserver(lastDataSetObserver = dataSetObserver);
+        }
+
+        @Override
+        public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
+            lastDataSetObserver = null;
+            wrapped.unregisterDataSetObserver(dataSetObserver);
+        }
+
+        @Override
+        public boolean areAllItemsEnabled() {
+            return wrapped.areAllItemsEnabled();
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            return wrapped.isEnabled(position);
+        }
+    }
+
+    public boolean performItemLongClick(final View child,
+            final int longPressPosition, final long longPressId) {
+        if (mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+            if (mChoiceActionMode == null &&
+                    (mChoiceActionMode = startActionMode(mMultiChoiceModeCallback)) != null) {
+                setItemChecked(longPressPosition, true);
+                performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             }
             return true;
         }
-        return super.performItemClick(view, position, id);
+        boolean handled = false;
+        if (mOnItemLongClickListenerWrapper.wrapped != null) {
+            handled = mOnItemLongClickListenerWrapper.wrapped.onItemLongClick(ListView.this, child,
+                    longPressPosition, longPressId);
+        }
+        if (!handled) {
+            mContextMenuInfo = createContextMenuInfo(child, longPressPosition, longPressId);
+            handled = super.showContextMenuForChild(ListView.this);
+        }
+        if (handled) {
+            performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+        }
+        return handled;
+    }
+
+    protected View onPrepareView(View view, int position) {
+        if (mEnableModalBackgroundWrapper && !(view instanceof ModalBackgroundWrapper)) {
+            if (view.getParent() != null) {
+                ((ViewGroup) view.getParent()).removeView(view);
+            }
+            ModalBackgroundWrapper wrapper = new ModalBackgroundWrapper(getContext());
+            wrapper.addView(view);
+            view = wrapper;
+        } else if (!mEnableModalBackgroundWrapper && view instanceof ModalBackgroundWrapper) {
+            view = ((ModalBackgroundWrapper) view).getChildAt(0);
+        }
+        if (mCheckStates != null) {
+            final boolean value = mCheckStates.get(position);
+            setStateOnView(view, value);
+        } else {
+            setStateOnView(view, false);
+        }
+        return view;
+    }
+
+    public final void setActivity(Activity activity) {
+        mActivity = activity;
+        if (mActivity != null) {
+            mActivity.addOnWindowFocusChangeListener(this);
+        }
+    }
+
+    @Override
+    public void setAdapter(ListAdapter adapter) {
+        mAdapter = adapter == null ? null : new ListAdapterWrapper(adapter);
+        if (mAdapter != null) {
+            mAdapterHasStableIds = mAdapter.hasStableIds();
+            if (mChoiceMode != CHOICE_MODE_NONE && mAdapterHasStableIds &&
+                    mCheckedIdStates == null) {
+                mCheckedIdStates = new LongSparseArray<Integer>();
+            }
+        }
+        if (mCheckStates != null) {
+            mCheckStates.clear();
+        }
+        if (mCheckedIdStates != null) {
+            mCheckedIdStates.clear();
+        }
+        super.setAdapter(mAdapter);
     }
 
     @Override
     public void setChoiceMode(int choiceMode) {
-        if (this.choiceMode == choiceMode) {
-            return;
+        mChoiceMode = choiceMode;
+        if (mChoiceActionMode != null) {
+            mChoiceActionMode.finish();
+            mChoiceActionMode = null;
         }
-        this.choiceMode = choiceMode;
-        if (actionMode != null) {
-            actionMode.finish();
-            actionMode = null;
-        }
-        if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
-            clearChoices();
-            checkedItemCount = 0;
-            setLongClickable(true);
-            updateOnScreenCheckedViews();
-            requestLayout();
-            invalidate();
-            super.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-            if (super.getOnItemLongClickListener() != null) {
-                setOnItemLongClickListener(super.getOnItemLongClickListener());
+        if (mChoiceMode != CHOICE_MODE_NONE) {
+            if (mCheckStates == null) {
+                mCheckStates = new SparseBooleanArray();
             }
-        } else {
-            super.setChoiceMode(choiceMode);
-            if (super.getOnItemLongClickListener() == longClickListenerWrapper) {
-                super.setOnItemLongClickListener(longClickListenerWrapper.wrapped);
+            if (mCheckedIdStates == null && mAdapter != null && mAdapter.hasStableIds()) {
+                mCheckedIdStates = new LongSparseArray<Integer>();
             }
-        }
-    }
-
-    public final void setHoloActivity(IHoloActivity iHoloActivity) {
-        holoActivity = iHoloActivity;
-        if (holoActivity != null) {
-            holoActivity.addOnWindowFocusChangeListener(this);
+            if (mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+                clearChoices();
+                setLongClickable(true);
+                setEnableModalBackgroundWrapper(true);
+            }
         }
     }
 
     @Override
     public void setItemChecked(int position, boolean value) {
-        if (choiceMode == ListView.CHOICE_MODE_MULTIPLE_MODAL) {
-            if (value && actionMode == null) {
-                actionMode = startActionMode(choiceModeListener);
-            }
-            super.setItemChecked(position, value);
-            checkedItemCount += value ? 1 : -1;
-            if (actionMode != null) {
-                ListAdapter adapter = getAdapter();
-                if (adapter != null) {
-                    choiceModeListener.onItemCheckedStateChanged(actionMode,
-                            position, adapter.getItemId(position), value);
+        if (mChoiceMode == CHOICE_MODE_NONE) {
+            return;
+        }
+        if (value && mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL && mChoiceActionMode == null) {
+            mChoiceActionMode = startActionMode(mMultiChoiceModeCallback);
+        }
+        if (mChoiceMode == CHOICE_MODE_MULTIPLE || mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+            boolean oldValue = mCheckStates.get(position);
+            mCheckStates.put(position, value);
+            if (mCheckedIdStates != null && mAdapter.hasStableIds()) {
+                if (value) {
+                    mCheckedIdStates.put(mAdapter.getItemId(position), position);
+                } else {
+                    mCheckedIdStates.delete(mAdapter.getItemId(position));
                 }
             }
-            requestLayout();
-            invalidate();
+            if (oldValue != value) {
+                if (value) {
+                    mCheckedItemCount++;
+                } else {
+                    mCheckedItemCount--;
+                }
+            }
+            if (mChoiceActionMode != null) {
+                final long id = mAdapter.getItemId(position);
+                mMultiChoiceModeCallback.onItemCheckedStateChanged(mChoiceActionMode,
+                        position, id, value);
+            }
         } else {
-            super.setItemChecked(position, value);
+            boolean updateIds = mCheckedIdStates != null && mAdapter.hasStableIds();
+            if (value || isItemChecked(position)) {
+                mCheckStates.clear();
+                if (updateIds) {
+                    mCheckedIdStates.clear();
+                }
+            }
+            if (value) {
+                mCheckStates.put(position, true);
+                if (updateIds) {
+                    mCheckedIdStates.put(mAdapter.getItemId(position), position);
+                }
+                mCheckedItemCount = 1;
+            } else if (mCheckStates.size() == 0 || !mCheckStates.valueAt(0)) {
+                mCheckedItemCount = 0;
+            }
         }
+        invalidateViews();
+        updateOnScreenCheckedViews();
     }
 
     public void setMultiChoiceModeListener(MultiChoiceModeListener listener) {
-        choiceModeListener.setWrapped(listener);
+        if (mMultiChoiceModeCallback == null) {
+            mMultiChoiceModeCallback = new MultiChoiceModeWrapper();
+        }
+        mMultiChoiceModeCallback.setWrapped(listener);
     }
 
     @Override
     public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-        if (choiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
-            longClickListenerWrapper.wrapped = listener;
-            super.setOnItemLongClickListener(longClickListenerWrapper);
-        } else {
-            super.setOnItemLongClickListener(listener);
+        mOnItemLongClickListenerWrapper.setWrapped(listener);
+    }
+
+    @Override
+    public boolean showContextMenuForChild(View originalView) {
+        final int longPressPosition = getPositionForView(originalView);
+        if (longPressPosition >= 0) {
+            final long longPressId = mAdapter.getItemId(longPressPosition);
+            boolean handled = false;
+            if (mOnItemLongClickListenerWrapper.wrapped != null) {
+                handled = mOnItemLongClickListenerWrapper.wrapped.onItemLongClick(ListView.this,
+                        originalView, longPressPosition, longPressId);
+            }
+            if (!handled) {
+                mContextMenuInfo = createContextMenuInfo(getChildAt(longPressPosition
+                        - getFirstVisiblePosition()), longPressPosition, longPressId);
+                handled = super.showContextMenuForChild(originalView);
+            }
+            return handled;
         }
+        return false;
     }
 
     public ActionMode startActionMode(ActionMode.Callback callback) {
-        if (actionMode != null) {
-            return actionMode;
+        if (mActivity != null) {
+            return mActivity.startActionMode(callback);
         }
-        if (holoActivity != null) {
-            actionMode = holoActivity.startActionMode(callback);
-        } else {
-            throw new RuntimeException(
-                    "ListView must have SBase (setSBase(SBase))");
-        }
-        return actionMode;
+        throw new RuntimeException("HoloEverywhere.ListView (" + this
+                + ") don't have reference on Activity");
     }
 
-    @SuppressLint("NewApi")
+    private static final boolean USE_ACTIVATED = VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB;
+
     private void updateOnScreenCheckedViews() {
         final int firstPos = getFirstVisiblePosition();
         final int count = getChildCount();
         for (int i = 0; i < count; i++) {
             final View child = getChildAt(i);
             final int position = firstPos + i;
-            boolean state = getCheckedItemPositions().get(position);
-            if (child instanceof Checkable) {
-                ((Checkable) child).setChecked(state);
-            } else if (VERSION.SDK_INT >= 11) {
-                child.setActivated(state);
-            }
+            final boolean value = mCheckStates.get(position);
+            setStateOnView(child, value);
+        }
+    }
+
+    protected final void setStateOnView(View child, boolean value) {
+        if (child instanceof Checkable) {
+            ((Checkable) child).setChecked(value);
+        } else if (USE_ACTIVATED) {
+            child.setActivated(value);
         }
     }
 }

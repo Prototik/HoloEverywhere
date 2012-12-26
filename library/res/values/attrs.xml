@@ -57,6 +57,7 @@
 	<attr name="panelMenuListWidth" format="dimension" />
 	<attr name="textAppearanceListItem" format="reference" />
 	<attr name="holoActionBarTheme" format="reference" />
+	<attr name="modalBackgroundWrapper" format="reference" />
 	<attr name="gravity">
 		<flag name="top" value="0x30" />
 		<flag name="bottom" value="0x50" />

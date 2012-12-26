@@ -238,6 +238,12 @@
 		"select_browser": {
 			"en": "Select a browser",
 			"ru": "Выберите браузер"
+		},
+		"listviewModal": {
+			"en": "ListView Modal"
+		},
+		"about_text": {
+			"en": "Just Holo.\nJust Everywhere."
 		}
 	}
 }

@@ -257,11 +257,6 @@ public class AlertDialog extends Dialog implements DialogInterface,
             return this;
         }
 
-        public Builder setRecycleOnMeasureEnabled(boolean enabled) {
-            P.mRecycleOnMeasure = enabled;
-            return this;
-        }
-
         public Builder setSingleChoiceItems(CharSequence[] items,
                 int checkedItem, final OnClickListener listener) {
             P.mItems = items;
