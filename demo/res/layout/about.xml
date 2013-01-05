@@ -24,21 +24,21 @@
 			android:layout_marginTop="18dp"
 			android:gravity="center"
 			android:text="@string/about_text" />
-		<DemoNavigationItem
+		<DemoListRowView
 			android:id="@+id/github"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/github"
-			android:color="@color/holo_blue_light" />
+			holo:selectionHandler="@color/holo_blue_light" />
 		<Divider
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical" />
-		<DemoNavigationItem
+		<DemoListRowView
 			android:id="@+id/developers"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="@string/write_to_developers"
-			android:color="@color/holo_green_light" />
+			holo:selectionHandler="@color/holo_red_light" />
 	</LinearLayout>
 </ScrollView>

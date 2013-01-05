@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 	<style name="Holo.Demo" />
-	<style name="Holo.Demo.NavigationItem">
+	<style name="Holo.Demo.ListRowView">
 		<item name="android:background">?selectableItemBackground</item>
 	</style>
 	<style name="Holo.Demo.Theme" parent="Holo.Theme">
 		<item name="disableMusicIcon">@drawable/disable_music_dark</item>
-		<item name="demoNavigationItemStyle">@style/Holo.Demo.NavigationItem</item>
+		<item name="demoListRowViewStyle">@style/Holo.Demo.ListRowView</item>
+		<item name="android:homeAsUpIndicator">@drawable/home_as_up_indicator</item>
+		<item name="homeAsUpIndicator">@drawable/home_as_up_indicator</item>
 	</style>
 	<style name="Holo.Demo.Theme.Light" parent="Holo.Theme.Light">
 		<item name="disableMusicIcon">@drawable/disable_music_light</item>
-		<item name="demoNavigationItemStyle">@style/Holo.Demo.NavigationItem</item>
+		<item name="demoListRowViewStyle">@style/Holo.Demo.ListRowView</item>
+		<item name="android:homeAsUpIndicator">@drawable/home_as_up_indicator</item>
+		<item name="homeAsUpIndicator">@drawable/home_as_up_indicator</item>
 	</style>
 	<style name="Holo.Demo.Theme.Light.DarkActionBar" parent="Holo.Theme.Light.DarkActionBar">
 		<item name="disableMusicIcon">@drawable/disable_music_dark</item>
-		<item name="demoNavigationItemStyle">@style/Holo.Demo.NavigationItem</item>
+		<item name="demoListRowViewStyle">@style/Holo.Demo.ListRowView</item>
+		<item name="android:homeAsUpIndicator">@drawable/home_as_up_indicator</item>
+		<item name="homeAsUpIndicator">@drawable/home_as_up_indicator</item>
 	</style>
 </resources>

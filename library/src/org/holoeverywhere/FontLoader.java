@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public final class FontLoader {
-    public static class HoloFont {
+    public static final class HoloFont {
         public static final HoloFont ROBOTO = new HoloFont(-1);
         public static final HoloFont ROBOTO_BOLD = new HoloFont(
                 R.raw.roboto_bold);
@@ -29,8 +29,21 @@ public final class FontLoader {
         public static final HoloFont ROBOTO_REGULAR = new HoloFont(
                 R.raw.roboto_regular);
 
+        public static HoloFont makeFont(int rawResourceId) {
+            return new HoloFont(rawResourceId);
+        }
+
+        public static HoloFont makeFont(int rawResourceId, boolean ignore) {
+            return new HoloFont(rawResourceId, ignore);
+        }
+
+        public static HoloFont makeFont(Typeface typeface) {
+            return new HoloFont(typeface);
+        }
+
         protected final int font;
         protected final boolean ignore;
+        protected final Typeface typeface;
 
         private HoloFont(int font) {
             this(font, VERSION.SDK_INT >= 11);
@@ -39,25 +52,49 @@ public final class FontLoader {
         private HoloFont(int font, boolean ignore) {
             this.font = font;
             this.ignore = ignore;
+            typeface = null;
+        }
+
+        private HoloFont(Typeface typeface) {
+            this.typeface = typeface;
+            font = -1;
+            ignore = false;
+        }
+
+        public <T extends View> T apply(T view) {
+            if (typeface != null) {
+                return FontLoader.apply(view, typeface);
+            } else if (font > 0) {
+                return FontLoader.apply(view, font);
+            }
+            return null;
+        }
+
+        public boolean isValid() {
+            return typeface != null || font > 0;
         }
     }
 
     private static final SparseArray<Typeface> fontArray = new SparseArray<Typeface>();
     private static final String TAG = "FontLoader";
 
-    public static View apply(View view) {
+    public static <T extends View> T apply(T view) {
         return FontLoader.applyDefaultStyles(view);
     }
 
-    public static View apply(View view, HoloFont font) {
+    public static <T extends View> T apply(T view, HoloFont font) {
         if (font.ignore) {
             return view;
         }
-        return FontLoader.apply(view, font.font);
+        if (font.isValid()) {
+            return font.apply(view);
+        } else {
+            throw new IllegalArgumentException("HoloFont is invalid");
+        }
     }
 
     @SuppressLint("NewApi")
-    public static View apply(View view, int font) {
+    public static <T extends View> T apply(T view, int font) {
         if (view == null || view.getContext() == null
                 || view.getContext().isRestricted()) {
             Log.e(FontLoader.TAG, "View or context is invalid");
@@ -75,7 +112,7 @@ public final class FontLoader {
         }
     }
 
-    public static View apply(View view, Typeface typeface) {
+    public static <T extends View> T apply(T view, Typeface typeface) {
         if (view == null || view.getContext() == null
                 || view.getContext().isRestricted()) {
             return view;
@@ -96,7 +133,7 @@ public final class FontLoader {
         return view;
     }
 
-    public static View applyDefaultStyles(View view) {
+    public static <T extends View> T applyDefaultStyles(T view) {
         if (view == null || view.getContext() == null
                 || view.getContext().isRestricted()) {
             return view;
@@ -137,25 +174,9 @@ public final class FontLoader {
         return view;
     }
 
-    /**
-     * @deprecated Use {@link LayoutInflater#inflate(Context, int)} instead
-     */
-    @Deprecated
-    public static View inflate(Context context, int res) {
-        return LayoutInflater.inflate(context, res);
-    }
-
-    /**
-     * @deprecated Use {@link LayoutInflater#inflate(Context, int, ViewGroup)}
-     *             instead
-     */
-    @Deprecated
-    public static View inflate(Context context, int res, ViewGroup parent) {
-        return LayoutInflater.inflate(context, res, parent);
-    }
-
     public static Typeface loadTypeface(Context context, int font) {
-        if (FontLoader.fontArray.get(font) == null) {
+        Typeface typeface = FontLoader.fontArray.get(font);
+        if (typeface == null) {
             try {
                 File file = new File(context.getApplicationInfo().dataDir
                         + "/fonts");
@@ -177,12 +198,12 @@ public final class FontLoader {
                 os.flush();
                 os.close();
                 is.close();
-                FontLoader.fontArray.put(font, Typeface.createFromFile(file));
+                FontLoader.fontArray.put(font, typeface = Typeface.createFromFile(file));
             } catch (Exception e) {
                 Log.e(FontLoader.TAG, "Error of loading font", e);
             }
         }
-        return FontLoader.fontArray.get(font);
+        return typeface;
     }
 
     private FontLoader() {

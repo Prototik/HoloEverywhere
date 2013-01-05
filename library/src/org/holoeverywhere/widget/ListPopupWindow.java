@@ -59,7 +59,7 @@ public class ListPopupWindow {
         }
 
         @Override
-        protected View onPrepareView(View view, int position) {
+        public View onPrepareView(View view, int position) {
             if (view instanceof android.widget.TextView) {
                 ((android.widget.TextView) view).setHorizontallyScrolling(true);
             }

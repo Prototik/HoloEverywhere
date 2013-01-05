@@ -10,6 +10,12 @@ import android.view.View;
 import android.widget.Checkable;
 
 public class ModalBackgroundWrapper extends FrameLayout implements Checkable {
+    private static final int[] CHECKED_STATE_SET = {
+            android.R.attr.state_checked
+    };
+
+    private boolean mChecked = false;
+
     public ModalBackgroundWrapper(Context context) {
         this(context, null);
     }
@@ -32,7 +38,14 @@ public class ModalBackgroundWrapper extends FrameLayout implements Checkable {
         return mChecked;
     }
 
-    private boolean mChecked = false;
+    @Override
+    protected int[] onCreateDrawableState(int extraSpace) {
+        final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
+        if (isChecked()) {
+            mergeDrawableStates(drawableState, CHECKED_STATE_SET);
+        }
+        return drawableState;
+    }
 
     @Override
     public void setChecked(boolean checked) {
@@ -49,19 +62,6 @@ public class ModalBackgroundWrapper extends FrameLayout implements Checkable {
                 }
             }
         }
-    }
-
-    private static final int[] CHECKED_STATE_SET = {
-            android.R.attr.state_checked
-    };
-
-    @Override
-    protected int[] onCreateDrawableState(int extraSpace) {
-        final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
-        if (isChecked()) {
-            mergeDrawableStates(drawableState, CHECKED_STATE_SET);
-        }
-        return drawableState;
     }
 
     @Override

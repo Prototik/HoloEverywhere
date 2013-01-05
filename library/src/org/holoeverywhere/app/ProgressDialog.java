@@ -104,7 +104,7 @@ public class ProgressDialog extends AlertDialog {
 
     public void incrementProgressBy(int diff) {
         if (mProgress != null) {
-            mProgress.incrementProgressBy(diff);
+            mProgress.incrementProgress(diff);
             onProgressChanged();
         } else {
             mIncrementBy += diff;
@@ -113,7 +113,7 @@ public class ProgressDialog extends AlertDialog {
 
     public void incrementSecondaryProgressBy(int diff) {
         if (mProgress != null) {
-            mProgress.incrementSecondaryProgressBy(diff);
+            mProgress.incrementSecondaryProgress(diff);
             onProgressChanged();
         } else {
             mIncrementSecondaryBy += diff;

@@ -192,6 +192,14 @@ public class Sherlock extends IAddon<SherlockA, SherlockF> {
             getSherlock().setSecondaryProgress(secondaryProgress);
         }
 
+        public void setUiOptions(int uiOptions) {
+            getSherlock().setUiOptions(uiOptions);
+        }
+
+        public void setUiOptions(int uiOptions, int mask) {
+            getSherlock().setUiOptions(uiOptions, mask);
+        }
+
         public ActionMode startActionMode(Callback callback) {
             return getSherlock().startActionMode(callback);
         }

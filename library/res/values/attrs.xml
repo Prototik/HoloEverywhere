@@ -340,4 +340,13 @@
 		<attr name="android:maxItems" />
 		<attr name="android:moreIcon" />
 	</declare-styleable>
+	<declare-styleable name="ExpandableListView">
+		<attr name="android:groupIndicator" />
+		<attr name="android:childIndicator" />
+		<attr name="android:indicatorLeft" />
+		<attr name="android:indicatorRight" />
+		<attr name="android:childIndicatorLeft" />
+		<attr name="android:childIndicatorRight" />
+		<attr name="android:childDivider" />
+	</declare-styleable>
 </resources>

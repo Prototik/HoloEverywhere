@@ -1,14 +1,20 @@
 
 package org.holoeverywhere.widget;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.holoeverywhere.IHoloActivity.OnWindowFocusChangeListener;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
+import org.holoeverywhere.internal.OnPrepareViewListener;
 import org.holoeverywhere.util.LongSparseArray;
+import org.holoeverywhere.widget.HeaderViewListAdapter.ViewInfo;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.graphics.Rect;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
@@ -17,11 +23,14 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewDebug.ExportedProperty;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Checkable;
 import android.widget.ListAdapter;
+import android.widget.WrapperListAdapter;
 
 import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder.ContextMenuInfoGetter;
 import com.actionbarsherlock.view.ActionMode;
@@ -29,13 +38,100 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class ListView extends android.widget.ListView implements OnWindowFocusChangeListener,
-        ContextMenuInfoGetter {
+        ContextMenuInfoGetter, OnPrepareViewListener {
+    public static class ListAdapterWrapper implements WrapperListAdapter {
+        private final OnPrepareViewListener listener;
+        private DataSetObserver mLastDataSetObserver;
+        private final ListAdapter wrapped;
+
+        public ListAdapterWrapper(ListAdapter wrapped, OnPrepareViewListener listener) {
+            this.wrapped = wrapped;
+            this.listener = listener;
+        }
+
+        @Override
+        public boolean areAllItemsEnabled() {
+            return wrapped.areAllItemsEnabled();
+        }
+
+        @Override
+        public int getCount() {
+            return wrapped.getCount();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return wrapped.getItem(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return wrapped.getItemId(position);
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return wrapped.getItemViewType(position);
+        }
+
+        public OnPrepareViewListener getListener() {
+            return listener;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return listener.onPrepareView(wrapped.getView(position, convertView, parent), position);
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return wrapped.getViewTypeCount();
+        }
+
+        @Override
+        public ListAdapter getWrappedAdapter() {
+            return wrapped;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return wrapped.hasStableIds();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return wrapped.isEmpty();
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            return wrapped.isEnabled(position);
+        }
+
+        public void notifyDataSetChanged() {
+            if (mLastDataSetObserver != null) {
+                mLastDataSetObserver.onChanged();
+            }
+        }
+
+        @Override
+        public void registerDataSetObserver(DataSetObserver dataSetObserver) {
+            wrapped.registerDataSetObserver(mLastDataSetObserver = dataSetObserver);
+        }
+
+        @Override
+        public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
+            mLastDataSetObserver = null;
+            wrapped.unregisterDataSetObserver(dataSetObserver);
+        }
+    }
+
     public interface MultiChoiceModeListener extends ActionMode.Callback {
         public void onItemCheckedStateChanged(ActionMode mode, int position,
                 long id, boolean checked);
     }
 
-    private class MultiChoiceModeWrapper implements MultiChoiceModeListener {
+    private final class MultiChoiceModeWrapper implements MultiChoiceModeListener {
         private MultiChoiceModeListener mWrapped;
 
         @Override
@@ -97,6 +193,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     }
 
     public static final int CHOICE_MODE_MULTIPLE_MODAL = AbsListView.CHOICE_MODE_MULTIPLE_MODAL;
+    private static final boolean USE_ACTIVATED = VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB;
     private Activity mActivity;
     private ListAdapterWrapper mAdapter;
     private boolean mAdapterHasStableIds;
@@ -106,19 +203,18 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     private ActionMode mChoiceActionMode;
     private int mChoiceMode;
     private ContextMenuInfo mContextMenuInfo;
-    private MultiChoiceModeWrapper mMultiChoiceModeCallback;
-    private final OnItemLongClickListenerWrapper mOnItemLongClickListenerWrapper;
     private boolean mEnableModalBackgroundWrapper;
+    private boolean mFastScrollEnabled;
+    private final List<ViewInfo> mFooterViewInfos = new ArrayList<ViewInfo>(),
+            mHeaderViewInfos = new ArrayList<ViewInfo>();
+    private boolean mForceHeaderListAdapter = false;
+    private boolean mIsAttached;
+    private int mLastScrollState = OnScrollListener.SCROLL_STATE_IDLE;
+    private MultiChoiceModeWrapper mMultiChoiceModeCallback;
 
-    public void setEnableModalBackgroundWrapper(boolean enableModalBackgroundWrapper) {
-        if (enableModalBackgroundWrapper == this.mEnableModalBackgroundWrapper) {
-            return;
-        }
-        this.mEnableModalBackgroundWrapper = enableModalBackgroundWrapper;
-        if (mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
-        }
-    }
+    private final OnItemLongClickListenerWrapper mOnItemLongClickListenerWrapper;
+
+    private OnScrollListener mOnScrollListener;
 
     public ListView(Context context) {
         this(context, null);
@@ -137,9 +233,52 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         if (Application.config().isDisableOverscrollEffects() && VERSION.SDK_INT >= 9) {
             setOverScrollMode(OVER_SCROLL_NEVER);
         }
+
         mOnItemLongClickListenerWrapper = new OnItemLongClickListenerWrapper();
         super.setOnItemLongClickListener(mOnItemLongClickListenerWrapper);
         setLongClickable(false);
+    }
+
+    @Override
+    public void addFooterView(View v) {
+        addFooterView(v, null, true);
+    }
+
+    @Override
+    public void addFooterView(View v, Object data, boolean isSelectable) {
+        if (mAdapter != null && !(mAdapter instanceof HeaderViewListAdapter)) {
+            throw new IllegalStateException(
+                    "Cannot add footer view to list -- setAdapter has already been called.");
+        }
+        ViewInfo info = new ViewInfo();
+        info.view = v;
+        info.data = data;
+        info.isSelectable = isSelectable;
+        mFooterViewInfos.add(info);
+        if (mAdapter != null) {
+            invalidateViews();
+        }
+    }
+
+    @Override
+    public void addHeaderView(View v) {
+        addHeaderView(v, null, true);
+    }
+
+    @Override
+    public void addHeaderView(View v, Object data, boolean isSelectable) {
+        if (mAdapter != null && !(mAdapter instanceof HeaderViewListAdapter)) {
+            throw new IllegalStateException(
+                    "Cannot add header view to list -- setAdapter has already been called.");
+        }
+        ViewInfo info = new ViewInfo();
+        info.view = v;
+        info.data = data;
+        info.isSelectable = isSelectable;
+        mHeaderViewInfos.add(info);
+        if (mAdapter != null) {
+            invalidateViews();
+        }
     }
 
     @Override
@@ -214,11 +353,68 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     }
 
     @Override
+    public int getFooterViewsCount() {
+        return mFooterViewInfos.size();
+    }
+
+    @Override
+    public int getHeaderViewsCount() {
+        return mHeaderViewInfos.size();
+    }
+
+    public boolean isAttached() {
+        return mIsAttached;
+    }
+
+    @Override
+    @ExportedProperty
+    public boolean isFastScrollEnabled() {
+        return mFastScrollEnabled;
+    }
+
+    public boolean isForceHeaderListAdapter() {
+        return mForceHeaderListAdapter;
+    }
+
+    public boolean isInScrollingContainer() {
+        ViewParent p = getParent();
+        while (p != null && p instanceof ViewGroup) {
+            if (((ViewGroup) p).shouldDelayChildPressedState()) {
+                return true;
+            }
+            p = p.getParent();
+        }
+        return false;
+    }
+
+    @Override
     public boolean isItemChecked(int position) {
         if (mChoiceMode != CHOICE_MODE_NONE && mCheckStates != null) {
             return mCheckStates.get(position);
         }
         return false;
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        mIsAttached = true;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mIsAttached = false;
+    }
+
+    @Override
+    protected void onFocusChanged(boolean gainFocus, int direction, Rect previouslyFocusedRect) {
+        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
+        if (gainFocus && getSelectedItemPosition() < 0 && !isInTouchMode()) {
+            if (!mIsAttached && mAdapter != null) {
+                invalidateViews();
+            }
+        }
     }
 
     @Override
@@ -244,6 +440,29 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
                 break;
         }
         return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    public View onPrepareView(View view, int position) {
+        if (mEnableModalBackgroundWrapper && !(view instanceof ModalBackgroundWrapper)) {
+            if (view.getParent() != null) {
+                ((ViewGroup) view.getParent()).removeView(view);
+            }
+            ModalBackgroundWrapper wrapper = new ModalBackgroundWrapper(getContext());
+            wrapper.addView(view);
+            view = wrapper;
+        } else if (!mEnableModalBackgroundWrapper && view instanceof ModalBackgroundWrapper) {
+            view = ((ModalBackgroundWrapper) view).getChildAt(0);
+            if (view.getParent() != null) {
+                ((ViewGroup) view.getParent()).removeView(view);
+            }
+        }
+        if (mCheckStates != null) {
+            setStateOnView(view, mCheckStates.get(position));
+        } else {
+            setStateOnView(view, false);
+        }
+        return view;
     }
 
     @Override
@@ -309,83 +528,6 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         return handled;
     }
 
-    private final class ListAdapterWrapper implements ListAdapter {
-        private final ListAdapter wrapped;
-
-        public ListAdapterWrapper(ListAdapter wrapped) {
-            this.wrapped = wrapped;
-        }
-
-        @Override
-        public int getCount() {
-            return wrapped.getCount();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return wrapped.getItem(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return wrapped.getItemId(position);
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return wrapped.getItemViewType(position);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            return onPrepareView(wrapped.getView(position, convertView, parent), position);
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return wrapped.getViewTypeCount();
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return wrapped.hasStableIds();
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return wrapped.isEmpty();
-        }
-
-        private DataSetObserver lastDataSetObserver;
-
-        public void notifyDataSetChanged() {
-            if (lastDataSetObserver != null) {
-                lastDataSetObserver.onChanged();
-            }
-        }
-
-        @Override
-        public void registerDataSetObserver(DataSetObserver dataSetObserver) {
-            wrapped.registerDataSetObserver(lastDataSetObserver = dataSetObserver);
-        }
-
-        @Override
-        public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
-            lastDataSetObserver = null;
-            wrapped.unregisterDataSetObserver(dataSetObserver);
-        }
-
-        @Override
-        public boolean areAllItemsEnabled() {
-            return wrapped.areAllItemsEnabled();
-        }
-
-        @Override
-        public boolean isEnabled(int position) {
-            return wrapped.isEnabled(position);
-        }
-    }
-
     public boolean performItemLongClick(final View child,
             final int longPressPosition, final long longPressId) {
         if (mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
@@ -411,24 +553,52 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         return handled;
     }
 
-    protected View onPrepareView(View view, int position) {
-        if (mEnableModalBackgroundWrapper && !(view instanceof ModalBackgroundWrapper)) {
-            if (view.getParent() != null) {
-                ((ViewGroup) view.getParent()).removeView(view);
+    private void removeViewInfo(View v, List<ViewInfo> where) {
+        int len = where.size();
+        for (int i = 0; i < len; ++i) {
+            ViewInfo info = where.get(i);
+            if (info.view == v) {
+                where.remove(i);
+                break;
             }
-            ModalBackgroundWrapper wrapper = new ModalBackgroundWrapper(getContext());
-            wrapper.addView(view);
-            view = wrapper;
-        } else if (!mEnableModalBackgroundWrapper && view instanceof ModalBackgroundWrapper) {
-            view = ((ModalBackgroundWrapper) view).getChildAt(0);
         }
-        if (mCheckStates != null) {
-            final boolean value = mCheckStates.get(position);
-            setStateOnView(view, value);
-        } else {
-            setStateOnView(view, false);
+    }
+
+    @Override
+    public boolean removeFooterView(View v) {
+        if (mFooterViewInfos.size() > 0) {
+            boolean result = false;
+            if (mAdapter != null && ((HeaderViewListAdapter) mAdapter).removeFooter(v)) {
+                invalidateViews();
+                result = true;
+            }
+            removeViewInfo(v, mFooterViewInfos);
+            return result;
         }
-        return view;
+        return false;
+    }
+
+    @Override
+    public boolean removeHeaderView(View v) {
+        if (mHeaderViewInfos.size() > 0) {
+            boolean result = false;
+            if (mAdapter != null && ((HeaderViewListAdapter) mAdapter).removeHeader(v)) {
+                invalidateViews();
+                result = true;
+            }
+            removeViewInfo(v, mHeaderViewInfos);
+            return result;
+        }
+        return false;
+    }
+
+    protected void reportScrollStateChange(int newState) {
+        if (newState != mLastScrollState) {
+            if (mOnScrollListener != null) {
+                mLastScrollState = newState;
+                mOnScrollListener.onScrollStateChanged(this, newState);
+            }
+        }
     }
 
     public final void setActivity(Activity activity) {
@@ -440,7 +610,15 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
 
     @Override
     public void setAdapter(ListAdapter adapter) {
-        mAdapter = adapter == null ? null : new ListAdapterWrapper(adapter);
+        if (adapter == null) {
+            mAdapter = null;
+        } else if (mForceHeaderListAdapter || mHeaderViewInfos.size() > 0
+                || mFooterViewInfos.size() > 0) {
+            mAdapter = new HeaderViewListAdapter(mHeaderViewInfos, mFooterViewInfos, adapter,
+                    this);
+        } else {
+            mAdapter = new ListAdapterWrapper(adapter, this);
+        }
         if (mAdapter != null) {
             mAdapterHasStableIds = mAdapter.hasStableIds();
             if (mChoiceMode != CHOICE_MODE_NONE && mAdapterHasStableIds &&
@@ -477,6 +655,20 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
                 setEnableModalBackgroundWrapper(true);
             }
         }
+    }
+
+    public void setEnableModalBackgroundWrapper(boolean enableModalBackgroundWrapper) {
+        if (enableModalBackgroundWrapper == mEnableModalBackgroundWrapper) {
+            return;
+        }
+        mEnableModalBackgroundWrapper = enableModalBackgroundWrapper;
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void setForceHeaderListAdapter(boolean forceHeaderListAdapter) {
+        mForceHeaderListAdapter = forceHeaderListAdapter;
     }
 
     @Override
@@ -527,8 +719,8 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
                 mCheckedItemCount = 0;
             }
         }
-        invalidateViews();
         updateOnScreenCheckedViews();
+        invalidateViews();
     }
 
     public void setMultiChoiceModeListener(MultiChoiceModeListener listener) {
@@ -541,6 +733,19 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     @Override
     public void setOnItemLongClickListener(OnItemLongClickListener listener) {
         mOnItemLongClickListenerWrapper.setWrapped(listener);
+    }
+
+    @Override
+    public void setOnScrollListener(OnScrollListener l) {
+        super.setOnScrollListener(mOnScrollListener = l);
+    }
+
+    protected final void setStateOnView(View child, boolean value) {
+        if (child instanceof Checkable) {
+            ((Checkable) child).setChecked(value);
+        } else if (USE_ACTIVATED) {
+            child.setActivated(value);
+        }
     }
 
     @Override
@@ -571,9 +776,10 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
                 + ") don't have reference on Activity");
     }
 
-    private static final boolean USE_ACTIVATED = VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB;
-
     private void updateOnScreenCheckedViews() {
+        if (mCheckStates == null) {
+            return;
+        }
         final int firstPos = getFirstVisiblePosition();
         final int count = getChildCount();
         for (int i = 0; i < count; i++) {
@@ -581,14 +787,6 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             final int position = firstPos + i;
             final boolean value = mCheckStates.get(position);
             setStateOnView(child, value);
-        }
-    }
-
-    protected final void setStateOnView(View child, boolean value) {
-        if (child instanceof Checkable) {
-            ((Checkable) child).setChecked(value);
-        } else if (USE_ACTIVATED) {
-            child.setActivated(value);
         }
     }
 }

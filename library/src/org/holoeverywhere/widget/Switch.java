@@ -412,7 +412,6 @@ public class Switch extends CompoundButton {
                 break;
             }
             case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL: {
                 if (mTouchMode == TOUCH_MODE_DOWN && mToggleWhenClick) {
                     toggle();
                     cancelSuperTouch(ev);
@@ -420,6 +419,7 @@ public class Switch extends CompoundButton {
                     mVelocityTracker.clear();
                     return true;
                 }
+            case MotionEvent.ACTION_CANCEL: {
                 if (mTouchMode == TOUCH_MODE_DRAGGING) {
                     stopDrag(ev);
                     return true;

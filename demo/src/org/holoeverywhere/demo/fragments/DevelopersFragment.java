@@ -87,19 +87,6 @@ public class DevelopersFragment extends ListFragment {
 
     }
 
-    private static DevelopersFragment instance;
-
-    public static DevelopersFragment getInstance() {
-        if (DevelopersFragment.instance == null) {
-            return new DevelopersFragment();
-        }
-        return DevelopersFragment.instance;
-    }
-
-    public DevelopersFragment() {
-        DevelopersFragment.instance = this;
-    }
-
     private DevelopersAdapter createDevelopersAdapter() {
         DevelopersAdapter adapter = new DevelopersAdapter();
         prepareAdapter(adapter);

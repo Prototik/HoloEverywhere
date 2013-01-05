@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:holo="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:orientation="vertical"
+	android:layout_height="?listPreferredItemHeightSmall"
+	android:minHeight="?listPreferredItemHeightSmall" >
+	<Divider
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:orientation="vertical" />
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:orientation="horizontal"
+		holo:divider="?dividerHorizontal"
+		holo:showDividers="middle" >
+		<DemoListRowView
+			android:id="@+id/dark"
+			android:layout_width="0dp"
+			android:layout_height="?listPreferredItemHeightSmall"
+			android:layout_weight="1"
+			android:baselineAligned="false"
+			android:gravity="bottom"
+			android:text="@string/dark"
+			android:textAppearance="?android:textAppearanceMedium"
+			holo:selectionHandler="@color/holo_blue_dark"
+			holo:selectionHandlerVisiblity="invisible" />
+		<DemoListRowView
+			android:id="@+id/light"
+			android:layout_width="0dp"
+			android:layout_height="?listPreferredItemHeightSmall"
+			android:layout_weight="1"
+			android:baselineAligned="false"
+			android:gravity="bottom"
+			android:text="@string/light"
+			android:textAppearance="?android:textAppearanceMedium"
+			holo:selectionHandler="@color/holo_blue_dark"
+			holo:selectionHandlerVisiblity="invisible" />
+		<DemoListRowView
+			android:id="@+id/mixed"
+			android:layout_width="0dp"
+			android:layout_height="?listPreferredItemHeightSmall"
+			android:layout_weight="1"
+			android:baselineAligned="false"
+			android:gravity="bottom"
+			android:text="@string/mixed"
+			android:textAppearance="?android:textAppearanceMedium"
+			holo:selectionHandler="@color/holo_blue_dark"
+			holo:selectionHandlerVisiblity="invisible" />
+	</LinearLayout>
+</LinearLayout>

@@ -25,6 +25,10 @@ public class ListModalFragment extends ListFragment implements MultiChoiceModeLi
 
     private ListView mList;
 
+    public ListModalFragment() {
+        instance = this;
+    }
+
     @Override
     public void onViewCreated(View view) {
         super.onViewCreated(view);

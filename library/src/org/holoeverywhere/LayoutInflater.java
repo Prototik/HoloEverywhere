@@ -21,6 +21,7 @@ import org.holoeverywhere.widget.CheckedTextView;
 import org.holoeverywhere.widget.DatePicker;
 import org.holoeverywhere.widget.Divider;
 import org.holoeverywhere.widget.EditText;
+import org.holoeverywhere.widget.ExpandableListView;
 import org.holoeverywhere.widget.FragmentBreadCrumbs;
 import org.holoeverywhere.widget.FrameLayout;
 import org.holoeverywhere.widget.GridView;
@@ -123,6 +124,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
         remap(GridView.class);
         remap(ViewPager.class);
         remap(ModalBackgroundWrapper.class);
+        remap(ExpandableListView.class);
         remapInternal(ActionBarView.class, HoloListMenuItemView.class,
                 ExpandedMenuView.class, ActionBarContainer.class, DialogTitle.class,
                 NumberPickerEditText.class);

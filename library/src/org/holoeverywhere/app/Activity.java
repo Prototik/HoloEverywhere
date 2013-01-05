@@ -9,6 +9,8 @@ import org.holoeverywhere.addon.Sherlock.SherlockA;
 import org.holoeverywhere.addons.IAddon;
 
 import android.content.res.Configuration;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v4.app._HoloActivity;
 import android.view.KeyEvent;
@@ -25,7 +27,6 @@ import com.actionbarsherlock.view.MenuItem;
 
 public abstract class Activity extends _HoloActivity {
     public static final String ADDON_SHERLOCK = "Sherlock";
-
     public static final String ADDON_SLIDING_MENU = "SlidingMenu";
     private final List<IAddon<?, ?>> addons = new ArrayList<IAddon<?, ?>>();
 
@@ -102,6 +103,15 @@ public abstract class Activity extends _HoloActivity {
     @Override
     public MenuInflater getSupportMenuInflater() {
         return requireSherlock().getMenuInflater();
+    }
+
+    public boolean isAddonAttached(Class<? extends IAddon<?, ?>> clazz) {
+        for (IAddon<?, ?> addon : addons) {
+            if (addon.getClass() == clazz) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -318,7 +328,7 @@ public abstract class Activity extends _HoloActivity {
         try {
             requireAddon((Class<? extends IAddon<?, ?>>) Class.forName(className));
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Failed to init SlidingMenu addon", e);
+            throw new RuntimeException("Failed to init addon", e);
         }
     }
 
@@ -370,6 +380,22 @@ public abstract class Activity extends _HoloActivity {
     @Override
     public void setSupportSecondaryProgress(int secondaryProgress) {
         requireSherlock().setSecondaryProgress(secondaryProgress);
+    }
+
+    public void setUiOptions(int uiOptions) {
+        if (isAddonAttached(Sherlock.class)) {
+            requireSherlock().setUiOptions(uiOptions);
+        } else if (VERSION.SDK_INT >= VERSION_CODES.ICE_CREAM_SANDWICH) {
+            getWindow().setUiOptions(uiOptions);
+        }
+    }
+
+    public void setUiOptions(int uiOptions, int mask) {
+        if (isAddonAttached(Sherlock.class)) {
+            requireSherlock().setUiOptions(uiOptions, mask);
+        } else if (VERSION.SDK_INT >= VERSION_CODES.ICE_CREAM_SANDWICH) {
+            getWindow().setUiOptions(uiOptions, mask);
+        }
     }
 
     @Override

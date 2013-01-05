@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<attr name="disableMusicIcon" />
-	<attr name="demoNavigationItemStyle" />
+	<attr name="demoListRowViewStyle" />
 	<declare-styleable name="WidgetContainer">
 		<attr name="android:text" />
 		<attr name="android:layout" />
 		<attr name="titleLayout" format="reference" />
 	</declare-styleable>
-	<declare-styleable name="DemoNavigationItem">
+	<declare-styleable name="DemoListRowView">
 		<attr name="android:text" />
-		<attr name="android:color" />
+		<attr name="selectionHandler" format="color|reference" />
+		<attr name="selectionHandlerVisiblity">
+			<enum name="visible" value="0" />
+			<enum name="invisible" value="1" />
+		</attr>
+		<attr name="android:gravity" />
 		<attr name="android:background" />
 	</declare-styleable>
 </resources>

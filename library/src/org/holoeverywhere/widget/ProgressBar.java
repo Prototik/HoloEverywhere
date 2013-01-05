@@ -35,6 +35,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewDebug;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
@@ -46,7 +47,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
 
-public class ProgressBar extends _View {
+public class ProgressBar extends android.widget.ProgressBar {
     private class AccessibilityEventSender implements Runnable {
         @Override
         public void run() {
@@ -186,13 +187,9 @@ public class ProgressBar extends _View {
     private boolean mRefreshIsPosted;
     private RefreshProgressRunnable mRefreshProgressRunnable;
     private Bitmap mSampleTile;
-
     private int mSecondaryProgress;
-
     private boolean mShouldStartAnimationDrawable;
-
     private Transformation mTransformation;
-
     private long mUiThreadId;
 
     public ProgressBar(Context context) {
@@ -338,24 +335,29 @@ public class ProgressBar extends _View {
         return new RoundRectShape(roundedCorners, null, null);
     }
 
+    @Override
     public Drawable getIndeterminateDrawable() {
         return mIndeterminateDrawable;
     }
 
+    @Override
     public Interpolator getInterpolator() {
         return mInterpolator;
     }
 
+    @Override
     @ViewDebug.ExportedProperty(category = "progress")
     public synchronized int getMax() {
         return mMax;
     }
 
+    @Override
     @ViewDebug.ExportedProperty(category = "progress")
     public synchronized int getProgress() {
         return mIndeterminate ? 0 : mProgress;
     }
 
+    @Override
     public Drawable getProgressDrawable() {
         return mProgressDrawable;
     }
@@ -369,16 +371,17 @@ public class ProgressBar extends _View {
                 : 0;
     }
 
+    @Override
     @ViewDebug.ExportedProperty(category = "progress")
     public synchronized int getSecondaryProgress() {
         return mIndeterminate ? 0 : mSecondaryProgress;
     }
 
-    public synchronized final void incrementProgressBy(int diff) {
+    public synchronized final void incrementProgress(int diff) {
         setProgress(mProgress + diff);
     }
 
-    public synchronized final void incrementSecondaryProgressBy(int diff) {
+    public synchronized final void incrementSecondaryProgress(int diff) {
         setSecondaryProgress(mSecondaryProgress + diff);
     }
 
@@ -412,6 +415,7 @@ public class ProgressBar extends _View {
         }
     }
 
+    @Override
     @ViewDebug.ExportedProperty(category = "progress")
     public synchronized boolean isIndeterminate() {
         return mIndeterminate;
@@ -566,7 +570,7 @@ public class ProgressBar extends _View {
     }
 
     @Override
-    public void onVisibilityChanged(_View changedView, int visibility) {
+    public void onVisibilityChanged(View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
         if (mIndeterminate) {
             if (visibility == android.view.View.GONE
@@ -589,7 +593,7 @@ public class ProgressBar extends _View {
             boolean fromUser) {
         if (mUiThreadId == Thread.currentThread().getId()) {
             doRefreshProgress(id, progress, fromUser, true);
-        } else {
+        } else if (mRefreshData != null) {
             if (mRefreshProgressRunnable == null) {
                 mRefreshProgressRunnable = new RefreshProgressRunnable();
             }
@@ -613,6 +617,7 @@ public class ProgressBar extends _View {
                 ProgressBar.TIMEOUT_SEND_ACCESSIBILITY_EVENT);
     }
 
+    @Override
     public synchronized void setIndeterminate(boolean indeterminate) {
         if ((!mOnlyIndeterminate || !mIndeterminate)
                 && indeterminate != mIndeterminate) {
@@ -629,6 +634,7 @@ public class ProgressBar extends _View {
         }
     }
 
+    @Override
     public void setIndeterminateDrawable(Drawable d) {
         if (d != null) {
             d.setCallback(this);
@@ -640,14 +646,17 @@ public class ProgressBar extends _View {
         }
     }
 
+    @Override
     public void setInterpolator(Context context, int resID) {
         setInterpolator(AnimationUtils.loadInterpolator(context, resID));
     }
 
+    @Override
     public void setInterpolator(Interpolator interpolator) {
         mInterpolator = interpolator;
     }
 
+    @Override
     public synchronized void setMax(int max) {
         if (max < 0) {
             max = 0;
@@ -663,6 +672,7 @@ public class ProgressBar extends _View {
         }
     }
 
+    @Override
     public synchronized void setProgress(int progress) {
         setProgress(progress, false);
     }
@@ -683,6 +693,7 @@ public class ProgressBar extends _View {
         }
     }
 
+    @Override
     public void setProgressDrawable(Drawable d) {
         boolean needUpdate;
         if (mProgressDrawable != null && d != mProgressDrawable) {
@@ -713,6 +724,7 @@ public class ProgressBar extends _View {
         }
     }
 
+    @Override
     public synchronized void setSecondaryProgress(int secondaryProgress) {
         if (mIndeterminate) {
             return;
