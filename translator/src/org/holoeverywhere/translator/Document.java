@@ -14,6 +14,8 @@ import org.json.JSONObject;
 public class Document {
     protected final Map<String, Map<String, String>> data = new HashMap<String, Map<String, String>>();
     protected final List<String> grab = new ArrayList<String>();
+    protected String prefix, filenamePattern;
+    protected boolean ignoreDefaultLocale;
 
     public synchronized Map<String, Map<String, String>> mergeData(Grabber grabber) {
         Map<String, Map<String, String>> map;
@@ -36,6 +38,9 @@ public class Document {
     public Document parse(JSONObject object) {
         grab.clear();
         data.clear();
+        prefix = object.optString("prefix", null);
+        filenamePattern = object.optString("filename_pattern", "%s.xml");
+        ignoreDefaultLocale = object.optBoolean("ignore_default_locale", false);
         if (object.has("grab")) {
             JSONArray grab = object.optJSONArray("grab");
             for (int i = 0; i < grab.length(); i++) {
@@ -67,5 +72,12 @@ public class Document {
             }
         }
         return this;
+    }
+
+    public String getNameForEntry(String key) {
+        if (prefix == null) {
+            return key;
+        }
+        return prefix + key;
     }
 }

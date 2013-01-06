@@ -7,10 +7,9 @@ import java.util.List;
 import org.holoeverywhere.IHoloActivity.OnWindowFocusChangeListener;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
-import org.holoeverywhere.internal.OnPrepareViewListener;
 import org.holoeverywhere.util.LongSparseArray;
 import org.holoeverywhere.widget.HeaderViewListAdapter.ViewInfo;
-import org.holoeverywhere.widget.ListView.ListAdapterWrapper;
+import org.holoeverywhere.widget.ListAdapterWrapper.OnPrepareViewListener;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -456,17 +455,6 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         return handled;
     }
 
-    private void removeViewInfo(View v, List<ViewInfo> where) {
-        int len = where.size();
-        for (int i = 0; i < len; ++i) {
-            ViewInfo info = where.get(i);
-            if (info.view == v) {
-                where.remove(i);
-                break;
-            }
-        }
-    }
-
     public boolean removeFooterView(View v) {
         if (mFooterViewInfos.size() > 0) {
             boolean result = false;
@@ -491,6 +479,17 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
             return result;
         }
         return false;
+    }
+
+    private void removeViewInfo(View v, List<ViewInfo> where) {
+        int len = where.size();
+        for (int i = 0; i < len; ++i) {
+            ViewInfo info = where.get(i);
+            if (info.view == v) {
+                where.remove(i);
+                break;
+            }
+        }
     }
 
     protected void reportScrollStateChange(int newState) {

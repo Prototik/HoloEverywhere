@@ -38,10 +38,9 @@ public class Processer {
     };
 
     private static final String DEFAULT_LOCALE = "en";
-
     private static final XMLOutputFactory XML_OUTPUT_FACTORY = XMLOutputFactory.newFactory();
 
-    private static ProcesserState createWriter(File outputDir, String locale)
+    private static ProcesserState createWriter(File outputDir, String locale, String filenamePattern)
             throws FileNotFoundException, XMLStreamException {
         File dir, file;
         if (locale.equals(DEFAULT_LOCALE)) {
@@ -53,7 +52,7 @@ public class Processer {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        file = new File(dir, "strings.xml");
+        file = new File(dir, String.format(filenamePattern, "strings"));
         ProcesserState state = new ProcesserState();
         state.os = new FileOutputStream(file);
         state.stringWriter = new StringWriter();
@@ -70,14 +69,17 @@ public class Processer {
                 COMPARATOR);
         data.putAll(document.mergeData(grabber));
         for (Entry<String, Map<String, String>> entry : data.entrySet()) {
-            final String name = entry.getKey();
+            final String name = document.getNameForEntry(entry.getKey());
             try {
                 for (Entry<String, String> translates : entry.getValue().entrySet()) {
                     final String locale = translates.getKey(), value = translates.getValue();
+                    if (locale.equals(DEFAULT_LOCALE) && document.ignoreDefaultLocale) {
+                        continue;
+                    }
                     ProcesserState state = writers.get(locale);
                     XMLStreamWriter writer;
                     if (state == null) {
-                        state = createWriter(outputDir, locale);
+                        state = createWriter(outputDir, locale, document.filenamePattern);
                         writer = state.writer;
                         writers.put(locale, state);
                     } else {

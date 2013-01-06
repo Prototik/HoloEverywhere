@@ -4,9 +4,6 @@ package org.holoeverywhere.widget;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.holoeverywhere.internal.OnPrepareViewListener;
-import org.holoeverywhere.widget.ListView.ListAdapterWrapper;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
@@ -15,9 +12,9 @@ import android.widget.ListAdapter;
 
 public class HeaderViewListAdapter extends ListAdapterWrapper implements Filterable {
     public static final class ViewInfo {
-        public View view;
         public Object data;
         public boolean isSelectable;
+        public View view;
     }
 
     private static final List<ViewInfo> EMPTY_INFO_LIST = new ArrayList<ViewInfo>();
@@ -132,12 +129,12 @@ public class HeaderViewListAdapter extends ListAdapterWrapper implements Filtera
             final int adjPosition = position - numHeaders;
             int adapterCount = getWrappedAdapter().getCount();
             if (adjPosition < adapterCount) {
-                return getWrappedAdapter().getView(adjPosition, convertView, parent);
+                convertView = getWrappedAdapter().getView(adjPosition, convertView, parent);
             } else {
-                return mFooterViewInfos.get(adjPosition - adapterCount).view;
+                convertView = mFooterViewInfos.get(adjPosition - adapterCount).view;
             }
         }
-        return getListener().onPrepareView(convertView, position);
+        return onPrepareView(convertView, position);
     }
 
     @Override

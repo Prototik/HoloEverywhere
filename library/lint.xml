@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
 	<issue id="HandlerLeak" >
-		<ignore path="src/com/WazaBe/HoloEverywhere/app/ProgressDialog.java" />
-		<ignore path="src/com/WazaBe/HoloEverywhere/preference/PreferenceActivity.java" />
-		<ignore path="src/com/WazaBe/HoloEverywhere/preference/PreferenceActivity.java" />
-		<ignore path="src/com/WazaBe/HoloEverywhere/preference/PreferenceFragment.java" />
-		<ignore path="src/com/WazaBe/HoloEverywhere/preference/PreferenceFragment.java" />
-		<ignore path="src/com/WazaBe/HoloEverywhere/widget/ProgressDialog.java" />
+		<ignore path="src/org/holoeverywhere/app/ProgressDialog.java" />
+		<ignore path="src/org/holoeverywhere/preference/PreferenceActivity.java" />
+		<ignore path="src/org/holoeverywhere/preference/PreferenceActivity.java" />
+		<ignore path="src/org/holoeverywhere/preference/PreferenceFragment.java" />
+		<ignore path="src/org/holoeverywhere/preference/PreferenceFragment.java" />
+		<ignore path="src/org/holoeverywhere/widget/ProgressDialog.java" />
 	</issue>
 	<issue id="NewApi" >
-		<ignore path="src/com/WazaBe/HoloEverywhere/app/AlertDialog.java" />
-		<ignore path="src/com/WazaBe/HoloEverywhere/app/Dialog.java" />
+		<ignore path="src/org/holoeverywhere/app/AlertDialog.java" />
+		<ignore path="src/org/holoeverywhere/app/Dialog.java" />
 		<ignore path="src/com/actionbarsherlock/internal/view/menu/ContextMenuDecorView.java" />
 		<ignore path="res/layout/preference_widget_switch.xml" />
 		<ignore path="res/layout/preference_dialog_numberpicker.xml" />

@@ -519,7 +519,7 @@ public final class ThemeManager {
             theme &= ThemeManager._THEME_MASK;
         }
         if (force || ThemeManager.getTheme(activity) != theme) {
-            Intent intent = activity.getIntent();
+            Intent intent = new Intent(activity.getIntent());
             intent.setClass(activity, activity.getClass());
             intent.putExtra(ThemeManager._THEME_TAG, theme);
             if (activity.isRestricted()) {

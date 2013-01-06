@@ -19,10 +19,10 @@ public class GridFragment extends Fragment {
     private ListAdapter mAdapter;
     private CharSequence mEmptyText;
     private View mEmptyView;
-    final private Handler mHandler = new Handler();
     private GridView mGrid;
     private View mGridContainer;
     private boolean mGridShown;
+    final private Handler mHandler = new Handler();
     final private AdapterView.OnItemClickListener mOnClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View v, int position,
@@ -39,7 +39,7 @@ public class GridFragment extends Fragment {
     };
     private TextView mStandardEmptyView;
 
-    private void ensureList() {
+    private void ensureGrid() {
         if (mGrid != null) {
             return;
         }
@@ -96,22 +96,22 @@ public class GridFragment extends Fragment {
         return mEmptyView;
     }
 
+    public GridView getGridView() {
+        ensureGrid();
+        return mGrid;
+    }
+
     public ListAdapter getListAdapter() {
         return mAdapter;
     }
 
-    public GridView getGridView() {
-        ensureList();
-        return mGrid;
-    }
-
     public long getSelectedItemId() {
-        ensureList();
+        ensureGrid();
         return mGrid.getSelectedItemId();
     }
 
     public int getSelectedItemPosition() {
-        ensureList();
+        ensureGrid();
         return mGrid.getSelectedItemPosition();
     }
 
@@ -137,11 +137,11 @@ public class GridFragment extends Fragment {
     @Override
     public void onViewCreated(View view) {
         super.onViewCreated(view);
-        ensureList();
+        ensureGrid();
     }
 
     public void setEmptyText(CharSequence text) {
-        ensureList();
+        ensureGrid();
         if (mStandardEmptyView == null) {
             throw new IllegalStateException(
                     "Can't be used with a custom content view");
@@ -171,7 +171,7 @@ public class GridFragment extends Fragment {
     }
 
     private void setGridShown(boolean shown, boolean animate) {
-        ensureList();
+        ensureGrid();
         if (mProgressContainer == null) {
             throw new IllegalStateException(
                     "Can't be used with a custom content view");
@@ -212,7 +212,7 @@ public class GridFragment extends Fragment {
     }
 
     public void setSelection(int position) {
-        ensureList();
+        ensureGrid();
         mGrid.setSelection(position);
     }
 }
