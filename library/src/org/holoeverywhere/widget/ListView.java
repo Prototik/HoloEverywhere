@@ -1,21 +1,22 @@
 
 package org.holoeverywhere.widget;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.holoeverywhere.IHoloActivity.OnWindowFocusChangeListener;
+import org.holoeverywhere.R;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
 import org.holoeverywhere.util.LongSparseArray;
 import org.holoeverywhere.widget.HeaderViewListAdapter.ViewInfo;
-import org.holoeverywhere.widget.ListAdapterWrapper.OnPrepareViewListener;
+import org.holoeverywhere.widget.ListAdapterWrapper.ListAdapterCallback;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
@@ -25,6 +26,7 @@ import android.util.SparseBooleanArray;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewDebug.ExportedProperty;
 import android.view.ViewGroup;
@@ -40,7 +42,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class ListView extends android.widget.ListView implements OnWindowFocusChangeListener,
-        ContextMenuInfoGetter, OnPrepareViewListener {
+        ContextMenuInfoGetter {
     public interface MultiChoiceModeListener extends ActionMode.Callback {
         public void onItemCheckedStateChanged(ActionMode mode, int position,
                 long id, boolean checked);
@@ -108,6 +110,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     }
 
     public static final int CHOICE_MODE_MULTIPLE_MODAL = AbsListView.CHOICE_MODE_MULTIPLE_MODAL;
+
     private static final boolean USE_ACTIVATED = VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB;
     private Activity mActivity;
     private ListAdapterWrapper mAdapter;
@@ -118,17 +121,40 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     private ActionMode mChoiceActionMode;
     private int mChoiceMode;
     private ContextMenuInfo mContextMenuInfo;
-    private Drawable mDivider;
     private boolean mEnableModalBackgroundWrapper;
     private boolean mFastScrollEnabled;
+    private FastScroller mFastScroller;
     private final List<ViewInfo> mFooterViewInfos = new ArrayList<ViewInfo>(),
             mHeaderViewInfos = new ArrayList<ViewInfo>();
     private boolean mForceHeaderListAdapter = false;
     private boolean mIsAttached;
     private int mLastScrollState = OnScrollListener.SCROLL_STATE_IDLE;
+    private final ListAdapterCallback mListAdapterCallback = new ListAdapterCallback() {
+        @Override
+        public void onChanged() {
+            if (mFastScroller != null) {
+                mFastScroller.onSectionsChanged();
+            }
+        }
+
+        @Override
+        public void onInvalidated() {
+            if (mFastScroller != null) {
+                mFastScroller.onSectionsChanged();
+            }
+        }
+
+        @Override
+        public View onPrepareView(View view, int position) {
+            return ListView.this.onPrepareView(view, position);
+        }
+    };
     private MultiChoiceModeWrapper mMultiChoiceModeCallback;
     private final OnItemLongClickListenerWrapper mOnItemLongClickListenerWrapper;
+
     private OnScrollListener mOnScrollListener;
+
+    private int mVerticalScrollbarPosition = SCROLLBAR_POSITION_DEFAULT;
 
     public ListView(Context context) {
         this(context, null);
@@ -152,223 +178,16 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         super.setOnItemLongClickListener(mOnItemLongClickListenerWrapper);
         setLongClickable(false);
 
-        mDivider = super.getDivider();
-        super.setDivider(null);
-        setDivider(mDivider);
-    }
-
-    @Override
-    public Drawable getDivider() {
-        return mDivider;
-    }
-
-    private boolean mDividerIsOpaque;
-    private int mDividerHeight;
-
-    @Override
-    public void setDividerHeight(int height) {
-        mDividerHeight = height;
-        requestLayout();
-        invalidate();
-    }
-
-    @Override
-    public int getDividerHeight() {
-        return mDividerHeight;
-    }
-
-    private final Rect mTempRect = new Rect();
-    private boolean mHeaderDividersEnabled;
-
-    public boolean isHeaderDividersEnabled() {
-        return mHeaderDividersEnabled;
-    }
-
-    @Override
-    public void setHeaderDividersEnabled(boolean headerDividersEnabled) {
-        if (mHeaderDividersEnabled != headerDividersEnabled) {
-            mHeaderDividersEnabled = headerDividersEnabled;
-            requestLayout();
-            invalidate();
+        if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
+            super.setFastScrollAlwaysVisible(false);
         }
-    }
-
-    private boolean mFooterDividersEnabled;
-
-    public boolean isFooterDividersEnabled() {
-        return mFooterDividersEnabled;
-    }
-
-    @Override
-    public void setFooterDividersEnabled(boolean footerDividersEnabled) {
-        if (mFooterDividersEnabled != footerDividersEnabled) {
-            mFooterDividersEnabled = footerDividersEnabled;
-            requestLayout();
-            invalidate();
-        }
-    }
-
-    private boolean mClipToPadding;
-
-    @Override
-    public void setClipToPadding(boolean clipToPadding) {
-        super.setClipToPadding(mClipToPadding = clipToPadding);
-    }
-
-    private Paint mDividerPaint;
-
-    protected void dispatchDraw(Canvas canvas) {
-        final int dividerHeight = mDividerHeight;
-        final boolean drawDividers = dividerHeight > 0 && mDivider != null;
-
-        if (drawDividers) {
-            final Rect bounds = mTempRect;
-            bounds.left = getPaddingLeft();
-            bounds.right = getRight() - getLeft() - getPaddingRight();
-
-            final int count = getChildCount();
-            final int headerCount = mHeaderViewInfos.size();
-            final int itemCount = getCount();
-            final int footerLimit = itemCount - mFooterViewInfos.size() - 1;
-            final boolean headerDividers = mHeaderDividersEnabled;
-            final boolean footerDividers = mFooterDividersEnabled;
-            final int first = getFirstVisiblePosition();
-            final boolean areAllItemsSelectable = mAdapter.areAllItemsEnabled();
-            final ListAdapter adapter = mAdapter;
-            final boolean fillForMissingDividers = isOpaque() && !super.isOpaque();
-            if (fillForMissingDividers && mDividerPaint == null && mIsCacheColorOpaque) {
-                mDividerPaint = new Paint();
-                mDividerPaint.setColor(getCacheColorHint());
-            }
-            final Paint paint = mDividerPaint;
-
-            int effectivePaddingTop = 0;
-            int effectivePaddingBottom = 0;
-            if (mClipToPadding) {
-                effectivePaddingTop = getListPaddingTop();
-                effectivePaddingBottom = mListPadding.bottom;
-            }
-
-            final int listBottom = mBottom - mTop - effectivePaddingBottom + mScrollY;
-            if (!mStackFromBottom) {
-                int bottom = 0;
-
-                // Draw top divider or header for overscroll
-                final int scrollY = mScrollY;
-                if (count > 0 && scrollY < 0) {
-                    if (drawOverscrollHeader) {
-                        bounds.bottom = 0;
-                        bounds.top = scrollY;
-                        drawOverscrollHeader(canvas, overscrollHeader, bounds);
-                    } else if (drawDividers) {
-                        bounds.bottom = 0;
-                        bounds.top = -dividerHeight;
-                        drawDivider(canvas, bounds, -1);
-                    }
-                }
-
-                for (int i = 0; i < count; i++) {
-                    if ((headerDividers || first + i >= headerCount) &&
-                            (footerDividers || first + i < footerLimit)) {
-                        View child = getChildAt(i);
-                        bottom = child.getBottom();
-                        // Don't draw dividers next to items that are not
-                        // enabled
-
-                        if (drawDividers &&
-                                (bottom < listBottom && !(drawOverscrollFooter && i == count - 1))) {
-                            if ((areAllItemsSelectable || (adapter.isEnabled(first + i) && (i == count - 1 || adapter
-                                    .isEnabled(first + i + 1))))) {
-                                bounds.top = bottom;
-                                bounds.bottom = bottom + dividerHeight;
-                                drawDivider(canvas, bounds, i);
-                            } else if (fillForMissingDividers) {
-                                bounds.top = bottom;
-                                bounds.bottom = bottom + dividerHeight;
-                                canvas.drawRect(bounds, paint);
-                            }
-                        }
-                    }
-                }
-
-                final int overFooterBottom = mBottom + mScrollY;
-                if (drawOverscrollFooter && first + count == itemCount &&
-                        overFooterBottom > bottom) {
-                    bounds.top = bottom;
-                    bounds.bottom = overFooterBottom;
-                    drawOverscrollFooter(canvas, overscrollFooter, bounds);
-                }
-            } else {
-                int top;
-
-                final int scrollY = mScrollY;
-
-                if (count > 0 && drawOverscrollHeader) {
-                    bounds.top = scrollY;
-                    bounds.bottom = getChildAt(0).getTop();
-                    drawOverscrollHeader(canvas, overscrollHeader, bounds);
-                }
-
-                final int start = drawOverscrollHeader ? 1 : 0;
-                for (int i = start; i < count; i++) {
-                    if ((headerDividers || first + i >= headerCount) &&
-                            (footerDividers || first + i < footerLimit)) {
-                        View child = getChildAt(i);
-                        top = child.getTop();
-                        // Don't draw dividers next to items that are not
-                        // enabled
-                        if (top > effectivePaddingTop) {
-                            if ((areAllItemsSelectable || (adapter.isEnabled(first + i) && (i == count - 1 || adapter
-                                    .isEnabled(first + i + 1))))) {
-                                bounds.top = top - dividerHeight;
-                                bounds.bottom = top;
-                                // Give the method the child ABOVE the divider,
-                                // so we
-                                // subtract one from our child
-                                // position. Give -1 when there is no child
-                                // above the
-                                // divider.
-                                drawDivider(canvas, bounds, i - 1);
-                            } else if (fillForMissingDividers) {
-                                bounds.top = top - dividerHeight;
-                                bounds.bottom = top;
-                                canvas.drawRect(bounds, paint);
-                            }
-                        }
-                    }
-                }
-
-                if (count > 0 && scrollY > 0) {
-                    if (drawOverscrollFooter) {
-                        final int absListBottom = mBottom;
-                        bounds.top = absListBottom;
-                        bounds.bottom = absListBottom + scrollY;
-                        drawOverscrollFooter(canvas, overscrollFooter, bounds);
-                    } else if (drawDividers) {
-                        bounds.top = listBottom;
-                        bounds.bottom = listBottom + dividerHeight;
-                        drawDivider(canvas, bounds, -1);
-                    }
-                }
-            }
-        }
-
-        // Draw the indicators (these should be drawn above the dividers) and
-        // children
-        super.dispatchDraw(canvas);
-    }
-
-    @Override
-    public void setDivider(Drawable divider) {
-        if (mDivider != null) {
-            mDividerHeight = mDivider.getIntrinsicHeight();
-        } else {
-            mDividerHeight = 0;
-        }
-        mDivider = divider;
-        mDividerIsOpaque = mDivider == null || mDivider.getOpacity() == PixelFormat.OPAQUE;
-        requestLayout();
-        invalidate();
+        super.setFastScrollEnabled(false);
+        TypedArray a = context.obtainStyledAttributes(attrs, new int[] {
+                android.R.attr.fastScrollEnabled, android.R.attr.fastScrollAlwaysVisible
+        }, defStyle, R.style.Holo_ListView);
+        setFastScrollEnabled(a.getBoolean(0, false));
+        setFastScrollAlwaysVisible(a.getBoolean(1, false));
+        a.recycle();
     }
 
     @Override
@@ -429,11 +248,30 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         return new AdapterContextMenuInfo(view, position, id);
     }
 
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        if (mFastScroller != null) {
+            final int scrollY = getScrollY();
+            if (scrollY != 0) {
+                int restoreCount = canvas.save();
+                canvas.translate(0, scrollY);
+                mFastScroller.draw(canvas);
+                canvas.restoreToCount(restoreCount);
+            } else {
+                mFastScroller.draw(canvas);
+            }
+        }
+
+    }
+
     /**
-     * Don't used
+     * O_O This method doesn't override super method, but super class invoke it
+     * instead of android.widget.ListView.drawDivider. It's fucking magick of
+     * dalvik?
      */
     void drawDivider(Canvas canvas, Rect bounds, int childIndex) {
-        final Drawable divider = mDivider;
+        final Drawable divider = getDivider();
         divider.setBounds(bounds);
         divider.draw(canvas);
     }
@@ -503,8 +341,38 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         return mHeaderViewInfos.size();
     }
 
+    @Override
+    public int getVerticalScrollbarPosition() {
+        return mVerticalScrollbarPosition;
+    }
+
+    @Override
+    public int getVerticalScrollbarWidth() {
+        if (isFastScrollAlwaysVisible()) {
+            return Math.max(super.getVerticalScrollbarWidth(), mFastScroller.getWidth());
+        }
+        return super.getVerticalScrollbarWidth();
+    }
+
+    void invokeOnItemScrollListener() {
+        final int mFirstPosition = getFirstVisiblePosition();
+        final int mItemCount = getCount();
+        if (mFastScroller != null) {
+            mFastScroller.onScroll(this, mFirstPosition, getChildCount(), mItemCount);
+        }
+        if (mOnScrollListener != null) {
+            mOnScrollListener.onScroll(this, mFirstPosition, getChildCount(), mItemCount);
+        }
+        onScrollChanged(0, 0, 0, 0);
+    }
+
     public boolean isAttached() {
         return mIsAttached;
+    }
+
+    @Override
+    public boolean isFastScrollAlwaysVisible() {
+        return mFastScrollEnabled && mFastScroller.isAlwaysShowEnabled();
     }
 
     @Override
@@ -520,7 +388,8 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     public boolean isInScrollingContainer() {
         ViewParent p = getParent();
         while (p != null && p instanceof ViewGroup) {
-            if (((ViewGroup) p).shouldDelayChildPressedState()) {
+            if (VERSION.SDK_INT >= VERSION_CODES.ICE_CREAM_SANDWICH
+                    && ((ViewGroup) p).shouldDelayChildPressedState()) {
                 return true;
             }
             p = p.getParent();
@@ -534,6 +403,10 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             return mCheckStates.get(position);
         }
         return false;
+    }
+
+    protected boolean isVerticalScrollBarHidden() {
+        return mFastScroller != null && mFastScroller.isVisible();
     }
 
     @Override
@@ -556,6 +429,17 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
                 invalidateViews();
             }
         }
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (!mIsAttached) {
+            return false;
+        }
+        if (mFastScroller != null && mFastScroller.onInterceptTouchEvent(ev)) {
+            return true;
+        }
+        return super.onInterceptTouchEvent(ev);
     }
 
     @Override
@@ -584,6 +468,15 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     }
 
     @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        final int mOldItemCount = getCount();
+        super.onLayout(changed, l, t, r, b);
+        final int mItemCount = getCount();
+        if (mFastScroller != null && mItemCount != mOldItemCount) {
+            mFastScroller.onItemCountChanged(mOldItemCount, mItemCount);
+        }
+    }
+
     public View onPrepareView(View view, int position) {
         if (mEnableModalBackgroundWrapper && !(view instanceof ModalBackgroundWrapper)) {
             if (view.getParent() != null) {
@@ -604,6 +497,28 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             setStateOnView(view, false);
         }
         return view;
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        if (mFastScroller != null) {
+            mFastScroller.onSizeChanged(w, h, oldw, oldh);
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        if (!isEnabled()) {
+            return isClickable() || isLongClickable();
+        }
+        if (!mIsAttached) {
+            return false;
+        }
+        if (mFastScroller != null && mFastScroller.onTouchEvent(ev)) {
+            return true;
+        }
+        return super.onTouchEvent(ev);
     }
 
     @Override
@@ -756,9 +671,9 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         } else if (mForceHeaderListAdapter || mHeaderViewInfos.size() > 0
                 || mFooterViewInfos.size() > 0) {
             mAdapter = new HeaderViewListAdapter(mHeaderViewInfos, mFooterViewInfos, adapter,
-                    this);
+                    mListAdapterCallback);
         } else {
-            mAdapter = new ListAdapterWrapper(adapter, this);
+            mAdapter = new ListAdapterWrapper(adapter, mListAdapterCallback);
         }
         if (mAdapter != null) {
             mAdapterHasStableIds = mAdapter.hasStableIds();
@@ -805,6 +720,40 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         mEnableModalBackgroundWrapper = enableModalBackgroundWrapper;
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void setFastScrollAlwaysVisible(boolean alwaysShow) {
+        if (alwaysShow && !mFastScrollEnabled) {
+            setFastScrollEnabled(true);
+        }
+        if (mFastScroller != null) {
+            mFastScroller.setAlwaysShow(alwaysShow);
+        }
+        try {
+            Method method = View.class.getDeclaredMethod("computeOpaqueFlags");
+            method.setAccessible(true);
+            method.invoke(this);
+            method = View.class.getDeclaredMethod("recomputePadding");
+            method.setAccessible(true);
+            method.invoke(this);
+        } catch (Exception e) {
+        }
+    }
+
+    @Override
+    public void setFastScrollEnabled(boolean enabled) {
+        mFastScrollEnabled = enabled;
+        if (enabled) {
+            if (mFastScroller == null) {
+                mFastScroller = new FastScroller(getContext(), this);
+            }
+        } else {
+            if (mFastScroller != null) {
+                mFastScroller.stop();
+                mFastScroller = null;
+            }
         }
     }
 
@@ -886,6 +835,14 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             ((Checkable) child).setChecked(value);
         } else if (USE_ACTIVATED) {
             child.setActivated(value);
+        }
+    }
+
+    @Override
+    public void setVerticalScrollbarPosition(int position) {
+        mVerticalScrollbarPosition = position;
+        if (mFastScroller != null) {
+            mFastScroller.setScrollbarPosition(position);
         }
     }
 

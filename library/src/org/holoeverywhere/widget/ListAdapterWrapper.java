@@ -13,21 +13,49 @@ import android.widget.ListAdapter;
  * @author prok
  */
 public class ListAdapterWrapper implements ListAdapter {
-    public static interface OnPrepareViewListener {
+    public static interface ListAdapterCallback {
+        public void onChanged();
+
+        public void onInvalidated();
+
         public View onPrepareView(View view, int position);
     }
 
+    private final class WrapperDataSetObserver extends DataSetObserver {
+        private DataSetObserver mDataSetObserver;
+
+        public WrapperDataSetObserver(DataSetObserver dataSetObserver) {
+            mDataSetObserver = dataSetObserver;
+        }
+
+        @Override
+        public void onChanged() {
+            mDataSetObserver.onChanged();
+            if (mCallback != null) {
+                mCallback.onChanged();
+            }
+        }
+
+        @Override
+        public void onInvalidated() {
+            mDataSetObserver.onInvalidated();
+            if (mCallback != null) {
+                mCallback.onInvalidated();
+            }
+        }
+    }
+
+    private final ListAdapterCallback mCallback;
     private DataSetObserver mLastDataSetObserver;
-    private final OnPrepareViewListener mListener;
     private final ListAdapter mWrapped;
 
     public ListAdapterWrapper(ListAdapter wrapped) {
         this(wrapped, null);
     }
 
-    public ListAdapterWrapper(ListAdapter wrapped, OnPrepareViewListener listener) {
+    public ListAdapterWrapper(ListAdapter wrapped, ListAdapterCallback callback) {
         mWrapped = wrapped;
-        mListener = listener;
+        mCallback = callback;
     }
 
     @Override
@@ -91,20 +119,21 @@ public class ListAdapterWrapper implements ListAdapter {
     }
 
     public View onPrepareView(View view, int position) {
-        if (mListener != null) {
-            return mListener.onPrepareView(view, position);
+        if (mCallback != null) {
+            return mCallback.onPrepareView(view, position);
         }
         return view;
     }
 
     @Override
     public void registerDataSetObserver(DataSetObserver dataSetObserver) {
-        mWrapped.registerDataSetObserver(mLastDataSetObserver = dataSetObserver);
+        mWrapped.registerDataSetObserver(mLastDataSetObserver = new WrapperDataSetObserver(
+                dataSetObserver));
     }
 
     @Override
     public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
+        mWrapped.unregisterDataSetObserver(mLastDataSetObserver);
         mLastDataSetObserver = null;
-        mWrapped.unregisterDataSetObserver(dataSetObserver);
     }
 }

@@ -15,6 +15,9 @@
             "dividerVertical": "?android:listDivider", 
             "dropdownListPreferredItemHeight": "?listPreferredItemHeight", 
             "editTextPreferenceStyle": "@style/Holo.PreferenceDialog.EditTextPreference", 
+            "fastScrollOverlayPosition": "atThumb", 
+            "fastScrollTextColor": "@color/primary_text_holo_dark", 
+            "fastScrollThumbDrawable": "@drawable/fastscroll_thumb_holo", 
             "holoTheme": true, 
             "listPreferredItemHeight": "64dip", 
             "listPreferredItemHeightLarge": "80dp", 
@@ -52,6 +55,9 @@
             "calendarViewStyle": "@style/Holo.CalendarView", 
             "dialogTheme": "@style/Holo.Theme.Dialog", 
             "dropDownListViewStyle": "@style/Holo.ListView.DropDown", 
+            "fastScrollPreviewBackgroundLeft": "@drawable/fastscroll_label_left_holo_dark", 
+            "fastScrollPreviewBackgroundRight": "@drawable/fastscroll_label_right_holo_dark", 
+            "fastScrollTrackDrawable": "@drawable/fastscroll_track_holo_dark", 
             "include": [
                 "Base"
             ], 
@@ -79,6 +85,9 @@
             "calendarViewStyle": "@style/Holo.CalendarView.Light", 
             "dialogTheme": "@style/Holo.Theme.Dialog.Light", 
             "dropDownListViewStyle": "@style/Holo.ListView.DropDown.Light", 
+            "fastScrollPreviewBackgroundLeft": "@drawable/fastscroll_label_left_holo_light", 
+            "fastScrollPreviewBackgroundRight": "@drawable/fastscroll_label_right_holo_light", 
+            "fastScrollTrackDrawable": "@drawable/fastscroll_track_holo_light", 
             "include": [
                 "Base"
             ], 

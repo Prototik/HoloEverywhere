@@ -25,7 +25,7 @@ public class HeaderViewListAdapter extends ListAdapterWrapper implements Filtera
 
     public HeaderViewListAdapter(List<ViewInfo> headerViewInfos,
             List<ViewInfo> footerViewInfos,
-            ListAdapter adapter, OnPrepareViewListener listener) {
+            ListAdapter adapter, ListAdapterCallback listener) {
         super(adapter, listener);
         mIsFilterable = adapter instanceof Filterable;
         if (headerViewInfos == null) {

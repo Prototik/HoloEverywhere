@@ -4,7 +4,6 @@ package org.holoeverywhere.app;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 import org.holoeverywhere.widget.GridView;
-import org.holoeverywhere.widget.ListView;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -60,7 +59,7 @@ public class GridFragment extends Fragment {
             mProgressContainer = root.findViewById(R.id.progressContainer);
             mGridContainer = root.findViewById(R.id.listContainer);
             View rawGridVIew = root.findViewById(android.R.id.list);
-            if (!(rawGridVIew instanceof ListView)) {
+            if (!(rawGridVIew instanceof GridView)) {
                 if (rawGridVIew == null) {
                     throw new RuntimeException(
                             "Your content must have a GridVIew whose id attribute is "

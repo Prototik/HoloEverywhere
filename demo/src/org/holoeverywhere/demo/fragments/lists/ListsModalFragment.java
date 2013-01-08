@@ -1,5 +1,5 @@
 
-package org.holoeverywhere.demo.fragments;
+package org.holoeverywhere.demo.fragments.lists;
 
 import org.holoeverywhere.ArrayAdapter;
 import org.holoeverywhere.app.ListFragment;
@@ -13,21 +13,8 @@ import com.actionbarsherlock.view.MenuItem;
 
 import android.view.View;
 
-public class ListModalFragment extends ListFragment implements MultiChoiceModeListener {
-    private static ListModalFragment instance;
-
-    public static ListModalFragment getInstance() {
-        if (ListModalFragment.instance == null) {
-            return new ListModalFragment();
-        }
-        return ListModalFragment.instance;
-    }
-
+public class ListsModalFragment extends ListFragment implements MultiChoiceModeListener {
     private ListView mList;
-
-    public ListModalFragment() {
-        instance = this;
-    }
 
     @Override
     public void onViewCreated(View view) {

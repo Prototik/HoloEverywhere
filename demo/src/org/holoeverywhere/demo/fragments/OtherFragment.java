@@ -4,20 +4,15 @@ package org.holoeverywhere.demo.fragments;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.GridFragment;
 import org.holoeverywhere.demo.R;
+import org.holoeverywhere.demo.fragments.lists.ListsFragment;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class OtherFragment extends GridFragment {
+public class OtherFragment extends BaseOtherFragment {
     @Override
-    public void onViewCreated(View view) {
-        super.onViewCreated(view);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.other, container, false);
+    public void onHandleData() {
+        addItem("Lists", ListsFragment.class);
     }
 }

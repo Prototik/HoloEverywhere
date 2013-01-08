@@ -1,18 +1,16 @@
 
 package org.holoeverywhere.demo.fragments;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.app.GridFragment;
-import org.holoeverywhere.demo.R;
+import org.holoeverywhere.app.Fragment;
+import org.holoeverywhere.app.ListFragment;
+import org.holoeverywhere.demo.DemoActivity;
 import org.holoeverywhere.demo.widget.DemoAdapter;
 import org.holoeverywhere.demo.widget.DemoItem;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 
-public abstract class BaseOtherFragment extends GridFragment {
+public abstract class BaseOtherFragment extends ListFragment {
     private static final class OtherAdapter extends DemoAdapter {
         public OtherAdapter(Context context) {
             super(context);
@@ -41,8 +39,8 @@ public abstract class BaseOtherFragment extends GridFragment {
         super.onViewCreated(view);
         mAdapter = new OtherAdapter(getSupportActivity());
         onHandleData();
-        setGridAdapter(mAdapter);
-        getGridView().setOnItemClickListener(mAdapter);
+        setListAdapter(mAdapter);
+        getListView().setOnItemClickListener(mAdapter);
     }
 
     public void addItem(DemoItem item) {
@@ -56,10 +54,23 @@ public abstract class BaseOtherFragment extends GridFragment {
         addItem(item);
     }
 
-    public abstract void onHandleData();
+    private final class FragmentListener implements OnOtherItemClickListener {
+        private Class<? extends Fragment> mClass;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.other, container, false);
+        public FragmentListener(Class<? extends Fragment> clazz) {
+            mClass = clazz;
+        }
+
+        @Override
+        public void onClick(OtherItem otherItem) {
+            ((DemoActivity) getSupportActivity()).replaceFragment(Fragment.instantiate(mClass),
+                    "fragment-" + mClass.getName());
+        }
     }
+
+    public void addItem(CharSequence label, Class<? extends Fragment> clazz) {
+        addItem(label, new FragmentListener(clazz));
+    }
+
+    public abstract void onHandleData();
 }

@@ -9,7 +9,7 @@ import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
 import org.holoeverywhere.util.LongSparseArray;
 import org.holoeverywhere.widget.HeaderViewListAdapter.ViewInfo;
-import org.holoeverywhere.widget.ListAdapterWrapper.OnPrepareViewListener;
+import org.holoeverywhere.widget.ListAdapterWrapper.ListAdapterCallback;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -36,14 +36,10 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class GridView extends android.widget.GridView implements OnWindowFocusChangeListener,
-        ContextMenuInfoGetter, OnPrepareViewListener {
-    public interface MultiChoiceModeListener extends ActionMode.Callback {
-        public void onItemCheckedStateChanged(ActionMode mode, int position,
-                long id, boolean checked);
-    }
-
-    private final class MultiChoiceModeWrapper implements MultiChoiceModeListener {
-        private MultiChoiceModeListener mWrapped;
+        ContextMenuInfoGetter, ListAdapterCallback {
+    private final class MultiChoiceModeWrapper implements
+            org.holoeverywhere.widget.ListView.MultiChoiceModeListener {
+        private org.holoeverywhere.widget.ListView.MultiChoiceModeListener mWrapped;
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
@@ -82,7 +78,7 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
             return mWrapped.onPrepareActionMode(mode, menu);
         }
 
-        public void setWrapped(MultiChoiceModeListener wrapped) {
+        public void setWrapped(org.holoeverywhere.widget.ListView.MultiChoiceModeListener wrapped) {
             mWrapped = wrapped;
         }
     }
@@ -104,7 +100,9 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
     }
 
     public static final int CHOICE_MODE_MULTIPLE_MODAL = AbsListView.CHOICE_MODE_MULTIPLE_MODAL;
+
     private static final boolean USE_ACTIVATED = VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB;
+
     private Activity mActivity;
     private ListAdapterWrapper mAdapter;
     private boolean mAdapterHasStableIds;
@@ -304,6 +302,11 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
     }
 
     @Override
+    public void onChanged() {
+
+    }
+
+    @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mIsAttached = false;
@@ -317,6 +320,11 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
                 invalidateViews();
             }
         }
+    }
+
+    @Override
+    public void onInvalidated() {
+
     }
 
     @Override
@@ -623,7 +631,8 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         invalidateViews();
     }
 
-    public void setMultiChoiceModeListener(MultiChoiceModeListener listener) {
+    public void setMultiChoiceModeListener(
+            org.holoeverywhere.widget.ListView.MultiChoiceModeListener listener) {
         if (mMultiChoiceModeCallback == null) {
             mMultiChoiceModeCallback = new MultiChoiceModeWrapper();
         }

@@ -349,4 +349,15 @@
 		<attr name="android:childIndicatorRight" />
 		<attr name="android:childDivider" />
 	</declare-styleable>
+	<declare-styleable name="FastScroll">
+		<attr name="fastScrollThumbDrawable" format="reference" />
+		<attr name="fastScrollPreviewBackgroundRight" format="reference" />
+		<attr name="fastScrollPreviewBackgroundLeft" format="reference" />
+		<attr name="fastScrollTrackDrawable" format="reference" />
+		<attr name="fastScrollOverlayPosition">
+			<enum name="floating" value="0" />
+			<enum name="atThumb" value="1" />
+		</attr>
+		<attr name="fastScrollTextColor" format="color" />
+	</declare-styleable>
 </resources>

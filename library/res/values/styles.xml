@@ -620,6 +620,9 @@
         <item name="dividerVertical">?android:listDivider</item>
         <item name="dropdownListPreferredItemHeight">?listPreferredItemHeight</item>
         <item name="editTextPreferenceStyle">@style/Holo.PreferenceDialog.EditTextPreference</item>
+        <item name="fastScrollOverlayPosition">atThumb</item>
+        <item name="fastScrollTextColor">@color/primary_text_holo_dark</item>
+        <item name="fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
         <item name="holoTheme">true</item>
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
@@ -656,6 +659,9 @@
         <item name="calendarViewStyle">@style/Holo.CalendarView</item>
         <item name="dialogTheme">@style/Holo.Theme.Dialog</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown</item>
+        <item name="fastScrollPreviewBackgroundLeft">@drawable/fastscroll_label_left_holo_dark</item>
+        <item name="fastScrollPreviewBackgroundRight">@drawable/fastscroll_label_right_holo_dark</item>
+        <item name="fastScrollTrackDrawable">@drawable/fastscroll_track_holo_dark</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_dark</item>
         <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow</item>
         <item name="modalBackgroundWrapper">@drawable/modal_background_holo_dark</item>
@@ -673,8 +679,6 @@
         <!--Include block: Holo-->
         <item name="android:divider">?android:listDivider</item>
         <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
-        <item name="android:fastScrollOverlayPosition">atThumb</item>
-        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
         <item name="android:gridViewStyle">@style/Holo.GridView</item>
         <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
         <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
@@ -722,9 +726,6 @@
         <item name="android:checkboxStyle">@style/Holo.CompoundButton.CheckBox</item>
         <item name="android:editTextStyle">@style/Holo.EditText</item>
         <item name="android:expandableListViewStyle">@style/Holo.ExpandableListView</item>
-        <item name="android:fastScrollPreviewBackgroundLeft">@drawable/fastscroll_label_left_holo_dark</item>
-        <item name="android:fastScrollPreviewBackgroundRight">@drawable/fastscroll_label_right_holo_dark</item>
-        <item name="android:fastScrollTrackDrawable">@drawable/fastscroll_track_holo_dark</item>
         <item name="android:imageButtonStyle">@style/Holo.ImageButton</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_checkbox_holo_dark</item>
@@ -823,6 +824,9 @@
         <item name="dividerVertical">?android:listDivider</item>
         <item name="dropdownListPreferredItemHeight">?listPreferredItemHeight</item>
         <item name="editTextPreferenceStyle">@style/Holo.PreferenceDialog.EditTextPreference</item>
+        <item name="fastScrollOverlayPosition">atThumb</item>
+        <item name="fastScrollTextColor">@color/primary_text_holo_dark</item>
+        <item name="fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
         <item name="holoTheme">true</item>
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
@@ -859,6 +863,9 @@
         <item name="calendarViewStyle">@style/Holo.CalendarView.Light</item>
         <item name="dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
+        <item name="fastScrollPreviewBackgroundLeft">@drawable/fastscroll_label_left_holo_light</item>
+        <item name="fastScrollPreviewBackgroundRight">@drawable/fastscroll_label_right_holo_light</item>
+        <item name="fastScrollTrackDrawable">@drawable/fastscroll_track_holo_light</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
         <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow.Light</item>
         <item name="modalBackgroundWrapper">@drawable/modal_background_holo_light</item>
@@ -876,8 +883,6 @@
         <!--Include block: Holo-->
         <item name="android:divider">?android:listDivider</item>
         <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
-        <item name="android:fastScrollOverlayPosition">atThumb</item>
-        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
         <item name="android:gridViewStyle">@style/Holo.GridView</item>
         <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
         <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
@@ -925,9 +930,6 @@
         <item name="android:checkboxStyle">@style/Holo.CompoundButton.CheckBox.Light</item>
         <item name="android:editTextStyle">@style/Holo.EditText.Light</item>
         <item name="android:expandableListViewStyle">@style/Holo.ExpandableListView.Light</item>
-        <item name="android:fastScrollPreviewBackgroundLeft">@drawable/fastscroll_label_left_holo_light</item>
-        <item name="android:fastScrollPreviewBackgroundRight">@drawable/fastscroll_label_right_holo_light</item>
-        <item name="android:fastScrollTrackDrawable">@drawable/fastscroll_track_holo_light</item>
         <item name="android:imageButtonStyle">@style/Holo.ImageButton.Light</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_light</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_checkbox_holo_light</item>
@@ -965,6 +967,9 @@
         <item name="dividerVertical">?android:listDivider</item>
         <item name="dropdownListPreferredItemHeight">?listPreferredItemHeight</item>
         <item name="editTextPreferenceStyle">@style/Holo.PreferenceDialog.EditTextPreference</item>
+        <item name="fastScrollOverlayPosition">atThumb</item>
+        <item name="fastScrollTextColor">@color/primary_text_holo_dark</item>
+        <item name="fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
         <item name="holoTheme">true</item>
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
@@ -1001,6 +1006,9 @@
         <item name="calendarViewStyle">@style/Holo.CalendarView.Light</item>
         <item name="dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
+        <item name="fastScrollPreviewBackgroundLeft">@drawable/fastscroll_label_left_holo_light</item>
+        <item name="fastScrollPreviewBackgroundRight">@drawable/fastscroll_label_right_holo_light</item>
+        <item name="fastScrollTrackDrawable">@drawable/fastscroll_track_holo_light</item>
         <item name="listDividerAlertDialog">@drawable/list_divider_holo_light</item>
         <item name="listPopupWindowStyle">@style/Holo.ListPopupWindow.Light</item>
         <item name="modalBackgroundWrapper">@drawable/modal_background_holo_light</item>
@@ -1018,8 +1026,6 @@
         <!--Include block: Holo-->
         <item name="android:divider">?android:listDivider</item>
         <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
-        <item name="android:fastScrollOverlayPosition">atThumb</item>
-        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
         <item name="android:gridViewStyle">@style/Holo.GridView</item>
         <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
         <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
@@ -1067,9 +1073,6 @@
         <item name="android:checkboxStyle">@style/Holo.CompoundButton.CheckBox.Light</item>
         <item name="android:editTextStyle">@style/Holo.EditText.Light</item>
         <item name="android:expandableListViewStyle">@style/Holo.ExpandableListView.Light</item>
-        <item name="android:fastScrollPreviewBackgroundLeft">@drawable/fastscroll_label_left_holo_light</item>
-        <item name="android:fastScrollPreviewBackgroundRight">@drawable/fastscroll_label_right_holo_light</item>
-        <item name="android:fastScrollTrackDrawable">@drawable/fastscroll_track_holo_light</item>
         <item name="android:imageButtonStyle">@style/Holo.ImageButton.Light</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_light</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_checkbox_holo_light</item>
