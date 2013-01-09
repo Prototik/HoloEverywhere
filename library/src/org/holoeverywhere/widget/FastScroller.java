@@ -21,6 +21,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ExpandableListAdapter;
 import android.widget.ListAdapter;
+import android.widget.SectionIndexer;
 import android.widget.WrapperListAdapter;
 
 class FastScroller {

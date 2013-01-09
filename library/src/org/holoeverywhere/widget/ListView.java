@@ -22,6 +22,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.HapticFeedbackConstants;
@@ -267,13 +268,37 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
 
     /**
      * O_O This method doesn't override super method, but super class invoke it
-     * instead of android.widget.ListView.drawDivider. It's fucking magick of
+     * instead of android.widget.ListView.drawDivider. It's fucking magic of
      * dalvik?
      */
     void drawDivider(Canvas canvas, Rect bounds, int childIndex) {
         final Drawable divider = getDivider();
+        if (mCropDividersByScroller) {
+            final int scrollbarWidth = getVerticalScrollbarWidth();
+            Rect canvasBounds = canvas.getClipBounds();
+            switch (mVerticalScrollbarPosition) {
+                case SCROLLBAR_POSITION_LEFT:
+                    bounds.left = canvasBounds.left + scrollbarWidth;
+                    break;
+                case SCROLLBAR_POSITION_DEFAULT:
+                case SCROLLBAR_POSITION_RIGHT:
+                default:
+                    bounds.right = canvasBounds.left + canvasBounds.right - scrollbarWidth;
+                    break;
+            }
+        }
         divider.setBounds(bounds);
         divider.draw(canvas);
+    }
+
+    private boolean mCropDividersByScroller = false;
+
+    public void setCropDividersByScroller(boolean cropDividersByScroller) {
+        mCropDividersByScroller = cropDividersByScroller;
+    }
+
+    public boolean isCropDividersByScroller() {
+        return mCropDividersByScroller;
     }
 
     public Activity getActivity() {

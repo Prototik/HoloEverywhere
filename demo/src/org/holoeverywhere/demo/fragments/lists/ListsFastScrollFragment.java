@@ -17,7 +17,8 @@ public class ListsFastScrollFragment extends ListFragment {
         mList = getListView();
         mList.setFastScrollEnabled(true);
         mList.setFastScrollAlwaysVisible(true);
-        setListAdapter(ArrayAdapter.createFromResource(getActivity(), R.array.adjectives,
+        mList.setCropDividersByScroller(true);
+        setListAdapter(ArrayAdapter.createFromResource(getActivity(), R.array.countries,
                 R.layout.simple_list_item_1));
     }
 }

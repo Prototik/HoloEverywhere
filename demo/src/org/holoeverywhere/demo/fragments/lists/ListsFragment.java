@@ -8,5 +8,6 @@ public class ListsFragment extends BaseOtherFragment {
     public void onHandleData() {
         addItem("Modal", ListsModalFragment.class);
         addItem("Fast scroll", ListsFastScrollFragment.class);
+        addItem("Fast scroll with sections", ListsFastScrollWithSectionsFragment.class);
     }
 }
