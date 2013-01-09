@@ -70,6 +70,7 @@ public class DemoActivity extends Activity {
             return view;
         }
 
+        @Override
         public void onClick() {
             getSupportActionBar().setSubtitle(title);
             replaceFragment(Fragment.instantiate(clazz));
@@ -77,8 +78,27 @@ public class DemoActivity extends Activity {
         }
     }
 
-    private NavigationAdapter navigationAdapter;
     private static final String PAGE = "page";
+    private NavigationAdapter navigationAdapter;
+
+    private int computeMenuWidth() {
+        return (int) getResources().getFraction(R.dimen.demo_menu_width,
+                getResources().getDisplayMetrics().widthPixels, 1);
+    }
+
+    private View makeMenuView() {
+        View view = getLayoutInflater().inflate(R.layout.menu);
+        navigationAdapter = new NavigationAdapter();
+        navigationAdapter.add(MainFragment.class, R.string.demo);
+        navigationAdapter.add(SettingsFragment.class, R.string.settings);
+        navigationAdapter.add(OtherFragment.class, R.string.other);
+        navigationAdapter.add(AboutFragment.class, R.string.about);
+        navigationAdapter.onItemSelected(getIntent().getIntExtra(PAGE, 0));
+        ListView list = (ListView) view.findViewById(R.id.list);
+        list.setAdapter(navigationAdapter);
+        list.setOnItemClickListener(navigationAdapter);
+        return view;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,29 +118,6 @@ public class DemoActivity extends Activity {
         sm.setBehindContentView(makeMenuView());
         sm.setContent(R.layout.content);
         sm.getSlidingMenu().setBehindWidth(computeMenuWidth());
-    }
-
-    private View makeMenuView() {
-        View view = getLayoutInflater().inflate(R.layout.menu);
-        navigationAdapter = new NavigationAdapter();
-        navigationAdapter.add(MainFragment.class, R.string.demo);
-        navigationAdapter.add(SettingsFragment.class, R.string.settings);
-        navigationAdapter.add(OtherFragment.class, R.string.other);
-        navigationAdapter.add(AboutFragment.class, R.string.about);
-        navigationAdapter.onItemSelected(getIntent().getIntExtra(PAGE, 0));
-        ListView list = (ListView) view.findViewById(R.id.list);
-        list.setAdapter(navigationAdapter);
-        list.setOnItemClickListener(navigationAdapter);
-        return view;
-    }
-
-    private int computeMenuWidth() {
-        return (int) getResources().getFraction(R.dimen.demo_menu_width,
-                getResources().getDisplayMetrics().widthPixels, 1);
-    }
-
-    public SlidingMenuA requireSlidingMenu() {
-        return requireAddon(org.holoeverywhere.addon.SlidingMenu.class).activity(this);
     }
 
     @Override
@@ -179,5 +176,9 @@ public class DemoActivity extends Activity {
             ft.addToBackStack(backStackName);
         }
         ft.commit();
+    }
+
+    public SlidingMenuA requireSlidingMenu() {
+        return requireAddon(org.holoeverywhere.addon.SlidingMenu.class).activity(this);
     }
 }

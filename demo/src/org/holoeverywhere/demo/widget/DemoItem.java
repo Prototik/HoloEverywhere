@@ -16,6 +16,10 @@ public class DemoItem {
 
     }
 
+    public int getItemViewType() {
+        return 0;
+    }
+
     public View getView(int position, View convertView, ViewGroup parent) {
         DemoListRowView view = makeView(convertView, parent);
         view.setLabel(label);
@@ -36,10 +40,6 @@ public class DemoItem {
         } else {
             return (DemoListRowView) convertView;
         }
-    }
-
-    public int getItemViewType() {
-        return 0;
     }
 
     public void onClick() {

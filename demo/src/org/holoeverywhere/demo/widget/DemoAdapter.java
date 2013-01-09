@@ -15,8 +15,13 @@ public class DemoAdapter extends ArrayAdapter<DemoItem> implements OnItemClickLi
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        getItem(position).onClick();
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        return getView(position, convertView, parent);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return getItem(position).getItemViewType();
     }
 
     @Override
@@ -25,12 +30,7 @@ public class DemoAdapter extends ArrayAdapter<DemoItem> implements OnItemClickLi
     }
 
     @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        return getView(position, convertView, parent);
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return getItem(position).getItemViewType();
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        getItem(position).onClick();
     }
 }

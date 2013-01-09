@@ -56,15 +56,6 @@ public class DemoListRowView extends LinearLayout {
         a.recycle();
     }
 
-    @SuppressWarnings("deprecation")
-    public void setSelectionHandlerDrawable(Drawable drawable) {
-        selectionHandler.setBackgroundDrawable(drawable);
-    }
-
-    public void setSelectionHandlerDrawableResource(int resId) {
-        setSelectionHandlerDrawable(getResources().getDrawable(resId));
-    }
-
     public void setLabel(CharSequence label) {
         this.label.setText(label);
     }
@@ -81,11 +72,20 @@ public class DemoListRowView extends LinearLayout {
         setSelectionHandlerColor(getResources().getColor(resId));
     }
 
-    public void setSelectionHandlerVisiblity(int visiblity) {
-        selectionHandler.setVisibility(visiblity);
+    @SuppressWarnings("deprecation")
+    public void setSelectionHandlerDrawable(Drawable drawable) {
+        selectionHandler.setBackgroundDrawable(drawable);
+    }
+
+    public void setSelectionHandlerDrawableResource(int resId) {
+        setSelectionHandlerDrawable(getResources().getDrawable(resId));
     }
 
     public void setSelectionHandlerVisiblity(boolean visible) {
         setSelectionHandlerVisiblity(visible ? VISIBLE : INVISIBLE);
+    }
+
+    public void setSelectionHandlerVisiblity(int visiblity) {
+        selectionHandler.setVisibility(visiblity);
     }
 }

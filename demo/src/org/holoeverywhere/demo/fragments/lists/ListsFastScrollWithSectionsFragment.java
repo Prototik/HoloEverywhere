@@ -8,29 +8,12 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.holoeverywhere.ArrayAdapter;
-import org.holoeverywhere.app.ListFragment;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.util.CharSequences;
-import org.holoeverywhere.widget.ListView;
 
-import android.view.View;
 import android.widget.SectionIndexer;
 
-public class ListsFastScrollWithSectionsFragment extends ListFragment {
-    private ListView mList;
-    private static final Comparator<CharSequence> CHAR_SEQUENCE_COMPARATOR = new Comparator<CharSequence>() {
-        @Override
-        public int compare(CharSequence lhs, CharSequence rhs) {
-            return CharSequences.compareToIgnoreCase(lhs, rhs);
-        }
-    };
-    private static final Comparator<Character> CHARACTER_COMPARATOR = new Comparator<Character>() {
-        @Override
-        public int compare(Character lhs, Character rhs) {
-            return lhs.compareTo(rhs);
-        }
-    };
-
+public class ListsFastScrollWithSectionsFragment extends ListsFastScrollFragment {
     private static final class CharacterWrapper {
         private char c;
 
@@ -45,8 +28,8 @@ public class ListsFastScrollWithSectionsFragment extends ListFragment {
     }
 
     private class CustomAdapter extends ArrayAdapter<CharSequence> implements SectionIndexer {
-        private final CharSequence[] mData;
         private final Character[] mAlphabet;
+        private final CharSequence[] mData;
 
         public CustomAdapter(CharSequence[] data) {
             super(getActivity(), R.layout.simple_list_item_1, android.R.id.text1);
@@ -106,13 +89,22 @@ public class ListsFastScrollWithSectionsFragment extends ListFragment {
         }
     }
 
+    private static final Comparator<CharSequence> CHAR_SEQUENCE_COMPARATOR = new Comparator<CharSequence>() {
+        @Override
+        public int compare(CharSequence lhs, CharSequence rhs) {
+            return CharSequences.compareToIgnoreCase(lhs, rhs);
+        }
+    };
+
+    private static final Comparator<Character> CHARACTER_COMPARATOR = new Comparator<Character>() {
+        @Override
+        public int compare(Character lhs, Character rhs) {
+            return lhs.compareTo(rhs);
+        }
+    };
+
     @Override
-    public void onViewCreated(View view) {
-        super.onViewCreated(view);
-        mList = getListView();
-        mList.setFastScrollEnabled(true);
-        mList.setFastScrollAlwaysVisible(true);
-        mList.setCropDividersByScroller(true);
-        setListAdapter(new CustomAdapter(getResources().getTextArray(R.array.countries)));
+    protected CustomAdapter onObtainData() {
+        return new CustomAdapter(getResources().getTextArray(R.array.countries));
     }
 }

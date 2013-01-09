@@ -22,7 +22,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.HapticFeedbackConstants;
@@ -152,9 +151,8 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     };
     private MultiChoiceModeWrapper mMultiChoiceModeCallback;
     private final OnItemLongClickListenerWrapper mOnItemLongClickListenerWrapper;
-
     private OnScrollListener mOnScrollListener;
-
+    private boolean mPaddingFromScroller = false;
     private int mVerticalScrollbarPosition = SCROLLBAR_POSITION_DEFAULT;
 
     public ListView(Context context) {
@@ -273,32 +271,8 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
      */
     void drawDivider(Canvas canvas, Rect bounds, int childIndex) {
         final Drawable divider = getDivider();
-        if (mCropDividersByScroller) {
-            final int scrollbarWidth = getVerticalScrollbarWidth();
-            Rect canvasBounds = canvas.getClipBounds();
-            switch (mVerticalScrollbarPosition) {
-                case SCROLLBAR_POSITION_LEFT:
-                    bounds.left = canvasBounds.left + scrollbarWidth;
-                    break;
-                case SCROLLBAR_POSITION_DEFAULT:
-                case SCROLLBAR_POSITION_RIGHT:
-                default:
-                    bounds.right = canvasBounds.left + canvasBounds.right - scrollbarWidth;
-                    break;
-            }
-        }
         divider.setBounds(bounds);
         divider.draw(canvas);
-    }
-
-    private boolean mCropDividersByScroller = false;
-
-    public void setCropDividersByScroller(boolean cropDividersByScroller) {
-        mCropDividersByScroller = cropDividersByScroller;
-    }
-
-    public boolean isCropDividersByScroller() {
-        return mCropDividersByScroller;
     }
 
     public Activity getActivity() {
@@ -428,6 +402,10 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             return mCheckStates.get(position);
         }
         return false;
+    }
+
+    public boolean isPaddingFromScroller() {
+        return mPaddingFromScroller;
     }
 
     protected boolean isVerticalScrollBarHidden() {
@@ -634,6 +612,29 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         return handled;
     }
 
+    protected void recomputePaddingFromScroller() {
+        final int left = getPaddingLeft();
+        final int top = getPaddingTop();
+        final int right = getPaddingRight();
+        final int bottom = getPaddingBottom();
+        if (mPaddingFromScroller) {
+            final int scrollbarWidth = getVerticalScrollbarWidth();
+            switch (mVerticalScrollbarPosition) {
+                case SCROLLBAR_POSITION_LEFT:
+                    setPadding(scrollbarWidth, top, right, bottom);
+                    break;
+                case SCROLLBAR_POSITION_RIGHT:
+                case SCROLLBAR_POSITION_DEFAULT:
+                default:
+                    setPadding(left, top, scrollbarWidth, bottom);
+                    break;
+            }
+        } else {
+            setPadding(0, top, 0, bottom);
+        }
+        invalidate();
+    }
+
     @Override
     public boolean removeFooterView(View v) {
         if (mFooterViewInfos.size() > 0) {
@@ -765,6 +766,9 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             method.invoke(this);
         } catch (Exception e) {
         }
+        if (alwaysShow) {
+            setPaddingFromScroller(true);
+        }
     }
 
     @Override
@@ -855,6 +859,11 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         super.setOnScrollListener(mOnScrollListener = l);
     }
 
+    public void setPaddingFromScroller(boolean paddingFromScroller) {
+        mPaddingFromScroller = paddingFromScroller;
+        recomputePaddingFromScroller();
+    }
+
     protected final void setStateOnView(View child, boolean value) {
         if (child instanceof Checkable) {
             ((Checkable) child).setChecked(value);
@@ -869,6 +878,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         if (mFastScroller != null) {
             mFastScroller.setScrollbarPosition(position);
         }
+        recomputePaddingFromScroller();
     }
 
     @Override

@@ -7,24 +7,14 @@ import org.holoeverywhere.demo.R;
 import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.ListView.MultiChoiceModeListener;
 
+import android.view.View;
+
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-import android.view.View;
-
-public class ListsModalFragment extends ListFragment implements MultiChoiceModeListener {
+public class ListsChoiceModeModalFragment extends ListFragment implements MultiChoiceModeListener {
     private ListView mList;
-
-    @Override
-    public void onViewCreated(View view) {
-        super.onViewCreated(view);
-        mList = getListView();
-        mList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        mList.setMultiChoiceModeListener(this);
-        setListAdapter(ArrayAdapter.createFromResource(getActivity(), R.array.adjectives,
-                R.layout.simple_list_item_multiple_choice));
-    }
 
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem) {
@@ -44,7 +34,7 @@ public class ListsModalFragment extends ListFragment implements MultiChoiceModeL
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         mode.setTitle(R.string.library_name);
-        getMenuInflater().inflate(R.menu.modal, menu);
+        getMenuInflater().inflate(R.menu.lists_choice_mode_modal, menu);
         return true;
     }
 
@@ -54,12 +44,22 @@ public class ListsModalFragment extends ListFragment implements MultiChoiceModeL
     }
 
     @Override
+    public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+        mode.setSubtitle("Checked: " + mList.getCheckedItemCount());
+    }
+
+    @Override
     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
         return true;
     }
 
     @Override
-    public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-        mode.setSubtitle("Checked: " + mList.getCheckedItemCount());
+    public void onViewCreated(View view) {
+        super.onViewCreated(view);
+        mList = getListView();
+        mList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        mList.setMultiChoiceModeListener(this);
+        setListAdapter(ArrayAdapter.createFromResource(getActivity(), R.array.adjectives,
+                R.layout.simple_list_item_multiple_choice));
     }
 }

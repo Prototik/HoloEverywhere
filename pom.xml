@@ -182,8 +182,7 @@
 							<debug>false</debug>
 						</sign>
 						<zipalign>
-							<skip>false</skip>
-							<verbose>false</verbose>
+							<skip>true</skip>
 						</zipalign>
 						<undeployBeforeDeploy>true</undeployBeforeDeploy>
 						<proguard>
