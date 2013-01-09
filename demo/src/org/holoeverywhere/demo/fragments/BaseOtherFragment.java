@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.demo.fragments;
 
+import org.holoeverywhere.app.DialogFragment;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.app.ListFragment;
 import org.holoeverywhere.demo.DemoActivity;
@@ -20,8 +21,13 @@ public abstract class BaseOtherFragment extends ListFragment {
 
         @Override
         public void onClick(OtherItem otherItem) {
-            ((DemoActivity) getSupportActivity()).replaceFragment(Fragment.instantiate(mClass),
-                    "fragment-" + mClass.getName());
+            Fragment fragment = Fragment.instantiate(mClass);
+            if (fragment instanceof DialogFragment) {
+                ((DialogFragment) fragment).show(getSupportActivity());
+            } else {
+                ((DemoActivity) getSupportActivity()).replaceFragment(fragment,
+                        "fragment-" + mClass.getName());
+            }
         }
     }
 
