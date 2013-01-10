@@ -4,17 +4,23 @@
 	android:layout_height="wrap_content"
 	android:layout_gravity="center"
 	android:orientation="vertical"
-	android:padding="36dp" >
+	android:paddingBottom="36dp"
+	android:paddingLeft="12dp"
+	android:paddingRight="12dp"
+	android:paddingTop="36dp" >
 	<TextView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center"
 		android:text="@string/library_name"
-		android:textAppearance="?android:textAppearanceLarge" />
+		android:textAppearance="?android:textAppearanceLarge"
+		android:textColor="@color/holo_blue_dark"
+		android:textStyle="bold" />
 	<TextView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
 		android:gravity="center"
-		android:text="You really want read this text?"
+		android:text="You really want to read this text?"
 		android:textAppearance="?android:textAppearanceMedium" />
 </LinearLayout>

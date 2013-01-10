@@ -12,6 +12,7 @@ public class DialogsDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setContentView(R.layout.dialog_content);
+        dialog.setCanceledOnTouchOutside(true);
         return dialog;
     }
 }

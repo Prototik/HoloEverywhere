@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="org.holoeverywhere.demo"
-	android:versionCode="22"
-	android:versionName="1.3.4" >
+	android:versionCode="23"
+	android:versionName="1.4.2" >
 	<uses-sdk
 		android:minSdkVersion="7"
 		android:targetSdkVersion="16" />
