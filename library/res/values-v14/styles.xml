@@ -72,7 +72,7 @@
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Small</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
         <!--End of block BaseDark-->
-        <item name="holoActionBarTheme">@style/Holo.Theme</item>
+        <item name="holoActionBarTheme">dark</item>
     </style>
     <style name="Holo.Theme.Light" parent="Theme.Sherlock.Light">
         <!--Include block: BaseLight-->
@@ -147,7 +147,7 @@
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block BaseLight-->
-        <item name="holoActionBarTheme">@style/Holo.Theme.Light</item>
+        <item name="holoActionBarTheme">light</item>
     </style>
     <style name="Holo.Theme.Light.DarkActionBar" parent="Theme.Sherlock.Light.DarkActionBar">
         <!--Include block: BaseLight-->
@@ -222,6 +222,6 @@
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block BaseLight-->
-        <item name="holoActionBarTheme">@style/Holo.Theme</item>
+        <item name="holoActionBarTheme">dark</item>
     </style>
 </resources>

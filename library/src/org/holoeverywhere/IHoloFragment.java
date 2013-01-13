@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 
 public interface IHoloFragment extends IHolo, OnPrepareOptionsMenuListener,
@@ -24,6 +25,8 @@ public interface IHoloFragment extends IHolo, OnPrepareOptionsMenuListener,
 
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode);
+
+    public ActionBar getSupportActionBar();
 
     public Activity getSupportActivity();
 

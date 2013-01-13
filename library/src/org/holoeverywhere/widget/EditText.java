@@ -9,9 +9,13 @@ import android.content.res.TypedArray;
 import android.os.Build.VERSION;
 import android.util.AttributeSet;
 
-public class EditText extends android.widget.EditText {
+import com.actionbarsherlock.internal.view.menu.ContextMenuCallbackGetter;
+
+public class EditText extends android.widget.EditText implements ContextMenuCallbackGetter {
     private boolean allCaps = false;
+    private OnCreateContextMenuListener mOnCreateContextMenuListener;
     private CharSequence originalText;
+
     private BufferType originalType;
 
     public EditText(Context context) {
@@ -48,6 +52,11 @@ public class EditText extends android.widget.EditText {
         onDisplayHint(hint);
     }
 
+    @Override
+    public OnCreateContextMenuListener getOnCreateContextMenuListener() {
+        return mOnCreateContextMenuListener;
+    }
+
     public boolean isAllCaps() {
         return allCaps;
     }
@@ -64,6 +73,11 @@ public class EditText extends android.widget.EditText {
     public void setAllCaps(boolean allCaps) {
         this.allCaps = allCaps;
         updateTextState();
+    }
+
+    @Override
+    public void setOnCreateContextMenuListener(OnCreateContextMenuListener l) {
+        super.setOnCreateContextMenuListener(mOnCreateContextMenuListener = l);
     }
 
     @Override

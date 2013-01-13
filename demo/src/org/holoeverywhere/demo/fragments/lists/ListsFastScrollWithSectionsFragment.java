@@ -104,6 +104,11 @@ public class ListsFastScrollWithSectionsFragment extends ListsFastScrollFragment
     };
 
     @Override
+    protected CharSequence getTitle() {
+        return super.getTitle() + ": Sections";
+    }
+
+    @Override
     protected CustomAdapter onObtainData() {
         return new CustomAdapter(getResources().getTextArray(R.array.countries));
     }

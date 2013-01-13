@@ -15,4 +15,10 @@ public class MainFragment extends Fragment {
             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.main);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getSupportActionBar().setSubtitle("Demo");
+    }
 }

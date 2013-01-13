@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 public class DemoItem {
     public CharSequence label;
+    public View lastView;
+    public boolean longClickable = false;
     public int selectionHandlerColor = -1;
     public boolean selectionHandlerVisible = false;
 
@@ -44,5 +46,9 @@ public class DemoItem {
 
     public void onClick() {
 
+    }
+
+    public boolean onLongClick() {
+        return false;
     }
 }

@@ -1,44 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:holo="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent" >
-	<LinearLayout
+	android:layout_height="wrap_content"
+	android:orientation="vertical" >
+	<TextView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:orientation="vertical" >
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="6dp"
-			android:gravity="center"
-			android:lines="1"
-			android:text="@string/library_name"
-			android:textColor="@color/holo_blue_light"
-			android:textSize="36sp"
-			android:textStyle="bold" />
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginBottom="16dp"
-			android:layout_marginTop="18dp"
-			android:gravity="center"
-			android:text="@string/about_text" />
-		<DemoListRowView
-			android:id="@+id/github"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/github"
-			holo:selectionHandler="@color/holo_blue_light" />
-		<Divider
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical" />
-		<DemoListRowView
-			android:id="@+id/developers"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/write_to_developers"
-			holo:selectionHandler="@color/holo_red_light" />
-	</LinearLayout>
-</ScrollView>
+		android:layout_marginTop="6dp"
+		android:gravity="center"
+		android:lines="1"
+		android:text="@string/library_name"
+		android:textColor="@color/holo_blue_light"
+		android:textSize="36sp"
+		android:textStyle="bold" />
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="16dp"
+		android:layout_marginTop="18dp"
+		android:gravity="center"
+		android:text="@string/about_text" />
+</LinearLayout>

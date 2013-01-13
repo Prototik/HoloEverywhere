@@ -14,6 +14,7 @@ import org.holoeverywhere.demo.widget.DemoListRowView;
 import org.holoeverywhere.widget.ListView;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,14 +40,16 @@ public class DemoActivity extends Activity {
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            onItemSelected(position);
+            onItemSelected(position, true);
         }
 
-        public void onItemSelected(int position) {
+        public void onItemSelected(int position, boolean setData) {
             if (lastSelection != position) {
                 lastSelection = position;
                 getIntent().putExtra(PAGE, position);
-                ((NavigationItem) getItem(position)).onClick();
+                if (setData) {
+                    ((NavigationItem) getItem(position)).onClick(null);
+                }
                 notifyDataSetInvalidated();
             }
         }
@@ -70,15 +73,20 @@ public class DemoActivity extends Activity {
             return view;
         }
 
-        @Override
-        public void onClick() {
-            getSupportActionBar().setSubtitle(title);
+        public void onClick(View view) {
+            FragmentManager fm = getSupportFragmentManager();
+            while (fm.popBackStackImmediate()) {
+                fm.executePendingTransactions();
+            }
             replaceFragment(Fragment.instantiate(clazz));
+            fm.executePendingTransactions();
             requireSlidingMenu().showContent();
         }
     }
 
     private static final String PAGE = "page";
+    private View bottom;
+
     private NavigationAdapter navigationAdapter;
 
     private int computeMenuWidth() {
@@ -86,14 +94,19 @@ public class DemoActivity extends Activity {
                 getResources().getDisplayMetrics().widthPixels, 1);
     }
 
-    private View makeMenuView() {
+    public View getAnchorForPopup() {
+        return bottom;
+    }
+
+    private View makeMenuView(Bundle savedInstanceState) {
         View view = getLayoutInflater().inflate(R.layout.menu);
         navigationAdapter = new NavigationAdapter();
         navigationAdapter.add(MainFragment.class, R.string.demo);
         navigationAdapter.add(SettingsFragment.class, R.string.settings);
         navigationAdapter.add(OtherFragment.class, R.string.other);
         navigationAdapter.add(AboutFragment.class, R.string.about);
-        navigationAdapter.onItemSelected(getIntent().getIntExtra(PAGE, 0));
+        navigationAdapter.onItemSelected(getIntent().getIntExtra(PAGE, 0),
+                savedInstanceState == null);
         ListView list = (ListView) view.findViewById(R.id.list);
         list.setAdapter(navigationAdapter);
         list.setOnItemClickListener(navigationAdapter);
@@ -115,9 +128,11 @@ public class DemoActivity extends Activity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         final SlidingMenuA sm = requireSlidingMenu();
-        sm.setBehindContentView(makeMenuView());
         sm.setContent(R.layout.content);
+        sm.setBehindContentView(makeMenuView(savedInstanceState));
         sm.getSlidingMenu().setBehindWidth(computeMenuWidth());
+
+        bottom = findViewById(R.id.bottom);
     }
 
     @Override
@@ -170,11 +185,11 @@ public class DemoActivity extends Activity {
     public void replaceFragment(Fragment fragment,
             String backStackName) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.replace(R.id.content, fragment);
         if (backStackName != null) {
             ft.addToBackStack(backStackName);
         }
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
     }
 

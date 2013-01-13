@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:holo="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/scrollview"
 	android:layout_width="match_parent"
-	android:layout_height="0dip"
-	android:layout_weight="1"
+	android:layout_height="match_parent"
 	android:descendantFocusability="beforeDescendants"
 	android:scrollbars="none" >
 	<LinearLayout
@@ -28,20 +28,24 @@
 					android:layout_height="match_parent" />
 			</LinearLayout>
 			<EditText
+				android:id="@+id/edittext"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:hint="@string/edittext" />
 			<AutoCompleteTextView
+				android:id="@+id/autocompleretextview"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:entries="@array/countries"
 				android:hint="@string/autocompletetextview" />
 			<Spinner
+				android:id="@+id/spinner"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:drawSelectorOnTop="true"
 				android:entries="@array/countries" />
 			<RatingBar
+				android:id="@+id/ratingbar"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center"
@@ -54,10 +58,12 @@
 				android:gravity="center"
 				android:orientation="horizontal" >
 				<Switch
+					android:id="@+id/switch1"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginRight="10dp" />
 				<Switch
+					android:id="@+id/switch2"
 					style="?switchStyleOld"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -87,6 +93,7 @@
 					android:gravity="center"
 					android:orientation="vertical" >
 					<SeekBar
+						android:id="@+id/seekbar"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:progress="75" />
@@ -116,18 +123,22 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content" >
 				<RadioGroup
+					android:id="@+id/radiogroup"
 					android:layout_width="0dp"
 					android:layout_height="match_parent"
 					android:layout_weight="1" >
 					<RadioButton
+						android:id="@+id/radio1"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="@string/radiobutton" />
 					<RadioButton
+						android:id="@+id/radio2"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="@string/radiobutton" />
 					<RadioButton
+						android:id="@+id/radio3"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="@string/radiobutton" />
@@ -138,14 +149,17 @@
 					android:layout_weight="1"
 					android:orientation="vertical" >
 					<CheckBox
+						android:id="@+id/checkbox1"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="@string/checkbox" />
 					<CheckBox
+						android:id="@+id/checkbox2"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="@string/checkbox" />
 					<CheckBox
+						android:id="@+id/checkbox3"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="@string/checkbox" />

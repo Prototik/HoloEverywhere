@@ -17,7 +17,6 @@
 		<item name="homeAsUpIndicator">@drawable/home_as_up_indicator</item>
 	</style>
 	<style name="Holo.Demo.Theme.Light.DarkActionBar" parent="Holo.Theme.Light.DarkActionBar">
-		<item name="disableMusicIcon">@drawable/disable_music_dark</item>
 		<item name="demoListRowViewStyle">@style/Holo.Demo.ListRowView</item>
 		<item name="android:homeAsUpIndicator">@drawable/home_as_up_indicator</item>
 		<item name="homeAsUpIndicator">@drawable/home_as_up_indicator</item>

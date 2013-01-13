@@ -1,13 +1,144 @@
 
 package org.holoeverywhere.demo.fragments;
 
+import org.holoeverywhere.app.DialogFragment;
+import org.holoeverywhere.app.Fragment;
+import org.holoeverywhere.app.ListFragment;
+import org.holoeverywhere.demo.DemoActivity;
 import org.holoeverywhere.demo.fragments.dialogs.DialogsFragment;
 import org.holoeverywhere.demo.fragments.lists.ListsFragment;
+import org.holoeverywhere.demo.fragments.menus.MenusFragments;
+import org.holoeverywhere.demo.fragments.pickers.PickersFragment;
+import org.holoeverywhere.demo.widget.DemoAdapter;
+import org.holoeverywhere.demo.widget.DemoItem;
+import org.holoeverywhere.widget.ListView;
 
-public class OtherFragment extends BaseOtherFragment {
-    @Override
-    public void onHandleData() {
+import android.content.Context;
+import android.view.View;
+
+public class OtherFragment extends ListFragment {
+    private final class FragmentListener implements OnOtherItemClickListener {
+        private Class<? extends Fragment> mClass;
+
+        public FragmentListener(Class<? extends Fragment> clazz) {
+            mClass = clazz;
+        }
+
+        @Override
+        public void onClick(OtherItem otherItem) {
+            Fragment fragment = Fragment.instantiate(mClass);
+            if (fragment instanceof DialogFragment) {
+                ((DialogFragment) fragment).show(getSupportActivity());
+            } else {
+                ((DemoActivity) getSupportActivity()).replaceFragment(fragment,
+                        "fragment-" + mClass.getName());
+            }
+        }
+    }
+
+    public static interface OnOtherItemClickListener {
+        public void onClick(OtherItem otherItem);
+    }
+
+    private static final class OtherAdapter extends DemoAdapter {
+        public OtherAdapter(Context context) {
+            super(context);
+        }
+    }
+
+    public static final class OtherItem extends DemoItem {
+        public OnOtherItemClickListener listener;
+        private boolean processLongClick = false;
+
+        @Override
+        public void onClick() {
+            if (listener != null && !longClickable) {
+                listener.onClick(this);
+            }
+        }
+
+        @Override
+        public boolean onLongClick() {
+            if (listener != null && longClickable && !processLongClick) {
+                processLongClick = true;
+                listener.onClick(this);
+                processLongClick = false;
+                return true;
+            }
+            return super.onLongClick();
+        }
+    }
+
+    private OtherAdapter mAdapter;
+
+    public void addItem(CharSequence label, Class<? extends Fragment> clazz) {
+        addItem(label, new FragmentListener(clazz));
+    }
+
+    public void addItem(CharSequence label, OnOtherItemClickListener listener) {
+        addItem(label, listener, false);
+    }
+
+    private void addItem(CharSequence label, OnOtherItemClickListener listener,
+            boolean longClickable) {
+        OtherItem item = new OtherItem();
+        item.label = label;
+        item.listener = listener;
+        item.longClickable = longClickable;
+        addItem(item);
+    }
+
+    public void addItem(DemoItem item) {
+        mAdapter.add(item);
+    }
+
+    public void addItemWithLongClick(CharSequence label, OnOtherItemClickListener listener) {
+        addItem(label, listener, true);
+    }
+
+    protected CharSequence getTitle() {
+        return "Other";
+    }
+
+    protected void onHandleData() {
         addItem("Lists", ListsFragment.class);
         addItem("Dialogs", DialogsFragment.class);
+        addItem("Pickers", PickersFragment.class);
+        addItem("Menus", MenusFragments.class);
+        addItem("Calendar", CalendarFragment.class);
+    }
+
+    protected void onPrepareListView(ListView list) {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        final CharSequence title = getTitle();
+        if (title != null) {
+            getSupportActionBar().setSubtitle(title);
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view) {
+        super.onViewCreated(view);
+        mAdapter = new OtherAdapter(getSupportActivity());
+        onHandleData();
+        boolean handleLongClick = false;
+        for (int i = 0; i < mAdapter.getCount(); i++) {
+            if (mAdapter.getItem(i).longClickable) {
+                handleLongClick = true;
+                break;
+            }
+        }
+        ListView list = getListView();
+        onPrepareListView(list);
+        setListAdapter(mAdapter);
+        list.setOnItemClickListener(mAdapter);
+        if (handleLongClick) {
+            list.setOnItemLongClickListener(mAdapter);
+        }
     }
 }

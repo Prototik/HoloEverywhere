@@ -3,19 +3,20 @@
 	<group android:checkableBehavior="single" >
 		<item
 			android:id="@+id/item1"
-			android:title="Item #1"/>
+			android:title="Radio #1"/>
 		<item
 			android:id="@+id/item2"
-			android:title="Item #2"/>
-		<item
-			android:id="@+id/item3"
-			android:title="Item #3"/>
+			android:title="Radio #2"/>
 	</group>
 	<item
+		android:id="@+id/item3"
+		android:title="Item #3"/>
+	<item
 		android:id="@+id/item4"
-		android:title="Item #4"/>
+		android:checkable="true"
+		android:title="Checkbox #4"/>
 	<item
 		android:id="@+id/item5"
 		android:checkable="true"
-		android:title="Item #5"/>
+		android:title="Checkbox #5"/>
 </menu>

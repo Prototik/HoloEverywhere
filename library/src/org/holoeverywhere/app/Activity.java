@@ -30,6 +30,8 @@ public abstract class Activity extends _HoloActivity {
     public static final String ADDON_SLIDING_MENU = "SlidingMenu";
     private final List<IAddon<?, ?>> addons = new ArrayList<IAddon<?, ?>>();
 
+    private MenuInflater mMenuInflater;
+
     @Override
     public void addContentView(View view, LayoutParams params) {
         view = prepareDecorView(view);
@@ -102,7 +104,11 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     public MenuInflater getSupportMenuInflater() {
-        return requireSherlock().getMenuInflater();
+        if (mMenuInflater != null) {
+            return mMenuInflater;
+        }
+        mMenuInflater = new MenuInflater(getSupportActionBarContext(), this);
+        return mMenuInflater;
     }
 
     public boolean isAddonAttached(Class<? extends IAddon<?, ?>> clazz) {
@@ -380,6 +386,12 @@ public abstract class Activity extends _HoloActivity {
     @Override
     public void setSupportSecondaryProgress(int secondaryProgress) {
         requireSherlock().setSecondaryProgress(secondaryProgress);
+    }
+
+    @Override
+    public void setTheme(int resid) {
+        mMenuInflater = null;
+        super.setTheme(resid);
     }
 
     public void setUiOptions(int uiOptions) {

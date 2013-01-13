@@ -15,6 +15,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
 import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
 import com.actionbarsherlock.internal.view.menu.ContextMenuItemWrapper;
@@ -84,6 +85,11 @@ public abstract class _HoloFragment extends Fragment implements IHoloFragment {
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode) {
         return activity.getSharedPreferences(name, mode);
+    }
+
+    @Override
+    public ActionBar getSupportActionBar() {
+        return getSupportActivity().getSupportActionBar();
     }
 
     @Override

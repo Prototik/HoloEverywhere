@@ -56,7 +56,10 @@
 	<attr name="autoCompleteTextViewStyle" format="reference" />
 	<attr name="panelMenuListWidth" format="dimension" />
 	<attr name="textAppearanceListItem" format="reference" />
-	<attr name="holoActionBarTheme" format="reference" />
+	<attr name="holoActionBarTheme">
+		<enum name="dark" value="0" />
+		<enum name="light" value="1" />
+	</attr>
 	<attr name="modalBackgroundWrapper" format="reference" />
 	<attr name="gravity">
 		<flag name="top" value="0x30" />

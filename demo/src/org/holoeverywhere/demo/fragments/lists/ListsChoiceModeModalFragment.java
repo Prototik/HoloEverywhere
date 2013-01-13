@@ -2,7 +2,6 @@
 package org.holoeverywhere.demo.fragments.lists;
 
 import org.holoeverywhere.ArrayAdapter;
-import org.holoeverywhere.app.ListFragment;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.ListView.MultiChoiceModeListener;
@@ -13,8 +12,14 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class ListsChoiceModeModalFragment extends ListFragment implements MultiChoiceModeListener {
+public class ListsChoiceModeModalFragment extends ListsBaseFragment implements
+        MultiChoiceModeListener {
     private ListView mList;
+
+    @Override
+    protected CharSequence getTitle() {
+        return "Lists: Choice mode: Modal";
+    }
 
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem) {

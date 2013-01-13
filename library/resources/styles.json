@@ -1,7 +1,7 @@
 {
     "data": {
         "Holo.Theme": {
-            "holoActionBarTheme": "@style/Holo.Theme", 
+            "holoActionBarTheme": "dark", 
             "include": [
                 "HoloDark"
             ], 
@@ -13,14 +13,14 @@
             ]
         }, 
         "Holo.Theme.Light": {
-            "holoActionBarTheme": "@style/Holo.Theme.Light", 
+            "holoActionBarTheme": "light", 
             "include": [
                 "HoloLight"
             ], 
             "parent": "Theme.Sherlock.Light"
         }, 
         "Holo.Theme.Light.DarkActionBar": {
-            "holoActionBarTheme": "@style/Holo.Theme", 
+            "holoActionBarTheme": "dark", 
             "include": [
                 "HoloLight"
             ], 

@@ -5,14 +5,9 @@ import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
+import android.widget.WrapperListAdapter;
 
-/**
- * Wrapper for ListAdapter I know about android.widget.WrapperListAdapter, but
- * maven don't want compile it :(
- * 
- * @author prok
- */
-public class ListAdapterWrapper implements ListAdapter {
+public class ListAdapterWrapper implements WrapperListAdapter {
     public static interface ListAdapterCallback {
         public void onChanged();
 
@@ -93,6 +88,7 @@ public class ListAdapterWrapper implements ListAdapter {
         return mWrapped.getViewTypeCount();
     }
 
+    @Override
     public ListAdapter getWrappedAdapter() {
         return mWrapped;
     }

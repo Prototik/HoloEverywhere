@@ -2,19 +2,17 @@
 package org.holoeverywhere.demo.fragments;
 
 import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.app.Fragment;
-import org.holoeverywhere.demo.DemoActivity;
 import org.holoeverywhere.demo.R;
+import org.holoeverywhere.widget.ListView;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
-public class AboutFragment extends Fragment {
-    private final class UrlListener implements OnClickListener {
+public class AboutFragment extends OtherFragment {
+    private final class UrlListener implements OnOtherItemClickListener {
         private final Uri uri;
 
         public UrlListener(String url) {
@@ -22,38 +20,40 @@ public class AboutFragment extends Fragment {
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(OtherItem item) {
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             intent = Intent.createChooser(intent, getText(R.string.select_browser));
             if (intent != null) {
                 getActivity().startActivity(intent);
             }
         }
-
     }
 
-    private final OnClickListener developersListener = new OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            ((DemoActivity) getSupportActivity()).replaceFragment(
-                    Fragment.instantiate(DevelopersFragment.class),
-                    "developers");
-        }
-    };
-
-    private final OnClickListener githubListener = new UrlListener(
-            "https://github.com/ChristopheVersieux/HoloEverywhere");
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.about);
+    private void addItem(String label, String url) {
+        addItem(label, new UrlListener(url));
     }
 
     @Override
-    public void onViewCreated(View view) {
-        super.onViewCreated(view);
-        view.findViewById(R.id.github).setOnClickListener(githubListener);
-        view.findViewById(R.id.developers).setOnClickListener(developersListener);
+    protected CharSequence getTitle() {
+        return "About";
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        ((ListView) view.findViewById(android.R.id.list)).setForceHeaderListAdapter(true);
+        return view;
+    }
+
+    @Override
+    protected void onHandleData() {
+        addItem("GitHub", "https://github.com/ChristopheVersieux/HoloEverywhere");
+        addItem("Play Store", "https://github.com/ChristopheVersieux/HoloEverywhere");
+        addItem("Developers", DevelopersFragment.class);
+    }
+
+    @Override
+    protected void onPrepareListView(ListView list) {
+        list.addHeaderView(getLayoutInflater().inflate(R.layout.about), null, false);
     }
 }

@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 public class DevelopersFragment extends ListFragment {
     private static final class Developer {
         private final int name, description;
-
         private final OnClickListener onClickListener;
 
         public Developer(int name, int description, OnClickListener onClickListener) {
@@ -87,9 +86,20 @@ public class DevelopersFragment extends ListFragment {
 
     }
 
+    private DevelopersAdapter mAdapter;
+
+    private void add(int name, int desc, String url) {
+        mAdapter.add(new Developer(name, desc, new UrlListener(url)));
+    }
+
+    private void add(int name, int desc, String email, String subject) {
+        mAdapter.add(new Developer(name, desc, new EmailListener(email, subject)));
+    }
+
     private DevelopersAdapter createDevelopersAdapter() {
-        DevelopersAdapter adapter = new DevelopersAdapter();
+        DevelopersAdapter adapter = mAdapter = new DevelopersAdapter();
         prepareAdapter(adapter);
+        mAdapter = null;
         return adapter;
     }
 
@@ -107,12 +117,16 @@ public class DevelopersFragment extends ListFragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getSupportActionBar().setSubtitle("Developers");
+    }
+
     private void prepareAdapter(DevelopersAdapter adapter) {
-        adapter.add(new Developer(R.string.developer_christophe,
-                R.string.developer_christophe_description, new UrlListener(
-                        "https://plus.google.com/108315424589085456181")));
-        adapter.add(new Developer(R.string.developer_sergey,
-                R.string.developer_sergey_description, new EmailListener(
-                        "prototypegamez@gmail.com", "HoloEverywhere")));
+        add(R.string.developer_christophe, R.string.developer_christophe_description,
+                "https://plus.google.com/108315424589085456181");
+        add(R.string.developer_sergey, R.string.developer_sergey_description,
+                "prototypegamez@gmail.com", "HoloEverywhere");
     }
 }

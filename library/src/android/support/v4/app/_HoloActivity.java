@@ -32,9 +32,12 @@ import android.util.TypedValue;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.view.View.OnCreateContextMenuListener;
 import android.view.ViewGroup.LayoutParams;
 
+import com.actionbarsherlock.internal.view.menu.ContextMenuBackWrapper;
 import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
+import com.actionbarsherlock.internal.view.menu.ContextMenuCallbackGetter;
 import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
 import com.actionbarsherlock.internal.view.menu.ContextMenuItemWrapper;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
@@ -190,17 +193,17 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         return PreferenceManager.wrap(this, name, mode);
     }
 
-    public Context getSupportActionBarContext() {
+    protected Context getSupportActionBarContext() {
         if (actionBarContext == null) {
             TypedValue value = new TypedValue();
             getTheme().resolveAttribute(R.attr.holoActionBarTheme, value, true);
-            actionBarContext = new ContextThemeWrapper(this, value.resourceId);
+            // 0 - Dark
+            // 1 - Light
+            actionBarContext = new ContextThemeWrapper(this,
+                    ThemeManager.getThemeResource(value.data == 1 ? ThemeManager.LIGHT
+                            : ThemeManager.DARK));
         }
         return actionBarContext;
-    }
-
-    public LayoutInflater getSupportActionBarInflater() {
-        return LayoutInflater.from(getSupportActionBarContext());
     }
 
     @Override
@@ -301,9 +304,19 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View view,
             ContextMenuInfo menuInfo) {
+        final android.view.ContextMenu nativeMenu;
         if (menu instanceof ContextMenuWrapper) {
-            super.onCreateContextMenu(((ContextMenuWrapper) menu).unwrap(),
-                    view, menuInfo);
+            nativeMenu = ((ContextMenuWrapper) menu).unwrap();
+        } else {
+            nativeMenu = new ContextMenuBackWrapper(menu);
+        }
+        super.onCreateContextMenu(nativeMenu, view, menuInfo);
+        if (view instanceof ContextMenuCallbackGetter) {
+            final OnCreateContextMenuListener l = ((ContextMenuCallbackGetter) view)
+                    .getOnCreateContextMenuListener();
+            if (l != null) {
+                l.onCreateContextMenu(nativeMenu, view, menuInfo);
+            }
         }
     }
 

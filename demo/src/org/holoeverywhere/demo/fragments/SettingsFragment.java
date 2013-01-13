@@ -12,4 +12,10 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getSupportActionBar().setSubtitle("Settings");
+    }
 }

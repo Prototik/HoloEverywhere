@@ -2,14 +2,17 @@
 package org.holoeverywhere.demo.widget;
 
 import org.holoeverywhere.ArrayAdapter;
+import org.holoeverywhere.widget.ListView;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
-public class DemoAdapter extends ArrayAdapter<DemoItem> implements OnItemClickListener {
+public class DemoAdapter extends ArrayAdapter<DemoItem> implements OnItemClickListener,
+        OnItemLongClickListener {
     public DemoAdapter(Context context) {
         super(context, 0);
     }
@@ -31,6 +34,22 @@ public class DemoAdapter extends ArrayAdapter<DemoItem> implements OnItemClickLi
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        getItem(position).onClick();
+        DemoItem item = getItem(position - ((ListView) adapterView).getHeaderViewsCount());
+        item.lastView = view;
+        item.onClick();
+        item.lastView = null;
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+        DemoItem item = getItem(position - ((ListView) adapterView).getHeaderViewsCount());
+        if (item.longClickable) {
+            item.lastView = view;
+            boolean result = item.onLongClick();
+            item.lastView = null;
+            return result;
+        } else {
+            return false;
+        }
     }
 }
