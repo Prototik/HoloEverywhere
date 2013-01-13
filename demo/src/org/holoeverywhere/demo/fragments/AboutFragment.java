@@ -48,7 +48,7 @@ public class AboutFragment extends OtherFragment {
     @Override
     protected void onHandleData() {
         addItem("GitHub", "https://github.com/ChristopheVersieux/HoloEverywhere");
-        addItem("Play Store", "https://github.com/ChristopheVersieux/HoloEverywhere");
+        addItem("Play Store", "market://details?id=org.holoeverywhere.demo");
         addItem("Developers", DevelopersFragment.class);
     }
 

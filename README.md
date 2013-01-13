@@ -1,4 +1,4 @@
-# HoloEverywhere v1.4.1
+# HoloEverywhere v1.4.2 ([Play Store](https://play.google.com/store/apps/details?id=org.holoeverywhere.demo))
 ## What is it?
 Bringing Holo Theme from Android 4.1 to 2.1 and above.
 ## How to use?
@@ -42,6 +42,8 @@ ProgressBar bar = (ProgressBar) findViewById(R.id.progress_bar);
 ![Screenshot 6](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/screen6.png "Screenshot 6")
 ![Screenshot 7](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/screen7.png "Screenshot 7")
 ![Screenshot 8](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/screen8.png "Screenshot 8")
+![Screenshot 9](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/screen9.png "Screenshot 9")
+![Screenshot 10](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/screen10.png "Screenshot 10")
 
 ## Contact
 [Christophe](https://plus.google.com/108315424589085456181/posts "Google Plus")
