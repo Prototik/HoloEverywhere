@@ -163,6 +163,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     private FastScroller mFastScroller;
     private final List<ViewInfo> mFooterViewInfos = new ArrayList<ViewInfo>(),
             mHeaderViewInfos = new ArrayList<ViewInfo>();
+    private boolean mForceFastScrollAlwaysVisibleDisable = false;
     private boolean mForceHeaderListAdapter = false;
     private boolean mIsAttached;
     private int mLastScrollState = OnScrollListener.SCROLL_STATE_IDLE;
@@ -388,10 +389,13 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
 
     @Override
     public int getVerticalScrollbarWidth() {
+        mForceFastScrollAlwaysVisibleDisable = true;
+        final int superWidth = super.getVerticalScrollbarWidth();
+        mForceFastScrollAlwaysVisibleDisable = false;
         if (isFastScrollAlwaysVisible()) {
-            return Math.max(super.getVerticalScrollbarWidth(), mFastScroller.getWidth());
+            return Math.max(superWidth, mFastScroller.getWidth());
         }
-        return super.getVerticalScrollbarWidth();
+        return superWidth;
     }
 
     void invokeOnItemScrollListener() {
@@ -412,6 +416,9 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
 
     @Override
     public boolean isFastScrollAlwaysVisible() {
+        if (mForceFastScrollAlwaysVisibleDisable) {
+            return false;
+        }
         return mFastScrollEnabled && mFastScroller.isAlwaysShowEnabled();
     }
 

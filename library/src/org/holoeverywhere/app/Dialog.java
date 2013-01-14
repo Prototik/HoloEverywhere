@@ -49,12 +49,6 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
     }
 
     @Override
-    public void setCancelable(boolean flag) {
-        super.setCancelable(flag);
-        setCanceledOnTouchOutside(flag);
-    }
-
-    @Override
     public void addContentView(View view, LayoutParams params) {
         super.addContentView(prepareDecorView(view), params);
     }
@@ -118,6 +112,12 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
 
     public View prepareDecorView(View v) {
         return ContextMenuDecorView.prepareDecorView(getContext(), v, this, 0);
+    }
+
+    @Override
+    public void setCancelable(boolean flag) {
+        super.setCancelable(flag);
+        setCanceledOnTouchOutside(flag);
     }
 
     @Override
