@@ -1,6 +1,9 @@
-# HoloEverywhere v1.4.2 ([Play Store](https://play.google.com/store/apps/details?id=org.holoeverywhere.demo))
+# HoloEverywhere v1.4.2 
 ## What is it?
 Bringing Holo Theme from Android 4.1 to 2.1 and above.
+## Links
+[![Play Store](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/play_store_button.png)][Play Store]  
+[![Donate](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/donate_button.png)][Donate]
 ## How to use?
 
 * You should clone git repo, init and update submodules:
@@ -83,3 +86,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+[Play Store]: https://play.google.com/store/apps/details?id=org.holoeverywhere.demo "Play Store"
+[Donate]: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=X7E7U7HNR36YN&lc=US&item_name=HoloEverywhere&currency_code=USD&bn=PP%2dDonationsBF%3adonate_button%2epng%3aNonHosted "Donate"
