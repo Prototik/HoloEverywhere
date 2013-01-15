@@ -6,11 +6,12 @@ Bringing Holo Theme from Android 4.1 to 2.1 and above.
 * You should clone git repo, init and update submodules:
 
 ```
-git clone git://github.com/ChristopheVersieux/HoloEverywhere.git HoloEverywhere
+git clone --branch stable git://github.com/ChristopheVersieux/HoloEverywhere.git HoloEverywhere
 cd HoloEverywhere
-git checkout holoeverywhere-1.4.2
 git submodule update --init --recursive
 ```
+Git will be swear on detached HEAD state, ignore it.
+
 You also may use git GUI programs
 
 * Import HoloEverywhere from `library` folder and ActionBarSherlock from `contrib/ActionBarSherlock/library` folder into Eclipse
@@ -52,6 +53,23 @@ ProgressBar bar = (ProgressBar) findViewById(R.id.progress_bar);
 
 ### Notice for developers
 If you make changes in styles.xml - use the [Builder](https://github.com/ChristopheVersieux/HoloEverywhere/tree/master/builder), otherwise pull request will not be accepted.
+And before commiting your changes check HEAD - it should be reference on master branch.
+```
+$ git branch
+* master
+```
+If you see it:
+```
+$ git branch
+* (no branch)
+  master
+```
+Your HEAD in detached state. Stash your changes, switch branch and apply stash:
+```
+git stash
+git checkout master
+git stash apply
+```
 
 ### Demo notice
 In demo using music "Winter Dawn" by machinimasound.com. Licensed under Creative Commons "Attribution 3.0"
