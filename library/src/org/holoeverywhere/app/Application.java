@@ -67,6 +67,8 @@ public class Application extends android.app.Application implements
         private EnumProperty<PreferenceImpl> preferenceImpl;
         @SettingProperty(create = true)
         private StringProperty preferencePackage;
+        @SettingProperty(create = true, defaultBoolean = true)
+        private BooleanProperty stringedNamePreferences;
         @SettingProperty(create = true)
         private StringProperty widgetsPackage;
 
@@ -88,6 +90,10 @@ public class Application extends android.app.Application implements
 
         public String getPreferencePackage() {
             return preferencePackage.getValue();
+        }
+
+        public boolean getStringedNamePreferences() {
+            return stringedNamePreferences.getValue();
         }
 
         public String getWidgetsPackage() {
@@ -156,6 +162,10 @@ public class Application extends android.app.Application implements
         public Config setPreferencePackage(String preferencePackage) {
             this.preferencePackage.setValue(preferencePackage);
             return this;
+        }
+
+        public void setStringedNamePreferences(boolean stringedNamePreferences) {
+            this.stringedNamePreferences.setValue(stringedNamePreferences);
         }
 
         /**

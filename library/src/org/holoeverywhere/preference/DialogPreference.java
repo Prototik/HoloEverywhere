@@ -157,6 +157,23 @@ public abstract class DialogPreference extends Preference implements
         mWhichButtonClicked = which;
     }
 
+    protected Dialog onCreateDialog(Context context) {
+        mBuilder = new AlertDialog.Builder(context);
+        mBuilder.setTitle(mDialogTitle);
+        mBuilder.setIcon(mDialogIcon);
+        mBuilder.setPositiveButton(mPositiveButtonText, this);
+        mBuilder.setNegativeButton(mNegativeButtonText, this);
+        View contentView = onCreateDialogView();
+        if (contentView != null) {
+            onBindDialogView(contentView);
+            mBuilder.setView(contentView);
+        } else {
+            mBuilder.setMessage(mDialogMessage);
+        }
+        onPrepareDialogBuilder(mBuilder);
+        return mBuilder.create();
+    }
+
     protected View onCreateDialogView() {
         if (mDialogLayoutResId == 0) {
             return null;
@@ -256,28 +273,15 @@ public abstract class DialogPreference extends Preference implements
     protected void showDialog(Bundle state) {
         Context context = getContext();
         mWhichButtonClicked = DialogInterface.BUTTON_NEGATIVE;
-        mBuilder = new AlertDialog.Builder(context);
-        mBuilder.setTitle(mDialogTitle);
-        mBuilder.setIcon(mDialogIcon);
-        mBuilder.setPositiveButton(mPositiveButtonText, this);
-        mBuilder.setNegativeButton(mNegativeButtonText, this);
-        View contentView = onCreateDialogView();
-        if (contentView != null) {
-            onBindDialogView(contentView);
-            mBuilder.setView(contentView);
-        } else {
-            mBuilder.setMessage(mDialogMessage);
-        }
-        onPrepareDialogBuilder(mBuilder);
+        mDialog = onCreateDialog(context);
         getPreferenceManager().registerOnActivityDestroyListener(this);
-        final Dialog dialog = mDialog = mBuilder.create();
         if (state != null) {
-            dialog.onRestoreInstanceState(state);
+            mDialog.onRestoreInstanceState(state);
         }
         if (needInputMethod()) {
-            requestInputMethod(dialog);
+            requestInputMethod(mDialog);
         }
-        dialog.setOnDismissListener(this);
-        dialog.show();
+        mDialog.setOnDismissListener(this);
+        mDialog.show();
     }
 }

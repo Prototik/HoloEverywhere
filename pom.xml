@@ -19,10 +19,11 @@
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
+		<module>addons</module>
+		<module>builder</module>
+		<module>demo</module>
 		<module>library</module>
 		<module>slidingmenu</module>
-		<module>demo</module>
-		<module>builder</module>
 		<module>translator</module>
 	</modules>
 

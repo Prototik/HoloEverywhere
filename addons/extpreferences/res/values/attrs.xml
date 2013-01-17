@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<attr name="timePreferenceStyle" />
+	<declare-styleable name="TimePreference">
+		<attr name="is24HourView">
+			<enum name="auto" value="0" />
+			<enum name="no" value="-1" />
+			<enum name="yes" value="1" />
+		</attr>
+	</declare-styleable>
+	<attr name="datePreferenceStyle" />
+	<declare-styleable name="DatePreference"></declare-styleable>
+</resources>

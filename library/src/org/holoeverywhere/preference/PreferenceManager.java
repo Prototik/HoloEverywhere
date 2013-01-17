@@ -66,7 +66,12 @@ public class PreferenceManager {
 
     public static String makeNameById(int id) {
         if (id > 0) {
-            return "preference_0x" + Integer.toHexString(id);
+            if (Application.config().getStringedNamePreferences()) {
+                return "preference_"
+                        + Application.getLastInstance().getResources().getResourceName(id);
+            } else {
+                return "preference_0x" + Integer.toHexString(id);
+            }
         } else {
             return null;
         }

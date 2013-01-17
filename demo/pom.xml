@@ -26,6 +26,13 @@
 			<version>${project.version}</version>
 			<type>apklib</type>
 		</dependency>
+
+		<dependency>
+			<groupId>org.holoeverywhere</groupId>
+			<artifactId>addon-extpreferences</artifactId>
+			<version>${project.version}</version>
+			<type>apklib</type>
+		</dependency>
 	</dependencies>
 
 	<build>

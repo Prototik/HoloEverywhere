@@ -7,31 +7,31 @@
 		holo:title="@string/preference_title" />
 	<PreferenceCategory holo:title="@string/preference_base" >
 		<EditTextPreference
+			holo:id="@+id/edit_text"
 			holo:dialogIcon="@drawable/icon"
 			holo:dialogTitle="@string/preference_edit_text_dialog_title"
-			holo:key="edit_text"
 			holo:summary="@string/preference_edit_text_summary"
 			holo:title="@string/preference_edit_text_title" />
 		<CheckBoxPreference
+			holo:id="@+id/check_box"
 			holo:defaultValue="false"
-			holo:key="check_box"
 			holo:summaryOff="@string/preference_check_box_summary_off"
 			holo:summaryOn="@string/preference_check_box_summary_on"
 			holo:title="@string/preference_check_box_title" />
 		<RingtonePreference
-			holo:key="ringtone"
+			holo:id="@+id/ringtone"
 			holo:ringtoneType="all"
 			holo:summary="@string/preference_ringtone_summary"
 			holo:title="@string/preference_ringtone_title" />
 		<SwitchPreference
-			holo:key="switch"
+			holo:id="@+id/switch2"
 			holo:summaryOff="@string/preference_switch_summary_off"
 			holo:summaryOn="@string/preference_switch_summary_on"
 			holo:title="@string/preference_switch_title" />
 		<NumberPickerPreference
+			holo:id="@+id/number_picker"
 			holo:defaultValue="10"
 			holo:dialogMessage="@string/preference_number_picker_dialog_title"
-			holo:key="number_picker"
 			holo:max="25"
 			holo:min="5"
 			holo:summary="@string/preference_number_picker_summary"
@@ -39,36 +39,48 @@
 	</PreferenceCategory>
 	<PreferenceCategory holo:title="@string/preference_lists" >
 		<ListPreference
+			holo:id="@+id/list"
 			holo:dialogIcon="@drawable/icon"
 			holo:dialogTitle="@string/preference_list_dialog_title"
 			holo:entries="@array/skillet"
 			holo:entryValues="@array/skillet"
-			holo:key="list"
 			holo:summary="@string/preference_list_summary"
 			holo:title="@string/preference_list_title" />
 		<MultiSelectListPreference
+			holo:id="@+id/multi_select_list"
 			holo:dialogIcon="@drawable/icon"
 			holo:dialogTitle="@string/preference_multi_list_dialog_title"
 			holo:entries="@array/nirvana"
 			holo:entryValues="@array/nirvana"
-			holo:key="multi_select_list"
 			holo:summary="@string/preference_multi_list_summary"
 			holo:title="@string/preference_multi_list_title" />
+	</PreferenceCategory>
+	<PreferenceCategory
+		holo:summary="Addon for HoloEverywhere"
+		holo:title="ExtPreferences" >
+		<TimePreference
+			holo:id="@+id/time_preference"
+			holo:summary="When next party?"
+			holo:title="Time" />
+		<DatePreference
+			holo:id="@+id/date_preference"
+			holo:summary="When next the end?"
+			holo:title="Date" />
 	</PreferenceCategory>
 	<PreferenceCategory holo:title="@string/preference_other" >
 		<PreferenceScreen holo:title="@string/preference_unsupported" >
 			<SeekBarPreference
+				holo:id="@+id/seek_bar"
 				holo:defaultValue="25"
-				holo:key="seek_bar"
 				holo:max="100"
 				holo:title="@string/preference_seek_bar" />
 			<SeekBarDialogPreference
+				holo:id="@+id/seek_bar_dialog"
 				holo:defaultValue="75"
-				holo:key="seek_bar_dialog"
 				holo:max="100"
 				holo:title="@string/preference_seek_bar_dialog" />
 			<VolumePreference
-				holo:key="volume"
+				holo:id="@+id/volume"
 				holo:title="@string/preference_volume" />
 		</PreferenceScreen>
 	</PreferenceCategory>

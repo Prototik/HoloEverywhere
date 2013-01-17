@@ -44,6 +44,14 @@ public class DialogsProgressDialogFragment extends DialogFragment {
     private CustomTask mTask;
 
     @Override
+    public void onCancel(DialogInterface dialog) {
+        if (mTask != null) {
+            mTask.cancel(false);
+        }
+        super.onCancel(dialog);
+    }
+
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         mDialog = new ProgressDialog(getSupportActivity(), getTheme());
         mDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -55,13 +63,5 @@ public class DialogsProgressDialogFragment extends DialogFragment {
         mTask = new CustomTask();
         mTask.execute();
         return mDialog;
-    }
-
-    @Override
-    public void onCancel(DialogInterface dialog) {
-        if (mTask != null) {
-            mTask.cancel(false);
-        }
-        super.onCancel(dialog);
     }
 }
