@@ -30,7 +30,7 @@ public class Application extends android.app.Application implements
         private static void onStateChange(Config config) {
             String p = config.holoEverywherePackage.getValue();
             if (p != null && p.length() > 0) {
-                config.holoEverywherePackage.setValue(p + ".widget");
+                config.widgetsPackage.setValue(p + ".widget");
                 config.preferencePackage.setValue(p + ".preference");
                 config.addonsPackage.setValue(p + ".addon");
             }
