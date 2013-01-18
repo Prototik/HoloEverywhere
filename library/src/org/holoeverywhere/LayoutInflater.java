@@ -340,7 +340,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
     @SuppressLint("NewApi")
     private View prepareView(View view) {
-        if (Application.config().isDisableOverscrollEffects() && VERSION.SDK_INT >= 9) {
+        if (Application.config().disableOverscrollEffects.getValue() && VERSION.SDK_INT >= 9) {
             view.setOverScrollMode(View.OVER_SCROLL_NEVER);
         }
         return view;

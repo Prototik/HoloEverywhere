@@ -329,10 +329,10 @@ public abstract class Activity extends _HoloActivity {
         if (name == null) {
             return;
         }
-        String className = getConfig().getHoloEverywherePackage()
-                + ".addon." + name;
+        String className = getConfig().addonsPackage.getValue() + '.' + name;
         try {
-            requireAddon((Class<? extends IAddon<?, ?>>) Class.forName(className));
+            requireAddon((Class<? extends IAddon<?, ?>>) Class.forName(className, true,
+                    getClassLoader()));
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Failed to init addon", e);
         }

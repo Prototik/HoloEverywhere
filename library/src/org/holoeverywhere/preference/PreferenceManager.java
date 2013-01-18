@@ -47,7 +47,7 @@ public class PreferenceManager {
     private static final String TAG = "PreferenceManager";
 
     public static SharedPreferences getDefaultSharedPreferences(Context context) {
-        return getDefaultSharedPreferences(context, Application.config().getPreferenceImpl());
+        return getDefaultSharedPreferences(context, Application.config().preferenceImpl.getValue());
     }
 
     public static SharedPreferences getDefaultSharedPreferences(Context context,
@@ -66,9 +66,9 @@ public class PreferenceManager {
 
     public static String makeNameById(int id) {
         if (id > 0) {
-            if (Application.config().getStringedNamePreferences()) {
-                return "preference_"
-                        + Application.getLastInstance().getResources().getResourceName(id);
+            if (Application.config().namedPreferences.getValue()) {
+                return "id_"
+                        + Application.getLastInstance().getResources().getResourceEntryName(id);
             } else {
                 return "preference_0x" + Integer.toHexString(id);
             }
@@ -118,7 +118,7 @@ public class PreferenceManager {
 
     public static SharedPreferences wrap(Context context, String name, int mode) {
         return PreferenceManager.wrap(context, Application.config()
-                .getPreferenceImpl(), name, mode);
+                .preferenceImpl.getValue(), name, mode);
     }
 
     private Activity mActivity;
@@ -126,27 +126,16 @@ public class PreferenceManager {
     private List<OnActivityResultListener> mActivityResultListeners;
     private List<OnActivityStopListener> mActivityStopListeners;
     private Context mContext;
-
     private SharedPreferences.Editor mEditor;
-
     private PreferenceFragment mFragment;
-
     private long mNextId = 0;
-
     private int mNextRequestCode;
-
     private boolean mNoCommit;
-
     private OnPreferenceTreeClickListener mOnPreferenceTreeClickListener;
-
     private PreferenceScreen mPreferenceScreen;
-
     private List<DialogInterface> mPreferencesScreens;
-
     private SharedPreferences mSharedPreferences;
-
     private int mSharedPreferencesMode;
-
     private String mSharedPreferencesName;
 
     PreferenceManager(Activity activity, int firstRequestCode) {

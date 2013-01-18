@@ -69,7 +69,7 @@ public final class ContextMenuDecorView extends FrameLayout {
 
     public static View prepareDecorView(Context context, View v,
             ContextMenuListener listener, int decorViewId) {
-        if (v != null && !Application.config().isDisableContextMenu()) {
+        if (v != null && !Application.config().disableContextMenu.getValue()) {
             v = new ContextMenuDecorView(context, v, listener);
             if (decorViewId > 0) {
                 v.setId(decorViewId);
@@ -100,7 +100,7 @@ public final class ContextMenuDecorView extends FrameLayout {
 
     @Override
     public boolean showContextMenuForChild(View originalView) {
-        if (Application.config().isDisableContextMenu()) {
+        if (Application.config().disableContextMenu.getValue()) {
             return super.showContextMenuForChild(originalView);
         }
         if (contextMenu == null) {

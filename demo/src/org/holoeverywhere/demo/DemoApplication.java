@@ -11,7 +11,8 @@ import org.holoeverywhere.demo.widget.WidgetContainer;
 
 public class DemoApplication extends Application {
     static {
-        config().setDebugMode(true).setPreferenceImpl(PreferenceImpl.JSON);
+        config().debugMode.setValue(true);
+        config().preferenceImpl.setValue(PreferenceImpl.JSON);
         LayoutInflater.remap(WidgetContainer.class);
         LayoutInflater.remap(DemoListRowView.class);
         LayoutInflater.remap(DemoThemePicker.class);

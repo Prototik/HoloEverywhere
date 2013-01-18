@@ -30,8 +30,9 @@ public class Application extends android.app.Application implements
         private static void onStateChange(Config config) {
             String p = config.holoEverywherePackage.getValue();
             if (p != null && p.length() > 0) {
-                config.setWidgetsPackage(p + ".widget");
-                config.setPreferencePackage(p + ".preference");
+                config.holoEverywherePackage.setValue(p + ".widget");
+                config.preferencePackage.setValue(p + ".preference");
+                config.addonsPackage.setValue(p + ".addon");
             }
         }
 
@@ -53,24 +54,26 @@ public class Application extends android.app.Application implements
             }
 
         };
-        @SettingProperty(create = true, defaultBoolean = false)
-        private BooleanProperty alwaysUseParentTheme;
-        @SettingProperty(create = true, defaultBoolean = false)
-        private BooleanProperty debugMode;
         @SettingProperty(create = true)
-        private BooleanProperty disableContextMenu;
+        public StringProperty addonsPackage;
+        @SettingProperty(create = true, defaultBoolean = false)
+        public BooleanProperty alwaysUseParentTheme;
+        @SettingProperty(create = true, defaultBoolean = false)
+        public BooleanProperty debugMode;
+        @SettingProperty(create = true)
+        public BooleanProperty disableContextMenu;
         @SettingProperty(create = true, defaultBoolean = true)
-        private BooleanProperty disableOverscrollEffects;
+        public BooleanProperty disableOverscrollEffects;
         @SettingProperty(create = true, defaultString = Config.HOLO_EVERYWHERE_PACKAGE)
-        private StringProperty holoEverywherePackage;
-        @SettingProperty(create = true, defaultEnum = "XML", enumClass = PreferenceImpl.class)
-        private EnumProperty<PreferenceImpl> preferenceImpl;
-        @SettingProperty(create = true)
-        private StringProperty preferencePackage;
+        public StringProperty holoEverywherePackage;
         @SettingProperty(create = true, defaultBoolean = true)
-        private BooleanProperty stringedNamePreferences;
+        public BooleanProperty namedPreferences;
+        @SettingProperty(create = true, defaultEnum = "XML", enumClass = PreferenceImpl.class)
+        public EnumProperty<PreferenceImpl> preferenceImpl;
         @SettingProperty(create = true)
-        private StringProperty widgetsPackage;
+        public StringProperty preferencePackage;
+        @SettingProperty(create = true)
+        public StringProperty widgetsPackage;
 
         public Config attachDefaultListener() {
             return addListener(_DEFAULT_SETTINGS_LISTENER);
@@ -80,108 +83,9 @@ public class Application extends android.app.Application implements
             return removeListener(_DEFAULT_SETTINGS_LISTENER);
         }
 
-        public String getHoloEverywherePackage() {
-            return holoEverywherePackage.getValue();
-        }
-
-        public PreferenceImpl getPreferenceImpl() {
-            return preferenceImpl.getValue();
-        }
-
-        public String getPreferencePackage() {
-            return preferencePackage.getValue();
-        }
-
-        public boolean getStringedNamePreferences() {
-            return stringedNamePreferences.getValue();
-        }
-
-        public String getWidgetsPackage() {
-            return widgetsPackage.getValue();
-        }
-
-        public boolean isAlwaysUseParentTheme() {
-            return alwaysUseParentTheme.getValue();
-        }
-
-        public boolean isDebugMode() {
-            return debugMode.getValue();
-        }
-
-        public boolean isDisableContextMenu() {
-            return disableContextMenu.getValue();
-        }
-
-        public boolean isDisableOverscrollEffects() {
-            return disableOverscrollEffects.getValue();
-        }
-
-        /**
-         * @deprecated This property always true
-         */
-        @Deprecated
-        public boolean isUseThemeManager() {
-            return true;
-        }
-
         @Override
         protected void onInit() {
             attachDefaultListener();
-        }
-
-        public Config setAlwaysUseParentTheme(boolean alwaysUseParentTheme) {
-            this.alwaysUseParentTheme.setValue(alwaysUseParentTheme);
-            return this;
-        }
-
-        public Config setDebugMode(boolean debugMode) {
-            this.debugMode.setValue(debugMode);
-            return this;
-        }
-
-        public Config setDisableContextMenu(boolean disableContextMenu) {
-            this.disableContextMenu.setValue(disableContextMenu);
-            return this;
-        }
-
-        public Config setDisableOverscrollEffects(boolean disableOverscrollEffects) {
-            this.disableOverscrollEffects.setValue(disableOverscrollEffects);
-            return this;
-        }
-
-        public Config setHoloEverywherePackage(String holoEverywherePackage) {
-            this.holoEverywherePackage.setValue(holoEverywherePackage);
-            return this;
-        }
-
-        public Config setPreferenceImpl(PreferenceImpl preferenceImpl) {
-            this.preferenceImpl.setValue(preferenceImpl);
-            return this;
-        }
-
-        public Config setPreferencePackage(String preferencePackage) {
-            this.preferencePackage.setValue(preferencePackage);
-            return this;
-        }
-
-        public void setStringedNamePreferences(boolean stringedNamePreferences) {
-            this.stringedNamePreferences.setValue(stringedNamePreferences);
-        }
-
-        /**
-         * @deprecated This property always true
-         */
-        @Deprecated
-        public Config setUseThemeManager(boolean useThemeManager) {
-            if (!useThemeManager) {
-                throw new RuntimeException("This property always true");
-            }
-            return this;
-        }
-
-        public Config setWidgetsPackage(String widgetsPackage) {
-            this.widgetsPackage.setValue(widgetsPackage);
-            return this;
         }
     }
 
@@ -189,8 +93,8 @@ public class Application extends android.app.Application implements
 
     static {
         SystemServiceManager.register(LayoutInflaterCreator.class);
-        config().setDisableContextMenu(VERSION.SDK_INT >= 14);
-        config().setDisableOverscrollEffects(VERSION.SDK_INT <= 10);
+        config().disableContextMenu.setValue(VERSION.SDK_INT >= 14);
+        config().disableOverscrollEffects.setValue(VERSION.SDK_INT <= 10);
     }
 
     public static Config config() {
@@ -202,7 +106,7 @@ public class Application extends android.app.Application implements
     }
 
     public static boolean isDebugMode() {
-        return Application.config().isDebugMode();
+        return Application.config().debugMode.getValue();
     }
 
     public Application() {
@@ -272,7 +176,7 @@ public class Application extends android.app.Application implements
 
     @Override
     public void startActivity(Intent intent, Bundle options) {
-        if (config().isAlwaysUseParentTheme()) {
+        if (config().alwaysUseParentTheme.getValue()) {
             ThemeManager.startActivity(this, intent, options);
         } else {
             superStartActivity(intent, -1, options);

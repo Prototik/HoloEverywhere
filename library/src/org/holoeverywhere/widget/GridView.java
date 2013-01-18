@@ -137,7 +137,7 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         if (context instanceof Activity) {
             setActivity((Activity) context);
         }
-        if (Application.config().isDisableOverscrollEffects() && VERSION.SDK_INT >= 9) {
+        if (Application.config().disableOverscrollEffects.getValue() && VERSION.SDK_INT >= 9) {
             setOverScrollMode(OVER_SCROLL_NEVER);
         }
 

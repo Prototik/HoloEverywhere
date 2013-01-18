@@ -473,7 +473,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     @Override
     public void startActivityForResult(Intent intent, int requestCode,
             Bundle options) {
-        if (getConfig().isAlwaysUseParentTheme()) {
+        if (getConfig().alwaysUseParentTheme.getValue()) {
             ThemeManager.startActivity(this, intent, requestCode, options);
         } else {
             superStartActivity(intent, requestCode, options);

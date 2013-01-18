@@ -3,6 +3,7 @@
 	<name>HoloEverywhere Addons</name>
 	<comment></comment>
 	<projects>
+		<project>HoloEverywhere Addon ExtPreferences</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -4,6 +4,8 @@
 	<comment></comment>
 	<projects>
 		<project>HoloEverywhere ABS</project>
+		<project>HoloEverywhere Addon ExtPreferences</project>
+		<project>HoloEverywhere Addons</project>
 		<project>HoloEverywhere Builder</project>
 		<project>HoloEverywhere Demo</project>
 		<project>HoloEverywhere Library</project>

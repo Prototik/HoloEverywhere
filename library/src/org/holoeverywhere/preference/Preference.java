@@ -135,7 +135,7 @@ public class Preference implements Comparable<Preference>,
                 R.styleable.Preference_shouldDisableView, mShouldDisableView);
         a.recycle();
         if (!getClass().getName().startsWith(
-                Application.config().getPreferencePackage())) {
+                Application.config().preferencePackage.getValue())) {
             mHasSpecifiedLayout = true;
         }
     }
@@ -927,7 +927,7 @@ public class Preference implements Comparable<Preference>,
     public void setResId(int resId) {
         mResId = resId;
         if (TextUtils.isEmpty(mKey) && resId > 0) {
-            mKey = "preference_0x" + Integer.toHexString(mResId);
+            mKey = PreferenceManager.makeNameById(resId);
         }
     }
 
