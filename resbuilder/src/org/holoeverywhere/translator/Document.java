@@ -14,8 +14,15 @@ import org.json.JSONObject;
 public class Document {
     protected final Map<String, Map<String, String>> data = new HashMap<String, Map<String, String>>();
     protected final List<String> grab = new ArrayList<String>();
-    protected String prefix, filenamePattern;
     protected boolean ignoreDefaultLocale;
+    protected String prefix, filenamePattern;
+
+    public String getNameForEntry(String key) {
+        if (prefix == null) {
+            return key;
+        }
+        return prefix + key;
+    }
 
     public synchronized Map<String, Map<String, String>> mergeData(Grabber grabber) {
         Map<String, Map<String, String>> map;
@@ -72,12 +79,5 @@ public class Document {
             }
         }
         return this;
-    }
-
-    public String getNameForEntry(String key) {
-        if (prefix == null) {
-            return key;
-        }
-        return prefix + key;
     }
 }

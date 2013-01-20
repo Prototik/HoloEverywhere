@@ -16,26 +16,36 @@ public class Translator extends AbstractMojo {
         /**
          * @parameter
          */
+        private File includeDir;
+        /**
+         * @parameter
+         */
         private String[] input;
         /**
          * @parameter
          */
         private File outputDir;
-        /**
-         * @parameter
-         */
-        private File includeDir;
+    }
+
+    private static boolean validDir(File file) {
+        return file != null && file.exists() && file.isDirectory();
+    }
+
+    private static boolean validFile(File file) {
+        return file != null && file.exists() && file.isFile();
     }
 
     /**
      * @parameter alias="translator"
      */
     private Config config;
+
     /**
      * @parameter expression="${android.sdk.path}"
      * @required
      */
     private File sdk;
+
     /**
      * @parameter expression="${android.sdk.platform}" default-value="16"
      * @required
@@ -71,14 +81,6 @@ public class Translator extends AbstractMojo {
             Processer.process(document, grabber, config.outputDir);
             getLog().info("");
         }
-    }
-
-    private static boolean validDir(File file) {
-        return file != null && file.exists() && file.isDirectory();
-    }
-
-    private static boolean validFile(File file) {
-        return file != null && file.exists() && file.isFile();
     }
 
 }

@@ -19,15 +19,19 @@ public class Styler extends AbstractMojo {
         /**
          * @parameter
          */
+        private File includeDir;
+        /**
+         * @parameter
+         */
         private String[] input;
         /**
          * @parameter
          */
         private File outputDir;
-        /**
-         * @parameter
-         */
-        private File includeDir;
+    }
+
+    private static boolean validFile(File file) {
+        return file.exists() && file.isFile();
     }
 
     /**
@@ -69,9 +73,5 @@ public class Styler extends AbstractMojo {
         } catch (FileNotFoundException e) {
             getLog().error("Error while processing " + source.getCanonicalPath(), e);
         }
-    }
-
-    private static boolean validFile(File file) {
-        return file.exists() && file.isFile();
     }
 }
