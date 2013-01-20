@@ -22,7 +22,7 @@
 
 		<dependency>
 			<groupId>org.holoeverywhere</groupId>
-			<artifactId>slidingmenu</artifactId>
+			<artifactId>addon-slidingmenu</artifactId>
 			<version>${project.version}</version>
 			<type>apklib</type>
 		</dependency>
@@ -41,11 +41,13 @@
 		<plugins>
 			<plugin>
 				<groupId>org.holoeverywhere</groupId>
-				<artifactId>translator</artifactId>
+				<artifactId>resbuilder</artifactId>
 				<configuration>
-					<input>
-						<param>strings.json</param>
-					</input>
+					<translator>
+						<input>
+							<file>strings.json</file>
+						</input>
+					</translator>
 				</configuration>
 			</plugin>
 
@@ -61,35 +63,6 @@
 				<inherited>true</inherited>
 			</plugin>
 		</plugins>
-
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.holoeverywhere</groupId>
-										<artifactId>translator</artifactId>
-										<versionRange>[1.4.0,)</versionRange>
-										<goals>
-											<goal>build</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<execute />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 	<profiles>

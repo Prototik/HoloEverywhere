@@ -38,22 +38,19 @@
 		<plugins>
 			<plugin>
 				<groupId>org.holoeverywhere</groupId>
-				<artifactId>builder</artifactId>
+				<artifactId>resbuilder</artifactId>
 				<configuration>
-					<input>
-						<param>styles.json</param>
-						<param>styles-v14.json</param>
-					</input>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.holoeverywhere</groupId>
-				<artifactId>translator</artifactId>
-				<configuration>
-					<input>
-						<param>strings.json</param>
-					</input>
+					<styler>
+						<input>
+							<file>styles.json</file>
+							<file>styles-v14.json</file>
+						</input>
+					</styler>
+					<translator>
+						<input>
+							<file>strings.json</file>
+						</input>
+					</translator>
 				</configuration>
 			</plugin>
 
@@ -68,48 +65,6 @@
 				<inherited>true</inherited>
 			</plugin>
 		</plugins>
-
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.holoeverywhere</groupId>
-										<artifactId>builder</artifactId>
-										<versionRange>[1.4.0,)</versionRange>
-										<goals>
-											<goal>build</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<execute />
-									</action>
-								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.holoeverywhere</groupId>
-										<artifactId>translator</artifactId>
-										<versionRange>[1.4.0,)</versionRange>
-										<goals>
-											<goal>build</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<execute />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 	<profiles>

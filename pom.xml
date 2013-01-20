@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.holoeverywhere</groupId>
@@ -20,11 +21,9 @@
 
 	<modules>
 		<module>addons</module>
-		<module>builder</module>
+		<module>resbuilder</module>
 		<module>demo</module>
 		<module>library</module>
-		<module>slidingmenu</module>
-		<module>translator</module>
 	</modules>
 
 	<scm>
@@ -84,12 +83,10 @@
 		<java.version>1.6</java.version>
 		<abs.version>4.2.0</abs.version>
 		<android.version>4.1.1.4</android.version>
-		<android.platform>16</android.platform>
+		<android.sdk.platform>16</android.sdk.platform>
 
 		<github.downloads.repositoryOwner>ChristopheVersieux</github.downloads.repositoryOwner>
 		<github.downloads.repositoryName>HoloEverywhere</github.downloads.repositoryName>
-
-		<holo.resources>${project.basedir}/resources</holo.resources>
 	</properties>
 
 	<dependencyManagement>
@@ -114,39 +111,27 @@
 			<plugins>
 				<plugin>
 					<groupId>org.holoeverywhere</groupId>
-					<artifactId>builder</artifactId>
+					<artifactId>resbuilder</artifactId>
 					<version>${project.version}</version>
 					<inherited>true</inherited>
 					<executions>
 						<execution>
 							<goals>
-								<goal>build</goal>
+								<goal>translator</goal>
+								<goal>styler</goal>
 							</goals>
 							<phase>initialize</phase>
 						</execution>
 					</executions>
 					<configuration>
-						<outputDir>${project.basedir}/res</outputDir>
-						<includeDir>${holo.resources}</includeDir>
-					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>org.holoeverywhere</groupId>
-					<artifactId>translator</artifactId>
-					<version>${project.version}</version>
-					<inherited>true</inherited>
-					<executions>
-						<execution>
-							<goals>
-								<goal>build</goal>
-							</goals>
-							<phase>initialize</phase>
-						</execution>
-					</executions>
-					<configuration>
-						<outputDir>${project.basedir}/res</outputDir>
-						<includeDir>${holo.resources}</includeDir>
+						<styler>
+							<outputDir>${project.basedir}/res</outputDir>
+							<includeDir>${project.basedir}/resources</includeDir>
+						</styler>
+						<translator>
+							<outputDir>${project.basedir}/res</outputDir>
+							<includeDir>${project.basedir}/resources</includeDir>
+						</translator>
 					</configuration>
 				</plugin>
 
@@ -178,9 +163,6 @@
 					<inherited>true</inherited>
 					<extensions>true</extensions>
 					<configuration>
-						<sdk>
-							<platform>${android.platform}</platform>
-						</sdk>
 						<sign>
 							<debug>false</debug>
 						</sign>
@@ -264,6 +246,32 @@
 							<argument>-digestalg</argument>
 							<argument>SHA1</argument>
 						</arguments>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.holoeverywhere</groupId>
+										<artifactId>resbuilder</artifactId>
+										<versionRange>1.4.3-SNAPSHOT</versionRange>
+										<goals>
+											<goal>translator</goal>
+											<goal>styler</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
 			</plugins>

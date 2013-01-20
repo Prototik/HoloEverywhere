@@ -1,5 +1,5 @@
 
-package org.holoeverywhere.builder;
+package org.holoeverywhere.styler;
 
 import java.io.OutputStream;
 import java.io.StringReader;

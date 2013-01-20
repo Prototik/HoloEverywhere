@@ -17,6 +17,7 @@
 	<description>Addons for HoloEverywhere</description>
 
 	<modules>
+		<module>slidingmenu</module>
 		<module>extpreferences</module>
 	</modules>
 </project>

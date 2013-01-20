@@ -1,5 +1,5 @@
 
-package org.holoeverywhere.builder;
+package org.holoeverywhere.styler;
 
 import java.util.Map;
 

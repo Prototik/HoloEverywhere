@@ -1,5 +1,5 @@
 
-package org.holoeverywhere.builder;
+package org.holoeverywhere.styler;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,34 +11,40 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 /**
- * @goal build
+ * @goal styler
+ * @phase initialize
  */
-public class Builder extends AbstractMojo {
+public class Styler extends AbstractMojo {
+    public static final class Config {
+        /**
+         * @parameter
+         */
+        private String[] input;
+        /**
+         * @parameter
+         */
+        private File outputDir;
+        /**
+         * @parameter
+         */
+        private File includeDir;
+    }
+
     /**
-     * @parameter
+     * @parameter alias="styler"
      */
-    private String[] input;
-    /**
-     * @parameter
-     */
-    private File outputDir;
-    /**
-     * @parameter
-     */
-    private File includeDir;
+    private Config config;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        if (input.length == 0) {
+        if (config == null || config.input == null || config.input.length == 0) {
             getLog().info("Not need to generate resources");
             return;
         }
-        Parser.setSourcePath(includeDir);
+        Parser.setSourcePath(config.includeDir);
         try {
-            getLog().info("");
-            for (String file : input) {
+            for (String file : config.input) {
                 process(file);
-                getLog().info("");
             }
         } catch (IOException e) {
             throw new MojoExecutionException("IOException", e);
@@ -47,7 +53,7 @@ public class Builder extends AbstractMojo {
 
     public void process(String sourceName) throws MojoExecutionException, MojoFailureException,
             IOException {
-        File source = new File(includeDir, sourceName);
+        File source = new File(config.includeDir, sourceName);
         if (!validFile(source)) {
             throw new MojoFailureException("Source " + source.getAbsolutePath() + " doesn't exists");
         }
@@ -56,7 +62,7 @@ public class Builder extends AbstractMojo {
             getLog().warn(source.getCanonicalPath() + " don't has output file, ignore");
             return;
         }
-        File output = new File(outputDir, document.output);
+        File output = new File(config.outputDir, document.output);
         getLog().info("Compile " + source.getName() + " => " + output.getCanonicalPath());
         try {
             Processer.process(document, new FileOutputStream(output));

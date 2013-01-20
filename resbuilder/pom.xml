@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>slidingmenu</artifactId>
-	<name>HoloEverywhere SlidingMenu</name>
-	<packaging>apklib</packaging>
+	<artifactId>resbuilder</artifactId>
+	<name>HoloEverywhere ResBuilder</name>
+	<packaging>maven-plugin</packaging>
 
 	<parent>
 		<groupId>org.holoeverywhere</groupId>
@@ -16,26 +15,26 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.holoeverywhere</groupId>
-			<artifactId>library</artifactId>
-			<type>apklib</type>
-			<version>${project.version}</version>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
 		</dependency>
-
 		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android</artifactId>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>3.0.4</version>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>test</testSourceDirectory>
-
 		<plugins>
 			<plugin>
-				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-				<artifactId>android-maven-plugin</artifactId>
+				<artifactId>maven-plugin-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<goalPrefix>resbuilder</goalPrefix>
+				</configuration>
 			</plugin>
 
 			<plugin>
