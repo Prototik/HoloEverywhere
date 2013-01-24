@@ -185,7 +185,7 @@ public class LinearLayout extends android.widget.LinearLayout {
         }
         if (a.hasValue(R.styleable.LinearLayout_android_dividerPadding)) {
             mDividerPadding = a.getDimensionPixelSize(
-                    R.styleable.LinearLayout_dividerPadding, 0);
+                    R.styleable.LinearLayout_android_dividerPadding, 0);
         } else {
             mDividerPadding = a.getDimensionPixelSize(
                     R.styleable.LinearLayout_dividerPadding, 0);

@@ -2,14 +2,4 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/content"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent" >
-	<FrameLayout
-		android:id="@+id/content"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent" />
-	<View
-		android:id="@+id/bottom"
-		android:layout_width="match_parent"
-		android:layout_height="1dp"
-		android:layout_gravity="bottom" />
-</FrameLayout>
+	android:layout_height="match_parent" />

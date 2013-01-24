@@ -14,6 +14,7 @@ import org.holoeverywhere.demo.widget.DemoListRowView;
 import org.holoeverywhere.widget.ListView;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.slidingmenu.lib.SlidingMenu;
 
 public class DemoActivity extends Activity {
     private final class NavigationAdapter extends DemoAdapter implements
@@ -80,13 +82,24 @@ public class DemoActivity extends Activity {
             }
             replaceFragment(Fragment.instantiate(clazz));
             fm.executePendingTransactions();
-            requireSlidingMenu().showContent();
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    requireSlidingMenu().showContent();
+                }
+            }, 100);
         }
     }
 
-    private static final String PAGE = "page";
-    private View bottom;
+    public void postDelayed(Runnable runnable, long delay) {
+        if (handler == null) {
+            handler = new Handler(getMainLooper());
+        }
+        handler.postDelayed(runnable, delay);
+    }
 
+    private Handler handler;
+    private static final String PAGE = "page";
     private NavigationAdapter navigationAdapter;
 
     private int computeMenuWidth() {
@@ -94,12 +107,11 @@ public class DemoActivity extends Activity {
                 getResources().getDisplayMetrics().widthPixels, 1);
     }
 
-    public View getAnchorForPopup() {
-        return bottom;
+    private View makeMenuView(Bundle savedInstanceState) {
+        return prepareMenuView(getLayoutInflater().inflate(R.layout.menu), savedInstanceState);
     }
 
-    private View makeMenuView(Bundle savedInstanceState) {
-        View view = getLayoutInflater().inflate(R.layout.menu);
+    private View prepareMenuView(View view, Bundle savedInstanceState) {
         navigationAdapter = new NavigationAdapter();
         navigationAdapter.add(MainFragment.class, R.string.demo);
         navigationAdapter.add(SettingsFragment.class, R.string.settings);
@@ -127,12 +139,26 @@ public class DemoActivity extends Activity {
         ab.setTitle(R.string.library_name);
         ab.setDisplayHomeAsUpEnabled(true);
 
-        final SlidingMenuA sm = requireSlidingMenu();
-        sm.setContent(R.layout.content);
-        sm.setBehindContentView(makeMenuView(savedInstanceState));
-        sm.getSlidingMenu().setBehindWidth(computeMenuWidth());
+        setContentView(R.layout.content);
 
-        bottom = findViewById(R.id.bottom);
+        final SlidingMenuA addonSM = requireSlidingMenu();
+        final SlidingMenu sm = addonSM.getSlidingMenu();
+
+        View menu = findViewById(R.id.menu);
+        if (menu == null) {
+            // Phone
+            addonSM.setBehindContentView(makeMenuView(savedInstanceState));
+            sm.setBehindWidth(computeMenuWidth());
+            sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+            sm.setSlidingEnabled(true);
+        } else {
+            // Tablet
+            addonSM.setBehindContentView(new View(this)); // dummy view
+            sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+            sm.setSlidingEnabled(false);
+            
+            prepareMenuView(menu, savedInstanceState);
+        }
     }
 
     @Override

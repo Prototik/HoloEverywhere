@@ -1,6 +1,8 @@
 
 package org.holoeverywhere;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -75,7 +77,7 @@ public final class FontLoader {
         }
     }
 
-    private static final SparseArray<Typeface> fontArray = new SparseArray<Typeface>();
+    private static final SparseArray<Typeface> FONT_CACHE = new SparseArray<Typeface>();
     private static final String TAG = "FontLoader";
 
     public static <T extends View> T apply(T view) {
@@ -175,7 +177,7 @@ public final class FontLoader {
     }
 
     public static Typeface loadTypeface(Context context, int font) {
-        Typeface typeface = FontLoader.fontArray.get(font);
+        Typeface typeface = FontLoader.FONT_CACHE.get(font);
         if (typeface == null) {
             try {
                 File file = new File(context.getApplicationInfo().dataDir
@@ -188,17 +190,22 @@ public final class FontLoader {
                     file.delete();
                 }
                 Resources res = context.getResources();
-                InputStream is = res.openRawResource(font);
-                OutputStream os = new FileOutputStream(file);
-                byte[] buffer = new byte[8192];
+                InputStream is = new BufferedInputStream(res.openRawResource(font));
+                OutputStream os = new ByteArrayOutputStream(Math.max(is.available(), 1024));
+                byte[] buffer = new byte[1024];
                 int read;
                 while ((read = is.read(buffer)) > 0) {
                     os.write(buffer, 0, read);
                 }
+                is.close();
+                os.flush();
+                buffer = ((ByteArrayOutputStream) os).toByteArray();
+                os.close();
+                os = new FileOutputStream(file);
+                os.write(buffer);
                 os.flush();
                 os.close();
-                is.close();
-                FontLoader.fontArray.put(font, typeface = Typeface.createFromFile(file));
+                FontLoader.FONT_CACHE.put(font, typeface = Typeface.createFromFile(file));
             } catch (Exception e) {
                 Log.e(FontLoader.TAG, "Error of loading font", e);
             }
