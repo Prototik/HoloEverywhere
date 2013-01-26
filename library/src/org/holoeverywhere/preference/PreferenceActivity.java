@@ -1,4 +1,3 @@
-
 package org.holoeverywhere.preference;
 
 import java.io.IOException;
@@ -876,7 +875,7 @@ public abstract class PreferenceActivity extends ListActivity implements
 
     public void showBreadCrumbs(CharSequence title, CharSequence shortTitle) {
         if (mFragmentBreadCrumbs == null) {
-            View crumbs = findViewById(android.R.id.title);
+            View crumbs = findViewById(R.id.title);
             try {
                 mFragmentBreadCrumbs = (FragmentBreadCrumbs) crumbs;
             } catch (ClassCastException e) {
