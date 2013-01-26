@@ -50,6 +50,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
+import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 import com.actionbarsherlock.internal.view.menu.ExpandedMenuView;
 import com.actionbarsherlock.internal.view.menu.HoloListMenuItemView;
 import com.actionbarsherlock.internal.widget.ActionBarContainer;
@@ -297,6 +299,12 @@ public class LayoutInflater extends android.view.LayoutInflater implements
         if (LayoutInflater.listener != null) {
             LayoutInflater.listener.onInitInflater(this);
         }
+    }
+
+    public ContextMenuDecorView makeDecorView(int layout, ContextMenuListener listener) {
+        ContextMenuDecorView view = new ContextMenuDecorView(getContext(), listener);
+        inflate(layout, view, true);
+        return view;
     }
 
     @Override

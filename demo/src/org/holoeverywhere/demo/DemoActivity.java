@@ -111,6 +111,12 @@ public class DemoActivity extends Activity {
         return prepareMenuView(getLayoutInflater().inflate(R.layout.menu), savedInstanceState);
     }
 
+    protected Holo onCreateConfig(Bundle savedInstanceState) {
+        Holo config = super.onCreateConfig(savedInstanceState);
+        config.requireSlidingMenu = true;
+        return config;
+    }
+
     private View prepareMenuView(View view, Bundle savedInstanceState) {
         navigationAdapter = new NavigationAdapter();
         navigationAdapter.add(MainFragment.class, R.string.demo);
@@ -127,10 +133,6 @@ public class DemoActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Holo config = Holo.defaultConfig();
-        config.requireSlidingMenu = true;
-        init(config);
-
         super.onCreate(savedInstanceState);
 
         PlaybackService.onCreate();
@@ -156,7 +158,7 @@ public class DemoActivity extends Activity {
             addonSM.setBehindContentView(new View(this)); // dummy view
             sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
             sm.setSlidingEnabled(false);
-            
+
             prepareMenuView(menu, savedInstanceState);
         }
     }

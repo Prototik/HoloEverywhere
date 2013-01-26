@@ -26,6 +26,8 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Build.VERSION;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -48,30 +50,73 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class _HoloActivity extends Watson implements IHoloActivity {
-    public static class Holo {
+    public static class Holo implements Parcelable {
+        public static final Parcelable.Creator<Holo> CREATOR = new Creator<Holo>() {
+            @Override
+            public Holo createFromParcel(Parcel source) {
+                try {
+                    @SuppressWarnings("unchecked")
+                    Class<? extends Holo> clazz = (Class<? extends Holo>) Class.forName(source
+                            .readString());
+                    Holo holo = clazz.newInstance();
+                    holo.createFromParcel(source);
+                    return holo;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            @Override
+            public Holo[] newArray(int size) {
+                return new Holo[size];
+            }
+        };
+
         public static Holo defaultConfig() {
             return new Holo();
         }
 
-        public static Holo wrap(Holo holo) {
-            return defaultConfig().onWrap(holo);
-        }
-
         public boolean addFactoryToInflater = true;
+        public boolean applyImmediately = false;
         public boolean forceThemeApply = false;
         public boolean ignoreThemeCheck = false;
-        public int layout = -1;
         public boolean requireSherlock = true;
         public boolean requireSlidingMenu = false;
 
-        protected Holo onWrap(Holo holo) {
+        protected Holo copy(Holo holo) {
             addFactoryToInflater = holo.addFactoryToInflater;
             forceThemeApply = holo.forceThemeApply;
             ignoreThemeCheck = holo.ignoreThemeCheck;
-            layout = holo.layout;
             requireSherlock = holo.requireSherlock;
             requireSlidingMenu = holo.requireSlidingMenu;
+            applyImmediately = holo.applyImmediately;
             return this;
+        }
+
+        protected void createFromParcel(Parcel source) {
+            addFactoryToInflater = source.readInt() == 1;
+            forceThemeApply = source.readInt() == 1;
+            ignoreThemeCheck = source.readInt() == 1;
+            requireSherlock = source.readInt() == 1;
+            requireSlidingMenu = source.readInt() == 1;
+            applyImmediately = source.readInt() == 1;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(getClass().getName());
+            dest.writeInt(addFactoryToInflater ? 1 : 0);
+            dest.writeInt(forceThemeApply ? 1 : 0);
+            dest.writeInt(ignoreThemeCheck ? 1 : 0);
+            dest.writeInt(requireSherlock ? 1 : 0);
+            dest.writeInt(requireSlidingMenu ? 1 : 0);
+            dest.writeInt(applyImmediately ? 1 : 0);
         }
     }
 
@@ -223,6 +268,9 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
 
     protected void init(Holo config) {
         this.config = config;
+        if (this.config.applyImmediately) {
+            onInit(this.config, null);
+        }
     }
 
     @Override
@@ -289,10 +337,12 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        onPreInit();
-        onInit(config);
+        onInit(config, savedInstanceState);
         super.onCreate(savedInstanceState);
-        onPostInit(config);
+    }
+
+    protected Holo onCreateConfig(Bundle savedInstanceState) {
+        return Holo.defaultConfig();
     }
 
     @Override
@@ -331,7 +381,17 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         LayoutInflater.onDestroy(this);
     }
 
-    protected void onInit(Holo config) {
+    protected void onInit(Holo config, Bundle savedInstanceState) {
+        if (wasInited) {
+            return;
+        }
+        wasInited = true;
+        if (config == null) {
+            config = onCreateConfig(savedInstanceState);
+        }
+        if (config == null) {
+            config = Holo.defaultConfig();
+        }
         if (config.addFactoryToInflater) {
             getLayoutInflater().setFactory(this);
         }
@@ -361,6 +421,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
                 throw new HoloThemeException(this);
             }
         }
+        onPostInit(config, savedInstanceState);
     }
 
     @Override
@@ -368,21 +429,8 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         return false;
     }
 
-    protected void onPostInit(Holo config) {
-        final int layout = config.layout;
-        if (layout > 0) {
-            setContentView(layout);
-        }
-    }
+    protected void onPostInit(Holo config, Bundle savedInstanceState) {
 
-    protected void onPreInit() {
-        if (wasInited) {
-            return;
-        }
-        wasInited = true;
-        if (config == null) {
-            config = Holo.defaultConfig();
-        }
     }
 
     @Override
@@ -414,6 +462,9 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
 
     @Override
     public View prepareDecorView(View v) {
+        if (v instanceof ContextMenuDecorView) {
+            return v;
+        }
         return ContextMenuDecorView.prepareDecorView(this, v, this, 0);
     }
 

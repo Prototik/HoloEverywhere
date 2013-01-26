@@ -81,21 +81,30 @@ public final class ContextMenuDecorView extends FrameLayout {
     private ContextMenuBuilder contextMenu;
     private final InternalWrapper listener;
     private MenuDialogHelper menuDialogHelper;
-    private final View view;
 
-    public ContextMenuDecorView(Context context, View view,
+    public ContextMenuDecorView(Context context,
             ContextMenuListener listener) {
         super(context);
         this.listener = new InternalWrapper(listener);
-        if (view != null) {
-            ViewParent parent = view.getParent();
-            if (parent != null && parent instanceof ViewGroup) {
-                ((ViewGroup) parent).removeView(view);
-            }
-            addView(view, android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                    android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+    public ContextMenuDecorView(Context context, View view,
+            ContextMenuListener listener) {
+        this(context, listener);
+        attachView(view);
+    }
+
+    public synchronized void attachView(View view) {
+        if (view == null) {
+            throw new NullPointerException("View cannot be null");
         }
-        this.view = view;
+        ViewParent parent = view.getParent();
+        if (parent != null && parent instanceof ViewGroup) {
+            ((ViewGroup) parent).removeView(view);
+        }
+        removeAllViews();
+        addView(view, android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
     @Override
@@ -120,6 +129,6 @@ public final class ContextMenuDecorView extends FrameLayout {
     }
 
     public View unwrap() {
-        return view;
+        return getChildCount() > 0 ? getChildAt(0) : null;
     }
 }

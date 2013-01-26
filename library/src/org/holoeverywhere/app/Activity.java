@@ -344,7 +344,7 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     public void setContentView(int layoutResId) {
-        setContentView(getLayoutInflater().inflate(layoutResId));
+        setContentView(getLayoutInflater().makeDecorView(layoutResId, this));
     }
 
     @Override
