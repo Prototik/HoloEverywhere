@@ -16,6 +16,7 @@ import org.holoeverywhere.widget.ListView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
 
-public class DemoActivity extends Activity {
+public class DemoActivity extends Activity implements OnBackStackChangedListener {
     private final class NavigationAdapter extends DemoAdapter implements
             OnItemClickListener {
         private int lastSelection = -1;
@@ -91,15 +92,10 @@ public class DemoActivity extends Activity {
         }
     }
 
-    public void postDelayed(Runnable runnable, long delay) {
-        if (handler == null) {
-            handler = new Handler(getMainLooper());
-        }
-        handler.postDelayed(runnable, delay);
-    }
+    private static final String PAGE = "page";
 
     private Handler handler;
-    private static final String PAGE = "page";
+    private boolean mHasSlidingMenu;
     private NavigationAdapter navigationAdapter;
 
     private int computeMenuWidth() {
@@ -111,24 +107,16 @@ public class DemoActivity extends Activity {
         return prepareMenuView(getLayoutInflater().inflate(R.layout.menu), savedInstanceState);
     }
 
-    protected Holo onCreateConfig(Bundle savedInstanceState) {
-        Holo config = super.onCreateConfig(savedInstanceState);
-        config.requireSlidingMenu = true;
-        return config;
-    }
-
-    private View prepareMenuView(View view, Bundle savedInstanceState) {
-        navigationAdapter = new NavigationAdapter();
-        navigationAdapter.add(MainFragment.class, R.string.demo);
-        navigationAdapter.add(SettingsFragment.class, R.string.settings);
-        navigationAdapter.add(OtherFragment.class, R.string.other);
-        navigationAdapter.add(AboutFragment.class, R.string.about);
-        navigationAdapter.onItemSelected(getIntent().getIntExtra(PAGE, 0),
-                savedInstanceState == null);
-        ListView list = (ListView) view.findViewById(R.id.list);
-        list.setAdapter(navigationAdapter);
-        list.setOnItemClickListener(navigationAdapter);
-        return view;
+    @Override
+    public void onBackStackChanged() {
+        if (mHasSlidingMenu) {
+            // On phone home as up should be enable
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        } else {
+            // On tablet only when have back stack record
+            getSupportActionBar().setDisplayHomeAsUpEnabled(
+                    getSupportFragmentManager().getBackStackEntryCount() > 0);
+        }
     }
 
     @Override
@@ -139,7 +127,6 @@ public class DemoActivity extends Activity {
 
         final ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.library_name);
-        ab.setDisplayHomeAsUpEnabled(true);
 
         setContentView(R.layout.content);
 
@@ -149,18 +136,29 @@ public class DemoActivity extends Activity {
         View menu = findViewById(R.id.menu);
         if (menu == null) {
             // Phone
+            mHasSlidingMenu = true;
             addonSM.setBehindContentView(makeMenuView(savedInstanceState));
             sm.setBehindWidth(computeMenuWidth());
             sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
             sm.setSlidingEnabled(true);
         } else {
             // Tablet
+            mHasSlidingMenu = false;
             addonSM.setBehindContentView(new View(this)); // dummy view
             sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
             sm.setSlidingEnabled(false);
-
             prepareMenuView(menu, savedInstanceState);
         }
+
+        getSupportFragmentManager().addOnBackStackChangedListener(this);
+        onBackStackChanged();
+    }
+
+    @Override
+    protected Holo onCreateConfig(Bundle savedInstanceState) {
+        Holo config = super.onCreateConfig(savedInstanceState);
+        config.requireSlidingMenu = true;
+        return config;
     }
 
     @Override
@@ -180,7 +178,11 @@ public class DemoActivity extends Activity {
                 supportInvalidateOptionsMenu();
                 break;
             case android.R.id.home:
-                requireSlidingMenu().toggle();
+                if (mHasSlidingMenu) {
+                    requireSlidingMenu().toggle();
+                } else {
+                    onBackPressed();
+                }
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -204,6 +206,27 @@ public class DemoActivity extends Activity {
     protected void onResume() {
         super.onResume();
         PlaybackService.onResume(this);
+    }
+
+    public void postDelayed(Runnable runnable, long delay) {
+        if (handler == null) {
+            handler = new Handler(getMainLooper());
+        }
+        handler.postDelayed(runnable, delay);
+    }
+
+    private View prepareMenuView(View view, Bundle savedInstanceState) {
+        navigationAdapter = new NavigationAdapter();
+        navigationAdapter.add(MainFragment.class, R.string.demo);
+        navigationAdapter.add(SettingsFragment.class, R.string.settings);
+        navigationAdapter.add(OtherFragment.class, R.string.other);
+        navigationAdapter.add(AboutFragment.class, R.string.about);
+        navigationAdapter.onItemSelected(getIntent().getIntExtra(PAGE, 0),
+                savedInstanceState == null);
+        ListView list = (ListView) view.findViewById(R.id.list);
+        list.setAdapter(navigationAdapter);
+        list.setOnItemClickListener(navigationAdapter);
+        return view;
     }
 
     public void replaceFragment(Fragment fragment) {

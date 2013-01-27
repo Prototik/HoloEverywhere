@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:holo="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:orientation="horizontal" >
+	android:divider="?dividerHorizontal"
+	android:orientation="horizontal"
+	holo:showDividers="middle" >
 	<include
 		android:id="@+id/menu"
 		android:layout_width="240dp"
 		android:layout_height="match_parent"
-		android:layout_marginRight="6dp"
 		layout="@layout/menu" />
 	<FrameLayout
 		android:id="@+id/content"
