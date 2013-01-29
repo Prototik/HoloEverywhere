@@ -5,6 +5,7 @@ import org.holoeverywhere.app.Application;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -92,6 +93,16 @@ public final class ContextMenuDecorView extends FrameLayout {
             ContextMenuListener listener) {
         this(context, listener);
         attachView(view);
+    }
+
+    @Override
+    public void addView(View child) {
+        LayoutParams params = (LayoutParams) child.getLayoutParams();
+        if (params == null) {
+            params = generateDefaultLayoutParams();
+        }
+        params.gravity = Gravity.CENTER;
+        addView(child, params);
     }
 
     public synchronized void attachView(View view) {
