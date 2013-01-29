@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 public class MainActivity extends Activity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.Holo_Theme_Light);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         findViewById(R.id.button).setOnClickListener(this);
