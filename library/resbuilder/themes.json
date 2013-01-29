@@ -1,4 +1,4 @@
-{
+{"styles":{
     "blocks": {
         "Holo": {
             "android:divider": "?android:listDivider", 
@@ -76,4 +76,4 @@
             "name": "textcolors.json"
         }
     ]
-}
+}}

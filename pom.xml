@@ -117,21 +117,13 @@
 					<executions>
 						<execution>
 							<goals>
-								<goal>translator</goal>
-								<goal>styler</goal>
+								<goal>build</goal>
 							</goals>
-							<phase>initialize</phase>
 						</execution>
 					</executions>
 					<configuration>
-						<styler>
-							<outputDir>${project.basedir}/res</outputDir>
-							<includeDir>${project.basedir}/resources</includeDir>
-						</styler>
-						<translator>
-							<outputDir>${project.basedir}/res</outputDir>
-							<includeDir>${project.basedir}/resources</includeDir>
-						</translator>
+						<buildAll>true</buildAll>
+						<verbose>false</verbose>
 					</configuration>
 				</plugin>
 

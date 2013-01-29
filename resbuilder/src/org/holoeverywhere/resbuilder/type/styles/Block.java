@@ -1,9 +1,7 @@
 
-package org.holoeverywhere.styler;
+package org.holoeverywhere.resbuilder.type.styles;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -14,22 +12,15 @@ import java.util.TreeMap;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import org.holoeverywhere.resbuilder.type.strings.TypeStrings;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Block implements Parseable<JSONObject, Block> {
-    private static final Comparator<String> COMPARATOR = new Comparator<String>() {
-        @Override
-        public int compare(String o1, String o2) {
-            return o1.compareTo(o2);
-        }
-    };
-    public Map<String, String> data = new HashMap<String, String>();
+public class Block {
+    public Map<String, String> data = new TreeMap<String, String>(TypeStrings.COMPARATOR);
     public List<String> include = new ArrayList<String>();
-
     public String parent;
 
-    @Override
     @SuppressWarnings("unchecked")
     public Block parse(JSONObject data) {
         parent = null;
@@ -72,7 +63,7 @@ public class Block implements Parseable<JSONObject, Block> {
                 writer.writeComment(" Block not found: " + i + " ");
             }
         }
-        SortedMap<String, String> data = new TreeMap<String, String>(COMPARATOR);
+        SortedMap<String, String> data = new TreeMap<String, String>(TypeStrings.COMPARATOR);
         data.putAll(this.data);
         for (Entry<String, String> entry : data.entrySet()) {
             writer.writeStartElement("item");

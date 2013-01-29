@@ -1,4 +1,4 @@
-{
+{"styles":{
     "blocks": {
         "Fullscreen": {
             "android:windowContentOverlay": "@null", 
@@ -23,4 +23,4 @@
             "name": "widgets.json"
         }
     ]
-}
+}}

@@ -1,4 +1,4 @@
-{
+{"styles":{
     "blocks": {
         "ColorsDark": {
             "android:textColor": "@color/primary_text_holo_dark", 
@@ -668,4 +668,4 @@
             "internalLayout": "@layout/time_picker_holo"
         }
     }
-}
+}}

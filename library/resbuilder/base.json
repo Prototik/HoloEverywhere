@@ -1,4 +1,4 @@
-{
+{"styles":{
     "blocks": {
         "Base": {
             "activatedBackgroundIndicator": "@drawable/activated_background_holo", 
@@ -106,4 +106,4 @@
             "textColorAlertDialogListItem": "@color/primary_text_holo_light"
         }
     }
-}
+}}

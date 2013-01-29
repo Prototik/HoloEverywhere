@@ -42,13 +42,6 @@
 			<plugin>
 				<groupId>org.holoeverywhere</groupId>
 				<artifactId>resbuilder</artifactId>
-				<configuration>
-					<translator>
-						<input>
-							<file>strings.json</file>
-						</input>
-					</translator>
-				</configuration>
 			</plugin>
 
 			<plugin>

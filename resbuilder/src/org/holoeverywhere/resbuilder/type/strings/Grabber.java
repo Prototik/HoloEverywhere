@@ -1,11 +1,12 @@
 
-package org.holoeverywhere.translator;
+package org.holoeverywhere.resbuilder.type.strings;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -18,11 +19,10 @@ public class Grabber {
         return new Grabber(resFolder);
     }
 
-    private final Map<String, Map<String, String>> data = new HashMap<String, Map<String, String>>();
+    private final Map<String, Map<String, String>> data = new TreeMap<String, Map<String, String>>(
+            TypeStrings.COMPARATOR);
     private final Map<String, File> fileMap = new HashMap<String, File>();
-
     private final File resFolder;
-
     public final Map<File, Map<String, String>> translateCache = new HashMap<File, Map<String, String>>();
 
     private Grabber(File resFolder) {
@@ -30,7 +30,7 @@ public class Grabber {
         fillFileMap();
     }
 
-    protected void fillFileMap() {
+    private void fillFileMap() {
         for (File file : resFolder.listFiles()) {
             if (!file.isDirectory()) {
                 continue;
@@ -67,12 +67,12 @@ public class Grabber {
         for (Entry<String, File> entry : fileMap.entrySet()) {
             final String locale = entry.getKey(), translate = grab(name, entry.getValue());
             if (translate != null) {
-                Map<String, String> map = data.get(name);
+                Map<String, String> map = data.get(locale);
                 if (map == null) {
-                    map = new HashMap<String, String>();
-                    data.put(name, map);
+                    map = new TreeMap<String, String>(TypeStrings.COMPARATOR);
+                    data.put(locale, map);
                 }
-                map.put(locale, translate);
+                map.put(name, translate);
             }
         }
     }

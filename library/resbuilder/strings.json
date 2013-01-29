@@ -1,4 +1,4 @@
-{
+{"styles":{
     "data": {
         "time_picker_separator": {
             "en": ":"
@@ -36,4 +36,4 @@
         "ringtone_default", 
         "ringtone_silent"
     ]
-}
+}}

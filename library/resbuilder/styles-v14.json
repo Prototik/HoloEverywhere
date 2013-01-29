@@ -1,4 +1,4 @@
-{
+{"styles":{
     "data": {
         "Holo.Theme": {
             "holoActionBarTheme": "dark", 
@@ -28,4 +28,4 @@
         }
     ], 
     "output": "values-v14/styles.xml"
-}
+}}
