@@ -11,6 +11,8 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -315,9 +317,6 @@ public class ExpandableListView extends ListView {
         }
     }
 
-    /**
-     * Don't used
-     */
     @Override
     void drawDivider(Canvas canvas, Rect bounds, int childIndex) {
         int flatListPosition = childIndex + getFirstVisiblePosition();
@@ -352,9 +351,9 @@ public class ExpandableListView extends ListView {
         if (mOnGroupExpandListener != null) {
             mOnGroupExpandListener.onGroupExpand(groupPos);
         }
-        if (animate) {
+        // TODO Make it works on Eclair
+        if (animate && VERSION.SDK_INT >= VERSION_CODES.FROYO) {
             final int groupFlatPos = pm.position.flatListPos;
-
             final int shiftedGroupPosition = groupFlatPos + getHeaderViewsCount();
             smoothScrollToPosition(shiftedGroupPosition + mAdapter.getChildrenCount(groupPos),
                     shiftedGroupPosition);
@@ -470,11 +469,15 @@ public class ExpandableListView extends ListView {
                 if (mOnGroupExpandListener != null) {
                     mOnGroupExpandListener.onGroupExpand(posMetadata.position.groupPos);
                 }
-                final int groupPos = posMetadata.position.groupPos;
-                final int groupFlatPos = posMetadata.position.flatListPos;
-                final int shiftedGroupPosition = groupFlatPos + getHeaderViewsCount();
-                smoothScrollToPosition(shiftedGroupPosition + mAdapter.getChildrenCount(groupPos),
-                        shiftedGroupPosition);
+                // TODO Make it works on Eclair
+                if (VERSION.SDK_INT >= VERSION_CODES.FROYO) {
+                    final int groupPos = posMetadata.position.groupPos;
+                    final int groupFlatPos = posMetadata.position.flatListPos;
+                    final int shiftedGroupPosition = groupFlatPos + getHeaderViewsCount();
+                    smoothScrollToPosition(
+                            shiftedGroupPosition + mAdapter.getChildrenCount(groupPos),
+                            shiftedGroupPosition);
+                }
             }
             returnValue = true;
         } else {
