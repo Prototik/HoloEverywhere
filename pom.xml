@@ -254,8 +254,7 @@
 										<artifactId>resbuilder</artifactId>
 										<versionRange>1.4.3-SNAPSHOT</versionRange>
 										<goals>
-											<goal>translator</goal>
-											<goal>styler</goal>
+											<goal>build</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>

@@ -517,7 +517,6 @@ public class AlertController {
             lastView = v;
             lastLight = light[pos];
         }
-
         if (lastView != null) {
             if (setView) {
                 lastView.setBackgroundResource(lastLight ? hasButtons ? bottomMedium
@@ -528,7 +527,6 @@ public class AlertController {
                         : fullDark);
             }
         }
-
         if (mListView != null && mAdapter != null) {
             mListView.setAdapter(mAdapter);
             if (mCheckedItem > -1) {

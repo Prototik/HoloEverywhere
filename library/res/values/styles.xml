@@ -16,6 +16,7 @@
         <item name="multiChoiceItemLayout">@layout/select_dialog_multichoice_holo</item>
         <item name="progressLayout">@layout/progress_dialog_holo</item>
         <item name="singleChoiceItemLayout">@layout/select_dialog_singlechoice_holo</item>
+        <item name="topBright">@drawable/dialog_top_holo_dark</item>
         <item name="topDark">@drawable/dialog_top_holo_dark</item>
     </style>
     <style name="Holo.AlertDialog.Light">
@@ -27,6 +28,7 @@
         <item name="centerMedium">@drawable/dialog_middle_holo_light</item>
         <item name="fullBright">@drawable/dialog_full_holo_light</item>
         <item name="fullDark">@drawable/dialog_full_holo_light</item>
+        <item name="topBright">@drawable/dialog_top_holo_light</item>
         <item name="topDark">@drawable/dialog_top_holo_light</item>
     </style>
     <style name="Holo.Animation"/>
