@@ -109,11 +109,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
     @Override
     public void onBackStackChanged() {
-        if (mHasSlidingMenu) {
-            // On phone home as up should be enable
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        } else {
-            // On tablet only when have back stack record
+        if (!mHasSlidingMenu) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(
                     getSupportFragmentManager().getBackStackEntryCount() > 0);
         }
@@ -137,7 +133,9 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         if (menu == null) {
             // Phone
             mHasSlidingMenu = true;
+            ab.setDisplayHomeAsUpEnabled(true);
             addonSM.setBehindContentView(makeMenuView(savedInstanceState));
+            addonSM.setSlidingActionBarEnabled(true);
             sm.setBehindWidth(computeMenuWidth());
             sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
             sm.setSlidingEnabled(true);

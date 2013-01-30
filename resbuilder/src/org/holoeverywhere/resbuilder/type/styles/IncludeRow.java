@@ -47,12 +47,20 @@ public class IncludeRow {
 
     public void process(TypeStyles processer, BuildMojo mojo, Map<String, Block> blocks,
             Map<String, Block> data) throws FileProcesserException {
+        process(processer, mojo, blocks, data, null);
+    }
+
+    public void process(TypeStyles processer, BuildMojo mojo, Map<String, Block> blocks,
+            Map<String, Block> data, IncludeType parentIncludeType) throws FileProcesserException {
         if (blocks == null || data == null) {
             return;
         }
         StylesProcessResult result = mojo.processer.process(name).find(StylesProcessResult.class);
         if (result == null) {
             return;
+        }
+        if (parentIncludeType == IncludeType.ONLY_BLOCKS) {
+            type = IncludeType.ONLY_BLOCKS;
         }
         switch (type) {
             default:
@@ -62,7 +70,7 @@ public class IncludeRow {
                 blocks.putAll(result.blocks);
         }
         for (IncludeRow i : result.include) {
-            i.process(processer, mojo, blocks, data);
+            i.process(processer, mojo, blocks, data, type);
         }
     }
 }

@@ -35,6 +35,9 @@ public class DemoThemePicker extends FrameLayout {
         THEME_HASHTABLE.put(ThemeManager.DARK, R.id.dark);
         THEME_HASHTABLE.put(ThemeManager.LIGHT, R.id.light);
         THEME_HASHTABLE.put(ThemeManager.MIXED, R.id.mixed);
+        THEME_HASHTABLE.put(ThemeManager.DARK | ThemeManager.FULLSCREEN, R.id.dark);
+        THEME_HASHTABLE.put(ThemeManager.LIGHT | ThemeManager.FULLSCREEN, R.id.light);
+        THEME_HASHTABLE.put(ThemeManager.MIXED | ThemeManager.FULLSCREEN, R.id.mixed);
     }
 
     private final Activity activity;

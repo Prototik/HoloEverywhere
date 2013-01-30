@@ -1,0 +1,51 @@
+{
+	"data": {
+		"Holo.Demo": {},
+		"Holo.Demo.ListRowView": {
+			"android:background": "?selectableItemBackground"
+		},
+		"Holo.Demo.Theme": {
+			"parent": "Holo.Theme",
+			"include": [ "DemoThemeDark" ]
+		},
+		"Holo.Demo.Theme.Light": {
+			"parent": "Holo.Theme.Light",
+			"include": [ "DemoThemeLight" ]
+		},
+		"Holo.Demo.Theme.Light.DarkActionBar": {
+			"parent": "Holo.Theme.Light.DarkActionBar",
+			"include": [ "DemoThemeDark" ]
+		},
+		"Holo.Demo.Theme.Fullscreen": {
+			"include": [ "Fullscreen" ]
+		},
+		"Holo.Demo.Theme.Light.Fullscreen": {
+			"include": [ "Fullscreen" ]
+		},
+		"Holo.Demo.Theme.Light.DarkActionBar.Fullscreen": {
+			"include": [ "Fullscreen" ]
+		}
+	},
+	"blocks": {
+		"DemoTheme": {
+			"demoListRowViewStyle": "@style/Holo.Demo.ListRowView",
+			"android:homeAsUpIndicator": "@drawable/home_as_up_indicator",
+			"homeAsUpIndicator": "@drawable/home_as_up_indicator"
+		},
+		"DemoThemeDark": {
+			"disableMusicIcon": "@drawable/disable_music_dark",
+			"include": [ "DemoTheme" ]
+		},
+		"DemoThemeLight": {
+			"disableMusicIcon": "@drawable/disable_music_light",
+			"include": [ "DemoTheme" ]
+		}
+	},
+	"include": [
+	    {
+	    	"name": "blocks.json", 
+	    	"type": "only blocks"
+	    }
+	],
+	"output": "values/styles.xml"
+}

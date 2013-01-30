@@ -29,7 +29,6 @@ public class SlidingMenu extends IAddon<SlidingMenuA, SlidingMenuF> {
             super.onCreate(savedInstanceState);
             mHelper = new SlidingActivityHelper(getActivity());
             mHelper.onCreate(savedInstanceState);
-            mHelper.setSlidingActionBarEnabled(false);
         }
 
         @Override
@@ -101,8 +100,7 @@ public class SlidingMenu extends IAddon<SlidingMenuA, SlidingMenuF> {
         }
 
         public void setSlidingActionBarEnabled(boolean b) {
-            // mHelper.setSlidingActionBarEnabled(b);
-            // Sliding with ActionBar temporary not working
+            mHelper.setSlidingActionBarEnabled(b);
         }
 
         @Override

@@ -12,8 +12,6 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.actionbarsherlock.internal.nineoldandroids.view.animation.AnimatorProxy;
-
 public class LinearLayout extends android.widget.LinearLayout {
     public static final int SHOW_DIVIDER_ALL = 7;
     public static final int SHOW_DIVIDER_BEGINNING = 1;
@@ -24,7 +22,6 @@ public class LinearLayout extends android.widget.LinearLayout {
     private int mDividerHeight;
     private int mDividerPadding;
     private int mDividerWidth;
-    private final AnimatorProxy mProxy;
     private int mShowDividers;
 
     public LinearLayout(Context context) {
@@ -37,7 +34,6 @@ public class LinearLayout extends android.widget.LinearLayout {
 
     public LinearLayout(Context context, AttributeSet attrs, int defStyleRes) {
         super(context, attrs);
-        mProxy = AnimatorProxy.NEEDS_PROXY ? AnimatorProxy.wrap(this) : null;
         init(attrs, defStyleRes);
     }
 
@@ -108,16 +104,6 @@ public class LinearLayout extends android.widget.LinearLayout {
     }
 
     @Override
-    @SuppressLint("NewApi")
-    public float getAlpha() {
-        if (AnimatorProxy.NEEDS_PROXY) {
-            return mProxy.getAlpha();
-        } else {
-            return super.getAlpha();
-        }
-    }
-
-    @Override
     public int getDividerPadding() {
         return mDividerPadding;
     }
@@ -129,26 +115,6 @@ public class LinearLayout extends android.widget.LinearLayout {
     @Override
     public int getShowDividers() {
         return mShowDividers;
-    }
-
-    @Override
-    @SuppressLint("NewApi")
-    public float getTranslationX() {
-        if (AnimatorProxy.NEEDS_PROXY) {
-            return mProxy.getTranslationX();
-        } else {
-            return super.getTranslationX();
-        }
-    }
-
-    @Override
-    @SuppressLint("NewApi")
-    public float getTranslationY() {
-        if (AnimatorProxy.NEEDS_PROXY) {
-            return mProxy.getTranslationY();
-        } else {
-            return super.getTranslationY();
-        }
     }
 
     protected boolean hasDividerBeforeChildAt(int childIndex) {
@@ -247,16 +213,6 @@ public class LinearLayout extends android.widget.LinearLayout {
     }
 
     @Override
-    @SuppressLint("NewApi")
-    public void setAlpha(float alpha) {
-        if (AnimatorProxy.NEEDS_PROXY) {
-            mProxy.setAlpha(alpha);
-        } else {
-            super.setAlpha(alpha);
-        }
-    }
-
-    @Override
     public void setDividerDrawable(Drawable divider) {
         if (divider == mDivider) {
             return;
@@ -285,37 +241,5 @@ public class LinearLayout extends android.widget.LinearLayout {
             invalidate();
         }
         mShowDividers = showDividers;
-    }
-
-    @Override
-    @SuppressLint("NewApi")
-    public void setTranslationX(float translationX) {
-        if (AnimatorProxy.NEEDS_PROXY) {
-            mProxy.setTranslationX(translationX);
-        } else {
-            super.setTranslationX(translationX);
-        }
-    }
-
-    @Override
-    @SuppressLint("NewApi")
-    public void setTranslationY(float translationY) {
-        if (AnimatorProxy.NEEDS_PROXY) {
-            mProxy.setTranslationY(translationY);
-        } else {
-            super.setTranslationY(translationY);
-        }
-    }
-
-    @Override
-    public void setVisibility(int visibility) {
-        if (mProxy != null) {
-            if (visibility == View.GONE) {
-                clearAnimation();
-            } else if (visibility == View.VISIBLE) {
-                setAnimation(mProxy);
-            }
-        }
-        super.setVisibility(visibility);
     }
 }

@@ -44,6 +44,8 @@
 		<developer>
 			<name>Sergey Shatunov</name>
 			<id>Prototik</id>
+			<email>prototypegamez@gmail.com</email>
+			<timezone>+8</timezone>
 			<roles>
 				<role>developer</role>
 			</roles>
@@ -82,6 +84,7 @@
 
 		<java.version>1.6</java.version>
 		<abs.version>4.2.0</abs.version>
+		<noa.version>2.4.0</noa.version>
 		<android.version>4.1.1.4</android.version>
 		<android.sdk.platform>16</android.sdk.platform>
 

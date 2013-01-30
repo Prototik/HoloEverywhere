@@ -3,14 +3,12 @@ package org.holoeverywhere.internal;
 
 import org.holoeverywhere.IHoloActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEventSource;
 
-import com.actionbarsherlock.internal.nineoldandroids.view.animation.AnimatorProxy;
 import com.actionbarsherlock.view.ActionMode;
 
 public class _View extends android.view.View implements Drawable.Callback,
@@ -212,30 +210,16 @@ public class _View extends android.view.View implements Drawable.Callback,
                 & android.view.View.MEASURED_STATE_MASK;
     }
 
-    private final AnimatorProxy proxy;
-
     public _View(Context context) {
         super(context);
-        proxy = AnimatorProxy.NEEDS_PROXY ? AnimatorProxy.wrap(this) : null;
     }
 
     public _View(Context context, AttributeSet attrs) {
         super(context, attrs);
-        proxy = AnimatorProxy.NEEDS_PROXY ? AnimatorProxy.wrap(this) : null;
     }
 
     public _View(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        proxy = AnimatorProxy.NEEDS_PROXY ? AnimatorProxy.wrap(this) : null;
-    }
-
-    @SuppressLint("NewApi")
-    @Override
-    public float getAlpha() {
-        if (proxy != null) {
-            return proxy.getAlpha();
-        }
-        return super.getAlpha();
     }
 
     public int getMeasuredStateInt() {
@@ -243,68 +227,6 @@ public class _View extends android.view.View implements Drawable.Callback,
                 & android.view.View.MEASURED_STATE_MASK
                 | getMeasuredHeight() >> android.view.View.MEASURED_HEIGHT_STATE_SHIFT
                 & android.view.View.MEASURED_STATE_MASK >> android.view.View.MEASURED_HEIGHT_STATE_SHIFT;
-    }
-
-    @SuppressLint("NewApi")
-    @Override
-    public float getTranslationX() {
-        if (proxy != null) {
-            return proxy.getTranslationX();
-        }
-        return super.getTranslationX();
-    }
-
-    @SuppressLint("NewApi")
-    @Override
-    public float getTranslationY() {
-        if (proxy != null) {
-            return proxy.getTranslationY();
-        }
-        return super.getTranslationY();
-    }
-
-    @SuppressLint("NewApi")
-    public void onVisibilityChanged(_View changedView, int visibility) {
-        super.onVisibilityChanged(changedView, visibility);
-    }
-
-    @SuppressLint("NewApi")
-    @Override
-    public void setAlpha(float alpha) {
-        if (proxy != null) {
-            proxy.setAlpha(alpha);
-        }
-        super.setAlpha(alpha);
-    }
-
-    @SuppressLint("NewApi")
-    @Override
-    public void setTranslationX(float translationX) {
-        if (proxy != null) {
-            proxy.setTranslationX(translationX);
-        }
-        super.setTranslationX(translationX);
-    }
-
-    @SuppressLint("NewApi")
-    @Override
-    public void setTranslationY(float translationY) {
-        if (proxy != null) {
-            proxy.setTranslationY(translationY);
-        }
-        super.setTranslationY(translationY);
-    }
-
-    @Override
-    public void setVisibility(int visibility) {
-        if (proxy != null) {
-            if (visibility == android.view.View.GONE) {
-                clearAnimation();
-            } else if (visibility == android.view.View.VISIBLE) {
-                setAnimation(proxy);
-            }
-        }
-        super.setVisibility(visibility);
     }
 
     public ActionMode startActionMode(ActionMode.Callback actionModeCallback) {

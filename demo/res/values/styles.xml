@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?><resources>
+    <style name="Holo.Demo"/>
+    <style name="Holo.Demo.ListRowView">
+        <item name="android:background">?selectableItemBackground</item>
+    </style>
+    <style name="Holo.Demo.Theme" parent="Holo.Theme">
+        <!--Include block: DemoThemeDark-->
+        <!--Include block: DemoTheme-->
+        <item name="android:homeAsUpIndicator">@drawable/home_as_up_indicator</item>
+        <item name="demoListRowViewStyle">@style/Holo.Demo.ListRowView</item>
+        <item name="homeAsUpIndicator">@drawable/home_as_up_indicator</item>
+        <!--End of block DemoTheme-->
+        <item name="disableMusicIcon">@drawable/disable_music_dark</item>
+        <!--End of block DemoThemeDark-->
+    </style>
+    <style name="Holo.Demo.Theme.Fullscreen">
+        <!--Include block: Fullscreen-->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowContentOverlay">@null</item>
+        <!--End of block Fullscreen-->
+    </style>
+    <style name="Holo.Demo.Theme.Light" parent="Holo.Theme.Light">
+        <!--Include block: DemoThemeLight-->
+        <!--Include block: DemoTheme-->
+        <item name="android:homeAsUpIndicator">@drawable/home_as_up_indicator</item>
+        <item name="demoListRowViewStyle">@style/Holo.Demo.ListRowView</item>
+        <item name="homeAsUpIndicator">@drawable/home_as_up_indicator</item>
+        <!--End of block DemoTheme-->
+        <item name="disableMusicIcon">@drawable/disable_music_light</item>
+        <!--End of block DemoThemeLight-->
+    </style>
+    <style name="Holo.Demo.Theme.Light.DarkActionBar" parent="Holo.Theme.Light.DarkActionBar">
+        <!--Include block: DemoThemeDark-->
+        <!--Include block: DemoTheme-->
+        <item name="android:homeAsUpIndicator">@drawable/home_as_up_indicator</item>
+        <item name="demoListRowViewStyle">@style/Holo.Demo.ListRowView</item>
+        <item name="homeAsUpIndicator">@drawable/home_as_up_indicator</item>
+        <!--End of block DemoTheme-->
+        <item name="disableMusicIcon">@drawable/disable_music_dark</item>
+        <!--End of block DemoThemeDark-->
+    </style>
+    <style name="Holo.Demo.Theme.Light.DarkActionBar.Fullscreen">
+        <!--Include block: Fullscreen-->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowContentOverlay">@null</item>
+        <!--End of block Fullscreen-->
+    </style>
+    <style name="Holo.Demo.Theme.Light.Fullscreen">
+        <!--Include block: Fullscreen-->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowContentOverlay">@null</item>
+        <!--End of block Fullscreen-->
+    </style>
+</resources>

@@ -4,6 +4,7 @@ package org.holoeverywhere.resbuilder;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -39,7 +40,7 @@ public class BuildMojo extends AbstractMojo {
     public int androidSdkVersion;
 
     /**
-     * Build all files from all include dirs. If it true - input tag is ignore
+     * Build all files from all include dirs
      * 
      * @parameter expression="${holo.resbuilder.buildAll}" default-value="false"
      */
@@ -49,7 +50,6 @@ public class BuildMojo extends AbstractMojo {
      * Dirs for search of input files
      * 
      * @parameter expression="${holo.resbuilder.includeDirs}"
-     *            default-value="${basedir}/resbuilder"
      */
     public File[] includeDirs;
 
@@ -103,6 +103,9 @@ public class BuildMojo extends AbstractMojo {
                     list.add(file.getAbsolutePath());
                 }
             }
+            if (inputFiles != null && inputFiles.length > 0) {
+                list.addAll(0, Arrays.asList(inputFiles));
+            }
             inputFiles = list.toArray(new String[list.size()]);
             if (inputFiles.length == 0) {
                 getLog().info("BuildAll: nothing to build");
@@ -115,6 +118,32 @@ public class BuildMojo extends AbstractMojo {
         }
         if (!buildAll && includeDirs == null || includeDirs.length == 0) {
             getLog().warn("Include dirs don't specified");
+        }
+        if (verbose) {
+            getLog().info("");
+            getLog().info("Final configuration:");
+            getLog().info(
+                    " # androidSdkPath: " + androidSdkPath);
+            getLog().info(" # androidSdkVersion: " + androidSdkVersion);
+            if (includeDirs == null || includeDirs.length == 0) {
+                getLog().info(" # includeDirs: empty");
+            } else {
+                getLog().info(" # includeDirs: [");
+                for (File dir : includeDirs) {
+                    getLog().info(" # # " + dir.getAbsolutePath());
+                }
+                getLog().info(" # ]");
+            }
+            if (inputFiles == null || inputFiles.length == 0) {
+                getLog().info(" # input: empty");
+            } else {
+                getLog().info(" # input: [");
+                for (String input : inputFiles) {
+                    getLog().info(" # # " + input);
+                }
+                getLog().info(" # ]");
+            }
+            getLog().info(" # outputDir: " + outputDir);
         }
         try {
             FileProcesser.process(this);
