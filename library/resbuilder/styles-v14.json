@@ -2,21 +2,21 @@
     "styles": {
         "data": {
             "Holo.Theme": {
-                "holoActionBarTheme": "dark", 
+                "holoTheme": "dark", 
                 "include": [
                     "BaseDark"
                 ], 
                 "parent": "Theme.Sherlock"
             }, 
             "Holo.Theme.Light": {
-                "holoActionBarTheme": "light", 
+                "holoTheme": "light", 
                 "include": [
                     "BaseLight"
                 ], 
                 "parent": "Theme.Sherlock.Light"
             }, 
             "Holo.Theme.Light.DarkActionBar": {
-                "holoActionBarTheme": "dark", 
+                "holoTheme": "dark", 
                 "include": [
                     "BaseLight"
                 ], 

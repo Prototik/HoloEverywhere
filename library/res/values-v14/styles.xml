@@ -9,42 +9,24 @@
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
-        <item name="checkBoxPreferenceStyle">@style/Holo.PreferenceCheckBox</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
-        <item name="dialogPreferenceStyle">@style/Holo.PreferenceDialog</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="dividerVertical">?android:listDivider</item>
         <item name="dropdownListPreferredItemHeight">?listPreferredItemHeight</item>
-        <item name="editTextPreferenceStyle">@style/Holo.PreferenceDialog.EditTextPreference</item>
         <item name="fastScrollOverlayPosition">atThumb</item>
         <item name="fastScrollTextColor">@color/primary_text_holo_dark</item>
         <item name="fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
-        <item name="holoTheme">true</item>
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
         <item name="listPreferredItemHeightSmall">48dp</item>
         <item name="listPreferredItemPaddingLeft">8dp</item>
         <item name="listPreferredItemPaddingRight">8dp</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
-        <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="panelMenuListWidth">250dp</item>
-        <item name="preferenceCategoryStyle">@style/Holo.PreferenceCategory</item>
-        <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
-        <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
-        <item name="preferenceInformationStyle">@style/Holo.PreferenceInformation</item>
-        <item name="preferenceLayoutChild">@layout/preference_child_holo</item>
-        <item name="preferencePanelStyle">@style/Holo.PreferencePanel</item>
-        <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
-        <item name="preferenceStyle">@style/Holo.Preference</item>
-        <item name="ringtonePreferenceStyle">@style/Holo.PreferenceRingtone</item>
-        <item name="seekBarDialogPreferenceStyle">@style/Holo.PreferenceDialog.SeekBarDialogPreference</item>
-        <item name="seekBarPreferenceStyle">@style/Holo.PreferenceSeekBar</item>
-        <item name="switchPreferenceStyle">@style/Holo.PreferenceSwitch</item>
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
-        <item name="yesNoPreferenceStyle">@style/Holo.PreferenceDialog.YesNoPreference</item>
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert</item>
@@ -72,7 +54,7 @@
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Small</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
         <!--End of block BaseDark-->
-        <item name="holoActionBarTheme">dark</item>
+        <item name="holoTheme">dark</item>
     </style>
     <style name="Holo.Theme.Light" parent="Theme.Sherlock.Light">
         <!--Include block: BaseLight-->
@@ -84,42 +66,24 @@
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
-        <item name="checkBoxPreferenceStyle">@style/Holo.PreferenceCheckBox</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
-        <item name="dialogPreferenceStyle">@style/Holo.PreferenceDialog</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="dividerVertical">?android:listDivider</item>
         <item name="dropdownListPreferredItemHeight">?listPreferredItemHeight</item>
-        <item name="editTextPreferenceStyle">@style/Holo.PreferenceDialog.EditTextPreference</item>
         <item name="fastScrollOverlayPosition">atThumb</item>
         <item name="fastScrollTextColor">@color/primary_text_holo_dark</item>
         <item name="fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
-        <item name="holoTheme">true</item>
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
         <item name="listPreferredItemHeightSmall">48dp</item>
         <item name="listPreferredItemPaddingLeft">8dp</item>
         <item name="listPreferredItemPaddingRight">8dp</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
-        <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="panelMenuListWidth">250dp</item>
-        <item name="preferenceCategoryStyle">@style/Holo.PreferenceCategory</item>
-        <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
-        <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
-        <item name="preferenceInformationStyle">@style/Holo.PreferenceInformation</item>
-        <item name="preferenceLayoutChild">@layout/preference_child_holo</item>
-        <item name="preferencePanelStyle">@style/Holo.PreferencePanel</item>
-        <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
-        <item name="preferenceStyle">@style/Holo.Preference</item>
-        <item name="ringtonePreferenceStyle">@style/Holo.PreferenceRingtone</item>
-        <item name="seekBarDialogPreferenceStyle">@style/Holo.PreferenceDialog.SeekBarDialogPreference</item>
-        <item name="seekBarPreferenceStyle">@style/Holo.PreferenceSeekBar</item>
-        <item name="switchPreferenceStyle">@style/Holo.PreferenceSwitch</item>
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
-        <item name="yesNoPreferenceStyle">@style/Holo.PreferenceDialog.YesNoPreference</item>
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
@@ -147,7 +111,7 @@
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block BaseLight-->
-        <item name="holoActionBarTheme">light</item>
+        <item name="holoTheme">light</item>
     </style>
     <style name="Holo.Theme.Light.DarkActionBar" parent="Theme.Sherlock.Light.DarkActionBar">
         <!--Include block: BaseLight-->
@@ -159,42 +123,24 @@
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
-        <item name="checkBoxPreferenceStyle">@style/Holo.PreferenceCheckBox</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
-        <item name="dialogPreferenceStyle">@style/Holo.PreferenceDialog</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="dividerVertical">?android:listDivider</item>
         <item name="dropdownListPreferredItemHeight">?listPreferredItemHeight</item>
-        <item name="editTextPreferenceStyle">@style/Holo.PreferenceDialog.EditTextPreference</item>
         <item name="fastScrollOverlayPosition">atThumb</item>
         <item name="fastScrollTextColor">@color/primary_text_holo_dark</item>
         <item name="fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
-        <item name="holoTheme">true</item>
         <item name="listPreferredItemHeight">64dip</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
         <item name="listPreferredItemHeightSmall">48dp</item>
         <item name="listPreferredItemPaddingLeft">8dp</item>
         <item name="listPreferredItemPaddingRight">8dp</item>
         <item name="numberPickerInputTextStyle">@style/Holo.EditText.NumberPickerInputText</item>
-        <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="numberPickerStyle">@style/Holo.NumberPicker</item>
         <item name="panelMenuListWidth">250dp</item>
-        <item name="preferenceCategoryStyle">@style/Holo.PreferenceCategory</item>
-        <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
-        <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
-        <item name="preferenceInformationStyle">@style/Holo.PreferenceInformation</item>
-        <item name="preferenceLayoutChild">@layout/preference_child_holo</item>
-        <item name="preferencePanelStyle">@style/Holo.PreferencePanel</item>
-        <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
-        <item name="preferenceStyle">@style/Holo.Preference</item>
-        <item name="ringtonePreferenceStyle">@style/Holo.PreferenceRingtone</item>
-        <item name="seekBarDialogPreferenceStyle">@style/Holo.PreferenceDialog.SeekBarDialogPreference</item>
-        <item name="seekBarPreferenceStyle">@style/Holo.PreferenceSeekBar</item>
-        <item name="switchPreferenceStyle">@style/Holo.PreferenceSwitch</item>
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
-        <item name="yesNoPreferenceStyle">@style/Holo.PreferenceDialog.YesNoPreference</item>
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
@@ -222,6 +168,6 @@
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block BaseLight-->
-        <item name="holoActionBarTheme">dark</item>
+        <item name="holoTheme">dark</item>
     </style>
 </resources>

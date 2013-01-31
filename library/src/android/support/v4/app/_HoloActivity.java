@@ -15,7 +15,7 @@ import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
 import org.holoeverywhere.app.Application.Config;
 import org.holoeverywhere.app.Application.Config.PreferenceImpl;
-import org.holoeverywhere.preference.PreferenceManager;
+import org.holoeverywhere.preference.PreferenceManagerHelper;
 import org.holoeverywhere.preference.SharedPreferences;
 import org.holoeverywhere.util.SparseIntArray;
 
@@ -31,7 +31,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -230,16 +229,23 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
 
     @Override
     public SharedPreferences getDefaultSharedPreferences() {
-        return PreferenceManager.getDefaultSharedPreferences(this);
+        return PreferenceManagerHelper.getDefaultSharedPreferences(this);
     }
 
     @Override
     public SharedPreferences getDefaultSharedPreferences(PreferenceImpl impl) {
-        return PreferenceManager.getDefaultSharedPreferences(this, impl);
+        return PreferenceManagerHelper.getDefaultSharedPreferences(this, impl);
     }
 
     public Holo getHolo() {
         return config;
+    }
+
+    private int getHoloThemeAttr() {
+        TypedArray a = obtainStyledAttributes(R.styleable.HoloActivity);
+        final int holoTheme = a.getInt(R.styleable.HoloActivity_holoTheme, 0);
+        a.recycle();
+        return holoTheme;
     }
 
     public int getLastThemeResourceId() {
@@ -254,23 +260,32 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     @Override
     public SharedPreferences getSharedPreferences(PreferenceImpl impl,
             String name, int mode) {
-        return PreferenceManager.wrap(this, impl, name, mode);
+        return PreferenceManagerHelper.wrap(this, impl, name, mode);
     }
 
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode) {
-        return PreferenceManager.wrap(this, name, mode);
+        return PreferenceManagerHelper.wrap(this, name, mode);
     }
 
     protected Context getSupportActionBarContext() {
         if (actionBarContext == null) {
-            TypedValue value = new TypedValue();
-            getTheme().resolveAttribute(R.attr.holoActionBarTheme, value, true);
-            // 0 - Dark
-            // 1 - Light
-            actionBarContext = new ContextThemeWrapper(this,
-                    ThemeManager.getThemeResource(value.data == 1 ? ThemeManager.LIGHT
-                            : ThemeManager.DARK));
+            int theme;
+            switch (getHoloThemeAttr()) {
+                case 1:
+                    // Dark
+                    theme = ThemeManager.DARK;
+                    break;
+                case 2:
+                    // Light
+                    theme = ThemeManager.LIGHT;
+                    break;
+                case 0:
+                default:
+                    // Invalid
+                    throw new HoloThemeException(this);
+            }
+            actionBarContext = new ContextThemeWrapper(this, ThemeManager.getThemeResource(theme));
         }
         return actionBarContext;
     }
@@ -449,14 +464,8 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
             forceThemeApply = true;
         }
         ThemeManager.applyTheme(this, forceThemeApply);
-        if (!config.ignoreThemeCheck) {
-            TypedArray a = obtainStyledAttributes(R.styleable.HoloActivity);
-            final boolean holoTheme = a.getBoolean(
-                    R.styleable.HoloActivity_holoTheme, false);
-            a.recycle();
-            if (!holoTheme) {
-                throw new HoloThemeException(this);
-            }
+        if (!config.ignoreThemeCheck && getHoloThemeAttr() == 0) {
+            throw new HoloThemeException(this);
         }
         onPostInit(config, savedInstanceState);
     }
@@ -540,10 +549,9 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     }
 
     @Override
-    public void setTheme(int resid) {
-        lastThemeResourceId = resid;
+    public synchronized void setTheme(int resid) {
         actionBarContext = null;
-        super.setTheme(resid);
+        super.setTheme(lastThemeResourceId = resid);
     }
 
     @Override

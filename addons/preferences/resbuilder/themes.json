@@ -1,0 +1,37 @@
+{
+	"styles": {
+		"blocks": {
+			"PreferenceBase": {
+				"checkBoxPreferenceStyle": "@style/Holo.PreferenceCheckBox", 
+				"dialogPreferenceStyle": "@style/Holo.PreferenceDialog", 
+                "editTextPreferenceStyle": "@style/Holo.PreferenceDialog.EditTextPreference",
+                "numberPickerPreferenceStyle": "@style/Holo.PreferenceDialog.NumberPickerPreference", 
+                "preferenceCategoryStyle": "@style/Holo.PreferenceCategory", 
+                "preferenceFragmentStyle": "@style/Holo.PreferenceFragment", 
+                "preferenceFrameLayoutStyle": "@style/Holo.PreferenceFrameLayout", 
+                "preferenceInformationStyle": "@style/Holo.PreferenceInformation", 
+                "preferenceLayoutChild": "@layout/preference_child_holo", 
+                "preferencePanelStyle": "@style/Holo.PreferencePanel", 
+                "preferenceScreenStyle": "@style/Holo.PreferenceScreen", 
+                "preferenceStyle": "@style/Holo.Preference", 
+                "ringtonePreferenceStyle": "@style/Holo.PreferenceRingtone", 
+                "seekBarDialogPreferenceStyle": "@style/Holo.PreferenceDialog.SeekBarDialogPreference", 
+                "seekBarPreferenceStyle": "@style/Holo.PreferenceSeekBar", 
+                "switchPreferenceStyle": "@style/Holo.PreferenceSwitch", 
+                "yesNoPreferenceStyle": "@style/Holo.PreferenceDialog.YesNoPreference"
+			}
+		},
+		"data": {
+			"Holo.PreferenceTheme": {},
+			"Holo.PreferenceTheme.Dark": {
+				"include": [ "PreferenceBase" ],
+				"parent": "Holo.Theme"
+			},
+			"Holo.PreferenceTheme.Light": {
+				"include": [ "PreferenceBase" ],
+				"parent": "Holo.Theme.Light"
+			}
+		},
+		"output": "values/themes.xml"
+	}
+}

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-	<style name="Holo.PreferenceTime">
-		<item name="is24HourView">auto</item>
-	</style>
-	<style name="Holo.PreferenceDate"></style>
-</resources>

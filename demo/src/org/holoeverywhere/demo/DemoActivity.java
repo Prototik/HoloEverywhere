@@ -47,7 +47,8 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         }
 
         public void onItemSelected(int position, boolean setData) {
-            if (lastSelection != position) {
+            if (lastSelection != position
+                    || mHasSlidingMenu && getSupportFragmentManager().getBackStackEntryCount() > 0) {
                 lastSelection = position;
                 getIntent().putExtra(PAGE, position);
                 if (setData) {
@@ -176,7 +177,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
                 supportInvalidateOptionsMenu();
                 break;
             case android.R.id.home:
-                if (mHasSlidingMenu) {
+                if (mHasSlidingMenu && getSupportFragmentManager().getBackStackEntryCount() == 0) {
                     requireSlidingMenu().toggle();
                 } else {
                     onBackPressed();

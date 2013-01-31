@@ -12,7 +12,6 @@ import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemServic
 import org.holoeverywhere.app.Application;
 import org.holoeverywhere.internal.DialogTitle;
 import org.holoeverywhere.internal.NumberPickerEditText;
-import org.holoeverywhere.preference.PreferenceFrameLayout;
 import org.holoeverywhere.widget.AutoCompleteTextView;
 import org.holoeverywhere.widget.Button;
 import org.holoeverywhere.widget.CalendarView;
@@ -22,7 +21,6 @@ import org.holoeverywhere.widget.DatePicker;
 import org.holoeverywhere.widget.Divider;
 import org.holoeverywhere.widget.EditText;
 import org.holoeverywhere.widget.ExpandableListView;
-import org.holoeverywhere.widget.FragmentBreadCrumbs;
 import org.holoeverywhere.widget.FrameLayout;
 import org.holoeverywhere.widget.GridView;
 import org.holoeverywhere.widget.LinearLayout;
@@ -114,11 +112,9 @@ public class LayoutInflater extends android.view.LayoutInflater implements
         remap(SeekBar.class);
         remap(Button.class);
         remap(CheckedTextView.class);
-        remap(FragmentBreadCrumbs.class);
         remap(ToggleButton.class);
         remap(RadioButton.class);
         remap(CheckBox.class);
-        remap(PreferenceFrameLayout.class);
         remap(ViewPager.class);
         remap(PagerTitleStrip.class);
         remap(WebView.class);

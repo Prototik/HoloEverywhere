@@ -39,19 +39,6 @@
 			<plugin>
 				<groupId>org.holoeverywhere</groupId>
 				<artifactId>resbuilder</artifactId>
-				<configuration>
-					<styler>
-						<input>
-							<file>styles.json</file>
-							<file>styles-v14.json</file>
-						</input>
-					</styler>
-					<translator>
-						<input>
-							<file>strings.json</file>
-						</input>
-					</translator>
-				</configuration>
 			</plugin>
 
 			<plugin>

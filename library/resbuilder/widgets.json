@@ -287,67 +287,6 @@
                 "android:popupAnimationStyle": "@style/Holo.Animation.PopupWindow"
             }, 
             "Holo.PopupWindow.Light": {}, 
-            "Holo.Preference": {
-                "layout": "@layout/preference_holo"
-            }, 
-            "Holo.PreferenceCategory": {
-                "layout": "@layout/preference_category_holo", 
-                "selectable": "false", 
-                "shouldDisableView": "false"
-            }, 
-            "Holo.PreferenceCheckBox": {
-                "widgetLayout": "@layout/preference_widget_checkbox"
-            }, 
-            "Holo.PreferenceDialog": {
-                "negativeButtonText": "@android:string/cancel", 
-                "positiveButtonText": "@android:string/ok"
-            }, 
-            "Holo.PreferenceDialog.EditTextPreference": {
-                "dialogLayout": "@layout/preference_dialog_edittext"
-            }, 
-            "Holo.PreferenceDialog.NumberPickerPreference": {
-                "dialogLayout": "@layout/preference_dialog_numberpicker", 
-                "max": "10", 
-                "min": "0", 
-                "wrapSelectorWheel": "true"
-            }, 
-            "Holo.PreferenceDialog.SeekBarDialogPreference": {
-                "dialogLayout": "@layout/preference_dialog_seekbar"
-            }, 
-            "Holo.PreferenceDialog.YesNoPreference": {
-                "negativeButtonText": "@android:string/no", 
-                "positiveButtonText": "@android:string/yes"
-            }, 
-            "Holo.PreferenceFragment": {
-                "android:paddingLeft": "@dimen/preference_fragment_padding_side", 
-                "android:paddingRight": "@dimen/preference_fragment_padding_side"
-            }, 
-            "Holo.PreferenceFrameLayout": {
-                "borderBottom": "@dimen/preference_fragment_padding_bottom", 
-                "borderLeft": "@dimen/preference_fragment_padding_side", 
-                "borderRight": "@dimen/preference_fragment_padding_side", 
-                "borderTop": "0dip"
-            }, 
-            "Holo.PreferenceInformation": {
-                "enabled": "false", 
-                "layout": "@layout/preference_information_holo", 
-                "shouldDisableView": "false"
-            }, 
-            "Holo.PreferencePanel": {}, 
-            "Holo.PreferenceRingtone": {
-                "ringtoneType": "ringtone", 
-                "showDefault": "true", 
-                "showSilent": "true"
-            }, 
-            "Holo.PreferenceScreen": {}, 
-            "Holo.PreferenceSeekBar": {
-                "layout": "@layout/preference_widget_seekbar"
-            }, 
-            "Holo.PreferenceSwitch": {
-                "switchTextOff": "@string/capital_off", 
-                "switchTextOn": "@string/capital_on", 
-                "widgetLayout": "@layout/preference_widget_switch"
-            }, 
             "Holo.ProgressBar": {
                 "android:indeterminateDrawable": "@drawable/progress_medium_holo", 
                 "parent": "@android:style/Widget.ProgressBar"

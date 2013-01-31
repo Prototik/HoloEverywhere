@@ -10,7 +10,7 @@ import org.holoeverywhere.SystemServiceManager.SuperSystemService;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.ThemeManager.SuperStartActivity;
 import org.holoeverywhere.app.Application.Config.PreferenceImpl;
-import org.holoeverywhere.preference.PreferenceManager;
+import org.holoeverywhere.preference.PreferenceManagerHelper;
 import org.holoeverywhere.preference.SharedPreferences;
 
 import android.annotation.SuppressLint;
@@ -27,35 +27,6 @@ public class Application extends android.app.Application implements
 
         private static final String HOLO_EVERYWHERE_PACKAGE = "org.holoeverywhere";
 
-        private static void onStateChange(Config config) {
-            String p = config.holoEverywherePackage.getValue();
-            if (p != null && p.length() > 0) {
-                config.widgetsPackage.setValue(p + ".widget");
-                config.preferencePackage.setValue(p + ".preference");
-                config.addonsPackage.setValue(p + ".addon");
-            }
-        }
-
-        private final SettingListener<Config> _DEFAULT_SETTINGS_LISTENER = new SettingListener<Config>() {
-            @Override
-            public void onAttach(Config config) {
-                onStateChange(config);
-            }
-
-            @Override
-            public void onDetach(Config config) {
-            }
-
-            @Override
-            public void onPropertyChange(Config config, Property<?> property) {
-                if (property == config.holoEverywherePackage) {
-                    onStateChange(config);
-                }
-            }
-
-        };
-        @SettingProperty(create = true)
-        public StringProperty addonsPackage;
         @SettingProperty(create = true, defaultBoolean = false)
         public BooleanProperty alwaysUseParentTheme;
         @SettingProperty(create = true, defaultBoolean = false)
@@ -70,23 +41,6 @@ public class Application extends android.app.Application implements
         public BooleanProperty namedPreferences;
         @SettingProperty(create = true, defaultEnum = "XML", enumClass = PreferenceImpl.class)
         public EnumProperty<PreferenceImpl> preferenceImpl;
-        @SettingProperty(create = true)
-        public StringProperty preferencePackage;
-        @SettingProperty(create = true)
-        public StringProperty widgetsPackage;
-
-        public Config attachDefaultListener() {
-            return addListener(_DEFAULT_SETTINGS_LISTENER);
-        }
-
-        public Config detachDefaultListener() {
-            return removeListener(_DEFAULT_SETTINGS_LISTENER);
-        }
-
-        @Override
-        protected void onInit() {
-            attachDefaultListener();
-        }
     }
 
     private static Application lastInstance;
@@ -120,12 +74,12 @@ public class Application extends android.app.Application implements
 
     @Override
     public SharedPreferences getDefaultSharedPreferences() {
-        return PreferenceManager.getDefaultSharedPreferences(this);
+        return PreferenceManagerHelper.getDefaultSharedPreferences(this);
     }
 
     @Override
     public SharedPreferences getDefaultSharedPreferences(PreferenceImpl impl) {
-        return PreferenceManager.getDefaultSharedPreferences(this, impl);
+        return PreferenceManagerHelper.getDefaultSharedPreferences(this, impl);
     }
 
     @Override
@@ -135,12 +89,12 @@ public class Application extends android.app.Application implements
 
     @Override
     public SharedPreferences getSharedPreferences(PreferenceImpl impl, String name, int mode) {
-        return PreferenceManager.wrap(this, impl, name, mode);
+        return PreferenceManagerHelper.wrap(this, impl, name, mode);
     }
 
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode) {
-        return PreferenceManager.wrap(this, name, mode);
+        return PreferenceManagerHelper.wrap(this, name, mode);
     }
 
     @Override

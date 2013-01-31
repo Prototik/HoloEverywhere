@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?><resources>
+    <style name="Holo.Preference">
+        <item name="layout">@layout/preference_holo</item>
+    </style>
+    <style name="Holo.PreferenceCategory">
+        <item name="layout">@layout/preference_category_holo</item>
+        <item name="selectable">false</item>
+        <item name="shouldDisableView">false</item>
+    </style>
+    <style name="Holo.PreferenceCheckBox">
+        <item name="widgetLayout">@layout/preference_widget_checkbox</item>
+    </style>
+    <style name="Holo.PreferenceDate"/>
+    <style name="Holo.PreferenceDialog">
+        <item name="negativeButtonText">@android:string/cancel</item>
+        <item name="positiveButtonText">@android:string/ok</item>
+    </style>
+    <style name="Holo.PreferenceDialog.EditTextPreference">
+        <item name="dialogLayout">@layout/preference_dialog_edittext</item>
+    </style>
+    <style name="Holo.PreferenceDialog.NumberPickerPreference">
+        <item name="dialogLayout">@layout/preference_dialog_numberpicker</item>
+        <item name="max">10</item>
+        <item name="min">0</item>
+        <item name="wrapSelectorWheel">true</item>
+    </style>
+    <style name="Holo.PreferenceDialog.SeekBarDialogPreference">
+        <item name="dialogLayout">@layout/preference_dialog_seekbar</item>
+    </style>
+    <style name="Holo.PreferenceDialog.YesNoPreference">
+        <item name="negativeButtonText">@android:string/no</item>
+        <item name="positiveButtonText">@android:string/yes</item>
+    </style>
+    <style name="Holo.PreferenceFragment">
+        <item name="android:paddingLeft">@dimen/preference_fragment_padding_side</item>
+        <item name="android:paddingRight">@dimen/preference_fragment_padding_side</item>
+    </style>
+    <style name="Holo.PreferenceFrameLayout">
+        <item name="borderBottom">@dimen/preference_fragment_padding_bottom</item>
+        <item name="borderLeft">@dimen/preference_fragment_padding_side</item>
+        <item name="borderRight">@dimen/preference_fragment_padding_side</item>
+        <item name="borderTop">0dip</item>
+    </style>
+    <style name="Holo.PreferenceInformation">
+        <item name="enabled">false</item>
+        <item name="layout">@layout/preference_information_holo</item>
+        <item name="shouldDisableView">false</item>
+    </style>
+    <style name="Holo.PreferencePanel"/>
+    <style name="Holo.PreferenceRingtone">
+        <item name="ringtoneType">ringtone</item>
+        <item name="showDefault">true</item>
+        <item name="showSilent">true</item>
+    </style>
+    <style name="Holo.PreferenceScreen"/>
+    <style name="Holo.PreferenceSeekBar">
+        <item name="layout">@layout/preference_widget_seekbar</item>
+    </style>
+    <style name="Holo.PreferenceSwitch">
+        <item name="switchTextOff">@string/capital_off</item>
+        <item name="switchTextOn">@string/capital_on</item>
+        <item name="widgetLayout">@layout/preference_widget_switch</item>
+    </style>
+    <style name="Holo.PreferenceTime">
+        <item name="is24HourView">auto</item>
+    </style>
+</resources>

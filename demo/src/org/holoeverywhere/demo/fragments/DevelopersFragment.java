@@ -16,11 +16,10 @@ import android.view.ViewGroup;
 
 public class DevelopersFragment extends ListFragment {
     private static final class Developer {
-        private final int name, description;
+        private final int description;
         private final OnClickListener onClickListener;
 
         public Developer(int name, int description, OnClickListener onClickListener) {
-            this.name = name;
             this.description = description;
             this.onClickListener = onClickListener;
         }
@@ -36,10 +35,10 @@ public class DevelopersFragment extends ListFragment {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.developer);
             }
-            TextView name = (TextView) convertView.findViewById(R.id.developerName);
+            convertView.findViewById(R.id.developerName);
             TextView description = (TextView) convertView.findViewById(R.id.developerDescription);
             Developer developer = getItem(position);
-            name.setText(developer.name);
+            // name.setText(developer.name);
             description.setText(developer.description);
             return convertView;
         }

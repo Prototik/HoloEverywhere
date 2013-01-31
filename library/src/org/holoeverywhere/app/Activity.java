@@ -333,7 +333,7 @@ public abstract class Activity extends _HoloActivity {
         if (name == null) {
             return;
         }
-        String className = getConfig().addonsPackage.getValue() + '.' + name;
+        String className = getConfig().holoEverywherePackage.getValue() + ".addon." + name;
         try {
             requireAddon((Class<? extends IAddon<?, ?>>) Class.forName(className, true,
                     getClassLoader()));

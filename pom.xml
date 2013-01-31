@@ -126,6 +126,10 @@
 					</executions>
 					<configuration>
 						<buildAll>true</buildAll>
+						<includeDirs>
+							<dir>${project.basedir}/resbuilder</dir>
+						</includeDirs>
+						<outputDir>${project.basedir}/res</outputDir>
 						<verbose>false</verbose>
 					</configuration>
 				</plugin>

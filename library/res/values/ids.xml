@@ -8,5 +8,5 @@
 	<item name="typeface" type="id"/>
 	<item name="increment" type="id"/>
 	<item name="decrement" type="id"/>
-	<item name="pagerTag" type="id"/>
+	<item name="empty" type="id"/>
 </resources>

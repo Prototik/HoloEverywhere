@@ -14,7 +14,6 @@ import static org.holoeverywhere.R.style.Holo_Theme_Light_NoActionBar_Fullscreen
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar;
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Fullscreen;
 
-import org.holoeverywhere.ThemeManager.ThemeGetter;
 import org.holoeverywhere.ThemeManager.ThemeGetter.ThemeTag;
 import org.holoeverywhere.app.Application;
 
@@ -81,9 +80,9 @@ public final class ThemeManager {
     }
 
     /**
-     * Theme getter. This class should return theme resource for specify
-     * {@link ThemeGetter.ThemeTag} object. If under the right ThemeTag no have
-     * theme, return a negative number or zero. <br />
+     * Theme getter. This class should return theme resource for set of flags.
+     * If under the right ThemeTag no have theme, return a negative number or
+     * zero. <br />
      * <br />
      * Example:
      * 
@@ -119,42 +118,50 @@ public final class ThemeManager {
         public int getThemeResource(ThemeTag themeTag);
     }
 
-    private static int _DEFAULT_THEME = ThemeManager.DARK;
+    private static int _DEFAULT_THEME;
+
     private static final int _START_RESOURCES_ID = 0x01000000;
+
     private static ThemeGetter _THEME_GETTER;
-    private static final int _THEME_MASK = ThemeManager.DARK
-            | ThemeManager.LIGHT | ThemeManager.MIXED
-            | ThemeManager.NO_ACTION_BAR | ThemeManager.FULLSCREEN;
+    private static int _THEME_MASK = 0;
     private static int _THEME_MODIFIER = 0;
-    private static final String _THEME_TAG = "holoeverywhere:theme";
+    private static final String _THEME_TAG = ":holoeverywhere:theme";
     private static final SparseIntArray _THEMES_MAP = new SparseIntArray();
+    public static final int COLOR_SCHEME_MASK;
     /**
      * Flag indicates on the dark theme
      */
-    public static final int DARK = 1;
+    public static final int DARK;
     /**
      * Flag indicates on the fullscreen theme
      */
-    public static final int FULLSCREEN = 16;
+    public static final int FULLSCREEN;
     /**
      * Flag indicates on the light theme. If you want light theme with dark
      * action bar, use {@link #MIXED} flag
      */
-    public static final int LIGHT = 2;
+    public static final int LIGHT;
     /**
      * Flag indicates on the light theme with dark action bar
      */
-    public static final int MIXED = 4;
+    public static final int MIXED;
+    private static int NEXT_OFFSET = 0;
     /**
-     * Flag indicates on the theme without action bar by default (may be show
-     * later)
+     * Flag indicates on the theme without action bar
      */
-    public static final int NO_ACTION_BAR = 8;
-
-    /**
-     * Map default themes
-     */
+    public static final int NO_ACTION_BAR;
     static {
+        DARK = makeNewFlag();
+        LIGHT = makeNewFlag();
+        MIXED = makeNewFlag();
+        FULLSCREEN = makeNewFlag();
+        NO_ACTION_BAR = makeNewFlag();
+
+        _DEFAULT_THEME = DARK;
+
+        COLOR_SCHEME_MASK = DARK | LIGHT | MIXED;
+
+        // Map default themes
         map(DARK, Holo_Theme);
         map(DARK | FULLSCREEN, Holo_Theme_Fullscreen);
         map(DARK | NO_ACTION_BAR, Holo_Theme_NoActionBar);
@@ -264,7 +271,14 @@ public final class ThemeManager {
      * Resolve theme resource id by flags
      */
     public static int getThemeResource(int themeTag) {
-        themeTag = prepareFlags(themeTag);
+        return getThemeResource(themeTag, true);
+    }
+
+    /**
+     * Resolve theme resource id by flags
+     */
+    public static int getThemeResource(int themeTag, boolean applyModifier) {
+        themeTag = prepareFlags(themeTag, applyModifier);
         if (themeTag >= _START_RESOURCES_ID) {
             return themeTag;
         }
@@ -371,6 +385,19 @@ public final class ThemeManager {
     }
 
     /**
+     * Generate flag for using it in ThemeManager. Not more than 32 flags can be
+     * created.
+     */
+    public static int makeNewFlag() {
+        if (NEXT_OFFSET > 32) {
+            throw new IllegalStateException();
+        }
+        final int flag = 1 << NEXT_OFFSET++;
+        _THEME_MASK |= flag;
+        return flag;
+    }
+
+    /**
      * Remap default theme.
      * 
      * @see #map(int, int)
@@ -455,10 +482,14 @@ public final class ThemeManager {
     }
 
     private static int prepareFlags(int i) {
+        return prepareFlags(i, true);
+    }
+
+    private static int prepareFlags(int i, boolean applyModifier) {
         if (i >= _START_RESOURCES_ID) {
             return i;
         }
-        if (ThemeManager._THEME_MODIFIER > 0) {
+        if (applyModifier && ThemeManager._THEME_MODIFIER > 0) {
             i |= ThemeManager._THEME_MODIFIER;
         }
         return i & ThemeManager._THEME_MASK;
