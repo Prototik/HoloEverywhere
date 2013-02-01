@@ -5,10 +5,10 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.IHoloActivity.OnWindowFocusChangeListener;
 import org.holoeverywhere.R;
 import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.Application;
 import org.holoeverywhere.util.LongSparseArray;
 import org.holoeverywhere.widget.HeaderViewListAdapter.ViewInfo;
 import org.holoeverywhere.widget.ListAdapterWrapper.ListAdapterCallback;
@@ -111,8 +111,8 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         }
     }
 
-    public static final class SavedState extends BaseSavedState {
-        public static final Creator<SavedState> CREATOR = new Creator<ListView.SavedState>() {
+    static final class SavedState extends BaseSavedState {
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
             @Override
             public SavedState createFromParcel(Parcel parcel) {
                 return new SavedState(parcel);
@@ -207,7 +207,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         if (context instanceof Activity) {
             setActivity((Activity) context);
         }
-        if (Application.config().disableOverscrollEffects.getValue() && VERSION.SDK_INT >= 9) {
+        if (HoloEverywhere.DISABLE_OVERSCROLL_EFFECT && VERSION.SDK_INT >= 9) {
             setOverScrollMode(OVER_SCROLL_NEVER);
         }
 

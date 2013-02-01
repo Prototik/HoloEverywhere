@@ -1,10 +1,11 @@
 
 package org.holoeverywhere.demo;
 
+import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Application;
-import org.holoeverywhere.app.Application.Config.PreferenceImpl;
 import org.holoeverywhere.demo.widget.DemoListRowView;
 import org.holoeverywhere.demo.widget.DemoThemePicker;
 import org.holoeverywhere.demo.widget.WidgetContainer;
@@ -14,16 +15,20 @@ import android.os.Build.VERSION_CODES;
 
 public class DemoApplication extends Application {
     static {
-        config().debugMode.setValue(true);
-        config().preferenceImpl.setValue(PreferenceImpl.JSON);
+        HoloEverywhere.DEBUG = true;
+        HoloEverywhere.PREFERENCE_IMPL = PreferenceImpl.JSON;
+
         LayoutInflater.remap(WidgetContainer.class);
         LayoutInflater.remap(DemoListRowView.class);
         LayoutInflater.remap(DemoThemePicker.class);
+
         ThemeManager.setDefaultTheme(ThemeManager.MIXED);
+
         // Android 2.1 incorrect process FULLSCREEN flag
         if (VERSION.SDK_INT >= VERSION_CODES.FROYO) {
             ThemeManager.modify(ThemeManager.FULLSCREEN);
         }
+
         ThemeManager.map(ThemeManager.DARK,
                 R.style.Holo_Demo_Theme);
         ThemeManager.map(ThemeManager.LIGHT,

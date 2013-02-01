@@ -20,5 +20,6 @@ public class ListsFragment extends OtherFragment {
         addItem("Fast scroll with sections", ListsFastScrollWithSectionsFragment.class);
         addItem("Fast scroll with sections (left)",
                 ListsFastScrollWithSectionsLeftSideFragment.class);
+        addItem("Expandable list", ListsExpandableListFragment.class);
     }
 }

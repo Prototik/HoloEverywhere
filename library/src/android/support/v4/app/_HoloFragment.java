@@ -1,12 +1,11 @@
 
 package android.support.v4.app;
 
+import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 import org.holoeverywhere.IHoloFragment;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
-import org.holoeverywhere.app.Application.Config;
-import org.holoeverywhere.app.Application.Config.PreferenceImpl;
 import org.holoeverywhere.preference.SharedPreferences;
 
 import android.os.Bundle;
@@ -37,11 +36,6 @@ public abstract class _HoloFragment extends Fragment implements IHoloFragment {
     public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
             View view, ContextMenuInfo menuInfo, ContextMenuListener listener) {
         activity.createContextMenu(contextMenuBuilder, view, menuInfo, listener);
-    }
-
-    @Override
-    public Config getConfig() {
-        return activity.getConfig();
     }
 
     protected int getContainerId() {

@@ -1,7 +1,7 @@
 
 package org.holoeverywhere.preference;
 
-import org.holoeverywhere.app.Application.Config.PreferenceImpl;
+import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 import org.holoeverywhere.preference.PreferenceManagerHelper.PreferenceManagerImpl;
 
 import android.content.Context;

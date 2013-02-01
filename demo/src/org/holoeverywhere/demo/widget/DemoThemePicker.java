@@ -6,7 +6,6 @@ import java.util.Hashtable;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.demo.PlaybackService;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.widget.FrameLayout;
 
@@ -24,7 +23,6 @@ public class DemoThemePicker extends FrameLayout {
 
         @Override
         public void onClick(View view) {
-            PlaybackService.ignore();
             ThemeManager.restartWithTheme(activity, theme);
         }
     }

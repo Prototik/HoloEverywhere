@@ -71,7 +71,7 @@ public class ExpandableListView extends ListView {
         ArrayList<ExpandableListConnector.GroupMetadata> expandedGroupMetadataList;
 
         private SavedState(Parcel in) {
-            super(in);
+            super(in.readParcelable(ListView.SavedState.class.getClassLoader()));
             expandedGroupMetadataList = new ArrayList<ExpandableListConnector.GroupMetadata>();
             in.readList(expandedGroupMetadataList, ExpandableListConnector.class.getClassLoader());
         }

@@ -4,9 +4,9 @@ package org.holoeverywhere.widget;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.IHoloActivity.OnWindowFocusChangeListener;
 import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.Application;
 import org.holoeverywhere.util.LongSparseArray;
 import org.holoeverywhere.widget.HeaderViewListAdapter.ViewInfo;
 import org.holoeverywhere.widget.ListAdapterWrapper.ListAdapterCallback;
@@ -137,7 +137,7 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         if (context instanceof Activity) {
             setActivity((Activity) context);
         }
-        if (Application.config().disableOverscrollEffects.getValue() && VERSION.SDK_INT >= 9) {
+        if (HoloEverywhere.DISABLE_OVERSCROLL_EFFECT && VERSION.SDK_INT >= 9) {
             setOverScrollMode(OVER_SCROLL_NEVER);
         }
 

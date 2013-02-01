@@ -1,8 +1,8 @@
 
 package org.holoeverywhere.preference;
 
-import org.holoeverywhere.app.Application;
-import org.holoeverywhere.app.Application.Config.PreferenceImpl;
+import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 
 import android.content.Context;
 import android.util.Log;
@@ -18,12 +18,11 @@ public class PreferenceManagerHelper {
     static {
         try {
             Class<?> clazz = Class
-                    .forName(Application.config().holoEverywherePackage.getValue()
-                            + ".preference._PreferenceManagerImpl");
+                    .forName(HoloEverywhere.PACKAGE + ".preference._PreferenceManagerImpl");
             IMPL = (PreferenceManagerImpl) clazz.newInstance();
         } catch (Exception e) {
             IMPL = null;
-            if (Application.config().debugMode.getValue()) {
+            if (HoloEverywhere.DEBUG) {
                 Log.w("HoloEverywhere",
                         "Cannot find PreferenceManager class. Preference framework are disabled.",
                         e);
@@ -38,7 +37,7 @@ public class PreferenceManagerHelper {
     }
 
     public static SharedPreferences getDefaultSharedPreferences(Context context) {
-        return getDefaultSharedPreferences(context, Application.config().preferenceImpl.getValue());
+        return getDefaultSharedPreferences(context, HoloEverywhere.PREFERENCE_IMPL);
     }
 
     public static SharedPreferences getDefaultSharedPreferences(Context context,
@@ -55,7 +54,7 @@ public class PreferenceManagerHelper {
 
     public static SharedPreferences wrap(Context context, String name,
             int mode) {
-        return wrap(context, Application.config().preferenceImpl.getValue(), name, mode);
+        return wrap(context, HoloEverywhere.PREFERENCE_IMPL, name, mode);
     }
 
     private PreferenceManagerHelper() {

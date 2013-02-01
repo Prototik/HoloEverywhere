@@ -25,15 +25,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="11.2"
-     inkscape:cx="-3.6398391"
-     inkscape:cy="27.620097"
+     inkscape:cx="-19.086268"
+     inkscape:cy="27.441526"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1021"
+     inkscape:window-height="1052"
      inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-y="-3"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -54,9 +54,9 @@
      transform="translate(0,-1004.3622)">
     <path
        style="fill:#0099cc;fill-opacity:1;stroke:none"
-       d="m 0,1004.3622 0,48 4.8810274,0 c 0,0 -3.5216076,-11.8643 -2.1428571,-17.25 0.1522596,-0.5948 0.5698101,-0.9592 0.8556783,-1.4375 1.06009,-1.7739 3.1874014,-2.9578 3.1874014,-5.3125 0,-2.3547 -2.1273114,-3.5386 -3.1874014,-5.3125 -0.2858682,-0.4783 -0.7034187,-0.8427 -0.8556783,-1.4375 -1.3787505,-5.3857 2.1428571,-17.25 2.1428571,-17.25 z"
-       id="rect2985"
+       d="m 9.640625,1016.9872 -3.75,4.5938 -5.53125,6.7812 5.53125,6.7813 3.75,4.5937 0,-1.7187 c 0,0 -2.5252255,-2.6187 -3.40625,-4.1875 -0.946945,-1.6863 -1.9375,-3.1213 -1.9375,-5.4688 0,-2.3475 0.990555,-3.7825 1.9375,-5.4687 0.8810245,-1.5689 3.40625,-4.1875 3.40625,-4.1875 z"
+       id="path3758"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccssssscc" />
+       sodipodi:nodetypes="ccccccssscc" />
   </g>
 </svg>

@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 import org.holoeverywhere.app.Application;
-import org.holoeverywhere.app.Application.Config.PreferenceImpl;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -45,7 +46,7 @@ public class PreferenceManager {
     private static final String TAG = "PreferenceManager";
 
     public static SharedPreferences getDefaultSharedPreferences(Context context) {
-        return getDefaultSharedPreferences(context, Application.config().preferenceImpl.getValue());
+        return getDefaultSharedPreferences(context, HoloEverywhere.PREFERENCE_IMPL);
     }
 
     public static SharedPreferences getDefaultSharedPreferences(Context context,
@@ -64,9 +65,8 @@ public class PreferenceManager {
 
     public static String makeNameById(int id) {
         if (id > 0) {
-            if (Application.config().namedPreferences.getValue()) {
-                return "id_"
-                        + Application.getLastInstance().getResources().getResourceEntryName(id);
+            if (HoloEverywhere.NAMED_PREFERENCES) {
+                return Application.getLastInstance().getResources().getResourceEntryName(id);
             } else {
                 return "preference_0x" + Integer.toHexString(id);
             }
@@ -115,8 +115,7 @@ public class PreferenceManager {
     }
 
     public static SharedPreferences wrap(Context context, String name, int mode) {
-        return PreferenceManager.wrap(context, Application.config()
-                .preferenceImpl.getValue(), name, mode);
+        return PreferenceManager.wrap(context, HoloEverywhere.PREFERENCE_IMPL, name, mode);
     }
 
     private Activity mActivity;

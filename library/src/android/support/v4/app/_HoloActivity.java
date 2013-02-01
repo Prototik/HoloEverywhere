@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 import org.holoeverywhere.IHoloActivity;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
@@ -13,8 +15,6 @@ import org.holoeverywhere.SystemServiceManager;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
-import org.holoeverywhere.app.Application.Config;
-import org.holoeverywhere.app.Application.Config.PreferenceImpl;
 import org.holoeverywhere.preference.PreferenceManagerHelper;
 import org.holoeverywhere.preference.SharedPreferences;
 import org.holoeverywhere.util.SparseIntArray;
@@ -220,11 +220,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
             View view, ContextMenuInfo menuInfo, ContextMenuListener listener) {
         listener.onCreateContextMenu(contextMenuBuilder, view, menuInfo);
-    }
-
-    @Override
-    public Config getConfig() {
-        return Application.config();
     }
 
     @Override
@@ -584,7 +579,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     @Override
     public void startActivityForResult(Intent intent, int requestCode,
             Bundle options) {
-        if (getConfig().alwaysUseParentTheme.getValue()) {
+        if (HoloEverywhere.ALWAYS_USE_PARENT_THEME) {
             ThemeManager.startActivity(this, intent, requestCode, options);
         } else {
             superStartActivity(intent, requestCode, options);

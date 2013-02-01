@@ -6,11 +6,12 @@ gen() {
 		mkdir "$png"
 	fi
 	png="$png/$name.png"
-	if [ ! -e "$png" ]; then
-		inkscape -zCd $3 -e "$png" "$1" > /dev/null
-		convert -antialias -strip "$png" "$png"
-		optipng -quiet -o7 "$png"
+	if [ -e "$png" ]; then
+		rm "$png"
 	fi
+	inkscape -zCd $3 -e "$png" "$1" > /dev/null
+	convert -antialias -strip "$png" "$png"
+	optipng -quiet -o7 "$png"
 }
 
 for z in *.svg; do

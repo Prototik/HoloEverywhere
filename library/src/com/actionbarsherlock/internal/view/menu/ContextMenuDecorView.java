@@ -1,7 +1,7 @@
 
 package com.actionbarsherlock.internal.view.menu;
 
-import org.holoeverywhere.app.Application;
+import org.holoeverywhere.HoloEverywhere;
 
 import android.content.Context;
 import android.util.Log;
@@ -21,19 +21,14 @@ public final class ContextMenuDecorView extends FrameLayout {
 
         public InternalWrapper(ContextMenuListener listener) {
             if (listener == null) {
-                throw new IllegalArgumentException("Listener is null",
-                        new NullPointerException());
+                throw new IllegalArgumentException("Listener cannot be null");
             }
             this.listener = listener;
-            if (Application.isDebugMode()) {
-                Log.v(TAG, "Create new InternalWrapper with listener: "
-                        + listener);
-            }
         }
 
         @Override
         public void onCloseMenu(MenuBuilder menu, boolean allMenusAreClosing) {
-            if (Application.isDebugMode()) {
+            if (HoloEverywhere.DEBUG) {
                 Log.v(TAG, "Calling onContextMenuClosed on " + listener);
             }
             listener.onContextMenuClosed((ContextMenu) menu);
@@ -41,7 +36,7 @@ public final class ContextMenuDecorView extends FrameLayout {
 
         @Override
         public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
-            if (Application.isDebugMode()) {
+            if (HoloEverywhere.DEBUG) {
                 Log.v(TAG, "Calling onContextItemSelected on " + listener);
             }
             if (menu instanceof ContextMenuBuilder
@@ -69,7 +64,7 @@ public final class ContextMenuDecorView extends FrameLayout {
 
     public static View prepareDecorView(Context context, View v,
             ContextMenuListener listener, int decorViewId) {
-        if (v != null && !Application.config().disableContextMenu.getValue()) {
+        if (v != null) {
             v = new ContextMenuDecorView(context, v, listener);
             if (decorViewId > 0) {
                 v.setId(decorViewId);
@@ -120,7 +115,7 @@ public final class ContextMenuDecorView extends FrameLayout {
 
     @Override
     public boolean showContextMenuForChild(View originalView) {
-        if (Application.config().disableContextMenu.getValue()) {
+        if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
             return super.showContextMenuForChild(originalView);
         }
         if (contextMenu == null) {

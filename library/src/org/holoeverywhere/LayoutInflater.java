@@ -9,7 +9,6 @@ import java.util.WeakHashMap;
 
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator;
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
-import org.holoeverywhere.app.Application;
 import org.holoeverywhere.internal.DialogTitle;
 import org.holoeverywhere.internal.NumberPickerEditText;
 import org.holoeverywhere.widget.AutoCompleteTextView;
@@ -344,7 +343,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
     @SuppressLint("NewApi")
     private View prepareView(View view) {
-        if (Application.config().disableOverscrollEffects.getValue() && VERSION.SDK_INT >= 9) {
+        if (HoloEverywhere.DISABLE_OVERSCROLL_EFFECT && VERSION.SDK_INT >= 9) {
             view.setOverScrollMode(View.OVER_SCROLL_NEVER);
         }
         return view;

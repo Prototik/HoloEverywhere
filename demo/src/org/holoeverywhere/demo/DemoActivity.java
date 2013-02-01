@@ -120,8 +120,6 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PlaybackService.onCreate();
-
         final ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.library_name);
 
@@ -173,7 +171,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.disableMusic:
-                PlaybackService.disable();
+                // PlaybackService.disable();
                 supportInvalidateOptionsMenu();
                 break;
             case android.R.id.home:
@@ -191,20 +189,14 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
     @Override
     protected void onPause() {
-        PlaybackService.onPause();
+        PlaybackService.pause();
         super.onPause();
-    }
-
-    @Override
-    protected void onRestart() {
-        PlaybackService.ignore();
-        super.onRestart();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        PlaybackService.onResume(this);
+        PlaybackService.play();
     }
 
     public void postDelayed(Runnable runnable, long delay) {

@@ -1,14 +1,11 @@
 
 package org.holoeverywhere;
 
+import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 import org.holoeverywhere.app.Application;
-import org.holoeverywhere.app.Application.Config;
-import org.holoeverywhere.app.Application.Config.PreferenceImpl;
 import org.holoeverywhere.preference.SharedPreferences;
 
 public interface IHolo {
-    public Config getConfig();
-
     public SharedPreferences getDefaultSharedPreferences();
 
     public SharedPreferences getDefaultSharedPreferences(PreferenceImpl impl);

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.holoeverywhere.app.Application;
+import org.holoeverywhere.HoloEverywhere;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -211,7 +211,6 @@ public class _SharedPreferencesImpl_JSON extends _SharedPreferencesBase {
 
     private static final Map<String, ImplReference> refs = new HashMap<String, ImplReference>();
     private String charset;
-    private final boolean DEBUG = Application.isDebugMode();
     private File file;
     private final String fileTag;
     private final String TAG = getClass().getSimpleName();
@@ -415,7 +414,7 @@ public class _SharedPreferencesImpl_JSON extends _SharedPreferencesBase {
             try {
                 reader = new InputStreamReader(is, charset);
             } catch (UnsupportedEncodingException e) {
-                if (DEBUG) {
+                if (HoloEverywhere.DEBUG) {
                     Log.w(TAG, "Encoding unsupport: " + charset);
                 }
                 reader = new InputStreamReader(is);
@@ -457,7 +456,7 @@ public class _SharedPreferencesImpl_JSON extends _SharedPreferencesBase {
 
     public void saveDataToFile(File file, JSONObject data) {
         String s;
-        if (DEBUG) {
+        if (HoloEverywhere.DEBUG) {
             try {
                 s = data.toString(2);
             } catch (JSONException e) {

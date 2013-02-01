@@ -4,6 +4,7 @@ package org.holoeverywhere.app;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.addon.Sherlock;
 import org.holoeverywhere.addon.Sherlock.SherlockA;
 import org.holoeverywhere.addons.IAddon;
@@ -333,7 +334,7 @@ public abstract class Activity extends _HoloActivity {
         if (name == null) {
             return;
         }
-        String className = getConfig().holoEverywherePackage.getValue() + ".addon." + name;
+        String className = HoloEverywhere.PACKAGE + ".addon." + name;
         try {
             requireAddon((Class<? extends IAddon<?, ?>>) Class.forName(className, true,
                     getClassLoader()));

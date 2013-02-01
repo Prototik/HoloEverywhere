@@ -1,15 +1,15 @@
 
 package org.holoeverywhere.app;
 
+import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 import org.holoeverywhere.IHolo;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.LayoutInflater.LayoutInflaterCreator;
-import org.holoeverywhere.Setting;
 import org.holoeverywhere.SystemServiceManager;
 import org.holoeverywhere.SystemServiceManager.SuperSystemService;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.ThemeManager.SuperStartActivity;
-import org.holoeverywhere.app.Application.Config.PreferenceImpl;
 import org.holoeverywhere.preference.PreferenceManagerHelper;
 import org.holoeverywhere.preference.SharedPreferences;
 
@@ -20,56 +20,21 @@ import android.os.Bundle;
 
 public class Application extends android.app.Application implements
         IHolo, SuperStartActivity, SuperSystemService {
-    public static final class Config extends Setting<Config> {
-        public static enum PreferenceImpl {
-            JSON, XML
-        }
-
-        private static final String HOLO_EVERYWHERE_PACKAGE = "org.holoeverywhere";
-
-        @SettingProperty(create = true, defaultBoolean = false)
-        public BooleanProperty alwaysUseParentTheme;
-        @SettingProperty(create = true, defaultBoolean = false)
-        public BooleanProperty debugMode;
-        @SettingProperty(create = true)
-        public BooleanProperty disableContextMenu;
-        @SettingProperty(create = true, defaultBoolean = true)
-        public BooleanProperty disableOverscrollEffects;
-        @SettingProperty(create = true, defaultString = Config.HOLO_EVERYWHERE_PACKAGE)
-        public StringProperty holoEverywherePackage;
-        @SettingProperty(create = true, defaultBoolean = true)
-        public BooleanProperty namedPreferences;
-        @SettingProperty(create = true, defaultEnum = "XML", enumClass = PreferenceImpl.class)
-        public EnumProperty<PreferenceImpl> preferenceImpl;
-    }
-
     private static Application lastInstance;
 
     static {
         SystemServiceManager.register(LayoutInflaterCreator.class);
-        config().disableContextMenu.setValue(VERSION.SDK_INT >= 14);
-        config().disableOverscrollEffects.setValue(VERSION.SDK_INT <= 10);
-    }
-
-    public static Config config() {
-        return Setting.get(Config.class);
     }
 
     public static Application getLastInstance() {
         return Application.lastInstance;
     }
 
-    public static boolean isDebugMode() {
-        return Application.config().debugMode.getValue();
+    public static void init() {
     }
 
     public Application() {
         Application.lastInstance = this;
-    }
-
-    @Override
-    public Config getConfig() {
-        return config();
     }
 
     @Override
@@ -130,7 +95,7 @@ public class Application extends android.app.Application implements
 
     @Override
     public void startActivity(Intent intent, Bundle options) {
-        if (config().alwaysUseParentTheme.getValue()) {
+        if (HoloEverywhere.ALWAYS_USE_PARENT_THEME) {
             ThemeManager.startActivity(this, intent, options);
         } else {
             superStartActivity(intent, -1, options);
