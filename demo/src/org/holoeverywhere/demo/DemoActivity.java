@@ -13,6 +13,7 @@ import org.holoeverywhere.demo.widget.DemoItem;
 import org.holoeverywhere.demo.widget.DemoListRowView;
 import org.holoeverywhere.widget.ListView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -50,7 +51,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
             if (lastSelection != position
                     || mHasSlidingMenu && getSupportFragmentManager().getBackStackEntryCount() > 0) {
                 lastSelection = position;
-                getIntent().putExtra(PAGE, position);
+                getIntent().putExtra(KEY_PAGE, position);
                 if (setData) {
                     ((NavigationItem) getItem(position)).onClick(null);
                 }
@@ -73,7 +74,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
             DemoListRowView view = makeView(convertView, parent);
             view.setLabel(title);
             view.setSelectionHandlerColorResource(R.color.holo_blue_dark);
-            view.setSelectionHandlerVisiblity(position == navigationAdapter.lastSelection);
+            view.setSelectionHandlerVisiblity(position == mNavigationAdapter.lastSelection);
             return view;
         }
 
@@ -93,11 +94,12 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         }
     }
 
-    private static final String PAGE = "page";
-
-    private Handler handler;
+    private static final String KEY_DISABLE_MUSIC = "disableMusic";
+    private static final String KEY_PAGE = "page";
+    private boolean mDisableMusic = false;
+    private Handler mHandler;
     private boolean mHasSlidingMenu;
-    private NavigationAdapter navigationAdapter;
+    private NavigationAdapter mNavigationAdapter;
 
     private int computeMenuWidth() {
         return (int) getResources().getFraction(R.dimen.demo_menu_width,
@@ -106,6 +108,13 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
     private View makeMenuView(Bundle savedInstanceState) {
         return prepareMenuView(getLayoutInflater().inflate(R.layout.menu), savedInstanceState);
+    }
+
+    @Override
+    @SuppressLint("NewApi")
+    public void onBackPressed() {
+        PlaybackService.pause(true);
+        super.onBackPressed();
     }
 
     @Override
@@ -119,6 +128,10 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            mDisableMusic = savedInstanceState.getBoolean(KEY_DISABLE_MUSIC, false);
+        }
 
         final ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.library_name);
@@ -161,7 +174,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.main, menu);
-        if (PlaybackService.isDisable()) {
+        if (mDisableMusic) {
             menu.findItem(R.id.disableMusic).setVisible(false);
         }
         return true;
@@ -171,8 +184,11 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.disableMusic:
-                // PlaybackService.disable();
-                supportInvalidateOptionsMenu();
+                if (!mDisableMusic) {
+                    mDisableMusic = true;
+                    PlaybackService.pause(true);
+                    supportInvalidateOptionsMenu();
+                }
                 break;
             case android.R.id.home:
                 if (mHasSlidingMenu && getSupportFragmentManager().getBackStackEntryCount() == 0) {
@@ -189,34 +205,42 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
     @Override
     protected void onPause() {
-        PlaybackService.pause();
+        PlaybackService.pause(false);
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        PlaybackService.play();
+        if (!mDisableMusic) {
+            PlaybackService.play();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_DISABLE_MUSIC, mDisableMusic);
     }
 
     public void postDelayed(Runnable runnable, long delay) {
-        if (handler == null) {
-            handler = new Handler(getMainLooper());
+        if (mHandler == null) {
+            mHandler = new Handler(getMainLooper());
         }
-        handler.postDelayed(runnable, delay);
+        mHandler.postDelayed(runnable, delay);
     }
 
     private View prepareMenuView(View view, Bundle savedInstanceState) {
-        navigationAdapter = new NavigationAdapter();
-        navigationAdapter.add(MainFragment.class, R.string.demo);
-        navigationAdapter.add(SettingsFragment.class, R.string.settings);
-        navigationAdapter.add(OtherFragment.class, R.string.other);
-        navigationAdapter.add(AboutFragment.class, R.string.about);
-        navigationAdapter.onItemSelected(getIntent().getIntExtra(PAGE, 0),
+        mNavigationAdapter = new NavigationAdapter();
+        mNavigationAdapter.add(MainFragment.class, R.string.demo);
+        mNavigationAdapter.add(SettingsFragment.class, R.string.settings);
+        mNavigationAdapter.add(OtherFragment.class, R.string.other);
+        mNavigationAdapter.add(AboutFragment.class, R.string.about);
+        mNavigationAdapter.onItemSelected(getIntent().getIntExtra(KEY_PAGE, 0),
                 savedInstanceState == null);
         ListView list = (ListView) view.findViewById(R.id.list);
-        list.setAdapter(navigationAdapter);
-        list.setOnItemClickListener(navigationAdapter);
+        list.setAdapter(mNavigationAdapter);
+        list.setOnItemClickListener(mNavigationAdapter);
         return view;
     }
 

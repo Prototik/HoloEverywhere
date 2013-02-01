@@ -16,17 +16,17 @@ public class PlaybackService {
             return true;
         }
     });
-    private static boolean mDisable = false;
     private static MediaPlayer mPlayer;
     private static int mSeek = -1;
-    private static final int T_PAUSE = 1, T_PLAY = 2;
+    private static final int T_PAUSE = 1, T_PLAY = 2, T_STOP = 3;
 
     private static void handleMessage(int what, int res) {
         switch (what) {
             case T_PAUSE:
+            case T_STOP:
                 if (mPlayer != null) {
                     if (mPlayer.isPlaying()) {
-                        mSeek = mPlayer.getCurrentPosition();
+                        mSeek = what == T_PAUSE ? mPlayer.getCurrentPosition() : -1;
                         mPlayer.stop();
                     }
                     mPlayer.release();
@@ -46,18 +46,18 @@ public class PlaybackService {
         }
     }
 
-    public static boolean isDisable() {
-        return mDisable;
-    }
-
-    public static void pause() {
+    public static void pause(boolean stop) {
         HANDLER.removeMessages(T_PLAY);
-        Message message = Message.obtain(HANDLER, T_PAUSE);
-        HANDLER.sendMessageDelayed(message, 400);
+        if (stop) {
+            HANDLER.sendMessage(Message.obtain(HANDLER, T_STOP));
+        } else {
+            HANDLER.sendMessageDelayed(Message.obtain(HANDLER, T_PAUSE), 400);
+        }
     }
 
     public static void play() {
         HANDLER.removeMessages(T_PAUSE);
+        HANDLER.removeMessages(T_STOP);
         Message message = Message.obtain(HANDLER, T_PLAY);
         message.arg1 = R.raw.winter_dawn;
         message.sendToTarget();
