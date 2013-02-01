@@ -41,6 +41,7 @@ public class PlaybackService {
                 if (mSeek > 0) {
                     mPlayer.seekTo(mSeek);
                 }
+                mPlayer.setLooping(true);
                 mPlayer.start();
                 break;
         }
