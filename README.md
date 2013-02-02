@@ -1,4 +1,4 @@
-[HoloEverywhere](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/logo.png)
+![HoloEverywhere](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/logo.png "HoloEverywhere")
 
 ## What is it?
 Bringing Holo Theme from Android 4.1 to 2.1 and above.
