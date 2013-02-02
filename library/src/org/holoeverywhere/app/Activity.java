@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.Sherlock;
 import org.holoeverywhere.addon.Sherlock.SherlockA;
 import org.holoeverywhere.addons.IAddon;
@@ -30,7 +31,6 @@ public abstract class Activity extends _HoloActivity {
     public static final String ADDON_SHERLOCK = "Sherlock";
     public static final String ADDON_SLIDING_MENU = "SlidingMenu";
     private final List<IAddon<?, ?>> addons = new ArrayList<IAddon<?, ?>>();
-
     private MenuInflater mMenuInflater;
 
     @Override
@@ -112,6 +112,17 @@ public abstract class Activity extends _HoloActivity {
         return mMenuInflater;
     }
 
+    public Bundle instanceState(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            return savedInstanceState;
+        }
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.containsKey(ThemeManager.KEY_INSTANCE_STATE)) {
+            return extras.getBundle(ThemeManager.KEY_INSTANCE_STATE);
+        }
+        return null;
+    }
+
     public boolean isAddonAttached(Class<? extends IAddon<?, ?>> clazz) {
         for (IAddon<?, ?> addon : addons) {
             if (addon.getClass() == clazz) {
@@ -139,6 +150,7 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        savedInstanceState = instanceState(savedInstanceState);
         super.onCreate(savedInstanceState);
         for (IAddon<?, ?> addon : addons) {
             addon.activity(this).onCreate(savedInstanceState);
@@ -232,6 +244,7 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
+        savedInstanceState = instanceState(savedInstanceState);
         for (IAddon<?, ?> addon : addons) {
             addon.activity(this).onPostCreate(savedInstanceState);
         }
@@ -345,6 +358,12 @@ public abstract class Activity extends _HoloActivity {
 
     public SherlockA requireSherlock() {
         return requireAddon(Sherlock.class).activity(this);
+    }
+
+    public Bundle saveInstanceState() {
+        Bundle bundle = new Bundle(getClassLoader());
+        onSaveInstanceState(bundle);
+        return bundle.size() > 0 ? bundle : null;
     }
 
     @Override

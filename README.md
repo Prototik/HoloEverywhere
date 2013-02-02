@@ -1,4 +1,5 @@
-# HoloEverywhere v1.4.2 
+[HoloEverywhere](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/logo.png)
+
 ## What is it?
 Bringing Holo Theme from Android 4.1 to 2.1 and above.
 ## Links

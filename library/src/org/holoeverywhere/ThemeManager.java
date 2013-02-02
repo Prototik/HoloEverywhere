@@ -15,10 +15,10 @@ import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar;
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Fullscreen;
 
 import org.holoeverywhere.ThemeManager.ThemeGetter.ThemeTag;
+import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build.VERSION;
@@ -119,9 +119,7 @@ public final class ThemeManager {
     }
 
     private static int _DEFAULT_THEME;
-
-    private static final int _START_RESOURCES_ID = 0x01000000;
-
+    public static final int _START_RESOURCES_ID = 0x01000000;
     private static ThemeGetter _THEME_GETTER;
     private static int _THEME_MASK = 0;
     private static int _THEME_MODIFIER = 0;
@@ -137,6 +135,14 @@ public final class ThemeManager {
      */
     public static final int FULLSCREEN;
     /**
+     * Boolean flag indicates that activity was be created by theme manager
+     */
+    public static final String KEY_CREATED_BY_THEME_MANAGER = ":holoeverywhere:createbythememanager";
+    /**
+     * Key for saving activity instance state. Only for system use
+     */
+    public static final String KEY_INSTANCE_STATE = ":holoeverywhere:instancestate";
+    /**
      * Flag indicates on the light theme. If you want light theme with dark
      * action bar, use {@link #MIXED} flag
      */
@@ -150,6 +156,7 @@ public final class ThemeManager {
      * Flag indicates on the theme without action bar
      */
     public static final int NO_ACTION_BAR;
+
     static {
         DARK = makeNewFlag();
         LIGHT = makeNewFlag();
@@ -552,7 +559,11 @@ public final class ThemeManager {
         if (force || ThemeManager.getTheme(activity) != theme) {
             Intent intent = new Intent(activity.getIntent());
             intent.setClass(activity, activity.getClass());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra(ThemeManager._THEME_TAG, theme);
+            intent.putExtra(KEY_INSTANCE_STATE, activity.saveInstanceState());
+            intent.putExtra(KEY_CREATED_BY_THEME_MANAGER, true);
             if (activity.isRestricted()) {
                 Application app = Application.getLastInstance();
                 if (app != null && !app.isRestricted()) {

@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.demo;
 
+import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.SlidingMenu.SlidingMenuA;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Fragment;
@@ -32,8 +33,6 @@ import com.slidingmenu.lib.SlidingMenu;
 public class DemoActivity extends Activity implements OnBackStackChangedListener {
     private final class NavigationAdapter extends DemoAdapter implements
             OnItemClickListener {
-        private int lastSelection = -1;
-
         public NavigationAdapter() {
             super(DemoActivity.this);
         }
@@ -48,10 +47,12 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         }
 
         public void onItemSelected(int position, boolean setData) {
-            if (lastSelection != position
-                    || mHasSlidingMenu && getSupportFragmentManager().getBackStackEntryCount() > 0) {
-                lastSelection = position;
-                getIntent().putExtra(KEY_PAGE, position);
+            if (position < 0) {
+                position = 0;
+            }
+            if (mCurrentPage != position || mStaticSlidingMenu
+                    && getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                mCurrentPage = position;
                 if (setData) {
                     ((NavigationItem) getItem(position)).onClick(null);
                 }
@@ -74,7 +75,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
             DemoListRowView view = makeView(convertView, parent);
             view.setLabel(title);
             view.setSelectionHandlerColorResource(R.color.holo_blue_dark);
-            view.setSelectionHandlerVisiblity(position == mNavigationAdapter.lastSelection);
+            view.setSelectionHandlerVisiblity(position == mCurrentPage);
             return view;
         }
 
@@ -96,10 +97,11 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
     private static final String KEY_DISABLE_MUSIC = "disableMusic";
     private static final String KEY_PAGE = "page";
-    private boolean mDisableMusic = false;
+    private int mCurrentPage = -1;
     private Handler mHandler;
-    private boolean mHasSlidingMenu;
     private NavigationAdapter mNavigationAdapter;
+    private boolean mStaticSlidingMenu, mCreatedByThemeManager = false, mDisableMusic = false,
+            mFirstRun;
 
     private int computeMenuWidth() {
         return (int) getResources().getFraction(R.dimen.demo_menu_width,
@@ -113,13 +115,15 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     @Override
     @SuppressLint("NewApi")
     public void onBackPressed() {
-        PlaybackService.pause(true);
-        super.onBackPressed();
+        if (!getSupportFragmentManager().popBackStackImmediate()) {
+            PlaybackService.pause(true);
+            finish();
+        }
     }
 
     @Override
     public void onBackStackChanged() {
-        if (!mHasSlidingMenu) {
+        if (!mStaticSlidingMenu) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(
                     getSupportFragmentManager().getBackStackEntryCount() > 0);
         }
@@ -127,10 +131,18 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        mFirstRun = savedInstanceState == null;
+        // This line restore instance state when we are change theme and
+        // activity restarts
+        savedInstanceState = instanceState(savedInstanceState);
         super.onCreate(savedInstanceState);
+
+        mCreatedByThemeManager = getIntent().getBooleanExtra(
+                ThemeManager.KEY_CREATED_BY_THEME_MANAGER, false);
 
         if (savedInstanceState != null) {
             mDisableMusic = savedInstanceState.getBoolean(KEY_DISABLE_MUSIC, false);
+            mCurrentPage = savedInstanceState.getInt(KEY_PAGE, 0);
         }
 
         final ActionBar ab = getSupportActionBar();
@@ -144,7 +156,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         View menu = findViewById(R.id.menu);
         if (menu == null) {
             // Phone
-            mHasSlidingMenu = true;
+            mStaticSlidingMenu = true;
             ab.setDisplayHomeAsUpEnabled(true);
             addonSM.setBehindContentView(makeMenuView(savedInstanceState));
             addonSM.setSlidingActionBarEnabled(true);
@@ -153,7 +165,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
             sm.setSlidingEnabled(true);
         } else {
             // Tablet
-            mHasSlidingMenu = false;
+            mStaticSlidingMenu = false;
             addonSM.setBehindContentView(new View(this)); // dummy view
             sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
             sm.setSlidingEnabled(false);
@@ -161,7 +173,6 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         }
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
-        onBackStackChanged();
     }
 
     @Override
@@ -191,7 +202,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
                 }
                 break;
             case android.R.id.home:
-                if (mHasSlidingMenu && getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                if (mStaticSlidingMenu && getSupportFragmentManager().getBackStackEntryCount() == 0) {
                     requireSlidingMenu().toggle();
                 } else {
                     onBackPressed();
@@ -210,6 +221,16 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        if (mCreatedByThemeManager) {
+            savedInstanceState = instanceState(savedInstanceState);
+            savedInstanceState.putBoolean("SlidingActivityHelper.open", false);
+            savedInstanceState.putBoolean("SlidingActivityHelper.secondary", false);
+        }
+        super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if (!mDisableMusic) {
@@ -221,6 +242,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(KEY_DISABLE_MUSIC, mDisableMusic);
+        outState.putInt(KEY_PAGE, mCurrentPage);
     }
 
     public void postDelayed(Runnable runnable, long delay) {
@@ -236,8 +258,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         mNavigationAdapter.add(SettingsFragment.class, R.string.settings);
         mNavigationAdapter.add(OtherFragment.class, R.string.other);
         mNavigationAdapter.add(AboutFragment.class, R.string.about);
-        mNavigationAdapter.onItemSelected(getIntent().getIntExtra(KEY_PAGE, 0),
-                savedInstanceState == null);
+        mNavigationAdapter.onItemSelected(mCurrentPage, mFirstRun);
         ListView list = (ListView) view.findViewById(R.id.list);
         list.setAdapter(mNavigationAdapter);
         list.setOnItemClickListener(mNavigationAdapter);

@@ -186,10 +186,19 @@ public final class FontLoader {
                     file.mkdirs();
                 }
                 file = new File(file, Integer.toHexString(font));
-                if (file.exists()) {
-                    file.delete();
-                }
-                Resources res = context.getResources();
+                FontLoader.FONT_CACHE.put(font,
+                        typeface = readTypeface(file, context.getResources(), font, false));
+            } catch (Exception e) {
+                Log.e(FontLoader.TAG, "Error of loading font", e);
+            }
+        }
+        return typeface;
+    }
+
+    private static Typeface readTypeface(File file, Resources res, int font,
+            boolean allowReadExistsFile) throws Exception {
+        try {
+            if (!allowReadExistsFile || !file.exists()) {
                 InputStream is = new BufferedInputStream(res.openRawResource(font));
                 OutputStream os = new ByteArrayOutputStream(Math.max(is.available(), 1024));
                 byte[] buffer = new byte[1024];
@@ -205,12 +214,14 @@ public final class FontLoader {
                 os.write(buffer);
                 os.flush();
                 os.close();
-                FontLoader.FONT_CACHE.put(font, typeface = Typeface.createFromFile(file));
-            } catch (Exception e) {
-                Log.e(FontLoader.TAG, "Error of loading font", e);
             }
+            return Typeface.createFromFile(file);
+        } catch (Exception e) {
+            if (allowReadExistsFile) {
+                return readTypeface(file, res, font, false);
+            }
+            throw e;
         }
-        return typeface;
     }
 
     private FontLoader() {

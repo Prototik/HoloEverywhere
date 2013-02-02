@@ -442,25 +442,25 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
             if (config.requireSherlock) {
                 activity.requireSherlock();
             }
-        }
-        final SparseIntArray windowFeatures = config.windowFeatures;
-        if (windowFeatures != null) {
-            for (int i = 0; i < windowFeatures.size(); i++) {
-                if (windowFeatures.valueAt(i) > 0) {
-                    requestWindowFeature((long) windowFeatures.keyAt(i));
+            final SparseIntArray windowFeatures = config.windowFeatures;
+            if (windowFeatures != null) {
+                for (int i = 0; i < windowFeatures.size(); i++) {
+                    if (windowFeatures.valueAt(i) > 0) {
+                        requestWindowFeature((long) windowFeatures.keyAt(i));
+                    }
                 }
             }
-        }
-        boolean forceThemeApply = isForceThemeApply();
-        if (config.forceThemeApply) {
-            setForceThemeApply(forceThemeApply = true);
-        }
-        if (lastThemeResourceId == 0) {
-            forceThemeApply = true;
-        }
-        ThemeManager.applyTheme(this, forceThemeApply);
-        if (!config.ignoreThemeCheck && getHoloThemeAttr() == 0) {
-            throw new HoloThemeException(this);
+            boolean forceThemeApply = isForceThemeApply();
+            if (config.forceThemeApply) {
+                setForceThemeApply(forceThemeApply = true);
+            }
+            if (lastThemeResourceId == 0) {
+                forceThemeApply = true;
+            }
+            ThemeManager.applyTheme(activity, forceThemeApply);
+            if (!config.ignoreThemeCheck && getHoloThemeAttr() == 0) {
+                throw new HoloThemeException(activity);
+            }
         }
         onPostInit(config, savedInstanceState);
     }
@@ -545,8 +545,12 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
 
     @Override
     public synchronized void setTheme(int resid) {
-        actionBarContext = null;
-        super.setTheme(lastThemeResourceId = resid);
+        if (resid > ThemeManager._START_RESOURCES_ID) {
+            actionBarContext = null;
+            super.setTheme(lastThemeResourceId = resid);
+        } else {
+            setTheme(ThemeManager.getThemeResource(resid));
+        }
     }
 
     @Override
