@@ -26,7 +26,7 @@
 			<version>${project.version}</version>
 			<type>apklib</type>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.holoeverywhere</groupId>
 			<artifactId>addon-slidingmenu</artifactId>
@@ -42,6 +42,10 @@
 		</dependency>
 	</dependencies>
 
+	<properties>
+		<holo.resbuilder.buildAll>false</holo.resbuilder.buildAll>
+	</properties>
+
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 
@@ -50,7 +54,6 @@
 				<groupId>org.holoeverywhere</groupId>
 				<artifactId>resbuilder</artifactId>
 				<configuration>
-					<buildAll>false</buildAll>
 					<includeDirs>
 						<dir>${project.basedir}/resbuilder</dir>
 						<dir>${project.basedir}/../library/resbuilder</dir>
@@ -66,12 +69,53 @@
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 				<artifactId>android-maven-plugin</artifactId>
 				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>zipalign</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<zipalign>
+						<skip>false</skip>
+						<verbose>true</verbose>
+						<inputApk>${project.build.directory}/${project.artifactId}-${project.version}.apk</inputApk>
+						<outputApk>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</outputApk>
+					</zipalign>
+					<file>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</file>
+				</configuration>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jarsigner-plugin</artifactId>
 				<inherited>true</inherited>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.7</version>
+				<configuration>
+					<artifacts>
+						<artifact>
+							<file>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</file>
+							<type>apk</type>
+							<classifier>signed-aligned</classifier>
+						</artifact>
+					</artifacts>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-signed-aligned</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -94,64 +138,18 @@
 						<executions>
 							<execution>
 								<id>manifestUpdate</id>
-								<phase>process-resources</phase>
+								<phase>initialize</phase>
 								<goals>
 									<goal>manifest-update</goal>
 								</goals>
 							</execution>
-							<execution>
-								<phase>package</phase>
-								<goals>
-									<goal>zipalign</goal>
-								</goals>
-							</execution>
 						</executions>
 						<configuration>
-							<zipalign>
-								<verbose>true</verbose>
-								<inputApk>${project.build.directory}/${project.artifactId}-${project.version}.apk</inputApk>
-								<outputApk>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</outputApk>
-							</zipalign>
 							<manifest>
 								<versionName>${project.version}</versionName>
-								<versionCodeAutoIncrement>true</versionCodeAutoIncrement>
+								<versionCodeUpdateFromVersion>true</versionCodeUpdateFromVersion>
 							</manifest>
-							<proguard>
-								<skip>false</skip>
-								<config>${project.baseDir}/proguard.cfg</config>
-							</proguard>
-							<sign>
-								<debug>false</debug>
-							</sign>
 						</configuration>
-					</plugin>
-
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>build-helper-maven-plugin</artifactId>
-						<configuration>
-							<artifacts>
-								<artifact>
-									<file>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</file>
-									<type>apk</type>
-									<classifier>signed-aligned</classifier>
-								</artifact>
-								<artifact>
-									<file>${project.build.directory}/proguard/mapping.txt</file>
-									<type>map</type>
-									<classifier>release</classifier>
-								</artifact>
-							</artifacts>
-						</configuration>
-						<executions>
-							<execution>
-								<id>attach-signed-aligned</id>
-								<phase>package</phase>
-								<goals>
-									<goal>attach-artifact</goal>
-								</goals>
-							</execution>
-						</executions>
 					</plugin>
 				</plugins>
 			</build>

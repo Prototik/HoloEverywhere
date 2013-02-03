@@ -30,8 +30,13 @@
 		<url>https://github.com/ChristopheVersieux/HoloEverywhere</url>
 		<connection>scm:git:git://github.com/ChristopheVersieux/HoloEverywhere.git</connection>
 		<developerConnection>scm:git:git@github.com:ChristopheVersieux/HoloEverywhere.git</developerConnection>
-		<tag>holoeverywhere-parent-1.3.2</tag>
+		<tag>holoeverywhere-1.5</tag>
 	</scm>
+
+	<ciManagement>
+		<system>jenkins</system>
+		<url>http://ci.holoeverywhere.org/</url>
+	</ciManagement>
 
 	<developers>
 		<developer>
@@ -90,6 +95,9 @@
 
 		<github.downloads.repositoryOwner>ChristopheVersieux</github.downloads.repositoryOwner>
 		<github.downloads.repositoryName>HoloEverywhere</github.downloads.repositoryName>
+
+		<holo.resbuilder.buildAll>true</holo.resbuilder.buildAll>
+		<holo.resbuilder.outputDir>${project.basedir}/res</holo.resbuilder.outputDir>
 	</properties>
 
 	<dependencyManagement>
@@ -125,12 +133,9 @@
 						</execution>
 					</executions>
 					<configuration>
-						<buildAll>true</buildAll>
 						<includeDirs>
 							<dir>${project.basedir}/resbuilder</dir>
 						</includeDirs>
-						<outputDir>${project.basedir}/res</outputDir>
-						<verbose>false</verbose>
 					</configuration>
 				</plugin>
 
@@ -184,8 +189,8 @@
 					<version>2.4</version>
 					<configuration>
 						<autoVersionSubmodules>true</autoVersionSubmodules>
-						<tagNameFormat>holoeverywhere-${project.version}</tagNameFormat>
-						<scmCommentPrefix>Release:</scmCommentPrefix>
+						<tagNameFormat>holoeverywhere-@{project.version}</tagNameFormat>
+						<scmCommentPrefix>Release: </scmCommentPrefix>
 					</configuration>
 				</plugin>
 
@@ -259,7 +264,7 @@
 									<pluginExecutionFilter>
 										<groupId>org.holoeverywhere</groupId>
 										<artifactId>resbuilder</artifactId>
-										<versionRange>1.4.3-SNAPSHOT</versionRange>
+										<versionRange>${project.version}</versionRange>
 										<goals>
 											<goal>build</goal>
 										</goals>

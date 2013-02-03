@@ -139,6 +139,9 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
         mCreatedByThemeManager = getIntent().getBooleanExtra(
                 ThemeManager.KEY_CREATED_BY_THEME_MANAGER, false);
+        if (mCreatedByThemeManager) {
+            mFirstRun = false;
+        }
 
         if (savedInstanceState != null) {
             mDisableMusic = savedInstanceState.getBoolean(KEY_DISABLE_MUSIC, false);

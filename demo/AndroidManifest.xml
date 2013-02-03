@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="org.holoeverywhere.demo"
-	android:versionCode="23"
-	android:versionName="1.4.2" >
-	<uses-sdk
-		android:minSdkVersion="7"
-		android:targetSdkVersion="16" />
-	<application
-		android:name=".DemoApplication"
-		android:allowBackup="false"
-		android:hardwareAccelerated="true"
-		android:icon="@drawable/icon"
-		android:label="@string/app_name" >
-		<activity
-			android:name=".DemoActivity"
-			android:windowSoftInputMode="stateHidden" >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1004003" android:versionName="1.4.3-SNAPSHOT" package="org.holoeverywhere.demo">
+	<uses-sdk android:minSdkVersion="7" android:targetSdkVersion="16"/>
+	<application android:allowBackup="false" android:hardwareAccelerated="true" android:icon="@drawable/icon" android:label="@string/app_name" android:name=".DemoApplication">
+		<activity android:name=".DemoActivity" android:windowSoftInputMode="stateHidden">
 			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
+				<action android:name="android.intent.action.MAIN"/>
+				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
 	</application>
