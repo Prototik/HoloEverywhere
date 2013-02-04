@@ -17,8 +17,8 @@
 	<attr name="switchPreferenceStyle" format="reference" />
 	<attr name="seekBarPreferenceStyle" format="reference" />
 	<attr name="seekBarDialogPreferenceStyle" format="reference" />
-	<attr name="datePreferenceStyle" />
-	<attr name="timePreferenceStyle" />
+	<attr name="datePreferenceStyle" format="reference" />
+	<attr name="timePreferenceStyle" format="reference" />
 	<declare-styleable name="Preference">
 		<!--
 		Already defined in ABS

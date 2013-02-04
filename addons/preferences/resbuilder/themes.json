@@ -18,7 +18,7 @@
                 "seekBarDialogPreferenceStyle": "@style/Holo.PreferenceDialog.SeekBarDialogPreference", 
                 "seekBarPreferenceStyle": "@style/Holo.PreferenceSeekBar", 
                 "switchPreferenceStyle": "@style/Holo.PreferenceSwitch", 
-                "yesNoPreferenceStyle": "@style/Holo.PreferenceDialog.YesNoPreference"
+                "yesNoPreferenceStyle": "@style/Holo.PreferenceDialog.YesNoPreference",
 			}
 		},
 		"data": {

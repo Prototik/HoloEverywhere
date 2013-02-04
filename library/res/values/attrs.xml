@@ -39,6 +39,7 @@
 	<attr name="autoCompleteTextViewStyle" format="reference" />
 	<attr name="panelMenuListWidth" format="dimension" />
 	<attr name="textAppearanceListItem" format="reference" />
+	<attr name="colorPickerStyle" format="reference" />
 	<attr name="holoTheme">
 		<enum name="invalid" value="0" />
 		<enum name="dark" value="1" />
@@ -248,5 +249,16 @@
 			<enum name="atThumb" value="1" />
 		</attr>
 		<attr name="fastScrollTextColor" format="color" />
+	</declare-styleable>
+	<declare-styleable name="LayerDrawable">
+		<attr name="android:opacity" />
+	</declare-styleable>
+	<declare-styleable name="LayerDrawableItem">
+		<attr name="android:left" />
+		<attr name="android:top" />
+		<attr name="android:right" />
+		<attr name="android:bottom" />
+		<attr name="android:drawable" />
+		<attr name="android:id" />
 	</declare-styleable>
 </resources>

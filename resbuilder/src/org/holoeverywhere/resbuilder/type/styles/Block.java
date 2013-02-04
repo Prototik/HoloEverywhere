@@ -66,9 +66,14 @@ public class Block {
         SortedMap<String, String> data = new TreeMap<String, String>(TypeStrings.COMPARATOR);
         data.putAll(this.data);
         for (Entry<String, String> entry : data.entrySet()) {
+            String key = entry.getKey(), value = entry.getValue();
             writer.writeStartElement("item");
-            writer.writeAttribute("name", entry.getKey());
-            writer.writeCharacters(entry.getValue());
+            writer.writeAttribute("name", key);
+            if (value.startsWith("fraction:")) {
+                writer.writeAttribute("type", "fraction");
+                value = value.substring("fraction:".length());
+            }
+            writer.writeCharacters(value);
             writer.writeEndElement();
         }
     }

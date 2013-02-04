@@ -25,13 +25,13 @@ public class DatePreference extends DialogPreference {
             calendar.set(Calendar.MONTH, mMonth = month);
             calendar.set(Calendar.DAY_OF_MONTH, mDay = day);
             DatePreference.this.onDateSet(datePicker, calendar.getTimeInMillis(), year, month, day);
+            updateDialogState();
         }
     };
 
-    private long mCurrentTime = Long.MAX_VALUE;
-
+    private long mDefaultDate;
+    private boolean mDefaultDateSetted = false;
     private OnDateSetListener mOnDateSetListener;
-
     private int mYear, mMonth, mDay;
 
     public DatePreference(Context context) {
@@ -49,15 +49,15 @@ public class DatePreference extends DialogPreference {
         a.recycle();
     }
 
-    public long getCurrentTime() {
-        if (mCurrentTime == Long.MAX_VALUE) {
-            return System.currentTimeMillis();
-        }
-        return mCurrentTime;
-    }
-
     public int getDay() {
         return mDay;
+    }
+
+    public long getDefaultDate() {
+        if (!mDefaultDateSetted) {
+            return System.currentTimeMillis();
+        }
+        return mDefaultDate;
     }
 
     public int getMonth() {
@@ -88,7 +88,7 @@ public class DatePreference extends DialogPreference {
     protected String onGetDefaultValue(TypedArray a, int index) {
         String value = a.getString(index);
         if (value == null || value.length() == 0) {
-            value = String.valueOf(getCurrentTime());
+            value = String.valueOf(getDefaultDate());
         }
         return value;
     }
@@ -96,27 +96,39 @@ public class DatePreference extends DialogPreference {
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
         if (restorePersistedValue) {
-            defaultValue = getPersistedLong(getCurrentTime());
+            defaultValue = getPersistedLong(getDefaultDate());
         }
         long time;
         try {
+            if (defaultValue instanceof Long) {
+                time = ((Long) defaultValue).longValue();
+            } else {
+                time = Long.parseLong(String.valueOf(defaultValue));
+            }
             time = Long.parseLong(String.valueOf(defaultValue));
         } catch (Exception e) {
-            time = getCurrentTime();
+            time = getDefaultDate();
         }
         setTime(time);
     }
 
-    public void setCurrentTime(long time) {
-        mCurrentTime = time;
+    public void resetDefaultDate() {
+        mDefaultDateSetted = false;
     }
 
     public void setDay(int day) {
         mDay = day;
+        updateDialogState();
+    }
+
+    public void setDefaultDate(long defaultDate) {
+        mDefaultDate = defaultDate;
+        mDefaultDateSetted = true;
     }
 
     public void setMonth(int month) {
         mMonth = month;
+        updateDialogState();
     }
 
     public void setOnDateSetListener(OnDateSetListener onTimeSetListener) {
@@ -126,13 +138,15 @@ public class DatePreference extends DialogPreference {
     private void setTime(long time) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(time);
-        setYear(calendar.get(Calendar.YEAR));
-        setMonth(calendar.get(Calendar.MONTH));
-        setDay(calendar.get(Calendar.DAY_OF_MONTH));
+        mYear = calendar.get(Calendar.YEAR);
+        mMonth = calendar.get(Calendar.MONTH);
+        mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        updateDialogState();
     }
 
     public void setYear(int year) {
         mYear = year;
+        updateDialogState();
     }
 
     protected void updateDialogState() {

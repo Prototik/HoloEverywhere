@@ -28,14 +28,6 @@
 			holo:summaryOff="@string/preference_switch_summary_off"
 			holo:summaryOn="@string/preference_switch_summary_on"
 			holo:title="@string/preference_switch_title" />
-		<NumberPickerPreference
-			holo:id="@+id/number_picker"
-			holo:defaultValue="10"
-			holo:dialogMessage="@string/preference_number_picker_dialog_title"
-			holo:max="25"
-			holo:min="5"
-			holo:summary="@string/preference_number_picker_summary"
-			holo:title="@string/preference_number_picker_title" />
 	</PreferenceCategory>
 	<PreferenceCategory holo:title="@string/preference_lists" >
 		<ListPreference
@@ -55,9 +47,7 @@
 			holo:summary="@string/preference_multi_list_summary"
 			holo:title="@string/preference_multi_list_title" />
 	</PreferenceCategory>
-	<PreferenceCategory
-		holo:summary="Addon for HoloEverywhere"
-		holo:title="ExtPreferences" >
+	<PreferenceCategory holo:title="ExtPreferences" >
 		<TimePreference
 			holo:id="@+id/time_preference"
 			holo:summary="When next party?"
@@ -66,6 +56,14 @@
 			holo:id="@+id/date_preference"
 			holo:summary="When next the end?"
 			holo:title="Date" />
+		<NumberPickerPreference
+			holo:id="@+id/number_picker"
+			holo:defaultValue="10"
+			holo:dialogMessage="@string/preference_number_picker_dialog_title"
+			holo:max="25"
+			holo:min="5"
+			holo:summary="@string/preference_number_picker_summary"
+			holo:title="@string/preference_number_picker_title" />
 	</PreferenceCategory>
 	<PreferenceCategory holo:title="@string/preference_other" >
 		<PreferenceScreen holo:title="@string/preference_unsupported" >

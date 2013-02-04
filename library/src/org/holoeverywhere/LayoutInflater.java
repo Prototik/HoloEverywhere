@@ -11,30 +11,6 @@ import org.holoeverywhere.SystemServiceManager.SystemServiceCreator;
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
 import org.holoeverywhere.internal.DialogTitle;
 import org.holoeverywhere.internal.NumberPickerEditText;
-import org.holoeverywhere.widget.AutoCompleteTextView;
-import org.holoeverywhere.widget.Button;
-import org.holoeverywhere.widget.CalendarView;
-import org.holoeverywhere.widget.CheckBox;
-import org.holoeverywhere.widget.CheckedTextView;
-import org.holoeverywhere.widget.DatePicker;
-import org.holoeverywhere.widget.Divider;
-import org.holoeverywhere.widget.EditText;
-import org.holoeverywhere.widget.ExpandableListView;
-import org.holoeverywhere.widget.FrameLayout;
-import org.holoeverywhere.widget.GridView;
-import org.holoeverywhere.widget.LinearLayout;
-import org.holoeverywhere.widget.ListView;
-import org.holoeverywhere.widget.ModalBackgroundWrapper;
-import org.holoeverywhere.widget.MultiAutoCompleteTextView;
-import org.holoeverywhere.widget.NumberPicker;
-import org.holoeverywhere.widget.ProgressBar;
-import org.holoeverywhere.widget.RadioButton;
-import org.holoeverywhere.widget.SeekBar;
-import org.holoeverywhere.widget.Spinner;
-import org.holoeverywhere.widget.Switch;
-import org.holoeverywhere.widget.TextView;
-import org.holoeverywhere.widget.TimePicker;
-import org.holoeverywhere.widget.ToggleButton;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.annotation.SuppressLint;
@@ -94,34 +70,9 @@ public class LayoutInflater extends android.view.LayoutInflater implements
     private static final Map<String, String> VIEWS_MAP = new HashMap<String, String>();
 
     static {
-        remap(ProgressBar.class);
-        remap(LinearLayout.class);
-        remap(Switch.class);
-        remap(TextView.class);
-        remap(EditText.class);
-        remap(AutoCompleteTextView.class);
-        remap(MultiAutoCompleteTextView.class);
-        remap(CalendarView.class);
-        remap(Spinner.class);
-        remap(NumberPicker.class);
-        remap(DatePicker.class);
-        remap(TimePicker.class);
-        remap(ListView.class);
-        remap(Divider.class);
-        remap(SeekBar.class);
-        remap(Button.class);
-        remap(CheckedTextView.class);
-        remap(ToggleButton.class);
-        remap(RadioButton.class);
-        remap(CheckBox.class);
-        remap(ViewPager.class);
         remap(PagerTitleStrip.class);
         remap(WebView.class);
-        remap(FrameLayout.class);
-        remap(GridView.class);
         remap(ViewPager.class);
-        remap(ModalBackgroundWrapper.class);
-        remap(ExpandableListView.class);
         remapInternal(ActionBarView.class, HoloListMenuItemView.class,
                 ExpandedMenuView.class, ActionBarContainer.class, DialogTitle.class,
                 NumberPickerEditText.class);
@@ -318,6 +269,10 @@ public class LayoutInflater extends android.view.LayoutInflater implements
             if (view != null) {
                 return prepareView(view);
             }
+        }
+        view = tryCreateView(name, HoloEverywhere.PACKAGE + ".widget.", attrs);
+        if (view != null) {
+            return prepareView(view);
         }
         view = tryCreateView(name, "android.widget.", attrs);
         if (view != null) {

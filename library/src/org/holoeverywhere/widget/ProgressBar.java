@@ -4,6 +4,7 @@ package org.holoeverywhere.widget;
 import java.util.ArrayList;
 
 import org.holoeverywhere.R;
+import org.holoeverywhere.drawable.DrawableCompat;
 import org.holoeverywhere.internal._View;
 import org.holoeverywhere.util.Pool;
 import org.holoeverywhere.util.Poolable;
@@ -25,12 +26,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.RotateDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
-import android.os.Build.VERSION;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -212,8 +211,7 @@ public class ProgressBar extends android.widget.ProgressBar {
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.ProgressBar, defStyle, styleRes);
         mNoInvalidate = true;
-
-        Drawable drawable = getDrawable(a,
+        Drawable drawable = DrawableCompat.getDrawable(a,
                 R.styleable.ProgressBar_android_progressDrawable);
         if (drawable != null) {
             drawable = tileify(drawable, false);
@@ -245,7 +243,7 @@ public class ProgressBar extends android.widget.ProgressBar {
         setSecondaryProgress(a.getInt(
                 R.styleable.ProgressBar_android_secondaryProgress,
                 mSecondaryProgress));
-        drawable = getDrawable(a,
+        drawable = DrawableCompat.getDrawable(a,
                 R.styleable.ProgressBar_android_indeterminateDrawable);
         if (drawable != null) {
             drawable = tileifyIndeterminate(drawable);
@@ -289,43 +287,6 @@ public class ProgressBar extends android.widget.ProgressBar {
 
     protected Drawable getCurrentDrawable() {
         return mCurrentDrawable;
-    }
-
-    // Very funny change android.RotateDrawable on custom RotateDrawable,
-    // ported from JB
-    private Drawable getDrawable(TypedArray a, int attr) {
-        Drawable d = a.getDrawable(attr);
-        try {
-            int id = a.getResourceId(attr, 0);
-            if ((id == R.drawable.progress_small_holo
-                    || id == R.drawable.progress_medium_holo || id == R.drawable.progress_large_holo)
-                    && VERSION.SDK_INT < 14) {
-                LayerDrawable layers = (LayerDrawable) d;
-                int layersCount = layers.getNumberOfLayers();
-                Drawable[] newLayers = new Drawable[layersCount];
-                for (int i = 0; i < layersCount; i++) {
-                    Drawable layer = layers.getDrawable(i);
-                    if (layer instanceof RotateDrawable && (i == 0 || i == 1)) {
-                        org.holoeverywhere.drawable.RotateDrawable r = new org.holoeverywhere.drawable.RotateDrawable();
-                        Drawable rotatedDrawable = ((RotateDrawable) layer)
-                                .getDrawable();
-                        if (i == 0) {
-                            r.setState(rotatedDrawable, true, true, 0.5f, 0.5f,
-                                    0f, 1080f);
-                        } else if (i == 1) {
-                            r.setState(rotatedDrawable, true, true, 0.5f, 0.5f,
-                                    720f, 0f);
-                        }
-                        layer = r;
-                    }
-                    newLayers[i] = layer;
-                }
-                return new LayerDrawable(newLayers);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return d;
     }
 
     private Shape getDrawableShape() {

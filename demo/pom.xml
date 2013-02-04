@@ -119,40 +119,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>release</id>
-			<activation>
-				<property>
-					<name>performRelease</name>
-					<value>true</value>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-						<artifactId>android-maven-plugin</artifactId>
-						<extensions>true</extensions>
-						<executions>
-							<execution>
-								<id>manifestUpdate</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>manifest-update</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<manifest>
-								<versionName>${project.version}</versionName>
-								<versionCodeUpdateFromVersion>true</versionCodeUpdateFromVersion>
-							</manifest>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 </project>

@@ -53,6 +53,9 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
             if (mCurrentPage != position || mStaticSlidingMenu
                     && getSupportFragmentManager().getBackStackEntryCount() > 0) {
                 mCurrentPage = position;
+                if (mOnMenuClickListener != null) {
+                    mOnMenuClickListener.onMenuClick(position);
+                }
                 if (setData) {
                     ((NavigationItem) getItem(position)).onClick(null);
                 }
@@ -95,11 +98,18 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         }
     }
 
+    public static interface OnMenuClickListener {
+        public void onMenuClick(int position);
+    }
+
     private static final String KEY_DISABLE_MUSIC = "disableMusic";
     private static final String KEY_PAGE = "page";
     private int mCurrentPage = -1;
     private Handler mHandler;
     private NavigationAdapter mNavigationAdapter;
+
+    private OnMenuClickListener mOnMenuClickListener;
+
     private boolean mStaticSlidingMenu, mCreatedByThemeManager = false, mDisableMusic = false,
             mFirstRun;
 
@@ -285,5 +295,9 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
     public SlidingMenuA requireSlidingMenu() {
         return requireAddon(org.holoeverywhere.addon.SlidingMenu.class).activity(this);
+    }
+
+    public void setOnMenuClickListener(OnMenuClickListener onMenuClickListener) {
+        mOnMenuClickListener = onMenuClickListener;
     }
 }

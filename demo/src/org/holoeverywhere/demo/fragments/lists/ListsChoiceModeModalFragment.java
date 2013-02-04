@@ -2,10 +2,13 @@
 package org.holoeverywhere.demo.fragments.lists;
 
 import org.holoeverywhere.ArrayAdapter;
+import org.holoeverywhere.demo.DemoActivity;
+import org.holoeverywhere.demo.DemoActivity.OnMenuClickListener;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.ListView.MultiChoiceModeListener;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.actionbarsherlock.view.ActionMode;
@@ -13,9 +16,9 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class ListsChoiceModeModalFragment extends ListsBaseFragment implements
-        MultiChoiceModeListener {
+        MultiChoiceModeListener, OnMenuClickListener {
     private ActionMode mLastActionMode;
-
+    private DemoActivity mLastActivity;
     private ListView mList;
 
     @Override
@@ -40,6 +43,12 @@ public class ListsChoiceModeModalFragment extends ListsBaseFragment implements
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        (mLastActivity = (DemoActivity) getSupportActivity()).setOnMenuClickListener(this);
+    }
+
+    @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         mLastActionMode = mode;
         mode.setTitle(R.string.library_name);
@@ -53,18 +62,26 @@ public class ListsChoiceModeModalFragment extends ListsBaseFragment implements
     }
 
     @Override
+    public void onDetach() {
+        if (mLastActivity != null) {
+            mLastActivity.setOnMenuClickListener(null);
+            mLastActivity = null;
+        }
+        super.onDetach();
+    }
+
+    @Override
     public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
         mLastActionMode = mode;
         mode.setSubtitle("Checked: " + mList.getCheckedItemCount());
     }
 
     @Override
-    public void onPause() {
+    public void onMenuClick(int position) {
         if (mLastActionMode != null) {
             mLastActionMode.finish();
             mLastActionMode = null;
         }
-        super.onPause();
     }
 
     @Override
