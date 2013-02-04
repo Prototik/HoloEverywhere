@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.ThemeManager;
+import org.holoeverywhere.addon.IAddon;
 import org.holoeverywhere.addon.Sherlock;
 import org.holoeverywhere.addon.Sherlock.SherlockA;
-import org.holoeverywhere.addons.IAddon;
 
 import android.content.res.Configuration;
 import android.os.Build.VERSION;

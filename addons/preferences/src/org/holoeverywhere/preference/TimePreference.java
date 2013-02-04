@@ -30,10 +30,7 @@ public class TimePreference extends DialogPreference {
         }
     };
 
-    private long mCurrentTime = Long.MAX_VALUE;
-
     private int mHour, mMinute;
-
     private OnTimeSetListener mOnTimeSetListener;
 
     public TimePreference(Context context) {
@@ -66,10 +63,7 @@ public class TimePreference extends DialogPreference {
     }
 
     public long getCurrentTime() {
-        if (mCurrentTime == Long.MAX_VALUE) {
-            return System.currentTimeMillis();
-        }
-        return mCurrentTime;
+        return System.currentTimeMillis();
     }
 
     public int getHour() {
@@ -120,10 +114,6 @@ public class TimePreference extends DialogPreference {
         if (mOnTimeSetListener == null || mOnTimeSetListener.onTimeSet(this, time, hour, minute)) {
             persistLong(time);
         }
-    }
-
-    public void setCurrentTime(long time) {
-        mCurrentTime = time;
     }
 
     public void setHour(int hour) {

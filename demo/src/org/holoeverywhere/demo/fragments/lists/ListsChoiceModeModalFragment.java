@@ -14,6 +14,8 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class ListsChoiceModeModalFragment extends ListsBaseFragment implements
         MultiChoiceModeListener {
+    private ActionMode mLastActionMode;
+
     private ListView mList;
 
     @Override
@@ -23,6 +25,7 @@ public class ListsChoiceModeModalFragment extends ListsBaseFragment implements
 
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem) {
+        mLastActionMode = mode;
         switch (menuItem.getItemId()) {
             case R.id.inverse:
                 final int count = mList.getCount();
@@ -38,6 +41,7 @@ public class ListsChoiceModeModalFragment extends ListsBaseFragment implements
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        mLastActionMode = mode;
         mode.setTitle(R.string.library_name);
         getMenuInflater().inflate(R.menu.lists_choice_mode_modal, menu);
         return true;
@@ -45,16 +49,27 @@ public class ListsChoiceModeModalFragment extends ListsBaseFragment implements
 
     @Override
     public void onDestroyActionMode(ActionMode mode) {
-
+        mLastActionMode = null;
     }
 
     @Override
     public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+        mLastActionMode = mode;
         mode.setSubtitle("Checked: " + mList.getCheckedItemCount());
     }
 
     @Override
+    public void onPause() {
+        if (mLastActionMode != null) {
+            mLastActionMode.finish();
+            mLastActionMode = null;
+        }
+        super.onPause();
+    }
+
+    @Override
     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        mLastActionMode = mode;
         return true;
     }
 

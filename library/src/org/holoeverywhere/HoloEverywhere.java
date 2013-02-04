@@ -23,6 +23,7 @@ public class HoloEverywhere {
      * Disable any overscroll effects for views
      */
     public static boolean DISABLE_OVERSCROLL_EFFECT;
+
     /**
      * Since 1.5 to preferences can be assigned id instead of key. But for
      * saving values in SharedPreferences using key, and it has next format:
@@ -34,17 +35,23 @@ public class HoloEverywhere {
      * If it options true - key for the preference will be name of id row:
      * 
      * <pre>
-     *  <Preference holo:id="@+id/myCoolPreference" />
+     *  &lt;Preference holo:id="@+id/myCoolPreference" /&gt;
      *  
      *  Key for SharedPreferences: myCoolPreference
      * </pre>
      */
     public static boolean NAMED_PREFERENCES;
+
+    /**
+     * Main package of HoloEverywhere
+     */
     public static final String PACKAGE;
+
     /**
      * Preference implementation using by default
      */
     public static PreferenceImpl PREFERENCE_IMPL;
+
     /**
      * Wrap any context menu calls by native classes. Like it do ABS on Android
      * 4.0+ with options menu
@@ -64,5 +71,4 @@ public class HoloEverywhere {
 
     private HoloEverywhere() {
     }
-
 }

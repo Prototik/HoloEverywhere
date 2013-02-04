@@ -3,9 +3,6 @@ package org.holoeverywhere.addon;
 
 import org.holoeverywhere.addon.SlidingMenu.SlidingMenuA;
 import org.holoeverywhere.addon.SlidingMenu.SlidingMenuF;
-import org.holoeverywhere.addons.IAddon;
-import org.holoeverywhere.addons.IAddonActivity;
-import org.holoeverywhere.addons.IAddonFragment;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Fragment;
 

@@ -17,7 +17,7 @@ public class Toast extends android.widget.Toast {
         toast.setDuration(duration);
         TextView view = new TextView(context);
         view.setText(s);
-        view.setTextColor(0xFFDADADA);
+        view.setTextColor(0xFFFFFFFF);
         view.setGravity(Gravity.CENTER);
         view.setBackgroundResource(R.drawable.toast_frame);
         toast.setView(view);

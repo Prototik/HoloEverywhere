@@ -160,7 +160,7 @@ public final class ThemeManager {
     static {
         DARK = makeNewFlag();
         LIGHT = makeNewFlag();
-        MIXED = makeNewFlag();
+        MIXED = DARK | LIGHT;
         FULLSCREEN = makeNewFlag();
         NO_ACTION_BAR = makeNewFlag();
 
@@ -328,7 +328,7 @@ public final class ThemeManager {
     }
 
     private static boolean is(int config, int key) {
-        return (config & key) != 0;
+        return (config & key) == key;
     }
 
     public static boolean isDark(Activity activity) {
@@ -573,6 +573,7 @@ public final class ThemeManager {
             } else {
                 if (!activity.isFinishing()) {
                     activity.finish();
+                    activity.overridePendingTransition(0, 0);
                 }
                 if (activity instanceof SuperStartActivity) {
                     ((SuperStartActivity) activity).superStartActivity(intent,

@@ -1,5 +1,5 @@
 
-package org.holoeverywhere.addons;
+package org.holoeverywhere.addon;
 
 import org.holoeverywhere.app.Activity;
 

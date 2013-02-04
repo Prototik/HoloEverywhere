@@ -4,9 +4,9 @@ package org.holoeverywhere.app;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.holoeverywhere.addon.IAddon;
 import org.holoeverywhere.addon.Sherlock;
 import org.holoeverywhere.addon.Sherlock.SherlockF;
-import org.holoeverywhere.addons.IAddon;
 
 import android.content.Context;
 import android.os.Bundle;

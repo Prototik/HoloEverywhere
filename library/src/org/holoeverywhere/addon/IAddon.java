@@ -1,5 +1,5 @@
 
-package org.holoeverywhere.addons;
+package org.holoeverywhere.addon;
 
 import java.util.Map;
 import java.util.WeakHashMap;

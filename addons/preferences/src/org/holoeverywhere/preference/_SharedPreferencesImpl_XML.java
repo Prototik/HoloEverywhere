@@ -1,10 +1,10 @@
 
 package org.holoeverywhere.preference;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.holoeverywhere.IHoloActivity;
 import org.holoeverywhere.app.Application;
@@ -18,49 +18,6 @@ import android.os.Build.VERSION;
 import android.util.Log;
 
 public final class _SharedPreferencesImpl_XML extends _SharedPreferencesBase {
-    public static class BaseOnSharedPreferenceChangeListener implements
-            android.content.SharedPreferences.OnSharedPreferenceChangeListener {
-        private static final Map<OnSharedPreferenceChangeListener, BaseOnSharedPreferenceChangeListener> instances = new HashMap<SharedPreferences.OnSharedPreferenceChangeListener, BaseOnSharedPreferenceChangeListener>();
-
-        @SuppressWarnings("unchecked")
-        public static <T extends BaseOnSharedPreferenceChangeListener> T obtain(
-                SharedPreferences prefs,
-                OnSharedPreferenceChangeListener listener) {
-            if (!BaseOnSharedPreferenceChangeListener.instances
-                    .containsKey(listener)) {
-                synchronized (BaseOnSharedPreferenceChangeListener.instances) {
-                    if (!BaseOnSharedPreferenceChangeListener.instances
-                            .containsKey(listener)) {
-                        try {
-                            BaseOnSharedPreferenceChangeListener.instances.put(
-                                    listener,
-                                    new BaseOnSharedPreferenceChangeListener(prefs, listener));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-            return (T) BaseOnSharedPreferenceChangeListener.instances
-                    .get(listener);
-        }
-
-        private OnSharedPreferenceChangeListener listener;
-        private SharedPreferences prefs;
-
-        public BaseOnSharedPreferenceChangeListener(SharedPreferences prefs,
-                OnSharedPreferenceChangeListener listener) {
-            this.prefs = prefs;
-            this.listener = listener;
-        }
-
-        @Override
-        public void onSharedPreferenceChanged(
-                android.content.SharedPreferences sharedPreferences, String key) {
-            listener.onSharedPreferenceChanged(prefs, key);
-        }
-    }
-
     private final class EditorImpl extends _BaseEditor {
         private android.content.SharedPreferences.Editor editor;
 
@@ -171,6 +128,36 @@ public final class _SharedPreferencesImpl_XML extends _SharedPreferencesBase {
         public Editor remove(String key) {
             editor.remove(key);
             return this;
+        }
+    }
+
+    private static final class ListenerWrapper implements
+            android.content.SharedPreferences.OnSharedPreferenceChangeListener {
+        private static final Map<OnSharedPreferenceChangeListener, ListenerWrapper> INSTANCES = new WeakHashMap<OnSharedPreferenceChangeListener, ListenerWrapper>();
+
+        public static synchronized ListenerWrapper obtain(
+                SharedPreferences prefs,
+                OnSharedPreferenceChangeListener listener) {
+            ListenerWrapper t = ListenerWrapper.INSTANCES.get(listener);
+            if (t == null) {
+                INSTANCES.put(listener, t = new ListenerWrapper(prefs, listener));
+            }
+            return t;
+        }
+
+        private OnSharedPreferenceChangeListener listener;
+        private SharedPreferences prefs;
+
+        private ListenerWrapper(SharedPreferences prefs,
+                OnSharedPreferenceChangeListener listener) {
+            this.prefs = prefs;
+            this.listener = listener;
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(
+                android.content.SharedPreferences sharedPreferences, String key) {
+            listener.onSharedPreferenceChanged(prefs, key);
         }
     }
 
@@ -312,7 +299,7 @@ public final class _SharedPreferencesImpl_XML extends _SharedPreferencesBase {
     @Override
     public void registerOnSharedPreferenceChangeListener(
             OnSharedPreferenceChangeListener listener) {
-        registerOnSharedPreferenceChangeListener(BaseOnSharedPreferenceChangeListener
+        registerOnSharedPreferenceChangeListener(ListenerWrapper
                 .obtain(this, listener));
     }
 
@@ -325,7 +312,7 @@ public final class _SharedPreferencesImpl_XML extends _SharedPreferencesBase {
     @Override
     public void unregisterOnSharedPreferenceChangeListener(
             OnSharedPreferenceChangeListener listener) {
-        unregisterOnSharedPreferenceChangeListener(BaseOnSharedPreferenceChangeListener
+        unregisterOnSharedPreferenceChangeListener(ListenerWrapper
                 .obtain(this, listener));
     }
 }
