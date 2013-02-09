@@ -1,10 +1,10 @@
 
-package org.holoeverywhere.internal;
+package org.holoeverywhere.preference;
 
 import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.R;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.AlertDialog.Builder;
+import org.holoeverywhere.app.Dialog;
 import org.holoeverywhere.internal.AlertController.AlertParams.OnPrepareListViewListener;
 import org.holoeverywhere.widget.ListView;
 
@@ -27,7 +27,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 
-public class RingtonePicker implements OnItemSelectedListener, Runnable,
+public class _RingtonePickerDialog implements OnItemSelectedListener, Runnable,
         OnClickListener, OnPrepareListViewListener, OnCancelListener,
         OnDismissListener {
     public static interface RingtonePickerListener {
@@ -52,7 +52,7 @@ public class RingtonePicker implements OnItemSelectedListener, Runnable,
     private RingtoneManager ringtoneManager;
     private Uri uriForDefaultItem;
 
-    public RingtonePicker(Context context, Intent intent,
+    public _RingtonePickerDialog(Context context, Intent intent,
             RingtonePickerListener listener) {
         this.context = context;
         this.intent = intent;
@@ -76,14 +76,14 @@ public class RingtonePicker implements OnItemSelectedListener, Runnable,
         return listView.getHeaderViewsCount() - 1;
     }
 
-    public RingtonePicker cancel() {
+    public _RingtonePickerDialog cancel() {
         if (dialog != null) {
             dialog.cancel();
         }
         return this;
     }
 
-    public RingtonePicker create() {
+    public _RingtonePickerDialog create() {
         if (dialog != null) {
             return this;
         }
@@ -117,7 +117,7 @@ public class RingtonePicker implements OnItemSelectedListener, Runnable,
         return this;
     }
 
-    public RingtonePicker dismiss() {
+    public _RingtonePickerDialog dismiss() {
         if (dialog != null) {
             dialog.dismiss();
         }
@@ -142,6 +142,11 @@ public class RingtonePicker implements OnItemSelectedListener, Runnable,
 
     private int getRingtoneManagerPosition(int listPos) {
         return listPos - staticItemCount;
+    }
+
+    public Dialog makeDialog() {
+        create();
+        return dialog;
     }
 
     @Override
@@ -200,7 +205,7 @@ public class RingtonePicker implements OnItemSelectedListener, Runnable,
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position,
             long id) {
-        playRingtone(position, RingtonePicker.DELAY_MS_SELECTION_PLAYED);
+        playRingtone(position, _RingtonePickerDialog.DELAY_MS_SELECTION_PLAYED);
     }
 
     @Override
@@ -259,12 +264,6 @@ public class RingtonePicker implements OnItemSelectedListener, Runnable,
         if (ringtone != null) {
             ringtone.play();
         }
-    }
-
-    public RingtonePicker show() {
-        create();
-        dialog.show();
-        return this;
     }
 
     private void stopAnyPlayingRingtone() {

@@ -1,9 +1,9 @@
 
 package org.holoeverywhere.preference;
 
-import org.holoeverywhere.internal.RingtonePicker;
-import org.holoeverywhere.internal.RingtonePicker.RingtonePickerListener;
+import org.holoeverywhere.preference._RingtonePickerDialog.RingtonePickerListener;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -12,9 +12,11 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-public class RingtonePreference extends Preference implements
+public class RingtonePreference extends DialogPreference implements
         RingtonePickerListener {
+    private Uri mLastUri;
     private int mRingtoneType;
+
     private boolean mShowDefault, mShowSilent;
 
     public RingtonePreference(Context context) {
@@ -51,10 +53,18 @@ public class RingtonePreference extends Preference implements
     }
 
     @Override
-    protected void onClick() {
+    protected Dialog onCreateDialog(Context context) {
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
         onPrepareRingtonePickerIntent(intent);
-        new RingtonePicker(getContext(), intent, this).show();
+        return new _RingtonePickerDialog(getContext(), intent, this).makeDialog();
+    }
+
+    @Override
+    protected void onDialogClosed(boolean positiveResult) {
+        String uri = mLastUri == null ? "" : mLastUri.toString();
+        if (positiveResult && callChangeListener(uri)) {
+            persistString(uri);
+        }
     }
 
     @Override
@@ -88,20 +98,13 @@ public class RingtonePreference extends Preference implements
 
     @Override
     public void onRingtonePickerCanceled() {
-        if (callChangeListener("")) {
-            onSaveRingtone(null);
-        }
+        onDialogClosed(false);
     }
 
     @Override
     public void onRingtonePickerChanged(Uri uri) {
-        if (callChangeListener(uri != null ? uri.toString() : "")) {
-            onSaveRingtone(uri);
-        }
-    }
-
-    protected void onSaveRingtone(Uri ringtoneUri) {
-        persistString(ringtoneUri != null ? ringtoneUri.toString() : "");
+        mLastUri = uri;
+        onDialogClosed(true);
     }
 
     @Override
@@ -112,7 +115,8 @@ public class RingtonePreference extends Preference implements
             defaultValue = getPersistedString(defaultValue);
         }
         if (!TextUtils.isEmpty(defaultValue)) {
-            onSaveRingtone(Uri.parse(defaultValue));
+            mLastUri = Uri.parse(defaultValue);
+            onDialogClosed(true);
         }
     }
 

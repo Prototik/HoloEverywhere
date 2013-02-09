@@ -48,8 +48,7 @@ public class DialogFragment extends Fragment implements
         try {
             fragment = (T) activity.getSupportFragmentManager().findFragmentByTag(makeTag(clazz));
             if (fragment == null) {
-                fragment = (T) android.support.v4.app.Fragment.instantiate(activity,
-                        clazz.getName());
+                fragment = Fragment.instantiate(clazz);
             }
         } catch (Exception e) {
             throw new RuntimeException("Error of finding DialogFragment instance", e);

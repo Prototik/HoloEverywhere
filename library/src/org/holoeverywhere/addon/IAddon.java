@@ -10,6 +10,7 @@ import java.util.WeakHashMap;
 public abstract class IAddon<A extends IAddonActivity, F extends IAddonFragment> {
     private final Map<Object, Object> statesMap = new WeakHashMap<Object, Object>();
 
+    @SuppressWarnings("unchecked")
     public A activity(Activity activity) {
         A addon = (A) get(activity);
         if (addon == null) {
@@ -35,6 +36,7 @@ public abstract class IAddon<A extends IAddonActivity, F extends IAddonFragment>
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     public F fragment(Fragment fragment) {
         F addon = (F) get(fragment);
         if (addon == null) {
@@ -44,7 +46,6 @@ public abstract class IAddon<A extends IAddonActivity, F extends IAddonFragment>
         return addon;
     }
 
-    @SuppressWarnings("unchecked")
     public Object get(Object key) {
         return statesMap.get(key);
     }
