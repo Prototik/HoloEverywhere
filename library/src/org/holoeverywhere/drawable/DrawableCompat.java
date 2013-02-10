@@ -29,6 +29,7 @@ public final class DrawableCompat {
     static {
         CLASS_MAP.put("rotate", RotateDrawable.class);
         CLASS_MAP.put("layer-list", LayerDrawable.class);
+        CLASS_MAP.put("selector", StateListDrawable.class);
     }
 
     public static Drawable createFromPath(String pathName) {

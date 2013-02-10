@@ -1,11 +1,11 @@
 
 package org.holoeverywhere.addon;
 
-import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.Fragment;
-
 import java.util.Map;
 import java.util.WeakHashMap;
+
+import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.Fragment;
 
 public abstract class IAddon<A extends IAddonActivity, F extends IAddonFragment> {
     private final Map<Object, Object> statesMap = new WeakHashMap<Object, Object>();

@@ -7,6 +7,7 @@ import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 import org.holoeverywhere.widget.FrameLayout;
 import org.holoeverywhere.widget.ListPopupWindow;
+import org.holoeverywhere.widget.PopupWindow;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -20,7 +21,6 @@ import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
-import android.widget.PopupWindow;
 
 import com.actionbarsherlock.internal.view.View_HasStateListenerSupport;
 import com.actionbarsherlock.internal.view.View_OnAttachStateChangeListener;

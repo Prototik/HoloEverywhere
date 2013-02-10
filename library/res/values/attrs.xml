@@ -261,4 +261,16 @@
 		<attr name="android:drawable" />
 		<attr name="android:id" />
 	</declare-styleable>
+	<declare-styleable name="PopupWindow">
+		<attr name="android:popupBackground" />
+		<attr name="android:popupAnimationStyle" />
+	</declare-styleable>
+	<declare-styleable name="StateListDrawable">
+		<attr name="android:visible" />
+		<attr name="android:variablePadding" />
+		<attr name="android:constantSize" />
+		<attr name="android:dither" />
+		<attr name="android:enterFadeDuration" />
+		<attr name="android:exitFadeDuration" />
+	</declare-styleable>
 </resources>

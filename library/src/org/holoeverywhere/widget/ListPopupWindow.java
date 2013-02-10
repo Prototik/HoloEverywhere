@@ -25,7 +25,6 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
-import android.widget.PopupWindow;
 
 public class ListPopupWindow {
     private static class DropDownListView extends ListView {
@@ -807,7 +806,7 @@ public class ListPopupWindow {
         int widthSpec = 0;
         int heightSpec = 0;
         boolean noInputMethod = isInputMethodNotNeeded();
-        // TODO mPopup.setAllowScrollingAnchorParent(!noInputMethod);
+        mPopup.setAllowScrollingAnchorParent(!noInputMethod);
         if (mPopup.isShowing()) {
             if (mDropDownWidth == ViewGroup.LayoutParams.MATCH_PARENT) {
                 widthSpec = -1;
@@ -857,7 +856,7 @@ public class ListPopupWindow {
                 }
             }
             mPopup.setWindowLayoutMode(widthSpec, heightSpec);
-            // TODO mPopup.setClipToScreenEnabled(true);
+            mPopup.setClipToScreenEnabled(true);
             mPopup.setOutsideTouchable(!mForceIgnoreOutsideTouch
                     && !mDropDownAlwaysVisible);
             mPopup.setTouchInterceptor(mTouchInterceptor);
