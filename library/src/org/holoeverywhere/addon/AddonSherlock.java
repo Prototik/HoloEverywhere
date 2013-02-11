@@ -1,8 +1,8 @@
 
 package org.holoeverywhere.addon;
 
-import org.holoeverywhere.addon.Sherlock.SherlockA;
-import org.holoeverywhere.addon.Sherlock.SherlockF;
+import org.holoeverywhere.addon.AddonSherlock.AddonSherlockA;
+import org.holoeverywhere.addon.AddonSherlock.AddonSherlockF;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Fragment;
 
@@ -21,8 +21,8 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.ActionMode.Callback;
 import com.actionbarsherlock.view.MenuInflater;
 
-public class Sherlock extends IAddon<SherlockA, SherlockF> {
-    public static class SherlockA extends IAddonActivity {
+public class AddonSherlock extends IAddon<AddonSherlockA, AddonSherlockF> {
+    public static class AddonSherlockA extends IAddonActivity {
         private boolean mIgnoreNativeCreate = false;
 
         private boolean mIgnoreNativePrepare = false;
@@ -30,7 +30,7 @@ public class Sherlock extends IAddon<SherlockA, SherlockF> {
         private boolean mIgnoreNativeSelected = false;
         private ActionBarSherlock mSherlock;
 
-        public SherlockA(Activity activity) {
+        public AddonSherlockA(Activity activity) {
             super(activity);
         }
 
@@ -73,7 +73,7 @@ public class Sherlock extends IAddon<SherlockA, SherlockF> {
         }
 
         @Override
-        public void onConfigurationChanged(Configuration newConfig) {
+        public void onConfigurationChanged(Configuration oldConfig, Configuration newConfig) {
             getSherlock().dispatchConfigurationChanged(newConfig);
         }
 
@@ -202,19 +202,19 @@ public class Sherlock extends IAddon<SherlockA, SherlockF> {
         }
     }
 
-    public static class SherlockF extends IAddonFragment {
-        public SherlockF(Fragment fragment) {
+    public static class AddonSherlockF extends IAddonFragment {
+        public AddonSherlockF(Fragment fragment) {
             super(fragment);
         }
     }
 
     @Override
-    public SherlockA createAddon(Activity activity) {
-        return new SherlockA(activity);
+    public AddonSherlockA createAddon(Activity activity) {
+        return new AddonSherlockA(activity);
     }
 
     @Override
-    public SherlockF createAddon(Fragment fragment) {
-        return new SherlockF(fragment);
+    public AddonSherlockF createAddon(Fragment fragment) {
+        return new AddonSherlockF(fragment);
     }
 }

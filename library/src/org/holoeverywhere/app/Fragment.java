@@ -4,9 +4,9 @@ package org.holoeverywhere.app;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.holoeverywhere.addon.AddonSherlock;
+import org.holoeverywhere.addon.AddonSherlock.AddonSherlockF;
 import org.holoeverywhere.addon.IAddon;
-import org.holoeverywhere.addon.Sherlock;
-import org.holoeverywhere.addon.Sherlock.SherlockF;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -90,7 +90,7 @@ public class Fragment extends _HoloFragment {
         return t;
     }
 
-    public SherlockF requireSherlock() {
-        return requireAddon(Sherlock.class).fragment(this);
+    public AddonSherlockF requireSherlock() {
+        return requireAddon(AddonSherlock.class).fragment(this);
     }
 }

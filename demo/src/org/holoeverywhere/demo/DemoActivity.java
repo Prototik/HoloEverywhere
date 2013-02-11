@@ -2,7 +2,8 @@
 package org.holoeverywhere.demo;
 
 import org.holoeverywhere.ThemeManager;
-import org.holoeverywhere.addon.SlidingMenu.SlidingMenuA;
+import org.holoeverywhere.addon.AddonSlidingMenu;
+import org.holoeverywhere.addon.AddonSlidingMenu.AddonSlidingMenuA;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.demo.fragments.AboutFragment;
@@ -163,7 +164,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
         setContentView(R.layout.content);
 
-        final SlidingMenuA addonSM = requireSlidingMenu();
+        final AddonSlidingMenuA addonSM = requireSlidingMenu();
         final SlidingMenu sm = addonSM.getSlidingMenu();
 
         View menu = findViewById(R.id.menu);
@@ -293,8 +294,8 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         ft.commit();
     }
 
-    public SlidingMenuA requireSlidingMenu() {
-        return requireAddon(org.holoeverywhere.addon.SlidingMenu.class).activity(this);
+    public AddonSlidingMenuA requireSlidingMenu() {
+        return requireAddon(AddonSlidingMenu.class).activity(this);
     }
 
     public void setOnMenuClickListener(OnMenuClickListener onMenuClickListener) {

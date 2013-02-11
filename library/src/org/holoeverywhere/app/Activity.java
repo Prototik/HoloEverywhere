@@ -6,10 +6,11 @@ import java.util.List;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.ThemeManager;
+import org.holoeverywhere.addon.AddonSherlock;
+import org.holoeverywhere.addon.AddonSherlock.AddonSherlockA;
 import org.holoeverywhere.addon.IAddon;
-import org.holoeverywhere.addon.Sherlock;
-import org.holoeverywhere.addon.Sherlock.SherlockA;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
@@ -28,6 +29,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class Activity extends _HoloActivity {
+    public static final String ADDON_ROBOGUICE = "Roboguice";
     public static final String ADDON_SHERLOCK = "Sherlock";
     public static final String ADDON_SLIDING_MENU = "SlidingMenu";
     private final List<IAddon<?, ?>> addons = new ArrayList<IAddon<?, ?>>();
@@ -141,16 +143,28 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (IAddon<?, ?> addon : addons) {
+            addon.activity(this).onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
     public void onConfigurationChanged(Configuration newConfig) {
+        Configuration oldConfig = getResources().getConfiguration();
         super.onConfigurationChanged(newConfig);
         for (IAddon<?, ?> addon : addons) {
-            addon.activity(this).onConfigurationChanged(newConfig);
+            addon.activity(this).onConfigurationChanged(oldConfig, newConfig);
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         savedInstanceState = instanceState(savedInstanceState);
+        for (IAddon<?, ?> addon : addons) {
+            addon.activity(this).onPreCreate(savedInstanceState);
+        }
         super.onCreate(savedInstanceState);
         for (IAddon<?, ?> addon : addons) {
             addon.activity(this).onCreate(savedInstanceState);
@@ -214,6 +228,14 @@ public abstract class Activity extends _HoloActivity {
             }
         }
         return super.onMenuOpened(featureId, menu);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        for (IAddon<?, ?> addon : addons) {
+            addon.activity(this).onNewIntent(intent);
+        }
     }
 
     @Override
@@ -281,10 +303,34 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
+    protected void onRestart() {
+        for (IAddon<?, ?> addon : addons) {
+            addon.activity(this).onRestart();
+        }
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        for (IAddon<?, ?> addon : addons) {
+            addon.activity(this).onResume();
+        }
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         for (IAddon<?, ?> addon : addons) {
             addon.activity(this).onSaveInstanceState(outState);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        for (IAddon<?, ?> addon : addons) {
+            addon.activity(this).onStart();
         }
     }
 
@@ -347,7 +393,7 @@ public abstract class Activity extends _HoloActivity {
         if (name == null) {
             return;
         }
-        String className = HoloEverywhere.PACKAGE + ".addon." + name;
+        final String className = HoloEverywhere.PACKAGE + ".addon.Addon" + name;
         try {
             requireAddon((Class<? extends IAddon<?, ?>>) Class.forName(className, true,
                     getClassLoader()));
@@ -356,8 +402,8 @@ public abstract class Activity extends _HoloActivity {
         }
     }
 
-    public SherlockA requireSherlock() {
-        return requireAddon(Sherlock.class).activity(this);
+    public AddonSherlockA requireSherlock() {
+        return requireAddon(AddonSherlock.class).activity(this);
     }
 
     public Bundle saveInstanceState() {
@@ -419,7 +465,7 @@ public abstract class Activity extends _HoloActivity {
     }
 
     public void setUiOptions(int uiOptions) {
-        if (isAddonAttached(Sherlock.class)) {
+        if (isAddonAttached(AddonSherlock.class)) {
             requireSherlock().setUiOptions(uiOptions);
         } else if (VERSION.SDK_INT >= VERSION_CODES.ICE_CREAM_SANDWICH) {
             getWindow().setUiOptions(uiOptions);
@@ -427,7 +473,7 @@ public abstract class Activity extends _HoloActivity {
     }
 
     public void setUiOptions(int uiOptions, int mask) {
-        if (isAddonAttached(Sherlock.class)) {
+        if (isAddonAttached(AddonSherlock.class)) {
             requireSherlock().setUiOptions(uiOptions, mask);
         } else if (VERSION.SDK_INT >= VERSION_CODES.ICE_CREAM_SANDWICH) {
             getWindow().setUiOptions(uiOptions, mask);
