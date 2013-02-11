@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:holo="http://schemas.android.com/apk/res-auto" >
+	<Preference holo:title="Screen 2" />
+	<SwitchPreference
+		holo:id="@+id/switchWidget"
+		holo:title="Switch" />
+</PreferenceScreen>

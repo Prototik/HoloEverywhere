@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:holo="http://schemas.android.com/apk/res-auto" > 
+    <header holo:fragment="org.holoeverywhere.bug.i299.Fragment1" holo:title="Screen 1" />
+    <header holo:fragment="org.holoeverywhere.bug.i299.Fragment2" holo:title="Screen 2" />
+</preference-headers>
