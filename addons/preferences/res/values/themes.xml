@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <style name="Holo.PreferenceTheme"/>
-    <style name="Holo.PreferenceTheme.Dark" parent="Holo.Theme">
+    <style name="Holo.PreferenceTheme" parent="Holo.Theme">
         <!--Include block: PreferenceBase-->
         <item name="checkBoxPreferenceStyle">@style/Holo.PreferenceCheckBox</item>
         <item name="dialogPreferenceStyle">@style/Holo.PreferenceDialog</item>

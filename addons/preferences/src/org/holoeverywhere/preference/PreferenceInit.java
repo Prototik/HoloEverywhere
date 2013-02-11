@@ -13,15 +13,10 @@ public class PreferenceInit {
         PACKAGE = PreferenceInit.class.getPackage().getName();
         THEME_FLAG = ThemeManager.makeNewFlag();
 
-        ThemeManager.map(THEME_FLAG | ThemeManager.DARK,
-                R.style.Holo_PreferenceTheme_Dark);
-        ThemeManager.map(THEME_FLAG | ThemeManager.LIGHT,
-                R.style.Holo_PreferenceTheme_Light);
-        ThemeManager.map(THEME_FLAG | ThemeManager.MIXED,
-                R.style.Holo_PreferenceTheme_Light);
-
         LayoutInflater.remap(PreferenceFrameLayout.class);
         LayoutInflater.remap(FragmentBreadCrumbs.class);
+
+        map(R.style.Holo_PreferenceTheme, R.style.Holo_PreferenceTheme_Light);
     }
 
     /**
@@ -29,6 +24,16 @@ public class PreferenceInit {
      */
     public static void init() {
 
+    }
+
+    public static void map(int darkTheme, int lightTheme) {
+        if (darkTheme > 0) {
+            ThemeManager.map(THEME_FLAG | ThemeManager.DARK, darkTheme);
+        }
+        if (lightTheme > 0) {
+            ThemeManager.map(THEME_FLAG | ThemeManager.LIGHT, lightTheme);
+            ThemeManager.map(THEME_FLAG | ThemeManager.MIXED, lightTheme);
+        }
     }
 
     private PreferenceInit() {

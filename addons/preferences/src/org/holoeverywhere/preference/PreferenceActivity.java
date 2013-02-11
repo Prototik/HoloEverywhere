@@ -285,7 +285,7 @@ public abstract class PreferenceActivity extends ListActivity implements
     @Deprecated
     public void addPreferencesFromResource(int preferencesResId) {
         requirePreferenceManager();
-        setPreferenceScreen(mPreferenceManager.inflateFromResource(obtainThemedContext(),
+        setPreferenceScreen(mPreferenceManager.inflateFromResource(getThemedContext(),
                 preferencesResId, getPreferenceScreen()));
     }
 
@@ -397,6 +397,13 @@ public abstract class PreferenceActivity extends ListActivity implements
             return mPreferenceManager.getPreferenceScreen();
         }
         return null;
+    }
+
+    protected Context getThemedContext() {
+        if (mThemedContext == null) {
+            mThemedContext = Preference.context(this);
+        }
+        return mThemedContext;
     }
 
     public boolean hasHeaders() {
@@ -531,13 +538,6 @@ public abstract class PreferenceActivity extends ListActivity implements
         }
     }
 
-    private Context obtainThemedContext() {
-        if (mThemedContext == null) {
-            mThemedContext = Preference.context(this);
-        }
-        return mThemedContext;
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -633,7 +633,7 @@ public abstract class PreferenceActivity extends ListActivity implements
                 showBreadCrumbs(initialTitleStr, initialShortTitleStr);
             }
         } else if (mHeaders.size() > 0) {
-            setListAdapter(new HeaderAdapter(obtainThemedContext(), mHeaders));
+            setListAdapter(new HeaderAdapter(getThemedContext(), mHeaders));
             if (!mSinglePane) {
                 getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
                 if (mCurHeader != null) {
@@ -851,7 +851,7 @@ public abstract class PreferenceActivity extends ListActivity implements
 
     @Override
     public void setContentView(int layoutResId) {
-        setContentView(LayoutInflater.inflate(obtainThemedContext(), layoutResId));
+        setContentView(LayoutInflater.inflate(getThemedContext(), layoutResId));
     }
 
     public void setListFooter(View view) {

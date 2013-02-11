@@ -94,7 +94,7 @@ public class Preference implements Comparable<Preference>,
         }
         theme = ThemeManager.getThemeResource(theme, false);
         if (theme == ThemeManager.getDefaultTheme()) {
-            theme = R.style.Holo_PreferenceTheme_Dark;
+            theme = R.style.Holo_PreferenceTheme;
         }
         return new PreferenceContextWrapper(context, theme);
     }

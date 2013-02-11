@@ -22,8 +22,7 @@
 			}
 		},
 		"data": {
-			"Holo.PreferenceTheme": {},
-			"Holo.PreferenceTheme.Dark": {
+			"Holo.PreferenceTheme": {
 				"include": [ "PreferenceBase" ],
 				"parent": "Holo.Theme"
 			},
