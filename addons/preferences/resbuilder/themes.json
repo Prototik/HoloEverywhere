@@ -30,6 +30,10 @@
 			"Holo.PreferenceTheme.Light": {
 				"include": [ "PreferenceBase" ],
 				"parent": "Holo.Theme.Light"
+			},
+			"Holo.PreferenceTheme.Light.DarkActionBar": {
+				"include": [ "PreferenceBase" ],
+				"parent": "Holo.Theme.Light.DarkActionBar"
 			}
 		},
 		"output": "values/themes.xml"
