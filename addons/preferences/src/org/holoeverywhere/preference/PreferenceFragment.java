@@ -167,7 +167,7 @@ public abstract class PreferenceFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPreferenceManager = new PreferenceManager(getActivity(),
+        mPreferenceManager = new PreferenceManager(getSupportActivity(),
                 PreferenceFragment.FIRST_REQUEST_CODE);
         mPreferenceManager.setFragment(this);
     }

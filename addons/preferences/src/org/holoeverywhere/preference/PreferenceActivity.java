@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.holoeverywhere.ArrayAdapter;
 import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.app.ListActivity;
 import org.holoeverywhere.util.XmlUtils;
 import org.holoeverywhere.widget.Button;
@@ -27,7 +28,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -273,6 +273,8 @@ public abstract class PreferenceActivity extends ListActivity implements
 
     private boolean mSinglePane;
 
+    private Context mThemedContext;
+
     @Deprecated
     public void addPreferencesFromIntent(Intent intent) {
         requirePreferenceManager();
@@ -283,7 +285,7 @@ public abstract class PreferenceActivity extends ListActivity implements
     @Deprecated
     public void addPreferencesFromResource(int preferencesResId) {
         requirePreferenceManager();
-        setPreferenceScreen(mPreferenceManager.inflateFromResource(this,
+        setPreferenceScreen(mPreferenceManager.inflateFromResource(obtainThemedContext(),
                 preferencesResId, getPreferenceScreen()));
     }
 
@@ -365,7 +367,6 @@ public abstract class PreferenceActivity extends ListActivity implements
             setResult(resultCode, resultData);
             finish();
         } else {
-            // XXX be smarter about popping the stack.
             onBackPressed();
             if (caller != null) {
                 if (caller.getTargetFragment() != null) {
@@ -530,6 +531,13 @@ public abstract class PreferenceActivity extends ListActivity implements
         }
     }
 
+    private Context obtainThemedContext() {
+        if (mThemedContext == null) {
+            mThemedContext = Preference.context(this);
+        }
+        return mThemedContext;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -565,6 +573,7 @@ public abstract class PreferenceActivity extends ListActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        savedInstanceState = instanceState(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preference_list_content);
         mListFooter = (FrameLayout) findViewById(R.id.list_footer);
@@ -624,7 +633,7 @@ public abstract class PreferenceActivity extends ListActivity implements
                 showBreadCrumbs(initialTitleStr, initialShortTitleStr);
             }
         } else if (mHeaders.size() > 0) {
-            setListAdapter(new HeaderAdapter(this, mHeaders));
+            setListAdapter(new HeaderAdapter(obtainThemedContext(), mHeaders));
             if (!mSinglePane) {
                 getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
                 if (mCurHeader != null) {
@@ -840,6 +849,11 @@ public abstract class PreferenceActivity extends ListActivity implements
         }
     }
 
+    @Override
+    public void setContentView(int layoutResId) {
+        setContentView(LayoutInflater.inflate(obtainThemedContext(), layoutResId));
+    }
+
     public void setListFooter(View view) {
         mListFooter.removeAllViews();
         mListFooter.addView(view, new FrameLayout.LayoutParams(
@@ -936,6 +950,7 @@ public abstract class PreferenceActivity extends ListActivity implements
             startWithFragment(fragmentClass, args, resultTo, resultRequestCode,
                     titleRes, 0);
         } else {
+            @SuppressWarnings("deprecation")
             Fragment f = Fragment.instantiate(this, fragmentClass, args);
             if (resultTo != null) {
                 f.setTargetFragment(resultTo, resultRequestCode);
@@ -996,6 +1011,7 @@ public abstract class PreferenceActivity extends ListActivity implements
         getSupportFragmentManager().popBackStack(
                 PreferenceActivity.BACK_STACK_PREFS,
                 FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        @SuppressWarnings("deprecation")
         Fragment f = Fragment.instantiate(this, fragmentName, args);
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();

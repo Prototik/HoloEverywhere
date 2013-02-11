@@ -7,10 +7,10 @@ import java.util.List;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
+import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;

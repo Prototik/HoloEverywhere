@@ -280,7 +280,12 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
                     // Invalid
                     throw new HoloThemeException(this);
             }
-            actionBarContext = new ContextThemeWrapper(this, ThemeManager.getThemeResource(theme));
+            if (this instanceof Activity && ThemeManager.getTheme((Activity) this) == theme) {
+                actionBarContext = this;
+            } else {
+                theme = ThemeManager.getThemeResource(theme);
+                actionBarContext = new ContextThemeWrapper(this, theme);
+            }
         }
         return actionBarContext;
     }
