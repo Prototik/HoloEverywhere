@@ -11,7 +11,6 @@ import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.app.ListActivity;
 import org.holoeverywhere.util.XmlUtils;
 import org.holoeverywhere.widget.Button;
-import org.holoeverywhere.widget.FragmentBreadCrumbs;
 import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.TextView;
 import org.xmlpull.v1.XmlPullParser;

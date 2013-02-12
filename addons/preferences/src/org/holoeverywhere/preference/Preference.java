@@ -85,10 +85,32 @@ public class Preference implements Comparable<Preference>,
         }
         int theme = PreferenceInit.THEME_FLAG;
         if (context instanceof Activity) {
-            final int mod = ThemeManager.getTheme((Activity) context)
+            int mod = ThemeManager.getTheme((Activity) context)
                     & ThemeManager.COLOR_SCHEME_MASK;
-            theme |= mod > 0 ? mod : ThemeManager.getDefaultTheme()
-                    & ThemeManager.COLOR_SCHEME_MASK;
+            if (mod == 0 || mod == ThemeManager.getDefaultTheme()) {
+                switch (context.obtainStyledAttributes(new int[] {
+                        R.attr.holoTheme
+                }).getInt(0, 0)) {
+                    case 1:
+                        // Dark
+                        mod = ThemeManager.DARK;
+                        break;
+                    case 2:
+                        // Light
+                        mod = ThemeManager.LIGHT;
+                        break;
+                    case 3:
+                        // Mixed
+                        mod = ThemeManager.MIXED;
+                        break;
+                    case 0:
+                    default:
+                        // Invalid
+                        mod = ThemeManager.getDefaultTheme() & ThemeManager.COLOR_SCHEME_MASK;
+                }
+
+            }
+            theme |= mod;
         } else {
             theme |= ThemeManager.getDefaultTheme() & ThemeManager.COLOR_SCHEME_MASK;
         }

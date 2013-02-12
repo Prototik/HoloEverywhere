@@ -44,6 +44,7 @@
 		<enum name="invalid" value="0" />
 		<enum name="dark" value="1" />
 		<enum name="light" value="2" />
+		<enum name="mixed" value="3" />
 	</attr>
 	<attr name="modalBackgroundWrapper" format="reference" />
 	<attr name="gravity">

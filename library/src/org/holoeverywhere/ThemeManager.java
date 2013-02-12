@@ -125,7 +125,7 @@ public final class ThemeManager {
     private static int _THEME_MODIFIER = 0;
     private static final String _THEME_TAG = ":holoeverywhere:theme";
     private static final SparseIntArray _THEMES_MAP = new SparseIntArray();
-    public static final int COLOR_SCHEME_MASK;
+    public static int COLOR_SCHEME_MASK;
     /**
      * Flag indicates on the dark theme
      */
@@ -164,26 +164,7 @@ public final class ThemeManager {
         FULLSCREEN = makeNewFlag();
         NO_ACTION_BAR = makeNewFlag();
 
-        _DEFAULT_THEME = DARK;
-
-        COLOR_SCHEME_MASK = DARK | LIGHT | MIXED;
-
-        // Map default themes
-        map(DARK, Holo_Theme);
-        map(DARK | FULLSCREEN, Holo_Theme_Fullscreen);
-        map(DARK | NO_ACTION_BAR, Holo_Theme_NoActionBar);
-        map(DARK | NO_ACTION_BAR | FULLSCREEN,
-                Holo_Theme_NoActionBar_Fullscreen);
-        map(LIGHT, Holo_Theme_Light);
-        map(LIGHT | FULLSCREEN, Holo_Theme_Light_Fullscreen);
-        map(LIGHT | NO_ACTION_BAR, Holo_Theme_Light_NoActionBar);
-        map(LIGHT | NO_ACTION_BAR | FULLSCREEN,
-                Holo_Theme_Light_NoActionBar_Fullscreen);
-        map(MIXED, Holo_Theme_Light_DarkActionBar);
-        map(MIXED | FULLSCREEN, Holo_Theme_Light_DarkActionBar_Fullscreen);
-        map(MIXED | NO_ACTION_BAR, Holo_Theme_Light_DarkActionBar_NoActionBar);
-        map(MIXED | NO_ACTION_BAR | FULLSCREEN,
-                Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen);
+        reset();
     }
 
     /**
@@ -500,6 +481,30 @@ public final class ThemeManager {
             i |= ThemeManager._THEME_MODIFIER;
         }
         return i & ThemeManager._THEME_MASK;
+    }
+
+    /**
+     * Reset all themes to default
+     */
+    public static void reset() {
+        _DEFAULT_THEME = DARK;
+        COLOR_SCHEME_MASK = DARK | LIGHT | MIXED;
+        _THEMES_MAP.clear();
+        map(DARK, Holo_Theme);
+        map(DARK | FULLSCREEN, Holo_Theme_Fullscreen);
+        map(DARK | NO_ACTION_BAR, Holo_Theme_NoActionBar);
+        map(DARK | NO_ACTION_BAR | FULLSCREEN,
+                Holo_Theme_NoActionBar_Fullscreen);
+        map(LIGHT, Holo_Theme_Light);
+        map(LIGHT | FULLSCREEN, Holo_Theme_Light_Fullscreen);
+        map(LIGHT | NO_ACTION_BAR, Holo_Theme_Light_NoActionBar);
+        map(LIGHT | NO_ACTION_BAR | FULLSCREEN,
+                Holo_Theme_Light_NoActionBar_Fullscreen);
+        map(MIXED, Holo_Theme_Light_DarkActionBar);
+        map(MIXED | FULLSCREEN, Holo_Theme_Light_DarkActionBar_Fullscreen);
+        map(MIXED | NO_ACTION_BAR, Holo_Theme_Light_DarkActionBar_NoActionBar);
+        map(MIXED | NO_ACTION_BAR | FULLSCREEN,
+                Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen);
     }
 
     /**

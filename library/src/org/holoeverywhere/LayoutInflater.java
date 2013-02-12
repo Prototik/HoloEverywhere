@@ -4,6 +4,7 @@ package org.holoeverywhere;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -16,12 +17,9 @@ import org.xmlpull.v1.XmlPullParser;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build.VERSION;
-import android.support.v4.view.PagerTitleStrip;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 
 import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
@@ -67,12 +65,15 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
     private static final Map<Context, WeakReference<LayoutInflater>> INSTANCES_MAP = new WeakHashMap<Context, WeakReference<LayoutInflater>>();
     private static OnInitInflaterListener listener;
+    private static final List<String> PACKAGES_LIST = new ArrayList<String>();
     private static final Map<String, String> VIEWS_MAP = new HashMap<String, String>();
 
     static {
-        remap(PagerTitleStrip.class);
-        remap(WebView.class);
-        remap(ViewPager.class);
+        registerPackage(HoloEverywhere.PACKAGE + ".widget");
+        registerPackage("android.support.v4.view");
+        registerPackage("android.widget");
+        registerPackage("android.view");
+        registerPackage("android.webkit");
         remapInternal(ActionBarView.class, HoloListMenuItemView.class,
                 ExpandedMenuView.class, ActionBarContainer.class, DialogTitle.class,
                 NumberPickerEditText.class);
@@ -136,6 +137,13 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
     public static void onDestroy(Context context) {
         LayoutInflater.INSTANCES_MAP.remove(context);
+    }
+
+    public static void registerPackage(String packageName) {
+        packageName = Package.getPackage(packageName).getName();
+        if (!PACKAGES_LIST.contains(packageName)) {
+            PACKAGES_LIST.add(packageName);
+        }
     }
 
     public static void remap(Class<? extends View>... classes) {
@@ -270,20 +278,13 @@ public class LayoutInflater extends android.view.LayoutInflater implements
                 return prepareView(view);
             }
         }
-        view = tryCreateView(name, HoloEverywhere.PACKAGE + ".widget.", attrs);
-        if (view != null) {
-            return prepareView(view);
+        for (int i = 0; i < PACKAGES_LIST.size(); i++) {
+            view = tryCreateView(name, PACKAGES_LIST.get(i) + ".", attrs);
+            if (view != null) {
+                return prepareView(view);
+            }
         }
-        view = tryCreateView(name, "android.widget.", attrs);
-        if (view != null) {
-            return prepareView(view);
-        }
-        view = tryCreateView(name, "android.view.", attrs);
-        if (view != null) {
-            return prepareView(view);
-        } else {
-            throw new ClassNotFoundException("Could not find class: " + name);
-        }
+        throw new ClassNotFoundException("Could not find class: " + name);
     }
 
     @Override

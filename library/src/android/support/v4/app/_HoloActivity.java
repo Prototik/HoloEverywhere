@@ -81,6 +81,8 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         public boolean applyImmediately = false;
         public boolean forceThemeApply = false;
         public boolean ignoreThemeCheck = false;
+        public boolean ignoreApplicationInstanceCheck = false;
+        public boolean requireRoboguice = false;
         public boolean requireSherlock = true;
         public boolean requireSlidingMenu = false;
         private SparseIntArray windowFeatures;
@@ -89,8 +91,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
             addFactoryToInflater = holo.addFactoryToInflater;
             forceThemeApply = holo.forceThemeApply;
             ignoreThemeCheck = holo.ignoreThemeCheck;
+            ignoreApplicationInstanceCheck = holo.ignoreApplicationInstanceCheck;
             requireSherlock = holo.requireSherlock;
             requireSlidingMenu = holo.requireSlidingMenu;
+            requireRoboguice = holo.requireRoboguice;
             applyImmediately = holo.applyImmediately;
             windowFeatures = holo.windowFeatures == null ? null : holo.windowFeatures.clone();
             return this;
@@ -100,8 +104,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
             addFactoryToInflater = source.readInt() == 1;
             forceThemeApply = source.readInt() == 1;
             ignoreThemeCheck = source.readInt() == 1;
+            ignoreApplicationInstanceCheck = source.readInt() == 1;
             requireSherlock = source.readInt() == 1;
             requireSlidingMenu = source.readInt() == 1;
+            requireRoboguice = source.readInt() == 1;
             applyImmediately = source.readInt() == 1;
             windowFeatures = source.readParcelable(SparseIntArray.class.getClassLoader());
         }
@@ -124,8 +130,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
             dest.writeInt(addFactoryToInflater ? 1 : 0);
             dest.writeInt(forceThemeApply ? 1 : 0);
             dest.writeInt(ignoreThemeCheck ? 1 : 0);
+            dest.writeInt(ignoreApplicationInstanceCheck ? 1 : 0);
             dest.writeInt(requireSherlock ? 1 : 0);
             dest.writeInt(requireSlidingMenu ? 1 : 0);
+            dest.writeInt(requireRoboguice ? 1 : 0);
             dest.writeInt(applyImmediately ? 1 : 0);
             dest.writeParcelable(windowFeatures, flags);
         }
@@ -148,9 +156,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     private boolean forceThemeApply = false;
     private int lastThemeResourceId = 0;
     private final List<WeakReference<OnWindowFocusChangeListener>> onWindowFocusChangeListeners = new ArrayList<WeakReference<OnWindowFocusChangeListener>>();
-
     private final String TAG = getClass().getSimpleName();
-
     private boolean wasInited = false;
 
     @Override
@@ -222,6 +228,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         listener.onCreateContextMenu(contextMenuBuilder, view, menuInfo);
     }
 
+    public Holo getConfig() {
+        return config;
+    }
+
     @Override
     public SharedPreferences getDefaultSharedPreferences() {
         return PreferenceManagerHelper.getDefaultSharedPreferences(this);
@@ -232,8 +242,12 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         return PreferenceManagerHelper.getDefaultSharedPreferences(this, impl);
     }
 
+    /**
+     * @deprecated Use {@link #getConfig()} instead
+     */
+    @Deprecated
     public Holo getHolo() {
-        return config;
+        return getConfig();
     }
 
     private int getHoloThemeAttr() {
@@ -273,6 +287,8 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
                     break;
                 case 2:
                     // Light
+                case 3:
+                    // Mixed
                     theme = ThemeManager.LIGHT;
                     break;
                 case 0:
@@ -380,6 +396,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (config == null && savedInstanceState != null
+                && savedInstanceState.containsKey(CONFIG_KEY)) {
+            config = savedInstanceState.getParcelable(CONFIG_KEY);
+        }
         onInit(config, savedInstanceState);
         super.onCreate(savedInstanceState);
     }
@@ -435,12 +455,26 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
             return;
         }
         wasInited = true;
-        config = createConfig(savedInstanceState);
+        if (config == null) {
+            config = createConfig(savedInstanceState);
+        }
+        if (config == null) {
+            config = Holo.defaultConfig();
+        }
+        if (!config.ignoreApplicationInstanceCheck && !(getApplication() instanceof Application)) {
+            throw new IllegalStateException(
+                    "Application instance isn't HoloEverywhere.\n" +
+                            "Put attr 'android:name=\"org.holoeverywhere.app.Application\"'" +
+                            " in <application> tag of AndroidManifest.xml");
+        }
         if (config.addFactoryToInflater) {
             getLayoutInflater().setFactory(this);
         }
         if (this instanceof Activity) {
             Activity activity = (Activity) this;
+            if (config.requireRoboguice) {
+                activity.requireAddon(Activity.ADDON_ROBOGUICE);
+            }
             if (config.requireSlidingMenu) {
                 activity.requireAddon(Activity.ADDON_SLIDING_MENU);
             }
