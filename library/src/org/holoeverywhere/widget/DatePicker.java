@@ -229,9 +229,7 @@ public class DatePicker extends FrameLayout {
         currentDate.setTimeInMillis(System.currentTimeMillis());
         init(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH),
                 currentDate.get(Calendar.DAY_OF_MONTH), null);
-        // TODO
-        // Reordering a spinners leads them stop, temporarily disabled.
-        // reorderSpinners();
+        reorderSpinners();
     }
 
     private void checkInputState(NumberPicker... spinners) {
@@ -373,7 +371,6 @@ public class DatePicker extends FrameLayout {
         }
     }
 
-    @SuppressWarnings("unused")
     private void reorderSpinners() {
         char[] order = DateFormat.getDateFormatOrder(getContext());
         final int spinnerCount = order.length;

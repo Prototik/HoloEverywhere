@@ -9,6 +9,7 @@ import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.IHoloActivity.OnWindowFocusChangeListener;
 import org.holoeverywhere.R;
 import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.drawable.DrawableCompat;
 import org.holoeverywhere.util.LongSparseArray;
 import org.holoeverywhere.widget.HeaderViewListAdapter.ViewInfo;
 import org.holoeverywhere.widget.ListAdapterWrapper.ListAdapterCallback;
@@ -808,7 +809,9 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             if (mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
                 clearChoices();
                 setLongClickable(true);
-                setEnableModalBackgroundWrapper(true);
+                if (VERSION.SDK_INT < VERSION_CODES.HONEYCOMB) {
+                    setEnableModalBackgroundWrapper(true);
+                }
             }
         }
     }
@@ -936,6 +939,11 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     public void setPaddingFromScroller(boolean paddingFromScroller) {
         mPaddingFromScroller = paddingFromScroller;
         recomputePaddingFromScroller();
+    }
+
+    @Override
+    public void setSelector(int resID) {
+        setSelector(DrawableCompat.getDrawable(getResources(), resID));
     }
 
     protected final void setStateOnView(View child, boolean value) {

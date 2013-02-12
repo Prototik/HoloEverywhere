@@ -80,8 +80,8 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         public boolean addFactoryToInflater = true;
         public boolean applyImmediately = false;
         public boolean forceThemeApply = false;
-        public boolean ignoreThemeCheck = false;
         public boolean ignoreApplicationInstanceCheck = false;
+        public boolean ignoreThemeCheck = false;
         public boolean requireRoboguice = false;
         public boolean requireSherlock = true;
         public boolean requireSlidingMenu = false;

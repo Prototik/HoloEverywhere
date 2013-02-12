@@ -24,7 +24,7 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 import com.actionbarsherlock.internal.view.menu.ExpandedMenuView;
-import com.actionbarsherlock.internal.view.menu.HoloListMenuItemView;
+import com.actionbarsherlock.internal.view.menu.ListMenuItemView;
 import com.actionbarsherlock.internal.widget.ActionBarContainer;
 import com.actionbarsherlock.internal.widget.ActionBarView;
 
@@ -74,7 +74,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
         registerPackage("android.widget");
         registerPackage("android.view");
         registerPackage("android.webkit");
-        remapInternal(ActionBarView.class, HoloListMenuItemView.class,
+        remapInternal(ActionBarView.class, ListMenuItemView.class,
                 ExpandedMenuView.class, ActionBarContainer.class, DialogTitle.class,
                 NumberPickerEditText.class);
     }
