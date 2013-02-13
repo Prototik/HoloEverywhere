@@ -8,10 +8,10 @@
 		android:targetSdkVersion="17" />
 	<application
 		android:name="org.holoeverywhere.app.Application"
-		android:allowBackup="true" >
-		<activity
-			android:name="org.holoeverywhere.bug.i299.MainActivity"
-			android:label="HE Bug #299" >
+		android:allowBackup="true"
+		android:label="HE Bug #299"
+		android:theme="@style/Holo.Theme.Light.DarkActionBar" >
+		<activity android:name=".MainActivity" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
