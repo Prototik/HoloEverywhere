@@ -168,6 +168,6 @@
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block BaseLight-->
-        <item name="holoTheme">dark</item>
+        <item name="holoTheme">mixed</item>
     </style>
 </resources>

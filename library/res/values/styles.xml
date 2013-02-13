@@ -977,7 +977,7 @@
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
         <item name="android:seekBarStyle">@style/Holo.SeekBar.Light</item>
         <!--End of block HoloLight-->
-        <item name="holoTheme">dark</item>
+        <item name="holoTheme">mixed</item>
     </style>
     <style name="Holo.Theme.Light.DarkActionBar.Fullscreen">
         <!--Include block: Fullscreen-->

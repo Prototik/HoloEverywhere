@@ -16,7 +16,7 @@
                 "parent": "Theme.Sherlock.Light"
             }, 
             "Holo.Theme.Light.DarkActionBar": {
-                "holoTheme": "dark", 
+                "holoTheme": "mixed", 
                 "include": [
                     "BaseLight"
                 ], 

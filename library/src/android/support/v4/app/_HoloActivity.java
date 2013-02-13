@@ -283,18 +283,16 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
             switch (getHoloThemeAttr()) {
                 case 1:
                     // Dark
+                case 3:
+                    // Mixed
+                case 0:
+                default:
+                    // Invalid
                     theme = ThemeManager.DARK;
                     break;
                 case 2:
                     // Light
-                case 3:
-                    // Mixed
                     theme = ThemeManager.LIGHT;
-                    break;
-                case 0:
-                default:
-                    // Invalid
-                    throw new HoloThemeException(this);
             }
             if (this instanceof Activity && ThemeManager.getTheme((Activity) this) == theme) {
                 actionBarContext = this;
