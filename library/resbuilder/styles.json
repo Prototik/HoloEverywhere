@@ -13,6 +13,11 @@
                     "Fullscreen"
                 ]
             }, 
+            "Holo.Theme.Fullscreen.Wallpaper": {
+                "include": [
+                    "Wallpaper"
+                ]
+            }, 
             "Holo.Theme.Light": {
                 "holoTheme": "light", 
                 "include": [
@@ -32,6 +37,11 @@
                     "Fullscreen"
                 ]
             }, 
+            "Holo.Theme.Light.DarkActionBar.Fullscreen.Wallpaper": {
+                "include": [
+                    "Wallpaper"
+                ]
+            }, 
             "Holo.Theme.Light.DarkActionBar.NoActionBar": {
                 "include": [
                     "NoActionBar"
@@ -42,9 +52,29 @@
                     "Fullscreen"
                 ]
             }, 
+            "Holo.Theme.Light.DarkActionBar.NoActionBar.Fullscreen.Wallpaper": {
+                "include": [
+                    "Wallpaper"
+                ]
+            }, 
+            "Holo.Theme.Light.DarkActionBar.NoActionBar.Wallpaper": {
+                "include": [
+                    "Wallpaper"
+                ]
+            }, 
+            "Holo.Theme.Light.DarkActionBar.Wallpaper": {
+                "include": [
+                    "Wallpaper"
+                ]
+            }, 
             "Holo.Theme.Light.Fullscreen": {
                 "include": [
                     "Fullscreen"
+                ]
+            }, 
+            "Holo.Theme.Light.Fullscreen.Wallpaper": {
+                "include": [
+                    "Wallpaper"
                 ]
             }, 
             "Holo.Theme.Light.NoActionBar": {
@@ -57,6 +87,21 @@
                     "Fullscreen"
                 ]
             }, 
+            "Holo.Theme.Light.NoActionBar.Fullscreen.Wallpaper": {
+                "include": [
+                    "Wallpaper"
+                ]
+            }, 
+            "Holo.Theme.Light.NoActionBar.Wallpaper": {
+                "include": [
+                    "Wallpaper"
+                ]
+            }, 
+            "Holo.Theme.Light.Wallpaper": {
+                "include": [
+                    "Wallpaper"
+                ]
+            }, 
             "Holo.Theme.NoActionBar": {
                 "include": [
                     "NoActionBar"
@@ -65,6 +110,21 @@
             "Holo.Theme.NoActionBar.Fullscreen": {
                 "include": [
                     "Fullscreen"
+                ]
+            }, 
+            "Holo.Theme.NoActionBar.Fullscreen.Wallpaper": {
+                "include": [
+                    "Wallpaper"
+                ]
+            }, 
+            "Holo.Theme.NoActionBar.Wallpaper": {
+                "include": [
+                    "Wallpaper"
+                ]
+            }, 
+            "Holo.Theme.Wallpaper": {
+                "include": [
+                    "Wallpaper"
                 ]
             }
         }, 

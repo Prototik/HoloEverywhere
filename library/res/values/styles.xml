@@ -729,6 +729,13 @@
         <item name="windowContentOverlay">@null</item>
         <!--End of block Fullscreen-->
     </style>
+    <style name="Holo.Theme.Fullscreen.Wallpaper">
+        <!--Include block: Wallpaper-->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <!--End of block Wallpaper-->
+    </style>
     <style name="Holo.Theme.Light" parent="Theme.Sherlock.Light">
         <!--Include block: HoloLight-->
         <!--Include block: BaseLight-->
@@ -986,6 +993,13 @@
         <item name="windowContentOverlay">@null</item>
         <!--End of block Fullscreen-->
     </style>
+    <style name="Holo.Theme.Light.DarkActionBar.Fullscreen.Wallpaper">
+        <!--Include block: Wallpaper-->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <!--End of block Wallpaper-->
+    </style>
     <style name="Holo.Theme.Light.DarkActionBar.NoActionBar">
         <!--Include block: NoActionBar-->
         <item name="android:windowActionBar">false</item>
@@ -1001,12 +1015,40 @@
         <item name="windowContentOverlay">@null</item>
         <!--End of block Fullscreen-->
     </style>
+    <style name="Holo.Theme.Light.DarkActionBar.NoActionBar.Fullscreen.Wallpaper">
+        <!--Include block: Wallpaper-->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <!--End of block Wallpaper-->
+    </style>
+    <style name="Holo.Theme.Light.DarkActionBar.NoActionBar.Wallpaper">
+        <!--Include block: Wallpaper-->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <!--End of block Wallpaper-->
+    </style>
+    <style name="Holo.Theme.Light.DarkActionBar.Wallpaper">
+        <!--Include block: Wallpaper-->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <!--End of block Wallpaper-->
+    </style>
     <style name="Holo.Theme.Light.Fullscreen">
         <!--Include block: Fullscreen-->
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFullscreen">true</item>
         <item name="windowContentOverlay">@null</item>
         <!--End of block Fullscreen-->
+    </style>
+    <style name="Holo.Theme.Light.Fullscreen.Wallpaper">
+        <!--Include block: Wallpaper-->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <!--End of block Wallpaper-->
     </style>
     <style name="Holo.Theme.Light.NoActionBar">
         <!--Include block: NoActionBar-->
@@ -1023,6 +1065,27 @@
         <item name="windowContentOverlay">@null</item>
         <!--End of block Fullscreen-->
     </style>
+    <style name="Holo.Theme.Light.NoActionBar.Fullscreen.Wallpaper">
+        <!--Include block: Wallpaper-->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <!--End of block Wallpaper-->
+    </style>
+    <style name="Holo.Theme.Light.NoActionBar.Wallpaper">
+        <!--Include block: Wallpaper-->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <!--End of block Wallpaper-->
+    </style>
+    <style name="Holo.Theme.Light.Wallpaper">
+        <!--Include block: Wallpaper-->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <!--End of block Wallpaper-->
+    </style>
     <style name="Holo.Theme.NoActionBar">
         <!--Include block: NoActionBar-->
         <item name="android:windowActionBar">false</item>
@@ -1037,6 +1100,27 @@
         <item name="android:windowFullscreen">true</item>
         <item name="windowContentOverlay">@null</item>
         <!--End of block Fullscreen-->
+    </style>
+    <style name="Holo.Theme.NoActionBar.Fullscreen.Wallpaper">
+        <!--Include block: Wallpaper-->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <!--End of block Wallpaper-->
+    </style>
+    <style name="Holo.Theme.NoActionBar.Wallpaper">
+        <!--Include block: Wallpaper-->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <!--End of block Wallpaper-->
+    </style>
+    <style name="Holo.Theme.Wallpaper">
+        <!--Include block: Wallpaper-->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <!--End of block Wallpaper-->
     </style>
     <style name="Holo.TimePicker">
         <item name="internalLayout">@layout/time_picker_holo</item>

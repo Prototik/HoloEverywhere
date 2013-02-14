@@ -11,6 +11,11 @@
                 "android:windowNoTitle": true, 
                 "windowActionBar": false, 
                 "windowNoTitle": true
+            }, 
+            "Wallpaper": {
+                "android:colorBackgroundCacheHint": "@null", 
+                "android:windowBackground": "@android:color/transparent", 
+                "android:windowShowWallpaper": "true"
             }
         }, 
         "include": [
