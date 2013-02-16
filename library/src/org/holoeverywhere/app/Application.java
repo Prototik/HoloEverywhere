@@ -68,6 +68,11 @@ public class Application extends android.app.Application implements
     }
 
     @Override
+    public Object getSystemService(String name) {
+        return SystemServiceManager.getSystemService(this, name);
+    }
+
+    @Override
     public void onTerminate() {
         LayoutInflater.clearInstances();
         super.onTerminate();

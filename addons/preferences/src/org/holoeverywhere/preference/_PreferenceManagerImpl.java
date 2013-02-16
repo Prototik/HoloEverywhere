@@ -7,9 +7,18 @@ import org.holoeverywhere.preference.PreferenceManagerHelper.PreferenceManagerIm
 import android.content.Context;
 
 public class _PreferenceManagerImpl implements PreferenceManagerImpl {
+    static {
+        PreferenceInit.init();
+    }
+
     @Override
     public SharedPreferences getDefaultSharedPreferences(Context context, PreferenceImpl impl) {
         return PreferenceManager.getDefaultSharedPreferences(context, impl);
+    }
+
+    @Override
+    public int obtainThemeTag() {
+        return PreferenceInit.THEME_FLAG;
     }
 
     @Override

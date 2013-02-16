@@ -2,7 +2,6 @@
 package org.holoeverywhere.preference;
 
 import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.preference.R;
 import org.holoeverywhere.widget.LinearLayout;
 
 import android.animation.LayoutTransition;

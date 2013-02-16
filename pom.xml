@@ -20,10 +20,10 @@
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
-		<module>addons</module>
-		<module>resbuilder</module>
-		<module>demo</module>
 		<module>library</module>
+		<module>addons</module>
+		<module>demo</module>
+		<module>resbuilder</module>
 	</modules>
 
 	<scm>
@@ -108,6 +108,20 @@
 				<version>${android.version}</version>
 				<scope>provided</scope>
 			</dependency>
+
+			<dependency>
+				<groupId>com.google.android</groupId>
+				<artifactId>android-test</artifactId>
+				<version>${android.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.8.1</version>
+			</dependency>
+
 			<dependency>
 				<groupId>com.actionbarsherlock</groupId>
 				<artifactId>actionbarsherlock</artifactId>
@@ -177,9 +191,6 @@
 						<proguard>
 							<skip>true</skip>
 						</proguard>
-						<test>
-							<skip>true</skip>
-						</test>
 					</configuration>
 				</plugin>
 
@@ -211,11 +222,7 @@
 
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.12.4</version>
-					<inherited>true</inherited>
-					<configuration>
-						<skip>true</skip>
-					</configuration>
+					<version>2.13</version>
 				</plugin>
 
 				<plugin>
@@ -288,6 +295,9 @@
 					<name>performRelease</name>
 					<value>true</value>
 				</property>
+				<file>
+					<exists>${project.basedir}/AndroidManifest.xml</exists>
+				</file>
 			</activation>
 			<build>
 				<pluginManagement>

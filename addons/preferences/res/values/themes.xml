@@ -4,6 +4,7 @@
         <item name="checkBoxPreferenceStyle">@style/Holo.PreferenceCheckBox</item>
         <item name="dialogPreferenceStyle">@style/Holo.PreferenceDialog</item>
         <item name="editTextPreferenceStyle">@style/Holo.PreferenceDialog.EditTextPreference</item>
+        <item name="holoTheme">preference</item>
         <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="preferenceCategoryStyle">@style/Holo.PreferenceCategory</item>
         <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
@@ -25,6 +26,7 @@
         <item name="checkBoxPreferenceStyle">@style/Holo.PreferenceCheckBox</item>
         <item name="dialogPreferenceStyle">@style/Holo.PreferenceDialog</item>
         <item name="editTextPreferenceStyle">@style/Holo.PreferenceDialog.EditTextPreference</item>
+        <item name="holoTheme">preference</item>
         <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
         <item name="preferenceCategoryStyle">@style/Holo.PreferenceCategory</item>
         <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>

@@ -11,6 +11,8 @@ public class PreferenceManagerHelper {
     static interface PreferenceManagerImpl {
         SharedPreferences getDefaultSharedPreferences(Context context, PreferenceImpl impl);
 
+        int obtainThemeTag();
+
         SharedPreferences wrap(Context context, PreferenceImpl impl, String name, int mode);
     }
 
@@ -44,6 +46,11 @@ public class PreferenceManagerHelper {
             PreferenceImpl impl) {
         checkImpl();
         return IMPL.getDefaultSharedPreferences(context, impl);
+    }
+
+    public static int obtainThemeTag() {
+        checkImpl();
+        return IMPL.obtainThemeTag();
     }
 
     public static SharedPreferences wrap(Context context, PreferenceImpl impl, String name,

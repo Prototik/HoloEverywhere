@@ -45,6 +45,12 @@
 		<enum name="dark" value="1" />
 		<enum name="light" value="2" />
 		<enum name="mixed" value="3" />
+		<enum name="preference" value="4" />
+	</attr>
+	<attr name="preferenceTheme" format="reference">
+		<enum name="dark" value="1" />
+		<enum name="light" value="2" />
+		<enum name="mixed" value="3" />
 	</attr>
 	<attr name="modalBackgroundWrapper" format="reference" />
 	<attr name="gravity">
