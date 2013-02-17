@@ -96,6 +96,9 @@
 						<inputApk>${project.build.directory}/${project.artifactId}-${project.version}.apk</inputApk>
 						<outputApk>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</outputApk>
 					</zipalign>
+					<test>
+						<skip>true</skip>
+					</test>
 					<file>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</file>
 				</configuration>
 			</plugin>
