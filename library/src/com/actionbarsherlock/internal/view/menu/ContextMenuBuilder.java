@@ -22,35 +22,26 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
         public ContextMenuInfo getContextMenuInfo();
     }
 
-    private ContextMenuInfo contextMenuInfo;
-    private final ContextMenuListener listener;
-
+    private ContextMenuInfo mContextMenuInfo;
+    private ContextMenuListener mListener;
     private final String TAG = getClass().getSimpleName();
 
     public ContextMenuBuilder(Context context, ContextMenuListener listener) {
         super(context);
-        if (listener == null) {
-            throw new IllegalArgumentException(
-                    "ContextMenuListener can't be null");
-        }
-        this.listener = listener;
+        setContextMenuListener(listener);
     }
 
     public ContextMenuInfo getContextMenuInfo() {
-        return contextMenuInfo;
+        return mContextMenuInfo;
     }
 
-    private ContextMenuInfo getContextMenuInfo(View view) {
+    protected ContextMenuInfo getContextMenuInfo(View view) {
         if (view instanceof ContextMenuInfoGetter) {
             return ((ContextMenuInfoGetter) view).getContextMenuInfo();
         }
         ContextMenuInfo menuInfo = null;
         try {
-            Class<?> clazz = view.getClass();
-            while (clazz != View.class) {
-                clazz = clazz.getSuperclass();
-            }
-            Method method = clazz.getDeclaredMethod("getContextMenuInfo");
+            Method method = View.class.getDeclaredMethod("getContextMenuInfo");
             method.setAccessible(true);
             menuInfo = (ContextMenuInfo) method.invoke(view);
         } catch (Exception e) {
@@ -59,6 +50,14 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
             }
         }
         return menuInfo;
+    }
+
+    public ContextMenuListener getContextMenuListener() {
+        return mListener;
+    }
+
+    public void setContextMenuListener(ContextMenuListener listener) {
+        mListener = listener;
     }
 
     @Override
@@ -88,9 +87,12 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
 
     @SuppressLint("NewApi")
     public MenuDialogHelper show(View originalView, IBinder token) {
-        contextMenuInfo = getContextMenuInfo(originalView);
-        listener.createContextMenu(this, originalView, contextMenuInfo,
-                listener);
+        if (mListener == null) {
+            throw new IllegalStateException(
+                    "Cannot show context menu without reference on ContextMenuListener");
+        }
+        mContextMenuInfo = getContextMenuInfo(originalView);
+        mListener.createContextMenu(this, originalView, mContextMenuInfo, mListener);
         if (getVisibleItems().size() > 0) {
             if (VERSION.SDK_INT >= 8) {
                 EventLog.writeEvent(50001, 1);

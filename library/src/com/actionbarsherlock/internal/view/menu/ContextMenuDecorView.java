@@ -6,6 +6,7 @@ import org.holoeverywhere.HoloEverywhere;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewDebug.ExportedProperty;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
@@ -13,55 +14,8 @@ import android.widget.FrameLayout;
 import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.MenuItem;
 
-public final class ContextMenuDecorView extends FrameLayout {
-    private static final class InternalWrapper implements
-            MenuPresenter.Callback, MenuBuilder.Callback {
-        private final ContextMenuListener listener;
-        private final String TAG = getClass().getSimpleName();
-
-        public InternalWrapper(ContextMenuListener listener) {
-            if (listener == null) {
-                throw new IllegalArgumentException("Listener cannot be null");
-            }
-            this.listener = listener;
-        }
-
-        @Override
-        public void onCloseMenu(MenuBuilder menu, boolean allMenusAreClosing) {
-            if (HoloEverywhere.DEBUG) {
-                Log.v(TAG, "Calling onContextMenuClosed on " + listener);
-            }
-            listener.onContextMenuClosed((ContextMenu) menu);
-        }
-
-        @Override
-        public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
-            if (HoloEverywhere.DEBUG) {
-                Log.v(TAG, "Calling onContextItemSelected on " + listener);
-            }
-            if (menu instanceof ContextMenuBuilder
-                    && item instanceof MenuItemImpl) {
-                ((MenuItemImpl) item).setMenuInfo(((ContextMenuBuilder) menu)
-                        .getContextMenuInfo());
-            }
-            return listener.onContextItemSelected(item);
-        }
-
-        @Override
-        public void onMenuModeChange(MenuBuilder menu) {
-
-        }
-
-        @Override
-        public boolean onOpenSubMenu(MenuBuilder subMenu) {
-            return false;
-        }
-
-        public ContextMenuListener unwrap() {
-            return listener;
-        }
-    }
-
+public final class ContextMenuDecorView extends FrameLayout implements
+        MenuPresenter.Callback, MenuBuilder.Callback {
     public static View prepareDecorView(Context context, View v,
             ContextMenuListener listener, int decorViewId) {
         if (v != null) {
@@ -74,30 +28,23 @@ public final class ContextMenuDecorView extends FrameLayout {
     }
 
     private ContextMenuBuilder contextMenu;
-    private final InternalWrapper listener;
+
     private MenuDialogHelper menuDialogHelper;
+
+    private final ContextMenuListener mListener;
+
+    private final String TAG = getClass().getSimpleName();
 
     public ContextMenuDecorView(Context context,
             ContextMenuListener listener) {
         super(context);
-        this.listener = new InternalWrapper(listener);
+        mListener = listener;
     }
 
     public ContextMenuDecorView(Context context, View view,
             ContextMenuListener listener) {
         this(context, listener);
         attachView(view);
-    }
-
-    @Override
-    public void addView(View child) {
-        LayoutParams params = (LayoutParams) child.getLayoutParams();
-        if (params == null) {
-            params = generateDefaultLayoutParams();
-        }
-        params.height = android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-        params.width = android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-        addView(child, params);
     }
 
     public synchronized void attachView(View view) {
@@ -113,22 +60,90 @@ public final class ContextMenuDecorView extends FrameLayout {
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
+    public ContextMenuListener getContextMenuListener() {
+        return mListener;
+    }
+
+    @Override
+    @ExportedProperty(deepExport = true, prefix = "layout_")
+    public ViewGroup.LayoutParams getLayoutParams() {
+        if (getChildCount() == 0) {
+            return super.getLayoutParams();
+        }
+        final View child = unwrap();
+        ViewGroup.LayoutParams params = super.getLayoutParams();
+        if (params == null) {
+            params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+        ViewGroup.LayoutParams childParams = child.getLayoutParams();
+        boolean modified = false;
+        if (params.width != childParams.width) {
+            params.width = childParams.width;
+            modified = true;
+        }
+        if (params.height != childParams.height) {
+            params.height = childParams.height;
+            modified = true;
+        }
+        if (modified) {
+            setLayoutParams(params);
+        }
+        return params;
+    }
+
+    @Override
+    public void onCloseMenu(MenuBuilder menu, boolean allMenusAreClosing) {
+        if (mListener == null) {
+            return;
+        }
+        if (HoloEverywhere.DEBUG) {
+            Log.v(TAG, "Calling onContextMenuClosed on " + mListener);
+        }
+        mListener.onContextMenuClosed((ContextMenu) menu);
+    }
+
+    @Override
+    public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
+        if (mListener == null) {
+            return false;
+        }
+        if (HoloEverywhere.DEBUG) {
+            Log.v(TAG, "Calling onContextItemSelected on " + mListener);
+        }
+        if (menu instanceof ContextMenuBuilder
+                && item instanceof MenuItemImpl) {
+            ((MenuItemImpl) item).setMenuInfo(((ContextMenuBuilder) menu)
+                    .getContextMenuInfo());
+        }
+        return mListener.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onMenuModeChange(MenuBuilder menu) {
+
+    }
+
+    @Override
+    public boolean onOpenSubMenu(MenuBuilder subMenu) {
+        return false;
+    }
+
     @Override
     public boolean showContextMenuForChild(View originalView) {
         if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
             return super.showContextMenuForChild(originalView);
         }
         if (contextMenu == null) {
-            contextMenu = new ContextMenuBuilder(getContext(),
-                    listener.unwrap());
-            contextMenu.setCallback(listener);
+            contextMenu = new ContextMenuBuilder(getContext(), mListener);
+            contextMenu.setCallback(this);
         } else {
             contextMenu.clearAll();
         }
         final MenuDialogHelper helper = contextMenu.show(originalView,
                 originalView.getWindowToken());
         if (helper != null) {
-            helper.setPresenterCallback(listener);
+            helper.setPresenterCallback(this);
         }
         menuDialogHelper = helper;
         return menuDialogHelper != null;
