@@ -5,6 +5,7 @@ import org.holoeverywhere.R;
 import org.holoeverywhere.internal.AlertController;
 import org.holoeverywhere.internal.AlertController.AlertDecorViewInstaller;
 import org.holoeverywhere.internal.AlertController.AlertParams.OnPrepareListViewListener;
+import org.holoeverywhere.widget.Button;
 import org.holoeverywhere.widget.ListView;
 
 import android.content.Context;
@@ -19,7 +20,6 @@ import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListAdapter;
 
 public class AlertDialog extends Dialog implements DialogInterface,

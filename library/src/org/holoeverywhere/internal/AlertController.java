@@ -6,8 +6,12 @@ import java.lang.ref.WeakReference;
 import org.holoeverywhere.ArrayAdapter;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
+import org.holoeverywhere.widget.Button;
+import org.holoeverywhere.widget.CheckedTextView;
+import org.holoeverywhere.widget.FrameLayout;
 import org.holoeverywhere.widget.LinearLayout;
 import org.holoeverywhere.widget.ListView;
+import org.holoeverywhere.widget.TextView;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,14 +33,10 @@ import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
-import android.widget.CheckedTextView;
-import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 public class AlertController {
     public static interface AlertDecorViewInstaller {
