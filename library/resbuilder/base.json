@@ -12,7 +12,7 @@
                 "datePickerStyle": "@style/Holo.DatePicker", 
                 "dividerHorizontal": "?android:listDivider", 
                 "dividerVertical": "?android:listDivider", 
-                "dropdownListPreferredItemHeight": "?listPreferredItemHeight", 
+                "dropdownListPreferredItemHeight": "?listPreferredItemHeightSmall", 
                 "fastScrollOverlayPosition": "atThumb", 
                 "fastScrollTextColor": "@color/primary_text_holo_dark", 
                 "fastScrollThumbDrawable": "@drawable/fastscroll_thumb_holo", 

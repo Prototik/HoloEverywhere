@@ -211,8 +211,8 @@ public class ProgressBar extends android.widget.ProgressBar {
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.ProgressBar, defStyle, styleRes);
         mNoInvalidate = true;
-        Drawable drawable = DrawableCompat.getDrawable(a,
-                R.styleable.ProgressBar_android_progressDrawable);
+
+        Drawable drawable = a.getDrawable(R.styleable.ProgressBar_android_progressDrawable);
         if (drawable != null) {
             drawable = tileify(drawable, false);
             setProgressDrawable(drawable);

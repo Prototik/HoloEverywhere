@@ -557,7 +557,7 @@
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="dividerVertical">?android:listDivider</item>
-        <item name="dropdownListPreferredItemHeight">?listPreferredItemHeight</item>
+        <item name="dropdownListPreferredItemHeight">?listPreferredItemHeightSmall</item>
         <item name="fastScrollOverlayPosition">atThumb</item>
         <item name="fastScrollTextColor">@color/primary_text_holo_dark</item>
         <item name="fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
@@ -750,7 +750,7 @@
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="dividerVertical">?android:listDivider</item>
-        <item name="dropdownListPreferredItemHeight">?listPreferredItemHeight</item>
+        <item name="dropdownListPreferredItemHeight">?listPreferredItemHeightSmall</item>
         <item name="fastScrollOverlayPosition">atThumb</item>
         <item name="fastScrollTextColor">@color/primary_text_holo_dark</item>
         <item name="fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
@@ -875,7 +875,7 @@
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="dividerVertical">?android:listDivider</item>
-        <item name="dropdownListPreferredItemHeight">?listPreferredItemHeight</item>
+        <item name="dropdownListPreferredItemHeight">?listPreferredItemHeightSmall</item>
         <item name="fastScrollOverlayPosition">atThumb</item>
         <item name="fastScrollTextColor">@color/primary_text_holo_dark</item>
         <item name="fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
