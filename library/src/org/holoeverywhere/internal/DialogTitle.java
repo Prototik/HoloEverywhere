@@ -2,13 +2,13 @@
 package org.holoeverywhere.internal;
 
 import org.holoeverywhere.R;
+import org.holoeverywhere.widget.TextView;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.widget.TextView;
 
 public class DialogTitle extends TextView {
     public DialogTitle(Context context) {

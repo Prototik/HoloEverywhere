@@ -30,7 +30,7 @@ public class DialogsProgressDialogFragment extends DialogFragment {
                 }
             }
             mLastPosition = 0;
-            if (isVisible()) {
+            if (getDialog() != null && getDialog().isShowing()) {
                 dismiss();
             }
             return null;
