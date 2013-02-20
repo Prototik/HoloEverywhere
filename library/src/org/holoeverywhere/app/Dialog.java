@@ -132,7 +132,8 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
 
     @Override
     public void setContentView(View view) {
-        setContentView(prepareDecorView(view));
+        setContentView(view,
+                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
     @Override
