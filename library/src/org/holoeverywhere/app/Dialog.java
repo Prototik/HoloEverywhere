@@ -9,6 +9,7 @@ import android.util.TypedValue;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
 import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
@@ -50,7 +51,7 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
 
     @Override
     public void addContentView(View view, LayoutParams params) {
-        super.addContentView(prepareDecorView(view), params);
+        getWindow().addContentView(prepareDecorView(view, params), params);
     }
 
     @Override
@@ -111,7 +112,11 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
     }
 
     public View prepareDecorView(View v) {
-        return ContextMenuDecorView.prepareDecorView(getContext(), v, this, 0);
+        return prepareDecorView(v, null);
+    }
+
+    public View prepareDecorView(View v, ViewGroup.LayoutParams params) {
+        return ContextMenuDecorView.prepareDecorView(getContext(), v, this, params, 0);
     }
 
     @Override
@@ -122,16 +127,16 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
 
     @Override
     public void setContentView(int layoutResID) {
-        setContentView(getLayoutInflater().inflate(layoutResID));
+        setContentView(getLayoutInflater().makeDecorView(layoutResID, this));
     }
 
     @Override
     public void setContentView(View view) {
-        super.setContentView(prepareDecorView(view));
+        setContentView(prepareDecorView(view));
     }
 
     @Override
     public void setContentView(View view, LayoutParams params) {
-        super.setContentView(prepareDecorView(view), params);
+        getWindow().setContentView(prepareDecorView(view, params), params);
     }
 }

@@ -36,6 +36,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
 import com.actionbarsherlock.internal.view.menu.ContextMenuBackWrapper;
@@ -539,11 +540,15 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     }
 
     @Override
-    public View prepareDecorView(View v) {
+    public View prepareDecorView(View view) {
+        return prepareDecorView(view, null);
+    }
+
+    public View prepareDecorView(View v, ViewGroup.LayoutParams params) {
         if (v instanceof ContextMenuDecorView) {
             return v;
         }
-        return ContextMenuDecorView.prepareDecorView(this, v, this, 0);
+        return ContextMenuDecorView.prepareDecorView(this, v, this, params, 0);
     }
 
     @Override

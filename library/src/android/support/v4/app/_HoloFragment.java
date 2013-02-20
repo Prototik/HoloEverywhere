@@ -228,6 +228,6 @@ public abstract class _HoloFragment extends Fragment implements IHoloFragment {
     @Override
     public View prepareDecorView(View v) {
         return ContextMenuDecorView.prepareDecorView(getSupportActivity(), v,
-                this, INTERNAL_DECOR_VIEW_ID);
+                this, null, INTERNAL_DECOR_VIEW_ID);
     }
 }

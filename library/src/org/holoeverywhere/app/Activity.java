@@ -37,13 +37,13 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     public void addContentView(View view, LayoutParams params) {
-        view = prepareDecorView(view);
+        view = prepareDecorView(view, params);
         for (IAddon<?, ?> addon : addons) {
             if (addon.activity(this).addContentView(view, params)) {
                 return;
             }
         }
-        super.addContentView(view, params);
+        getWindow().addContentView(view, params);
     }
 
     public void attachAddon(IAddon<?, ?> addon) {
@@ -424,13 +424,13 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     public void setContentView(View view, LayoutParams params) {
-        view = prepareDecorView(view);
+        view = prepareDecorView(view, params);
         for (IAddon<?, ?> addon : addons) {
             if (addon.activity(this).setContentView(view, params)) {
                 return;
             }
         }
-        super.setContentView(view, params);
+        getWindow().setContentView(view, params);
     }
 
     @Override

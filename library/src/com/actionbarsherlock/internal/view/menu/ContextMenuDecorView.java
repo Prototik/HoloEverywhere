@@ -2,6 +2,8 @@
 package com.actionbarsherlock.internal.view.menu;
 
 import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.widget.FrameLayout;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,45 +11,54 @@ import android.view.View;
 import android.view.ViewDebug.ExportedProperty;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.widget.FrameLayout;
 
 import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.MenuItem;
 
 public final class ContextMenuDecorView extends FrameLayout implements
         MenuPresenter.Callback, MenuBuilder.Callback {
-    public static View prepareDecorView(Context context, View v,
-            ContextMenuListener listener, int decorViewId) {
-        if (v != null) {
-            v = new ContextMenuDecorView(context, v, listener);
-            if (decorViewId > 0) {
-                v.setId(decorViewId);
-            }
+    public static ContextMenuDecorView inflateDecorView(LayoutInflater layoutInflater, int layout,
+            ContextMenuListener listener) {
+        ContextMenuDecorView view = new ContextMenuDecorView(layoutInflater.getContext(), listener);
+        layoutInflater.inflate(layout, view, true);
+        return view;
+    }
+
+    public static ContextMenuDecorView prepareDecorView(Context context, View v,
+            ContextMenuListener listener, ViewGroup.LayoutParams params, int decorViewId) {
+        if (v instanceof ContextMenuDecorView) {
+            return (ContextMenuDecorView) v;
         }
-        return v;
+        if (v != null) {
+            ContextMenuDecorView decorView = new ContextMenuDecorView(context, v, params, listener);
+            if (decorViewId > 0) {
+                decorView.setId(decorViewId);
+            }
+            return decorView;
+        } else {
+            return null;
+        }
     }
 
     private ContextMenuBuilder contextMenu;
-
     private MenuDialogHelper menuDialogHelper;
-
     private final ContextMenuListener mListener;
 
     private final String TAG = getClass().getSimpleName();
 
-    public ContextMenuDecorView(Context context,
+    private ContextMenuDecorView(Context context,
             ContextMenuListener listener) {
         super(context);
         mListener = listener;
     }
 
-    public ContextMenuDecorView(Context context, View view,
+    private ContextMenuDecorView(Context context, View view, ViewGroup.LayoutParams params,
             ContextMenuListener listener) {
         this(context, listener);
-        attachView(view);
+        attachView(view, params);
     }
 
-    public synchronized void attachView(View view) {
+    public synchronized void attachView(View view, ViewGroup.LayoutParams params) {
         if (view == null) {
             throw new NullPointerException("View cannot be null");
         }
@@ -56,8 +67,14 @@ public final class ContextMenuDecorView extends FrameLayout implements
             ((ViewGroup) parent).removeView(view);
         }
         removeAllViews();
-        addView(view, android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+        if (params == null) {
+            params = view.getLayoutParams();
+        }
+        if (params == null) {
+            params = new FrameLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                    android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+        }
+        addView(view, params);
     }
 
     public ContextMenuListener getContextMenuListener() {
@@ -75,8 +92,13 @@ public final class ContextMenuDecorView extends FrameLayout implements
         if (params == null) {
             params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
+            setLayoutParams(params);
         }
         ViewGroup.LayoutParams childParams = child.getLayoutParams();
+        if (childParams == null) {
+            child.setLayoutParams(params);
+            return params;
+        }
         boolean modified = false;
         if (params.width != childParams.width) {
             params.width = childParams.width;

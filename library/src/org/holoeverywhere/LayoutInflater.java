@@ -256,9 +256,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements
     }
 
     public ContextMenuDecorView makeDecorView(int layout, ContextMenuListener listener) {
-        ContextMenuDecorView view = new ContextMenuDecorView(getContext(), listener);
-        inflate(layout, view, true);
-        return view;
+        return ContextMenuDecorView.inflateDecorView(this, layout, listener);
     }
 
     @Override
