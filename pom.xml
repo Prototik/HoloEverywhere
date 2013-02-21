@@ -64,32 +64,41 @@
 
 	<distributionManagement>
 		<repository>
-			<uniqueVersion>true</uniqueVersion>
-			<id>${project.repo.release.id}</id>
+			<id>holoeverywhere-repo</id>
 			<name>HoloEverywhere Repo</name>
-			<url>${project.release.repository.url}</url>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+			<uniqueVersion>true</uniqueVersion>
 		</repository>
 		<snapshotRepository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>${project.repo.snapshots.id}</id>
+			<id>holoeverywhere-repo-snapshots</id>
 			<name>HoloEverywhere Repo Snapshots</name>
-			<url>${project.snapshots.repository.url}</url>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<uniqueVersion>false</uniqueVersion>
 		</snapshotRepository>
+		<site>
+			<id>holoeverywhere-website</id>
+			<name>HoloEverywhere Website</name>
+			<url>http://holoeverywhere.org/</url>
+		</site>
 	</distributionManagement>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://raw.github.com/ChristopheVersieux/HoloEverywhere/stable/LICENSE</url>
+			<distribution>repo</distribution>
+			<comments>Copyright (c) 2012 Christophe Versieux, Sergey Shatunov</comments>
+		</license>
+	</licenses>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<project.repo.release.id>holoeverywhere-repo</project.repo.release.id>
-		<project.release.repository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2</project.release.repository.url>
-
-		<project.repo.snapshots.id>holoeverywhere-repo-snapshots</project.repo.snapshots.id>
-		<project.snapshots.repository.url>https://oss.sonatype.org/content/repositories/snapshots</project.snapshots.repository.url>
-
 		<java.version>1.6</java.version>
 		<abs.version>4.2.0</abs.version>
 		<noa.version>2.4.0</noa.version>
+		<junit.version>4.8.1</junit.version>
 		<android.version>4.1.1.4</android.version>
 		<android.sdk.platform>16</android.sdk.platform>
 
@@ -119,7 +128,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.8.1</version>
+				<version>${junit.version}</version>
 			</dependency>
 
 			<dependency>
@@ -127,6 +136,12 @@
 				<artifactId>actionbarsherlock</artifactId>
 				<version>${abs.version}</version>
 				<type>apklib</type>
+			</dependency>
+
+			<dependency>
+				<groupId>com.nineoldandroids</groupId>
+				<artifactId>library</artifactId>
+				<version>${noa.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
