@@ -1,4 +1,9 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto);
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Roboto Regular"), local("Roboto-Regular"), url(fonts/roboto.woff) format("woff"); }
+
 html {
   background: #151515;
   color: #e6d3bd;
@@ -15,7 +20,7 @@ div.clearfix {
 
 .container {
   width: 1000px;
-  min-width: 400px;
+  min-width: 240px;
   margin: 32px auto;
   background: rgba(80, 80, 80, 0.3);
   border: 2px groove rgba(140, 140, 140, 0.4); }
@@ -40,11 +45,13 @@ header.header {
       font-size: .7em; }
   header.header ul.menu {
     font-size: 0;
-    padding: 0; }
+    padding: 0;
+    margin: 0; }
     header.header ul.menu li {
       font-size: 25.2px;
       background: #0099cc;
       padding: 6px;
+      margin: 0;
       -webkit-transition: background 0.4s ease 0;
       -moz-transition: background 0.4s ease 0;
       -o-transition: background 0.4s ease 0;
@@ -69,7 +76,6 @@ header.header {
     font-size: 1.3em;
     border-bottom: 2px solid #0099cc;
     display: block;
-    width: 90%;
     color: #0099cc;
     padding: 4px;
     font-weight: bold; }
@@ -81,25 +87,27 @@ header.header {
     border: 0; } }
 @media all and (max-width: 900px) {
   header.header {
-    text-align: center; }
+    font-size: 28px;
+    text-align: center;
+    padding: 8px 0 0 0; }
     header.header p {
-      display: block; }
+      display: block;
+      margin-bottom: 4px; }
     header.header ul.menu {
       float: none;
       display: block;
-      border-top: 2px solid #0099cc;
-      padding-top: 8px;
-      margin-top: 8px; }
+      border-top: 2px solid #0099cc; }
       header.header ul.menu li {
+        font-size: 19.6px;
         background: none;
         margin: 0 !important;
-        padding-left: 8px !important;
-        padding-right: 8px !important;
+        padding-left: 2px !important;
+        padding-right: 2px !important;
+        color: #0099cc;
         -webkit-transition: background 0.4s ease 0, color 0.4s ease 0;
         -moz-transition: background 0.4s ease 0, color 0.4s ease 0;
         -o-transition: background 0.4s ease 0, color 0.4s ease 0;
-        transition: background 0.4s ease 0, color 0.4s ease 0;
-        color: #0099cc; }
+        transition: background 0.4s ease 0, color 0.4s ease 0; }
         header.header ul.menu li:first-child {
           border-right: 2px solid #0099cc; }
         header.header ul.menu li:last-child {
@@ -113,8 +121,8 @@ header.header {
     float: none;
     display: block;
     width: 100%;
-    padding: 8px;
-    margin-bottom: 12px;
+    margin: 0;
+    padding: 0;
     border-bottom: 1px solid rgba(170, 170, 170, 0.2); }
     .node:last-child {
       margin-bottom: 0;

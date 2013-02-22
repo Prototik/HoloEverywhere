@@ -4,12 +4,19 @@ $panel-color: rgba(80, 80, 80, 0.3);
 $panel-width: 1000px;
 $panel-border-size: 2px;
 $foreground-color: #E6D3BD;
-$min-width: 400px;
+$min-width: 240px;
 $header-font-size: 36px;
+$header-font-size-small: 28px;
 $header-padding: 8px;
 $menu-child-distance: 8px;
+$menu-child-distance-small: 2px;
 
-@import url(http://fonts.googleapis.com/css?family=Roboto);
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Regular'), local('Roboto-Regular'), url(fonts/roboto.woff) format('woff');
+}
 
 @mixin transition($style) {
   -webkit-transition: $style;
@@ -68,10 +75,12 @@ header.header {
   ul.menu {
     font-size: 0;
     padding: 0;
+    margin: 0;
     li {
       font-size: ($header-font-size * 0.7);
       background: $base-color;
       padding: 6px;
+      margin: 0;
       @include transition(background 0.4s ease 0);
       &:first-child {
         margin-right: $menu-child-distance;
@@ -101,7 +110,6 @@ header.header {
     font-size: 1.3em;
     border-bottom: 2px solid $base-color;
     display: block;
-    width: 90%;
     color: $base-color;
     padding: 4px;
     font-weight: bold;
@@ -118,25 +126,27 @@ header.header {
 
 @media all and (max-width: ($panel-width * 0.9)) {
   header.header {
+    font-size: $header-font-size-small;
   	text-align: center;
+  	padding: $header-padding 0 0 0;
   	p {
   	  display: block;
+  	  margin-bottom: 4px;
   	}
   	ul.menu {
   	  float: none;
   	  display: block;
   	  border-top: 2px solid $base-color;
-  	  padding-top: $header-padding;
-  	  margin-top: $header-padding;
   	  li {
+  	    font-size: ($header-font-size-small * 0.7);
   	    background: none;
   	    margin: 0 !important;
-  	    padding-left: $menu-child-distance !important;
-  	    padding-right: $menu-child-distance !important;
-  	    @include transition((background 0.4s ease 0, color 0.4s ease 0));
+  	    padding-left: $menu-child-distance-small !important;
+  	    padding-right: $menu-child-distance-small !important;
   	    color: $base-color;
+  	    @include transition((background 0.4s ease 0, color 0.4s ease 0));
   	    &:first-child {
-          border-right: 2px solid $base-color;
+          border-right: $menu-child-distance-small solid $base-color;
         }
         &:last-child {
           border-right: 0;
@@ -154,8 +164,8 @@ header.header {
     float: none;
     display: block;
     width: 100%;
-    padding: $header-padding;
-    margin-bottom: 12px;
+    margin: 0;
+    padding: 0;
     border-bottom: 1px solid rgba(170, 170, 170, 0.2);
     &:last-child {
       margin-bottom: 0;
