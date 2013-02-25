@@ -48,6 +48,7 @@ public class MultiSelectListPreference extends DialogPreference {
 
     public MultiSelectListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+        context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.ListPreference, 0, 0);
         mEntries = a.getTextArray(R.styleable.ListPreference_entries);

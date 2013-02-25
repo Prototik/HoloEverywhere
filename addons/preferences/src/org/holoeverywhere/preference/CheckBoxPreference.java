@@ -18,6 +18,7 @@ public class CheckBoxPreference extends TwoStatePreference {
 
     public CheckBoxPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.CheckBoxPreference, defStyle, 0);
         setSummaryOn(a.getString(R.styleable.CheckBoxPreference_summaryOn));

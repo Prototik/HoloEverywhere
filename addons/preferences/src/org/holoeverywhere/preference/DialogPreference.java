@@ -65,6 +65,7 @@ public abstract class DialogPreference extends Preference implements
 
     public DialogPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.DialogPreference, defStyle, R.style.Holo_PreferenceDialog);
         mDialogTitle = a.getString(R.styleable.DialogPreference_dialogTitle);

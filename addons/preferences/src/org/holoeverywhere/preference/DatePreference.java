@@ -44,7 +44,8 @@ public class DatePreference extends DialogPreference {
 
     public DatePreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DatePreference,
+        context = getContext();
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DatePreference,
                 defStyle, R.style.Holo_PreferenceDate);
         a.recycle();
     }

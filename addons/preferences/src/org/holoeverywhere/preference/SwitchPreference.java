@@ -36,6 +36,7 @@ public class SwitchPreference extends TwoStatePreference {
 
     public SwitchPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.SwitchPreference, defStyle,
                 R.style.Holo_PreferenceSwitch);

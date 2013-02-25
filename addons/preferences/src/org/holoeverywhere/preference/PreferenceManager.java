@@ -42,7 +42,7 @@ public class PreferenceManager {
     }
 
     public static final String KEY_HAS_SET_DEFAULT_VALUES = "_has_set_default_values";
-    public static final String METADATA_KEY_PREFERENCES = "com.WazaBe.HoloEverywhere.preference";
+    public static final String METADATA_KEY_PREFERENCES = PreferenceInit.PACKAGE;
     private static final String TAG = "PreferenceManager";
 
     public static SharedPreferences getDefaultSharedPreferences(Context context) {
@@ -129,10 +129,12 @@ public class PreferenceManager {
     private int mNextRequestCode;
     private boolean mNoCommit;
     private OnPreferenceTreeClickListener mOnPreferenceTreeClickListener;
+    private PreferenceInflater mPreferenceInflater;
     private PreferenceScreen mPreferenceScreen;
     private List<DialogInterface> mPreferencesScreens;
     private SharedPreferences mSharedPreferences;
     private int mSharedPreferencesMode;
+
     private String mSharedPreferencesName;
 
     PreferenceManager(Activity activity, int firstRequestCode) {
@@ -298,6 +300,19 @@ public class PreferenceManager {
         return mOnPreferenceTreeClickListener;
     }
 
+    public PreferenceInflater getPreferenceInflater() {
+        return getPreferenceInflater(mActivity == null ? mContext : mActivity);
+    }
+
+    private PreferenceInflater getPreferenceInflater(Context context) {
+        if (mPreferenceInflater != null) {
+            return mPreferenceInflater;
+        }
+        mPreferenceInflater = new PreferenceInflater(context, this);
+        onInitInflater(mPreferenceInflater);
+        return mPreferenceInflater;
+    }
+
     PreferenceScreen getPreferenceScreen() {
         return mPreferenceScreen;
     }
@@ -322,11 +337,9 @@ public class PreferenceManager {
             PreferenceScreen rootPreferences) {
         final List<ResolveInfo> activities = queryIntentActivities(queryIntent);
         final HashSet<String> inflatedRes = new HashSet<String>();
-
         for (int i = activities.size() - 1; i >= 0; i--) {
             final ActivityInfo activityInfo = activities.get(i).activityInfo;
             final Bundle metaData = activityInfo.metaData;
-
             if (metaData == null
                     || !metaData
                             .containsKey(PreferenceManager.METADATA_KEY_PREFERENCES)) {
@@ -336,7 +349,6 @@ public class PreferenceManager {
                     + ":"
                     + activityInfo.metaData
                             .getInt(PreferenceManager.METADATA_KEY_PREFERENCES);
-
             if (!inflatedRes.contains(uniqueResId)) {
                 inflatedRes.add(uniqueResId);
 
@@ -351,37 +363,24 @@ public class PreferenceManager {
                                     + Log.getStackTraceString(e));
                     continue;
                 }
-
-                final PreferenceInflater inflater = new PreferenceInflater(
-                        Preference.context(context), this);
                 final XmlResourceParser parser = activityInfo.loadXmlMetaData(
-                        context.getPackageManager(),
-                        PreferenceManager.METADATA_KEY_PREFERENCES);
-                rootPreferences = (PreferenceScreen) inflater.inflate(parser,
-                        rootPreferences, true);
+                        context.getPackageManager(), PreferenceManager.METADATA_KEY_PREFERENCES);
+                rootPreferences = (PreferenceScreen) getPreferenceInflater(context).inflate(
+                        parser, rootPreferences);
                 parser.close();
             }
         }
-
         rootPreferences.onAttachedToHierarchy(this);
-
         return rootPreferences;
     }
 
     public PreferenceScreen inflateFromResource(Context context, int resId,
             PreferenceScreen rootPreferences) {
-        // Block commits
         setNoCommit(true);
-
-        final PreferenceInflater inflater = new PreferenceInflater(Preference.context(context),
-                this);
-        rootPreferences = (PreferenceScreen) inflater.inflate(resId,
-                rootPreferences, true);
+        rootPreferences = (PreferenceScreen) getPreferenceInflater(context).inflate(
+                resId, rootPreferences);
         rootPreferences.onAttachedToHierarchy(this);
-
-        // Unblock commits
         setNoCommit(false);
-
         return rootPreferences;
     }
 
@@ -390,6 +389,10 @@ public class PreferenceManager {
 
         setSharedPreferencesName(PreferenceManager
                 .getDefaultSharedPreferencesName(context));
+    }
+
+    protected void onInitInflater(PreferenceInflater inflater) {
+
     }
 
     private List<ResolveInfo> queryIntentActivities(Intent queryIntent) {

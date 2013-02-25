@@ -1,9 +1,11 @@
 
 package org.holoeverywhere.preference;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
@@ -76,6 +78,8 @@ public class Preference implements Comparable<Preference>,
 
     public static final int DEFAULT_ORDER = Integer.MAX_VALUE;
 
+    private static WeakHashMap<Context, WeakReference<PreferenceContextWrapper>> sStyledContextMap = new WeakHashMap<Context, WeakReference<PreferenceContextWrapper>>();
+
     static {
         PreferenceInit.init();
     }
@@ -84,7 +88,14 @@ public class Preference implements Comparable<Preference>,
         if (context instanceof PreferenceContextWrapper) {
             return (PreferenceContextWrapper) context;
         }
+        WeakReference<PreferenceContextWrapper> reference = sStyledContextMap.get(context);
         PreferenceContextWrapper wrapper = null;
+        if (reference != null) {
+            wrapper = reference.get();
+        }
+        if (wrapper != null) {
+            return wrapper;
+        }
         int theme, mod = 0;
         TypedValue outValue = new TypedValue();
         context.obtainStyledAttributes(new int[] {
@@ -129,7 +140,12 @@ public class Preference implements Comparable<Preference>,
         if (theme == ThemeManager.getDefaultTheme() || theme == 0) {
             theme = R.style.Holo_PreferenceTheme;
         }
-        return wrapper = new PreferenceContextWrapper(context, theme);
+        if (wrapper == null) {
+            wrapper = new PreferenceContextWrapper(context, theme);
+        }
+        reference = new WeakReference<PreferenceContextWrapper>(wrapper);
+        sStyledContextMap.put(context, reference);
+        return wrapper;
     }
 
     private boolean mBaseMethodCalled;
@@ -174,9 +190,9 @@ public class Preference implements Comparable<Preference>,
     }
 
     public Preference(Context context, AttributeSet attrs, int defStyle) {
-        mContext = context;
-        TypedArray a = context.obtainStyledAttributes(attrs,
-                R.styleable.Preference, defStyle, 0);
+        mContext = context(context);
+        TypedArray a = mContext.obtainStyledAttributes(attrs,
+                R.styleable.Preference, defStyle, R.style.Holo_Preference);
         mKey = a.getString(R.styleable.Preference_key);
         setResId(a.getResourceId(R.styleable.Preference_id, 0));
         mIconResId = a.getResourceId(R.styleable.Preference_icon, 0);
@@ -200,8 +216,7 @@ public class Preference implements Comparable<Preference>,
         mShouldDisableView = a.getBoolean(
                 R.styleable.Preference_shouldDisableView, mShouldDisableView);
         a.recycle();
-        if (!getClass().getName().startsWith(
-                PreferenceInit.PACKAGE)) {
+        if (!getClass().getName().startsWith(PreferenceInit.PACKAGE)) {
             mHasSpecifiedLayout = true;
         }
     }

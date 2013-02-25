@@ -1,3 +1,4 @@
+@import url(normalize.css);
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
@@ -51,13 +52,11 @@ header.header {
       font-size: 25.2px;
       background: #0099cc;
       padding: 6px;
-      margin: 0;
+      margin: 0 8px 0 0;
       -webkit-transition: background 0.4s ease 0;
       -moz-transition: background 0.4s ease 0;
       -o-transition: background 0.4s ease 0;
       transition: background 0.4s ease 0; }
-      header.header ul.menu li:first-child {
-        margin-right: 8px; }
       header.header ul.menu li:last-child {
         margin-right: 0; }
       header.header ul.menu li:hover {
@@ -100,18 +99,16 @@ header.header {
       header.header ul.menu li {
         font-size: 19.6px;
         background: none;
-        margin: 0 !important;
-        padding-left: 2px !important;
-        padding-right: 2px !important;
+        margin: 0 2px 0 0;
         color: #0099cc;
+        padding-left: 10px;
+        padding-right: 10px;
         -webkit-transition: background 0.4s ease 0, color 0.4s ease 0;
         -moz-transition: background 0.4s ease 0, color 0.4s ease 0;
         -o-transition: background 0.4s ease 0, color 0.4s ease 0;
         transition: background 0.4s ease 0, color 0.4s ease 0; }
-        header.header ul.menu li:first-child {
-          border-right: 2px solid #0099cc; }
         header.header ul.menu li:last-child {
-          border-right: 0; }
+          margin-right: 0; }
         header.header ul.menu li:hover {
           color: white; }
         header.header ul.menu li a {

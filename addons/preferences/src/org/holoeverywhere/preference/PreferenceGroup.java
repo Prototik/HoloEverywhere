@@ -26,6 +26,7 @@ public abstract class PreferenceGroup extends Preference implements
 
     public PreferenceGroup(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        context = getContext();
         mPreferenceList = new ArrayList<Preference>();
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.PreferenceGroup, defStyle, 0);

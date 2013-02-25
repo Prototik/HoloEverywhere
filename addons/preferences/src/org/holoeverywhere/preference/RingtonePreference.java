@@ -29,6 +29,7 @@ public class RingtonePreference extends DialogPreference implements
 
     public RingtonePreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.RingtonePreference, defStyle, 0);
         mRingtoneType = a.getInt(R.styleable.RingtonePreference_ringtoneType,

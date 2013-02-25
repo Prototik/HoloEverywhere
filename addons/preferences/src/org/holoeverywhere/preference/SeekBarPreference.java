@@ -51,6 +51,7 @@ public class SeekBarPreference extends Preference implements
 
     public SeekBarPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.SeekBarPreference, defStyle, 0);
         setMax(a.getInt(R.styleable.SeekBarPreference_max, mMax));

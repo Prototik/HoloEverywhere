@@ -46,6 +46,7 @@ public class TimePreference extends DialogPreference {
 
     public TimePreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TimePreference, defStyle,
                 R.style.Holo_PreferenceTime);
         switch (a.getInt(R.styleable.TimePreference_is24HourView, 0)) {

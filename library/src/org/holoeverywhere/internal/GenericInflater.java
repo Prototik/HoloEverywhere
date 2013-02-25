@@ -3,7 +3,9 @@ package org.holoeverywhere.internal;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -19,45 +21,36 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
         public T onCreateItem(String name, Context context, AttributeSet attrs);
     }
 
-    private static class FactoryMerger<T> implements Factory<T> {
-        private final Factory<T> mF1, mF2;
-
-        FactoryMerger(Factory<T> f1, Factory<T> f2) {
-            mF1 = f1;
-            mF2 = f2;
-        }
-
-        @Override
-        public T onCreateItem(String name, Context context, AttributeSet attrs) {
-            T v = mF1.onCreateItem(name, context, attrs);
-            if (v != null) {
-                return v;
-            }
-            return mF2.onCreateItem(name, context, attrs);
-        }
-    }
-
     public interface Parent<T> {
         public void addItemFromInflater(T child);
     }
 
-    protected static final HashMap<String, Constructor<?>> constructorMap = new HashMap<String, Constructor<?>>();
-    protected static final Class<?>[] constructorSignature = new Class<?>[] {
+    private static final HashMap<Class<?>, Constructor<?>> sConstructorMap = new HashMap<Class<?>, Constructor<?>>();
+    protected final Class<?>[] mConstructorSignature = new Class<?>[] {
             Context.class, AttributeSet.class
     };
-    protected final Object[] constructorArgs = new Object[2];
-    protected final Context context;
-    private String defaultPackage;
-    private Factory<T> factory;
-    private boolean factorySet;
+    protected final Object[] mConstructorArgs = new Object[2];
+    private final Context mContext;
+    private ClassLoader mClassLoader;
+    private final List<String> mPackages = new ArrayList<String>();
+    private final List<Factory<T>> mFactoryList;
+
+    public void setClassLoader(ClassLoader classLoader) {
+        mClassLoader = classLoader;
+    }
+
+    public ClassLoader getClassLoader() {
+        return mClassLoader;
+    }
 
     protected GenericInflater(Context context) {
-        this.context = context;
+        mContext = context;
+        mFactoryList = new ArrayList<Factory<T>>();
     }
 
     protected GenericInflater(GenericInflater<T, P> original, Context newContext) {
-        context = newContext;
-        factory = original.factory;
+        mContext = newContext;
+        mFactoryList = new ArrayList<Factory<T>>(original.mFactoryList);
     }
 
     public abstract GenericInflater<T, P> cloneInContext(Context newContext);
@@ -65,22 +58,27 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
     @SuppressWarnings("unchecked")
     public final T createItem(String name, String prefix, AttributeSet attrs)
             throws ClassNotFoundException, InflateException {
-        Constructor<?> constructor = GenericInflater.constructorMap.get(name);
-
+        if (prefix != null) {
+            name = prefix + name;
+        }
+        Constructor<?> constructor = GenericInflater.sConstructorMap.get(name);
         try {
             if (constructor == null) {
-                Class<?> clazz = context.getClassLoader().loadClass(
-                        prefix != null ? prefix + name : name);
+                if (mClassLoader == null) {
+                    mClassLoader = getClassLoader();
+                    if (mClassLoader == null) {
+                        mClassLoader = mContext.getClassLoader();
+                    }
+                }
+                Class<?> clazz = mClassLoader.loadClass(name);
                 constructor = findConstructor(clazz);
-                GenericInflater.constructorMap.put(name, constructor);
+                GenericInflater.sConstructorMap.put(clazz, constructor);
             }
-            Object[] args = constructorArgs;
-            args[1] = attrs;
-            return (T) constructor.newInstance(args);
+            return (T) constructor.newInstance(obtainConstructorArgs(name, attrs,
+                    constructor));
         } catch (NoSuchMethodException e) {
             InflateException ie = new InflateException(
-                    attrs.getPositionDescription() + ": Error inflating class "
-                            + (prefix != null ? prefix + name : name));
+                    attrs.getPositionDescription() + ": Error inflating class " + name);
             ie.initCause(e);
             throw ie;
         } catch (Exception e) {
@@ -92,11 +90,27 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
         }
     }
 
+    protected Object[] obtainConstructorArgs(String name, AttributeSet attrs,
+            Constructor<?> constructor) {
+        final Object[] args = mConstructorArgs;
+        args[0] = mContext;
+        args[1] = attrs;
+        return args;
+    }
+
     private final T createItemFromTag(XmlPullParser parser, String name,
             AttributeSet attrs) {
         try {
-            T item = factory == null ? null : factory.onCreateItem(name,
-                    context, attrs);
+            T item = null;
+            for (Factory<T> factory : mFactoryList) {
+                try {
+                    item = factory.onCreateItem(name, mContext, attrs);
+                    if (item != null) {
+                        break;
+                    }
+                } catch (Exception e) {
+                }
+            }
             if (item == null) {
                 if (name.indexOf('.') < 0) {
                     item = onCreateItem(name, attrs);
@@ -124,19 +138,28 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 
     protected Constructor<?> findConstructor(Class<?> clazz)
             throws NoSuchMethodException {
-        return clazz.getConstructor(GenericInflater.constructorSignature);
+        return clazz.getConstructor(mConstructorSignature);
     }
 
     public Context getContext() {
-        return context;
+        return mContext;
     }
 
-    public String getDefaultPackage() {
-        return defaultPackage;
-    }
-
+    @Deprecated
     public final Factory<T> getFactory() {
-        return factory;
+        return getFactory(0);
+    }
+
+    public final Factory<T> getFactory(int position) {
+        return mFactoryList.get(position);
+    }
+
+    public final int getFactoryCount() {
+        return mFactoryList.size();
+    }
+
+    public T inflate(int resource) {
+        return inflate(resource, null, false);
     }
 
     public T inflate(int resource, P root) {
@@ -152,43 +175,44 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
         }
     }
 
+    public T inflate(XmlPullParser parser) {
+        return inflate(parser, null, false);
+    }
+
     public T inflate(XmlPullParser parser, P root) {
         return inflate(parser, root, root != null);
     }
 
     @SuppressWarnings("unchecked")
-    public T inflate(XmlPullParser parser, P root, boolean attachToRoot) {
-        synchronized (constructorArgs) {
-            final AttributeSet attrs = Xml.asAttributeSet(parser);
-            constructorArgs[0] = context;
-            T result = (T) root;
-            try {
-                int type;
-                while ((type = parser.next()) != XmlPullParser.START_TAG
-                        && type != XmlPullParser.END_DOCUMENT) {
-                    ;
-                }
-                if (type != XmlPullParser.START_TAG) {
-                    throw new InflateException(parser.getPositionDescription()
-                            + ": No start tag found!");
-                }
-                T xmlRoot = createItemFromTag(parser, parser.getName(), attrs);
-                result = (T) onMergeRoots(root, attachToRoot, (P) xmlRoot);
-                rInflate(parser, result, attrs);
-            } catch (InflateException e) {
-                throw e;
-            } catch (XmlPullParserException e) {
-                InflateException ex = new InflateException(e.getMessage());
-                ex.initCause(e);
-                throw ex;
-            } catch (IOException e) {
-                InflateException ex = new InflateException(
-                        parser.getPositionDescription() + ": " + e.getMessage());
-                ex.initCause(e);
-                throw ex;
+    public synchronized T inflate(XmlPullParser parser, P root, boolean attachToRoot) {
+        final AttributeSet attrs = Xml.asAttributeSet(parser);
+        T result = (T) root;
+        try {
+            int type;
+            while ((type = parser.next()) != XmlPullParser.START_TAG
+                    && type != XmlPullParser.END_DOCUMENT) {
+                ;
             }
-            return result;
+            if (type != XmlPullParser.START_TAG) {
+                throw new InflateException(parser.getPositionDescription()
+                        + ": No start tag found!");
+            }
+            T xmlRoot = createItemFromTag(parser, parser.getName(), attrs);
+            result = (T) onMergeRoots(root, attachToRoot, (P) xmlRoot);
+            rInflate(parser, result, attrs);
+        } catch (InflateException e) {
+            throw e;
+        } catch (XmlPullParserException e) {
+            InflateException ex = new InflateException(e.getMessage());
+            ex.initCause(e);
+            throw ex;
+        } catch (IOException e) {
+            InflateException ex = new InflateException(
+                    parser.getPositionDescription() + ": " + e.getMessage());
+            ex.initCause(e);
+            throw ex;
         }
+        return result;
     }
 
     protected boolean onCreateCustomFromTag(XmlPullParser parser, T parent,
@@ -198,7 +222,13 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 
     protected T onCreateItem(String name, AttributeSet attrs)
             throws ClassNotFoundException {
-        return createItem(name, defaultPackage, attrs);
+        for (String sPackage : mPackages) {
+            try {
+                return createItem(name, sPackage + ".", attrs);
+            } catch (Exception e) {
+            }
+        }
+        return null;
     }
 
     protected P onMergeRoots(P givenRoot, boolean attachToGivenRoot, P xmlRoot) {
@@ -226,23 +256,26 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
         }
     }
 
-    public void setDefaultPackage(String defaultPackage) {
-        this.defaultPackage = defaultPackage;
+    public void registerPackage(String name) {
+        name = Package.getPackage(name).getName();
+        if (!mPackages.contains(name)) {
+            mPackages.add(name);
+        }
+    }
+
+    public void unregisterPackage(String string) {
+        mPackages.remove(string);
+    }
+
+    public void addFactory(Factory<T> factory) {
+        mFactoryList.add(factory);
     }
 
     public void setFactory(Factory<T> factory) {
-        if (factorySet) {
-            throw new IllegalStateException(
-                    "A factory has already been set on this inflater");
-        }
-        if (factory == null) {
-            throw new NullPointerException("Given factory can not be null");
-        }
-        factorySet = true;
-        if (this.factory == null) {
-            this.factory = factory;
-        } else {
-            this.factory = new FactoryMerger<T>(factory, this.factory);
-        }
+        mFactoryList.add(0, factory);
+    }
+
+    public void removeFactory(Factory<T> factory) {
+        mFactoryList.remove(factory);
     }
 }

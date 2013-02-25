@@ -231,6 +231,7 @@ public class VolumePreference extends SeekBarDialogPreference implements
 
     public VolumePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+        context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.VolumePreference, 0, 0);
         mStreamType = a.getInt(R.styleable.VolumePreference_streamType, 0);

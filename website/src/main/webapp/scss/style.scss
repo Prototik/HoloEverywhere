@@ -11,6 +11,8 @@ $header-padding: 8px;
 $menu-child-distance: 8px;
 $menu-child-distance-small: 2px;
 
+@import url(normalize.css);
+
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
@@ -80,14 +82,11 @@ header.header {
       font-size: ($header-font-size * 0.7);
       background: $base-color;
       padding: 6px;
-      margin: 0;
-      @include transition(background 0.4s ease 0);
-      &:first-child {
-        margin-right: $menu-child-distance;
-      }
+      margin: 0 $menu-child-distance 0 0;
       &:last-child {
         margin-right: 0;
       }
+      @include transition(background 0.4s ease 0);
       &:hover {
         cursor: pointer;
         background: ($base-color + #222222);
@@ -140,16 +139,13 @@ header.header {
   	  li {
   	    font-size: ($header-font-size-small * 0.7);
   	    background: none;
-  	    margin: 0 !important;
-  	    padding-left: $menu-child-distance-small !important;
-  	    padding-right: $menu-child-distance-small !important;
+  	    margin: 0 $menu-child-distance-small 0 0;
   	    color: $base-color;
+  	    padding-left: 10px;
+  	    padding-right: 10px;
   	    @include transition((background 0.4s ease 0, color 0.4s ease 0));
-  	    &:first-child {
-          border-right: $menu-child-distance-small solid $base-color;
-        }
         &:last-child {
-          border-right: 0;
+          margin-right: 0;
         }
         &:hover {
           color: white;

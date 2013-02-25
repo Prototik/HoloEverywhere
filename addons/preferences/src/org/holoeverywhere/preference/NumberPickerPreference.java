@@ -72,6 +72,7 @@ public class NumberPickerPreference extends DialogPreference {
     public NumberPickerPreference(Context context, AttributeSet attrs,
             int defStyle) {
         super(context, attrs, defStyle);
+        context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.NumberPickerPreference, defStyle,
                 R.style.Holo_PreferenceDialog_NumberPickerPreference);

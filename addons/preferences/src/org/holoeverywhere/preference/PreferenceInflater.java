@@ -12,10 +12,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
 
-class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
+public class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
     private static final String EXTRA_TAG_NAME = "extra";
     private static final String INTENT_TAG_NAME = "intent";
-
     private PreferenceManager mPreferenceManager;
 
     public PreferenceInflater(Context context,
@@ -24,22 +23,20 @@ class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
         init(preferenceManager);
     }
 
-    public PreferenceInflater(
-            GenericInflater<Preference, PreferenceGroup> original,
+    public PreferenceInflater(PreferenceInflater original,
             PreferenceManager preferenceManager, Context newContext) {
         super(original, Preference.context(newContext));
         init(preferenceManager);
     }
 
     @Override
-    public GenericInflater<Preference, PreferenceGroup> cloneInContext(
-            Context newContext) {
+    public PreferenceInflater cloneInContext(Context newContext) {
         return new PreferenceInflater(this, mPreferenceManager, newContext);
     }
 
     private void init(PreferenceManager preferenceManager) {
         mPreferenceManager = preferenceManager;
-        setDefaultPackage(PreferenceInit.PACKAGE + '.');
+        registerPackage(PreferenceInit.PACKAGE);
     }
 
     @Override
@@ -47,7 +44,6 @@ class PreferenceInflater extends GenericInflater<Preference, PreferenceGroup> {
             Preference parentPreference, AttributeSet attrs)
             throws XmlPullParserException {
         final String tag = parser.getName();
-
         if (tag.equals(PreferenceInflater.INTENT_TAG_NAME)) {
             Intent intent = null;
             try {
