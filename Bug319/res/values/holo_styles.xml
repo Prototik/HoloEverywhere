@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?><resources>
+    <style name="AppTheme" parent="Holo.Theme">
+        <!--Include block: DarkTheme-->
+        <!--Include block: Theme-->
+        <!--End of block Theme-->
+        <item name="android:listChoiceIndicatorMultiple">@drawable/custom_btn_check_holo_dark</item>
+        <item name="preferenceTheme">@style/AppTheme._Preference</item>
+        <!--End of block DarkTheme-->
+    </style>
+    <style name="AppTheme.Light" parent="Holo.Theme.Light">
+        <!--Include block: LightTheme-->
+        <!--Include block: Theme-->
+        <!--End of block Theme-->
+        <item name="android:listChoiceIndicatorMultiple">@drawable/custom_btn_check_holo_light</item>
+        <item name="preferenceTheme">@style/AppTheme._Preference.Light</item>
+        <!--End of block LightTheme-->
+    </style>
+    <style name="AppTheme.Light.DarkActionBar" parent="Holo.Theme.Light.DarkActionBar">
+        <!--Include block: LightTheme-->
+        <!--Include block: Theme-->
+        <!--End of block Theme-->
+        <item name="android:listChoiceIndicatorMultiple">@drawable/custom_btn_check_holo_light</item>
+        <item name="preferenceTheme">@style/AppTheme._Preference.Light</item>
+        <!--End of block LightTheme-->
+    </style>
+    <style name="AppTheme._Preference" parent="Holo.PreferenceTheme">
+        <!--Include block: DarkTheme-->
+        <!--Include block: Theme-->
+        <!--End of block Theme-->
+        <item name="android:listChoiceIndicatorMultiple">@drawable/custom_btn_check_holo_dark</item>
+        <item name="preferenceTheme">@style/AppTheme._Preference</item>
+        <!--End of block DarkTheme-->
+    </style>
+    <style name="AppTheme._Preference.Light" parent="Holo.PreferenceTheme.Light">
+        <!--Include block: LightTheme-->
+        <!--Include block: Theme-->
+        <!--End of block Theme-->
+        <item name="android:listChoiceIndicatorMultiple">@drawable/custom_btn_check_holo_light</item>
+        <item name="preferenceTheme">@style/AppTheme._Preference.Light</item>
+        <!--End of block LightTheme-->
+    </style>
+</resources>
