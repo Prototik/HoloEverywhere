@@ -1,0 +1,34 @@
+{
+	"data": {
+		"Holo.Demo": {},
+		"Holo.Demo.ListRowView": {
+			"android:background": "?selectableItemBackground"
+		},
+		"Holo.Demo.Theme | DemoThemeDark < Holo.Theme": {},
+		"Holo.Demo.Theme.Light | DemoThemeLight < Holo.Theme.Light": {},
+		"Holo.Demo.Theme.Light.DarkActionBar | DemoThemeDark < Holo.Theme.Light.DarkActionBar": {},
+		"Holo.Demo.Theme.Fullscreen | Fullscreen": {},
+		"Holo.Demo.Theme.Light.Fullscreen | Fullscreen": {},
+		"Holo.Demo.Theme.Light.DarkActionBar.Fullscreen | Fullscreen": {}
+	},
+	"blocks": {
+		"DemoTheme": {
+			"demoListRowViewStyle": "@style/Holo.Demo.ListRowView",
+			"android:homeAsUpIndicator": "@drawable/home_as_up_indicator",
+			"homeAsUpIndicator": "@drawable/home_as_up_indicator"
+		},
+		"DemoThemeDark | DemoTheme": {
+			"disableMusicIcon": "@drawable/disable_music_dark"
+		},
+		"DemoThemeLight | DemoTheme": {
+			"disableMusicIcon": "@drawable/disable_music_light"
+		}
+	},
+	"include": [
+	    {
+	    	"name": "styles-core.json:styles", 
+	    	"type": "only blocks"
+	    }
+	],
+	"output": "values/styles.xml"
+}

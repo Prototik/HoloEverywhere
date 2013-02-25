@@ -40,6 +40,7 @@
 	<attr name="panelMenuListWidth" format="dimension" />
 	<attr name="textAppearanceListItem" format="reference" />
 	<attr name="colorPickerStyle" format="reference" />
+	<attr name="detailsElementBackground" format="reference" />
 	<attr name="holoTheme">
 		<enum name="invalid" value="0" />
 		<enum name="dark" value="1" />

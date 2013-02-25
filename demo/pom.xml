@@ -66,13 +66,14 @@
 				<groupId>org.holoeverywhere</groupId>
 				<artifactId>resbuilder</artifactId>
 				<configuration>
+					<buildAll>false</buildAll>
 					<includeDirs>
 						<dir>${project.basedir}/resbuilder</dir>
 						<dir>${project.basedir}/../library/resbuilder</dir>
 					</includeDirs>
 					<inputFiles>
-						<file>${project.basedir}/resbuilder/key_strings.json</file>
-						<file>${project.basedir}/resbuilder/key_styles.json</file>
+						<file>strings.json:strings</file>
+						<file>themes.json:styles</file>
 					</inputFiles>
 				</configuration>
 			</plugin>

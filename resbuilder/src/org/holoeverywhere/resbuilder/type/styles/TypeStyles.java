@@ -59,7 +59,7 @@ public class TypeStyles extends TypeProcesser {
             try {
                 for (Entry<String, Block> entry : data.entrySet()) {
                     writer.writeStartElement("style");
-                    writer.writeAttribute("name", entry.getKey());
+                    writer.writeAttribute("name", entry.getValue().getName());
                     entry.getValue().process(writer, blocks);
                     writer.writeEndElement();
                 }
@@ -76,7 +76,7 @@ public class TypeStyles extends TypeProcesser {
         if (json.has("include")) {
             JSONArray include = json.optJSONArray("include");
             for (int i = 0; i < include.length(); i++) {
-                result.include.add(new IncludeRow().parse(include.optJSONObject(i)));
+                result.include.add(new IncludeRow().parseRaw(include.opt(i)));
             }
         }
         if (json.has("blocks")) {
@@ -84,7 +84,8 @@ public class TypeStyles extends TypeProcesser {
             Iterator<String> keys = blocks.sortedKeys();
             while (keys.hasNext()) {
                 String key = keys.next();
-                result.blocks.put(key, new Block().parse(blocks.optJSONObject(key)));
+                Block block = new Block().parse(blocks.optJSONObject(key), key);
+                result.blocks.put(block.getName(), block);
             }
         }
         if (json.has("data")) {
@@ -92,7 +93,8 @@ public class TypeStyles extends TypeProcesser {
             Iterator<String> keys = data.sortedKeys();
             while (keys.hasNext()) {
                 String key = keys.next();
-                result.data.put(key, new Block().parse(data.optJSONObject(key)));
+                Block block = new Block().parse(data.optJSONObject(key), key);
+                result.data.put(block.getName(), block);
             }
         }
         result.output = json.optString("output");

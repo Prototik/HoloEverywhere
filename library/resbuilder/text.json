@@ -7,7 +7,7 @@
                 "android:textCheckMarkInverse": "?android:checkMark", 
                 "android:textColorLink": "@color/holo_blue_light"
             }, 
-            "TextDark": {
+            "TextDark | Text": {
                 "android:textAppearance": "@style/Holo.TextAppearance", 
                 "android:textAppearanceInverse": "@style/Holo.TextAppearance.Inverse", 
                 "android:textAppearanceLarge": "@style/Holo.TextAppearance.Large", 
@@ -30,12 +30,9 @@
                 "android:textColorSecondaryInverseNoDisable": "@color/secondary_text_nodisable_holo_light", 
                 "android:textColorSecondaryNoDisable": "@color/secondary_text_nodisable_holo_dark", 
                 "android:textColorTertiary": "@color/tertiary_text_holo_dark", 
-                "android:textColorTertiaryInverse": "@color/tertiary_text_holo_light", 
-                "include": [
-                    "Text"
-                ]
+                "android:textColorTertiaryInverse": "@color/tertiary_text_holo_light"
             }, 
-            "TextLight": {
+            "TextLight | Text": {
                 "android:textAppearance": "@style/Holo.TextAppearance.Light", 
                 "android:textAppearanceInverse": "@style/Holo.TextAppearance.Inverse.Light", 
                 "android:textAppearanceLarge": "@style/Holo.TextAppearance.Large.Light", 
@@ -58,10 +55,7 @@
                 "android:textColorSecondaryInverseNoDisable": "@color/secondary_text_nodisable_holo_dark", 
                 "android:textColorSecondaryNoDisable": "@color/secondary_text_nodisable_holo_light", 
                 "android:textColorTertiary": "@color/tertiary_text_holo_light", 
-                "android:textColorTertiaryInverse": "@color/tertiary_text_holo_dark", 
-                "include": [
-                    "Text"
-                ]
+                "android:textColorTertiaryInverse": "@color/tertiary_text_holo_dark"
             }
         }
     }

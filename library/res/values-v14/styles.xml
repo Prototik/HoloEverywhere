@@ -35,6 +35,7 @@
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
         <item name="calendarViewStyle">@style/Holo.CalendarView</item>
+        <item name="detailsElementBackground">@drawable/panel_bg_holo_dark</item>
         <item name="dialogTheme">@style/Holo.Theme.Dialog</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown</item>
         <item name="fastScrollPreviewBackgroundLeft">@drawable/fastscroll_label_left_holo_dark</item>
@@ -92,6 +93,7 @@
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
         <item name="calendarViewStyle">@style/Holo.CalendarView.Light</item>
+        <item name="detailsElementBackground">@drawable/panel_bg_holo_light</item>
         <item name="dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
         <item name="fastScrollPreviewBackgroundLeft">@drawable/fastscroll_label_left_holo_light</item>
@@ -149,6 +151,7 @@
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
         <item name="calendarViewStyle">@style/Holo.CalendarView.Light</item>
+        <item name="detailsElementBackground">@drawable/panel_bg_holo_light</item>
         <item name="dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
         <item name="fastScrollPreviewBackgroundLeft">@drawable/fastscroll_label_left_holo_light</item>

@@ -191,12 +191,20 @@ public class FileProcesser {
         result.flush(mojo);
     }
 
-    @SuppressWarnings("unchecked")
     public ProcessResult process(File file) throws FileProcesserException {
+        return process(file, null);
+    }
+
+    @SuppressWarnings("unchecked")
+    public ProcessResult process(File file, String forceType) throws FileProcesserException {
         try {
             mojo.getLog().info("Process file: " + file.getAbsolutePath());
             String fileContent = readFile(file);
             JSONObject json = new JSONObject(fileContent);
+            if (forceType != null) {
+                mojo.getLog().info("Handle all file by key '" + forceType + "' (force)");
+                return process(forceType, json);
+            }
             if (file.getName().startsWith("key_")) {
                 String key = file.getName();
                 int c = key.lastIndexOf('.');
@@ -220,15 +228,22 @@ public class FileProcesser {
     }
 
     public ProcessResult process(String filename) throws FileProcesserException {
+        String forceType = null;
+        int c = filename.lastIndexOf(':');
+        if (c > 0) {
+            // Filename: data.json:styles
+            forceType = filename.substring(c + 1);
+            filename = filename.substring(0, c);
+        }
         File file;
         for (File includeDir : mojo.includeDirs) {
             file = new File(includeDir, filename);
             if (file.exists()) {
-                return process(file);
+                return process(file, forceType);
             }
         }
         if ((file = new File(filename)).exists()) {
-            return process(file);
+            return process(file, forceType);
         }
         throw new FileProcesserException("Couldn't find file for processing: " + filename);
     }

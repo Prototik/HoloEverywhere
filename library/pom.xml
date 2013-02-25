@@ -34,12 +34,21 @@
 		</dependency>
 	</dependencies>
 
+
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.holoeverywhere</groupId>
 				<artifactId>resbuilder</artifactId>
+				<configuration>
+					<buildAll>false</buildAll>
+					<inputFiles>
+						<file>strings.json:strings</file>
+						<file>styles-v7.json:styles</file>
+						<file>styles-v14.json:styles</file>
+					</inputFiles>
+				</configuration>
 			</plugin>
 
 			<plugin>

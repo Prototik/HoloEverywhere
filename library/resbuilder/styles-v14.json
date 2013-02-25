@@ -1,33 +1,20 @@
 {
-    "styles": {
-        "data": {
-            "Holo.Theme": {
-                "holoTheme": "dark", 
-                "include": [
-                    "BaseDark"
-                ], 
-                "parent": "Theme.Sherlock"
-            }, 
-            "Holo.Theme.Light": {
-                "holoTheme": "light", 
-                "include": [
-                    "BaseLight"
-                ], 
-                "parent": "Theme.Sherlock.Light"
-            }, 
-            "Holo.Theme.Light.DarkActionBar": {
-                "holoTheme": "mixed", 
-                "include": [
-                    "BaseLight"
-                ], 
-                "parent": "Theme.Sherlock.Light.DarkActionBar"
-            }
+    "data": {
+        "Holo.Theme | BaseDark < Theme.Sherlock": {
+            "holoTheme": "dark"
         }, 
-        "include": [
-            {
-                "name": "base.json"
-            }
-        ], 
-        "output": "values-v14/styles.xml"
-    }
+        "Holo.Theme.Light | BaseLight < Theme.Sherlock.Light": {
+            "holoTheme": "light"
+        }, 
+        "Holo.Theme.Light.DarkActionBar | BaseLight < Theme.Sherlock.Light.DarkActionBar": {
+            "holoTheme": "mixed"
+        }
+    }, 
+    "include": [
+        {
+            "name": "styles-core.json:styles", 
+            "type": "only blocks"
+        }
+    ], 
+    "output": "values-v14/styles.xml"
 }

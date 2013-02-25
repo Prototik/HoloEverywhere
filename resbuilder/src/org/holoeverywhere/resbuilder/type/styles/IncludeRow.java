@@ -73,4 +73,13 @@ public class IncludeRow {
             i.process(processer, mojo, blocks, data, type);
         }
     }
+
+    public IncludeRow parseRaw(Object o) {
+        if (o instanceof JSONObject) {
+            return parse((JSONObject) o);
+        } else {
+            name = o.toString();
+        }
+        return this;
+    }
 }

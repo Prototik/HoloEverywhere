@@ -1,5 +1,4 @@
 {
-	"styles": {
 		"blocks": {
 			"PreferenceBase": {
 				"checkBoxPreferenceStyle": "@style/Holo.PreferenceCheckBox", 
@@ -23,15 +22,8 @@
 			}
 		},
 		"data": {
-			"Holo.PreferenceTheme": {
-				"include": [ "PreferenceBase" ],
-				"parent": "Holo.Theme"
-			},
-			"Holo.PreferenceTheme.Light": {
-				"include": [ "PreferenceBase" ],
-				"parent": "Holo.Theme.Light"
-			}
+			"Holo.PreferenceTheme | PreferenceBase < Holo.Theme": {},
+			"Holo.PreferenceTheme.Light | PreferenceBase < Holo.Theme.Light": {}
 		},
 		"output": "values/themes.xml"
-	}
 }
