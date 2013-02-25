@@ -1,16 +1,4 @@
 {
-    "blocks": {
-        "ColorsDark": {
-            "android:textColor": "@color/primary_text_holo_dark", 
-            "android:textColorHighlight": "@color/highlighted_text_holo_dark", 
-            "android:textColorHint": "@color/hint_foreground_holo_dark"
-        }, 
-        "ColorsLight": {
-            "android:textColor": "@color/primary_text_holo_light", 
-            "android:textColorHighlight": "@color/highlighted_text_holo_light", 
-            "android:textColorHint": "@color/hint_foreground_holo_light"
-        }
-    }, 
     "data": {
         "Holo": {}, 
         "Holo.AlertDialog": {
