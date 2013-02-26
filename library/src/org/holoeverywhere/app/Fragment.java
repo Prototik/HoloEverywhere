@@ -11,6 +11,7 @@ import org.holoeverywhere.addon.IAddon;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app._HoloFragment;
+import android.view.View;
 
 public class Fragment extends _HoloFragment {
     public static <T extends Fragment> T instantiate(Class<T> clazz) {
@@ -75,6 +76,22 @@ public class Fragment extends _HoloFragment {
     @Deprecated
     public Activity getSherlockActivity() {
         return (Activity) getActivity();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        for (IAddon<?, ?> addon : addons) {
+            addon.fragment(this).onCreate(savedInstanceState);
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view) {
+        super.onViewCreated(view);
+        for (IAddon<?, ?> addon : addons) {
+            addon.fragment(this).onViewCreated(view);
+        }
     }
 
     public <T extends IAddon<?, ?>> T requireAddon(Class<T> clazz) {

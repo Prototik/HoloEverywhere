@@ -1,6 +1,11 @@
 
 package org.holoeverywhere.app;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +34,13 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class Activity extends _HoloActivity {
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    @Inherited
+    public static @interface Addons {
+        public String[] value();
+    }
+
     public static final String ADDON_ROBOGUICE = "Roboguice";
     public static final String ADDON_SHERLOCK = "Sherlock";
     public static final String ADDON_SLIDING_MENU = "SlidingMenu";
@@ -278,6 +290,24 @@ public abstract class Activity extends _HoloActivity {
         super.onPostResume();
         for (IAddon<?, ?> addon : addons) {
             addon.activity(this).onPostResume();
+        }
+    }
+
+    @Override
+    protected void onPreInit(Holo config, Bundle savedInstanceState) {
+        super.onPreInit(config, savedInstanceState);
+        if (getClass().isAnnotationPresent(Addons.class)) {
+            for (String addon : getClass().getAnnotation(Addons.class).value()) {
+                if (ADDON_SHERLOCK.equals(addon)) {
+                    config.requireSherlock = true;
+                } else if (ADDON_SLIDING_MENU.equals(addon)) {
+                    config.requireSlidingMenu = true;
+                } else if (ADDON_ROBOGUICE.equals(addon)) {
+                    config.requireRoboguice = true;
+                } else {
+                    requireAddon(addon);
+                }
+            }
         }
     }
 

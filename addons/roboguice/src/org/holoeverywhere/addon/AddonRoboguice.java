@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.inject.Key;
 
@@ -121,6 +122,18 @@ public class AddonRoboguice extends IAddon<AddonRoboguiceA, AddonRoboguiceF> {
     public static class AddonRoboguiceF extends IAddonFragment {
         public AddonRoboguiceF(Fragment fragment) {
             super(fragment);
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            RoboGuice.getInjector(getFragment().getActivity())
+                    .injectMembersWithoutViews(getFragment());
+        }
+
+        @Override
+        public void onViewCreated(View view) {
+            RoboGuice.getInjector(getFragment().getActivity())
+                    .injectViewMembers(getFragment());
         }
     }
 

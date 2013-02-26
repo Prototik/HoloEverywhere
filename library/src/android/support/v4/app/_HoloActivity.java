@@ -412,6 +412,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         if (config == null) {
             config = Holo.defaultConfig();
         }
+        onPreInit(config, savedInstanceState);
         if (!config.ignoreApplicationInstanceCheck && !(getApplication() instanceof Application)) {
             throw new IllegalStateException(
                     "Application instance isn't HoloEverywhere.\n" +
@@ -461,6 +462,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     }
 
     protected void onPostInit(Holo config, Bundle savedInstanceState) {
+
+    }
+
+    protected void onPreInit(Holo config, Bundle savedInstanceState) {
 
     }
 

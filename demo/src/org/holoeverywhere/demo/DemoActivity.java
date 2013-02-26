@@ -5,6 +5,7 @@ import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.AddonSlidingMenu;
 import org.holoeverywhere.addon.AddonSlidingMenu.AddonSlidingMenuA;
 import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.Activity.Addons;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.demo.fragments.AboutFragment;
 import org.holoeverywhere.demo.fragments.MainFragment;
@@ -31,6 +32,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
 
+@Addons(Activity.ADDON_SLIDING_MENU)
 public class DemoActivity extends Activity implements OnBackStackChangedListener {
     private final class NavigationAdapter extends DemoAdapter implements
             OnItemClickListener {
@@ -187,13 +189,6 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         }
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
-    }
-
-    @Override
-    protected Holo onCreateConfig(Bundle savedInstanceState) {
-        Holo config = super.onCreateConfig(savedInstanceState);
-        config.requireSlidingMenu = true;
-        return config;
     }
 
     @Override
