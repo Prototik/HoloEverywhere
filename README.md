@@ -79,15 +79,9 @@ git stash apply
 In demo using music "Winter Dawn" by machinimasound.com. Licensed under Creative Commons "Attribution 3.0"
 
 ### License
-
-Copyright (c) 2012 Christophe Versieux, Sergey Shatunov
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+LGPLv3, full text of license see [here][License]
 
 [Play Store]: https://play.google.com/store/apps/details?id=org.holoeverywhere.demo "Play Store"
 [Donate]: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=X7E7U7HNR36YN&lc=US&item_name=HoloEverywhere&currency_code=USD&bn=PP%2dDonationsBF%3adonate_button%2epng%3aNonHosted "Donate"
 [Build with Maven]: https://github.com/ChristopheVersieux/HoloEverywhere/wiki/Maven "Build with maven"
+[License]: https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/LICENSE "LGPLv3"
