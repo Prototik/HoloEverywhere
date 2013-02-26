@@ -10,7 +10,6 @@ import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 import org.holoeverywhere.IHoloActivity;
 import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.R;
 import org.holoeverywhere.SystemServiceManager;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Activity;
@@ -22,15 +21,11 @@ import org.holoeverywhere.util.SparseIntArray;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.content.res.Resources.Theme;
-import android.content.res.TypedArray;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.ContextThemeWrapper;
@@ -191,29 +186,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         }
     }
 
-    private void checkWindowSizes() {
-        View view = getWindow().getDecorView();
-        if (VERSION.SDK_INT < 11 && view != null) {
-            DisplayMetrics dm = getResources().getDisplayMetrics();
-            TypedArray a = obtainStyledAttributes(R.styleable.HoloActivity);
-            final int windowMinWidthMajor = (int) a.getFraction(
-                    R.styleable.HoloActivity_windowMinWidthMajor, dm.widthPixels, 1, 0);
-            final int windowMinWidthMinor = (int) a.getFraction(
-                    R.styleable.HoloActivity_windowMinWidthMinor, dm.widthPixels, 1, 0);
-            a.recycle();
-            switch (getRequestedOrientation()) {
-                case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
-                case ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE:
-                    view.setMinimumWidth(windowMinWidthMajor);
-                    break;
-                case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
-                case ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT:
-                    view.setMinimumWidth(windowMinWidthMinor);
-                    break;
-            }
-        }
-    }
-
     protected Holo createConfig(Bundle savedInstanceState) {
         if (mConfig == null) {
             mConfig = onCreateConfig(savedInstanceState);
@@ -339,18 +311,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         if (!getSupportFragmentManager().popBackStackImmediate()) {
             finish();
         }
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        checkWindowSizes();
-    }
-
-    @Override
-    public void onContentChanged() {
-        super.onContentChanged();
-        checkWindowSizes();
     }
 
     @Override

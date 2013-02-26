@@ -97,7 +97,7 @@
         "Wallpaper": {
             "android:colorBackgroundCacheHint": "@null", 
             "android:windowBackground": "@android:color/transparent", 
-            "android:windowShowWallpaper": "true"
+            "android:windowShowWallpaper": true
         }
     }, 
     "include": [

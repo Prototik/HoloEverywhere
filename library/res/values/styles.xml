@@ -153,7 +153,7 @@
         <item name="calendarViewShown">false</item>
         <item name="endYear">2100</item>
         <item name="forceShownState">false</item>
-        <item name="internalLayout">@layout/date_picker_holo</item>
+        <item name="layout">@layout/date_picker_holo</item>
         <item name="spinnersShown">true</item>
         <item name="startYear">1900</item>
     </style>
@@ -1126,6 +1126,6 @@
         <!--End of block Wallpaper-->
     </style>
     <style name="Holo.TimePicker">
-        <item name="internalLayout">@layout/time_picker_holo</item>
+        <item name="layout">@layout/time_picker_holo</item>
     </style>
 </resources>

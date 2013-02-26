@@ -51,16 +51,15 @@ public abstract class TwoStatePreference extends Preference {
     private boolean mSendClickAccessibilityEvent;
     private CharSequence mSummaryOff, mSummaryOn;
 
-    public TwoStatePreference(Context context) {
-        this(context, null);
-    }
-
-    public TwoStatePreference(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
     public TwoStatePreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        context = getContext();
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TwoStatePreference,
+                defStyle, R.style.Holo_PreferenceTwoState);
+        mSummaryOn = a.getText(R.styleable.TwoStatePreference_summaryOn);
+        mSummaryOff = a.getText(R.styleable.TwoStatePreference_summaryOff);
+        mDisableDependentsState = a.getBoolean(R.styleable.TwoStatePreference_disableDependentsState, false);
+        a.recycle();
     }
 
     public boolean getDisableDependentsState() {

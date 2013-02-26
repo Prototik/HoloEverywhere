@@ -74,6 +74,7 @@
 					<inputFiles>
 						<file>strings.json:strings</file>
 						<file>themes.json:styles</file>
+						<file>attrs.json:attrs</file>
 					</inputFiles>
 				</configuration>
 			</plugin>

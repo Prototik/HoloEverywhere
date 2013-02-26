@@ -7,7 +7,7 @@
         <item name="selectable">false</item>
         <item name="shouldDisableView">false</item>
     </style>
-    <style name="Holo.PreferenceCheckBox">
+    <style name="Holo.PreferenceCheckBox" parent="Holo.PreferenceTwoState">
         <item name="widgetLayout">@layout/preference_widget_checkbox</item>
     </style>
     <style name="Holo.PreferenceDate"/>
@@ -56,7 +56,7 @@
     <style name="Holo.PreferenceSeekBar">
         <item name="layout">@layout/preference_widget_seekbar</item>
     </style>
-    <style name="Holo.PreferenceSwitch">
+    <style name="Holo.PreferenceSwitch" parent="Holo.PreferenceTwoState">
         <item name="switchTextOff">@string/capital_off</item>
         <item name="switchTextOn">@string/capital_on</item>
         <item name="widgetLayout">@layout/preference_widget_switch</item>
@@ -64,4 +64,5 @@
     <style name="Holo.PreferenceTime">
         <item name="is24HourView">auto</item>
     </style>
+    <style name="Holo.PreferenceTwoState"/>
 </resources>

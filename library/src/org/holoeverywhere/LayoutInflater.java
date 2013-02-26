@@ -97,9 +97,16 @@ public class LayoutInflater extends android.view.LayoutInflater implements
             inflater = reference.get();
         }
         if (inflater == null) {
-            inflater = new LayoutInflater(context);
-            reference = new WeakReference<LayoutInflater>(inflater);
-            INSTANCES_MAP.put(context, reference);
+            try {
+                inflater = (LayoutInflater) SystemServiceManager.getSystemService(context,
+                        Context.LAYOUT_INFLATER_SERVICE);
+                if (inflater == null) {
+                    inflater = new LayoutInflater(context);
+                }
+            } catch (Exception e) {
+                inflater = new LayoutInflater(context);
+            }
+            INSTANCES_MAP.put(context, new WeakReference<LayoutInflater>(inflater));
         }
         return inflater;
     }

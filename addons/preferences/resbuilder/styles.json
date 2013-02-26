@@ -8,9 +8,10 @@
                 "selectable": "false", 
                 "shouldDisableView": "false"
             }, 
-            "Holo.PreferenceCheckBox": {
+            "Holo.PreferenceCheckBox < Holo.PreferenceTwoState": {
                 "widgetLayout": "@layout/preference_widget_checkbox"
             }, 
+            "Holo.PreferenceTwoState": {}, 
             "Holo.PreferenceDialog": {
                 "negativeButtonText": "@android:string/cancel", 
                 "positiveButtonText": "@android:string/ok"
@@ -56,7 +57,7 @@
             "Holo.PreferenceSeekBar": {
                 "layout": "@layout/preference_widget_seekbar"
             }, 
-            "Holo.PreferenceSwitch": {
+            "Holo.PreferenceSwitch < Holo.PreferenceTwoState": {
                 "switchTextOff": "@string/capital_off", 
                 "switchTextOn": "@string/capital_on", 
                 "widgetLayout": "@layout/preference_widget_switch"

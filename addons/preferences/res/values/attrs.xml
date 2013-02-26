@@ -1,128 +1,164 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-	<attr name="preferenceFrameLayoutStyle" format="reference" />
-	<attr name="preferenceScreenStyle" format="reference" />
-	<attr name="preferenceFragmentStyle" format="reference" />
-	<attr name="preferenceCategoryStyle" format="reference" />
-	<attr name="preferenceStyle" format="reference" />
-	<attr name="preferenceInformationStyle" format="reference" />
-	<attr name="checkBoxPreferenceStyle" format="reference" />
-	<attr name="yesNoPreferenceStyle" format="reference" />
-	<attr name="dialogPreferenceStyle" format="reference" />
-	<attr name="editTextPreferenceStyle" format="reference" />
-	<attr name="ringtonePreferenceStyle" format="reference" />
-	<attr name="numberPickerPreferenceStyle" format="reference" />
-	<attr name="preferenceLayoutChild" format="reference" />
-	<attr name="preferencePanelStyle" format="reference" />
-	<attr name="switchPreferenceStyle" format="reference" />
-	<attr name="seekBarPreferenceStyle" format="reference" />
-	<attr name="seekBarDialogPreferenceStyle" format="reference" />
-	<attr name="datePreferenceStyle" format="reference" />
-	<attr name="timePreferenceStyle" format="reference" />
-	<declare-styleable name="Preference">
-		<!--
-		Already defined in ABS
-		<attr name="icon" format="reference" />
-		<attr name="title" format="string" />
-		-->
-		<attr name="id" />
-		<attr name="icon" />
-		<attr name="title" />
-		<attr name="key" format="string" />
-		<attr name="summary" />
-		<attr name="order" format="integer" />
-		<attr name="fragment" />
-		<attr name="layout" />
-		<attr name="widgetLayout" format="reference" />
-		<attr name="enabled" format="boolean" />
-		<attr name="selectable" format="boolean" />
-		<attr name="dependency" format="string" />
-		<attr name="depends" format="reference" />
-		<attr name="persistent" format="boolean" />
-		<attr name="defaultValue" format="string|boolean|integer|reference|float" />
-		<attr name="shouldDisableView" format="boolean" />
-	</declare-styleable>
-	<declare-styleable name="PreferenceGroup">
-		<attr name="orderingFromXml" format="boolean" />
-	</declare-styleable>
-	<declare-styleable name="PreferenceHeader">
-		<attr name="id" format="reference" />
-		<attr name="title" />
-		<attr name="summary" format="string" />
-		<attr name="breadCrumbTitle" format="string" />
-		<attr name="breadCrumbShortTitle" format="string" />
-		<attr name="icon" />
-		<attr name="fragment" format="string" />
-	</declare-styleable>
-	<declare-styleable name="PreferenceFrameLayout">
-		<attr name="borderTop" format="dimension" />
-		<attr name="borderBottom" format="dimension" />
-		<attr name="borderLeft" format="dimension" />
-		<attr name="borderRight" format="dimension" />
-	</declare-styleable>
-	<declare-styleable name="PreferenceFrameLayout_Layout">
-		<attr name="layout_removeBorders" format="boolean" />
-	</declare-styleable>
-	<declare-styleable name="CheckBoxPreference">
-		<attr name="summaryOn" format="string" />
-		<attr name="summaryOff" format="string" />
-		<attr name="disableDependentsState" format="boolean" />
-	</declare-styleable>
-	<declare-styleable name="DialogPreference">
-		<attr name="dialogTitle" format="string" />
-		<attr name="dialogMessage" format="string" />
-		<attr name="dialogIcon" format="reference" />
-		<attr name="positiveButtonText" format="string" />
-		<attr name="negativeButtonText" format="string" />
-		<attr name="dialogLayout" format="reference" />
-	</declare-styleable>
-	<declare-styleable name="SwitchPreference">
-		<attr name="summaryOn" />
-		<attr name="summaryOff" />
-		<attr name="switchTextOn" format="string" />
-		<attr name="switchTextOff" format="string" />
-		<attr name="disableDependentsState" />
-	</declare-styleable>
-	<declare-styleable name="ListPreference">
-		<attr name="entries" format="reference" />
-		<attr name="entryValues" format="reference" />
-	</declare-styleable>
-	<declare-styleable name="RingtonePreference">
-		<attr name="ringtoneType">
-			<flag name="ringtone" value="1" />
-			<flag name="notification" value="2" />
-			<flag name="alarm" value="4" />
-			<flag name="all" value="7" />
-		</attr>
-		<attr name="showDefault" format="boolean" />
-		<attr name="showSilent" format="boolean" />
-	</declare-styleable>
-	<declare-styleable name="VolumePreference">
-		<attr name="streamType">
-			<enum name="voice" value="0" />
-			<enum name="system" value="1" />
-			<enum name="ring" value="2" />
-			<enum name="music" value="3" />
-			<enum name="alarm" value="4" />
-		</attr>
-	</declare-styleable>
-	<declare-styleable name="SeekBarPreference">
-		<attr name="max" />
-	</declare-styleable>
-	<declare-styleable name="SeekBarDialogPreference">
-		<attr name="max" />
-	</declare-styleable>
-	<declare-styleable name="NumberPickerPreference">
-		<attr name="min" format="integer" />
-		<attr name="max" format="integer" />
-		<attr name="wrapSelectorWheel" format="boolean" />
-	</declare-styleable>
-	<declare-styleable name="TimePreference">
-		<attr name="is24HourView">
-			<enum name="auto" value="0" />
-			<enum name="no" value="-1" />
-			<enum name="yes" value="1" />
-		</attr>
-	</declare-styleable>
-	<declare-styleable name="DatePreference"></declare-styleable>
+<?xml version="1.0" encoding="utf-8"?><resources>
+    <!--Start attrs definition block-->
+    <attr name="borderBottom" format="dimension"/>
+    <attr name="borderLeft" format="dimension"/>
+    <attr name="borderRight" format="dimension"/>
+    <attr name="borderTop" format="dimension"/>
+    <attr name="breadCrumbShortTitle" format="string"/>
+    <attr name="breadCrumbTitle" format="string"/>
+    <attr name="checkBoxPreferenceStyle" format="reference"/>
+    <attr name="datePreferenceStyle" format="reference"/>
+    <attr name="defaultValue" format="string|boolean|integer|reference|float"/>
+    <attr name="dependency" format="string"/>
+    <attr name="depends" format="reference"/>
+    <attr name="dialogIcon" format="reference"/>
+    <attr name="dialogLayout" format="reference"/>
+    <attr name="dialogMessage" format="string"/>
+    <attr name="dialogPreferenceStyle" format="reference"/>
+    <attr name="dialogTitle" format="string"/>
+    <attr name="disableDependentsState" format="boolean"/>
+    <attr name="editTextPreferenceStyle" format="reference"/>
+    <attr name="enabled" format="boolean"/>
+    <attr name="entries" format="reference"/>
+    <attr name="entryValues" format="reference"/>
+    <attr name="fragment" format="string"/>
+    <attr name="id" format="reference"/>
+    <attr name="is24HourView" format="enum">
+        <enum name="auto" value="0"/>
+        <enum name="no" value="-1"/>
+        <enum name="yes" value="1"/>
+    </attr>
+    <attr name="key" format="string"/>
+    <attr name="layout_removeBorders" format="boolean"/>
+    <attr name="max" format="integer"/>
+    <attr name="min" format="integer"/>
+    <attr name="negativeButtonText" format="string"/>
+    <attr name="numberPickerPreferenceStyle" format="reference"/>
+    <attr name="order" format="integer"/>
+    <attr name="orderingFromXml" format="boolean"/>
+    <attr name="persistent" format="boolean"/>
+    <attr name="positiveButtonText" format="string"/>
+    <attr name="preferenceCategoryStyle" format="reference"/>
+    <attr name="preferenceFragmentStyle" format="reference"/>
+    <attr name="preferenceFrameLayoutStyle" format="reference"/>
+    <attr name="preferenceInformationStyle" format="reference"/>
+    <attr name="preferenceLayoutChild" format="reference"/>
+    <attr name="preferencePanelStyle" format="reference"/>
+    <attr name="preferenceScreenStyle" format="reference"/>
+    <attr name="preferenceStyle" format="reference"/>
+    <attr name="ringtonePreferenceStyle" format="reference"/>
+    <attr name="ringtoneType">
+        <flag name="alarm" value="4"/>
+        <flag name="all" value="7"/>
+        <flag name="notification" value="2"/>
+        <flag name="ringtone" value="1"/>
+    </attr>
+    <attr name="seekBarDialogPreferenceStyle" format="reference"/>
+    <attr name="seekBarPreferenceStyle" format="reference"/>
+    <attr name="selectable" format="boolean"/>
+    <attr name="shouldDisableView" format="boolean"/>
+    <attr name="showDefault" format="boolean"/>
+    <attr name="showSilent" format="boolean"/>
+    <attr name="streamType" format="enum">
+        <enum name="alarm" value="4"/>
+        <enum name="music" value="3"/>
+        <enum name="ring" value="2"/>
+        <enum name="system" value="1"/>
+        <enum name="voice" value="0"/>
+    </attr>
+    <attr name="summary" format="string"/>
+    <attr name="summaryOff" format="string"/>
+    <attr name="summaryOn" format="string"/>
+    <attr name="switchPreferenceStyle" format="reference"/>
+    <attr name="switchTextOff" format="string"/>
+    <attr name="switchTextOn" format="string"/>
+    <attr name="timePreferenceStyle" format="reference"/>
+    <attr name="widgetLayout" format="reference"/>
+    <attr name="wrapSelectorWheel" format="boolean"/>
+    <attr name="yesNoPreferenceStyle" format="reference"/>
+    <!--Start styleable definition block-->
+    <declare-styleable name="DatePreference"/>
+    <declare-styleable name="DialogPreference">
+        <attr name="dialogIcon"/>
+        <attr name="dialogLayout"/>
+        <attr name="dialogMessage"/>
+        <attr name="dialogTitle"/>
+        <attr name="negativeButtonText"/>
+        <attr name="positiveButtonText"/>
+    </declare-styleable>
+    <declare-styleable name="ListPreference">
+        <attr name="entries"/>
+        <attr name="entryValues"/>
+    </declare-styleable>
+    <declare-styleable name="NumberPickerPreference">
+        <attr name="max"/>
+        <attr name="min"/>
+        <attr name="wrapSelectorWheel"/>
+    </declare-styleable>
+    <declare-styleable name="Preference">
+        <attr name="defaultValue"/>
+        <attr name="dependency"/>
+        <attr name="depends"/>
+        <attr name="enabled"/>
+        <attr name="fragment"/>
+        <attr name="icon"/>
+        <attr name="id"/>
+        <attr name="key"/>
+        <attr name="layout"/>
+        <attr name="order"/>
+        <attr name="persistent"/>
+        <attr name="selectable"/>
+        <attr name="shouldDisableView"/>
+        <attr name="summary"/>
+        <attr name="title"/>
+        <attr name="widgetLayout"/>
+    </declare-styleable>
+    <declare-styleable name="PreferenceFrameLayout">
+        <attr name="borderBottom"/>
+        <attr name="borderLeft"/>
+        <attr name="borderRight"/>
+        <attr name="borderTop"/>
+    </declare-styleable>
+    <declare-styleable name="PreferenceFrameLayout_Layout">
+        <attr name="layout_removeBorders"/>
+    </declare-styleable>
+    <declare-styleable name="PreferenceGroup">
+        <attr name="orderingFromXml"/>
+    </declare-styleable>
+    <declare-styleable name="PreferenceHeader">
+        <attr name="breadCrumbShortTitle"/>
+        <attr name="breadCrumbTitle"/>
+        <attr name="fragment"/>
+        <attr name="icon"/>
+        <attr name="id"/>
+        <attr name="summary"/>
+        <attr name="title"/>
+    </declare-styleable>
+    <declare-styleable name="RingtonePreference">
+        <attr name="ringtoneType"/>
+        <attr name="showDefault"/>
+        <attr name="showSilent"/>
+    </declare-styleable>
+    <declare-styleable name="SeekBarDialogPreference">
+        <attr name="max"/>
+    </declare-styleable>
+    <declare-styleable name="SeekBarPreference">
+        <attr name="max"/>
+    </declare-styleable>
+    <declare-styleable name="SwitchPreference">
+        <attr name="switchTextOff"/>
+        <attr name="switchTextOn"/>
+    </declare-styleable>
+    <declare-styleable name="TimePreference">
+        <attr name="is24HourView"/>
+    </declare-styleable>
+    <declare-styleable name="TwoStatePreference">
+        <attr name="disableDependentsState"/>
+        <attr name="summaryOff"/>
+        <attr name="summaryOn"/>
+    </declare-styleable>
+    <declare-styleable name="VolumePreference">
+        <attr name="streamType"/>
+    </declare-styleable>
+    <!--End of any blocks-->
 </resources>

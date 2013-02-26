@@ -123,10 +123,9 @@ public class TimePicker extends FrameLayout {
         mContext = context;
         setCurrentLocale(Locale.getDefault());
         TypedArray attributesArray = context.obtainStyledAttributes(attrs,
-                R.styleable.TimePicker, defStyle, 0);
+                R.styleable.TimePicker, defStyle, R.style.Holo_TimePicker);
         int layoutResourceId = attributesArray.getResourceId(
-                R.styleable.TimePicker_internalLayout,
-                R.layout.time_picker_holo);
+                R.styleable.TimePicker_layout, R.layout.time_picker_holo);
         attributesArray.recycle();
         LayoutInflater.inflate(mContext, layoutResourceId, this, true);
         FontLoader.apply(this);

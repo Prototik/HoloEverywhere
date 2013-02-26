@@ -26,22 +26,14 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
     }
 
     private static final HashMap<Class<?>, Constructor<?>> sConstructorMap = new HashMap<Class<?>, Constructor<?>>();
+    private ClassLoader mClassLoader;
+    protected final Object[] mConstructorArgs = new Object[2];
     protected final Class<?>[] mConstructorSignature = new Class<?>[] {
             Context.class, AttributeSet.class
     };
-    protected final Object[] mConstructorArgs = new Object[2];
     private final Context mContext;
-    private ClassLoader mClassLoader;
-    private final List<String> mPackages = new ArrayList<String>();
     private final List<Factory<T>> mFactoryList;
-
-    public void setClassLoader(ClassLoader classLoader) {
-        mClassLoader = classLoader;
-    }
-
-    public ClassLoader getClassLoader() {
-        return mClassLoader;
-    }
+    private final List<String> mPackages = new ArrayList<String>();
 
     protected GenericInflater(Context context) {
         mContext = context;
@@ -51,6 +43,10 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
     protected GenericInflater(GenericInflater<T, P> original, Context newContext) {
         mContext = newContext;
         mFactoryList = new ArrayList<Factory<T>>(original.mFactoryList);
+    }
+
+    public void addFactory(Factory<T> factory) {
+        mFactoryList.add(factory);
     }
 
     public abstract GenericInflater<T, P> cloneInContext(Context newContext);
@@ -88,14 +84,6 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
             ie.initCause(e);
             throw ie;
         }
-    }
-
-    protected Object[] obtainConstructorArgs(String name, AttributeSet attrs,
-            Constructor<?> constructor) {
-        final Object[] args = mConstructorArgs;
-        args[0] = mContext;
-        args[1] = attrs;
-        return args;
     }
 
     private final T createItemFromTag(XmlPullParser parser, String name,
@@ -139,6 +127,10 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
     protected Constructor<?> findConstructor(Class<?> clazz)
             throws NoSuchMethodException {
         return clazz.getConstructor(mConstructorSignature);
+    }
+
+    public ClassLoader getClassLoader() {
+        return mClassLoader;
     }
 
     public Context getContext() {
@@ -215,6 +207,14 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
         return result;
     }
 
+    protected Object[] obtainConstructorArgs(String name, AttributeSet attrs,
+            Constructor<?> constructor) {
+        final Object[] args = mConstructorArgs;
+        args[0] = mContext;
+        args[1] = attrs;
+        return args;
+    }
+
     protected boolean onCreateCustomFromTag(XmlPullParser parser, T parent,
             final AttributeSet attrs) throws XmlPullParserException {
         return false;
@@ -233,6 +233,17 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 
     protected P onMergeRoots(P givenRoot, boolean attachToGivenRoot, P xmlRoot) {
         return xmlRoot;
+    }
+
+    public void registerPackage(String name) {
+        name = Package.getPackage(name).getName();
+        if (!mPackages.contains(name)) {
+            mPackages.add(name);
+        }
+    }
+
+    public void removeFactory(Factory<T> factory) {
+        mFactoryList.remove(factory);
     }
 
     @SuppressWarnings("unchecked")
@@ -256,26 +267,15 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
         }
     }
 
-    public void registerPackage(String name) {
-        name = Package.getPackage(name).getName();
-        if (!mPackages.contains(name)) {
-            mPackages.add(name);
-        }
-    }
-
-    public void unregisterPackage(String string) {
-        mPackages.remove(string);
-    }
-
-    public void addFactory(Factory<T> factory) {
-        mFactoryList.add(factory);
+    public void setClassLoader(ClassLoader classLoader) {
+        mClassLoader = classLoader;
     }
 
     public void setFactory(Factory<T> factory) {
         mFactoryList.add(0, factory);
     }
 
-    public void removeFactory(Factory<T> factory) {
-        mFactoryList.remove(factory);
+    public void unregisterPackage(String string) {
+        mPackages.remove(string);
     }
 }

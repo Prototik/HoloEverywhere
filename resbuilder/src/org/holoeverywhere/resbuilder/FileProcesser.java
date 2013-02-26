@@ -25,6 +25,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.holoeverywhere.resbuilder.type.attrs.TypeAttrs;
 import org.holoeverywhere.resbuilder.type.strings.TypeStrings;
 import org.holoeverywhere.resbuilder.type.styles.TypeStyles;
 import org.json.JSONObject;
@@ -158,6 +159,7 @@ public class FileProcesser {
         PROCESSERS_MAP = new HashMap<String, TypeProcesser>();
         registerProcesser(TypeStrings.class);
         registerProcesser(TypeStyles.class);
+        registerProcesser(TypeAttrs.class);
     }
 
     public static void process(BuildMojo mojo) throws FileProcesserException {

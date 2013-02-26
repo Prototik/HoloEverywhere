@@ -154,7 +154,7 @@
             "calendarViewShown": "false", 
             "endYear": "2100", 
             "forceShownState": "false", 
-            "internalLayout": "@layout/date_picker_holo", 
+            "layout": "@layout/date_picker_holo", 
             "spinnersShown": "true", 
             "startYear": "1900"
         }, 
@@ -516,7 +516,7 @@
             "windowMinWidthMinor": "@dimen/dialog_min_width_minor"
         }, 
         "Holo.TimePicker": {
-            "internalLayout": "@layout/time_picker_holo"
+            "layout": "@layout/time_picker_holo"
         }
     }
 }
