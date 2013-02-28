@@ -202,6 +202,17 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         listener.onCreateContextMenu(contextMenuBuilder, view, menuInfo);
     }
 
+    protected void forceInit(Bundle savedInstanceState) {
+        if (mWasInited) {
+            return;
+        }
+        if (mConfig == null && savedInstanceState != null
+                && savedInstanceState.containsKey(CONFIG_KEY)) {
+            mConfig = savedInstanceState.getParcelable(CONFIG_KEY);
+        }
+        onInit(mConfig, savedInstanceState);
+    }
+
     public Holo getConfig() {
         return mConfig;
     }
@@ -347,11 +358,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (mConfig == null && savedInstanceState != null
-                && savedInstanceState.containsKey(CONFIG_KEY)) {
-            mConfig = savedInstanceState.getParcelable(CONFIG_KEY);
-        }
-        onInit(mConfig, savedInstanceState);
+        forceInit(savedInstanceState);
         super.onCreate(savedInstanceState);
     }
 

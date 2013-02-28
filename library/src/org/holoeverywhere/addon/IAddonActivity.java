@@ -33,6 +33,7 @@ public abstract class IAddonActivity extends IAddonBase {
         return null;
     }
 
+    @Override
     public Activity getActivity() {
         return activity;
     }
@@ -45,6 +46,10 @@ public abstract class IAddonActivity extends IAddonBase {
     }
 
     public void onConfigurationChanged(Configuration oldConfig, Configuration newConfig) {
+
+    }
+
+    public void onContentChanged() {
 
     }
 

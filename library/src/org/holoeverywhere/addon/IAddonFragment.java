@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.addon;
 
+import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Fragment;
 
 import android.os.Bundle;
@@ -11,6 +12,11 @@ public abstract class IAddonFragment extends IAddonBase {
 
     public IAddonFragment(Fragment fragment) {
         this.fragment = fragment;
+    }
+
+    @Override
+    public Activity getActivity() {
+        return fragment.getSupportActivity();
     }
 
     public Fragment getFragment() {

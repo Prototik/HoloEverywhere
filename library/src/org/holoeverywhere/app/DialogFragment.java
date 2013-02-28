@@ -44,11 +44,14 @@ public class DialogFragment extends Fragment implements
         if (activity == null || clazz == null) {
             throw new IllegalArgumentException("Activity of DialogFragment class is null");
         }
+        FragmentManager ft = activity.getSupportFragmentManager();
         T fragment;
+        final String tag = makeTag(clazz);
         try {
-            fragment = (T) activity.getSupportFragmentManager().findFragmentByTag(makeTag(clazz));
-            if (fragment == null) {
+            fragment = (T) ft.findFragmentByTag(tag);
+            if (fragment == null && makeIfNeed) {
                 fragment = Fragment.instantiate(clazz);
+                ft.putFragment(fragment.getArguments(), tag, fragment);
             }
         } catch (Exception e) {
             throw new RuntimeException("Error of finding DialogFragment instance", e);

@@ -172,8 +172,17 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+        for (IAddon<?, ?> addon : addons) {
+            addon.activity(this).onContentChanged();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         savedInstanceState = instanceState(savedInstanceState);
+        forceInit(savedInstanceState);
         for (IAddon<?, ?> addon : addons) {
             addon.activity(this).onPreCreate(savedInstanceState);
         }

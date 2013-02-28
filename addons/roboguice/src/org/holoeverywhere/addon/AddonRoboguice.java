@@ -2,6 +2,7 @@
 package org.holoeverywhere.addon;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.holoeverywhere.addon.AddonRoboguice.AddonRoboguiceA;
 import org.holoeverywhere.addon.AddonRoboguice.AddonRoboguiceF;
@@ -11,6 +12,7 @@ import org.holoeverywhere.app.Fragment;
 import roboguice.RoboGuice;
 import roboguice.activity.event.OnActivityResultEvent;
 import roboguice.activity.event.OnConfigurationChangedEvent;
+import roboguice.activity.event.OnContentChangedEvent;
 import roboguice.activity.event.OnCreateEvent;
 import roboguice.activity.event.OnDestroyEvent;
 import roboguice.activity.event.OnNewIntentEvent;
@@ -19,21 +21,37 @@ import roboguice.activity.event.OnRestartEvent;
 import roboguice.activity.event.OnResumeEvent;
 import roboguice.activity.event.OnStartEvent;
 import roboguice.activity.event.OnStopEvent;
+import roboguice.config.DefaultRoboModule;
 import roboguice.event.EventManager;
+import roboguice.inject.ContentViewListener;
+import roboguice.inject.ContextScopedRoboInjector;
 import roboguice.inject.RoboInjector;
+import roboguice.inject.ViewListener;
+import roboguice.inject._HoloViewInjector;
+import roboguice.util.RoboContext;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Key;
+import com.google.inject.Module;
+import com.google.inject.Provider;
+import com.google.inject.util.Modules;
 
 public class AddonRoboguice extends IAddon<AddonRoboguiceA, AddonRoboguiceF> {
     public static class AddonRoboguiceA extends IAddonActivity {
         private EventManager mEventManager;
-
-        private HashMap<Key<?>, Object> mScopedObjects = new HashMap<Key<?>, Object>();
+        private RoboInjector mInjector;
+        private Context mRoboguiceContext;
+        private boolean mActivityPresentRobo;
 
         public AddonRoboguiceA(Activity activity) {
             super(activity);
@@ -41,10 +59,6 @@ public class AddonRoboguice extends IAddon<AddonRoboguiceA, AddonRoboguiceF> {
 
         public EventManager getEventManager() {
             return mEventManager;
-        }
-
-        public HashMap<Key<?>, Object> getScopedObjectMap() {
-            return mScopedObjects;
         }
 
         @Override
@@ -55,6 +69,18 @@ public class AddonRoboguice extends IAddon<AddonRoboguiceA, AddonRoboguiceF> {
         @Override
         public void onConfigurationChanged(Configuration oldConfig, Configuration newConfig) {
             mEventManager.fire(new OnConfigurationChangedEvent(oldConfig, newConfig));
+        }
+
+        @Override
+        public void onContentChanged() {
+            if (mActivityPresentRobo) {
+                mInjector.injectViewMembers(getActivity());
+            } else if (mInjector instanceof ContextScopedRoboInjector) {
+                _HoloViewInjector.inject((ContextScopedRoboInjector) mInjector, getActivity());
+            } else {
+                _HoloViewInjector.inject(getActivity());
+            }
+            mEventManager.fire(new OnContentChangedEvent());
         }
 
         @Override
@@ -70,9 +96,13 @@ public class AddonRoboguice extends IAddon<AddonRoboguiceA, AddonRoboguiceF> {
                 Log.w(TAG, "OnDestroy error", e);
             } finally {
                 try {
-                    RoboGuice.destroyInjector(getActivity());
+                    RoboGuice.destroyInjector(mRoboguiceContext);
                 } catch (Exception e) {
                     Log.w(TAG, "OnDestroyInjector error", e);
+                } finally {
+                    mRoboguiceContext = null;
+                    mInjector = null;
+                    mEventManager = null;
                 }
             }
         }
@@ -87,11 +117,31 @@ public class AddonRoboguice extends IAddon<AddonRoboguiceA, AddonRoboguiceF> {
             mEventManager.fire(new OnPauseEvent());
         }
 
+        private Injector mMainInjector;
+
         @Override
         public void onPreCreate(Bundle savedInstanceState) {
-            final RoboInjector injector = RoboGuice.getInjector(getActivity());
-            mEventManager = injector.getInstance(EventManager.class);
-            injector.injectMembersWithoutViews(getActivity());
+            mActivityPresentRobo = getActivity() instanceof RoboContext;
+            mRoboguiceContext = mActivityPresentRobo ? getActivity() :
+                    new RoboguiceContextWrapper(getActivity());
+            mInjector = RoboGuice.getInjector(mRoboguiceContext);
+            mEventManager = mInjector.getInstance(EventManager.class);
+            mMainInjector = Guice.createInjector(Modules.override(RoboGuice
+                    .newDefaultRoboModule(getActivity().getApplication())).with(
+                    new AbstractModule() {
+                        @Override
+                        protected void configure() {
+                            bind(android.app.Activity.class).toProvider(new Provider<Activity>() {
+                                @Override
+                                public Activity get() {
+                                    return getActivity();
+                                }
+                            });
+                        }
+                    }));
+            mMainInjector = new ContextScopedRoboInjector(mRoboguiceContext, mMainInjector,
+                    new ViewListener());
+            mMainInjector.injectMembers(getActivity());
         }
 
         @Override
@@ -120,20 +170,42 @@ public class AddonRoboguice extends IAddon<AddonRoboguiceA, AddonRoboguiceF> {
     }
 
     public static class AddonRoboguiceF extends IAddonFragment {
+        private static final RoboInjector getInjector(Activity activity) {
+            return activity.requireAddon(AddonRoboguice.class).activity(activity).mInjector;
+        }
+
         public AddonRoboguiceF(Fragment fragment) {
             super(fragment);
         }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
-            RoboGuice.getInjector(getFragment().getActivity())
-                    .injectMembersWithoutViews(getFragment());
+            getInjector(getActivity()).injectMembersWithoutViews(getFragment());
         }
 
         @Override
         public void onViewCreated(View view) {
-            RoboGuice.getInjector(getFragment().getActivity())
-                    .injectViewMembers(getFragment());
+            getInjector(getActivity()).injectViewMembers(getFragment());
+        }
+    }
+
+    private static final class RoboguiceContextWrapper extends ContextWrapper implements
+            RoboContext {
+        /**
+         * Bug in Roboguice
+         */
+        @Inject
+        ContentViewListener ignored;
+
+        private final Map<Key<?>, Object> mScopedObjects = new HashMap<Key<?>, Object>();
+
+        public RoboguiceContextWrapper(Context base) {
+            super(base);
+        }
+
+        @Override
+        public Map<Key<?>, Object> getScopedObjectMap() {
+            return mScopedObjects;
         }
     }
 
