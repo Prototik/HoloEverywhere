@@ -10,13 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
-public abstract class IAddonActivity extends IAddonBase {
-    private final Activity activity;
-
-    public IAddonActivity(Activity activity) {
-        this.activity = activity;
-    }
-
+public abstract class IAddonActivity extends IAddonBase<Activity> {
     public boolean addContentView(View view, LayoutParams params) {
         return false;
     }
@@ -31,11 +25,6 @@ public abstract class IAddonActivity extends IAddonBase {
 
     public View findViewById(int id) {
         return null;
-    }
-
-    @Override
-    public Activity getActivity() {
-        return activity;
     }
 
     public boolean invalidateOptionsMenu() {

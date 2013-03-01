@@ -1,6 +1,8 @@
 
 package org.holoeverywhere;
 
+import org.holoeverywhere.addon.IAddonAttacher;
+import org.holoeverywhere.addon.IAddonFragment;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.preference.SharedPreferences;
 
@@ -17,7 +19,8 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 
 public interface IHoloFragment extends IHolo, OnPrepareOptionsMenuListener,
-        OnCreateOptionsMenuListener, OnOptionsItemSelectedListener, ContextMenuListener {
+        OnCreateOptionsMenuListener, OnOptionsItemSelectedListener, ContextMenuListener,
+        IAddonAttacher<IAddonFragment> {
     @Override
     public SharedPreferences getDefaultSharedPreferences();
 

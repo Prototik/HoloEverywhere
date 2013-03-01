@@ -1,8 +1,21 @@
 
 package org.holoeverywhere.addon;
 
-import org.holoeverywhere.app.Activity;
+public abstract class IAddonBase<T> {
+    private T mObject;
 
-public abstract class IAddonBase {
-    public abstract Activity getActivity();
+    public final void attach(T object) {
+        if (mObject != null || object == null) {
+            throw new IllegalStateException();
+        }
+        onAttach(mObject = object);
+    }
+
+    public T get() {
+        return mObject;
+    }
+
+    protected void onAttach(T object) {
+
+    }
 }

@@ -290,7 +290,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     }
 
     public AddonSlidingMenuA requireSlidingMenu() {
-        return requireAddon(AddonSlidingMenu.class).activity(this);
+        return addon(AddonSlidingMenu.class);
     }
 
     public void setOnMenuClickListener(OnMenuClickListener onMenuClickListener) {

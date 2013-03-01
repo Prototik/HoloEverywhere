@@ -1,10 +1,7 @@
 
 package org.holoeverywhere.addon;
 
-import org.holoeverywhere.addon.AddonSlidingMenu.AddonSlidingMenuA;
-import org.holoeverywhere.addon.AddonSlidingMenu.AddonSlidingMenuF;
 import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.Fragment;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -13,13 +10,9 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.slidingmenu.lib.app.SlidingActivityHelper;
 
-public class AddonSlidingMenu extends IAddon<AddonSlidingMenuA, AddonSlidingMenuF> {
+public class AddonSlidingMenu extends IAddon {
     public static class AddonSlidingMenuA extends IAddonActivity {
         private SlidingActivityHelper mHelper;
-
-        public AddonSlidingMenuA(Activity activity) {
-            super(activity);
-        }
 
         @Override
         public View findViewById(int id) {
@@ -33,7 +26,7 @@ public class AddonSlidingMenu extends IAddon<AddonSlidingMenuA, AddonSlidingMenu
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mHelper = new SlidingActivityHelper(getActivity());
+            mHelper = new SlidingActivityHelper(get());
             mHelper.onCreate(savedInstanceState);
         }
 
@@ -55,7 +48,7 @@ public class AddonSlidingMenu extends IAddon<AddonSlidingMenuA, AddonSlidingMenu
         }
 
         public void setBehindContentView(int id) {
-            setBehindContentView(getActivity().getLayoutInflater().inflate(id));
+            setBehindContentView(get().getLayoutInflater().inflate(id));
         }
 
         public void setBehindContentView(View v) {
@@ -68,15 +61,15 @@ public class AddonSlidingMenu extends IAddon<AddonSlidingMenuA, AddonSlidingMenu
         }
 
         public void setContent(int resId) {
-            getActivity().setContentView(resId);
+            get().setContentView(resId);
         }
 
         public void setContent(View view) {
-            getActivity().setContentView(view);
+            get().setContentView(view);
         }
 
         public void setContent(View view, LayoutParams params) {
-            getActivity().setContentView(view, params);
+            get().setContentView(view, params);
         }
 
         @Override
@@ -106,19 +99,7 @@ public class AddonSlidingMenu extends IAddon<AddonSlidingMenuA, AddonSlidingMenu
         }
     }
 
-    public static class AddonSlidingMenuF extends IAddonFragment {
-        public AddonSlidingMenuF(Fragment fragment) {
-            super(fragment);
-        }
-    }
-
-    @Override
-    public AddonSlidingMenuA createAddon(Activity activity) {
-        return new AddonSlidingMenuA(activity);
-    }
-
-    @Override
-    public AddonSlidingMenuF createAddon(Fragment fragment) {
-        return new AddonSlidingMenuF(fragment);
+    public AddonSlidingMenu() {
+        register(Activity.class, AddonSlidingMenuA.class);
     }
 }

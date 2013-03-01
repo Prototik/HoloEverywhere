@@ -1,12 +1,10 @@
 
 package org.holoeverywhere.app;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.holoeverywhere.addon.AddonSherlock;
-import org.holoeverywhere.addon.AddonSherlock.AddonSherlockF;
 import org.holoeverywhere.addon.IAddon;
+import org.holoeverywhere.addon.IAddonAttacher;
+import org.holoeverywhere.addon.IAddonBasicAttacher;
+import org.holoeverywhere.addon.IAddonFragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -51,63 +49,49 @@ public class Fragment extends _HoloFragment {
         }
     }
 
-    private final List<IAddon<?, ?>> addons = new ArrayList<IAddon<?, ?>>();
+    private final IAddonAttacher<IAddonFragment> mAttacher =
+            new IAddonBasicAttacher<IAddonFragment, Fragment>(this);
 
-    public void attachAddon(IAddon<?, ?> addon) {
-        if (!addons.contains(addon)) {
-            addons.add(addon);
-        }
-    }
-
-    public void detachAddon(IAddon<?, ?> addon) {
-        addons.remove(addon);
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T extends IAddon<?, ?>> T findAddon(Class<T> clazz) {
-        for (IAddon<?, ?> addon : addons) {
-            if (addon.getClass().isAssignableFrom(clazz)) {
-                return (T) addon;
-            }
-        }
-        return null;
-    }
-
-    @Deprecated
-    public Activity getSherlockActivity() {
-        return (Activity) getActivity();
+    @Override
+    public <T extends IAddonFragment> T addon(Class<? extends IAddon> clazz) {
+        return mAttacher.addon(clazz);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public <T extends IAddonFragment> T addon(String classname) {
+        return mAttacher.addon(classname);
+    }
+
+    @Override
+    public boolean isAddonAttached(Class<? extends IAddon> clazz) {
+        return mAttacher.isAddonAttached(clazz);
+    }
+
+    @Override
+    public void onCreate(final Bundle savedInstanceState) {
+        forceInit(savedInstanceState);
         super.onCreate(savedInstanceState);
-        for (IAddon<?, ?> addon : addons) {
-            addon.fragment(this).onCreate(savedInstanceState);
-        }
+        performAddonAction(new AddonCallback<IAddonFragment>() {
+            @Override
+            public void justAction(IAddonFragment addon) {
+                addon.onCreate(savedInstanceState);
+            }
+        });
     }
 
     @Override
-    public void onViewCreated(View view) {
+    public void onViewCreated(final View view) {
         super.onViewCreated(view);
-        for (IAddon<?, ?> addon : addons) {
-            addon.fragment(this).onViewCreated(view);
-        }
-    }
-
-    public <T extends IAddon<?, ?>> T requireAddon(Class<T> clazz) {
-        T t = findAddon(clazz);
-        if (t == null) {
-            try {
-                t = clazz.newInstance();
-                t.addon(this);
-            } catch (Exception e) {
-                e.printStackTrace();
+        performAddonAction(new AddonCallback<IAddonFragment>() {
+            @Override
+            public void justAction(IAddonFragment addon) {
+                addon.onViewCreated(view);
             }
-        }
-        return t;
+        });
     }
 
-    public AddonSherlockF requireSherlock() {
-        return requireAddon(AddonSherlock.class).fragment(this);
+    @Override
+    public boolean performAddonAction(AddonCallback<IAddonFragment> callback) {
+        return mAttacher.performAddonAction(callback);
     }
 }

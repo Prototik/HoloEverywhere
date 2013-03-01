@@ -432,13 +432,13 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         if (this instanceof Activity) {
             Activity activity = (Activity) this;
             if (config.requireRoboguice) {
-                activity.requireAddon(Activity.ADDON_ROBOGUICE);
+                activity.addon(Activity.ADDON_ROBOGUICE);
             }
             if (config.requireSlidingMenu) {
-                activity.requireAddon(Activity.ADDON_SLIDING_MENU);
+                activity.addon(Activity.ADDON_SLIDING_MENU);
             }
             if (config.requireSherlock) {
-                activity.requireSherlock();
+                activity.addonSherlock();
             }
             final SparseIntArray windowFeatures = config.windowFeatures;
             if (windowFeatures != null) {

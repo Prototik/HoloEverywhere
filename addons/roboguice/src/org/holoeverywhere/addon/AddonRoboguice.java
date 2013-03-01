@@ -4,8 +4,6 @@ package org.holoeverywhere.addon;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.holoeverywhere.addon.AddonRoboguice.AddonRoboguiceA;
-import org.holoeverywhere.addon.AddonRoboguice.AddonRoboguiceF;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Fragment;
 
@@ -21,12 +19,10 @@ import roboguice.activity.event.OnRestartEvent;
 import roboguice.activity.event.OnResumeEvent;
 import roboguice.activity.event.OnStartEvent;
 import roboguice.activity.event.OnStopEvent;
-import roboguice.config.DefaultRoboModule;
 import roboguice.event.EventManager;
 import roboguice.inject.ContentViewListener;
 import roboguice.inject.ContextScopedRoboInjector;
 import roboguice.inject.RoboInjector;
-import roboguice.inject.ViewListener;
 import roboguice.inject._HoloViewInjector;
 import roboguice.util.RoboContext;
 import android.content.Context;
@@ -42,20 +38,16 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Key;
-import com.google.inject.Module;
 import com.google.inject.Provider;
 import com.google.inject.util.Modules;
 
-public class AddonRoboguice extends IAddon<AddonRoboguiceA, AddonRoboguiceF> {
-    public static class AddonRoboguiceA extends IAddonActivity {
-        private EventManager mEventManager;
-        private RoboInjector mInjector;
-        private Context mRoboguiceContext;
+public class AddonRoboguice extends IAddon {
+    public static class AddonRoboguiceA extends IAddonActivity implements Provider<Activity> {
         private boolean mActivityPresentRobo;
-
-        public AddonRoboguiceA(Activity activity) {
-            super(activity);
-        }
+        private EventManager mEventManager;
+        private ContextScopedRoboInjector mInjector;
+        private Injector mMainInjector;
+        private Context mRoboguiceContext;
 
         public EventManager getEventManager() {
             return mEventManager;
@@ -74,11 +66,9 @@ public class AddonRoboguice extends IAddon<AddonRoboguiceA, AddonRoboguiceF> {
         @Override
         public void onContentChanged() {
             if (mActivityPresentRobo) {
-                mInjector.injectViewMembers(getActivity());
-            } else if (mInjector instanceof ContextScopedRoboInjector) {
-                _HoloViewInjector.inject((ContextScopedRoboInjector) mInjector, getActivity());
+                mInjector.injectViewMembers(get());
             } else {
-                _HoloViewInjector.inject(getActivity());
+                _HoloViewInjector.inject(mInjector, get());
             }
             mEventManager.fire(new OnContentChangedEvent());
         }
@@ -117,31 +107,24 @@ public class AddonRoboguice extends IAddon<AddonRoboguiceA, AddonRoboguiceF> {
             mEventManager.fire(new OnPauseEvent());
         }
 
-        private Injector mMainInjector;
-
         @Override
         public void onPreCreate(Bundle savedInstanceState) {
-            mActivityPresentRobo = getActivity() instanceof RoboContext;
-            mRoboguiceContext = mActivityPresentRobo ? getActivity() :
-                    new RoboguiceContextWrapper(getActivity());
-            mInjector = RoboGuice.getInjector(mRoboguiceContext);
+            mActivityPresentRobo = get() instanceof RoboContext;
+            mRoboguiceContext = mActivityPresentRobo ? get() :
+                    new RoboguiceContextWrapper(get());
+            mInjector = (ContextScopedRoboInjector) RoboGuice.getInjector(mRoboguiceContext);
             mEventManager = mInjector.getInstance(EventManager.class);
             mMainInjector = Guice.createInjector(Modules.override(RoboGuice
-                    .newDefaultRoboModule(getActivity().getApplication())).with(
-                    new AbstractModule() {
-                        @Override
-                        protected void configure() {
-                            bind(android.app.Activity.class).toProvider(new Provider<Activity>() {
-                                @Override
-                                public Activity get() {
-                                    return getActivity();
-                                }
-                            });
-                        }
-                    }));
+                    .newDefaultRoboModule(get().getApplication())).with(new AbstractModule() {
+                @Override
+                protected void configure() {
+                    bind(android.app.Activity.class).toProvider(AddonRoboguiceA.this);
+                    bind(Activity.class).toProvider(AddonRoboguiceA.this);
+                }
+            }));
             mMainInjector = new ContextScopedRoboInjector(mRoboguiceContext, mMainInjector,
-                    new ViewListener());
-            mMainInjector.injectMembers(getActivity());
+                    _HoloViewInjector.getViewListener(mInjector));
+            mMainInjector.injectMembers(get());
         }
 
         @Override
@@ -170,22 +153,20 @@ public class AddonRoboguice extends IAddon<AddonRoboguiceA, AddonRoboguiceF> {
     }
 
     public static class AddonRoboguiceF extends IAddonFragment {
-        private static final RoboInjector getInjector(Activity activity) {
-            return activity.requireAddon(AddonRoboguice.class).activity(activity).mInjector;
-        }
-
-        public AddonRoboguiceF(Fragment fragment) {
-            super(fragment);
+        private static final Injector getInjector(Activity activity, boolean main) {
+            AddonRoboguiceA addon = activity.addon(AddonRoboguice.class);
+            return main ? addon.mMainInjector : addon.mInjector;
         }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
-            getInjector(getActivity()).injectMembersWithoutViews(getFragment());
+            getInjector(get().getSupportActivity(), true).injectMembers(get());
         }
 
         @Override
         public void onViewCreated(View view) {
-            getInjector(getActivity()).injectViewMembers(getFragment());
+            ((RoboInjector) getInjector(get().getSupportActivity(), false))
+                    .injectViewMembers(get());
         }
     }
 
@@ -211,13 +192,8 @@ public class AddonRoboguice extends IAddon<AddonRoboguiceA, AddonRoboguiceF> {
 
     private static final String TAG = "Roboguice";
 
-    @Override
-    public AddonRoboguiceA createAddon(Activity activity) {
-        return new AddonRoboguiceA(activity);
-    }
-
-    @Override
-    public AddonRoboguiceF createAddon(Fragment fragment) {
-        return new AddonRoboguiceF(fragment);
+    public AddonRoboguice() {
+        register(Activity.class, AddonRoboguiceA.class);
+        register(Fragment.class, AddonRoboguiceF.class);
     }
 }

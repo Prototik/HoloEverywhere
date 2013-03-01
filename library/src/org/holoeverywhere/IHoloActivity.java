@@ -3,6 +3,8 @@ package org.holoeverywhere;
 
 import org.holoeverywhere.SystemServiceManager.SuperSystemService;
 import org.holoeverywhere.ThemeManager.SuperStartActivity;
+import org.holoeverywhere.addon.IAddonActivity;
+import org.holoeverywhere.addon.IAddonAttacher;
 
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -22,7 +24,8 @@ import com.actionbarsherlock.view.MenuItem;
 public interface IHoloActivity extends IHolo, SuperStartActivity,
         OnCreatePanelMenuListener, OnPreparePanelListener,
         OnMenuItemSelectedListener, OnActionModeStartedListener,
-        OnActionModeFinishedListener, SuperSystemService, ContextMenuListener {
+        OnActionModeFinishedListener, SuperSystemService, ContextMenuListener,
+        IAddonAttacher<IAddonActivity> {
     public static interface OnWindowFocusChangeListener {
         public void onWindowFocusChanged(boolean hasFocus);
     }

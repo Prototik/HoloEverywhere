@@ -1,10 +1,7 @@
 
 package org.holoeverywhere.addon;
 
-import org.holoeverywhere.addon.AddonSherlock.AddonSherlockA;
-import org.holoeverywhere.addon.AddonSherlock.AddonSherlockF;
 import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.Fragment;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -21,18 +18,12 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.ActionMode.Callback;
 import com.actionbarsherlock.view.MenuInflater;
 
-public class AddonSherlock extends IAddon<AddonSherlockA, AddonSherlockF> {
+public class AddonSherlock extends IAddon {
     public static class AddonSherlockA extends IAddonActivity {
         private boolean mIgnoreNativeCreate = false;
-
         private boolean mIgnoreNativePrepare = false;
-
         private boolean mIgnoreNativeSelected = false;
         private ActionBarSherlock mSherlock;
-
-        public AddonSherlockA(Activity activity) {
-            super(activity);
-        }
 
         @Override
         public boolean addContentView(View view, LayoutParams params) {
@@ -60,8 +51,7 @@ public class AddonSherlock extends IAddon<AddonSherlockA, AddonSherlockF> {
 
         protected ActionBarSherlock getSherlock() {
             if (mSherlock == null) {
-                mSherlock = ActionBarSherlock.wrap(getActivity(),
-                        ActionBarSherlock.FLAG_DELEGATE);
+                mSherlock = ActionBarSherlock.wrap(get(), ActionBarSherlock.FLAG_DELEGATE);
             }
             return mSherlock;
         }
@@ -202,19 +192,7 @@ public class AddonSherlock extends IAddon<AddonSherlockA, AddonSherlockF> {
         }
     }
 
-    public static class AddonSherlockF extends IAddonFragment {
-        public AddonSherlockF(Fragment fragment) {
-            super(fragment);
-        }
-    }
-
-    @Override
-    public AddonSherlockA createAddon(Activity activity) {
-        return new AddonSherlockA(activity);
-    }
-
-    @Override
-    public AddonSherlockF createAddon(Fragment fragment) {
-        return new AddonSherlockF(fragment);
+    public AddonSherlock() {
+        register(Activity.class, AddonSherlockA.class);
     }
 }
