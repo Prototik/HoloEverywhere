@@ -40,7 +40,7 @@ ProgressBar bar = (ProgressBar) findViewById(R.id.progress_bar);
 
 ## Screenshots
 ![Screenshot 1](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/1.png "Screenshot 1")
-![Screenshot 2](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/.png "Screenshot 2")
+![Screenshot 2](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/2.png "Screenshot 2")
 ![Screenshot 3](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/3.png "Screenshot 3")
 ![Screenshot 4](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/4.png "Screenshot 4")
 ![Screenshot 5](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/5.png "Screenshot 5")
@@ -56,7 +56,7 @@ ProgressBar bar = (ProgressBar) findViewById(R.id.progress_bar);
 [Sergey](mailto:prototypegamez@gmail.com "Send email to Sergey")
 
 ### Notice for developers
-If you make changes in styles.xml - use the [Builder](https://github.com/ChristopheVersieux/HoloEverywhere/tree/master/builder), otherwise pull request will not be accepted.
+If you make changes in styles.xml - use the [resbuilder](https://github.com/ChristopheVersieux/HoloEverywhere/tree/master/resbuilder), otherwise pull request will not be accepted.
 And before commiting your changes check HEAD - it should be reference on master branch.
 ```
 $ git branch
