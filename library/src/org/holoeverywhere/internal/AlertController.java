@@ -55,6 +55,7 @@ public class AlertController {
         public final Context mContext;
         public Cursor mCursor;
         public View mCustomTitleView;
+        public boolean mDismissOnButtonClick = true;
         public boolean mForceInverseBackground;
         public Drawable mIcon;
         public int mIconId = 0;
@@ -107,6 +108,7 @@ public class AlertController {
                     dialog.setIcon(mIconId);
                 }
             }
+            dialog.setDismissOnButtonClick(mDismissOnButtonClick);
             if (mMessage != null) {
                 dialog.setMessage(mMessage);
             }
@@ -322,8 +324,11 @@ public class AlertController {
             if (m != null) {
                 m.sendToTarget();
             }
-            mHandler.obtainMessage(ButtonHandler.MSG_DISMISS_DIALOG,
-                    mDialogInterface).sendToTarget();
+
+            if (mDismissOnButtonClick) {
+                mHandler.obtainMessage(ButtonHandler.MSG_DISMISS_DIALOG,
+                        mDialogInterface).sendToTarget();
+            }
         }
     };
     private Button mButtonNegative;
@@ -339,6 +344,7 @@ public class AlertController {
     private final Context mContext;
     private View mCustomTitleView;
     private final DialogInterface mDialogInterface;
+    private boolean mDismissOnButtonClick = true;
     private boolean mForceInverseBackground;
     private Handler mHandler;
     private Drawable mIcon;
@@ -561,6 +567,10 @@ public class AlertController {
 
     public void setCustomTitle(View customTitleView) {
         mCustomTitleView = customTitleView;
+    }
+
+    public void setDismissOnButtonClick(boolean dismiss) {
+        mDismissOnButtonClick = dismiss;
     }
 
     public void setIcon(Drawable icon) {
