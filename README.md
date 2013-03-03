@@ -1,10 +1,10 @@
-![HoloEverywhere](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/github-res/logo.png "HoloEverywhere")
+![HoloEverywhere](http://holoeverywhere.org/github-res/logo.png "HoloEverywhere")
 
 ## What is it?
 Bringing Holo Theme from Android 4.1 to 2.1 and above.
 ## Links
-[![Play Store](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/github-res/play_store_button.png)][Play Store]  
-[![Donate](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/github-res/donate_button.png)][Donate]
+[![Play Store](http://holoeverywhere.org/github-res/play_store_button.png)][Play Store]  
+[![Donate](http://holoeverywhere.org/github-res/donate_button.png)][Donate]
 ## How to use? ([Maven][Build with Maven])
 
 * You should clone git repo, init and update submodules:
@@ -39,16 +39,16 @@ ProgressBar bar = (ProgressBar) findViewById(R.id.progress_bar);
 ```
 
 ## Screenshots
-![Screenshot 1](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/1.png "Screenshot 1")
-![Screenshot 2](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/2.png "Screenshot 2")
-![Screenshot 3](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/3.png "Screenshot 3")
-![Screenshot 4](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/4.png "Screenshot 4")
-![Screenshot 5](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/5.png "Screenshot 5")
-![Screenshot 6](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/6.png "Screenshot 6")
-![Screenshot 7](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/7.png "Screenshot 7")
-![Screenshot 8](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/8.png "Screenshot 8")
-![Screenshot 9](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/9.png "Screenshot 9")
-![Screenshot 10](https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/website/src/main/webapp/img/screenshots/10.png "Screenshot 10")
+![Screenshot 1](http://holoeverywhere.org/img/screenshots/1.png "Screenshot 1")
+![Screenshot 2](http://holoeverywhere.org/img/screenshots/2.png "Screenshot 2")
+![Screenshot 3](http://holoeverywhere.org/img/screenshots/3.png "Screenshot 3")
+![Screenshot 4](http://holoeverywhere.org/img/screenshots/4.png "Screenshot 4")
+![Screenshot 5](http://holoeverywhere.org/img/screenshots/5.png "Screenshot 5")
+![Screenshot 6](http://holoeverywhere.org/img/screenshots/6.png "Screenshot 6")
+![Screenshot 7](http://holoeverywhere.org/img/screenshots/7.png "Screenshot 7")
+![Screenshot 8](http://holoeverywhere.org/img/screenshots/8.png "Screenshot 8")
+![Screenshot 9](http://holoeverywhere.org/img/screenshots/9.png "Screenshot 9")
+![Screenshot 10](http://holoeverywhere.org/img/screenshots/10.png "Screenshot 10")
 
 ## Contact
 [Christophe](https://plus.google.com/108315424589085456181/posts "Google Plus")

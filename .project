@@ -4,13 +4,10 @@
 	<comment></comment>
 	<projects>
 		<project>HoloEverywhere ABS</project>
-		<project>HoloEverywhere Addon ExtPreferences</project>
 		<project>HoloEverywhere Addons</project>
-		<project>HoloEverywhere Builder</project>
 		<project>HoloEverywhere Demo</project>
 		<project>HoloEverywhere Library</project>
-		<project>HoloEverywhere SlidingMenu</project>
-		<project>HoloEverywhere Translator</project>
+		<project>HoloEverywhere ResBuilder</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

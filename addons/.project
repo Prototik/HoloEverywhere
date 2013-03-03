@@ -3,7 +3,8 @@
 	<name>HoloEverywhere Addons</name>
 	<comment></comment>
 	<projects>
-		<project>HoloEverywhere Addon ExtPreferences</project>
+		<project>HoloEverywhere Addon Preferences</project>
+		<project>HoloEverywhere Addon Roboguice</project>
 		<project>HoloEverywhere Addon SlidingMenu</project>
 	</projects>
 	<buildSpec>
