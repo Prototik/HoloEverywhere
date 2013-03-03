@@ -38,21 +38,20 @@ public class DialogFragment extends Fragment implements
         return findInstance(activity, clazz, false);
     }
 
-    @SuppressWarnings("unchecked")
     public static final <T extends DialogFragment> T findInstance(Activity activity,
             Class<T> clazz, boolean makeIfNeed) {
-
         if (activity == null || clazz == null) {
             throw new IllegalArgumentException("Activity of DialogFragment class is null");
         }
-
         return findInstance(activity.getSupportFragmentManager(), clazz, makeIfNeed);
     }
 
     @SuppressWarnings("unchecked")
     public static final <T extends DialogFragment> T findInstance(FragmentManager fm,
             Class<T> clazz, boolean makeIfNeed) {
-
+        if (fm == null || clazz == null) {
+            throw new IllegalArgumentException("FragmentManager of DialogFragment class is null");
+        }
         T fragment;
         final String tag = makeTag(clazz);
         try {

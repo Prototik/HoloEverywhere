@@ -6,6 +6,7 @@ import java.lang.ref.WeakReference;
 import org.holoeverywhere.ArrayAdapter;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
+import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.Button;
 import org.holoeverywhere.widget.CheckedTextView;
 import org.holoeverywhere.widget.FrameLayout;
@@ -49,6 +50,7 @@ public class AlertController {
         }
 
         public ListAdapter mAdapter;
+        public int mButtonBehavior;
         public boolean mCancelable;
         public int mCheckedItem = -1;
         public boolean[] mCheckedItems;
@@ -88,9 +90,18 @@ public class AlertController {
         public int mViewSpacingTop;
 
         public AlertParams(Context context) {
+            this(context, 0);
+        }
+
+        public AlertParams(Context context, int theme) {
             mContext = context;
+            mTheme = theme;
             mCancelable = true;
             mInflater = LayoutInflater.from(context);
+
+            mButtonBehavior |= AlertDialog.DISMISS_ON_NEGATIVE;
+            mButtonBehavior |= AlertDialog.DISMISS_ON_NEUTRAL;
+            mButtonBehavior |= AlertDialog.DISMISS_ON_POSITIVE;
         }
 
         public void apply(AlertController dialog) {
@@ -122,6 +133,7 @@ public class AlertController {
                 dialog.setButton(DialogInterface.BUTTON_NEUTRAL,
                         mNeutralButtonText, mNeutralButtonListener, null);
             }
+            dialog.setButtonBehavior(mButtonBehavior);
             if (mForceInverseBackground) {
                 dialog.setInverseBackgroundForced(true);
             }
@@ -305,25 +317,53 @@ public class AlertController {
         return outValue.data != 0;
     }
 
-    private final AlertDecorViewInstaller decorViewInstaller;
     private ListAdapter mAdapter;
+
     private int mAlertDialogLayout;
-    View.OnClickListener mButtonHandler = new View.OnClickListener() {
+    private int mButtonBehavior;
+    private View.OnClickListener mButtonHandler = new View.OnClickListener() {
+        private boolean needToDismiss(int flag) {
+            return (mButtonBehavior & flag) == flag;
+        }
+
         @Override
         public void onClick(View v) {
-            Message m = null;
-            if (v == mButtonPositive && mButtonPositiveMessage != null) {
-                m = Message.obtain(mButtonPositiveMessage);
-            } else if (v == mButtonNegative && mButtonNegativeMessage != null) {
-                m = Message.obtain(mButtonNegativeMessage);
-            } else if (v == mButtonNeutral && mButtonNeutralMessage != null) {
-                m = Message.obtain(mButtonNeutralMessage);
+            int button;
+            if (v == mButtonPositive) {
+                button = DialogInterface.BUTTON_POSITIVE;
+            } else if (v == mButtonNegative) {
+                button = DialogInterface.BUTTON_NEGATIVE;
+            } else if (v == mButtonNeutral) {
+                button = DialogInterface.BUTTON_NEUTRAL;
+            } else {
+                return;
             }
-            if (m != null) {
-                m.sendToTarget();
+            boolean dismiss = false;
+            switch (button) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    send(mButtonPositiveMessage);
+                    dismiss = needToDismiss(AlertDialog.DISMISS_ON_POSITIVE);
+                    break;
+                case DialogInterface.BUTTON_NEGATIVE:
+                    send(mButtonNegativeMessage);
+                    dismiss = needToDismiss(AlertDialog.DISMISS_ON_NEGATIVE);
+                    break;
+                case DialogInterface.BUTTON_NEUTRAL:
+                    send(mButtonNeutralMessage);
+                    dismiss = needToDismiss(AlertDialog.DISMISS_ON_NEUTRAL);
+                    break;
             }
-            mHandler.obtainMessage(ButtonHandler.MSG_DISMISS_DIALOG,
-                    mDialogInterface).sendToTarget();
+            if (dismiss) {
+                mHandler.obtainMessage(ButtonHandler.MSG_DISMISS_DIALOG,
+                        mDialogInterface).sendToTarget();
+            }
+        }
+
+        private void send(Message m) {
+            if (m == null) {
+                return;
+            }
+            Message.obtain(m).sendToTarget();
         }
     };
     private Button mButtonNegative;
@@ -338,6 +378,7 @@ public class AlertController {
     private int mCheckedItem = -1;
     private final Context mContext;
     private View mCustomTitleView;
+    private final AlertDecorViewInstaller mDecorViewInstaller;
     private final DialogInterface mDialogInterface;
     private boolean mForceInverseBackground;
     private Handler mHandler;
@@ -359,9 +400,7 @@ public class AlertController {
     private int mViewSpacingLeft;
     private int mViewSpacingRight;
     private boolean mViewSpacingSpecified = false;
-
     private int mViewSpacingTop;
-
     private final Window mWindow;
 
     public AlertController(Context context, DialogInterface di, Window window) {
@@ -370,7 +409,7 @@ public class AlertController {
 
     public AlertController(Context context, DialogInterface di, Window window,
             AlertDecorViewInstaller decorViewInstaller) {
-        this.decorViewInstaller = decorViewInstaller;
+        mDecorViewInstaller = decorViewInstaller;
         mContext = context;
         mDialogInterface = di;
         mWindow = window;
@@ -433,11 +472,11 @@ public class AlertController {
             mWindow.setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                     WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         }
-        if (decorViewInstaller == null) {
+        if (mDecorViewInstaller == null) {
             mWindow.setContentView(LayoutInflater.inflate(mWindow.getContext(),
                     mAlertDialogLayout));
         } else {
-            decorViewInstaller.installDecorView(mContext, mAlertDialogLayout);
+            mDecorViewInstaller.installDecorView(mContext, mAlertDialogLayout);
         }
         setupView();
     }
@@ -557,6 +596,10 @@ public class AlertController {
             default:
                 throw new IllegalArgumentException("Button does not exist");
         }
+    }
+
+    public void setButtonBehavior(int buttonBehavior) {
+        mButtonBehavior = buttonBehavior;
     }
 
     public void setCustomTitle(View customTitleView) {
