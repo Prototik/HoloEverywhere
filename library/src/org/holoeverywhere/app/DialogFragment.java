@@ -41,17 +41,24 @@ public class DialogFragment extends Fragment implements
     @SuppressWarnings("unchecked")
     public static final <T extends DialogFragment> T findInstance(Activity activity,
             Class<T> clazz, boolean makeIfNeed) {
+
         if (activity == null || clazz == null) {
             throw new IllegalArgumentException("Activity of DialogFragment class is null");
         }
-        FragmentManager ft = activity.getSupportFragmentManager();
+
+        return findInstance(activity.getSupportFragmentManager(), clazz, makeIfNeed);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static final <T extends DialogFragment> T findInstance(FragmentManager fm,
+            Class<T> clazz, boolean makeIfNeed) {
+
         T fragment;
         final String tag = makeTag(clazz);
         try {
-            fragment = (T) ft.findFragmentByTag(tag);
+            fragment = (T) fm.findFragmentByTag(tag);
             if (fragment == null && makeIfNeed) {
                 fragment = Fragment.instantiate(clazz);
-                ft.putFragment(fragment.getArguments(), tag, fragment);
             }
         } catch (Exception e) {
             throw new RuntimeException("Error of finding DialogFragment instance", e);
