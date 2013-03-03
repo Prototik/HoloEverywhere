@@ -113,6 +113,11 @@ public class AlertDialog extends Dialog implements DialogInterface,
             return this;
         }
 
+        public Builder setDismissOnButtonClick(boolean dismiss) {
+            P.mDismissOnButtonClick = dismiss;
+            return this;
+        }
+
         public Builder setIcon(Drawable icon) {
             P.mIcon = icon;
             return this;
@@ -446,6 +451,10 @@ public class AlertDialog extends Dialog implements DialogInterface,
 
     public void setCustomTitle(View customTitleView) {
         mAlert.setCustomTitle(customTitleView);
+    }
+
+    public void setDismissOnButtonClick(boolean dismiss) {
+        mAlert.setDismissOnButtonClick(dismiss);
     }
 
     public void setIcon(Drawable icon) {
