@@ -323,7 +323,7 @@ public class AlertController {
     private int mButtonBehavior;
     private View.OnClickListener mButtonHandler = new View.OnClickListener() {
         private boolean needToDismiss(int flag) {
-            return (mButtonBehavior & flag) == flag;
+            return (mButtonBehavior & flag) != flag;
         }
 
         @Override
