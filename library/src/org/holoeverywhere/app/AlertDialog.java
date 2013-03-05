@@ -97,7 +97,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
 
         public Builder setBlockDismiss(boolean blockDismiss) {
             int buttonBehavior = 0;
-            if (blockDismiss) {
+            if (!blockDismiss) {
                 buttonBehavior |= AlertDialog.DISMISS_ON_POSITIVE;
                 buttonBehavior |= AlertDialog.DISMISS_ON_NEGATIVE;
                 buttonBehavior |= AlertDialog.DISMISS_ON_NEUTRAL;
