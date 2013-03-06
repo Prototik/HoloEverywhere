@@ -68,16 +68,25 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     public <T extends IAddonActivity> T addon(Class<? extends IAddon> clazz) {
+        checkAddonState();
         return mAttacher.addon(clazz);
     }
 
     @Override
     public <T extends IAddonActivity> T addon(String classname) {
+        checkAddonState();
         return mAttacher.addon(classname);
     }
 
     public AddonSherlockA addonSherlock() {
         return addon(AddonSherlock.class);
+    }
+
+    private void checkAddonState() {
+        if (super.isInited()) {
+            throw new IllegalStateException("Couldn't attach addon after init of activity\n" +
+                    "Call Activity.addon method before super.onCreate or use onCreateConfig");
+        }
     }
 
     @Override
@@ -503,7 +512,7 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     public void requestWindowFeature(long featureIdLong) {
-        if (!super.isWasInited()) {
+        if (!super.isInited()) {
             super.requestWindowFeature(featureIdLong);
             return;
         }

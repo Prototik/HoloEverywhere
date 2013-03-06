@@ -116,7 +116,7 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
     }
 
     public View prepareDecorView(View v, ViewGroup.LayoutParams params) {
-        return ContextMenuDecorView.prepareDecorView(getContext(), v, this, params, 0);
+        return new ContextMenuDecorView(getContext(), v, params, this);
     }
 
     @Override

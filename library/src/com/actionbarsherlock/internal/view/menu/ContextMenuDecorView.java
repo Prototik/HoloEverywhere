@@ -24,35 +24,18 @@ public final class ContextMenuDecorView extends FrameLayout implements
         return view;
     }
 
-    public static ContextMenuDecorView prepareDecorView(Context context, View v,
-            ContextMenuListener listener, ViewGroup.LayoutParams params, int decorViewId) {
-        if (v instanceof ContextMenuDecorView) {
-            return (ContextMenuDecorView) v;
-        }
-        if (v != null) {
-            ContextMenuDecorView decorView = new ContextMenuDecorView(context, v, params, listener);
-            if (decorViewId > 0) {
-                decorView.setId(decorViewId);
-            }
-            return decorView;
-        } else {
-            return null;
-        }
-    }
-
     private ContextMenuBuilder contextMenu;
     private MenuDialogHelper menuDialogHelper;
     private final ContextMenuListener mListener;
-
     private final String TAG = getClass().getSimpleName();
 
-    private ContextMenuDecorView(Context context,
+    public ContextMenuDecorView(Context context,
             ContextMenuListener listener) {
         super(context);
         mListener = listener;
     }
 
-    private ContextMenuDecorView(Context context, View view, ViewGroup.LayoutParams params,
+    public ContextMenuDecorView(Context context, View view, ViewGroup.LayoutParams params,
             ContextMenuListener listener) {
         this(context, listener);
         attachView(view, params);

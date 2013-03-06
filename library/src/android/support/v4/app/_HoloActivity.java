@@ -151,9 +151,9 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     private Context mActionBarContext;
     private Holo mConfig;
     private boolean mForceThemeApply = false;
+    private boolean mInited = false;
     private int mLastThemeResourceId = 0;
     private final List<WeakReference<OnWindowFocusChangeListener>> mOnWindowFocusChangeListeners = new ArrayList<WeakReference<OnWindowFocusChangeListener>>();
-    private boolean mWasInited = false;
     private final String TAG = getClass().getSimpleName();
 
     @Override
@@ -203,7 +203,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     }
 
     protected void forceInit(Bundle savedInstanceState) {
-        if (mWasInited) {
+        if (mInited) {
             return;
         }
         if (mConfig == null && savedInstanceState != null
@@ -227,14 +227,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         return PreferenceManagerHelper.getDefaultSharedPreferences(this, impl);
     }
 
-    /**
-     * @deprecated Use {@link #getConfig()} instead
-     */
-    @Deprecated
-    public Holo getHolo() {
-        return getConfig();
-    }
-
     public int getLastThemeResourceId() {
         return mLastThemeResourceId;
     }
@@ -255,7 +247,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         return PreferenceManagerHelper.wrap(this, name, mode);
     }
 
-    protected Context getSupportActionBarContext() {
+    /**
+     * @return Themed context for using in action bar
+     */
+    public Context getSupportActionBarContext() {
         if (mActionBarContext == null) {
             int theme = ThemeManager.getThemeType(this);
             if (theme == ThemeManager.INVALID || theme == ThemeManager.MIXED) {
@@ -296,9 +291,13 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     }
 
     protected void init(Holo config) {
+        init(config, null);
+    }
+
+    protected void init(Holo config, Bundle savedInstanceState) {
         mConfig = config;
         if (mConfig.applyImmediately) {
-            onInit(mConfig, null);
+            onInit(mConfig, savedInstanceState);
         }
     }
 
@@ -312,8 +311,8 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         return mForceThemeApply;
     }
 
-    public boolean isWasInited() {
-        return mWasInited;
+    public boolean isInited() {
+        return mInited;
     }
 
     @Override
@@ -408,11 +407,15 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         LayoutInflater.onDestroy(this);
     }
 
+    /**
+     * Do not override this method. Use {@link #onPreInit(Holo, Bundle)} and
+     * {@link #onPostInit(Holo, Bundle)}
+     */
     protected void onInit(Holo config, Bundle savedInstanceState) {
-        if (mWasInited) {
-            return;
+        if (mInited) {
+            throw new IllegalStateException("This instance was already inited");
         }
-        mWasInited = true;
+        mInited = true;
         if (config == null) {
             config = createConfig(savedInstanceState);
         }
@@ -520,12 +523,12 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         if (v instanceof ContextMenuDecorView) {
             return v;
         }
-        return ContextMenuDecorView.prepareDecorView(this, v, this, params, 0);
+        return new ContextMenuDecorView(this, v, params, this);
     }
 
     @Override
     public void requestWindowFeature(long featureId) {
-        if (!mWasInited) {
+        if (!mInited) {
             createConfig(null).requestWindowFeature((int) featureId);
         }
     }

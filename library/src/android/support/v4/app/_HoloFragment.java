@@ -33,13 +33,10 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
         IHoloFragment {
     private static final String CONFIG_KEY = "holo:config:fragment";
     private static final int INTERNAL_DECOR_VIEW_ID = 0x7f999999;
-    private Activity activity;
-
+    private Activity mActivity;
     private Holo mConfig;
-
+    private Bundle mSavedInstanceState;
     private boolean mWasInited;
-
-    private Bundle savedInstanceState;
 
     protected Holo createConfig(Bundle savedInstanceState) {
         if (mConfig == null) {
@@ -54,7 +51,7 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     @Override
     public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
             View view, ContextMenuInfo menuInfo, ContextMenuListener listener) {
-        activity.createContextMenu(contextMenuBuilder, view, menuInfo, listener);
+        mActivity.createContextMenu(contextMenuBuilder, view, menuInfo, listener);
     }
 
     protected void forceInit(Bundle savedInstanceState) {
@@ -78,17 +75,17 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
 
     @Override
     public SharedPreferences getDefaultSharedPreferences() {
-        return activity.getDefaultSharedPreferences();
+        return mActivity.getDefaultSharedPreferences();
     }
 
     @Override
     public SharedPreferences getDefaultSharedPreferences(PreferenceImpl impl) {
-        return activity.getDefaultSharedPreferences(impl);
+        return mActivity.getDefaultSharedPreferences(impl);
     }
 
     @Override
     public LayoutInflater getLayoutInflater() {
-        return activity.getLayoutInflater();
+        return mActivity.getLayoutInflater();
     }
 
     @Override
@@ -97,22 +94,22 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     }
 
     public MenuInflater getMenuInflater() {
-        return activity.getSupportMenuInflater();
+        return mActivity.getSupportMenuInflater();
     }
 
     protected Bundle getSavedInstanceState() {
-        return savedInstanceState;
+        return mSavedInstanceState;
     }
 
     @Override
     public SharedPreferences getSharedPreferences(PreferenceImpl impl,
             String name, int mode) {
-        return activity.getSharedPreferences(impl, name, mode);
+        return mActivity.getSharedPreferences(impl, name, mode);
     }
 
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode) {
-        return activity.getSharedPreferences(name, mode);
+        return mActivity.getSharedPreferences(name, mode);
     }
 
     @Override
@@ -122,25 +119,25 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
 
     @Override
     public Activity getSupportActivity() {
-        return activity;
+        return mActivity;
     }
 
     @Override
     public Application getSupportApplication() {
-        return activity.getSupportApplication();
+        return mActivity.getSupportApplication();
     }
 
     @Override
     public FragmentManager getSupportFragmentManager() {
-        if (activity != null) {
-            return activity.getSupportFragmentManager();
+        if (mActivity != null) {
+            return mActivity.getSupportFragmentManager();
         } else {
             return getFragmentManager();
         }
     }
 
     public Object getSystemService(String name) {
-        return activity.getSystemService(name);
+        return mActivity.getSystemService(name);
     }
 
     protected void init(Holo config) {
@@ -161,7 +158,7 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
             throw new RuntimeException(
                     "HoloEverywhere.Fragment must be attached to HoloEverywhere.Activity");
         }
-        this.activity = (Activity) activity;
+        mActivity = (Activity) activity;
         onAttach((Activity) activity);
     }
 
@@ -172,12 +169,12 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        return activity.onContextItemSelected(item);
+        return mActivity.onContextItemSelected(item);
     }
 
     @Override
     public void onContextMenuClosed(ContextMenu menu) {
-        activity.onContextMenuClosed(menu);
+        mActivity.onContextMenuClosed(menu);
     }
 
     protected Holo onCreateConfig(Bundle savedInstanceState) {
@@ -193,14 +190,14 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
-        activity.onCreateContextMenu(menu, v, menuInfo);
+        mActivity.onCreateContextMenu(menu, v, menuInfo);
     }
 
     @Override
     public final void onCreateOptionsMenu(android.view.Menu menu,
             android.view.MenuInflater inflater) {
         onCreateOptionsMenu(new MenuWrapper(menu),
-                activity.getSupportMenuInflater());
+                mActivity.getSupportMenuInflater());
     }
 
     @Override
@@ -291,7 +288,7 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     }
 
     public void onViewCreated(View view) {
-        super.onViewCreated(view, savedInstanceState);
+        super.onViewCreated(view, mSavedInstanceState);
     }
 
     @Override
@@ -300,7 +297,7 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
         if (v != null && v instanceof ContextMenuDecorView) {
             view = ((ContextMenuDecorView) v).unwrap();
         }
-        this.savedInstanceState = savedInstanceState;
+        mSavedInstanceState = savedInstanceState;
         onViewCreated(view);
     }
 
@@ -310,7 +307,8 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
 
     @Override
     public View prepareDecorView(View v) {
-        return ContextMenuDecorView.prepareDecorView(getSupportActivity(), v,
-                this, null, INTERNAL_DECOR_VIEW_ID);
+        ContextMenuDecorView view = new ContextMenuDecorView(mActivity, v, null, this);
+        view.setId(INTERNAL_DECOR_VIEW_ID);
+        return view;
     }
 }
