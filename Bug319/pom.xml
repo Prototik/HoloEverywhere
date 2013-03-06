@@ -8,25 +8,13 @@
 	<packaging>apk</packaging>
 
 	<parent>
-		<groupId>org.holoeverywhere</groupId>
+		<groupId>org.holoeverywhere.bug</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.4.3-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.holoeverywhere</groupId>
-			<artifactId>library</artifactId>
-			<version>${project.version}</version>
-			<type>apklib</type>
-		</dependency>
-
 		<dependency>
 			<groupId>org.holoeverywhere</groupId>
 			<artifactId>addon-preferences</artifactId>
@@ -36,24 +24,10 @@
 	</dependencies>
 
 	<build>
-		<sourceDirectory>src</sourceDirectory>
-
 		<plugins>
 			<plugin>
 				<groupId>org.holoeverywhere</groupId>
 				<artifactId>resbuilder</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-				<artifactId>android-maven-plugin</artifactId>
-				<extensions>true</extensions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jarsigner-plugin</artifactId>
-				<inherited>true</inherited>
 			</plugin>
 		</plugins>
 	</build>
