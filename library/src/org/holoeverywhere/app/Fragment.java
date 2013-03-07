@@ -62,6 +62,13 @@ public class Fragment extends _HoloFragment {
         return mAttacher.addon(clazz);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public void onDetach() {
+        ((IAddonBasicAttacher<IAddonFragment, Fragment>) mAttacher).reset();
+        super.onDetach();
+    }
+
     @Override
     public void addon(List<Class<? extends IAddon>> classes) {
         mAttacher.addon(classes);
@@ -88,8 +95,13 @@ public class Fragment extends _HoloFragment {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        addon(activity.obtainAddonsList());
+    }
+
+    @Override
     public void onCreate(final Bundle savedInstanceState) {
-        addon(getSupportActivity().obtainAddonsList());
         lockAttaching();
         performAddonAction(new AddonCallback<IAddonFragment>() {
             @Override
