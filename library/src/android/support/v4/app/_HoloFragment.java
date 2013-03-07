@@ -228,6 +228,9 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
 
     @Override
     public View prepareDecorView(View v) {
+        if (v == null) {
+            return v;
+        }
         ContextMenuDecorView view = new ContextMenuDecorView(mActivity, v, null, this);
         view.setId(INTERNAL_DECOR_VIEW_ID);
         return view;

@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.AddonSherlock;
 import org.holoeverywhere.addon.AddonSherlock.AddonSherlockA;
@@ -374,6 +375,7 @@ public abstract class Activity extends _HoloActivity {
             }
         });
         super.onPostCreate(savedInstanceState);
+        FontLoader.applyDefaultStyles(getWindow().getDecorView());
     }
 
     @Override

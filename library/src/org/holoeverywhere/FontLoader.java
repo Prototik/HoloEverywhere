@@ -160,8 +160,7 @@ public final class FontLoader {
                 font = HoloFont.ROBOTO_REGULAR;
             }
             if (!font.ignore) {
-                typeface = FontLoader
-                        .loadTypeface(view.getContext(), font.font);
+                typeface = FontLoader.loadTypeface(view.getContext(), font.font);
                 if (typeface != null) {
                     text.setTypeface(typeface);
                 }
@@ -180,14 +179,13 @@ public final class FontLoader {
         Typeface typeface = FontLoader.FONT_CACHE.get(font);
         if (typeface == null) {
             try {
-                File file = new File(context.getApplicationInfo().dataDir
-                        + "/fonts");
+                File file = new File(context.getApplicationInfo().dataDir + "/fonts");
                 if (!file.exists()) {
                     file.mkdirs();
                 }
-                file = new File(file, Integer.toHexString(font));
+                file = new File(file, "font_0x" + Integer.toHexString(font));
                 FontLoader.FONT_CACHE.put(font,
-                        typeface = readTypeface(file, context.getResources(), font, false));
+                        typeface = readTypeface(file, context.getResources(), font, true));
             } catch (Exception e) {
                 Log.e(FontLoader.TAG, "Error of loading font", e);
             }
