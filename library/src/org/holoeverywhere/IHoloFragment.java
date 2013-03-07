@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
+import com.actionbarsherlock.view.ActionMode;
 
 public interface IHoloFragment extends IHolo, OnPrepareOptionsMenuListener,
         OnCreateOptionsMenuListener, OnOptionsItemSelectedListener, ContextMenuListener,
@@ -42,4 +43,6 @@ public interface IHoloFragment extends IHolo, OnPrepareOptionsMenuListener,
             Bundle savedInstanceState);
 
     public View prepareDecorView(View view);
+
+    public ActionMode startActionMode(ActionMode.Callback callback);
 }

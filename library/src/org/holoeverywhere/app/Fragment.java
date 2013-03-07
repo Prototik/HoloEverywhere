@@ -13,6 +13,9 @@ import android.os.Bundle;
 import android.support.v4.app._HoloFragment;
 import android.view.View;
 
+import com.actionbarsherlock.view.ActionMode;
+import com.actionbarsherlock.view.ActionMode.Callback;
+
 public class Fragment extends _HoloFragment {
     public static <T extends Fragment> T instantiate(Class<T> clazz) {
         return instantiate(clazz, null);
@@ -117,5 +120,10 @@ public class Fragment extends _HoloFragment {
     @Override
     public boolean performAddonAction(AddonCallback<IAddonFragment> callback) {
         return mAttacher.performAddonAction(callback);
+    }
+
+    @Override
+    public ActionMode startActionMode(Callback callback) {
+        return getSupportActivity().startActionMode(callback);
     }
 }
