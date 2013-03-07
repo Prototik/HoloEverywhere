@@ -8,6 +8,7 @@ import org.holoeverywhere.addon.IAddonFragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app._HoloActivity.Holo;
 import android.support.v4.app._HoloFragment;
 import android.view.View;
 
@@ -68,6 +69,11 @@ public class Fragment extends _HoloFragment {
     }
 
     @Override
+    public void lockAttaching() {
+        mAttacher.lockAttaching();
+    }
+
+    @Override
     public void onCreate(final Bundle savedInstanceState) {
         forceInit(savedInstanceState);
         super.onCreate(savedInstanceState);
@@ -77,6 +83,11 @@ public class Fragment extends _HoloFragment {
                 addon.onCreate(savedInstanceState);
             }
         });
+    }
+
+    @Override
+    protected void onPostInit(Holo config, Bundle savedInstanceState) {
+        lockAttaching();
     }
 
     @Override

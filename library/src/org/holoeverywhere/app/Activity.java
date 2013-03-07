@@ -68,25 +68,16 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     public <T extends IAddonActivity> T addon(Class<? extends IAddon> clazz) {
-        checkAddonState();
         return mAttacher.addon(clazz);
     }
 
     @Override
     public <T extends IAddonActivity> T addon(String classname) {
-        checkAddonState();
         return mAttacher.addon(classname);
     }
 
     public AddonSherlockA addonSherlock() {
         return addon(AddonSherlock.class);
-    }
-
-    private void checkAddonState() {
-        if (super.isInited()) {
-            throw new IllegalStateException("Couldn't attach addon after init of activity\n" +
-                    "Call Activity.addon method before super.onCreate or use onCreateConfig");
-        }
     }
 
     @Override
@@ -169,6 +160,11 @@ public abstract class Activity extends _HoloActivity {
     @Override
     public boolean isAddonAttached(Class<? extends IAddon> clazz) {
         return mAttacher.isAddonAttached(clazz);
+    }
+
+    @Override
+    public void lockAttaching() {
+        mAttacher.lockAttaching();
     }
 
     @Override
@@ -370,6 +366,11 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
+    protected void onPostInit(Holo config, Bundle savedInstanceState) {
+        lockAttaching();
+    }
+
+    @Override
     protected void onPostResume() {
         super.onPostResume();
         performAddonAction(new AddonCallback<IAddonActivity>() {
@@ -382,7 +383,6 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     protected void onPreInit(Holo config, Bundle savedInstanceState) {
-        super.onPreInit(config, savedInstanceState);
         if (getClass().isAnnotationPresent(Addons.class)) {
             for (String addon : getClass().getAnnotation(Addons.class).value()) {
                 if (ADDON_SHERLOCK.equals(addon)) {

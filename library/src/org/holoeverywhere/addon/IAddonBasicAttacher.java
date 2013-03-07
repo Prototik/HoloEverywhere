@@ -9,6 +9,7 @@ import java.util.Map;
 public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IAddonAttacher<V> {
     private final Map<Class<? extends IAddon>, V> mAddons = new HashMap<Class<? extends IAddon>, V>();
     private final List<V> mAddonsList = new ArrayList<V>();
+    private boolean mLockAttaching = false;
 
     private Z mObject;
 
@@ -21,6 +22,9 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
     public <T extends V> T addon(Class<? extends IAddon> clazz) {
         T addon = (T) mAddons.get(clazz);
         if (addon == null) {
+            if (mLockAttaching) {
+                throw new AttachException(mObject, clazz);
+            }
             mAddons.put(clazz, addon = IAddon.obtain(clazz, mObject));
             mAddonsList.add(addon);
         }
@@ -35,6 +39,11 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
     @Override
     public boolean isAddonAttached(Class<? extends IAddon> clazz) {
         return mAddons.containsKey(clazz);
+    }
+
+    @Override
+    public void lockAttaching() {
+        mLockAttaching = true;
     }
 
     @Override

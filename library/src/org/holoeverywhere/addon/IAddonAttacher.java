@@ -40,11 +40,21 @@ public interface IAddonAttacher<V extends IAddonBase<?>> {
         }
     }
 
+    public static class AttachException extends RuntimeException {
+        private static final long serialVersionUID = 4007240742116340485L;
+
+        public AttachException(Object object, Class<? extends IAddon> clazz) {
+            super("Couldn't attach addon " + clazz.getName() + " after init of object " + object);
+        }
+    }
+
     public <T extends V> T addon(Class<? extends IAddon> clazz);
 
     public <T extends V> T addon(String classname);
 
     public boolean isAddonAttached(Class<? extends IAddon> clazz);
+
+    public void lockAttaching();
 
     public boolean performAddonAction(AddonCallback<V> callback);
 }
