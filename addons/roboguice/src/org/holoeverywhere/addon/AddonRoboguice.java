@@ -1,14 +1,17 @@
 
 package org.holoeverywhere.addon;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.Application;
 import org.holoeverywhere.app.Fragment;
 
 import roboguice.RoboGuice;
@@ -44,36 +47,27 @@ import com.google.inject.Key;
 import com.google.inject.Module;
 import com.google.inject.Provider;
 import com.google.inject.util.Modules;
+import com.google.inject.util.Modules.OverriddenModuleBuilder;
 
 public class AddonRoboguice extends IAddon {
-    public static class AddonRoboguiceA extends IAddonActivity implements Provider<Activity>,
-            Iterable<Module> {
-        private static List<Module> sUserModules;
-        private boolean mActivityPresentRobo;
+    public static class AddonRoboguiceA extends IAddonActivity implements Provider<Activity> {
         private EventManager mEventManager;
         private HoloInjector mInjector;
-        private Context mRoboguiceContext;
 
         public EventManager getEventManager() {
             return mEventManager;
-        }
-
-        @Override
-        public Iterator<Module> iterator() {
-            List<Module> allModules = new ArrayList<Module>(1 + sUserModules.size());
-            allModules.add(new HoloModule(get()));
-            allModules.addAll(sUserModules);
-            return allModules.iterator();
         }
 
         public HoloInjector obtainInjector() {
             if (mInjector != null) {
                 return mInjector;
             }
-            mActivityPresentRobo = get() instanceof RoboContext;
-            mRoboguiceContext = mActivityPresentRobo ? get() : new RoboguiceContextWrapper(get());
-            mInjector = new HoloInjector(mRoboguiceContext, Guice.createInjector(Modules.override(
-                    RoboGuice.newDefaultRoboModule(get().getApplication())).with(this)));
+            WeakReference<HoloInjector> reference = sInjectorsMap.get(get());
+            mInjector = reference == null ? null : reference.get();
+            if (mInjector == null) {
+                mInjector = createInjector(get());
+                sInjectorsMap.put(get(), reference);
+            }
             mEventManager = mInjector.getInstance(EventManager.class);
             return mInjector;
         }
@@ -127,15 +121,8 @@ public class AddonRoboguice extends IAddon {
             } catch (Exception e) {
                 Log.w(TAG, "OnDestroy error", e);
             } finally {
-                try {
-                    RoboGuice.destroyInjector(mRoboguiceContext);
-                } catch (Exception e) {
-                    Log.w(TAG, "OnDestroyInjector error", e);
-                } finally {
-                    mRoboguiceContext = null;
-                    mInjector = null;
-                    mEventManager = null;
-                }
+                mInjector = null;
+                mEventManager = null;
             }
         }
 
@@ -245,8 +232,19 @@ public class AddonRoboguice extends IAddon {
         }
     }
 
+    private static final WeakHashMap<Context, WeakReference<HoloInjector>> sInjectorsMap;
+
+    private static List<Module> sUserModules;
+
+    private static final WeakHashMap<Context, WeakReference<RoboguiceContextWrapper>> sWrappersMap;
     private static final String TAG = "Roboguice";
+
     private static final ViewListener VIEW_LISTENER = new ViewListener();
+
+    static {
+        sWrappersMap = new WeakHashMap<Context, WeakReference<RoboguiceContextWrapper>>();
+        sInjectorsMap = new WeakHashMap<Context, WeakReference<HoloInjector>>();
+    }
 
     public static void addModule(Class<? extends Module> clazz) {
         addModule(clazz, null);
@@ -275,10 +273,31 @@ public class AddonRoboguice extends IAddon {
         if (module == null) {
             return;
         }
-        if (AddonRoboguiceA.sUserModules == null) {
-            AddonRoboguiceA.sUserModules = new ArrayList<Module>();
+        if (sUserModules == null) {
+            sUserModules = new ArrayList<Module>();
         }
-        AddonRoboguiceA.sUserModules.add(module);
+        sUserModules.add(module);
+    }
+
+    private static HoloInjector createInjector(final Context context) {
+        OverriddenModuleBuilder builder = Modules.override(RoboGuice
+                .newDefaultRoboModule((Application) context.getApplicationContext()));
+        Module module;
+        if (context instanceof Activity) {
+            module = builder.with(new Iterable<Module>() {
+                @Override
+                public Iterator<Module> iterator() {
+                    List<Module> allModules = new ArrayList<Module>(1 + sUserModules
+                            .size());
+                    allModules.add(new HoloModule((Activity) context));
+                    allModules.addAll(sUserModules);
+                    return allModules.iterator();
+                }
+            });
+        } else {
+            module = builder.with(sUserModules);
+        }
+        return new HoloInjector(context, Guice.createInjector(module));
     }
 
     @SuppressWarnings("unchecked")
@@ -290,6 +309,23 @@ public class AddonRoboguice extends IAddon {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public static <T extends Context & RoboContext> T getContext(Context context) {
+        if (context instanceof Activity) {
+            return getContext((Activity) context);
+        }
+        if (context instanceof RoboContext) {
+            return (T) context;
+        }
+        WeakReference<RoboguiceContextWrapper> reference = sWrappersMap.get(context);
+        RoboguiceContextWrapper wrapper = reference == null ? null : reference.get();
+        if (wrapper == null) {
+            wrapper = new RoboguiceContextWrapper(context);
+            sWrappersMap.put(context, new WeakReference<RoboguiceContextWrapper>(wrapper));
+        }
+        return (T) wrapper;
+    }
+
     public static <T extends Context & RoboContext> T getContext(Fragment fragment) {
         return getContext(fragment.getSupportActivity());
     }
@@ -297,6 +333,19 @@ public class AddonRoboguice extends IAddon {
     public static HoloInjector getInjector(Activity activity) {
         AddonRoboguiceA addon = activity.addon(AddonRoboguice.class);
         return addon.obtainInjector();
+    }
+
+    public static HoloInjector getInjector(Context context) {
+        if (context instanceof Activity) {
+            return getInjector((Activity) context);
+        }
+        WeakReference<HoloInjector> reference = sInjectorsMap.get(context);
+        HoloInjector injector = reference == null ? null : reference.get();
+        if (injector == null) {
+            injector = createInjector(context);
+            sInjectorsMap.put(context, new WeakReference<HoloInjector>(injector));
+        }
+        return injector;
     }
 
     public static HoloInjector getInjector(Fragment fragment) {
