@@ -1,6 +1,8 @@
 
 package org.holoeverywhere.app;
 
+import java.util.List;
+
 import org.holoeverywhere.addon.IAddon;
 import org.holoeverywhere.addon.IAddonAttacher;
 import org.holoeverywhere.addon.IAddonBasicAttacher;
@@ -8,7 +10,6 @@ import org.holoeverywhere.addon.IAddonFragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app._HoloActivity.Holo;
 import android.support.v4.app._HoloFragment;
 import android.view.View;
 
@@ -59,6 +60,11 @@ public class Fragment extends _HoloFragment {
     }
 
     @Override
+    public void addon(List<Class<? extends IAddon>> classes) {
+        mAttacher.addon(classes);
+    }
+
+    @Override
     public <T extends IAddonFragment> T addon(String classname) {
         return mAttacher.addon(classname);
     }
@@ -74,8 +80,20 @@ public class Fragment extends _HoloFragment {
     }
 
     @Override
+    public List<Class<? extends IAddon>> obtainAddonsList() {
+        return mAttacher.obtainAddonsList();
+    }
+
+    @Override
     public void onCreate(final Bundle savedInstanceState) {
-        forceInit(savedInstanceState);
+        addon(getSupportActivity().obtainAddonsList());
+        lockAttaching();
+        performAddonAction(new AddonCallback<IAddonFragment>() {
+            @Override
+            public void justAction(IAddonFragment addon) {
+                addon.onPreCreate(savedInstanceState);
+            }
+        });
         super.onCreate(savedInstanceState);
         performAddonAction(new AddonCallback<IAddonFragment>() {
             @Override
@@ -83,11 +101,6 @@ public class Fragment extends _HoloFragment {
                 addon.onCreate(savedInstanceState);
             }
         });
-    }
-
-    @Override
-    protected void onPostInit(Holo config, Bundle savedInstanceState) {
-        lockAttaching();
     }
 
     @Override

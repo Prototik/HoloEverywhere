@@ -1,6 +1,8 @@
 
 package org.holoeverywhere.addon;
 
+import java.util.List;
+
 public interface IAddonAttacher<V extends IAddonBase<?>> {
     public abstract static class AddonCallback<V> {
         public boolean mStopped = false;
@@ -50,11 +52,15 @@ public interface IAddonAttacher<V extends IAddonBase<?>> {
 
     public <T extends V> T addon(Class<? extends IAddon> clazz);
 
+    public void addon(List<Class<? extends IAddon>> classes);
+
     public <T extends V> T addon(String classname);
 
     public boolean isAddonAttached(Class<? extends IAddon> clazz);
 
     public void lockAttaching();
+
+    public List<Class<? extends IAddon>> obtainAddonsList();
 
     public boolean performAddonAction(AddonCallback<V> callback);
 }

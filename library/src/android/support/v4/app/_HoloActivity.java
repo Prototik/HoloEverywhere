@@ -464,6 +464,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
             }
         }
         onPostInit(config, savedInstanceState);
+        lockAttaching();
     }
 
     @Override

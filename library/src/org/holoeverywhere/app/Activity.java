@@ -6,6 +6,7 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.holoeverywhere.ThemeManager;
@@ -69,6 +70,11 @@ public abstract class Activity extends _HoloActivity {
     @Override
     public <T extends IAddonActivity> T addon(Class<? extends IAddon> clazz) {
         return mAttacher.addon(clazz);
+    }
+
+    @Override
+    public void addon(List<Class<? extends IAddon>> classes) {
+        mAttacher.addon(classes);
     }
 
     @Override
@@ -165,6 +171,11 @@ public abstract class Activity extends _HoloActivity {
     @Override
     public void lockAttaching() {
         mAttacher.lockAttaching();
+    }
+
+    @Override
+    public List<Class<? extends IAddon>> obtainAddonsList() {
+        return mAttacher.obtainAddonsList();
     }
 
     @Override

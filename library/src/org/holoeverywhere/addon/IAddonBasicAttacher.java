@@ -10,7 +10,6 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
     private final Map<Class<? extends IAddon>, V> mAddons = new HashMap<Class<? extends IAddon>, V>();
     private final List<V> mAddonsList = new ArrayList<V>();
     private boolean mLockAttaching = false;
-
     private Z mObject;
 
     public IAddonBasicAttacher(Z object) {
@@ -25,10 +24,24 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
             if (mLockAttaching) {
                 throw new AttachException(mObject, clazz);
             }
-            mAddons.put(clazz, addon = IAddon.obtain(clazz, mObject));
+            addon = IAddon.obtain(clazz, mObject);
+            if (addon == null) {
+                return null;
+            }
+            mAddons.put(clazz, addon);
             mAddonsList.add(addon);
         }
         return addon;
+    }
+
+    @Override
+    public void addon(List<Class<? extends IAddon>> classes) {
+        if (classes == null) {
+            return;
+        }
+        for (int i = 0; i < classes.size(); i++) {
+            addon(classes.get(i));
+        }
     }
 
     @Override
@@ -44,6 +57,11 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
     @Override
     public void lockAttaching() {
         mLockAttaching = true;
+    }
+
+    @Override
+    public List<Class<? extends IAddon>> obtainAddonsList() {
+        return new ArrayList<Class<? extends IAddon>>(mAddons.keySet());
     }
 
     @Override

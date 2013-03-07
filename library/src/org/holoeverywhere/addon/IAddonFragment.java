@@ -11,6 +11,10 @@ public abstract class IAddonFragment extends IAddonBase<Fragment> {
 
     }
 
+    public void onPreCreate(Bundle savedInstanceState) {
+
+    }
+
     public void onViewCreated(View view) {
 
     }
