@@ -62,13 +62,6 @@ public class Fragment extends _HoloFragment {
         return mAttacher.addon(clazz);
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public void onDetach() {
-        ((IAddonBasicAttacher<IAddonFragment, Fragment>) mAttacher).reset();
-        super.onDetach();
-    }
-
     @Override
     public void addon(List<Class<? extends IAddon>> classes) {
         mAttacher.addon(classes);
@@ -116,6 +109,13 @@ public class Fragment extends _HoloFragment {
                 addon.onCreate(savedInstanceState);
             }
         });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void onDetach() {
+        ((IAddonBasicAttacher<IAddonFragment, Fragment>) mAttacher).reset();
+        super.onDetach();
     }
 
     @Override

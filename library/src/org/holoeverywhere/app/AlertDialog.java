@@ -96,13 +96,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
 
         public Builder setBlockDismiss(boolean blockDismiss) {
-            int buttonBehavior = 0;
-            if (!blockDismiss) {
-                buttonBehavior |= AlertDialog.DISMISS_ON_POSITIVE;
-                buttonBehavior |= AlertDialog.DISMISS_ON_NEGATIVE;
-                buttonBehavior |= AlertDialog.DISMISS_ON_NEUTRAL;
-            }
-            return setButtonBehavior(buttonBehavior);
+            return setButtonBehavior(blockDismiss ? 0 : DISMISS_ON_ALL);
         }
 
         public Builder setButtonBehavior(int buttonBehavior) {
@@ -353,10 +347,10 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
     }
 
-    public static final int DISMISS_ON_NEGATIVE = 1 << -BUTTON_NEGATIVE;
-    public static final int DISMISS_ON_NEUTRAL = 1 << -BUTTON_NEUTRAL;
-
-    public static final int DISMISS_ON_POSITIVE = 1 << -BUTTON_POSITIVE;
+    public static final int DISMISS_ON_ALL = 7; // DO_NEG | DO_NEU | DO_POS
+    public static final int DISMISS_ON_NEGATIVE = 1 << 0; // -BUTTON_NEGATIVE;
+    public static final int DISMISS_ON_NEUTRAL = 1 << 1; // -BUTTON_NEUTRAL;
+    public static final int DISMISS_ON_POSITIVE = 1 << 2; // -BUTTON_POSITIVE;
 
     public static final int THEME_HOLO_DARK = 1;
     public static final int THEME_HOLO_LIGHT = 2;
@@ -370,8 +364,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
             return resid;
         } else {
             TypedValue outValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.alertDialogTheme,
-                    outValue, true);
+            context.getTheme().resolveAttribute(R.attr.alertDialogTheme, outValue, true);
             return outValue.resourceId;
         }
     }
@@ -379,13 +372,12 @@ public class AlertDialog extends Dialog implements DialogInterface,
     private final AlertController mAlert;
 
     protected AlertDialog(Context context) {
-        this(context, false, null, AlertDialog.resolveDialogTheme(context, 0));
+        this(context, false, null, 0);
     }
 
     protected AlertDialog(Context context, boolean cancelable,
             OnCancelListener cancelListener) {
-        this(context, cancelable, cancelListener, AlertDialog
-                .resolveDialogTheme(context, 0));
+        this(context, cancelable, cancelListener, 0);
     }
 
     protected AlertDialog(Context context, boolean cancelable,
@@ -393,7 +385,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
         super(context, AlertDialog.resolveDialogTheme(context, theme));
         setCancelable(cancelable);
         setOnCancelListener(cancelListener);
-        mAlert = new AlertController(context, this, getWindow(), this);
+        mAlert = new AlertController(getContext(), this, getWindow(), this);
     }
 
     protected AlertDialog(Context context, int theme) {

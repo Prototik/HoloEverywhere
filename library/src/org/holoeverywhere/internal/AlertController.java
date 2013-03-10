@@ -50,7 +50,7 @@ public class AlertController {
         }
 
         public ListAdapter mAdapter;
-        public int mButtonBehavior;
+        public int mButtonBehavior = AlertDialog.DISMISS_ON_ALL;
         public boolean mCancelable;
         public int mCheckedItem = -1;
         public boolean[] mCheckedItems;
@@ -98,10 +98,6 @@ public class AlertController {
             mTheme = theme;
             mCancelable = true;
             mInflater = LayoutInflater.from(context);
-
-            mButtonBehavior |= AlertDialog.DISMISS_ON_NEGATIVE;
-            mButtonBehavior |= AlertDialog.DISMISS_ON_NEUTRAL;
-            mButtonBehavior |= AlertDialog.DISMISS_ON_POSITIVE;
         }
 
         public void apply(AlertController dialog) {
@@ -318,9 +314,8 @@ public class AlertController {
     }
 
     private ListAdapter mAdapter;
-
     private int mAlertDialogLayout;
-    private int mButtonBehavior;
+    private int mButtonBehavior = AlertDialog.DISMISS_ON_ALL;
     private View.OnClickListener mButtonHandler = new View.OnClickListener() {
         private boolean needToDismiss(int flag) {
             return (mButtonBehavior & flag) == flag;
@@ -753,15 +748,12 @@ public class AlertController {
     }
 
     private void setupView() {
-        LinearLayout contentPanel = (LinearLayout) mWindow
-                .findViewById(R.id.contentPanel);
+        LinearLayout contentPanel = (LinearLayout) mWindow.findViewById(R.id.contentPanel);
         setupContent(contentPanel);
         boolean hasButtons = setupButtons();
-        LinearLayout topPanel = (LinearLayout) mWindow
-                .findViewById(R.id.topPanel);
+        LinearLayout topPanel = (LinearLayout) mWindow.findViewById(R.id.topPanel);
         TypedArray a = mContext.obtainStyledAttributes(null,
-                R.styleable.AlertDialog, R.attr.alertDialogStyle,
-                R.style.Holo_AlertDialog);
+                R.styleable.AlertDialog, R.attr.alertDialogStyle, R.style.Holo_AlertDialog);
         boolean hasTitle = setupTitle(topPanel);
         View buttonPanel = mWindow.findViewById(R.id.buttonPanel);
         if (!hasButtons) {
@@ -771,11 +763,9 @@ public class AlertController {
         FrameLayout customPanel = null;
         if (mView != null) {
             customPanel = (FrameLayout) mWindow.findViewById(R.id.customPanel);
-            FrameLayout custom = (FrameLayout) mWindow
-                    .findViewById(R.id.custom);
-            custom.addView(mView, new LayoutParams(
-                    android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                    android.view.ViewGroup.LayoutParams.MATCH_PARENT));
+            FrameLayout custom = (FrameLayout) mWindow.findViewById(R.id.custom);
+            custom.addView(mView, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
             if (mViewSpacingSpecified) {
                 custom.setPadding(mViewSpacingLeft, mViewSpacingTop,
                         mViewSpacingRight, mViewSpacingBottom);
@@ -818,5 +808,4 @@ public class AlertController {
         mViewSpacingRight = viewSpacingRight;
         mViewSpacingBottom = viewSpacingBottom;
     }
-
 }

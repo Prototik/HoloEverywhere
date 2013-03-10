@@ -28,13 +28,13 @@ public class BuildMojo extends AbstractMojo {
     /**
      * Path to android sdk
      * 
-     * @parameter expression="${android.sdk.path}"
+     * @parameter property="android.sdk.path"
      * @required
      */
     public File androidSdkPath;
 
     /**
-     * @parameter expression="${android.sdk.platform}" default-value="16"
+     * @parameter property="android.sdk.platform" default-value="16"
      * @required
      */
     public int androidSdkVersion;
@@ -42,28 +42,28 @@ public class BuildMojo extends AbstractMojo {
     /**
      * Build all files from all include dirs
      * 
-     * @parameter expression="${holo.resbuilder.buildAll}" default-value="false"
+     * @parameter property="holo.resbuilder.buildAll" default-value="false"
      */
     public boolean buildAll;
 
     /**
      * Dirs for search of input files
      * 
-     * @parameter expression="${holo.resbuilder.includeDirs}"
+     * @parameter property="holo.resbuilder.includeDirs"
      */
     public File[] includeDirs;
 
     /**
      * Files for processing
      * 
-     * @parameter expression="${holo.resbuilder.input}" alias="input"
+     * @parameter property="holo.resbuilder.input" alias="input"
      */
     public String[] inputFiles;
 
     /**
      * Default output dir, if input file don't specify it
      * 
-     * @parameter expression="${holo.resbuilder.outputDir}"
+     * @parameter property="holo.resbuilder.outputDir"
      *            default-value="${basedir}/res"
      */
     public File outputDir;
@@ -72,14 +72,14 @@ public class BuildMojo extends AbstractMojo {
     /**
      * If true - skip resource build
      * 
-     * @parameter expression="${holo.resbuilder.skip}" default-value="false"
+     * @parameter property="holo.resbuilder.skip" default-value="false"
      */
     public boolean skip;
 
     /**
      * Be verbose
      * 
-     * @parameter expression="${holo.resbuilder.verbose}" default-value="true"
+     * @parameter property="holo.resbuilder.verbose" default-value="true"
      */
     public boolean verbose;
 
