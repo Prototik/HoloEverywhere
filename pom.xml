@@ -46,6 +46,7 @@
 				<role>developer</role>
 			</roles>
 		</developer>
+
 		<developer>
 			<name>Sergey Shatunov</name>
 			<id>Prototik</id>
@@ -69,12 +70,14 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 			<uniqueVersion>true</uniqueVersion>
 		</repository>
+
 		<snapshotRepository>
 			<id>holoeverywhere-repo-snapshots</id>
 			<name>HoloEverywhere Repo Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 			<uniqueVersion>false</uniqueVersion>
 		</snapshotRepository>
+
 		<site>
 			<id>holoeverywhere-website</id>
 			<name>HoloEverywhere Website</name>
@@ -84,8 +87,8 @@
 
 	<licenses>
 		<license>
-			<name>MIT License</name>
-			<url>https://raw.github.com/ChristopheVersieux/HoloEverywhere/stable/LICENSE</url>
+			<name>LGPLv3</name>
+			<url>https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/LICENSE</url>
 			<distribution>repo</distribution>
 			<comments>Copyright (c) 2012 Christophe Versieux, Sergey Shatunov</comments>
 		</license>
