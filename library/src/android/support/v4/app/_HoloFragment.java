@@ -55,7 +55,7 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
 
     @Override
     public LayoutInflater getLayoutInflater() {
-        return getLayoutInflater(null);
+        return mActivity.getLayoutInflater();
     }
 
     @Override
