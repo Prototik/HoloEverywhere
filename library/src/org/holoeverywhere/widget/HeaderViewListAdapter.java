@@ -24,8 +24,7 @@ public class HeaderViewListAdapter extends ListAdapterWrapper implements Filtera
     private final boolean mIsFilterable;
 
     public HeaderViewListAdapter(List<ViewInfo> headerViewInfos,
-            List<ViewInfo> footerViewInfos,
-            ListAdapter adapter, ListAdapterCallback listener) {
+            List<ViewInfo> footerViewInfos, ListAdapter adapter, ListAdapterCallback listener) {
         super(adapter, listener);
         mIsFilterable = adapter instanceof Filterable;
         if (headerViewInfos == null) {
@@ -104,7 +103,7 @@ public class HeaderViewListAdapter extends ListAdapterWrapper implements Filtera
                 return super.getItemId(adjPosition);
             }
         }
-        return android.widget.AdapterView.INVALID_ROW_ID;
+        return AdapterView.INVALID_ROW_ID;
     }
 
     @Override
@@ -176,8 +175,6 @@ public class HeaderViewListAdapter extends ListAdapterWrapper implements Filtera
                 return true;
             }
         }
-
         return false;
     }
-
 }
