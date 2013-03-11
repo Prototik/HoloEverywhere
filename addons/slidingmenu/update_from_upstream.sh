@@ -30,3 +30,4 @@ perform "Copy new resources..." "cp -r upstream/library/res ."
 
 echo "Check on the correct build..."
 mvn clean package || die "SlidingMenu build failed!"
+rm -rf upstream
