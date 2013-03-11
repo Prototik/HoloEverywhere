@@ -79,7 +79,7 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
             }
         }
         callback.post();
-        return true;
+        return false;
     }
 
     public void reset() {

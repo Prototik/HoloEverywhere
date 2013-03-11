@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 import com.slidingmenu.lib.app.SlidingActivityHelper;
+import com.slidingmenu.lib.SlidingMenu;
 
 public class AddonSlidingMenu extends IAddon {
     public static class AddonSlidingMenuA extends IAddonActivity {
@@ -19,7 +20,7 @@ public class AddonSlidingMenu extends IAddon {
             return mHelper != null ? mHelper.findViewById(id) : null;
         }
 
-        public com.slidingmenu.lib.SlidingMenu getSlidingMenu() {
+        public SlidingMenu getSlidingMenu() {
             return mHelper.getSlidingMenu();
         }
 
