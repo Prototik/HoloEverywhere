@@ -211,10 +211,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
         return from(context).inflate(resource, root, attachToRoot);
     }
 
-    public static void removeInstance(Context context) {
-        sInstances.remove(context);
-    }
-
     /**
      * Iterate over classes and call {@link #register(Class)} for each
      */
@@ -281,6 +277,10 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
     @Deprecated
     public static void remapHard(String from, String to) {
         register(from, to);
+    }
+
+    public static void removeInstance(Context context) {
+        sInstances.remove(context);
     }
 
     public static void setOnInitInflaterListener(OnInitInflaterListener listener) {

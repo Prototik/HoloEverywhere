@@ -1,10 +1,12 @@
 
 package org.holoeverywhere.demo.fragments;
 
+import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.DialogFragment;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.app.ListFragment;
 import org.holoeverywhere.demo.DemoActivity;
+import org.holoeverywhere.demo.DemoTabsActivity;
 import org.holoeverywhere.demo.fragments.dialogs.DialogsFragment;
 import org.holoeverywhere.demo.fragments.lists.ListsFragment;
 import org.holoeverywhere.demo.fragments.menus.MenusFragments;
@@ -14,9 +16,23 @@ import org.holoeverywhere.demo.widget.DemoItem;
 import org.holoeverywhere.widget.ListView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 public class OtherFragment extends ListFragment {
+    private final class ActivityListener implements OnOtherItemClickListener {
+        private Class<? extends Activity> mClass;
+
+        public ActivityListener(Class<? extends Activity> clazz) {
+            mClass = clazz;
+        }
+
+        @Override
+        public void onClick(OtherItem otherItem) {
+            startActivity(new Intent(getSupportActivity(), mClass));
+        }
+    }
+
     private final class FragmentListener implements OnOtherItemClickListener {
         private Class<? extends Fragment> mClass;
 
@@ -92,6 +108,10 @@ public class OtherFragment extends ListFragment {
         mAdapter.add(item);
     }
 
+    public void addItemActivity(CharSequence label, Class<? extends Activity> clazz) {
+        addItem(label, new ActivityListener(clazz));
+    }
+
     public void addItemWithLongClick(CharSequence label, OnOtherItemClickListener listener) {
         addItem(label, listener, true);
     }
@@ -106,6 +126,15 @@ public class OtherFragment extends ListFragment {
         addItem("Pickers", PickersFragment.class);
         addItem("Menus", MenusFragments.class);
         addItem("Calendar", CalendarFragment.class);
+        addItem("Tabs + Swipe", new OnOtherItemClickListener() {
+            @Override
+            public void onClick(OtherItem otherItem) {
+                DemoActivity activity = (DemoActivity) getSupportActivity();
+                Intent intent = new Intent(activity, DemoTabsActivity.class);
+                intent.putExtra(DemoActivity.KEY_DISABLE_MUSIC, activity.isDisableMusic());
+                startActivity(intent);
+            }
+        });
     }
 
     protected void onPrepareListView(ListView list) {

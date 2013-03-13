@@ -23,7 +23,8 @@ public class DemoThemePicker extends FrameLayout {
 
         @Override
         public void onClick(View view) {
-            ThemeManager.restartWithTheme(activity, theme);
+            ThemeManager.setDefaultTheme(theme);
+            ThemeManager.restart(activity);
         }
     }
 

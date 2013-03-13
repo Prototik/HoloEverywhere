@@ -634,6 +634,15 @@ public final class ThemeManager {
     }
 
     /**
+     * Simply restart activity
+     * 
+     * @param activity Activity
+     */
+    public static void restart(Activity activity) {
+        restartWithTheme(activity, -1, true);
+    }
+
+    /**
      * Check activity on dark theme and restart it if theme incorrect.
      * 
      * @see #restartWithTheme(Activity, int)
@@ -679,9 +688,8 @@ public final class ThemeManager {
      * @param theme Theme flags for check
      * @param force Force restart activity
      */
-    public static void restartWithTheme(Activity activity, int theme,
-            boolean force) {
-        if (theme < _START_RESOURCES_ID) {
+    public static void restartWithTheme(Activity activity, int theme, boolean force) {
+        if (theme < _START_RESOURCES_ID && theme > 0) {
             if (ThemeManager._THEME_MODIFIER > 0) {
                 theme |= ThemeManager._THEME_MODIFIER;
             }
@@ -692,7 +700,9 @@ public final class ThemeManager {
             intent.setClass(activity, activity.getClass());
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra(ThemeManager._THEME_TAG, theme);
+            if (theme > 0) {
+                intent.putExtra(ThemeManager._THEME_TAG, theme);
+            }
             intent.putExtra(KEY_INSTANCE_STATE, activity.saveInstanceState());
             intent.putExtra(KEY_CREATED_BY_THEME_MANAGER, true);
             if (activity.isRestricted()) {

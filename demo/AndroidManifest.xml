@@ -25,6 +25,7 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+		<activity android:name=".DemoTabsActivity" />
 		<uses-library
 			android:name="android.test.runner"
 			android:required="false" />

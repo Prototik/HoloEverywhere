@@ -105,7 +105,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         public void onMenuClick(int position);
     }
 
-    private static final String KEY_DISABLE_MUSIC = "disableMusic";
+    public static final String KEY_DISABLE_MUSIC = "disableMusic";
     private static final String KEY_PAGE = "page";
     private boolean mCreatedByThemeManager = false;
     private int mCurrentPage = -1;
@@ -123,6 +123,10 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     private int computeMenuWidth() {
         return (int) getResources().getFraction(R.dimen.demo_menu_width,
                 getResources().getDisplayMetrics().widthPixels, 1);
+    }
+
+    public boolean isDisableMusic() {
+        return mDisableMusic;
     }
 
     private View makeMenuView(Bundle savedInstanceState) {
