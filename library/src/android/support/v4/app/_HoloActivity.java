@@ -74,7 +74,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
             return new Holo();
         }
 
-        public boolean addFactoryToInflater = true;
         public boolean applyImmediately = false;
         public boolean forceThemeApply = false;
         public boolean ignoreApplicationInstanceCheck = false;
@@ -85,7 +84,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         private SparseIntArray windowFeatures;
 
         protected Holo copy(Holo holo) {
-            addFactoryToInflater = holo.addFactoryToInflater;
             forceThemeApply = holo.forceThemeApply;
             ignoreThemeCheck = holo.ignoreThemeCheck;
             ignoreApplicationInstanceCheck = holo.ignoreApplicationInstanceCheck;
@@ -98,7 +96,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         }
 
         protected void createFromParcel(Parcel source) {
-            addFactoryToInflater = source.readInt() == 1;
             forceThemeApply = source.readInt() == 1;
             ignoreThemeCheck = source.readInt() == 1;
             ignoreApplicationInstanceCheck = source.readInt() == 1;
@@ -124,7 +121,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(getClass().getName());
-            dest.writeInt(addFactoryToInflater ? 1 : 0);
             dest.writeInt(forceThemeApply ? 1 : 0);
             dest.writeInt(ignoreThemeCheck ? 1 : 0);
             dest.writeInt(ignoreApplicationInstanceCheck ? 1 : 0);
@@ -404,7 +400,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LayoutInflater.onDestroy(this);
+        LayoutInflater.removeInstance(this);
     }
 
     /**
@@ -429,9 +425,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
                             "Put attr 'android:name=\"org.holoeverywhere.app.Application\"'" +
                             " in <application> tag of AndroidManifest.xml");
         }
-        if (config.addFactoryToInflater) {
-            getLayoutInflater().setFactory(this);
-        }
+        getLayoutInflater().setFragmentActivity(this);
         if (this instanceof Activity) {
             Activity activity = (Activity) this;
             if (config.requireRoboguice) {

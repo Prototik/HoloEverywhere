@@ -139,12 +139,6 @@ public class Application extends android.app.Application implements
     }
 
     @Override
-    public void onTerminate() {
-        LayoutInflater.clearInstances();
-        super.onTerminate();
-    }
-
-    @Override
     public boolean performAddonAction(AddonCallback<IAddonApplication> callback) {
         return mAttacher.performAddonAction(callback);
     }

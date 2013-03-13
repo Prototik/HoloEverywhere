@@ -598,17 +598,8 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     public Parcelable onSaveInstanceState() {
         SavedState ss = new SavedState(super.onSaveInstanceState());
         ss.inActionMode = mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL && mChoiceActionMode != null;
-        if (mCheckStates != null) {
-            ss.checkState = mCheckStates.clone();
-        }
-        if (mCheckedIdStates != null) {
-            final LongSparseArray<Integer> idState = new LongSparseArray<Integer>();
-            final int count = mCheckedIdStates.size();
-            for (int i = 0; i < count; i++) {
-                idState.put(mCheckedIdStates.keyAt(i), mCheckedIdStates.valueAt(i));
-            }
-            ss.checkIdState = idState;
-        }
+        ss.checkState = mCheckStates;
+        ss.checkIdState = mCheckedIdStates;
         ss.checkedItemCount = mCheckedItemCount;
         return ss;
     }

@@ -1,7 +1,10 @@
 
 package org.holoeverywhere;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,14 +15,27 @@ import org.holoeverywhere.SystemServiceManager.SystemServiceCreator;
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
 import org.holoeverywhere.internal.DialogTitle;
 import org.holoeverywhere.internal.NumberPickerEditText;
+import org.holoeverywhere.widget.FrameLayout;
 import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.content.res.XmlResourceParser;
+import android.graphics.Canvas;
 import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app._HoloFragmentInflater;
 import android.util.AttributeSet;
+import android.util.Xml;
+import android.view.InflateException;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 
 import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
@@ -28,25 +44,89 @@ import com.actionbarsherlock.internal.view.menu.HoloListMenuItemView;
 import com.actionbarsherlock.internal.widget.ActionBarContainer;
 import com.actionbarsherlock.internal.widget.ActionBarView;
 
-public class LayoutInflater extends android.view.LayoutInflater implements
-        Cloneable, android.view.LayoutInflater.Factory {
-    private final class HoloFactoryMerger extends ArrayList<Factory> implements
-            Factory {
-        private static final long serialVersionUID = -851134244408815411L;
+public class LayoutInflater extends android.view.LayoutInflater implements Cloneable {
+    private static class BlinkLayout extends FrameLayout {
+        private static final int BLINK_DELAY = 500;
+        private static final int MESSAGE_BLINK = 0x42;
+
+        private boolean mBlink;
+        private boolean mBlinkState;
+        private final Handler mHandler;
+
+        public BlinkLayout(Context context, AttributeSet attrs) {
+            super(context, attrs);
+            mHandler = new Handler(new Handler.Callback() {
+                @Override
+                public boolean handleMessage(Message msg) {
+                    if (msg.what == MESSAGE_BLINK) {
+                        if (mBlink) {
+                            mBlinkState = !mBlinkState;
+                            makeBlink();
+                        }
+                        invalidate();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
 
         @Override
-        public View onCreateView(String name, Context context,
-                AttributeSet attrs) {
-            for (Factory factory : this) {
-                try {
-                    View view = factory.onCreateView(name, context, attrs);
-                    if (view != null) {
-                        return view;
-                    }
-                } catch (Exception e) {
-                }
+        protected void dispatchDraw(Canvas canvas) {
+            if (mBlinkState) {
+                super.dispatchDraw(canvas);
             }
-            return null;
+        }
+
+        private void makeBlink() {
+            Message message = mHandler.obtainMessage(MESSAGE_BLINK);
+            mHandler.sendMessageDelayed(message, BLINK_DELAY);
+        }
+
+        @Override
+        protected void onAttachedToWindow() {
+            super.onAttachedToWindow();
+            mBlink = true;
+            mBlinkState = true;
+            makeBlink();
+        }
+
+        @Override
+        protected void onDetachedFromWindow() {
+            super.onDetachedFromWindow();
+            mBlink = false;
+            mBlinkState = true;
+            mHandler.removeMessages(MESSAGE_BLINK);
+        }
+    }
+
+    public interface Factory {
+        public View onCreateView(View parent, String name, Context context, AttributeSet attrs);
+    }
+
+    private static final class Factory2Wrapper implements Factory {
+        private Factory2 mFactory;
+
+        public Factory2Wrapper(Factory2 factory) {
+            mFactory = factory;
+        }
+
+        @Override
+        public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+            return mFactory.onCreateView(parent, name, context, attrs);
+        }
+    }
+
+    private static final class FactoryWrapper implements Factory {
+        private android.view.LayoutInflater.Factory mFactory;
+
+        public FactoryWrapper(android.view.LayoutInflater.Factory factory) {
+            mFactory = factory;
+        }
+
+        @Override
+        public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+            return mFactory.onCreateView(name, context, attrs);
         }
     }
 
@@ -63,143 +143,251 @@ public class LayoutInflater extends android.view.LayoutInflater implements
         public void onInitInflater(LayoutInflater inflater);
     }
 
-    private static final Map<Context, WeakReference<LayoutInflater>> INSTANCES_MAP = new WeakHashMap<Context, WeakReference<LayoutInflater>>();
-    private static OnInitInflaterListener listener;
-    private static final List<String> PACKAGES_LIST = new ArrayList<String>();
-    private static final Map<String, String> VIEWS_MAP = new HashMap<String, String>();
+    private static final HashMap<String, Constructor<? extends View>> sConstructorMap =
+            new HashMap<String, Constructor<? extends View>>();
+    private static final Class<?>[] sConstructorSignature = {
+            Context.class, AttributeSet.class
+    };
+    private static final Map<Class<?>, Method> sFinishInflateMethods =
+            new HashMap<Class<?>, Method>(100);
+    private static final Map<Context, WeakReference<LayoutInflater>> sInstances = new WeakHashMap<Context, WeakReference<LayoutInflater>>();
+    private static OnInitInflaterListener sListener;
+    private static final List<String> sPackages = new ArrayList<String>();
+    private static final Map<String, String> sRemaps = new HashMap<String, String>();
+    private static final String TAG_1995 = "blink";
+    private static final String TAG_INCLUDE = "include";
+    private static final String TAG_MERGE = "merge";
+    private static final String TAG_REQUEST_FOCUS = "requestFocus";
 
     static {
-        registerPackage(HoloEverywhere.PACKAGE + ".widget");
-        registerPackage("android.support.v4.view");
-        registerPackage("android.widget");
-        registerPackage("android.view");
         registerPackage("android.webkit");
-        remapInternal(ActionBarView.class, HoloListMenuItemView.class,
-                ExpandedMenuView.class, ActionBarContainer.class, DialogTitle.class,
-                NumberPickerEditText.class);
+        registerPackage("android.view");
+        registerPackage("android.widget");
+        registerPackage("android.support.v4.view");
+        registerPackage(HoloEverywhere.PACKAGE + ".widget");
+
+        asInternal(ActionBarView.class);
+        asInternal(HoloListMenuItemView.class);
+        asInternal(ExpandedMenuView.class);
+        asInternal(ActionBarContainer.class);
+        asInternal(DialogTitle.class);
+        asInternal(NumberPickerEditText.class);
     }
 
-    public static void clearInstances() {
-        LayoutInflater.INSTANCES_MAP.clear();
+    private static void asInternal(Class<?> clazz) {
+        register("Internal." + clazz.getSimpleName(), clazz.getName());
     }
 
     public static LayoutInflater from(android.view.LayoutInflater inflater) {
         if (inflater instanceof LayoutInflater) {
             return (LayoutInflater) inflater;
         }
-        return new LayoutInflater(inflater, inflater.getContext());
+        return LayoutInflater.from(inflater.getContext()).grab(inflater);
     }
 
     public static LayoutInflater from(Context context) {
         LayoutInflater inflater = null;
-        WeakReference<LayoutInflater> reference = INSTANCES_MAP.get(context);
+        WeakReference<LayoutInflater> reference = sInstances.get(context);
         if (reference != null) {
             inflater = reference.get();
         }
         if (inflater == null) {
-            INSTANCES_MAP.put(context, new WeakReference<LayoutInflater>(
+            sInstances.put(context, new WeakReference<LayoutInflater>(
                     inflater = new LayoutInflater(context)));
         }
         return inflater;
     }
 
-    public static LayoutInflater from(View view) {
-        return LayoutInflater.from(view.getContext());
-    }
-
     public static View inflate(Context context, int resource) {
-        return LayoutInflater.from(context).inflate(resource, null);
+        return from(context).inflate(resource, null);
     }
 
     public static View inflate(Context context, int resource, ViewGroup root) {
-        return LayoutInflater.from(context).inflate(resource, root);
+        return from(context).inflate(resource, root);
     }
 
     public static View inflate(Context context, int resource, ViewGroup root,
             boolean attachToRoot) {
-        return LayoutInflater.from(context).inflate(resource, root,
-                attachToRoot);
+        return from(context).inflate(resource, root, attachToRoot);
     }
 
-    public static View inflate(View view, int resource) {
-        return LayoutInflater.from(view).inflate(resource, null);
+    public static void removeInstance(Context context) {
+        sInstances.remove(context);
     }
 
-    public static View inflate(View view, int resource, ViewGroup root) {
-        return LayoutInflater.from(view).inflate(resource, root);
+    /**
+     * Iterate over classes and call {@link #register(Class)} for each
+     */
+    public static void register(Class<? extends View>... classes) {
+        for (Class<? extends View> classe : classes) {
+            register(classe);
+        }
     }
 
-    public static View inflate(View view, int resource, ViewGroup root,
-            boolean attachToRoot) {
-        return LayoutInflater.from(view).inflate(resource, root, attachToRoot);
+    /**
+     * Fast mapping views by name<br />
+     * <br />
+     * MyView -> com.myapppackage.widget.MyView<br />
+     */
+    public static void register(Class<? extends View> clazz) {
+        if (clazz != null) {
+            register(clazz.getSimpleName(), clazz.getName());
+        }
     }
 
-    public static void onDestroy(Context context) {
-        LayoutInflater.INSTANCES_MAP.remove(context);
+    /**
+     * Manually register shortcuts for inflating<br />
+     * Not recommend to use. You are warned. <br />
+     * <br />
+     * MyView -> com.myapppackage.widget.SuperPuperViewVeryCustom
+     */
+    public static void register(String from, String to) {
+        LayoutInflater.sRemaps.put(from, to);
     }
 
     public static void registerPackage(String packageName) {
         packageName = Package.getPackage(packageName).getName();
-        if (!PACKAGES_LIST.contains(packageName)) {
-            PACKAGES_LIST.add(packageName);
+        if (!sPackages.contains(packageName)) {
+            sPackages.add(packageName);
         }
     }
 
+    /**
+     * @deprecated Use {@link #register(Class<? extends View>...)} instead
+     */
+    @Deprecated
     public static void remap(Class<? extends View>... classes) {
-        for (Class<? extends View> clazz : classes) {
-            remap(clazz);
-        }
+        register(classes);
     }
 
+    /**
+     * @deprecated Use {@link #register(Class<? extends View>)} instead
+     */
+    @Deprecated
     public static void remap(Class<? extends View> clazz) {
-        if (clazz != null) {
-            LayoutInflater.VIEWS_MAP
-                    .put(clazz.getSimpleName(), clazz.getName());
-        }
+        register(clazz);
     }
 
     @Deprecated
     public static void remap(String prefix, String... classess) {
         for (String clazz : classess) {
-            LayoutInflater.VIEWS_MAP.put(clazz, prefix + "." + clazz);
+            LayoutInflater.sRemaps.put(clazz, prefix + "." + clazz);
         }
     }
 
+    /**
+     * @deprecated Use {@link #register(String,String)} instead
+     */
+    @Deprecated
     public static void remapHard(String from, String to) {
-        LayoutInflater.VIEWS_MAP.put(from, to);
-    }
-
-    private static void remapInternal(Class<?>... classess) {
-        for (Class<?> clazz : classess) {
-            remapHard("Internal." + clazz.getSimpleName(), clazz.getName());
-        }
+        register(from, to);
     }
 
     public static void setOnInitInflaterListener(OnInitInflaterListener listener) {
-        LayoutInflater.listener = listener;
+        sListener = listener;
     }
 
-    private final HoloFactoryMerger factoryMerger = new HoloFactoryMerger();
+    private Map<Context, LayoutInflater> mClonedInstances;
+    private final Object[] mConstructorArgs = new Object[2];
+    private final Context mContext;
+    private List<Factory> mFactories;
+    private Filter mFilter;
+    private HashMap<String, Boolean> mFilterMap;
+
+    private FragmentActivity mFragmentActivity;
 
     protected LayoutInflater(android.view.LayoutInflater original,
             Context newContext) {
-        super(original, newContext);
-        init();
+        this(newContext);
+        grab(original);
     }
 
     protected LayoutInflater(Context context) {
         super(context);
-        init();
+        mContext = context;
+        if (LayoutInflater.sListener != null) {
+            LayoutInflater.sListener.onInitInflater(this);
+        }
+    }
+
+    public View _createView(String name, String prefix, AttributeSet attrs)
+            throws ClassNotFoundException, InflateException {
+        Constructor<? extends View> constructor = sConstructorMap.get(name);
+        Class<? extends View> clazz = null;
+        try {
+            if (constructor == null) {
+                clazz = mContext.getClassLoader().loadClass(
+                        prefix != null ? prefix + name : name).asSubclass(View.class);
+                if (mFilter != null && clazz != null) {
+                    boolean allowed = mFilter.onLoadClass(clazz);
+                    if (!allowed) {
+                        failNotAllowed(name, prefix, attrs);
+                    }
+                }
+                constructor = clazz.getConstructor(sConstructorSignature);
+                sConstructorMap.put(name, constructor);
+            } else {
+                if (mFilter != null) {
+                    Boolean allowedState = mFilterMap.get(name);
+                    if (allowedState == null) {
+                        clazz = mContext.getClassLoader().loadClass(
+                                prefix != null ? prefix + name : name).asSubclass(View.class);
+                        boolean allowed = clazz != null && mFilter.onLoadClass(clazz);
+                        mFilterMap.put(name, allowed);
+                        if (!allowed) {
+                            failNotAllowed(name, prefix, attrs);
+                        }
+                    } else if (allowedState.equals(Boolean.FALSE)) {
+                        failNotAllowed(name, prefix, attrs);
+                    }
+                }
+            }
+            Object[] args = mConstructorArgs;
+            args[1] = attrs;
+            final View view = constructor.newInstance(args);
+            if (view instanceof ViewStub) {
+                final ViewStub viewStub = (ViewStub) view;
+                viewStub.setLayoutInflater(this);
+            }
+            return view;
+        } catch (NoSuchMethodException e) {
+            InflateException ie = new InflateException(attrs.getPositionDescription()
+                    + ": Error inflating class "
+                    + (prefix != null ? prefix + name : name));
+            ie.initCause(e);
+            throw ie;
+
+        } catch (ClassCastException e) {
+            InflateException ie = new InflateException(attrs.getPositionDescription()
+                    + ": Class is not a View "
+                    + (prefix != null ? prefix + name : name));
+            ie.initCause(e);
+            throw ie;
+        } catch (ClassNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            InflateException ie = new InflateException(attrs.getPositionDescription()
+                    + ": Error inflating class "
+                    + (clazz == null ? "<unknown>" : clazz.getName()));
+            ie.initCause(e);
+            throw ie;
+        }
     }
 
     public void addFactory(Factory factory) {
         checkFactoryOnNull(factory);
-        factoryMerger.add(factory);
+        if (mFactories == null) {
+            mFactories = new ArrayList<Factory>();
+        }
+        mFactories.add(factory);
     }
 
     public void addFactory(Factory factory, int index) {
         checkFactoryOnNull(factory);
-        factoryMerger.add(index, factory);
+        if (mFactories == null) {
+            mFactories = new ArrayList<Factory>();
+        }
+        mFactories.add(index, factory);
     }
 
     private void checkFactoryOnNull(Factory factory) {
@@ -210,11 +398,95 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
     @Override
     public LayoutInflater cloneInContext(Context newContext) {
-        return new LayoutInflater(this, newContext);
+        if (mClonedInstances == null) {
+            mClonedInstances = new HashMap<Context, LayoutInflater>();
+        }
+        LayoutInflater inflater = mClonedInstances.get(newContext);
+        if (inflater == null) {
+            inflater = new LayoutInflater(this, newContext);
+            mClonedInstances.put(newContext, inflater);
+        }
+        return inflater;
+    }
+
+    View createViewFromTag(View parent, String name, AttributeSet attrs) {
+        if ("fragment".equals(name)) {
+            return _HoloFragmentInflater.inflate(LayoutInflater.this, attrs, parent);
+        }
+        if (name.equals("view")) {
+            name = attrs.getAttributeValue(null, "class");
+        }
+        try {
+            View view = null;
+            if (mFactories != null) {
+                for (int i = 0; i < mFactories.size(); i++) {
+                    view = mFactories.get(i).onCreateView(parent, name, mContext, attrs);
+                    if (view != null) {
+                        break;
+                    }
+                }
+            }
+            if (view == null) {
+                view = onCreateView(parent, name, attrs);
+            }
+            return prepareView(view);
+        } catch (InflateException e) {
+            throw e;
+        } catch (ClassNotFoundException e) {
+            InflateException ie = new InflateException(attrs.getPositionDescription()
+                    + ": Error inflating class " + name);
+            ie.initCause(e);
+            throw ie;
+        } catch (Exception e) {
+            InflateException ie = new InflateException(attrs.getPositionDescription()
+                    + ": Error inflating class " + name);
+            ie.initCause(e);
+            throw ie;
+        }
+    }
+
+    private void failNotAllowed(String name, String prefix, AttributeSet attrs) {
+        throw new InflateException(attrs.getPositionDescription()
+                + ": Class not allowed to be inflated "
+                + (prefix != null ? prefix + name : name));
+    }
+
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
+
+    public FragmentActivity getFragmentActivity() {
+        return mFragmentActivity;
+    }
+
+    protected LayoutInflater grab(android.view.LayoutInflater original) {
+        if (original instanceof LayoutInflater) {
+            LayoutInflater inflater = (LayoutInflater) original;
+            mFilter = inflater.mFilter;
+            mFilterMap = inflater.mFilterMap;
+            mFactories = inflater.mFactories;
+        } else {
+            if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
+                final Factory2 factory = original.getFactory2();
+                if (factory != null) {
+                    setFactory2(factory);
+                }
+            }
+            final android.view.LayoutInflater.Factory factory = original.getFactory();
+            if (factory != null) {
+                setFactory(factory);
+            }
+            final Filter filter = original.getFilter();
+            if (filter != null) {
+                setFilter(filter);
+            }
+        }
+        return this;
     }
 
     public View inflate(int resource) {
-        return inflate(resource, null);
+        return inflate(resource, null, false);
     }
 
     @Override
@@ -224,11 +496,11 @@ public class LayoutInflater extends android.view.LayoutInflater implements
 
     @Override
     public View inflate(int resource, ViewGroup root, boolean attachToRoot) {
-        View view = super.inflate(resource, root, attachToRoot);
-        if (view != null) {
-            view = FontLoader.applyDefaultStyles(view);
-        }
-        return view;
+        return inflate(getContext().getResources().getLayout(resource), root, attachToRoot);
+    }
+
+    public View inflate(XmlPullParser parser) {
+        return inflate(parser, null, false);
     }
 
     @Override
@@ -239,18 +511,63 @@ public class LayoutInflater extends android.view.LayoutInflater implements
     @Override
     public View inflate(XmlPullParser parser, ViewGroup root,
             boolean attachToRoot) {
-        View view = super.inflate(parser, root, attachToRoot);
-        if (view != null) {
-            view = FontLoader.applyDefaultStyles(view);
-        }
-        return view;
-    }
-
-    private void init() {
-        super.setFactory(factoryMerger);
-        factoryMerger.add(this);
-        if (LayoutInflater.listener != null) {
-            LayoutInflater.listener.onInitInflater(this);
+        synchronized (mConstructorArgs) {
+            final AttributeSet attrs = Xml.asAttributeSet(parser);
+            mConstructorArgs[0] = mContext;
+            View result = root;
+            try {
+                int type;
+                while ((type = parser.next()) != XmlPullParser.START_TAG &&
+                        type != XmlPullParser.END_DOCUMENT) {
+                    ;
+                }
+                if (type != XmlPullParser.START_TAG) {
+                    throw new InflateException(parser.getPositionDescription()
+                            + ": No start tag found!");
+                }
+                final String name = parser.getName();
+                if (TAG_MERGE.equals(name)) {
+                    if (root == null || !attachToRoot) {
+                        throw new InflateException("<merge /> can be used only with a valid "
+                                + "ViewGroup root and attachToRoot=true");
+                    }
+                    rInflate(parser, root, attrs, false);
+                } else {
+                    View temp;
+                    if (TAG_1995.equals(name)) {
+                        temp = new BlinkLayout(mContext, attrs);
+                    } else {
+                        temp = createViewFromTag(root, name, attrs);
+                    }
+                    ViewGroup.LayoutParams params = null;
+                    if (root != null) {
+                        params = root.generateLayoutParams(attrs);
+                        if (!attachToRoot) {
+                            temp.setLayoutParams(params);
+                        }
+                    }
+                    rInflate(parser, temp, attrs, true);
+                    if (root != null && attachToRoot) {
+                        root.addView(temp, params);
+                    }
+                    if (root == null || !attachToRoot) {
+                        result = temp;
+                    }
+                }
+            } catch (XmlPullParserException e) {
+                InflateException ex = new InflateException(e.getMessage());
+                ex.initCause(e);
+                throw ex;
+            } catch (IOException e) {
+                InflateException ex = new InflateException(
+                        parser.getPositionDescription()
+                                + ": " + e.getMessage());
+                ex.initCause(e);
+                throw ex;
+            } finally {
+                mConstructorArgs[1] = null;
+            }
+            return FontLoader.applyDefaultStyles(result);
         }
     }
 
@@ -259,38 +576,118 @@ public class LayoutInflater extends android.view.LayoutInflater implements
     }
 
     @Override
-    protected View onCreateView(String name, AttributeSet attrs)
+    protected View onCreateView(View parent, String name, AttributeSet attrs)
             throws ClassNotFoundException {
-        String newName = LayoutInflater.VIEWS_MAP.get(name.intern());
         View view;
+        String newName = LayoutInflater.sRemaps.get(name);
         if (newName != null) {
             view = tryCreateView(newName, null, attrs);
             if (view != null) {
-                return prepareView(view);
+                return view;
             }
         }
         if (name.indexOf('.') > 0) {
-            view = tryCreateView(name, null, attrs);
-            if (view != null) {
-                return prepareView(view);
-            }
+            return _createView(name, null, attrs);
         }
-        for (int i = 0; i < PACKAGES_LIST.size(); i++) {
-            view = tryCreateView(name, PACKAGES_LIST.get(i) + ".", attrs);
+        for (int i = sPackages.size() - 1; i >= 0; i--) {
+            view = tryCreateView(name, sPackages.get(i) + ".", attrs);
             if (view != null) {
-                return prepareView(view);
+                return view;
             }
         }
         throw new ClassNotFoundException("Could not find class: " + name);
     }
 
-    @Override
-    public View onCreateView(String name, Context context, AttributeSet attrs) {
-        try {
-            return onCreateView(name, attrs);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
+    private void parseInclude(XmlPullParser parser, View parent, AttributeSet attrs)
+            throws XmlPullParserException, IOException {
+        int type;
+        if (parent instanceof ViewGroup) {
+            final int layout = attrs.getAttributeResourceValue(null, "layout", 0);
+            if (layout == 0) {
+                final String value = attrs.getAttributeValue(null, "layout");
+                if (value == null) {
+                    throw new InflateException("You must specifiy a layout in the"
+                            + " include tag: <include layout=\"@layout/layoutID\" />");
+                } else {
+                    throw new InflateException("You must specifiy a valid layout "
+                            + "reference. The layout ID " + value + " is not valid.");
+                }
+            } else {
+                final XmlResourceParser childParser =
+                        getContext().getResources().getLayout(layout);
+                try {
+                    final AttributeSet childAttrs = Xml.asAttributeSet(childParser);
+                    while ((type = childParser.next()) != XmlPullParser.START_TAG &&
+                            type != XmlPullParser.END_DOCUMENT) {
+                        ;
+                    }
+                    if (type != XmlPullParser.START_TAG) {
+                        throw new InflateException(childParser.getPositionDescription() +
+                                ": No start tag found!");
+                    }
+                    final String childName = childParser.getName();
+                    if (TAG_MERGE.equals(childName)) {
+                        rInflate(childParser, parent, childAttrs, false);
+                    } else {
+                        final View view = createViewFromTag(parent, childName, childAttrs);
+                        final ViewGroup group = (ViewGroup) parent;
+                        ViewGroup.LayoutParams params = null;
+                        try {
+                            params = group.generateLayoutParams(attrs);
+                        } catch (RuntimeException e) {
+                            params = group.generateLayoutParams(childAttrs);
+                        } finally {
+                            if (params != null) {
+                                view.setLayoutParams(params);
+                            }
+                        }
+                        rInflate(childParser, view, childAttrs, true);
+                        TypedArray a = mContext.obtainStyledAttributes(attrs,
+                                new int[] {
+                                        android.R.attr.id,
+                                        android.R.attr.visibility
+                                }, 0, 0);
+                        int id = a.getResourceId(0, View.NO_ID);
+                        int visibility = a.getInt(1, -1);
+                        a.recycle();
+                        if (id != View.NO_ID) {
+                            view.setId(id);
+                        }
+                        switch (visibility) {
+                            case 0:
+                                view.setVisibility(View.VISIBLE);
+                                break;
+                            case 1:
+                                view.setVisibility(View.INVISIBLE);
+                                break;
+                            case 2:
+                                view.setVisibility(View.GONE);
+                                break;
+                        }
+                        group.addView(view);
+                    }
+                } finally {
+                    childParser.close();
+                }
+            }
+        } else {
+            throw new InflateException("<include /> can only be used inside of a ViewGroup");
+        }
+        final int currentDepth = parser.getDepth();
+        while (((type = parser.next()) != XmlPullParser.END_TAG ||
+                parser.getDepth() > currentDepth) && type != XmlPullParser.END_DOCUMENT) {
+            ;
+        }
+    }
+
+    private void parseRequestFocus(XmlPullParser parser, View parent)
+            throws XmlPullParserException, IOException {
+        int type;
+        parent.requestFocus();
+        final int currentDepth = parser.getDepth();
+        while (((type = parser.next()) != XmlPullParser.END_TAG ||
+                parser.getDepth() > currentDepth) && type != XmlPullParser.END_DOCUMENT) {
+            ;
         }
     }
 
@@ -302,20 +699,95 @@ public class LayoutInflater extends android.view.LayoutInflater implements
         return view;
     }
 
+    void rInflate(XmlPullParser parser, View parent, final AttributeSet attrs,
+            boolean finishInflate) throws XmlPullParserException, IOException {
+        final int depth = parser.getDepth();
+        int type;
+        while (((type = parser.next()) != XmlPullParser.END_TAG ||
+                parser.getDepth() > depth) && type != XmlPullParser.END_DOCUMENT) {
+            if (type != XmlPullParser.START_TAG) {
+                continue;
+            }
+            final String name = parser.getName();
+            if (TAG_REQUEST_FOCUS.equals(name)) {
+                parseRequestFocus(parser, parent);
+            } else if (TAG_INCLUDE.equals(name)) {
+                if (parser.getDepth() == 0) {
+                    throw new InflateException("<include /> cannot be the root element");
+                }
+                parseInclude(parser, parent, attrs);
+            } else if (TAG_MERGE.equals(name)) {
+                throw new InflateException("<merge /> must be the root element");
+            } else if (TAG_1995.equals(name)) {
+                final View view = new BlinkLayout(mContext, attrs);
+                final ViewGroup viewGroup = (ViewGroup) parent;
+                final ViewGroup.LayoutParams params = viewGroup.generateLayoutParams(attrs);
+                rInflate(parser, view, attrs, true);
+                viewGroup.addView(view, params);
+            } else {
+                final View view = createViewFromTag(parent, name, attrs);
+                final ViewGroup viewGroup = (ViewGroup) parent;
+                final ViewGroup.LayoutParams params = viewGroup.generateLayoutParams(attrs);
+                rInflate(parser, view, attrs, true);
+                viewGroup.addView(view, params);
+            }
+        }
+        if (finishInflate) {
+            Class<?> clazz = parent.getClass();
+            Method method = sFinishInflateMethods.get(clazz);
+            if (method == null) {
+                while (clazz != Object.class && method == null) {
+                    try {
+                        method = clazz.getDeclaredMethod("onFinishInflate", (Class<?>[]) null);
+                    } catch (Exception e) {
+                        clazz = clazz.getSuperclass();
+                    }
+                }
+                if (method != null) {
+                    method.setAccessible(true);
+                    sFinishInflateMethods.put(parent.getClass(), method);
+                }
+            }
+            if (method != null) {
+                try {
+                    method.invoke(parent, (Object[]) null);
+                } catch (Exception e) {
+                }
+            }
+        }
+    }
+
     @Override
+    public void setFactory(android.view.LayoutInflater.Factory factory) {
+        setFactory(new FactoryWrapper(factory));
+    }
+
     public void setFactory(Factory factory) {
         addFactory(factory, 0);
     }
 
-    protected View tryCreateView(String name, String prefix, AttributeSet attrs) {
-        String newName = prefix == null ? "" : prefix;
-        newName += name;
-        try {
-            if (Class.forName(newName) != null) {
-                return createView(newName, null, attrs);
-            }
-        } catch (ClassNotFoundException e) {
+    @Override
+    public void setFactory2(Factory2 factory) {
+        setFactory(new Factory2Wrapper(factory));
+    }
+
+    @Override
+    public void setFilter(Filter filter) {
+        mFilter = filter;
+        if (filter != null) {
+            mFilterMap = new HashMap<String, Boolean>();
         }
-        return null;
+    }
+
+    public void setFragmentActivity(FragmentActivity fragmentActivity) {
+        mFragmentActivity = fragmentActivity;
+    }
+
+    protected View tryCreateView(String name, String prefix, AttributeSet attrs) {
+        try {
+            return _createView(name, prefix, attrs);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

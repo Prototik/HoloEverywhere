@@ -49,6 +49,8 @@ public class PlaybackService {
 
     public static void pause(boolean stop) {
         HANDLER.removeMessages(T_PLAY);
+        HANDLER.removeMessages(T_STOP);
+        HANDLER.removeMessages(T_PAUSE);
         if (stop) {
             HANDLER.sendMessage(Message.obtain(HANDLER, T_STOP));
         } else {

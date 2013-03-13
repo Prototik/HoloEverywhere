@@ -53,8 +53,8 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
             if (position < 0) {
                 position = 0;
             }
-            if (mCurrentPage != position || mStaticSlidingMenu
-                    && getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            if (mCurrentPage != position || setData && getSupportFragmentManager()
+                    .getBackStackEntryCount() > 0) {
                 mCurrentPage = position;
                 if (mOnMenuClickListener != null) {
                     mOnMenuClickListener.onMenuClick(position);
@@ -95,7 +95,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
             postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    requireSlidingMenu().showContent();
+                    addonSlidingMenu().showContent();
                 }
             }, 100);
         }
@@ -115,6 +115,10 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     private NavigationAdapter mNavigationAdapter;
     private OnMenuClickListener mOnMenuClickListener;
     private boolean mStaticSlidingMenu;
+
+    public AddonSlidingMenuA addonSlidingMenu() {
+        return addon(AddonSlidingMenu.class);
+    }
 
     private int computeMenuWidth() {
         return (int) getResources().getFraction(R.dimen.demo_menu_width,
@@ -166,7 +170,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
         setContentView(R.layout.content);
 
-        final AddonSlidingMenuA addonSM = requireSlidingMenu();
+        final AddonSlidingMenuA addonSM = addonSlidingMenu();
         final SlidingMenu sm = addonSM.getSlidingMenu();
 
         View menu = findViewById(R.id.menu);
@@ -201,6 +205,12 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     }
 
     @Override
+    protected void onDestroy() {
+        PlaybackService.pause(true);
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.disableMusic:
@@ -213,7 +223,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
             case android.R.id.home:
                 if (!mStaticSlidingMenu
                         && getSupportFragmentManager().getBackStackEntryCount() == 0) {
-                    requireSlidingMenu().toggle();
+                    addonSlidingMenu().toggle();
                 } else {
                     onBackPressed();
                 }
@@ -226,6 +236,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
     @Override
     protected void onPause() {
+        PlaybackService.pause(false);
         super.onPause();
     }
 
@@ -287,10 +298,6 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         }
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
-    }
-
-    public AddonSlidingMenuA requireSlidingMenu() {
-        return addon(AddonSlidingMenu.class);
     }
 
     public void setOnMenuClickListener(OnMenuClickListener onMenuClickListener) {

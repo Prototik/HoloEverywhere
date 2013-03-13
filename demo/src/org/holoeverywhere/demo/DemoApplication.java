@@ -6,21 +6,17 @@ import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Application;
-import org.holoeverywhere.demo.widget.DemoListRowView;
-import org.holoeverywhere.demo.widget.DemoThemePicker;
-import org.holoeverywhere.demo.widget.WidgetContainer;
 
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 
 public class DemoApplication extends Application {
+    private static final String PACKAGE = DemoApplication.class.getPackage().getName();
     static {
         HoloEverywhere.DEBUG = true;
         HoloEverywhere.PREFERENCE_IMPL = PreferenceImpl.JSON;
 
-        LayoutInflater.remap(WidgetContainer.class);
-        LayoutInflater.remap(DemoListRowView.class);
-        LayoutInflater.remap(DemoThemePicker.class);
+        LayoutInflater.registerPackage(PACKAGE + ".widget");
 
         ThemeManager.setDefaultTheme(ThemeManager.MIXED);
 
@@ -35,6 +31,7 @@ public class DemoApplication extends Application {
                 R.style.Holo_Demo_Theme_Light);
         ThemeManager.map(ThemeManager.MIXED,
                 R.style.Holo_Demo_Theme_Light_DarkActionBar);
+
         ThemeManager.map(ThemeManager.DARK | ThemeManager.FULLSCREEN,
                 R.style.Holo_Demo_Theme_Fullscreen);
         ThemeManager.map(ThemeManager.LIGHT | ThemeManager.FULLSCREEN,
