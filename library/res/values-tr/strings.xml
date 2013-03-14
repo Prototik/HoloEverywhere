@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"Geri"</string>
     <string name="candidates_style">"adaylar"</string>
     <string name="capital_off">"KAPALI"</string>
     <string name="capital_on">"AÇIK"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"Tamamlandı"</string>
     <string name="date_time_set">"Ayarla"</string>
     <string name="loading">"Yükleniyor..."</string>
-    <string name="next_button_label">"İleri"</string>
     <string name="number_picker_decrement_button">"Azalt"</string>
     <string name="number_picker_increment_button">"Artır"</string>
     <string name="number_picker_increment_scroll_action">"Artırmak için yukarı, azaltmak için aşağı kaydırın."</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"Varsayılan zil sesi"</string>
     <string name="ringtone_picker_title">"Zil sesleri"</string>
     <string name="ringtone_silent">"Sessiz"</string>
-    <string name="skip_button_label">"Atla"</string>
     <string name="time_picker_decrement_hour_button">"Saati azalt"</string>
     <string name="time_picker_decrement_minute_button">"Dakikayı azalt"</string>
     <string name="time_picker_decrement_set_am_button">"ÖÖ değerini ayarla"</string>

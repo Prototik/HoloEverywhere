@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"Voltar"</string>
     <string name="candidates_style">"candidatos"</string>
     <string name="capital_off">"DESL"</string>
     <string name="capital_on">"LIG"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"Concluído"</string>
     <string name="date_time_set">"Definir"</string>
     <string name="loading">"Carregando…"</string>
-    <string name="next_button_label">"Avançar"</string>
     <string name="number_picker_decrement_button">"Diminuir"</string>
     <string name="number_picker_increment_button">"Aumentar"</string>
     <string name="number_picker_increment_scroll_action">"Deslize para cima para aumentar e para baixo para diminuir."</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"Toque padrão"</string>
     <string name="ringtone_picker_title">"Toques"</string>
     <string name="ringtone_silent">"Silencioso"</string>
-    <string name="skip_button_label">"Ignorar"</string>
     <string name="time_picker_decrement_hour_button">"Diminuir hora"</string>
     <string name="time_picker_decrement_minute_button">"Diminuir minuto"</string>
     <string name="time_picker_decrement_set_am_button">"Configurar valor AM"</string>

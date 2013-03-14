@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"رجوع"</string>
     <string name="candidates_style">"العناصر المرشحة"</string>
     <string name="capital_off">"إيقاف"</string>
     <string name="capital_on">"تشغيل"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"تم"</string>
     <string name="date_time_set">"تعيين"</string>
     <string name="loading">"جارٍ التحميل…"</string>
-    <string name="next_button_label">"التالي"</string>
     <string name="number_picker_decrement_button">"تقليل"</string>
     <string name="number_picker_increment_button">"زيادة"</string>
     <string name="number_picker_increment_scroll_action">"مرر لأعلى للزيادة ولأسفل للتقليل."</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"نغمة الرنين الافتراضية"</string>
     <string name="ringtone_picker_title">"نغمات الرنين"</string>
     <string name="ringtone_silent">"صامت"</string>
-    <string name="skip_button_label">"تخطٍ"</string>
     <string name="time_picker_decrement_hour_button">"تقليل الساعات"</string>
     <string name="time_picker_decrement_minute_button">"تقليل الدقائق"</string>
     <string name="time_picker_decrement_set_am_button">"تعيين الصباح"</string>

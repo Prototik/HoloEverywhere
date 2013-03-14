@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"Emuva"</string>
     <string name="candidates_style">"abahlanganyeli"</string>
     <string name="capital_off">"VALIWE"</string>
     <string name="capital_on">"VULIWE"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"Kwenziwe"</string>
     <string name="date_time_set">"Hlela"</string>
     <string name="loading">"Iyalayisha…"</string>
-    <string name="next_button_label">"Okulandelayo"</string>
     <string name="number_picker_decrement_button">"Yehlisa"</string>
     <string name="number_picker_increment_button">"Khulisa"</string>
     <string name="number_picker_increment_scroll_action">"Shelelisela phezulu ukuze ungeze futhi phansi ukuze wehlise."</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"Iringithoni emisiwe"</string>
     <string name="ringtone_picker_title">"Amaringithoni"</string>
     <string name="ringtone_silent">"Thulile"</string>
-    <string name="skip_button_label">"Yeqa"</string>
     <string name="time_picker_decrement_hour_button">"Yehlisa ihora"</string>
     <string name="time_picker_decrement_minute_button">"Yehlisa iminithi"</string>
     <string name="time_picker_decrement_set_am_button">"Setha Ekuseni"</string>

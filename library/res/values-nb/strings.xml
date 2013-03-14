@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"Tilbake"</string>
     <string name="candidates_style">"TAG_FONT""kandidater""CLOSE_FONT"</string>
     <string name="capital_off">"Av"</string>
     <string name="capital_on">"På"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"Ferdig"</string>
     <string name="date_time_set">"Lagre"</string>
     <string name="loading">"Laster inn …"</string>
-    <string name="next_button_label">"Neste"</string>
     <string name="number_picker_decrement_button">"Reduser"</string>
     <string name="number_picker_increment_button">"Øk"</string>
     <string name="number_picker_increment_scroll_action">"Dra opp for å øke og ned for å redusere."</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"Standard ringetone"</string>
     <string name="ringtone_picker_title">"Ringetoner"</string>
     <string name="ringtone_silent">"Stille"</string>
-    <string name="skip_button_label">"Hopp over"</string>
     <string name="time_picker_decrement_hour_button">"Reduser timer"</string>
     <string name="time_picker_decrement_minute_button">"Reduser minutter"</string>
     <string name="time_picker_decrement_set_am_button">"Angi a.m."</string>

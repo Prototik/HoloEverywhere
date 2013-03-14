@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"戻る"</string>
     <string name="candidates_style">"候補"</string>
     <string name="capital_off">"OFF"</string>
     <string name="capital_on">"ON"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"完了"</string>
     <string name="date_time_set">"設定"</string>
     <string name="loading">"読み込んでいます..."</string>
-    <string name="next_button_label">"次へ"</string>
     <string name="number_picker_decrement_button">"戻します"</string>
     <string name="number_picker_increment_button">"進めます"</string>
     <string name="number_picker_increment_scroll_action">"上にスライドで進み、下にスライドで戻ります。"</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"プリセット着信音"</string>
     <string name="ringtone_picker_title">"着信音"</string>
     <string name="ringtone_silent">"サイレント"</string>
-    <string name="skip_button_label">"スキップ"</string>
     <string name="time_picker_decrement_hour_button">"1時間戻します"</string>
     <string name="time_picker_decrement_minute_button">"1分戻します"</string>
     <string name="time_picker_decrement_set_am_button">"午前に設定"</string>

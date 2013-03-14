@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"Zurück"</string>
     <string name="candidates_style">"Kandidaten"</string>
     <string name="capital_off">"AUS"</string>
     <string name="capital_on">"AN"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"Fertig"</string>
     <string name="date_time_set">"Speichern"</string>
     <string name="loading">"Wird geladen…"</string>
-    <string name="next_button_label">"Weiter"</string>
     <string name="number_picker_decrement_button">"Verringern"</string>
     <string name="number_picker_increment_button">"Verlängern"</string>
     <string name="number_picker_increment_scroll_action">"Zum Verlängern nach oben und zum Verringern nach unten schieben"</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"Standard-Klingelton"</string>
     <string name="ringtone_picker_title">"Klingeltöne"</string>
     <string name="ringtone_silent">"Lautlos"</string>
-    <string name="skip_button_label">"Überspringen"</string>
     <string name="time_picker_decrement_hour_button">"Stunden verringern"</string>
     <string name="time_picker_decrement_minute_button">"Minuten verringern"</string>
     <string name="time_picker_decrement_set_am_button">"Zeit festlegen"</string>

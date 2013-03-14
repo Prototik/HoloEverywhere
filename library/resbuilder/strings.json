@@ -5,9 +5,6 @@
         }
     }, 
     "grab": [
-        "back_button_label", 
-        "skip_button_label", 
-        "next_button_label", 
         "loading", 
         "capital_on", 
         "capital_off", 

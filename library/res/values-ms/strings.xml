@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"Kembali"</string>
     <string name="candidates_style">"calon"</string>
     <string name="capital_off">"MATIKAN"</string>
     <string name="capital_on">"HIDUP"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"Selesai"</string>
     <string name="date_time_set">"Tetapkan"</string>
     <string name="loading">"Memuatkan…"</string>
-    <string name="next_button_label">"Seterusnya"</string>
     <string name="number_picker_decrement_button">"Kurangkan"</string>
     <string name="number_picker_increment_button">"Tingkatkan"</string>
     <string name="number_picker_increment_scroll_action">"Luncurkan ke atas untuk meningkatkan dan ke bawah untuk mengurangkan."</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"Nada dering lalai"</string>
     <string name="ringtone_picker_title">"Nada dering"</string>
     <string name="ringtone_silent">"Senyap"</string>
-    <string name="skip_button_label">"Langkau"</string>
     <string name="time_picker_decrement_hour_button">"Kurangkan jam"</string>
     <string name="time_picker_decrement_minute_button">"Kurangkan minit"</string>
     <string name="time_picker_decrement_set_am_button">"Tetapkan AM"</string>

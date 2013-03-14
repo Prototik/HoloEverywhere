@@ -43,6 +43,7 @@
 						<file>styles.json:styles</file>
 						<file>styles-sw720dp.json:styles</file>
 						<file>themes.json:styles</file>
+						<file>strings.json:strings</file>
 					</inputFiles>
 				</configuration>
 			</plugin>

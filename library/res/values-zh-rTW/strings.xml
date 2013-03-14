@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"返回"</string>
     <string name="candidates_style">"待選項目"</string>
     <string name="capital_off">"關閉"</string>
     <string name="capital_on">"開啟"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"完成"</string>
     <string name="date_time_set">"設定"</string>
     <string name="loading">"載入中..."</string>
-    <string name="next_button_label">"繼續"</string>
     <string name="number_picker_decrement_button">"減少"</string>
     <string name="number_picker_increment_button">"增加"</string>
     <string name="number_picker_increment_scroll_action">"向上滑動即可增加，向下滑動即可減少。"</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"預設鈴聲"</string>
     <string name="ringtone_picker_title">"鈴聲"</string>
     <string name="ringtone_silent">"靜音"</string>
-    <string name="skip_button_label">"略過"</string>
     <string name="time_picker_decrement_hour_button">"減少小時數"</string>
     <string name="time_picker_decrement_minute_button">"減少分鐘數"</string>
     <string name="time_picker_decrement_set_am_button">"設定 AM 值"</string>

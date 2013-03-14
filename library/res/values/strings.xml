@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">Back</string>
     <string name="candidates_style">candidates</string>
     <string name="capital_off">OFF</string>
     <string name="capital_on">ON</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">Done</string>
     <string name="date_time_set">Set</string>
     <string name="loading">Loading\u2026</string>
-    <string name="next_button_label">Next</string>
     <string name="number_picker_decrement_button">Decrease</string>
     <string name="number_picker_increment_button">Increase</string>
     <string name="number_picker_increment_scroll_action">Slide up to increase and down to decrease.</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">Default ringtone</string>
     <string name="ringtone_picker_title">Ringtones</string>
     <string name="ringtone_silent">Silent</string>
-    <string name="skip_button_label">Skip</string>
     <string name="time_picker_decrement_hour_button">Decrease hour</string>
     <string name="time_picker_decrement_minute_button">Decrease minute</string>
     <string name="time_picker_decrement_set_am_button">Set AM</string>

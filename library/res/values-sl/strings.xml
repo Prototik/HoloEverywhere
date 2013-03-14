@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"Nazaj"</string>
     <string name="candidates_style">"kandidati"</string>
     <string name="capital_off">"IZKLOPLJENO"</string>
     <string name="capital_on">"VKLOPLJENO"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"Končano"</string>
     <string name="date_time_set">"Nastavi"</string>
     <string name="loading">"Nalaganje …"</string>
-    <string name="next_button_label">"Naprej"</string>
     <string name="number_picker_decrement_button">"Manj"</string>
     <string name="number_picker_increment_button">"Več"</string>
     <string name="number_picker_increment_scroll_action">"Povlecite navzgor za povečanje in navzdol za zmanjšanje."</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"Privzeta melodija zvonjenja"</string>
     <string name="ringtone_picker_title">"Melodije zvonjenja"</string>
     <string name="ringtone_silent">"Tiho"</string>
-    <string name="skip_button_label">"Preskoči"</string>
     <string name="time_picker_decrement_hour_button">"Zmanjšanje vrednosti za uro"</string>
     <string name="time_picker_decrement_minute_button">"Zmanjšanje vrednosti za minuto"</string>
     <string name="time_picker_decrement_set_am_button">"Nastavi AM"</string>

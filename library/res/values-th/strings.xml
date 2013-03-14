@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"ย้อนกลับ"</string>
     <string name="candidates_style">"ตัวเลือก"</string>
     <string name="capital_off">"ปิด"</string>
     <string name="capital_on">"เปิด"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"เสร็จสิ้น"</string>
     <string name="date_time_set">"ตั้งค่า"</string>
     <string name="loading">"กำลังโหลด..."</string>
-    <string name="next_button_label">"ถัดไป"</string>
     <string name="number_picker_decrement_button">"ลด"</string>
     <string name="number_picker_increment_button">"เพิ่ม"</string>
     <string name="number_picker_increment_scroll_action">"เลื่อนขึ้นเพื่อเพิ่มและเลื่อนลงเพื่อลด"</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"เสียงเรียกเข้าเริ่มต้น"</string>
     <string name="ringtone_picker_title">"เสียงเรียกเข้า"</string>
     <string name="ringtone_silent">"ปิดเสียง"</string>
-    <string name="skip_button_label">"ข้าม"</string>
     <string name="time_picker_decrement_hour_button">"ลดชั่วโมง"</string>
     <string name="time_picker_decrement_minute_button">"ลดนาที"</string>
     <string name="time_picker_decrement_set_am_button">"ตั้งค่า AM"</string>

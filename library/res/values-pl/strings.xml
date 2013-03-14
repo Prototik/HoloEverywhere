@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"Wróć"</string>
     <string name="candidates_style">"kandydaci"</string>
     <string name="capital_off">"Wył."</string>
     <string name="capital_on">"Wł."</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"Gotowe"</string>
     <string name="date_time_set">"Ustaw"</string>
     <string name="loading">"Wczytywanie…"</string>
-    <string name="next_button_label">"Dalej"</string>
     <string name="number_picker_decrement_button">"Zmniejsz"</string>
     <string name="number_picker_increment_button">"Zwiększ"</string>
     <string name="number_picker_increment_scroll_action">"Przesuń w górę, by zwiększyć, i w dół, by zmniejszyć."</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"Dzwonek domyślny"</string>
     <string name="ringtone_picker_title">"Dzwonki"</string>
     <string name="ringtone_silent">"Cichy"</string>
-    <string name="skip_button_label">"Pomiń"</string>
     <string name="time_picker_decrement_hour_button">"Zmień godzinę na wcześniejszą"</string>
     <string name="time_picker_decrement_minute_button">"Zmień minutę na wcześniejszą"</string>
     <string name="time_picker_decrement_set_am_button">"Ustaw AM"</string>

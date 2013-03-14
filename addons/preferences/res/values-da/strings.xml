@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?><resources>
+    <string name="back_button_label">"Tilbage"</string>
+    <string name="next_button_label">"Næste"</string>
+    <string name="skip_button_label">"Spring over"</string>
+</resources>

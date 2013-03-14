@@ -51,11 +51,8 @@ public class FileProcesser {
         }
 
         private static final long serialVersionUID = 6761878269956927443L;
-
         private static final Transformer TRANSFORMER;
-
         private static final TransformerFactory TRANSFORMER_FACTORY;
-
         private static final Map<File, WriterState> WRITERS_MAP = new HashMap<File, WriterState>();
         private static final XMLOutputFactory XML_OUTPUT_FACTORY;
         static {
@@ -123,13 +120,14 @@ public class FileProcesser {
                 if (dir == null) {
                     dir = mojo.outputDir;
                 }
+                File file = new File(dir, filename);
+                dir = file.getParentFile();
                 if (!dir.exists()) {
                     if (mojo.verbose) {
                         mojo.getLog().info("Create new folder: " + dir.getAbsolutePath());
                     }
                     dir.mkdirs();
                 }
-                File file = new File(dir, filename);
                 WriterState state;
                 synchronized (WRITERS_MAP) {
                     state = WRITERS_MAP.get(file);

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"Bumalik"</string>
     <string name="candidates_style">"mga kandidato"</string>
     <string name="capital_off">"I-OFF"</string>
     <string name="capital_on">"I-ON"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"Tapos na"</string>
     <string name="date_time_set">"Itakda"</string>
     <string name="loading">"Naglo-load…"</string>
-    <string name="next_button_label">"Susunod"</string>
     <string name="number_picker_decrement_button">"Bawasan"</string>
     <string name="number_picker_increment_button">"Dagdagan"</string>
     <string name="number_picker_increment_scroll_action">"Mag-slide pataas upang magdagdag at pababa upang magbawas."</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"Default na ringtone"</string>
     <string name="ringtone_picker_title">"Mga Ringtone"</string>
     <string name="ringtone_silent">"Tahimik"</string>
-    <string name="skip_button_label">"Laktawan"</string>
     <string name="time_picker_decrement_hour_button">"Bawasan ang oras"</string>
     <string name="time_picker_decrement_minute_button">"Bawasan ang minuto"</string>
     <string name="time_picker_decrement_set_am_button">"Itakda ang AM"</string>

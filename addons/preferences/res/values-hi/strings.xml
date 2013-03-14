@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?><resources>
+    <string name="back_button_label">"वापस जाएं"</string>
+    <string name="next_button_label">"अगला"</string>
+    <string name="skip_button_label">"छोड़ें"</string>
+</resources>

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"Atgal"</string>
     <string name="candidates_style">"kandidatai"</string>
     <string name="capital_off">"IŠJ."</string>
     <string name="capital_on">"ĮJ."</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"Baigta"</string>
     <string name="date_time_set">"Nustatyti"</string>
     <string name="loading">"Įkeliama..."</string>
-    <string name="next_button_label">"Kitas"</string>
     <string name="number_picker_decrement_button">"Sumažinti"</string>
     <string name="number_picker_increment_button">"Padidinti"</string>
     <string name="number_picker_increment_scroll_action">"Slinkite aukštyn, kad padidintumėte, ir žemyn, kad sumažintumėte."</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"Numatytasis skambėjimo tonas"</string>
     <string name="ringtone_picker_title">"Skambėjimo tonai"</string>
     <string name="ringtone_silent">"Tylus"</string>
-    <string name="skip_button_label">"Praleisti"</string>
     <string name="time_picker_decrement_hour_button">"Sumažinti valandų skaičių"</string>
     <string name="time_picker_decrement_minute_button">"Sumažinti minučių skaičių"</string>
     <string name="time_picker_decrement_set_am_button">"Nustatyti prieš pusiaudienį"</string>

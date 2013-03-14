@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"ተመለስ"</string>
     <string name="candidates_style">"ዕጩዎች"</string>
     <string name="capital_off">"ውጪ"</string>
     <string name="capital_on">"በ"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"ተጠናቋል"</string>
     <string name="date_time_set">"አዘጋጅ"</string>
     <string name="loading">"በመጫን ላይ…"</string>
-    <string name="next_button_label">"ቀጥሎ"</string>
     <string name="number_picker_decrement_button">"ቀንስ"</string>
     <string name="number_picker_increment_button">"ጨምር"</string>
     <string name="number_picker_increment_scroll_action">"ለመጨመር ወደ ላይ እና ለመቀነስ ወደ ታች አንሸራትት።"</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"ነባሪ የስልክ ላይ ጥሪ"</string>
     <string name="ringtone_picker_title">"ጥሪ ድምፆች"</string>
     <string name="ringtone_silent">"ፀጥታ"</string>
-    <string name="skip_button_label">"ዝለል"</string>
     <string name="time_picker_decrement_hour_button">"ሰዓት ቀንስ"</string>
     <string name="time_picker_decrement_minute_button">"ደቂቃ ቀንስ"</string>
     <string name="time_picker_decrement_set_am_button">"AM አዘጋጅ"</string>

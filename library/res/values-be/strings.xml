@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"Назад"</string>
     <string name="candidates_style">"кандыдат."</string>
     <string name="capital_off">"Адключана"</string>
     <string name="capital_on">"Уключыць"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"Гатова"</string>
     <string name="date_time_set">"Задаць"</string>
     <string name="loading">"Загрузка..."</string>
-    <string name="next_button_label">"Далей"</string>
     <string name="number_picker_decrement_button">"Паменшыць"</string>
     <string name="number_picker_increment_button">"Павялічыць"</string>
     <string name="number_picker_increment_scroll_action">"Правядзіце пальцам уверх, каб павялічыць, або ўніз, каб паменшыць."</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"Рынгтон па змаўчаннi"</string>
     <string name="ringtone_picker_title">"Рынгтоны"</string>
     <string name="ringtone_silent">"Ціхі рэжым"</string>
-    <string name="skip_button_label">"Прапусціць"</string>
     <string name="time_picker_decrement_hour_button">"Паменшыць лічбу гадзін."</string>
     <string name="time_picker_decrement_minute_button">"Паменшыць лічбу хвілін."</string>
     <string name="time_picker_decrement_set_am_button">"Усталяваць час да паўдня"</string>

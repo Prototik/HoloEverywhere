@@ -60,6 +60,10 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     public abstract LayoutInflater getLayoutInflater();
 
     @Override
+    @Deprecated
+    /**
+     * It's method internal. Don't use or override it
+     */
     public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
         return getLayoutInflater();
     }
@@ -175,8 +179,7 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     @Override
     public final View onCreateView(android.view.LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
-        return prepareDecorView(onCreateView(
-                getLayoutInflater(savedInstanceState),
+        return prepareDecorView(onCreateView(getLayoutInflater(),
                 container, savedInstanceState));
     }
 

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <string name="back_button_label">"Zpět"</string>
     <string name="candidates_style">"kandidáti"</string>
     <string name="capital_off">"O"</string>
     <string name="capital_on">"I"</string>
@@ -13,7 +12,6 @@
     <string name="date_time_done">"Hotovo"</string>
     <string name="date_time_set">"Nastavit"</string>
     <string name="loading">"Načítání..."</string>
-    <string name="next_button_label">"Další"</string>
     <string name="number_picker_decrement_button">"Snížit"</string>
     <string name="number_picker_increment_button">"Zvýšit"</string>
     <string name="number_picker_increment_scroll_action">"Chcete-li hodnotu zvýšit, přijeďte prstem nahoru, chcete-li hodnotu snížit, přejeďte prstem dolů."</string>
@@ -21,7 +19,6 @@
     <string name="ringtone_default">"Výchozí vyzváněcí tón"</string>
     <string name="ringtone_picker_title">"Vyzváněcí tóny"</string>
     <string name="ringtone_silent">"Ticho"</string>
-    <string name="skip_button_label">"Přeskočit"</string>
     <string name="time_picker_decrement_hour_button">"Ubrat hodinu"</string>
     <string name="time_picker_decrement_minute_button">"Ubrat minutu"</string>
     <string name="time_picker_decrement_set_am_button">"Nastavit dop."</string>
