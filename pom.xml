@@ -22,6 +22,7 @@
 		<module>Bug319</module>
 		<module>Bug324</module>
 		<module>Bug334</module>
+		<module>Bug346</module>
 	</modules>
 
 	<dependencies>
