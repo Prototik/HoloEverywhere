@@ -8,13 +8,12 @@ import android.content.ContextWrapper;
 import android.content.res.TypedArray;
 import android.support.v4.app.FragmentActivity.FragmentTag;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 public class _HoloFragmentInflater {
-    private static final String TAG = "HoloFragmentInflater";
-
-    public static View inflate(AttributeSet attrs, View parent, FragmentActivity activity) {
+    private static View inflate(AttributeSet attrs, View parent, FragmentActivity activity,
+            Fragment parentFragment) {
         String fname = attrs.getAttributeValue(null, "class");
         TypedArray a = activity.obtainStyledAttributes(attrs, FragmentTag.Fragment);
         if (fname == null) {
@@ -33,28 +32,27 @@ public class _HoloFragmentInflater {
                             + ": Must specify unique android:id, android:tag, or have a parent with an id for "
                             + fname);
         }
-        Fragment fragment = id != View.NO_ID ? activity.mFragments.findFragmentById(id) : null;
+        final FragmentManagerImpl fm = obtainFragmentManager(activity, parentFragment);
+        Fragment fragment = id != View.NO_ID ? fm.findFragmentById(id) : null;
         if (fragment == null && tag != null) {
-            fragment = activity.mFragments.findFragmentByTag(tag);
+            fragment = fm.findFragmentByTag(tag);
         }
         if (fragment == null && containerId != View.NO_ID) {
-            fragment = activity.mFragments.findFragmentById(containerId);
-        }
-        if (FragmentManagerImpl.DEBUG) {
-            Log.v(TAG, "onCreateView: id=0x"
-                    + Integer.toHexString(id) + " fname=" + fname
-                    + " existing=" + fragment);
+            fragment = fm.findFragmentById(containerId);
         }
         if (fragment == null) {
             fragment = Fragment.instantiate(activity, fname);
+            fragment.mParentFragment = parentFragment;
             fragment.mFromLayout = true;
             fragment.mFragmentId = id != 0 ? id : containerId;
+            fragment.mContainer = (ViewGroup) parent;
             fragment.mContainerId = containerId;
             fragment.mTag = tag;
             fragment.mInLayout = true;
-            fragment.mFragmentManager = activity.mFragments;
+            fragment.mFragmentManager = fm;
             fragment.onInflate(activity, attrs, fragment.mSavedFragmentState);
-            activity.mFragments.addFragment(fragment, true);
+            fm.addFragment(fragment, false);
+            fm.moveToState(fragment, Fragment.CREATED, 0, 0, false);
         } else if (fragment.mInLayout) {
             throw new IllegalArgumentException(attrs.getPositionDescription()
                     + ": Duplicate id 0x" + Integer.toHexString(id)
@@ -65,9 +63,8 @@ public class _HoloFragmentInflater {
             if (!fragment.mRetaining) {
                 fragment.onInflate(activity, attrs, fragment.mSavedFragmentState);
             }
-            activity.mFragments.moveToState(fragment);
+            fm.moveToState(fragment, Fragment.CREATED, 0, 0, false);
         }
-
         if (fragment.mView == null) {
             throw new IllegalStateException("Fragment " + fname
                     + " did not create a view.");
@@ -81,10 +78,11 @@ public class _HoloFragmentInflater {
         return fragment.mView;
     }
 
-    public static View inflate(LayoutInflater layoutInflater, AttributeSet attrs, View parent) {
+    public static View inflate(LayoutInflater layoutInflater, AttributeSet attrs, View parent,
+            Fragment fragment) {
         FragmentActivity activity = layoutInflater.getFragmentActivity();
         if (activity != null) {
-            return inflate(attrs, parent, activity);
+            return inflate(attrs, parent, activity, fragment);
         }
         Context context = layoutInflater.getContext();
         while (context instanceof ContextWrapper) {
@@ -97,6 +95,25 @@ public class _HoloFragmentInflater {
         if (activity == null) {
             throw new IllegalStateException("Cannot find any reference to FragmentActivity");
         }
-        return inflate(attrs, parent, activity);
+        return inflate(attrs, parent, activity, fragment);
+    }
+
+    private static FragmentManagerImpl obtainFragmentManager(FragmentActivity activity,
+            Fragment fragment) {
+        FragmentManagerImpl fm = null;
+        if (fragment != null) {
+            fm = fragment.mChildFragmentManager;
+            if (fm == null) {
+                try {
+                    fm = (FragmentManagerImpl) fragment.getChildFragmentManager();
+                } catch (ClassCastException e) {
+                    fm = fragment.mChildFragmentManager;
+                }
+            }
+        }
+        if (fm == null && activity != null) {
+            fm = activity.mFragments;
+        }
+        return fm;
     }
 }

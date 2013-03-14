@@ -3,6 +3,7 @@ package org.holoeverywhere.app;
 
 import java.util.List;
 
+import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.addon.IAddon;
 import org.holoeverywhere.addon.IAddonAttacher;
 import org.holoeverywhere.addon.IAddonBasicAttacher;
@@ -57,6 +58,8 @@ public class Fragment extends _HoloFragment {
     private final IAddonAttacher<IAddonFragment> mAttacher =
             new IAddonBasicAttacher<IAddonFragment, Fragment>(this);
 
+    private LayoutInflater mLayoutInflater;
+
     @Override
     public <T extends IAddonFragment> T addon(Class<? extends IAddon> clazz) {
         return mAttacher.addon(clazz);
@@ -70,6 +73,15 @@ public class Fragment extends _HoloFragment {
     @Override
     public <T extends IAddonFragment> T addon(String classname) {
         return mAttacher.addon(classname);
+    }
+
+    @Override
+    public LayoutInflater getLayoutInflater() {
+        if (mLayoutInflater == null) {
+            mLayoutInflater = getSupportActivity().getLayoutInflater().
+                    obtainFragmentChildInflater(this);
+        }
+        return mLayoutInflater;
     }
 
     @Override

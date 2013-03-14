@@ -1,0 +1,16 @@
+language: java
+
+branches:
+  excludes:
+    - gh-pages
+    - bugs
+
+notifications:
+  email: false
+
+before_install:
+  - wget http://dl.google.com/android/android-sdk_r21.1-linux.tgz -O android.tgz
+  - tar -zxf android.tgz
+  - export ANDROID_HOME=`pwd`/android-sdk-linux
+  - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+  - android update sdk --filter 1 --no-ui --force

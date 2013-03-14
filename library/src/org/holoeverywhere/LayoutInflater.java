@@ -13,6 +13,7 @@ import java.util.WeakHashMap;
 
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator;
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
+import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.internal.DialogTitle;
 import org.holoeverywhere.internal.NumberPickerEditText;
 import org.holoeverywhere.widget.FrameLayout;
@@ -182,7 +183,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
         if (inflater instanceof LayoutInflater) {
             return (LayoutInflater) inflater;
         }
-        return LayoutInflater.from(inflater.getContext()).grab(inflater);
+        return LayoutInflater.from(inflater.getContext()).setParent(inflater);
     }
 
     public static LayoutInflater from(Context context) {
@@ -287,23 +288,37 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
         sListener = listener;
     }
 
+    private final Fragment mChildFragment;
     private Map<Context, LayoutInflater> mClonedInstances;
     private final Object[] mConstructorArgs = new Object[2];
     private final Context mContext;
     private List<Factory> mFactories;
     private Filter mFilter;
     private HashMap<String, Boolean> mFilterMap;
-
     private FragmentActivity mFragmentActivity;
+
+    private WeakHashMap<Fragment, WeakReference<LayoutInflater>> mFragmentChildInstances;
+
+    private LayoutInflater mParentInflater;
 
     protected LayoutInflater(android.view.LayoutInflater original,
             Context newContext) {
-        this(newContext);
-        grab(original);
+        this(original, newContext, null);
+    }
+
+    protected LayoutInflater(android.view.LayoutInflater original,
+            Context newContext, Fragment childFragment) {
+        this(original.getContext(), childFragment);
+        setParent(original);
     }
 
     protected LayoutInflater(Context context) {
+        this(context, null);
+    }
+
+    protected LayoutInflater(Context context, Fragment childFragment) {
         super(context);
+        mChildFragment = childFragment;
         mContext = context;
         if (LayoutInflater.sListener != null) {
             LayoutInflater.sListener.onInitInflater(this);
@@ -347,7 +362,9 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
             final View view = constructor.newInstance(args);
             if (view instanceof ViewStub) {
                 final ViewStub viewStub = (ViewStub) view;
-                viewStub.setLayoutInflater(this);
+                if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
+                    viewStub.setLayoutInflater(this);
+                }
             }
             return view;
         } catch (NoSuchMethodException e) {
@@ -411,7 +428,8 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
 
     View createViewFromTag(View parent, String name, AttributeSet attrs) {
         if ("fragment".equals(name)) {
-            return _HoloFragmentInflater.inflate(LayoutInflater.this, attrs, parent);
+            return _HoloFragmentInflater
+                    .inflate(LayoutInflater.this, attrs, parent, mChildFragment);
         }
         if (name.equals("view")) {
             name = attrs.getAttributeValue(null, "class");
@@ -458,31 +476,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
 
     public FragmentActivity getFragmentActivity() {
         return mFragmentActivity;
-    }
-
-    protected LayoutInflater grab(android.view.LayoutInflater original) {
-        if (original instanceof LayoutInflater) {
-            LayoutInflater inflater = (LayoutInflater) original;
-            mFilter = inflater.mFilter;
-            mFilterMap = inflater.mFilterMap;
-            mFactories = inflater.mFactories;
-        } else {
-            if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
-                final Factory2 factory = original.getFactory2();
-                if (factory != null) {
-                    setFactory2(factory);
-                }
-            }
-            final android.view.LayoutInflater.Factory factory = original.getFactory();
-            if (factory != null) {
-                setFactory(factory);
-            }
-            final Filter filter = original.getFilter();
-            if (filter != null) {
-                setFilter(filter);
-            }
-        }
-        return this;
     }
 
     public View inflate(int resource) {
@@ -573,6 +566,22 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
 
     public ContextMenuDecorView makeDecorView(int layout, ContextMenuListener listener) {
         return ContextMenuDecorView.inflateDecorView(this, layout, listener);
+    }
+
+    public LayoutInflater obtainFragmentChildInflater(Fragment fragment) {
+        if (mParentInflater != null) {
+            return mParentInflater.obtainFragmentChildInflater(fragment);
+        }
+        if (mFragmentChildInstances == null) {
+            mFragmentChildInstances = new WeakHashMap<Fragment, WeakReference<LayoutInflater>>();
+        }
+        WeakReference<LayoutInflater> reference = mFragmentChildInstances.get(fragment);
+        LayoutInflater inflater = reference == null ? null : reference.get();
+        if (inflater == null) {
+            inflater = new LayoutInflater(this, mContext, fragment);
+            mFragmentChildInstances.put(fragment, new WeakReference<LayoutInflater>(inflater));
+        }
+        return inflater;
     }
 
     @Override
@@ -781,6 +790,35 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
 
     public void setFragmentActivity(FragmentActivity fragmentActivity) {
         mFragmentActivity = fragmentActivity;
+    }
+
+    protected LayoutInflater setParent(android.view.LayoutInflater original) {
+        if (original == this) {
+            return this;
+        }
+        if (original instanceof LayoutInflater) {
+            mParentInflater = (LayoutInflater) original;
+            mFilter = mParentInflater.mFilter;
+            mFilterMap = mParentInflater.mFilterMap;
+            mFactories = mParentInflater.mFactories;
+        } else {
+            mParentInflater = null;
+            if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
+                final Factory2 factory = original.getFactory2();
+                if (factory != null) {
+                    setFactory2(factory);
+                }
+            }
+            final android.view.LayoutInflater.Factory factory = original.getFactory();
+            if (factory != null) {
+                setFactory(factory);
+            }
+            final Filter filter = original.getFilter();
+            if (filter != null) {
+                setFilter(filter);
+            }
+        }
+        return this;
     }
 
     protected View tryCreateView(String name, String prefix, AttributeSet attrs) {

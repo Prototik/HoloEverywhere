@@ -8,6 +8,7 @@ import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
 import org.holoeverywhere.preference.SharedPreferences;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -31,6 +32,8 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
         IHoloFragment {
     private static final int INTERNAL_DECOR_VIEW_ID = 0x7f999999;
     private Activity mActivity;
+    private boolean mDestoryChildFragments = true;
+
     private Bundle mSavedInstanceState;
 
     @Override
@@ -54,13 +57,11 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     }
 
     @Override
-    public LayoutInflater getLayoutInflater() {
-        return mActivity.getLayoutInflater();
-    }
+    public abstract LayoutInflater getLayoutInflater();
 
     @Override
     public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
-        return mActivity.getLayoutInflater();
+        return getLayoutInflater();
     }
 
     public MenuInflater getMenuInflater() {
@@ -84,7 +85,11 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
 
     @Override
     public ActionBar getSupportActionBar() {
-        return getSupportActivity().getSupportActionBar();
+        return mActivity.getSupportActionBar();
+    }
+
+    public Context getSupportActionBarContext() {
+        return mActivity.getSupportActionBarContext();
     }
 
     @Override
@@ -108,6 +113,10 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
 
     public Object getSystemService(String name) {
         return mActivity.getSystemService(name);
+    }
+
+    public boolean isDestoryChildFragments() {
+        return mDestoryChildFragments;
     }
 
     public void onAttach(Activity activity) {
@@ -167,14 +176,27 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     public final View onCreateView(android.view.LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         return prepareDecorView(onCreateView(
-                getLayoutInflater(savedInstanceState), container,
-                savedInstanceState));
+                getLayoutInflater(savedInstanceState),
+                container, savedInstanceState));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mChildFragmentManager != null && mDestoryChildFragments) {
+            synchronized (mChildFragmentManager) {
+                for (Fragment fragment : mChildFragmentManager.mActive) {
+                    mChildFragmentManager.removeFragment(fragment, 0, 0);
+                }
+            }
+            mChildFragmentManager = null;
+        }
     }
 
     @Override
@@ -234,5 +256,12 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
         ContextMenuDecorView view = new ContextMenuDecorView(mActivity, v, null, this);
         view.setId(INTERNAL_DECOR_VIEW_ID);
         return view;
+    }
+
+    /**
+     * If true fragment will be destory all child fragments after destory view
+     */
+    public void setDestoryChildFragments(boolean destoryChildFragments) {
+        mDestoryChildFragments = destoryChildFragments;
     }
 }

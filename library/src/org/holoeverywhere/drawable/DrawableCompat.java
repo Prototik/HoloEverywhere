@@ -30,6 +30,7 @@ public final class DrawableCompat {
         CLASS_MAP.put("rotate", RotateDrawable.class);
         CLASS_MAP.put("layer-list", LayerDrawable.class);
         CLASS_MAP.put("selector", StateListDrawable.class);
+        CLASS_MAP.put("color", ColorDrawable.class);
     }
 
     public static Drawable createFromPath(String pathName) {

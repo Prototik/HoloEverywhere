@@ -34,9 +34,6 @@ public class DemoThemePicker extends FrameLayout {
         THEME_HASHTABLE.put(ThemeManager.DARK, R.id.dark);
         THEME_HASHTABLE.put(ThemeManager.LIGHT, R.id.light);
         THEME_HASHTABLE.put(ThemeManager.MIXED, R.id.mixed);
-        THEME_HASHTABLE.put(ThemeManager.DARK | ThemeManager.FULLSCREEN, R.id.dark);
-        THEME_HASHTABLE.put(ThemeManager.LIGHT | ThemeManager.FULLSCREEN, R.id.light);
-        THEME_HASHTABLE.put(ThemeManager.MIXED | ThemeManager.FULLSCREEN, R.id.mixed);
     }
 
     private final Activity activity;
@@ -76,8 +73,8 @@ public class DemoThemePicker extends FrameLayout {
         findViewById(R.id.dark).setOnClickListener(new ThemeChangeListener(ThemeManager.DARK));
         findViewById(R.id.light).setOnClickListener(new ThemeChangeListener(ThemeManager.LIGHT));
         findViewById(R.id.mixed).setOnClickListener(new ThemeChangeListener(ThemeManager.MIXED));
-        ((DemoListRowView) findViewById(THEME_HASHTABLE.get(ThemeManager.getTheme(activity))))
-                .setSelectionHandlerVisiblity(true);
+        ((DemoListRowView) findViewById(THEME_HASHTABLE.get(ThemeManager.getTheme(activity)
+                & ThemeManager.COLOR_SCHEME_MASK))).setSelectionHandlerVisiblity(true);
     }
 
 }

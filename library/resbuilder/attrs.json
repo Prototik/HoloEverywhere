@@ -193,6 +193,7 @@
             "android:enterFadeDuration", 
             "android:exitFadeDuration"
         ], 
+        "ColorDrawable": "android:color",
         "TextAppearance": [
             "android:typeface", 
             "android:textSize", 

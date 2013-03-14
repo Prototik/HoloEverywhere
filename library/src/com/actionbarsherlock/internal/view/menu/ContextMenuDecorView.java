@@ -15,7 +15,7 @@ import android.view.ViewParent;
 import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.MenuItem;
 
-public final class ContextMenuDecorView extends FrameLayout implements
+public class ContextMenuDecorView extends FrameLayout implements
         MenuPresenter.Callback, MenuBuilder.Callback {
     public static ContextMenuDecorView inflateDecorView(LayoutInflater layoutInflater, int layout,
             ContextMenuListener listener) {

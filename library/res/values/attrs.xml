@@ -145,6 +145,9 @@
         <attr name="dropDownHorizontalOffset"/>
         <attr name="dropDownVerticalOffset"/>
     </declare-styleable>
+    <declare-styleable name="ColorDrawable">
+        <attr name="android:color"/>
+    </declare-styleable>
     <declare-styleable name="DatePicker">
         <attr name="calendarViewShown"/>
         <attr name="endYear"/>
