@@ -49,7 +49,6 @@ public abstract class Activity extends _HoloActivity {
     public static final String ADDON_SLIDING_MENU = "SlidingMenu";
     private final IAddonAttacher<IAddonActivity> mAttacher =
             new IAddonBasicAttacher<IAddonActivity, Activity>(this);
-
     private MenuInflater mMenuInflater;
 
     @Override

@@ -14,6 +14,7 @@ import org.holoeverywhere.SystemServiceManager;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
+import org.holoeverywhere.app.ContextThemeWrapperPlus;
 import org.holoeverywhere.preference.PreferenceManagerHelper;
 import org.holoeverywhere.preference.SharedPreferences;
 import org.holoeverywhere.util.SparseIntArray;
@@ -28,7 +29,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
 import android.view.ViewGroup;
@@ -256,7 +256,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
                     && (ThemeManager.getTheme((Activity) this) & ThemeManager.COLOR_SCHEME_MASK) == theme) {
                 mActionBarContext = this;
             } else {
-                mActionBarContext = new ContextThemeWrapper(this,
+                mActionBarContext = new ContextThemeWrapperPlus(this,
                         ThemeManager.getThemeResource(theme));
             }
         }

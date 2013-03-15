@@ -123,6 +123,7 @@ public class DialogFragment extends Fragment implements
     }
 
     @Override
+    @Deprecated
     public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
         if (!mShowsDialog) {
             return super.getLayoutInflater(savedInstanceState);
