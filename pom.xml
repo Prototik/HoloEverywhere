@@ -9,7 +9,7 @@
 
 	<parent>
 		<groupId>org.holoeverywhere</groupId>
-		<artifactId>parent</artifactId>
+		<artifactId>application</artifactId>
 		<version>1.4.3-SNAPSHOT</version>
 	</parent>
 
@@ -23,38 +23,10 @@
 		<module>Bug324</module>
 		<module>Bug334</module>
 		<module>Bug346</module>
+		<module>Bug352</module>
 	</modules>
-
-	<dependencies>
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.holoeverywhere</groupId>
-			<artifactId>library</artifactId>
-			<version>${project.version}</version>
-			<type>apklib</type>
-		</dependency>
-	</dependencies>
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
-
-		<plugins>
-			<plugin>
-				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-				<artifactId>android-maven-plugin</artifactId>
-				<extensions>true</extensions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jarsigner-plugin</artifactId>
-				<inherited>true</inherited>
-			</plugin>
-		</plugins>
 	</build>
 </project>
