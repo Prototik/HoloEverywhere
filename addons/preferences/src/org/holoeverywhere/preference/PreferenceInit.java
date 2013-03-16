@@ -12,8 +12,8 @@ public class PreferenceInit {
         PACKAGE = PreferenceInit.class.getPackage().getName();
         THEME_FLAG = ThemeManager.makeNewFlag();
 
-        LayoutInflater.remap(PreferenceFrameLayout.class);
-        LayoutInflater.remap(FragmentBreadCrumbs.class);
+        LayoutInflater.register(PreferenceFrameLayout.class);
+        LayoutInflater.register(FragmentBreadCrumbs.class);
 
         map(R.style.Holo_PreferenceTheme, R.style.Holo_PreferenceTheme_Light);
     }
@@ -57,5 +57,4 @@ public class PreferenceInit {
 
     private PreferenceInit() {
     }
-
 }

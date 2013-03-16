@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
+import org.holoeverywhere.app.ContextThemeWrapperPlus;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.SparseArray;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -157,7 +157,7 @@ public class ListMenuPresenter implements MenuPresenter,
     @Override
     public void initForMenu(Context context, MenuBuilder menu) {
         if (mThemeRes != 0) {
-            mContext = new ContextThemeWrapper(context, mThemeRes);
+            mContext = new ContextThemeWrapperPlus(context, mThemeRes);
             mInflater = LayoutInflater.from(mContext);
         } else if (mContext != null) {
             mContext = context;

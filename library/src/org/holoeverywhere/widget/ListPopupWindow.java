@@ -13,7 +13,6 @@ import android.os.Build.VERSION;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -164,19 +163,12 @@ public class ListPopupWindow {
     private boolean mModal;
     private DataSetObserver mObserver;
     private PopupWindow mPopup;
-
     private int mPromptPosition = ListPopupWindow.POSITION_PROMPT_ABOVE;
-
     private View mPromptView;
-
     private final ResizePopupRunnable mResizePopupRunnable = new ResizePopupRunnable();
-
     private final PopupScrollListener mScrollListener = new PopupScrollListener();
-
     private Runnable mShowDropDownRunnable;
-
     private Rect mTempRect = new Rect();
-
     private final PopupTouchInterceptor mTouchInterceptor = new PopupTouchInterceptor();
 
     public ListPopupWindow(Context context) {
@@ -191,16 +183,8 @@ public class ListPopupWindow {
         this(context, attrs, defStyleAttr, 0);
     }
 
-    @SuppressLint("NewApi")
-    public ListPopupWindow(Context context, AttributeSet attrs,
-            int defStyleAttr, int defStyleRes) {
-        mContext = context;
-        if (VERSION.SDK_INT >= 11) {
-            mPopup = new PopupWindow(mContext, attrs, defStyleAttr, defStyleRes);
-        } else {
-            mPopup = new PopupWindow(new ContextThemeWrapper(context,
-                    defStyleRes), attrs, defStyleAttr);
-        }
+    public ListPopupWindow(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        mPopup = new PopupWindow(mContext = context, attrs, defStyleAttr, defStyleRes);
         mPopup.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
     }
 

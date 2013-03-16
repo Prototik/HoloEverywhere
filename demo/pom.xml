@@ -9,24 +9,12 @@
 
 	<parent>
 		<groupId>org.holoeverywhere</groupId>
-		<artifactId>parent</artifactId>
+		<artifactId>application</artifactId>
 		<version>1.4.3-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<relativePath>../application/pom.xml</relativePath>
 	</parent>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android-test</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -34,29 +22,16 @@
 
 		<dependency>
 			<groupId>org.holoeverywhere</groupId>
-			<artifactId>library</artifactId>
-			<version>${project.version}</version>
-			<type>apklib</type>
-		</dependency>
-
-		<dependency>
-			<groupId>org.holoeverywhere</groupId>
 			<artifactId>addon-slidingmenu</artifactId>
-			<version>${project.version}</version>
 			<type>apklib</type>
 		</dependency>
 
 		<dependency>
 			<groupId>org.holoeverywhere</groupId>
 			<artifactId>addon-preferences</artifactId>
-			<version>${project.version}</version>
 			<type>apklib</type>
 		</dependency>
 	</dependencies>
-
-	<properties>
-		<holo.resbuilder.buildAll>false</holo.resbuilder.buildAll>
-	</properties>
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
@@ -78,75 +53,6 @@
 					</inputFiles>
 				</configuration>
 			</plugin>
-
-			<plugin>
-				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-				<artifactId>android-maven-plugin</artifactId>
-				<extensions>true</extensions>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>zipalign</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<zipalign>
-						<skip>false</skip>
-						<verbose>true</verbose>
-						<inputApk>${project.build.directory}/${project.artifactId}-${project.version}.apk</inputApk>
-						<outputApk>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</outputApk>
-					</zipalign>
-					<test>
-						<skip>true</skip>
-					</test>
-					<file>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</file>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.7</version>
-				<configuration>
-					<artifacts>
-						<artifact>
-							<file>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</file>
-							<type>apk</type>
-							<classifier>signed-aligned</classifier>
-						</artifact>
-					</artifacts>
-				</configuration>
-				<executions>
-					<execution>
-						<id>attach-signed-aligned</id>
-						<phase>package</phase>
-						<goals>
-							<goal>attach-artifact</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>sign</id>
-			<activation>
-				<file>
-					<exists>${holo.sign.keystore}</exists>
-				</file>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-jarsigner-plugin</artifactId>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 </project>

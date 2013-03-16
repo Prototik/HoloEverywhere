@@ -43,7 +43,6 @@ import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 import com.actionbarsherlock.internal.view.menu.ContextMenuWrapper;
 import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class _HoloActivity extends Watson implements IHoloActivity {
@@ -252,12 +251,11 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
             if (theme == ThemeManager.INVALID || theme == ThemeManager.MIXED) {
                 theme = ThemeManager.DARK;
             }
-            if (this instanceof Activity
-                    && (ThemeManager.getTheme((Activity) this) & ThemeManager.COLOR_SCHEME_MASK) == theme) {
+            theme = ThemeManager.getThemeResource(theme);
+            if (mLastThemeResourceId == theme) {
                 mActionBarContext = this;
             } else {
-                mActionBarContext = new ContextThemeWrapperPlus(this,
-                        ThemeManager.getThemeResource(theme));
+                mActionBarContext = new ContextThemeWrapperPlus(this, theme);
             }
         }
         return mActionBarContext;
@@ -266,11 +264,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     @Override
     public Application getSupportApplication() {
         return Application.getLastInstance();
-    }
-
-    @Override
-    public MenuInflater getSupportMenuInflater() {
-        return null;
     }
 
     @Override
@@ -550,10 +543,12 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     @Override
     public synchronized void setTheme(int resid) {
         if (resid > ThemeManager._START_RESOURCES_ID) {
-            mActionBarContext = null;
-            super.setTheme(mLastThemeResourceId = resid);
+            if (mLastThemeResourceId != resid) {
+                mActionBarContext = null;
+                super.setTheme(mLastThemeResourceId = resid);
+            }
         } else {
-            setTheme(mLastThemeResourceId = ThemeManager.getThemeResource(resid));
+            setTheme(ThemeManager.getThemeResource(resid));
         }
     }
 

@@ -10,6 +10,7 @@ import java.util.WeakHashMap;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.ContextThemeWrapperPlus;
 import org.holoeverywhere.util.CharSequences;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,7 +26,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.AbsSavedState;
-import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +70,7 @@ public class Preference implements Comparable<Preference>,
         boolean onPreferenceClick(Preference preference);
     }
 
-    static final class PreferenceContextWrapper extends ContextThemeWrapper {
+    static final class PreferenceContextWrapper extends ContextThemeWrapperPlus {
         public PreferenceContextWrapper(Context base, int themeres) {
             super(base, themeres);
         }
