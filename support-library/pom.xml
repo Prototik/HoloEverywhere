@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>support-library</artifactId>
+	<name>HoloEverywhere Support Library</name>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.holoeverywhere</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.4.3-SNAPSHOT</version>
+	</parent>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>install-jar</id>
+						<phase>install</phase>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+						<configuration>
+							<file>${project.basedir}/android-support-v4-r12.jar</file>
+							<generatePom>true</generatePom>
+							<groupId>com.google.android</groupId>
+							<artifactId>support-v4</artifactId>
+							<version>r12</version>
+							<packaging>jar</packaging>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

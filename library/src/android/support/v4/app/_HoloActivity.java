@@ -15,6 +15,7 @@ import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
 import org.holoeverywhere.app.ContextThemeWrapperPlus;
+import org.holoeverywhere.internal.WindowDecorView;
 import org.holoeverywhere.preference.PreferenceManagerHelper;
 import org.holoeverywhere.preference.SharedPreferences;
 import org.holoeverywhere.util.SparseIntArray;
@@ -37,7 +38,6 @@ import android.view.ViewGroup.LayoutParams;
 import com.actionbarsherlock.internal.view.menu.ContextMenuBackWrapper;
 import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
 import com.actionbarsherlock.internal.view.menu.ContextMenuCallbackGetter;
-import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
 import com.actionbarsherlock.internal.view.menu.ContextMenuItemWrapper;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 import com.actionbarsherlock.internal.view.menu.ContextMenuWrapper;
@@ -508,10 +508,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity {
     }
 
     public View prepareDecorView(View v, ViewGroup.LayoutParams params) {
-        if (v instanceof ContextMenuDecorView) {
+        if (v instanceof WindowDecorView) {
             return v;
         }
-        return new ContextMenuDecorView(this, v, params, this);
+        return new WindowDecorView(this, v, params, this);
     }
 
     @Override
