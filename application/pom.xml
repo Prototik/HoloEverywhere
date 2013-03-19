@@ -84,32 +84,6 @@
 					<file>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</file>
 				</configuration>
 			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.7</version>
-
-				<configuration>
-					<artifacts>
-						<artifact>
-							<file>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</file>
-							<type>apk</type>
-							<classifier>signed-aligned</classifier>
-						</artifact>
-					</artifacts>
-				</configuration>
-
-				<executions>
-					<execution>
-						<id>attach-signed-aligned</id>
-						<phase>package</phase>
-						<goals>
-							<goal>attach-artifact</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 
@@ -126,6 +100,44 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-jarsigner-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>attach-apk</id>
+			<activation>
+				<file>
+					<exists>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</exists>
+				</file>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+						<version>1.7</version>
+
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</file>
+									<type>apk</type>
+									<classifier>signed-aligned</classifier>
+								</artifact>
+							</artifacts>
+						</configuration>
+
+						<executions>
+							<execution>
+								<id>attach-apk</id>
+								<phase>package</phase>
+								<goals>
+									<goal>attach-artifact</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
