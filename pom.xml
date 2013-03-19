@@ -5,7 +5,7 @@
 	<groupId>org.holoeverywhere</groupId>
 	<artifactId>parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.5.0</version>
+	<version>1.5.1-SNAPSHOT</version>
 
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -31,7 +31,7 @@
 		<url>https://github.com/ChristopheVersieux/HoloEverywhere</url>
 		<connection>scm:git:git://github.com/ChristopheVersieux/HoloEverywhere.git</connection>
 		<developerConnection>scm:git:git@github.com:ChristopheVersieux/HoloEverywhere.git</developerConnection>
-		<tag>holoeverywhere-1.5.0</tag>
+		<tag>holoeverywhere-1.5</tag>
 	</scm>
 
 	<ciManagement>

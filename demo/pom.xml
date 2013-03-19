@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.holoeverywhere</groupId>
 		<artifactId>application</artifactId>
-		<version>1.5.0</version>
+		<version>1.5.1-SNAPSHOT</version>
 		<relativePath>../application/pom.xml</relativePath>
 	</parent>
 
