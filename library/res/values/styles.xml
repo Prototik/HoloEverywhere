@@ -132,6 +132,28 @@
         <item name="android:dividerPadding">0dip</item>
         <item name="dividerPadding">0dip</item>
     </style>
+    <style name="Holo.CalendarView">
+        <item name="dateTextAppearance">?android:textAppearanceSmall</item>
+        <item name="firstDayOfWeek">1</item>
+        <item name="focusedMonthDateColor">#FFFFFFFF</item>
+        <item name="maxDate">12/31/2100</item>
+        <item name="minDate">01/01/1900</item>
+        <item name="selectedDateVerticalBar">@drawable/day_picker_week_view_dayline_holo</item>
+        <item name="selectedWeekBackgroundColor">#330099FF</item>
+        <item name="showWeekNumber">true</item>
+        <item name="shownWeekCount">6</item>
+        <item name="unfocusedMonthDateColor">#66FFFFFF</item>
+        <item name="weekDayTextAppearance">@style/Holo.TextAppearance.CalendarView.WeekDayView</item>
+        <item name="weekNumberColor">#33FFFFFF</item>
+        <item name="weekSeparatorLineColor">#19FFFFFF</item>
+    </style>
+    <style name="Holo.CalendarView.Light">
+        <item name="focusedMonthDateColor">#FF000000</item>
+        <item name="selectedWeekBackgroundColor">#330066ff</item>
+        <item name="unfocusedMonthDateColor">#7F08002B</item>
+        <item name="weekNumberColor">#7F080021</item>
+        <item name="weekSeparatorLineColor">#7F08002A</item>
+    </style>
     <style name="Holo.CompoundButton">
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
@@ -355,6 +377,34 @@
         <item name="android:dropDownSelector">@drawable/list_selector_holo_light</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_holo_light</item>
     </style>
+    <style name="Holo.Switch">
+        <item name="switchMinWidth">96dp</item>
+        <item name="switchPadding">16dp</item>
+        <item name="switchTextAppearance">@style/Holo.Switch.TextAppearance</item>
+        <item name="textOff">@string/capital_off</item>
+        <item name="textOn">@string/capital_on</item>
+        <item name="thumb">@drawable/switch_inner_holo_dark</item>
+        <item name="thumbTextPadding">12dp</item>
+        <item name="toggleWhenClick">true</item>
+        <item name="track">@drawable/switch_track_holo_dark</item>
+    </style>
+    <style name="Holo.Switch.Light">
+        <item name="switchTextAppearance">@style/Holo.Switch.TextAppearance.Light</item>
+        <item name="thumb">@drawable/switch_inner_holo_light</item>
+        <item name="track">@drawable/switch_track_holo_light</item>
+    </style>
+    <style name="Holo.Switch.Light.Old">
+        <item name="thumb">@drawable/switch_old_inner_holo_light</item>
+    </style>
+    <style name="Holo.Switch.Old">
+        <item name="thumb">@drawable/switch_old_inner_holo_dark</item>
+    </style>
+    <style name="Holo.Switch.TextAppearance" parent="Holo.TextAppearance.Small">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="Holo.Switch.TextAppearance.Light" parent="Holo.TextAppearance.Small.Light">
+        <item name="android:textSize">12sp</item>
+    </style>
     <style name="Holo.TextAppearance">
         <!--Include block: ColorsDark-->
         <item name="android:textColor">@color/primary_text_holo_dark</item>
@@ -364,6 +414,10 @@
         <item name="android:textColorLink">@color/holo_blue_light</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">normal</item>
+    </style>
+    <style name="Holo.TextAppearance.CalendarView.WeekDayView" parent="Holo.TextAppearance">
+        <item name="android:textColor">#505050</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="Holo.TextAppearance.DialogWindowTitle" parent="Holo.TextAppearance">
         <item name="android:textColor">@color/holo_blue_light</item>
@@ -572,6 +626,8 @@
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
+        <item name="windowMinWidthMajor">@dimen/dialog_min_width_major</item>
+        <item name="windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert</item>
@@ -766,6 +822,8 @@
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
+        <item name="windowMinWidthMajor">@dimen/dialog_min_width_major</item>
+        <item name="windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
@@ -892,6 +950,8 @@
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
+        <item name="windowMinWidthMajor">@dimen/dialog_min_width_major</item>
+        <item name="windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>

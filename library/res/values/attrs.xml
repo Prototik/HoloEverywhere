@@ -11,10 +11,12 @@
     <attr name="buttonBarButtonStyle" format="reference"/>
     <attr name="buttonBarStyle" format="reference"/>
     <attr name="calendarViewShown" format="boolean"/>
+    <attr name="calendarViewStyle" format="reference"/>
     <attr name="centerBright" format="reference|color"/>
     <attr name="centerDark" format="reference|color"/>
     <attr name="centerMedium" format="reference|color"/>
     <attr name="datePickerStyle" format="reference"/>
+    <attr name="dateTextAppearance" format="reference"/>
     <attr name="detailsElementBackground" format="reference"/>
     <attr name="dialogTheme" format="reference"/>
     <attr name="disableChildrenWhenDisabled" format="boolean"/>
@@ -32,7 +34,9 @@
     <attr name="fastScrollTextColor" format="color"/>
     <attr name="fastScrollThumbDrawable" format="reference"/>
     <attr name="fastScrollTrackDrawable" format="reference"/>
+    <attr name="firstDayOfWeek" format="integer"/>
     <attr name="flingable" format="boolean"/>
+    <attr name="focusedMonthDateColor" format="color|reference"/>
     <attr name="forceShownState" format="boolean"/>
     <attr name="fullBright" format="reference|color"/>
     <attr name="fullDark" format="reference|color"/>
@@ -67,6 +71,8 @@
     <attr name="listLayout" format="reference"/>
     <attr name="listPreferredItemHeight" format="dimension"/>
     <attr name="listPreferredItemHeightLarge" format="dimension"/>
+    <attr name="maxDate" format="reference|string"/>
+    <attr name="minDate" format="reference|string"/>
     <attr name="modalBackgroundWrapper" format="reference"/>
     <attr name="multiChoiceItemLayout" format="reference"/>
     <attr name="numberPickerDownButtonStyle" format="reference"/>
@@ -82,6 +88,8 @@
     </attr>
     <attr name="progressLayout" format="reference"/>
     <attr name="segmentedButtonStyle" format="reference"/>
+    <attr name="selectedDateVerticalBar" format="reference"/>
+    <attr name="selectedWeekBackgroundColor" format="color|reference"/>
     <attr name="selectionDivider" format="reference"/>
     <attr name="selectionDividerHeight" format="dimension"/>
     <attr name="selectionDividersDistance" format="dimension"/>
@@ -92,6 +100,8 @@
         <flag name="middle" value="2"/>
         <flag name="none" value="0"/>
     </attr>
+    <attr name="showWeekNumber" format="boolean"/>
+    <attr name="shownWeekCount" format="integer"/>
     <attr name="singleChoiceItemLayout" format="reference"/>
     <attr name="solidColor" format="color|reference"/>
     <attr name="spinnerMode" format="enum">
@@ -101,13 +111,28 @@
     <attr name="spinnerStyle" format="reference"/>
     <attr name="spinnersShown" format="boolean"/>
     <attr name="startYear" format="integer"/>
+    <attr name="switchMinWidth" format="dimension"/>
+    <attr name="switchPadding" format="dimension"/>
+    <attr name="switchStyle" format="reference"/>
+    <attr name="switchStyleOld" format="reference"/>
+    <attr name="switchTextAppearance" format="reference"/>
     <attr name="textAllCaps" format="boolean"/>
     <attr name="textAppearanceListItem" format="reference"/>
     <attr name="textColorAlertDialogListItem" format="reference"/>
+    <attr name="textOff" format="reference|string"/>
+    <attr name="textOn" format="reference|string"/>
+    <attr name="thumb" format="reference"/>
+    <attr name="thumbTextPadding" format="dimension"/>
     <attr name="timePickerStyle" format="reference"/>
+    <attr name="toggleWhenClick" format="boolean"/>
     <attr name="topBright" format="reference|color"/>
     <attr name="topDark" format="reference|color"/>
+    <attr name="track" format="reference"/>
+    <attr name="unfocusedMonthDateColor" format="color|reference"/>
     <attr name="virtualButtonPressedDrawable" format="reference"/>
+    <attr name="weekDayTextAppearance" format="reference"/>
+    <attr name="weekNumberColor" format="color|reference"/>
+    <attr name="weekSeparatorLineColor" format="color|reference"/>
     <!--Start styleable definition block-->
     <declare-styleable name="AbsSpinner">
         <attr name="android:entries"/>
@@ -144,6 +169,21 @@
         <attr name="android:inputType"/>
         <attr name="dropDownHorizontalOffset"/>
         <attr name="dropDownVerticalOffset"/>
+    </declare-styleable>
+    <declare-styleable name="CalendarView">
+        <attr name="dateTextAppearance"/>
+        <attr name="firstDayOfWeek"/>
+        <attr name="focusedMonthDateColor"/>
+        <attr name="maxDate"/>
+        <attr name="minDate"/>
+        <attr name="selectedDateVerticalBar"/>
+        <attr name="selectedWeekBackgroundColor"/>
+        <attr name="showWeekNumber"/>
+        <attr name="shownWeekCount"/>
+        <attr name="unfocusedMonthDateColor"/>
+        <attr name="weekDayTextAppearance"/>
+        <attr name="weekNumberColor"/>
+        <attr name="weekSeparatorLineColor"/>
     </declare-styleable>
     <declare-styleable name="ColorDrawable">
         <attr name="android:color"/>
@@ -280,6 +320,17 @@
         <attr name="android:exitFadeDuration"/>
         <attr name="android:variablePadding"/>
         <attr name="android:visible"/>
+    </declare-styleable>
+    <declare-styleable name="Switch">
+        <attr name="switchMinWidth"/>
+        <attr name="switchPadding"/>
+        <attr name="switchTextAppearance"/>
+        <attr name="textOff"/>
+        <attr name="textOn"/>
+        <attr name="thumb"/>
+        <attr name="thumbTextPadding"/>
+        <attr name="toggleWhenClick"/>
+        <attr name="track"/>
     </declare-styleable>
     <declare-styleable name="TextAppearance">
         <attr name="android:textAllCaps"/>

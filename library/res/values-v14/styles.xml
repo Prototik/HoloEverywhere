@@ -27,6 +27,8 @@
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
+        <item name="windowMinWidthMajor">@dimen/dialog_min_width_major</item>
+        <item name="windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert</item>
@@ -85,6 +87,8 @@
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
+        <item name="windowMinWidthMajor">@dimen/dialog_min_width_major</item>
+        <item name="windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
@@ -143,6 +147,8 @@
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
+        <item name="windowMinWidthMajor">@dimen/dialog_min_width_major</item>
+        <item name="windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>

@@ -27,6 +27,9 @@
         "modalBackgroundWrapper$reference", 
         "holoTheme/invalid 0/dark 1/light 2/mixed 3/preference 4", 
         "preferenceTheme$reference/dark 1/light 2/mixed 3", 
+        "switchStyle$reference", 
+        "switchStyleOld$reference", 
+        "calendarViewStyle$reference", 
         {
             "enum": [
                 "top 0x30", 
@@ -85,6 +88,22 @@
             "android:inputType", 
             "android:entries"
         ], 
+        "CalendarView": [
+            "firstDayOfWeek$integer", 
+            "showWeekNumber$boolean", 
+            "minDate$reference|string", 
+            "maxDate$reference|string", 
+            "shownWeekCount$integer", 
+            "selectedWeekBackgroundColor$color|reference", 
+            "focusedMonthDateColor$color|reference", 
+            "unfocusedMonthDateColor$color|reference", 
+            "weekNumberColor$color|reference", 
+            "weekSeparatorLineColor$color|reference", 
+            "selectedDateVerticalBar$reference", 
+            "weekDayTextAppearance$reference", 
+            "dateTextAppearance$reference"
+        ], 
+        "ColorDrawable": "android:color", 
         "DatePicker": [
             "startYear$integer", 
             "endYear$integer", 
@@ -193,7 +212,17 @@
             "android:enterFadeDuration", 
             "android:exitFadeDuration"
         ], 
-        "ColorDrawable": "android:color",
+        "Switch": [
+            "track$reference", 
+            "thumbTextPadding$dimension", 
+            "switchTextAppearance$reference", 
+            "switchMinWidth$dimension", 
+            "switchPadding$dimension", 
+            "textOn$reference|string", 
+            "textOff$reference|string", 
+            "thumb$reference", 
+            "toggleWhenClick$boolean"
+        ], 
         "TextAppearance": [
             "android:typeface", 
             "android:textSize", 

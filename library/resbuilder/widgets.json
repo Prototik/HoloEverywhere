@@ -133,6 +133,28 @@
             "android:dividerPadding": "0dip", 
             "dividerPadding": "0dip"
         }, 
+        "Holo.CalendarView": {
+            "dateTextAppearance": "?android:textAppearanceSmall", 
+            "firstDayOfWeek": 1, 
+            "focusedMonthDateColor": "#FFFFFFFF", 
+            "maxDate": "12/31/2100", 
+            "minDate": "01/01/1900", 
+            "selectedDateVerticalBar": "@drawable/day_picker_week_view_dayline_holo", 
+            "selectedWeekBackgroundColor": "#330099FF", 
+            "showWeekNumber": true, 
+            "shownWeekCount": 6, 
+            "unfocusedMonthDateColor": "#66FFFFFF", 
+            "weekDayTextAppearance": "@style/Holo.TextAppearance.CalendarView.WeekDayView", 
+            "weekNumberColor": "#33FFFFFF", 
+            "weekSeparatorLineColor": "#19FFFFFF"
+        }, 
+        "Holo.CalendarView.Light": {
+            "focusedMonthDateColor": "#FF000000", 
+            "selectedWeekBackgroundColor": "#330066ff", 
+            "unfocusedMonthDateColor": "#7F08002B", 
+            "weekNumberColor": "#7F080021", 
+            "weekSeparatorLineColor": "#7F08002A"
+        }, 
         "Holo.CompoundButton": {
             "android:clickable": "true", 
             "android:focusable": "true", 
@@ -356,10 +378,42 @@
             "android:dropDownSelector": "@drawable/list_selector_holo_light", 
             "android:popupBackground": "@drawable/menu_dropdown_panel_holo_light"
         }, 
+        "Holo.Switch": {
+            "switchMinWidth": "96dp", 
+            "switchPadding": "16dp", 
+            "switchTextAppearance": "@style/Holo.Switch.TextAppearance", 
+            "textOff": "@string/capital_off", 
+            "textOn": "@string/capital_on", 
+            "thumb": "@drawable/switch_inner_holo_dark", 
+            "thumbTextPadding": "12dp", 
+            "toggleWhenClick": true, 
+            "track": "@drawable/switch_track_holo_dark"
+        }, 
+        "Holo.Switch.Light": {
+            "switchTextAppearance": "@style/Holo.Switch.TextAppearance.Light", 
+            "thumb": "@drawable/switch_inner_holo_light", 
+            "track": "@drawable/switch_track_holo_light"
+        }, 
+        "Holo.Switch.Light.Old": {
+            "thumb": "@drawable/switch_old_inner_holo_light"
+        }, 
+        "Holo.Switch.Old": {
+            "thumb": "@drawable/switch_old_inner_holo_dark"
+        }, 
+        "Holo.Switch.TextAppearance < Holo.TextAppearance.Small": {
+            "android:textSize": "12sp"
+        }, 
+        "Holo.Switch.TextAppearance.Light < Holo.TextAppearance.Small.Light": {
+            "android:textSize": "12sp"
+        }, 
         "Holo.TextAppearance | ColorsDark": {
             "android:textColorLink": "@color/holo_blue_light", 
             "android:textSize": "16sp", 
             "android:textStyle": "normal"
+        }, 
+        "Holo.TextAppearance.CalendarView.WeekDayView < Holo.TextAppearance": {
+            "android:textColor": "#505050", 
+            "android:textStyle": "bold"
         }, 
         "Holo.TextAppearance.DialogWindowTitle < Holo.TextAppearance": {
             "android:textColor": "@color/holo_blue_light", 

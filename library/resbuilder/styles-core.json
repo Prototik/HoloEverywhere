@@ -25,7 +25,9 @@
             "panelMenuListWidth": "250dp", 
             "textAppearanceListItem": "?android:textAppearanceLarge", 
             "textAppearanceListItemSmall": "?android:attr/textAppearanceMedium", 
-            "timePickerStyle": "@style/Holo.TimePicker"
+            "timePickerStyle": "@style/Holo.TimePicker", 
+            "windowMinWidthMajor": "@dimen/dialog_min_width_major", 
+            "windowMinWidthMinor": "@dimen/dialog_min_width_minor"
         }, 
         "BaseDark | Base": {
             "alertDialogStyle": "@style/Holo.AlertDialog", 
