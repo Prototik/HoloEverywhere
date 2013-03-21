@@ -195,8 +195,12 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
         if (mChildFragmentManager != null && mDestoryChildFragments) {
             synchronized (mChildFragmentManager) {
                 for (Fragment fragment : mChildFragmentManager.mActive) {
+                    if (fragment == null) {
+                        continue;
+                    }
                     mChildFragmentManager.removeFragment(fragment, 0, 0);
                 }
+                mChildFragmentManager.mActive.clear();
             }
             mChildFragmentManager = null;
         }
