@@ -1,9 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="org.holoeverywhere.addon.roboguice"
-	android:versionCode="1004003"
-	android:versionName="1.4.3-SNAPSHOT" >
-	<uses-sdk
-		android:minSdkVersion="7"
-		android:targetSdkVersion="17" />
-	<application />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1005000" android:versionName="1.5.0" package="org.holoeverywhere.addon.roboguice">
+	<uses-sdk android:minSdkVersion="7" android:targetSdkVersion="17"/>
+	<application/>
 </manifest>
