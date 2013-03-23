@@ -75,9 +75,6 @@ git checkout master
 git stash apply
 ```
 
-### Demo notice
-In demo using music "Winter Dawn" by machinimasound.com. Licensed under Creative Commons "Attribution 3.0"
-
 ### License
 LGPLv3, full text of license see [here][License]
 

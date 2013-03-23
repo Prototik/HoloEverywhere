@@ -92,7 +92,7 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
                     "Cannot show context menu without reference on ContextMenuListener");
         }
         mContextMenuInfo = getContextMenuInfo(originalView);
-        mListener.createContextMenu(this, originalView, mContextMenuInfo, mListener);
+        mListener.onCreateContextMenu(this, originalView, mContextMenuInfo);
         if (getVisibleItems().size() > 0) {
             if (VERSION.SDK_INT >= 8) {
                 EventLog.writeEvent(50001, 1);

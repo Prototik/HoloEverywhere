@@ -93,7 +93,16 @@ public class MenusFragments extends OtherFragment {
     private static final int[] RADIOS = {
             R.id.item1, R.id.item2
     };
-    private boolean mAllowCreateContextMenu = false;
+    private OnOtherItemClickListener mContextMenuListener = new OnOtherItemClickListener() {
+        @Override
+        public void onClick(OtherItem otherItem) {
+            final View view = otherItem.lastView;
+            registerForContextMenu(view);
+            openContextMenu(view);
+            unregisterForContextMenu(view);
+        }
+    };
+
     private MenuHelper mDemoMenuHelper;
 
     @Override
@@ -113,11 +122,7 @@ public class MenusFragments extends OtherFragment {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        if (mAllowCreateContextMenu) {
-            mDemoMenuHelper.makeMenu(menu, getMenuInflater());
-        } else {
-            super.onCreateContextMenu(menu, v, menuInfo);
-        }
+        mDemoMenuHelper.makeMenu(menu, getMenuInflater());
     }
 
     @Override
@@ -130,17 +135,8 @@ public class MenusFragments extends OtherFragment {
                 menu.show();
             }
         });
-        addItemWithLongClick("ContextMenu (press and hold)", new OnOtherItemClickListener() {
-            @Override
-            public void onClick(OtherItem otherItem) {
-                final View view = otherItem.lastView;
-                mAllowCreateContextMenu = true;
-                registerForContextMenu(view);
-                openContextMenu(view);
-                unregisterForContextMenu(view);
-                mAllowCreateContextMenu = false;
-            }
-        });
+        addItem("ContextMenu", mContextMenuListener);
+        addItemWithLongClick("ContextMenu (long click)", mContextMenuListener);
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.actionbarsherlock.ActionBarSherlock.OnCreatePanelMenuListener;
 import com.actionbarsherlock.ActionBarSherlock.OnMenuItemSelectedListener;
 import com.actionbarsherlock.ActionBarSherlock.OnPreparePanelListener;
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView.ContextMenuListenersProvider;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
@@ -25,7 +26,7 @@ public interface IHoloActivity extends IHolo, SuperStartActivity,
         OnCreatePanelMenuListener, OnPreparePanelListener,
         OnMenuItemSelectedListener, OnActionModeStartedListener,
         OnActionModeFinishedListener, SuperSystemService, ContextMenuListener,
-        IAddonAttacher<IAddonActivity> {
+        ContextMenuListenersProvider, IAddonAttacher<IAddonActivity> {
     public static interface OnWindowFocusChangeListener {
         public void onWindowFocusChanged(boolean hasFocus);
     }

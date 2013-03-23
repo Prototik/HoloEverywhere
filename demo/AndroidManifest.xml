@@ -10,7 +10,8 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".DemoTabsActivity"/>
-		<uses-library android:name="android.test.runner" android:required="false"/>
+		<activity android:name=".DemoDialogWhenLargeActivity"/>
+				<uses-library android:name="android.test.runner" android:required="false"/>
 		<activity android:name=".test.app.TestActivity" android:theme="@style/Holo.Theme"/>
 	</application>
 </manifest>

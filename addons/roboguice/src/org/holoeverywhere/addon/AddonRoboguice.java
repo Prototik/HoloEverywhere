@@ -174,7 +174,7 @@ public class AddonRoboguice extends IAddon {
         }
 
         @Override
-        public void onViewCreated(View view) {
+        public void onViewCreated(View view, Bundle savedInstanceState) {
             getInjector(get()).injectViewMembers(get());
         }
     }

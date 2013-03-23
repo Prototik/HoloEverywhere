@@ -107,8 +107,8 @@ public class ListsExpandableListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view) {
-        super.onViewCreated(view);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mExpandableListView = (ExpandableListView) view.findViewById(android.R.id.list);
         mExpandableListView.setAdapter(new Adapter());
     }

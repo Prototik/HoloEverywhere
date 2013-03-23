@@ -17,6 +17,7 @@ import org.holoeverywhere.widget.ListView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 public class OtherFragment extends ListFragment {
@@ -126,15 +127,7 @@ public class OtherFragment extends ListFragment {
         addItem("Pickers", PickersFragment.class);
         addItem("Menus", MenusFragments.class);
         addItem("Calendar", CalendarFragment.class);
-        addItem("Tabs + Swipe", new OnOtherItemClickListener() {
-            @Override
-            public void onClick(OtherItem otherItem) {
-                DemoActivity activity = (DemoActivity) getSupportActivity();
-                Intent intent = new Intent(activity, DemoTabsActivity.class);
-                intent.putExtra(DemoActivity.KEY_DISABLE_MUSIC, activity.isDisableMusic());
-                startActivity(intent);
-            }
-        });
+        addItemActivity("Tabs + Swipe", DemoTabsActivity.class);
     }
 
     protected void onPrepareListView(ListView list) {
@@ -151,8 +144,8 @@ public class OtherFragment extends ListFragment {
     }
 
     @Override
-    public void onViewCreated(View view) {
-        super.onViewCreated(view);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mAdapter = new OtherAdapter(getSupportActivity());
         onHandleData();
         boolean handleLongClick = false;

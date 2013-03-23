@@ -5,6 +5,7 @@ import org.holoeverywhere.ArrayAdapter;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.widget.ListView;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ListAdapter;
 
@@ -27,8 +28,8 @@ public class ListsFastScrollFragment extends ListsBaseFragment {
     }
 
     @Override
-    public void onViewCreated(View view) {
-        super.onViewCreated(view);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mList = getListView();
         mList.setFastScrollEnabled(true);
         onPrepareList(mList);

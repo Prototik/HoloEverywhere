@@ -1,6 +1,10 @@
 
 package org.holoeverywhere.app;
 
+import java.util.Map;
+import java.util.WeakHashMap;
+
+import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 import org.holoeverywhere.internal.WindowDecorView;
@@ -13,14 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
-import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder;
+import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView.ContextMenuListenersProvider;
 import com.actionbarsherlock.internal.view.menu.ContextMenuItemWrapper;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 import com.actionbarsherlock.internal.view.menu.ContextMenuWrapper;
 import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class Dialog extends android.app.Dialog implements ContextMenuListener {
+public class Dialog extends android.app.Dialog implements ContextMenuListener,
+        ContextMenuListenersProvider {
     private static final int checkTheme(Context context, int theme) {
         if (theme >= 0x01000000) {
             return theme;
@@ -32,6 +37,8 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
         }
         return R.style.Holo_Theme_Dialog;
     }
+
+    private Map<View, ContextMenuListener> mContextMenuListeners;
 
     public Dialog(Context context) {
         this(context, 0);
@@ -55,9 +62,11 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
     }
 
     @Override
-    public void createContextMenu(ContextMenuBuilder contextMenuBuilder,
-            View view, ContextMenuInfo menuInfo, ContextMenuListener listener) {
-        listener.onCreateContextMenu(contextMenuBuilder, view, menuInfo);
+    public ContextMenuListener getContextMenuListener(View view) {
+        if (mContextMenuListeners == null) {
+            return null;
+        }
+        return mContextMenuListeners.get(view);
     }
 
     @Override
@@ -117,9 +126,28 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
 
     public View prepareDecorView(View v, ViewGroup.LayoutParams params) {
         if (v instanceof WindowDecorView) {
+            ((WindowDecorView) v).setProvider(this);
             return v;
         }
-        return new WindowDecorView(getContext(), v, params, this);
+        WindowDecorView window = new WindowDecorView(getContext(), v, params);
+        window.setProvider(this);
+        return window;
+    }
+
+    @Override
+    public void registerForContextMenu(View view) {
+        if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
+            super.registerForContextMenu(view);
+        } else {
+            registerForContextMenu(view, this);
+        }
+    }
+
+    public void registerForContextMenu(View view, ContextMenuListener listener) {
+        if (mContextMenuListeners == null) {
+            mContextMenuListeners = new WeakHashMap<View, ContextMenuListener>();
+        }
+        mContextMenuListeners.put(view, listener);
     }
 
     @Override
@@ -130,17 +158,27 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener {
 
     @Override
     public void setContentView(int layoutResID) {
-        setContentView(getLayoutInflater().makeDecorView(layoutResID, this));
+        setContentView(getLayoutInflater().makeDecorView(layoutResID));
     }
 
     @Override
     public void setContentView(View view) {
-        setContentView(view,
-                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        setContentView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
     @Override
     public void setContentView(View view, LayoutParams params) {
         getWindow().setContentView(prepareDecorView(view, params), params);
+    }
+
+    @Override
+    public void unregisterForContextMenu(View view) {
+        if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
+            super.unregisterForContextMenu(view);
+        } else {
+            if (mContextMenuListeners != null) {
+                mContextMenuListeners.remove(view);
+            }
+        }
     }
 }

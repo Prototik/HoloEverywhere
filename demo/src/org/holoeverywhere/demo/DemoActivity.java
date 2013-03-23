@@ -16,7 +16,7 @@ import org.holoeverywhere.demo.widget.DemoItem;
 import org.holoeverywhere.demo.widget.DemoListRowView;
 import org.holoeverywhere.widget.ListView;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -28,7 +28,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
 
@@ -105,11 +104,10 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         public void onMenuClick(int position);
     }
 
-    public static final String KEY_DISABLE_MUSIC = "disableMusic";
     private static final String KEY_PAGE = "page";
+    private static final int TABS_ACTIVITY = 1;
     private boolean mCreatedByThemeManager = false;
     private int mCurrentPage = -1;
-    private boolean mDisableMusic = false;
     private boolean mFirstRun;
     private Handler mHandler;
     private NavigationAdapter mNavigationAdapter;
@@ -125,21 +123,8 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
                 getResources().getDisplayMetrics().widthPixels, 1);
     }
 
-    public boolean isDisableMusic() {
-        return mDisableMusic;
-    }
-
     private View makeMenuView(Bundle savedInstanceState) {
         return prepareMenuView(getLayoutInflater().inflate(R.layout.menu), savedInstanceState);
-    }
-
-    @Override
-    @SuppressLint("NewApi")
-    public void onBackPressed() {
-        if (!getSupportFragmentManager().popBackStackImmediate()) {
-            PlaybackService.pause(true);
-            finish();
-        }
     }
 
     @Override
@@ -165,7 +150,6 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         }
 
         if (savedInstanceState != null) {
-            mDisableMusic = savedInstanceState.getBoolean(KEY_DISABLE_MUSIC, false);
             mCurrentPage = savedInstanceState.getInt(KEY_PAGE, 0);
         }
 
@@ -200,30 +184,8 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.main, menu);
-        if (mDisableMusic) {
-            menu.findItem(R.id.disableMusic).setVisible(false);
-        }
-        return true;
-    }
-
-    @Override
-    protected void onDestroy() {
-        PlaybackService.pause(true);
-        super.onDestroy();
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.disableMusic:
-                if (!mDisableMusic) {
-                    mDisableMusic = true;
-                    PlaybackService.pause(true);
-                    supportInvalidateOptionsMenu();
-                }
-                break;
             case android.R.id.home:
                 if (!mStaticSlidingMenu
                         && getSupportFragmentManager().getBackStackEntryCount() == 0) {
@@ -239,12 +201,6 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     }
 
     @Override
-    protected void onPause() {
-        PlaybackService.pause(false);
-        super.onPause();
-    }
-
-    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         savedInstanceState = instanceState(savedInstanceState);
         if (mCreatedByThemeManager && savedInstanceState != null) {
@@ -255,17 +211,8 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (!mDisableMusic) {
-            PlaybackService.play();
-        }
-    }
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(KEY_DISABLE_MUSIC, mDisableMusic);
         outState.putInt(KEY_PAGE, mCurrentPage);
     }
 
@@ -306,5 +253,9 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
     public void setOnMenuClickListener(OnMenuClickListener onMenuClickListener) {
         mOnMenuClickListener = onMenuClickListener;
+    }
+
+    public void startDemoTabsActivity() {
+        startActivityForResult(new Intent(this, DemoTabsActivity.class), TABS_ACTIVITY);
     }
 }

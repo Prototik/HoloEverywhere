@@ -2,7 +2,6 @@
 package com.actionbarsherlock.internal.view.menu;
 
 import org.holoeverywhere.HoloEverywhere;
-import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.widget.FrameLayout;
 
 import android.content.Context;
@@ -17,28 +16,26 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class ContextMenuDecorView extends FrameLayout implements
         MenuPresenter.Callback, MenuBuilder.Callback {
-    public static ContextMenuDecorView inflateDecorView(LayoutInflater layoutInflater, int layout,
-            ContextMenuListener listener) {
-        ContextMenuDecorView view = new ContextMenuDecorView(layoutInflater.getContext(), listener);
-        layoutInflater.inflate(layout, view, true);
-        return view;
+    public interface ContextMenuListenersProvider {
+        public ContextMenuListener getContextMenuListener(View view);
     }
 
-    private ContextMenuBuilder contextMenu;
-    private MenuDialogHelper menuDialogHelper;
-    private final ContextMenuListener mListener;
+    private ContextMenuBuilder mContextMenu;
+    private ContextMenuListener mListener;
+    private MenuDialogHelper mMenuDialogHelper;
+    private ContextMenuListenersProvider mProvider;
+
     private final String TAG = getClass().getSimpleName();
 
-    public ContextMenuDecorView(Context context,
-            ContextMenuListener listener) {
+    public ContextMenuDecorView(Context context) {
         super(context);
-        mListener = listener;
     }
 
-    public ContextMenuDecorView(Context context, View view, ViewGroup.LayoutParams params,
-            ContextMenuListener listener) {
-        this(context, listener);
-        attachView(view, params);
+    public ContextMenuDecorView(Context context, View view, ViewGroup.LayoutParams params) {
+        this(context);
+        if (view != null) {
+            attachView(view, params);
+        }
     }
 
     public synchronized void attachView(View view, ViewGroup.LayoutParams params) {
@@ -60,10 +57,6 @@ public class ContextMenuDecorView extends FrameLayout implements
         addView(view, params);
     }
 
-    public ContextMenuListener getContextMenuListener() {
-        return mListener;
-    }
-
     @Override
     @ExportedProperty(deepExport = true, prefix = "layout_")
     public ViewGroup.LayoutParams getLayoutParams() {
@@ -82,17 +75,11 @@ public class ContextMenuDecorView extends FrameLayout implements
             child.setLayoutParams(params);
             return params;
         }
-        boolean modified = false;
         if (params.width != childParams.width) {
             params.width = childParams.width;
-            modified = true;
         }
         if (params.height != childParams.height) {
             params.height = childParams.height;
-            modified = true;
-        }
-        if (modified) {
-            setLayoutParams(params);
         }
         return params;
     }
@@ -134,24 +121,33 @@ public class ContextMenuDecorView extends FrameLayout implements
         return false;
     }
 
+    public void setProvider(ContextMenuListenersProvider provider) {
+        mProvider = provider;
+    }
+
     @Override
     public boolean showContextMenuForChild(View originalView) {
         if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
             return super.showContextMenuForChild(originalView);
         }
-        if (contextMenu == null) {
-            contextMenu = new ContextMenuBuilder(getContext(), mListener);
-            contextMenu.setCallback(this);
+        mListener = mProvider.getContextMenuListener(originalView);
+        if (mListener == null) {
+            return false;
+        }
+        if (mContextMenu == null) {
+            mContextMenu = new ContextMenuBuilder(getContext(), mListener);
+            mContextMenu.setCallback(this);
         } else {
-            contextMenu.clearAll();
+            mContextMenu.clearAll();
+            mContextMenu.setContextMenuListener(mListener);
         }
-        final MenuDialogHelper helper = contextMenu.show(originalView,
-                originalView.getWindowToken());
-        if (helper != null) {
-            helper.setPresenterCallback(this);
+        mMenuDialogHelper = mContextMenu.show(originalView, originalView.getWindowToken());
+        if (mMenuDialogHelper != null) {
+            mMenuDialogHelper.setPresenterCallback(this);
+            return true;
+        } else {
+            return false;
         }
-        menuDialogHelper = helper;
-        return menuDialogHelper != null;
     }
 
     public View unwrap() {

@@ -28,29 +28,9 @@ public class DemoTabsActivity extends TabSwipeActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        PlaybackService.pause(true);
-        super.onDestroy();
-    }
-
-    @Override
     protected void onHandleTabs() {
         addTab("Tab #1", TabFragment.class, make(1));
         addTab("Tab #2", TabFragment.class, make(2));
         addTab("Tab #3", TabFragment.class, make(3));
-    }
-
-    @Override
-    protected void onPause() {
-        PlaybackService.pause(false);
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!getIntent().getBooleanExtra(DemoActivity.KEY_DISABLE_MUSIC, false)) {
-            PlaybackService.play();
-        }
     }
 }

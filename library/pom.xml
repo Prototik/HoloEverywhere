@@ -45,6 +45,8 @@
 						<file>strings.json:strings</file>
 						<file>styles-v7.json:styles</file>
 						<file>styles-v14.json:styles</file>
+						<file>styles-large.json:styles</file>
+						<file>dialogs.json:styles</file>
 						<file>attrs.json:attrs</file>
 					</inputFiles>
 				</configuration>

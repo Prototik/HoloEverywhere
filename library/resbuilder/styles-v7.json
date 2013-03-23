@@ -65,6 +65,8 @@
         "Holo.Theme | HoloDark < Theme.Sherlock": {
             "holoTheme": "dark"
         }, 
+        "Holo.Theme.DialogWhenLarge < Holo.Theme": {}, 
+        "Holo.Theme.DialogWhenLarge.NoActionBar | NoActionBar": {}, 
         "Holo.Theme.Fullscreen | Fullscreen": {}, 
         "Holo.Theme.Fullscreen.Wallpaper | Wallpaper": {}, 
         "Holo.Theme.Light | HoloLight < Theme.Sherlock.Light": {
@@ -80,6 +82,8 @@
         "Holo.Theme.Light.DarkActionBar.NoActionBar.Fullscreen.Wallpaper | Wallpaper": {}, 
         "Holo.Theme.Light.DarkActionBar.NoActionBar.Wallpaper | Wallpaper": {}, 
         "Holo.Theme.Light.DarkActionBar.Wallpaper | Wallpaper": {}, 
+        "Holo.Theme.Light.DialogWhenLarge < Holo.Theme.Light": {}, 
+        "Holo.Theme.Light.DialogWhenLarge.NoActionBar | NoActionBar": {}, 
         "Holo.Theme.Light.Fullscreen | Fullscreen": {}, 
         "Holo.Theme.Light.Fullscreen.Wallpaper | Wallpaper": {}, 
         "Holo.Theme.Light.NoActionBar | NoActionBar": {}, 

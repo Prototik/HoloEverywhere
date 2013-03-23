@@ -7,6 +7,14 @@
         <item name="android:dialogTheme">?dialogTheme</item>
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
+        <item name="android:itemBackground">?selectableItemBackground</item>
+        <item name="android:panelColorBackground">#000000</item>
+        <item name="android:panelColorForeground">?android:attr/textColorPrimary</item>
+        <item name="android:panelTextAppearance">?android:attr/textAppearance</item>
+        <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
+        <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
+        <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
+        <item name="android:windowMinWidthMinor">?windowMinWidthMinor</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
@@ -32,6 +40,8 @@
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>
+        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_dark</item>
         <item name="android:popupWindowStyle">@style/Holo.PopupWindow</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView</item>
@@ -67,6 +77,14 @@
         <item name="android:dialogTheme">?dialogTheme</item>
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
+        <item name="android:itemBackground">?selectableItemBackground</item>
+        <item name="android:panelColorBackground">#000000</item>
+        <item name="android:panelColorForeground">?android:attr/textColorPrimary</item>
+        <item name="android:panelTextAppearance">?android:attr/textAppearance</item>
+        <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
+        <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
+        <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
+        <item name="android:windowMinWidthMinor">?windowMinWidthMinor</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
@@ -92,6 +110,8 @@
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_light</item>
+        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_light</item>
         <item name="android:popupWindowStyle">@style/Holo.PopupWindow.Light</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
@@ -127,6 +147,14 @@
         <item name="android:dialogTheme">?dialogTheme</item>
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
+        <item name="android:itemBackground">?selectableItemBackground</item>
+        <item name="android:panelColorBackground">#000000</item>
+        <item name="android:panelColorForeground">?android:attr/textColorPrimary</item>
+        <item name="android:panelTextAppearance">?android:attr/textAppearance</item>
+        <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
+        <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
+        <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
+        <item name="android:windowMinWidthMinor">?windowMinWidthMinor</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
@@ -152,6 +180,8 @@
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_light</item>
+        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_light</item>
         <item name="android:popupWindowStyle">@style/Holo.PopupWindow.Light</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>

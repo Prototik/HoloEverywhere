@@ -25,6 +25,10 @@ import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Fullscreen;
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Fullscreen_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_Wallpaper;
+import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge;
+import static org.holoeverywhere.R.style.Holo_Theme_Light_DialogWhenLarge;
+import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_NoActionBar;
+import static org.holoeverywhere.R.style.Holo_Theme_Light_DialogWhenLarge_NoActionBar;
 
 import org.holoeverywhere.ThemeManager.ThemeGetter.ThemeTag;
 import org.holoeverywhere.app.Activity;
@@ -100,6 +104,18 @@ import android.util.SparseIntArray;
  * <td>
  * {@link R.style#Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen_Wallpaper}
  * </td>
+ * </tr>
+ * <tr>
+ * <td>{@link #DIALOG}</td>
+ * <td>{@link R.style#Holo_Theme_DialogWhenLarge}</td>
+ * <td>{@link R.style#Holo_Theme_Light_DialogWhenLarge}</td>
+ * <td>{@link R.style#Holo_Theme_Light_DialogWhenLarge}</td>
+ * </tr>
+ * <tr>
+ * <td>{@link #DIALOG} | {@link #NO_ACTION_BAR}</td>
+ * <td>{@link R.style#Holo_Theme_DialogWhenLarge_NoActionBar}</td>
+ * <td>{@link R.style#Holo_Theme_Light_DialogWhenLarge_NoActionBar}</td>
+ * <td>{@link R.style#Holo_Theme_Light_DialogWhenLarge_NoActionBar}</td>
  * </tr>
  * </table>
  * <br />
@@ -208,6 +224,11 @@ public final class ThemeManager {
      */
     public static final int WALLPAPER;
 
+    /**
+     * Flag indicates on the dialog-when-large theme.
+     */
+    public static final int DIALOG;
+
     static {
         DARK = makeNewFlag();
         LIGHT = makeNewFlag();
@@ -215,6 +236,7 @@ public final class ThemeManager {
         FULLSCREEN = makeNewFlag();
         NO_ACTION_BAR = makeNewFlag();
         WALLPAPER = makeNewFlag();
+        DIALOG = makeNewFlag();
 
         COLOR_SCHEME_MASK = DARK | LIGHT | MIXED;
 
@@ -574,7 +596,9 @@ public final class ThemeManager {
      * Reset all themes to default
      */
     public static void reset() {
-        _DEFAULT_THEME = DARK;
+        if ((_DEFAULT_THEME & COLOR_SCHEME_MASK) == 0) {
+            _DEFAULT_THEME = DARK;
+        }
         _THEME_MODIFIER = 0;
         _THEMES_MAP.clear();
 
@@ -631,6 +655,20 @@ public final class ThemeManager {
                 Holo_Theme_Light_DarkActionBar_Fullscreen_Wallpaper);
         map(MIXED | NO_ACTION_BAR | FULLSCREEN | WALLPAPER,
                 Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen_Wallpaper);
+
+        map(DARK | DIALOG,
+                Holo_Theme_DialogWhenLarge);
+        map(LIGHT | DIALOG,
+                Holo_Theme_Light_DialogWhenLarge);
+        map(MIXED | DIALOG,
+                Holo_Theme_Light_DialogWhenLarge);
+
+        map(DARK | DIALOG,
+                Holo_Theme_DialogWhenLarge_NoActionBar);
+        map(LIGHT | DIALOG,
+                Holo_Theme_Light_DialogWhenLarge_NoActionBar);
+        map(MIXED | DIALOG,
+                Holo_Theme_Light_DialogWhenLarge_NoActionBar);
     }
 
     /**

@@ -195,24 +195,30 @@ public class FileProcesser {
         return process(file, null);
     }
 
+    private final Map<File, ProcessResult> mCache = new HashMap<File, FileProcesser.ProcessResult>();
+
     @SuppressWarnings("unchecked")
     public ProcessResult process(File file, String forceType) throws FileProcesserException {
+        ProcessResult result = mCache.get(file);
+        if (result != null) {
+            return result;
+        }
         try {
             mojo.getLog().info("Process file: " + file.getAbsolutePath());
             String fileContent = readFile(file);
             JSONObject json = new JSONObject(fileContent);
             if (forceType != null) {
                 mojo.getLog().info("Handle all file by key '" + forceType + "' (force)");
-                return process(forceType, json);
+                return cache(file, process(forceType, json));
             }
             if (file.getName().startsWith("key_")) {
                 String key = file.getName();
                 int c = key.lastIndexOf('.');
                 key = key.substring(4, c > 0 ? c : key.length());
                 mojo.getLog().info("Handle all file by key '" + key + "'");
-                return process(key, json);
+                return cache(file, process(key, json));
             }
-            ProcessResult result = new ProcessResult();
+            result = new ProcessResult();
             Iterator<String> keys = json.sortedKeys();
             while (keys.hasNext()) {
                 String key = keys.next();
@@ -221,10 +227,15 @@ public class FileProcesser {
                     result.add(subResult);
                 }
             }
-            return result;
+            return cache(file, result);
         } catch (Exception e) {
             throw new FileProcesserException(e);
         }
+    }
+
+    private ProcessResult cache(File file, ProcessResult result) {
+        mCache.put(file, result);
+        return result;
     }
 
     public ProcessResult process(String filename) throws FileProcesserException {

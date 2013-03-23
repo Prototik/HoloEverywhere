@@ -16,12 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView.ContextMenuListenersProvider;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 import com.actionbarsherlock.view.ActionMode;
 
 public interface IHoloFragment extends IHolo, OnPrepareOptionsMenuListener,
         OnCreateOptionsMenuListener, OnOptionsItemSelectedListener, ContextMenuListener,
-        IAddonAttacher<IAddonFragment> {
+        ContextMenuListenersProvider, IAddonAttacher<IAddonFragment> {
     @Override
     public SharedPreferences getDefaultSharedPreferences();
 

@@ -234,6 +234,16 @@
             "android:textAllCaps"
         ], 
         "TextView": "textAllCaps$boolean/android:textAllCaps/android:text", 
-        "TimePicker": "layout"
+        "TimePicker": "layout", 
+        "WindowSizes": [
+            "windowMinWidthMajor", 
+            "windowMinWidthMinor", 
+            "windowMinHeightMajor$dimension|fraction", 
+            "windowMinHeightMinor$dimension|fraction", 
+            "windowFixedWidthMajor$dimension|fraction", 
+            "windowFixedWidthMinor$dimension|fraction", 
+            "windowFixedHeightMajor$dimension|fraction", 
+            "windowFixedHeightMinor$dimension|fraction"
+        ]
     }
 }

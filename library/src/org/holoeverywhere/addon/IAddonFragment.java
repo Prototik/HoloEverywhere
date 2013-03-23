@@ -15,7 +15,7 @@ public abstract class IAddonFragment extends IAddonBase<Fragment> {
 
     }
 
-    public void onViewCreated(View view) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
 
     }
 }

@@ -133,6 +133,12 @@
     <attr name="weekDayTextAppearance" format="reference"/>
     <attr name="weekNumberColor" format="color|reference"/>
     <attr name="weekSeparatorLineColor" format="color|reference"/>
+    <attr name="windowFixedHeightMajor" format="dimension|fraction"/>
+    <attr name="windowFixedHeightMinor" format="dimension|fraction"/>
+    <attr name="windowFixedWidthMajor" format="dimension|fraction"/>
+    <attr name="windowFixedWidthMinor" format="dimension|fraction"/>
+    <attr name="windowMinHeightMajor" format="dimension|fraction"/>
+    <attr name="windowMinHeightMinor" format="dimension|fraction"/>
     <!--Start styleable definition block-->
     <declare-styleable name="AbsSpinner">
         <attr name="android:entries"/>
@@ -349,6 +355,16 @@
     </declare-styleable>
     <declare-styleable name="TimePicker">
         <attr name="layout"/>
+    </declare-styleable>
+    <declare-styleable name="WindowSizes">
+        <attr name="windowFixedHeightMajor"/>
+        <attr name="windowFixedHeightMinor"/>
+        <attr name="windowFixedWidthMajor"/>
+        <attr name="windowFixedWidthMinor"/>
+        <attr name="windowMinHeightMajor"/>
+        <attr name="windowMinHeightMinor"/>
+        <attr name="windowMinWidthMajor"/>
+        <attr name="windowMinWidthMinor"/>
     </declare-styleable>
     <!--End of any blocks-->
 </resources>

@@ -85,7 +85,7 @@ public abstract class TabSwipeActivity extends Activity {
 
     private TabSwipeAdapter mAdapter;
     private int mCustomLayout = -1;
-    private boolean mSmoothScroll = false;
+    private boolean mSmoothScroll = true;
     private List<TabInfo> mTabs = new ArrayList<TabInfo>();
     private ViewPager mViewPager;
 
