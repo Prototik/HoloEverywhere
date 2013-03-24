@@ -4,13 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.holoeverywhere.bug</groupId>
 	<artifactId>parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>HoloEverywhere Bugs</name>
 	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>org.holoeverywhere</groupId>
 		<artifactId>application</artifactId>
-		<version>1.4.3-SNAPSHOT</version>
+		<version>1.5.1-SNAPSHOT</version>
 	</parent>
 
 	<modules>
@@ -24,6 +25,7 @@
 		<module>Bug334</module>
 		<module>Bug346</module>
 		<module>Bug352</module>
+		<module>Bug358</module>
 	</modules>
 
 	<build>
