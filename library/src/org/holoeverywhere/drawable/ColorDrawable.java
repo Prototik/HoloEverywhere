@@ -16,7 +16,7 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
-public class ColorDrawable extends Drawable {
+public class ColorDrawable extends android.graphics.drawable.ColorDrawable {
     final static class ColorState extends ConstantState {
         int mBaseColor;
         int mChangingConfigurations;
@@ -46,7 +46,6 @@ public class ColorDrawable extends Drawable {
     }
 
     private final Paint mPaint = new Paint();
-
     private ColorState mState;
 
     public ColorDrawable() {

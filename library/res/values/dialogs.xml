@@ -68,6 +68,8 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="windowAnimationStyle">@style/Holo.Animation.Dialog</item>
         <item name="windowContentOverlay">@null</item>
+        <item name="windowMinWidthMajor">@dimen/dialog_min_width_major</item>
+        <item name="windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
         <!--End of block Dialog-->
         <item name="android:windowBackground">@drawable/dialog_full_holo_dark</item>
         <item name="android:windowTitleStyle">@style/Holo.DialogWindowTitle</item>
@@ -104,6 +106,8 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="windowAnimationStyle">@style/Holo.Animation.Dialog</item>
         <item name="windowContentOverlay">@null</item>
+        <item name="windowMinWidthMajor">@dimen/dialog_min_width_major</item>
+        <item name="windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
         <!--End of block Dialog-->
         <item name="android:windowBackground">@drawable/dialog_full_holo_light</item>
         <item name="android:windowTitleStyle">@style/Holo.DialogWindowTitle.Light</item>
@@ -122,11 +126,10 @@
         <item name="android:windowAnimationStyle">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowCloseOnTouchOutside">false</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowFrame">@null</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowContentOverlay">@null</item>
+        <item name="windowNoTitle">true</item>
         <!--End of block NoFrame-->
     </style>
     <style name="Holo.Theme.Dialog.NoFrame">
@@ -135,11 +138,10 @@
         <item name="android:windowAnimationStyle">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowCloseOnTouchOutside">false</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowFrame">@null</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowContentOverlay">@null</item>
+        <item name="windowNoTitle">true</item>
         <!--End of block NoFrame-->
     </style>
 </resources>

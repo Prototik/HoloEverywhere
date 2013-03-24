@@ -78,8 +78,7 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
                 return result;
             }
         }
-        callback.post();
-        return false;
+        return callback.post();
     }
 
     public void reset() {

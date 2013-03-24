@@ -556,9 +556,6 @@
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="android:itemBackground">?selectableItemBackground</item>
-        <item name="android:panelColorBackground">#000000</item>
-        <item name="android:panelColorForeground">?android:attr/textColorPrimary</item>
-        <item name="android:panelTextAppearance">?android:attr/textAppearance</item>
         <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
         <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
         <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
@@ -583,13 +580,9 @@
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
-        <item name="windowMinWidthMajor">@dimen/dialog_min_width_major</item>
-        <item name="windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert</item>
-        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>
-        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_dark</item>
         <item name="android:popupWindowStyle">@style/Holo.PopupWindow</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView</item>
@@ -619,6 +612,9 @@
         <item name="android:divider">?android:listDivider</item>
         <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
         <item name="android:gridViewStyle">@style/Holo.GridView</item>
+        <item name="android:panelColorBackground">#000000</item>
+        <item name="android:panelColorForeground">?android:attr/textColorPrimary</item>
+        <item name="android:panelTextAppearance">?android:attr/textAppearance</item>
         <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
         <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
         <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
@@ -673,6 +669,8 @@
         <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
         <item name="android:listSeparatorTextViewStyle">@style/Holo.TextView.ListSeparator</item>
         <item name="android:listViewStyle">@style/Holo.ListView</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>
+        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_dark</item>
         <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
         <item name="android:radioButtonStyle">@style/Holo.CompoundButton.RadioButton</item>
         <item name="android:ratingBarStyle">@style/Holo.RatingBar</item>
@@ -717,9 +715,6 @@
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="android:itemBackground">?selectableItemBackground</item>
-        <item name="android:panelColorBackground">#000000</item>
-        <item name="android:panelColorForeground">?android:attr/textColorPrimary</item>
-        <item name="android:panelTextAppearance">?android:attr/textAppearance</item>
         <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
         <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
         <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
@@ -744,13 +739,9 @@
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
-        <item name="windowMinWidthMajor">@dimen/dialog_min_width_major</item>
-        <item name="windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
-        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_light</item>
-        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_light</item>
         <item name="android:popupWindowStyle">@style/Holo.PopupWindow.Light</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
@@ -780,6 +771,9 @@
         <item name="android:divider">?android:listDivider</item>
         <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
         <item name="android:gridViewStyle">@style/Holo.GridView</item>
+        <item name="android:panelColorBackground">#000000</item>
+        <item name="android:panelColorForeground">?android:attr/textColorPrimary</item>
+        <item name="android:panelTextAppearance">?android:attr/textAppearance</item>
         <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
         <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
         <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
@@ -834,6 +828,8 @@
         <item name="android:listSelector">@drawable/list_selector_holo_light</item>
         <item name="android:listSeparatorTextViewStyle">@style/Holo.TextView.ListSeparator.Light</item>
         <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_light</item>
+        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_light</item>
         <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal.Light</item>
         <item name="android:radioButtonStyle">@style/Holo.CompoundButton.RadioButton.Light</item>
         <item name="android:ratingBarStyle">@style/Holo.RatingBar.Light</item>
@@ -855,9 +851,6 @@
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="android:itemBackground">?selectableItemBackground</item>
-        <item name="android:panelColorBackground">#000000</item>
-        <item name="android:panelColorForeground">?android:attr/textColorPrimary</item>
-        <item name="android:panelTextAppearance">?android:attr/textAppearance</item>
         <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
         <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
         <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
@@ -882,13 +875,9 @@
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
-        <item name="windowMinWidthMajor">@dimen/dialog_min_width_major</item>
-        <item name="windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
         <!--End of block Base-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
-        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_light</item>
-        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_light</item>
         <item name="android:popupWindowStyle">@style/Holo.PopupWindow.Light</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
@@ -918,6 +907,9 @@
         <item name="android:divider">?android:listDivider</item>
         <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
         <item name="android:gridViewStyle">@style/Holo.GridView</item>
+        <item name="android:panelColorBackground">#000000</item>
+        <item name="android:panelColorForeground">?android:attr/textColorPrimary</item>
+        <item name="android:panelTextAppearance">?android:attr/textAppearance</item>
         <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
         <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
         <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
@@ -972,6 +964,8 @@
         <item name="android:listSelector">@drawable/list_selector_holo_light</item>
         <item name="android:listSeparatorTextViewStyle">@style/Holo.TextView.ListSeparator.Light</item>
         <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_light</item>
+        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_light</item>
         <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal.Light</item>
         <item name="android:radioButtonStyle">@style/Holo.CompoundButton.RadioButton.Light</item>
         <item name="android:ratingBarStyle">@style/Holo.RatingBar.Light</item>

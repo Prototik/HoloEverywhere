@@ -16,7 +16,9 @@
             "windowActionBar": "false", 
             "windowActionModeOverlay": "true", 
             "windowAnimationStyle": "@style/Holo.Animation.Dialog", 
-            "windowContentOverlay": "@null"
+            "windowContentOverlay": "@null", 
+            "windowMinWidthMajor": "@dimen/dialog_min_width_major", 
+            "windowMinWidthMinor": "@dimen/dialog_min_width_minor"
         }, 
         "FixedSize": {
             "windowFixedHeightMajor": "@dimen/dialog_fixed_height_major", 
@@ -29,11 +31,10 @@
             "android:windowAnimationStyle": "@null", 
             "android:windowBackground": "@android:color/transparent", 
             "android:windowCloseOnTouchOutside": false, 
-            "android:windowContentOverlay": "@null", 
-            "android:windowFrame": "@null", 
             "android:windowIsTranslucent": true, 
             "android:windowNoTitle": true, 
-            "windowContentOverlay": "@null"
+            "windowContentOverlay": "@null", 
+            "windowNoTitle": true
         }
     }, 
     "data": {
