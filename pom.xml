@@ -26,6 +26,8 @@
 		<module>Bug346</module>
 		<module>Bug352</module>
 		<module>Bug358</module>
+		<module>Bug359</module>
+		<module>Bug361</module>
 	</modules>
 
 	<build>
