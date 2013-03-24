@@ -243,11 +243,19 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         TypedArray a = context.obtainStyledAttributes(attrs, new int[] {
                 android.R.attr.fastScrollEnabled,
                 android.R.attr.fastScrollAlwaysVisible,
-                android.R.attr.choiceMode
+                android.R.attr.choiceMode,
+                android.R.attr.overScrollFooter,
+                android.R.attr.overScrollHeader
         }, defStyle, R.style.Holo_ListView);
         setFastScrollEnabled(a.getBoolean(0, false));
         setFastScrollAlwaysVisible(a.getBoolean(1, false));
         setChoiceMode(a.getInt(2, CHOICE_MODE_NONE));
+        if (!a.hasValue(3) && VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) {
+            super.setOverscrollFooter(null);
+        }
+        if (!a.hasValue(4) && VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) {
+            super.setOverscrollHeader(null);
+        }
         a.recycle();
     }
 
@@ -836,9 +844,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             if (mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
                 clearChoices();
                 setLongClickable(true);
-                if (VERSION.SDK_INT < VERSION_CODES.HONEYCOMB) {
-                    setEnableModalBackgroundWrapper(true);
-                }
+                setEnableModalBackgroundWrapper(true);
             }
         }
     }
