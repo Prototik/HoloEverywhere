@@ -188,10 +188,11 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
-        savedInstanceState = instanceState(savedInstanceState);
-        if (mCreatedByThemeManager && savedInstanceState != null) {
-            savedInstanceState.putBoolean("SlidingActivityHelper.open", false);
-            savedInstanceState.putBoolean("SlidingActivityHelper.secondary", false);
+        if (mCreatedByThemeManager) {
+            /**
+             * Keep slider closed even if was be opened before activity restart
+             */
+            addonSlider().forceNotRestoreInstance();
         }
         super.onPostCreate(savedInstanceState);
     }

@@ -116,7 +116,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
         }
     }
 
-    static class SavedState extends BaseSavedState {
+    public static class SavedState extends BaseSavedState {
         public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
             @Override
             public SavedState createFromParcel(Parcel source) {
@@ -299,6 +299,14 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     public void disableShadow() {
         setLeftViewShadow(0);
         setRightViewShadow(0);
+    }
+
+    public void dispatchRestoreInstanceState(SavedState state) {
+        onRestoreInstanceState(state);
+    }
+
+    public SavedState dispatchSaveInstanceState() {
+        return (SavedState) onSaveInstanceState();
     }
 
     @Override

@@ -5,6 +5,7 @@ import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.slider.ISlider;
 import org.holoeverywhere.slider.R;
 import org.holoeverywhere.slider.SliderView;
+import org.holoeverywhere.slider.SliderView.SavedState;
 import org.holoeverywhere.slider.SliderView.SliderDrawer;
 import org.holoeverywhere.slider.SliderView.TouchMode;
 
@@ -17,9 +18,13 @@ import android.view.Window;
 
 public class AddonSlider extends IAddon {
     public static class AddonSliderA extends IAddonActivity implements ISlider {
+        private static final String KEY_SLIDER_STATE = "holo:slider:state";
         private View mContentView;
         private boolean mDragWithActionBar = false;
+        private boolean mForceNotRestoreInstance = false;
+
         private boolean mRejectContentView = true;
+
         private SliderView mSliderView;
 
         @Override
@@ -33,6 +38,10 @@ public class AddonSlider extends IAddon {
                 return mContentView.findViewById(id);
             }
             return null;
+        }
+
+        public void forceNotRestoreInstance() {
+            mForceNotRestoreInstance = true;
         }
 
         @Override
@@ -108,6 +117,10 @@ public class AddonSlider extends IAddon {
             return mDragWithActionBar;
         }
 
+        public boolean isForceNotRestoreInstance() {
+            return mForceNotRestoreInstance;
+        }
+
         @Override
         public boolean isLeftShowed() {
             return mSliderView.isLeftShowed();
@@ -125,6 +138,11 @@ public class AddonSlider extends IAddon {
 
         @Override
         public void onPostCreate(Bundle savedInstanceState) {
+            if (savedInstanceState != null && savedInstanceState.containsKey(KEY_SLIDER_STATE)
+                    && !mForceNotRestoreInstance) {
+                SavedState state = savedInstanceState.getParcelable(KEY_SLIDER_STATE);
+                mSliderView.dispatchRestoreInstanceState(state);
+            }
             mRejectContentView = false;
             TypedArray a = get().obtainStyledAttributes(new int[] {
                     android.R.attr.windowBackground
@@ -152,6 +170,13 @@ public class AddonSlider extends IAddon {
         public void onPreCreate(Bundle savedInstanceState) {
             mSliderView = new SliderView(get());
             mSliderView.setId(R.id.slider);
+        }
+
+        @Override
+        public void onSaveInstanceState(Bundle outState) {
+            if (mSliderView != null) {
+                outState.putParcelable(KEY_SLIDER_STATE, mSliderView.dispatchSaveInstanceState());
+            }
         }
 
         @Override
