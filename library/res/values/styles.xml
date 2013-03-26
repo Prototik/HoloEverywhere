@@ -556,8 +556,6 @@
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="android:itemBackground">?selectableItemBackground</item>
-        <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
-        <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
         <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
         <item name="android:windowMinWidthMinor">?windowMinWidthMinor</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
@@ -715,8 +713,6 @@
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="android:itemBackground">?selectableItemBackground</item>
-        <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
-        <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
         <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
         <item name="android:windowMinWidthMinor">?windowMinWidthMinor</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
@@ -851,8 +847,6 @@
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="android:itemBackground">?selectableItemBackground</item>
-        <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
-        <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
         <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
         <item name="android:windowMinWidthMinor">?windowMinWidthMinor</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>

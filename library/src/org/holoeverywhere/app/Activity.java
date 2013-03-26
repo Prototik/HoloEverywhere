@@ -33,7 +33,6 @@ import com.actionbarsherlock.internal.view.menu.MenuItemWrapper;
 import com.actionbarsherlock.internal.view.menu.MenuWrapper;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class Activity extends _HoloActivity {
@@ -46,10 +45,14 @@ public abstract class Activity extends _HoloActivity {
 
     public static final String ADDON_ROBOGUICE = "Roboguice";
     public static final String ADDON_SHERLOCK = "Sherlock";
-    public static final String ADDON_SLIDING_MENU = "SlidingMenu";
+    public static final String ADDON_SLIDER = "Slider";
+    /**
+     * Use {@link #ADDON_SLIDER} instead
+     */
+    @Deprecated
+    public static final String ADDON_SLIDING_MENU = ADDON_SLIDER;
     private final IAddonAttacher<IAddonActivity> mAttacher =
             new IAddonBasicAttacher<IAddonActivity, Activity>(this);
-    private MenuInflater mMenuInflater;
 
     @Override
     public void addContentView(View sView, final LayoutParams params) {
@@ -141,15 +144,6 @@ public abstract class Activity extends _HoloActivity {
     @Override
     public ActionBar getSupportActionBar() {
         return addonSherlock().getActionBar();
-    }
-
-    @Override
-    public MenuInflater getSupportMenuInflater() {
-        if (mMenuInflater != null) {
-            return mMenuInflater;
-        }
-        mMenuInflater = new MenuInflater(getSupportActionBarContext(), this);
-        return mMenuInflater;
     }
 
     public Bundle instanceState(Bundle savedInstanceState) {
@@ -399,8 +393,8 @@ public abstract class Activity extends _HoloActivity {
             for (String addon : getClass().getAnnotation(Addons.class).value()) {
                 if (ADDON_SHERLOCK.equals(addon)) {
                     config.requireSherlock = true;
-                } else if (ADDON_SLIDING_MENU.equals(addon)) {
-                    config.requireSlidingMenu = true;
+                } else if (ADDON_SLIDER.equals(addon)) {
+                    config.requireSlider = true;
                 } else if (ADDON_ROBOGUICE.equals(addon)) {
                     config.requireRoboguice = true;
                 } else {
@@ -597,12 +591,6 @@ public abstract class Activity extends _HoloActivity {
     @Override
     public void setSupportSecondaryProgress(int secondaryProgress) {
         addonSherlock().setSecondaryProgress(secondaryProgress);
-    }
-
-    @Override
-    public void setTheme(int resid) {
-        mMenuInflater = null;
-        super.setTheme(resid);
     }
 
     public void setUiOptions(int uiOptions) {

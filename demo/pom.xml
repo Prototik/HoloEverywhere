@@ -21,7 +21,7 @@
 
 		<dependency>
 			<groupId>org.holoeverywhere</groupId>
-			<artifactId>addon-slidingmenu</artifactId>
+			<artifactId>addon-slider</artifactId>
 			<type>apklib</type>
 		</dependency>
 

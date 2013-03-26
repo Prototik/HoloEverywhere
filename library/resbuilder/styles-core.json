@@ -7,8 +7,6 @@
             "android:dividerHorizontal": "?dividerHorizontal", 
             "android:dividerVertical": "?dividerVertical", 
             "android:itemBackground": "?selectableItemBackground", 
-            "android:textAppearanceLargePopupMenu": "?textAppearanceLargePopupMenu", 
-            "android:textAppearanceSmallPopupMenu": "?textAppearanceSmallPopupMenu", 
             "android:windowMinWidthMajor": "?windowMinWidthMajor", 
             "android:windowMinWidthMinor": "?windowMinWidthMinor", 
             "buttonBarButtonStyle": "?borderlessButtonStyle", 

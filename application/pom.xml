@@ -17,7 +17,7 @@
 		<dependencies>
 			<dependency>
 				<groupId>org.holoeverywhere</groupId>
-				<artifactId>addon-slidingmenu</artifactId>
+				<artifactId>addon-slider</artifactId>
 				<version>1.5.1-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>

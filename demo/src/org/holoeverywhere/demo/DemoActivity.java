@@ -2,8 +2,8 @@
 package org.holoeverywhere.demo;
 
 import org.holoeverywhere.ThemeManager;
-import org.holoeverywhere.addon.AddonSlidingMenu;
-import org.holoeverywhere.addon.AddonSlidingMenu.AddonSlidingMenuA;
+import org.holoeverywhere.addon.AddonSlider;
+import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Activity.Addons;
 import org.holoeverywhere.app.Fragment;
@@ -18,7 +18,6 @@ import org.holoeverywhere.widget.ListView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
@@ -29,9 +28,8 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
-import com.slidingmenu.lib.SlidingMenu;
 
-@Addons(Activity.ADDON_SLIDING_MENU)
+@Addons(Activity.ADDON_SLIDER)
 public class DemoActivity extends Activity implements OnBackStackChangedListener {
     private final class NavigationAdapter extends DemoAdapter implements
             OnItemClickListener {
@@ -91,12 +89,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
             }
             replaceFragment(Fragment.instantiate(clazz));
             fm.executePendingTransactions();
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    addonSlidingMenu().showContent();
-                }
-            }, 100);
+            addonSlider().showContentDelayed();
         }
     }
 
@@ -109,13 +102,12 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     private boolean mCreatedByThemeManager = false;
     private int mCurrentPage = -1;
     private boolean mFirstRun;
-    private Handler mHandler;
     private NavigationAdapter mNavigationAdapter;
     private OnMenuClickListener mOnMenuClickListener;
     private boolean mStaticSlidingMenu;
 
-    public AddonSlidingMenuA addonSlidingMenu() {
-        return addon(AddonSlidingMenu.class);
+    public AddonSliderA addonSlider() {
+        return addon(AddonSlider.class);
     }
 
     private int computeMenuWidth() {
@@ -158,25 +150,19 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
         setContentView(R.layout.content);
 
-        final AddonSlidingMenuA addonSM = addonSlidingMenu();
-        final SlidingMenu sm = addonSM.getSlidingMenu();
+        final AddonSliderA slider = addonSlider();
 
         View menu = findViewById(R.id.menu);
         if (menu == null) {
             // Phone
             mStaticSlidingMenu = false;
             ab.setDisplayHomeAsUpEnabled(true);
-            addonSM.setBehindContentView(makeMenuView(savedInstanceState));
-            addonSM.setSlidingActionBarEnabled(true);
-            sm.setBehindWidth(computeMenuWidth());
-            sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-            sm.setSlidingEnabled(true);
+            slider.setLeftView(makeMenuView(savedInstanceState));
+            slider.setLeftViewWidth(computeMenuWidth());
+            slider.setDragWithActionBar(true);
         } else {
             // Tablet
             mStaticSlidingMenu = true;
-            addonSM.setBehindContentView(new View(this)); // dummy view
-            sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-            sm.setSlidingEnabled(false);
             prepareMenuView(menu, savedInstanceState);
         }
 
@@ -189,7 +175,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
             case android.R.id.home:
                 if (!mStaticSlidingMenu
                         && getSupportFragmentManager().getBackStackEntryCount() == 0) {
-                    addonSlidingMenu().toggle();
+                    addonSlider().toggle();
                 } else {
                     onBackPressed();
                 }
@@ -214,13 +200,6 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_PAGE, mCurrentPage);
-    }
-
-    public void postDelayed(Runnable runnable, long delay) {
-        if (mHandler == null) {
-            mHandler = new Handler(getMainLooper());
-        }
-        mHandler.postDelayed(runnable, delay);
     }
 
     private View prepareMenuView(View view, Bundle savedInstanceState) {

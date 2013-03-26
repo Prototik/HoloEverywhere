@@ -69,6 +69,7 @@ public class ColorDrawable extends android.graphics.drawable.ColorDrawable {
         }
     }
 
+    @Override
     public int getAlpha() {
         return mState.mUseColor >>> 24;
     }
@@ -78,6 +79,7 @@ public class ColorDrawable extends android.graphics.drawable.ColorDrawable {
         return super.getChangingConfigurations() | mState.mChangingConfigurations;
     }
 
+    @Override
     public int getColor() {
         return mState.mUseColor;
     }
@@ -122,6 +124,7 @@ public class ColorDrawable extends android.graphics.drawable.ColorDrawable {
         }
     }
 
+    @Override
     public void setColor(int color) {
         if (mState.mBaseColor != color || mState.mUseColor != color) {
             invalidateSelf();

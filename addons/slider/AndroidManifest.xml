@@ -1,0 +1,19 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="org.holoeverywhere.slider"
+	android:versionCode="100500000"
+	android:versionName="1.5.0" >
+	<uses-sdk
+		android:minSdkVersion="7"
+		android:targetSdkVersion="17" />
+	<application
+		android:name="org.holoeverywhere.app.Application"
+		android:allowBackup="true"
+		android:theme="@style/Holo.Theme.Light.DarkActionBar" >
+		<activity android:name=".Test" >
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+	</application>
+</manifest>

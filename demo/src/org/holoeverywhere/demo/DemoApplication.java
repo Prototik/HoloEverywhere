@@ -20,8 +20,9 @@ public class DemoApplication extends Application {
 
         ThemeManager.setDefaultTheme(ThemeManager.MIXED);
 
-        // Android 2.1 incorrect process FULLSCREEN flag
-        if (VERSION.SDK_INT >= VERSION_CODES.FROYO) {
+        // Android 2.* incorrect process FULLSCREEN flag when we are modify
+        // DecorView of Window. This hack using HoloEverywhere Slider
+        if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
             ThemeManager.modify(ThemeManager.FULLSCREEN);
         }
 

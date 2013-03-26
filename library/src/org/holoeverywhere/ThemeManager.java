@@ -2,6 +2,8 @@
 package org.holoeverywhere;
 
 import static org.holoeverywhere.R.style.Holo_Theme;
+import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge;
+import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_NoActionBar;
 import static org.holoeverywhere.R.style.Holo_Theme_Fullscreen;
 import static org.holoeverywhere.R.style.Holo_Theme_Fullscreen_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_Light;
@@ -13,6 +15,8 @@ import static org.holoeverywhere.R.style.Holo_Theme_Light_DarkActionBar_NoAction
 import static org.holoeverywhere.R.style.Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_Light_DarkActionBar_NoActionBar_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_Light_DarkActionBar_Wallpaper;
+import static org.holoeverywhere.R.style.Holo_Theme_Light_DialogWhenLarge;
+import static org.holoeverywhere.R.style.Holo_Theme_Light_DialogWhenLarge_NoActionBar;
 import static org.holoeverywhere.R.style.Holo_Theme_Light_Fullscreen;
 import static org.holoeverywhere.R.style.Holo_Theme_Light_Fullscreen_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_Light_NoActionBar;
@@ -25,10 +29,6 @@ import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Fullscreen;
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Fullscreen_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_Wallpaper;
-import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge;
-import static org.holoeverywhere.R.style.Holo_Theme_Light_DialogWhenLarge;
-import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_NoActionBar;
-import static org.holoeverywhere.R.style.Holo_Theme_Light_DialogWhenLarge_NoActionBar;
 
 import org.holoeverywhere.ThemeManager.ThemeGetter.ThemeTag;
 import org.holoeverywhere.app.Activity;
@@ -158,7 +158,7 @@ public final class ThemeManager {
          * Class-container for theme flags.
          */
         public static final class ThemeTag {
-            public final boolean dark, fullscreen, light, mixed, noActionBar, wallpaper;
+            public final boolean dark, fullscreen, light, mixed, noActionBar, wallpaper, dialog;
             public final int flags;
 
             private ThemeTag(int flags) {
@@ -169,6 +169,7 @@ public final class ThemeManager {
                 noActionBar = isNoActionBar(flags);
                 fullscreen = isFullScreen(flags);
                 wallpaper = isWallpaper(flags);
+                dialog = isDialog(flags);
             }
         }
 
@@ -187,6 +188,10 @@ public final class ThemeManager {
      * Flag indicates on the dark theme
      */
     public static final int DARK;
+    /**
+     * Flag indicates on the dialog-when-large theme.
+     */
+    public static final int DIALOG;
     /**
      * Flag indicates on the fullscreen theme
      */
@@ -212,6 +217,7 @@ public final class ThemeManager {
      * Flag indicates on the light theme with dark action bar
      */
     public static final int MIXED;
+
     private static int NEXT_OFFSET = 0;
 
     /**
@@ -223,11 +229,6 @@ public final class ThemeManager {
      * Flag indicates on the theme with wallpaper background
      */
     public static final int WALLPAPER;
-
-    /**
-     * Flag indicates on the dialog-when-large theme.
-     */
-    public static final int DIALOG;
 
     static {
         DARK = makeNewFlag();
@@ -320,8 +321,15 @@ public final class ThemeManager {
      * Extract theme flags from intent
      */
     public static int getTheme(Intent intent) {
+        return getTheme(intent, true);
+    }
+
+    /**
+     * Extract theme flags from intent
+     */
+    public static int getTheme(Intent intent, boolean applyModifier) {
         return prepareFlags(intent.getIntExtra(ThemeManager._THEME_TAG,
-                ThemeManager._DEFAULT_THEME));
+                ThemeManager._DEFAULT_THEME), applyModifier);
     }
 
     /**
@@ -419,6 +427,18 @@ public final class ThemeManager {
 
     public static boolean isDark(Intent intent) {
         return ThemeManager.isDark(ThemeManager.getTheme(intent));
+    }
+
+    public static boolean isDialog(Activity activity) {
+        return ThemeManager.isDialog(ThemeManager.getTheme(activity));
+    }
+
+    public static boolean isDialog(int i) {
+        return ThemeManager.is(i, ThemeManager.DIALOG);
+    }
+
+    public static boolean isDialog(Intent intent) {
+        return ThemeManager.isDialog(ThemeManager.getTheme(intent));
     }
 
     public static boolean isFullScreen(Activity activity) {
@@ -578,10 +598,6 @@ public final class ThemeManager {
         ThemeManager._DEFAULT_THEME ^= mod;
     }
 
-    private static int prepareFlags(int i) {
-        return prepareFlags(i, true);
-    }
-
     private static int prepareFlags(int i, boolean applyModifier) {
         if (i >= _START_RESOURCES_ID) {
             return i;
@@ -677,7 +693,11 @@ public final class ThemeManager {
      * @param activity Activity
      */
     public static void restart(Activity activity) {
-        restartWithTheme(activity, -1, true);
+        restart(activity, true);
+    }
+
+    public static void restart(Activity activity, boolean force) {
+        restartWithTheme(activity, -1, force);
     }
 
     /**
