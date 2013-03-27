@@ -1,4 +1,3 @@
-
 package org.holoeverywhere.slider;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -972,7 +971,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
 
     @Override
     public void showRightView(boolean smooth) {
-        show(mRightViewWidth, smooth, STATE_LEFT_OPENED);
+        show(mRightViewWidth, smooth, STATE_RIGHT_OPENED);
     }
 
     @Override
