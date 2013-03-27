@@ -22,9 +22,7 @@ public class AddonSlider extends IAddon {
         private View mContentView;
         private boolean mDragWithActionBar = false;
         private boolean mForceNotRestoreInstance = false;
-
         private boolean mRejectContentView = true;
-
         private SliderView mSliderView;
 
         @Override
@@ -37,11 +35,32 @@ public class AddonSlider extends IAddon {
             if (mContentView != null) {
                 return mContentView.findViewById(id);
             }
+            if (mSliderView != null) {
+                View view = mSliderView.getLeftView();
+                if (view != null) {
+                    view = view.findViewById(id);
+                    if (view != null) {
+                        return view;
+                    }
+                }
+                view = mSliderView.getRightView();
+                if (view != null) {
+                    view = view.findViewById(id);
+                    if (view != null) {
+                        return view;
+                    }
+                }
+            }
             return null;
         }
 
         public void forceNotRestoreInstance() {
             mForceNotRestoreInstance = true;
+        }
+
+        @Override
+        public View getContentView() {
+            return mSliderView.getContentView();
         }
 
         @Override
@@ -57,6 +76,11 @@ public class AddonSlider extends IAddon {
         @Override
         public float getLeftTranslateFactor() {
             return mSliderView.getLeftTranslateFactor();
+        }
+
+        @Override
+        public View getLeftView() {
+            return mSliderView.getLeftView();
         }
 
         @Override
@@ -77,6 +101,11 @@ public class AddonSlider extends IAddon {
         @Override
         public float getRightTranslateFactor() {
             return mSliderView.getRightTranslateFactor();
+        }
+
+        @Override
+        public View getRightView() {
+            return mSliderView.getRightView();
         }
 
         @Override

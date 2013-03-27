@@ -198,7 +198,6 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     private int mTouchModeLeftMargin;
     private int mTouchModeRightMargin;
     private final int mTouchSlop;
-
     private final ViewConfiguration mViewConfiguration;
 
     public SliderView(Context context) {
@@ -318,6 +317,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     }
 
     @Override
+    public View getContentView() {
+        return mContentView;
+    }
+
+    @Override
     public SliderDrawer getDrawer() {
         return mDrawer;
     }
@@ -330,6 +334,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     @Override
     public float getLeftTranslateFactor() {
         return mLeftTranslateFactor;
+    }
+
+    @Override
+    public View getLeftView() {
+        return mLeftView;
     }
 
     public float getLeftViewShadow() {
@@ -388,6 +397,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     @Override
     public float getRightTranslateFactor() {
         return mRightTranslateFactor;
+    }
+
+    @Override
+    public View getRightView() {
+        return mRightView;
     }
 
     public float getRightViewShadow() {

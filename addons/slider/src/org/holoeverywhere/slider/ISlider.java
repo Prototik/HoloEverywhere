@@ -12,6 +12,8 @@ public interface ISlider {
      */
     public void disableShadow();
 
+    public View getContentView();
+
     public SliderDrawer getDrawer();
 
     /**
@@ -20,6 +22,8 @@ public interface ISlider {
     public int getLeftDragBound();
 
     public float getLeftTranslateFactor();
+
+    public View getLeftView();
 
     /**
      * Last computed or setted by usere width for left view
@@ -38,6 +42,8 @@ public interface ISlider {
     public int getRightDragBound();
 
     public float getRightTranslateFactor();
+
+    public View getRightView();
 
     /**
      * Last computed or setted by usere width for right view
