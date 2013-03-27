@@ -930,7 +930,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     private void show(int offset, boolean smooth, int newState) {
         if (getScrollX() != offset || mCurrentState != newState) {
             scrollTo(offset, smooth);
-            mCurrentState = STATE_CONTENT_OPENED;
+            mCurrentState = newState;
             if (mOnSlideListener != null) {
                 switch (newState) {
                     case STATE_CONTENT_OPENED:

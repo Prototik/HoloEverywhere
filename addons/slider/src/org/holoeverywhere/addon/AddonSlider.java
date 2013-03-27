@@ -33,11 +33,15 @@ public class AddonSlider extends IAddon {
 
         @Override
         public View findViewById(int id) {
+            View view;
             if (mContentView != null) {
-                return mContentView.findViewById(id);
+                view = mContentView.findViewById(id);
+                if (view != null) {
+                    return view;
+                }
             }
             if (mSliderView != null) {
-                View view = mSliderView.getLeftView();
+                view = mSliderView.getLeftView();
                 if (view != null) {
                     view = view.findViewById(id);
                     if (view != null) {
