@@ -5,6 +5,7 @@ import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.slider.ISlider;
 import org.holoeverywhere.slider.R;
 import org.holoeverywhere.slider.SliderView;
+import org.holoeverywhere.slider.SliderView.OnSlideListener;
 import org.holoeverywhere.slider.SliderView.SavedState;
 import org.holoeverywhere.slider.SliderView.SliderDrawer;
 import org.holoeverywhere.slider.SliderView.TouchMode;
@@ -86,6 +87,11 @@ public class AddonSlider extends IAddon {
         @Override
         public int getLeftViewWidth() {
             return mSliderView.getLeftViewWidth();
+        }
+
+        @Override
+        public OnSlideListener getOnSlideListener() {
+            return mSliderView.getOnSlideListener();
         }
 
         @Override
@@ -272,6 +278,11 @@ public class AddonSlider extends IAddon {
         @Override
         public void setLeftViewWidth(int leftViewWidth) {
             mSliderView.setLeftViewWidth(leftViewWidth);
+        }
+
+        @Override
+        public void setOnSlideListener(OnSlideListener onSlideListener) {
+            mSliderView.setOnSlideListener(onSlideListener);
         }
 
         @Override

@@ -116,6 +116,14 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
         }
     }
 
+    public interface OnSlideListener {
+        public void onContentShowed();
+
+        public void onLeftShowed();
+
+        public void onRightShowed();
+    }
+
     public static class SavedState extends BaseSavedState {
         public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
             @Override
@@ -166,8 +174,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     }
 
     private static final int DRAG_CLOSE = 3;
+
     private static final int DRAG_IDLE = 0;
+
     private static final int DRAG_NOP = 2;
+
     private static final int DRAG_PERFORM = 1;
     private static final int STATE_CONTENT_OPENED = 0;
     private static final int STATE_LEFT_OPENED = 1;
@@ -185,6 +196,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     private float mLeftViewShadow;
     private int mLeftViewWidth;
     private boolean mLeftViewWidthSetted = false, mRightViewWidthSetted = false;
+    private OnSlideListener mOnSlideListener;
     private boolean mOverlayActionBar = false;
     private int mRightDragBound;
     private float mRightTranslateFactor;
@@ -348,6 +360,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     @Override
     public int getLeftViewWidth() {
         return mLeftViewWidth;
+    }
+
+    @Override
+    public OnSlideListener getOnSlideListener() {
+        return mOnSlideListener;
     }
 
     private float getPercentValue(TypedArray a, int id, float defValue) {
@@ -820,6 +837,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     }
 
     @Override
+    public void setOnSlideListener(OnSlideListener onSlideListener) {
+        mOnSlideListener = onSlideListener;
+    }
+
+    @Override
     public void setOverlayActionBar(boolean overlayActionBar) {
         mOverlayActionBar = overlayActionBar;
     }
@@ -831,11 +853,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     public void setProgress(int progress) {
         progress = Math.max(-100, Math.min(100, progress));
         if (progress < 0) {
-            scrollTo(progress * -mLeftViewWidth, false);
+            show(progress * -mLeftViewWidth, false, STATE_LEFT_OPENED);
         } else if (progress > 0) {
-            scrollTo(progress * mRightViewWidth, false);
+            show(progress * mRightViewWidth, false, STATE_RIGHT_OPENED);
         } else {
-            scrollTo(0, false);
+            show(0, false, STATE_CONTENT_OPENED);
         }
     }
 
@@ -905,6 +927,26 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
         setRightViewShadow(viewShadow);
     }
 
+    private void show(int offset, boolean smooth, int newState) {
+        if (getScrollX() != offset || mCurrentState != newState) {
+            scrollTo(offset, smooth);
+            mCurrentState = STATE_CONTENT_OPENED;
+            if (mOnSlideListener != null) {
+                switch (newState) {
+                    case STATE_CONTENT_OPENED:
+                        mOnSlideListener.onContentShowed();
+                        break;
+                    case STATE_LEFT_OPENED:
+                        mOnSlideListener.onLeftShowed();
+                        break;
+                    case STATE_RIGHT_OPENED:
+                        mOnSlideListener.onRightShowed();
+                        break;
+                }
+            }
+        }
+    }
+
     @Override
     public void showContentDelayed() {
         if (mShowContentRunnable == null) {
@@ -920,20 +962,17 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
 
     @Override
     public void showContentView(boolean smooth) {
-        scrollTo(0, smooth);
-        mCurrentState = STATE_CONTENT_OPENED;
+        show(0, smooth, STATE_CONTENT_OPENED);
     }
 
     @Override
     public void showLeftView(boolean smooth) {
-        scrollTo(-mLeftViewWidth, smooth);
-        mCurrentState = STATE_LEFT_OPENED;
+        show(-mLeftViewWidth, smooth, STATE_LEFT_OPENED);
     }
 
     @Override
     public void showRightView(boolean smooth) {
-        scrollTo(mRightViewWidth, smooth);
-        mCurrentState = STATE_RIGHT_OPENED;
+        show(mRightViewWidth, smooth, STATE_LEFT_OPENED);
     }
 
     @Override

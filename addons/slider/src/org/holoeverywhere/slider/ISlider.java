@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.slider;
 
+import org.holoeverywhere.slider.SliderView.OnSlideListener;
 import org.holoeverywhere.slider.SliderView.SliderDrawer;
 import org.holoeverywhere.slider.SliderView.TouchMode;
 
@@ -29,6 +30,8 @@ public interface ISlider {
      * Last computed or setted by usere width for left view
      */
     public int getLeftViewWidth();
+
+    public OnSlideListener getOnSlideListener();
 
     /**
      * Progress between -100 and 100, where -100 - left view fully opened, 100 -
@@ -81,6 +84,8 @@ public interface ISlider {
     public void setLeftView(View view);
 
     public void setLeftViewWidth(int leftViewWidth);
+
+    public void setOnSlideListener(OnSlideListener onSlideListener);
 
     public void setOverlayActionBar(boolean overlayActionBar);
 
