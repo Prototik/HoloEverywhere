@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:holo="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/customMenuFrame"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:divider="?dividerHorizontal"
 	android:orientation="horizontal"
 	holo:showDividers="middle" >
-	<include
-		android:id="@+id/menu"
-		android:layout_width="240dp"
-		android:layout_height="match_parent"
-		layout="@layout/menu" />
+	<fragment
+		android:id="@id/leftView"
+		android:name=".fragments.MenuFragment"
+		android:layout_width="280dp"
+		android:layout_height="match_parent" />
 	<FrameLayout
-		android:id="@+id/content"
+		android:id="@id/contentView"
 		android:layout_width="0dp"
 		android:layout_height="match_parent"
 		android:layout_weight="1" />

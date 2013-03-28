@@ -53,6 +53,8 @@ public abstract class Activity extends _HoloActivity {
     public static final String ADDON_SLIDING_MENU = ADDON_SLIDER;
     private final IAddonAttacher<IAddonActivity> mAttacher =
             new IAddonBasicAttacher<IAddonActivity, Activity>(this);
+    private boolean mCreatedByThemeManager = false;
+    private boolean mFirstRun = true;
 
     @Override
     public void addContentView(View sView, final LayoutParams params) {
@@ -162,6 +164,14 @@ public abstract class Activity extends _HoloActivity {
         return mAttacher.isAddonAttached(clazz);
     }
 
+    public boolean isCreatedByThemeManager() {
+        return mCreatedByThemeManager;
+    }
+
+    public boolean isFirstRun() {
+        return mFirstRun;
+    }
+
     @Override
     public void lockAttaching() {
         mAttacher.lockAttaching();
@@ -215,20 +225,26 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
-    protected void onCreate(Bundle sSavedInstanceState) {
-        final Bundle savedInstanceState = instanceState(sSavedInstanceState);
-        forceInit(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        mFirstRun = savedInstanceState == null;
+        final Bundle state = instanceState(savedInstanceState);
+        mCreatedByThemeManager = getIntent().getBooleanExtra(
+                ThemeManager.KEY_CREATED_BY_THEME_MANAGER, false);
+        if (mCreatedByThemeManager) {
+            mFirstRun = false;
+        }
+        forceInit(state);
         performAddonAction(new AddonCallback<IAddonActivity>() {
             @Override
             public void justAction(IAddonActivity addon) {
-                addon.onPreCreate(savedInstanceState);
+                addon.onPreCreate(state);
             }
         });
-        super.onCreate(savedInstanceState);
+        super.onCreate(state);
         performAddonAction(new AddonCallback<IAddonActivity>() {
             @Override
             public void justAction(IAddonActivity addon) {
-                addon.onCreate(savedInstanceState);
+                addon.onCreate(state);
             }
         });
     }
@@ -543,7 +559,7 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
-    public void setContentView(int layoutResId) {
+    public void setContentView(final int layoutResId) {
         setContentView(getLayoutInflater().makeDecorView(layoutResId));
     }
 

@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.addon;
 
+import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.slider.ISlider;
 import org.holoeverywhere.slider.R;
@@ -20,7 +21,7 @@ import android.view.Window;
 public class AddonSlider extends IAddon {
     public static class AddonSliderA extends IAddonActivity implements ISlider {
         private static final String KEY_SLIDER_STATE = "holo:slider:state";
-        private View mContentView;
+        private boolean mAddonEnabled = true;
         private boolean mDragWithActionBar = false;
         private boolean mForceNotRestoreInstance = false;
         private boolean mRejectContentView = true;
@@ -33,14 +34,14 @@ public class AddonSlider extends IAddon {
 
         @Override
         public View findViewById(int id) {
-            View view;
-            if (mContentView != null) {
-                view = mContentView.findViewById(id);
-                if (view != null) {
-                    return view;
-                }
-            }
             if (mSliderView != null) {
+                View view = mSliderView.getContentView();
+                if (view != null) {
+                    view = view.findViewById(id);
+                    if (view != null) {
+                        return view;
+                    }
+                }
                 view = mSliderView.getLeftView();
                 if (view != null) {
                     view = view.findViewById(id);
@@ -142,6 +143,10 @@ public class AddonSlider extends IAddon {
             return mSliderView.getTouchModeRightMargin();
         }
 
+        public boolean isAddonEnabled() {
+            return mAddonEnabled;
+        }
+
         @Override
         public boolean isBlockLongMove() {
             return mSliderView.isBlockLongMove();
@@ -177,19 +182,32 @@ public class AddonSlider extends IAddon {
 
         @Override
         public void onPostCreate(Bundle savedInstanceState) {
+            mRejectContentView = false;
+            if (!mAddonEnabled) {
+                get().setContentView(mSliderView.getContentView());
+                mSliderView = null;
+                return;
+            }
             if (savedInstanceState != null && savedInstanceState.containsKey(KEY_SLIDER_STATE)
                     && !mForceNotRestoreInstance) {
                 SavedState state = savedInstanceState.getParcelable(KEY_SLIDER_STATE);
                 mSliderView.dispatchRestoreInstanceState(state);
             }
-            mRejectContentView = false;
+            View contentView = mSliderView.getContentView();
+            mSliderView.setContentView(contentView.findViewById(R.id.contentView));
+            mSliderView.setLeftView(contentView.findViewById(R.id.leftView));
+            mSliderView.setRightView(contentView.findViewById(R.id.rightView));
+            if (mSliderView.getContentView() == null && mSliderView.getLeftView() == null
+                    && mSliderView.getRightView() == null) {
+                mSliderView.setContentView(contentView);
+            }
             TypedArray a = get().obtainStyledAttributes(new int[] {
                     android.R.attr.windowBackground
             });
             final int windowBackground = a.getResourceId(0, 0);
             a.recycle();
             if (mDragWithActionBar) {
-                get().setContentView(mContentView);
+                get().setContentView(mSliderView.getContentView());
                 ViewGroup decorView = (ViewGroup) get().getWindow().getDecorView();
                 View view = decorView.getChildAt(0);
                 view.setBackgroundResource(windowBackground);
@@ -197,10 +215,9 @@ public class AddonSlider extends IAddon {
                 mSliderView.setContentView(view);
                 decorView.addView(mSliderView, 0);
             } else {
-                if (windowBackground > 0) {
-                    mContentView.setBackgroundResource(windowBackground);
+                if (windowBackground > 0 && mSliderView.getContentView() != null) {
+                    mSliderView.getContentView().setBackgroundResource(windowBackground);
                 }
-                mSliderView.setContentView(mContentView);
                 get().setContentView(mSliderView);
             }
         }
@@ -226,24 +243,32 @@ public class AddonSlider extends IAddon {
             return super.requestWindowFeature(featureId);
         }
 
+        public void setAddonEnabled(boolean addonEnabled) {
+            mAddonEnabled = addonEnabled;
+        }
+
         @Override
         public void setBlockLongMove(boolean blockLongMove) {
             mSliderView.setBlockLongMove(blockLongMove);
         }
 
-        @Override
-        public void setContentView(View view) {
-            if (mRejectContentView) {
-                mContentView = view;
-            } else {
-                mSliderView.setContentView(view);
-            }
+        public void setContentView(int layout) {
+            setContentView(LayoutInflater.inflate(get(), layout));
         }
 
         @Override
+        public void setContentView(View view) {
+            mSliderView.setContentView(view);
+        }
+
+        /**
+         * Doesn't call this manually!
+         */
+        @Override
+        @Deprecated
         public boolean setContentView(View view, LayoutParams params) {
             if (mRejectContentView) {
-                mContentView = view;
+                mSliderView.setContentView(view);
                 return true;
             } else {
                 return false;
@@ -272,6 +297,10 @@ public class AddonSlider extends IAddon {
         @Override
         public void setLeftTranslateFactor(float leftTranslateFactor) {
             mSliderView.setLeftTranslateFactor(leftTranslateFactor);
+        }
+
+        public void setLeftView(int layout) {
+            setLeftView(LayoutInflater.inflate(get(), layout));
         }
 
         @Override
@@ -307,6 +336,10 @@ public class AddonSlider extends IAddon {
         @Override
         public void setRightTranslateFactor(float rightTranslateFactor) {
             mSliderView.setRightTranslateFactor(rightTranslateFactor);
+        }
+
+        public void setRightView(int layout) {
+            setRightView(LayoutInflater.inflate(get(), layout));
         }
 
         @Override

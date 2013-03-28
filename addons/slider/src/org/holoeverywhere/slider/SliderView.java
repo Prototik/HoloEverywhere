@@ -1,3 +1,4 @@
+
 package org.holoeverywhere.slider;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -169,15 +170,32 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     }
 
     public static enum TouchMode {
-        Fullscreen, Left, LeftRight, None, Right;
+        /**
+         * Intercept touch events by full screen. Make unavailable some touch
+         * widgets, like switch or progress bar
+         */
+        Fullscreen,
+        /**
+         * Only left side, even if right view was setted
+         */
+        Left,
+        /**
+         * Double side
+         */
+        LeftRight,
+        /**
+         * Doesn't process any touches
+         */
+        None,
+        /**
+         * Only right side, even if left view was setted
+         */
+        Right;
     }
 
     private static final int DRAG_CLOSE = 3;
-
     private static final int DRAG_IDLE = 0;
-
     private static final int DRAG_NOP = 2;
-
     private static final int DRAG_PERFORM = 1;
     private static final int STATE_CONTENT_OPENED = 0;
     private static final int STATE_LEFT_OPENED = 1;
@@ -390,9 +408,6 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
         }
     }
 
-    /**
-     * Return scroll progress in range -100...100
-     */
     @Override
     public int getProgress() {
         final int x = getScrollX() * 100;
@@ -495,26 +510,22 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     }
 
     private View obtainView(int id) {
-        return obtainView(findViewById(id), id);
+        return obtainView(findViewById(id));
     }
 
-    private View obtainView(View view, int id) {
+    private View obtainView(View view) {
         if (view == null) {
             return null;
         }
+        if (view.getParent() != null) {
+            ((ViewGroup) view.getParent()).removeView(view);
+        }
         if (!(view instanceof DrawerView)) {
-            if (view.getParent() != null) {
-                ((ViewGroup) view.getParent()).removeView(view);
-            }
-            if (view.getId() == id) {
-                view.setId(View.NO_ID);
-            }
             DrawerView drawer = new DrawerView(getContext());
             drawer.setDrawer(this);
             drawer.addView(view);
             view = drawer;
         }
-        view.setId(id);
         view.setClickable(true);
         return view;
     }
@@ -534,9 +545,14 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
             case MotionEvent.ACTION_DOWN:
                 mDownPoint[0] = ev.getX();
                 mDownPoint[1] = ev.getY();
-                if (mCurrentState != STATE_CONTENT_OPENED && contains(mContentView, ev)) {
-                    mDragState = DRAG_CLOSE;
-                    return true;
+                if (mCurrentState != STATE_CONTENT_OPENED) {
+                    if (contains(mContentView, ev)) {
+                        mDragState = DRAG_CLOSE;
+                        return true;
+                    } else {
+                        mDragState = DRAG_NOP;
+                        return false;
+                    }
                 }
                 switch (mTouchMode) {
                     case None:
@@ -547,11 +563,13 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
                     case LeftRight:
                         mDragState = DRAG_NOP;
                         if ((mTouchMode == TouchMode.Left || mTouchMode == TouchMode.LeftRight)
-                                && mDownPoint[0] <= mTouchModeLeftMargin) {
+                                && mDownPoint[0] <= mTouchModeLeftMargin
+                                && mLeftView != null) {
                             mDragState = DRAG_IDLE;
                         }
                         if ((mTouchMode == TouchMode.Right || mTouchMode == TouchMode.LeftRight)
-                                && mDownPoint[0] >= getWidth() - mTouchModeLeftMargin) {
+                                && mDownPoint[0] >= getWidth() - mTouchModeLeftMargin
+                                && mRightView != null) {
                             mDragState = DRAG_IDLE;
                         }
                         break;
@@ -569,12 +587,13 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
                             if (Math.abs(dX) < Math.abs(dY)) {
                                 mDragState = DRAG_NOP;
                             } else {
-                                // if (dX > 0 && mLeftView != null || dX < 0 &&
-                                // mRightView != null) {
-                                mDragState = DRAG_PERFORM;
-                                mDraggingOffset = mDownPoint[0];
-                                return true;
-                                // }
+                                if (dX > 0 && mLeftView != null || dX < 0 && mRightView != null) {
+                                    mDragState = DRAG_PERFORM;
+                                    mDraggingOffset = mDownPoint[0];
+                                    return true;
+                                } else {
+                                    mDragState = DRAG_NOP;
+                                }
                             }
                         }
                         break;
@@ -783,7 +802,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
 
     @Override
     public void setContentView(View view) {
-        mContentView = obtainView(view, R.id.contentView);
+        mContentView = obtainView(view);
         requestLayout();
     }
 
@@ -818,7 +837,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
 
     @Override
     public void setLeftView(View view) {
-        mLeftView = obtainView(view, R.id.leftView);
+        mLeftView = obtainView(view);
         requestLayout();
     }
 
@@ -845,9 +864,6 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
         mOverlayActionBar = overlayActionBar;
     }
 
-    /**
-     * Set scroll progress in range -100...100
-     */
     @Override
     public void setProgress(int progress) {
         progress = Math.max(-100, Math.min(100, progress));
@@ -873,7 +889,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
 
     @Override
     public void setRightView(View view) {
-        mRightView = obtainView(view, R.id.rightView);
+        mRightView = obtainView(view);
         requestLayout();
         postInvalidate();
     }

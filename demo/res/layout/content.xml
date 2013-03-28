@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/content"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent" />
+<!-- It's dummy root and it not will be using in any view hierarchy -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+	<fragment
+		android:id="@id/leftView"
+		android:name=".fragments.MenuFragment"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent" />
+	<FrameLayout
+		android:id="@id/contentView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent" />
+</merge>

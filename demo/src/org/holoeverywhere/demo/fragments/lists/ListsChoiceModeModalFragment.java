@@ -3,8 +3,8 @@ package org.holoeverywhere.demo.fragments.lists;
 
 import org.holoeverywhere.ArrayAdapter;
 import org.holoeverywhere.demo.DemoActivity;
-import org.holoeverywhere.demo.DemoActivity.OnMenuClickListener;
 import org.holoeverywhere.demo.R;
+import org.holoeverywhere.demo.fragments.MenuFragment.OnMenuClickListener;
 import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.ListView.MultiChoiceModeListener;
 

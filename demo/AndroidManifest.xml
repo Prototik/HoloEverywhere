@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="preferExternal" android:versionCode="1005000" android:versionName="1.5.0" package="org.holoeverywhere.demo">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionCode="1005000" android:versionName="1.5.0" package="org.holoeverywhere.demo">
 	<uses-sdk android:minSdkVersion="7" android:targetSdkVersion="16"/>
 	<instrumentation android:label="HoloEverywhere Test" android:name=".test.TestRunner" android:targetPackage="org.holoeverywhere.demo"/>
 	<application android:allowBackup="true" android:hardwareAccelerated="true" android:icon="@drawable/icon" android:label="@string/app_name" android:name=".DemoApplication">
-		<activity android:name=".DemoActivity" android:windowSoftInputMode="stateHidden">
+		<activity android:name=".DemoActivity" android:windowSoftInputMode="stateHidden" android:launchMode="singleInstance">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
