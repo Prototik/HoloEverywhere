@@ -25,7 +25,6 @@ import android.os.Build.VERSION_CODES;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.HapticFeedbackConstants;
@@ -517,7 +516,6 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.v("POPKA", "onInterceptTouchEvent: " + ev);
         if (!mIsAttached) {
             return false;
         }
@@ -624,7 +622,6 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        Log.v("POPKA", "onTouchEvent: " + ev);
         if (!isEnabled()) {
             return isClickable() || isLongClickable();
         }

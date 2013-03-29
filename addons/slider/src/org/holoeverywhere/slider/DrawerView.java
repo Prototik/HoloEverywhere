@@ -6,6 +6,7 @@ import org.holoeverywhere.widget.FrameLayout;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 public class DrawerView extends FrameLayout {
     public interface Drawer {
@@ -27,6 +28,8 @@ public class DrawerView extends FrameLayout {
     public DrawerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setWillNotDraw(false);
+        setDescendantFocusability(FOCUS_AFTER_DESCENDANTS);
+        setFocusable(true);
     }
 
     @Override
@@ -43,6 +46,16 @@ public class DrawerView extends FrameLayout {
 
     public Drawer getDrawer() {
         return mDrawer;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return false;
     }
 
     public void setDrawer(Drawer drawer) {

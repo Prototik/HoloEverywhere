@@ -223,10 +223,12 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     private int mScrollOnLayoutTarget = -1;
     private final int mShadowInterpolatorRes, mTranslateInterpolatorRes;
     private Runnable mShowContentRunnable;
+    private final Rect mTempRect = new Rect();
     private TouchMode mTouchMode = TouchMode.LeftRight;
     private int mTouchModeLeftMargin;
     private int mTouchModeRightMargin;
     private final int mTouchSlop;
+
     private final ViewConfiguration mViewConfiguration;
 
     public SliderView(Context context) {
@@ -299,6 +301,23 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
         mTouchSlop = mViewConfiguration.getScaledTouchSlop();
     }
 
+    private void attachView(View view, int width, boolean matchParentWidth) {
+        if (view == null) {
+            return;
+        }
+        if (view.getParent() != this) {
+            if (view.getParent() != null) {
+                ((ViewGroup) view.getParent()).removeView(view);
+            }
+            addViewInLayout(view, -1, obtainParams(matchParentWidth));
+        }
+        final int pWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
+        final int pHeight = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
+        view.measure(MeasureSpec.makeMeasureSpec(width > 0 && width < pWidth ? width : pWidth,
+                matchParentWidth || width > 0 ? MeasureSpec.EXACTLY : MeasureSpec.UNSPECIFIED),
+                MeasureSpec.makeMeasureSpec(pHeight, MeasureSpec.EXACTLY));
+    }
+
     protected int computeDelay(int dX) {
         return Math.max(100, Math.min(800, Math.abs(dX) * 2));
     }
@@ -315,8 +334,8 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
         if (view == null) {
             return false;
         }
-        return x + getScrollX() > view.getLeft() && x + getScrollX() < view.getRight()
-                && y + getScrollY() > view.getTop() && y + getScrollY() < view.getBottom();
+        view.getHitRect(mTempRect);
+        return mTempRect.contains((int) x + getScrollX(), (int) y + getScrollY());
     }
 
     private boolean contains(View view, MotionEvent ev) {
@@ -484,21 +503,6 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
         return mCurrentState == STATE_RIGHT_OPENED;
     }
 
-    private void measure(View view, boolean matchParentWidth) {
-        measure(view, matchParentWidth, -1);
-    }
-
-    private void measure(View view, boolean matchParentWidth, int width) {
-        if (view == null) {
-            return;
-        }
-        final int pWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
-        final int pHeight = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
-        view.measure(MeasureSpec.makeMeasureSpec(width > 0 ? width : pWidth,
-                matchParentWidth || width > 0 ? MeasureSpec.EXACTLY : MeasureSpec.UNSPECIFIED),
-                MeasureSpec.makeMeasureSpec(pHeight, MeasureSpec.EXACTLY));
-    }
-
     private int obtainDragBound(boolean right, boolean invert) {
         int i = right ? mRightDragBound : mLeftDragBound;
         return invert ? 100 - i : i;
@@ -522,11 +526,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
         }
         if (!(view instanceof DrawerView)) {
             DrawerView drawer = new DrawerView(getContext());
-            drawer.setDrawer(this);
             drawer.addView(view);
-            view = drawer;
+            drawer.setDrawer(this);
+            drawer.setClickable(true);
+            return drawer;
         }
-        view.setClickable(true);
         return view;
     }
 
@@ -637,28 +641,14 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        removeAllViewsInLayout();
-        if (mContentView != null) {
-            addViewInLayout(mContentView, -1, obtainParams(true));
-            measure(mContentView, true);
+        attachView(mContentView, -1, true);
+        attachView(mLeftView, mLeftViewWidthSetted ? mLeftViewWidth : -1, false);
+        attachView(mRightView, mRightViewWidthSetted ? mRightViewWidth : -1, false);
+        if (mLeftView != null && !mLeftViewWidthSetted) {
+            mLeftViewWidth = mLeftView.getMeasuredWidth();
         }
-        if (mLeftView != null) {
-            addViewInLayout(mLeftView, -1, obtainParams(false));
-            measure(mLeftView, false, mLeftViewWidthSetted ? mLeftViewWidth : -1);
-            if (!mLeftViewWidthSetted) {
-                mLeftViewWidth = mLeftView.getMeasuredWidth();
-            }
-        } else {
-            mLeftViewWidth = 0;
-        }
-        if (mRightView != null) {
-            addViewInLayout(mRightView, -1, obtainParams(false));
-            measure(mRightView, false, mRightViewWidthSetted ? mRightViewWidth : -1);
-            if (!mRightViewWidthSetted) {
-                mRightViewWidth = mRightView.getMeasuredWidth();
-            }
-        } else {
-            mRightViewWidth = 0;
+        if (mRightView != null && !mRightViewWidthSetted) {
+            mRightViewWidth = mRightView.getMeasuredWidth();
         }
     }
 
@@ -868,11 +858,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     public void setProgress(int progress) {
         progress = Math.max(-100, Math.min(100, progress));
         if (progress < 0) {
-            show(progress * -mLeftViewWidth, false, STATE_LEFT_OPENED);
+            show(STATE_LEFT_OPENED, false, progress * -mLeftViewWidth);
         } else if (progress > 0) {
-            show(progress * mRightViewWidth, false, STATE_RIGHT_OPENED);
+            show(STATE_RIGHT_OPENED, false, progress * mRightViewWidth);
         } else {
-            show(0, false, STATE_CONTENT_OPENED);
+            show(STATE_CONTENT_OPENED, false);
         }
     }
 
@@ -942,8 +932,27 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
         setRightViewShadow(viewShadow);
     }
 
-    private void show(int offset, boolean smooth, int newState) {
+    private void show(int newState, boolean smooth) {
+        switch (newState) {
+            case STATE_CONTENT_OPENED:
+                show(newState, smooth, 0);
+                break;
+            case STATE_LEFT_OPENED:
+                show(newState, smooth, -mLeftViewWidth);
+                break;
+            case STATE_RIGHT_OPENED:
+                show(newState, smooth, mRightViewWidth);
+                break;
+        }
+    }
+
+    private void show(int newState, boolean smooth, int offset) {
         if (getScrollX() != offset || mCurrentState != newState) {
+            if (newState == STATE_LEFT_OPENED && mLeftView == null
+                    || newState == STATE_RIGHT_OPENED && mRightView == null) {
+                show(STATE_CONTENT_OPENED, smooth, 0);
+                return;
+            }
             scrollTo(offset, smooth);
             mCurrentState = newState;
             if (mOnSlideListener != null) {
@@ -977,17 +986,17 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
 
     @Override
     public void showContentView(boolean smooth) {
-        show(0, smooth, STATE_CONTENT_OPENED);
+        show(STATE_CONTENT_OPENED, smooth);
     }
 
     @Override
     public void showLeftView(boolean smooth) {
-        show(-mLeftViewWidth, smooth, STATE_LEFT_OPENED);
+        show(STATE_LEFT_OPENED, smooth);
     }
 
     @Override
     public void showRightView(boolean smooth) {
-        show(mRightViewWidth, smooth, STATE_RIGHT_OPENED);
+        show(STATE_RIGHT_OPENED, smooth);
     }
 
     @Override

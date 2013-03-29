@@ -43,8 +43,8 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final ActionBar ab = getSupportActionBar();
-        ab.setTitle(R.string.library_name);
+        final ActionBar actionbar = getSupportActionBar();
+        actionbar.setTitle(R.string.library_name);
 
         setContentView(R.layout.content);
 
@@ -53,7 +53,7 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         if (findViewById(R.id.customMenuFrame) == null) {
             // Phone
             mStaticMenu = false;
-            ab.setDisplayHomeAsUpEnabled(true);
+            actionbar.setDisplayHomeAsUpEnabled(true);
             slider.setLeftViewWidth(computeMenuWidth());
             slider.setDragWithActionBar(true);
         } else {

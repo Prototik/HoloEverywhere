@@ -6,6 +6,7 @@ import org.holoeverywhere.widget.FrameLayout;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewDebug.ExportedProperty;
 import android.view.ViewGroup;
@@ -96,6 +97,11 @@ public class ContextMenuDecorView extends FrameLayout implements
     }
 
     @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return false;
+    }
+
+    @Override
     public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
         if (mListener == null) {
             return false;
@@ -118,6 +124,11 @@ public class ContextMenuDecorView extends FrameLayout implements
 
     @Override
     public boolean onOpenSubMenu(MenuBuilder subMenu) {
+        return false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
         return false;
     }
 
