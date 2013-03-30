@@ -30,6 +30,9 @@ import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Fullscreen_Wallp
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_Wallpaper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.holoeverywhere.ThemeManager.ThemeGetter.ThemeTag;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
@@ -183,6 +186,11 @@ public final class ThemeManager {
     private static int _THEME_MODIFIER = 0;
     private static final String _THEME_TAG = ":holoeverywhere:theme";
     private static final SparseIntArray _THEMES_MAP = new SparseIntArray();
+
+    public static int getThemeMask() {
+        return _THEME_MASK;
+    }
+
     public static final int COLOR_SCHEME_MASK;
     /**
      * Flag indicates on the dark theme
@@ -532,9 +540,18 @@ public final class ThemeManager {
      * <pre>
      * ThemeManager.map({@link #LIGHT}, {@link R.style#Holo_Theme_Dialog_Light});
      * </pre>
+     * 
+     * If theme value negative - remove pair flags-theme
      */
     public static void map(int flags, int theme) {
-        _THEMES_MAP.put(flags & _THEME_MASK, theme);
+        if (theme > 0) {
+            _THEMES_MAP.put(flags & _THEME_MASK, theme);
+        } else {
+            final int i = _THEMES_MAP.indexOfKey(flags & _THEME_MASK);
+            if (i > 0) {
+                _THEMES_MAP.removeAt(i);
+            }
+        }
     }
 
     /**
@@ -685,6 +702,38 @@ public final class ThemeManager {
                 Holo_Theme_Light_DialogWhenLarge_NoActionBar);
         map(MIXED | DIALOG,
                 Holo_Theme_Light_DialogWhenLarge_NoActionBar);
+
+        if (sThemeSetters != null) {
+            for (ThemeSetter setter : sThemeSetters) {
+                setter.setupThemes();
+            }
+        }
+    }
+
+    public static interface ThemeSetter {
+        public void setupThemes();
+    }
+
+    private static List<ThemeSetter> sThemeSetters;
+
+    public static void registerThemeSetter(ThemeSetter themeSetter) {
+        if (themeSetter == null) {
+            return;
+        }
+        if (sThemeSetters == null) {
+            sThemeSetters = new ArrayList<ThemeManager.ThemeSetter>();
+        }
+        if (!sThemeSetters.contains(themeSetter)) {
+            sThemeSetters.add(themeSetter);
+            themeSetter.setupThemes();
+        }
+    }
+
+    public static void unregisterThemeSetter(ThemeSetter themeSetter) {
+        if (sThemeSetters == null || themeSetter == null) {
+            return;
+        }
+        sThemeSetters.remove(themeSetter);
     }
 
     /**

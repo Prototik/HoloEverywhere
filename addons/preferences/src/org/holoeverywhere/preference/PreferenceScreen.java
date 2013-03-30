@@ -24,7 +24,6 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.internal.view.menu.MenuItemWrapper;
 import com.actionbarsherlock.internal.widget.ActionBarView;
 import com.actionbarsherlock.view.MenuItem;
@@ -33,8 +32,8 @@ import com.actionbarsherlock.view.Window.Callback;
 public final class PreferenceScreen extends PreferenceGroup implements
         AdapterView.OnItemClickListener, DialogInterface.OnDismissListener {
     private final class PreferenceDialog extends Dialog implements Callback {
-        public PreferenceDialog(int theme) {
-            super(PreferenceScreen.this.getContext(), theme);
+        public PreferenceDialog(Context context, int theme) {
+            super(context, theme);
         }
 
         @Override
@@ -64,30 +63,12 @@ public final class PreferenceScreen extends PreferenceGroup implements
             return false;
         }
 
-        protected void onPrepareActionBar(ActionBarView actionBarView) {
-            if (actionBarView == null) {
-                return;
-            }
-            actionBarView.setWindowCallback(mDialog);
-            actionBarView.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP
-                    | actionBarView.getDisplayOptions()
-                    & ~ActionBar.DISPLAY_HOME_AS_UP);
-        }
-
-        @SuppressLint("NewApi")
-        protected void onPrepareActionBar(android.app.ActionBar actionBar) {
-            if (actionBar == null) {
-                return;
-            }
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        @SuppressLint("NewApi")
         private void prepareActionBar() {
-            if (VERSION.SDK_INT >= 11) {
-                onPrepareActionBar(getActionBar());
-            } else {
-                onPrepareActionBar((ActionBarView) findViewById(R.id.abs__action_bar));
+            if (VERSION.SDK_INT < 11) {
+                ActionBarView actionBarView = (ActionBarView) findViewById(R.id.abs__action_bar);
+                if (actionBarView != null) {
+                    actionBarView.setWindowCallback(mDialog);
+                }
             }
         }
 
@@ -258,23 +239,19 @@ public final class PreferenceScreen extends PreferenceGroup implements
 
     @SuppressLint("NewApi")
     private void showDialog(Bundle state) {
-        Context context = getContext();
-        while (context instanceof PreferenceContextWrapper) {
-            context = ((PreferenceContextWrapper) context).getBaseContext();
-        }
+        Context preferenceContext = getContext();
+        Context context = PreferenceInit.unwrap(getContext());
         final int contextTheme = getThemeResId(context);
-        PreferenceContextWrapper preferenceContext = Preference.context(context);
         if (mListView != null) {
             mListView.setAdapter(null);
         }
-
         View childPrefScreen = LayoutInflater.inflate(preferenceContext,
                 R.layout.preference_list_fragment);
         mListView = (ListView) childPrefScreen.findViewById(android.R.id.list);
         bind(mListView);
         final CharSequence title = getTitle();
         final boolean titleEmpty = TextUtils.isEmpty(title);
-        Dialog dialog = mDialog = new PreferenceDialog(contextTheme);
+        Dialog dialog = mDialog = new PreferenceDialog(context, contextTheme);
         if (titleEmpty) {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         } else {

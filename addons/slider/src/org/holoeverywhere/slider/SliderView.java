@@ -858,7 +858,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     public void setProgress(int progress) {
         progress = Math.max(-100, Math.min(100, progress));
         if (progress < 0) {
-            show(STATE_LEFT_OPENED, false, progress * -mLeftViewWidth);
+            show(STATE_LEFT_OPENED, false, progress * mLeftViewWidth);
         } else if (progress > 0) {
             show(STATE_RIGHT_OPENED, false, progress * mRightViewWidth);
         } else {

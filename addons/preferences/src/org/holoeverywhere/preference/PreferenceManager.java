@@ -385,7 +385,7 @@ public class PreferenceManager {
     }
 
     private void init(Context context) {
-        mContext = Preference.context(context);
+        mContext = PreferenceInit.context(context);
 
         setSharedPreferencesName(PreferenceManager
                 .getDefaultSharedPreferencesName(context));

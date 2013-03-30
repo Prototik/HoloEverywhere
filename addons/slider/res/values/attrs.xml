@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?><resources>
+    <!--Start attrs definition block-->
+    <attr name="dragBound" format="integer|fraction|reference|dimension"/>
+    <attr name="leftDragBound" format="integer|fraction|reference|dimension"/>
+    <attr name="leftShadow" format="float|fraction|reference|dimension"/>
+    <attr name="leftTranslateFactor" format="float|fraction|reference|dimension"/>
+    <attr name="rightDragBound" format="integer|fraction|reference|dimension"/>
+    <attr name="rightShadow" format="float|fraction|reference|dimension"/>
+    <attr name="rightTranslateFactor" format="float|fraction|reference|dimension"/>
+    <attr name="scrollInterpolator" format="reference"/>
+    <attr name="shadow" format="float|fraction|reference|dimension"/>
+    <attr name="shadowInterpolator" format="reference"/>
+    <attr name="sliderMenuItemBackground" format="reference|color"/>
+    <attr name="sliderMenuItemSelectionHandler" format="reference|color"/>
+    <attr name="sliderMenuItemStyle" format="reference"/>
+    <attr name="sliderMenuItemTextAppearance" format="reference"/>
+    <attr name="touchMode" format="enum">
+        <enum name="fullscreen" value="4"/>
+        <enum name="left" value="1"/>
+        <enum name="leftright" value="3"/>
+        <enum name="none" value="0"/>
+        <enum name="right" value="2"/>
+    </attr>
+    <attr name="touchModeLeftMargin" format="reference|dimension"/>
+    <attr name="touchModeMargin" format="reference|dimension"/>
+    <attr name="touchModeRightMargin" format="reference|dimension"/>
+    <attr name="translateFactor" format="float|fraction|reference|dimension"/>
+    <attr name="translateInterpolator" format="reference"/>
+    <!--Start styleable definition block-->
+    <declare-styleable name="Slider">
+        <attr name="dragBound"/>
+        <attr name="leftDragBound"/>
+        <attr name="leftShadow"/>
+        <attr name="leftTranslateFactor"/>
+        <attr name="rightDragBound"/>
+        <attr name="rightShadow"/>
+        <attr name="rightTranslateFactor"/>
+        <attr name="scrollInterpolator"/>
+        <attr name="shadow"/>
+        <attr name="shadowInterpolator"/>
+        <attr name="touchMode"/>
+        <attr name="touchModeLeftMargin"/>
+        <attr name="touchModeMargin"/>
+        <attr name="touchModeRightMargin"/>
+        <attr name="translateFactor"/>
+        <attr name="translateInterpolator"/>
+    </declare-styleable>
+    <declare-styleable name="SliderMenu.ItemView">
+        <attr name="sliderMenuItemBackground"/>
+        <attr name="sliderMenuItemSelectionHandler"/>
+        <attr name="sliderMenuItemTextAppearance"/>
+    </declare-styleable>
+    <!--End of any blocks-->
+</resources>

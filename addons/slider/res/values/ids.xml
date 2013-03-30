@@ -4,39 +4,4 @@
 	<item name="rightView" type="id"/>
 	<item name="contentView" type="id"/>
 	<item name="slider" type="id"/>
-	<dimen name="sliderTouchModeMargin">24dp</dimen>
-	<declare-styleable name="Slider">
-		<attr name="leftDragBound" format="integer|fraction|reference|dimension" />
-		<attr name="rightDragBound" format="integer|fraction|reference|dimension" />
-		<attr name="dragBound" format="integer|fraction|reference|dimension" />
-		<attr name="leftShadow" format="float|fraction|reference|dimension" />
-		<attr name="rightShadow" format="float|fraction|reference|dimension" />
-		<attr name="shadow" format="float|fraction|reference|dimension" />
-		<attr name="leftTranslateFactor" format="float|fraction|reference|dimension" />
-		<attr name="rightTranslateFactor" format="float|fraction|reference|dimension" />
-		<attr name="translateFactor" format="float|fraction|reference|dimension" />
-		<attr name="shadowInterpolator" format="reference" />
-		<attr name="translateInterpolator" format="reference" />
-		<attr name="scrollInterpolator" format="reference" />
-		<attr name="touchMode">
-			<enum name="none" value="0" />
-			<enum name="left" value="1" />
-			<enum name="right" value="2" />
-			<enum name="leftright" value="3" />
-			<enum name="fullscreen" value="4" />
-		</attr>
-		<attr name="touchModeLeftMargin" format="reference|dimension" />
-		<attr name="touchModeRightMargin" format="reference|dimension" />
-		<attr name="touchModeMargin" format="reference|dimension" />
-	</declare-styleable>
-	<style name="Holo.Slider">
-		<item name="dragBound">25%</item>
-		<item name="shadow">40%</item>
-		<item name="translateFactor">30%</item>
-		<item name="shadowInterpolator">@interpolator/decelerate_quad</item>
-		<item name="translateInterpolator">@interpolator/linear</item>
-		<item name="scrollInterpolator">@interpolator/decelerate_quint</item>
-		<item name="touchMode">leftright</item>
-		<item name="touchModeMargin">@dimen/sliderTouchModeMargin</item>
-	</style>
 </resources>

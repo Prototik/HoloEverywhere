@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?><resources>
+    <style name="Holo.Slider">
+        <item name="dragBound">25%</item>
+        <item name="scrollInterpolator">@interpolator/decelerate_quint</item>
+        <item name="shadow">55%</item>
+        <item name="shadowInterpolator">@interpolator/decelerate_quad</item>
+        <item name="touchMode">leftright</item>
+        <item name="touchModeMargin">@dimen/sliderTouchModeMargin</item>
+        <item name="translateFactor">40%</item>
+        <item name="translateInterpolator">@interpolator/linear</item>
+    </style>
+    <style name="Holo.SliderMenu.ItemView" parent="Holo.TextView">
+        <item name="android:textAppearance">?sliderMenuItemTextAppearance</item>
+    </style>
+    <style name="Holo.TextAppearance.SliderMenu.ItemView" parent="Holo.TextAppearance.Medium">
+        <item name="android:background">?sliderMenuItemBackground</item>
+    </style>
+    <style name="Holo.TextAppearance.SliderMenu.ItemView.Light" parent="Holo.TextAppearance.Medium.Light">
+        <item name="android:background">?sliderMenuItemBackground</item>
+    </style>
+    <style name="Holo.Theme.SliderMenu" parent="Holo.Theme">
+        <!--Include block: SliderMenuThemeDark-->
+        <!--Include block: SliderMenuTheme-->
+        <item name="sliderMenuItemBackground">@drawable/slider_menu_selector</item>
+        <item name="sliderMenuItemSelectionHandler">@color/holo_blue_dark</item>
+        <item name="sliderMenuItemStyle">@style/Holo.SliderMenu.ItemView</item>
+        <!--End of block SliderMenuTheme-->
+        <item name="sliderMenuItemTextAppearance">@style/Holo.TextAppearance.SliderMenu.ItemView</item>
+        <!--End of block SliderMenuThemeDark-->
+    </style>
+    <style name="Holo.Theme.SliderMenu.Light" parent="Holo.Theme.Light">
+        <!--Include block: SliderMenuThemeLight-->
+        <!--Include block: SliderMenuTheme-->
+        <item name="sliderMenuItemBackground">@drawable/slider_menu_selector</item>
+        <item name="sliderMenuItemSelectionHandler">@color/holo_blue_dark</item>
+        <item name="sliderMenuItemStyle">@style/Holo.SliderMenu.ItemView</item>
+        <!--End of block SliderMenuTheme-->
+        <item name="sliderMenuItemTextAppearance">@style/Holo.TextAppearance.SliderMenu.ItemView.Light</item>
+        <!--End of block SliderMenuThemeLight-->
+    </style>
+</resources>

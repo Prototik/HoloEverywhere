@@ -1,16 +1,11 @@
 
 package org.holoeverywhere.preference;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.ThemeManager;
-import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.ContextThemeWrapperPlus;
 import org.holoeverywhere.util.CharSequences;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,7 +19,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.AbsSavedState;
 import android.view.KeyEvent;
 import android.view.View;
@@ -70,82 +64,10 @@ public class Preference implements Comparable<Preference>,
         boolean onPreferenceClick(Preference preference);
     }
 
-    static final class PreferenceContextWrapper extends ContextThemeWrapperPlus {
-        public PreferenceContextWrapper(Context base, int themeres) {
-            super(base, themeres);
-        }
-    }
-
     public static final int DEFAULT_ORDER = Integer.MAX_VALUE;
-
-    private static WeakHashMap<Context, WeakReference<PreferenceContextWrapper>> sStyledContextMap = new WeakHashMap<Context, WeakReference<PreferenceContextWrapper>>();
 
     static {
         PreferenceInit.init();
-    }
-
-    public static PreferenceContextWrapper context(Context context) {
-        if (context instanceof PreferenceContextWrapper) {
-            return (PreferenceContextWrapper) context;
-        }
-        WeakReference<PreferenceContextWrapper> reference = sStyledContextMap.get(context);
-        PreferenceContextWrapper wrapper = null;
-        if (reference != null) {
-            wrapper = reference.get();
-        }
-        if (wrapper != null) {
-            return wrapper;
-        }
-        int theme, mod = 0;
-        TypedValue outValue = new TypedValue();
-        context.obtainStyledAttributes(new int[] {
-                R.attr.preferenceTheme
-        }).getValue(0, outValue);
-        switch (outValue.type) {
-            case TypedValue.TYPE_REFERENCE:
-                wrapper = new PreferenceContextWrapper(context, theme = outValue.resourceId);
-                if (wrapper.obtainStyledAttributes(new int[] {
-                        R.attr.holoTheme
-                }).getInt(0, 0) == 4) {
-                    // If preference theme
-                    return wrapper;
-                }
-                break;
-            case TypedValue.TYPE_INT_DEC:
-            case TypedValue.TYPE_INT_HEX:
-                mod = outValue.resourceId;
-                break;
-        }
-        theme = PreferenceInit.THEME_FLAG;
-        if (context instanceof Activity) {
-            if (mod == 0 || mod == ThemeManager.getDefaultTheme()) {
-                mod = ThemeManager.getThemeType(context);
-                if (mod == PreferenceInit.THEME_FLAG) {
-                    theme = mod;
-                    mod = 0;
-                } else if (mod == ThemeManager.INVALID) {
-                    mod = ThemeManager.getDefaultTheme() & ThemeManager.COLOR_SCHEME_MASK;
-                    if (mod == 0) {
-                        mod = ThemeManager.DARK;
-                    }
-                }
-            }
-            if (mod > 0) {
-                theme |= mod & ThemeManager.COLOR_SCHEME_MASK;
-            }
-        } else {
-            theme |= ThemeManager.getDefaultTheme() & ThemeManager.COLOR_SCHEME_MASK;
-        }
-        theme = ThemeManager.getThemeResource(theme, false);
-        if (theme == ThemeManager.getDefaultTheme() || theme == 0) {
-            theme = R.style.Holo_PreferenceTheme;
-        }
-        if (wrapper == null) {
-            wrapper = new PreferenceContextWrapper(context, theme);
-        }
-        reference = new WeakReference<PreferenceContextWrapper>(wrapper);
-        sStyledContextMap.put(context, reference);
-        return wrapper;
     }
 
     private boolean mBaseMethodCalled;
@@ -190,7 +112,7 @@ public class Preference implements Comparable<Preference>,
     }
 
     public Preference(Context context, AttributeSet attrs, int defStyle) {
-        mContext = context(context);
+        mContext = PreferenceInit.context(context);
         TypedArray a = mContext.obtainStyledAttributes(attrs,
                 R.styleable.Preference, defStyle, R.style.Holo_Preference);
         mKey = a.getString(R.styleable.Preference_key);

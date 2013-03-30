@@ -400,7 +400,7 @@ public abstract class PreferenceActivity extends ListActivity implements
 
     protected Context getThemedContext() {
         if (mThemedContext == null) {
-            mThemedContext = Preference.context(this);
+            mThemedContext = PreferenceInit.context(this);
         }
         return mThemedContext;
     }

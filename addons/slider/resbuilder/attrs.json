@@ -1,0 +1,31 @@
+{
+	"attrs": [
+	          "sliderMenuItemStyle$reference"
+    ],
+	"styleable": {
+		"Slider": [
+		            "leftDragBound$integer|fraction|reference|dimension",   
+		            "rightDragBound$integer|fraction|reference|dimension",   
+		            "dragBound$integer|fraction|reference|dimension",
+		            "leftShadow$float|fraction|reference|dimension",
+		            "rightShadow$float|fraction|reference|dimension",	    
+		            "shadow$float|fraction|reference|dimension",    
+		            "leftTranslateFactor$float|fraction|reference|dimension",
+		            "rightTranslateFactor$float|fraction|reference|dimension",
+		            "translateFactor$float|fraction|reference|dimension",
+		            "shadowInterpolator$reference",
+		            "translateInterpolator$reference",
+		            "scrollInterpolator$reference",
+		            "touchMode$enum/none 0/left 1/right 2/leftright 3/fullscreen 4",
+		            "touchModeLeftMargin$reference|dimension",
+		            "touchModeRightMargin$reference|dimension",
+		            "touchModeMargin$reference|dimension"
+		],
+		"SliderMenu.ItemView": [
+		    "sliderMenuItemTextAppearance$reference",
+		    "sliderMenuItemBackground$reference|color",
+		    "sliderMenuItemSelectionHandler$reference|color"
+        ]
+	},
+	"output": "values/attrs.xml"
+}

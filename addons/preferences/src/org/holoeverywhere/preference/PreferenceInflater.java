@@ -17,15 +17,14 @@ public class PreferenceInflater extends GenericInflater<Preference, PreferenceGr
     private static final String INTENT_TAG_NAME = "intent";
     private PreferenceManager mPreferenceManager;
 
-    public PreferenceInflater(Context context,
-            PreferenceManager preferenceManager) {
-        super(Preference.context(context));
+    public PreferenceInflater(Context context, PreferenceManager preferenceManager) {
+        super(PreferenceInit.context(context));
         init(preferenceManager);
     }
 
     public PreferenceInflater(PreferenceInflater original,
             PreferenceManager preferenceManager, Context newContext) {
-        super(original, Preference.context(newContext));
+        super(original, PreferenceInit.context(newContext));
         init(preferenceManager);
     }
 

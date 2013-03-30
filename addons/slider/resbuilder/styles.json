@@ -1,0 +1,39 @@
+{
+	"blocks": {
+		"SliderMenuTheme": {
+			"sliderMenuItemStyle": "@style/Holo.SliderMenu.ItemView",
+			"sliderMenuItemBackground": "@drawable/slider_menu_selector",
+			"sliderMenuItemSelectionHandler": "@color/holo_blue_dark"
+		},
+		"SliderMenuThemeDark | SliderMenuTheme": {
+			"sliderMenuItemTextAppearance": "@style/Holo.TextAppearance.SliderMenu.ItemView"
+		},
+		"SliderMenuThemeLight | SliderMenuTheme": {
+			"sliderMenuItemTextAppearance": "@style/Holo.TextAppearance.SliderMenu.ItemView.Light"
+		}
+	},
+	"data": {	
+		"Holo.Slider": {
+			"dragBound": "25%",
+			"shadow": "55%",
+			"translateFactor": "40%",
+			"shadowInterpolator": "@interpolator/decelerate_quad",
+			"translateInterpolator": "@interpolator/linear",
+			"scrollInterpolator": "@interpolator/decelerate_quint",
+			"touchMode": "leftright",
+			"touchModeMargin": "@dimen/sliderTouchModeMargin"
+		},
+		"Holo.SliderMenu.ItemView < Holo.TextView": {
+			"android:textAppearance": "?sliderMenuItemTextAppearance"
+		},
+		"Holo.TextAppearance.SliderMenu.ItemView < Holo.TextAppearance.Medium": {
+			"android:background": "?sliderMenuItemBackground"
+		},
+		"Holo.TextAppearance.SliderMenu.ItemView.Light < Holo.TextAppearance.Medium.Light": {
+			"android:background": "?sliderMenuItemBackground"			
+		},
+		"Holo.Theme.SliderMenu | SliderMenuThemeDark < Holo.Theme": {},
+		"Holo.Theme.SliderMenu.Light | SliderMenuThemeLight < Holo.Theme.Light": {}
+	},
+	"output": "values/styles.xml"
+}
