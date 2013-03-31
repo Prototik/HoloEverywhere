@@ -7,10 +7,10 @@ Bringing Holo Theme from Android 4.1 to 2.1 and above.
 [![Donate](http://holoeverywhere.org/github-res/donate_button.png)][Donate]
 ## How to use? ([Maven][Build with Maven])
 
-* You should clone git repo, init and update submodules:
+* You should clone git stable branch, init and update submodules:
 
 ```
-git clone --branch stable git://github.com/ChristopheVersieux/HoloEverywhere.git HoloEverywhere
+git clone --branch stable git://github.com/Prototik/HoloEverywhere.git HoloEverywhere
 cd HoloEverywhere
 git submodule update --init --recursive
 ```
@@ -18,7 +18,11 @@ Git will be swear on detached HEAD state, ignore it.
 
 You also may use git GUI programs
 
-* Import HoloEverywhere from `library` folder and ActionBarSherlock from `contrib/ActionBarSherlock/library` folder into Eclipse
+* Replace contrib/ActionBarSherlock/library/libs/android-support-v4.jar by support-library/android-support-v4-r12.jar
+
+* Import ActionBarSherlock from `contrib/ActionBarSherlock/library` folder
+
+* Import HoloEverywhere from `library` folder
 
 * Add HoloEverywhere project as library into your project (Properties/Android/Library/Add)
 
@@ -80,5 +84,5 @@ LGPLv3, full text of license see [here][License]
 
 [Play Store]: https://play.google.com/store/apps/details?id=org.holoeverywhere.demo "Play Store"
 [Donate]: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=X7E7U7HNR36YN&lc=US&item_name=HoloEverywhere&currency_code=USD&bn=PP%2dDonationsBF%3adonate_button%2epng%3aNonHosted "Donate"
-[Build with Maven]: https://github.com/ChristopheVersieux/HoloEverywhere/wiki/Maven "Build with maven"
-[License]: https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/LICENSE "LGPLv3"
+[Build with Maven]: https://github.com/Prototik/HoloEverywhere/wiki/Maven "Build with maven"
+[License]: https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE "LGPLv3"
