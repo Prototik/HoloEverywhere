@@ -24,7 +24,7 @@ public class PreferenceInit {
         LayoutInflater.register(PreferenceFrameLayout.class);
         LayoutInflater.register(FragmentBreadCrumbs.class);
 
-        map(R.style.Holo_PreferenceTheme, R.style.Holo_PreferenceTheme_Light);
+        map(R.style.Holo_Internal_Preference, R.style.Holo_Internal_Preference_Light);
     }
 
     /**
@@ -66,11 +66,10 @@ public class PreferenceInit {
             }).getValue(0, outValue);
             switch (outValue.type) {
                 case TypedValue.TYPE_REFERENCE:
-                    Context c = new ContextThemeWrapper(context, theme = outValue.resourceId);
-                    if (c.obtainStyledAttributes(new int[] {
-                            R.attr.holoTheme
-                    }).getInt(0, 0) == 4) {
-                        // If preference theme
+                    if (new ContextThemeWrapper(context, theme = outValue.resourceId)
+                            .obtainStyledAttributes(new int[] {
+                                    R.attr.holoTheme
+                            }).getInt(0, 0) == 4) {
                         return theme;
                     }
                     break;
@@ -101,7 +100,7 @@ public class PreferenceInit {
             }
             theme = ThemeManager.getThemeResource(theme, false);
             if (theme == ThemeManager.getDefaultTheme() || theme == 0) {
-                theme = R.style.Holo_PreferenceTheme;
+                theme = sThemes.getDarkTheme();
             }
             return theme;
         }

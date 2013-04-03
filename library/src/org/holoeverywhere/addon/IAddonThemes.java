@@ -22,6 +22,18 @@ public class IAddonThemes implements ThemeSetter {
     private int mLightTheme = -1;
     private int mMixedTheme = -1;
 
+    public int getDarkTheme() {
+        return mDarkTheme;
+    }
+
+    public int getLightTheme() {
+        return mLightTheme;
+    }
+
+    public int getMixedTheme() {
+        return mMixedTheme;
+    }
+
     public void setDarkTheme(int darkTheme) {
         mDarkTheme = darkTheme;
         setupThemes();

@@ -1,5 +1,6 @@
 {
 	"attrs": [
+	          "sliderMenuItemViewStyle$reference",
 	          "sliderMenuItemStyle$reference"
     ],
 	"styleable": {
@@ -22,9 +23,15 @@
 		            "touchModeMargin$reference|dimension"
 		],
 		"SliderMenu.ItemView": [
-		    "sliderMenuItemTextAppearance$reference",
-		    "sliderMenuItemBackground$reference|color",
-		    "sliderMenuItemSelectionHandler$reference|color"
+		    "sliderMenuItemViewTextAppearance$reference",
+		    "sliderMenuItemViewBackground$reference|color",
+		    "sliderMenuItemViewSelectionHandler$reference|color"
+        ],
+        "SliderMenu.Item": [
+            "title",
+            "icon"
+        ],
+        "SliderMenu.Group": [
         ]
 	},
 	"output": "values/attrs.xml"

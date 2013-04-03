@@ -22,8 +22,8 @@
 			}
 		},
 		"data": {
-			"Holo.PreferenceTheme | PreferenceBase < Holo.Theme": {},
-			"Holo.PreferenceTheme.Light | PreferenceBase < Holo.Theme.Light": {}
+			"Holo.Internal.Preference | PreferenceBase < Holo.Theme": {},
+			"Holo.Internal.Preference.Light | PreferenceBase < Holo.Theme.Light": {}
 		},
 		"output": "values/themes.xml"
 }

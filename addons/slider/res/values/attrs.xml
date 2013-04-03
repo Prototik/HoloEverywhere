@@ -10,10 +10,11 @@
     <attr name="scrollInterpolator" format="reference"/>
     <attr name="shadow" format="float|fraction|reference|dimension"/>
     <attr name="shadowInterpolator" format="reference"/>
-    <attr name="sliderMenuItemBackground" format="reference|color"/>
-    <attr name="sliderMenuItemSelectionHandler" format="reference|color"/>
     <attr name="sliderMenuItemStyle" format="reference"/>
-    <attr name="sliderMenuItemTextAppearance" format="reference"/>
+    <attr name="sliderMenuItemViewBackground" format="reference|color"/>
+    <attr name="sliderMenuItemViewSelectionHandler" format="reference|color"/>
+    <attr name="sliderMenuItemViewStyle" format="reference"/>
+    <attr name="sliderMenuItemViewTextAppearance" format="reference"/>
     <attr name="touchMode" format="enum">
         <enum name="fullscreen" value="4"/>
         <enum name="left" value="1"/>
@@ -45,10 +46,15 @@
         <attr name="translateFactor"/>
         <attr name="translateInterpolator"/>
     </declare-styleable>
+    <declare-styleable name="SliderMenu.Group"/>
+    <declare-styleable name="SliderMenu.Item">
+        <attr name="icon"/>
+        <attr name="title"/>
+    </declare-styleable>
     <declare-styleable name="SliderMenu.ItemView">
-        <attr name="sliderMenuItemBackground"/>
-        <attr name="sliderMenuItemSelectionHandler"/>
-        <attr name="sliderMenuItemTextAppearance"/>
+        <attr name="sliderMenuItemViewBackground"/>
+        <attr name="sliderMenuItemViewSelectionHandler"/>
+        <attr name="sliderMenuItemViewTextAppearance"/>
     </declare-styleable>
     <!--End of any blocks-->
 </resources>

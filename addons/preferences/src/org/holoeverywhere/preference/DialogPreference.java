@@ -163,7 +163,7 @@ public abstract class DialogPreference extends Preference implements
         mBuilder.setIcon(mDialogIcon);
         mBuilder.setPositiveButton(mPositiveButtonText, this);
         mBuilder.setNegativeButton(mNegativeButtonText, this);
-        View contentView = onCreateDialogView();
+        View contentView = onCreateDialogView(context);
         if (contentView != null) {
             onBindDialogView(contentView);
             mBuilder.setView(contentView);
@@ -174,11 +174,23 @@ public abstract class DialogPreference extends Preference implements
         return mBuilder.create();
     }
 
+    /**
+     * Use {@link #onCreateDialogView(Context)} instead
+     */
+    @Deprecated
     protected View onCreateDialogView() {
+        return null;
+    }
+
+    protected View onCreateDialogView(Context context) {
+        final View view = onCreateDialogView();
+        if (view != null) {
+            return view;
+        }
         if (mDialogLayoutResId == 0) {
             return null;
         }
-        return LayoutInflater.inflate(getContext(), mDialogLayoutResId);
+        return LayoutInflater.inflate(context, mDialogLayoutResId);
     }
 
     protected void onDialogClosed(boolean positiveResult) {
@@ -271,9 +283,8 @@ public abstract class DialogPreference extends Preference implements
     }
 
     protected void showDialog(Bundle state) {
-        Context context = getContext();
         mWhichButtonClicked = DialogInterface.BUTTON_NEGATIVE;
-        mDialog = onCreateDialog(context);
+        mDialog = onCreateDialog(PreferenceInit.unwrap(getContext()));
         getPreferenceManager().registerOnActivityDestroyListener(this);
         if (state != null) {
             mDialog.onRestoreInstanceState(state);

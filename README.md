@@ -18,13 +18,13 @@ Git will be swear on detached HEAD state, ignore it.
 
 You also may use git GUI programs
 
-* Replace contrib/ActionBarSherlock/library/libs/android-support-v4.jar by support-library/android-support-v4-r12.jar
+* Replace `contrib/ActionBarSherlock/library/libs/android-support-v4.jar` by `support-library/android-support-v4-r12.jar`
 
 * Import ActionBarSherlock from `contrib/ActionBarSherlock/library` folder
 
 * Import HoloEverywhere from `library` folder
 
-* Add HoloEverywhere project as library into your project (Properties/Android/Library/Add)
+* Add `HoloEverywhere Library` project as library into your project (Properties/Android/Library/Add)
 
 * Extend the Activities from `org.holoeverywhere.app.***Activity`
 
@@ -42,6 +42,16 @@ import org.holoeverywhere.widget.ProgressBar;
 ProgressBar bar = (ProgressBar) findViewById(R.id.progress_bar);
 ```
 
+## Contact
+
+Sergey:
+  * [Email](mailto:prototypegamez@gmail.com "Send email to Sergey")
+  * [Google Plus](https://plus.google.com/103272077758668000975/posts "Google Plus")
+  * [Habrahabr](http://habrahabr.ru/users/prototik/)
+  
+Christophe:
+  * [Google Plus](https://plus.google.com/108315424589085456181/posts "Google Plus")
+
 ## Screenshots
 ![Screenshot 1](http://holoeverywhere.org/img/screenshots/1.png "Screenshot 1")
 ![Screenshot 2](http://holoeverywhere.org/img/screenshots/2.png "Screenshot 2")
@@ -53,31 +63,6 @@ ProgressBar bar = (ProgressBar) findViewById(R.id.progress_bar);
 ![Screenshot 8](http://holoeverywhere.org/img/screenshots/8.png "Screenshot 8")
 ![Screenshot 9](http://holoeverywhere.org/img/screenshots/9.png "Screenshot 9")
 ![Screenshot 10](http://holoeverywhere.org/img/screenshots/10.png "Screenshot 10")
-
-## Contact
-[Christophe](https://plus.google.com/108315424589085456181/posts "Google Plus")
-
-[Sergey](mailto:prototypegamez@gmail.com "Send email to Sergey")
-
-### Notice for developers
-If you make changes in styles.xml - use the [resbuilder](https://github.com/ChristopheVersieux/HoloEverywhere/tree/master/resbuilder), otherwise pull request will not be accepted.
-And before commiting your changes check HEAD - it should be reference on master branch.
-```
-$ git branch
-* master
-```
-If you see it:
-```
-$ git branch
-* (no branch)
-  master
-```
-Your HEAD in detached state. Stash your changes, switch branch and apply stash:
-```
-git stash
-git checkout master
-git stash apply
-```
 
 ### License
 LGPLv3, full text of license see [here][License]

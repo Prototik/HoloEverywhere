@@ -372,7 +372,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
     private final AlertController mAlert;
 
     protected AlertDialog(Context context) {
-        this(context, false, null, 0);
+        this(context, true, null, 0);
     }
 
     protected AlertDialog(Context context, boolean cancelable,
@@ -389,7 +389,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
     }
 
     protected AlertDialog(Context context, int theme) {
-        this(context, false, null, theme);
+        this(context, true, null, theme);
     }
 
     public Button getButton(int whichButton) {

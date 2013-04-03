@@ -8,8 +8,7 @@ notifications:
   email: false
 
 before_install:
-  - wget http://dl.google.com/android/android-sdk_r21.1-linux.tgz -O android.tgz
+  - wget "https://my.owndrive.com/public.php?service=files&t=d238bd41ebef0e377a81781cf7bb56f1&download" -O android.tgz
   - tar -zxf android.tgz
-  - export ANDROID_HOME=`pwd`/android-sdk-linux
+  - export ANDROID_HOME=`pwd`/android-sdk-light
   - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-  - android update sdk --filter $(android list sdk --no-ui | grep "SDK Platform Android 4.0.3, API 15" | cut -d"-" -f1) --no-ui --force
