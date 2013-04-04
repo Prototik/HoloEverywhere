@@ -1,4 +1,3 @@
-
 package org.holoeverywhere.addon;
 
 import org.holoeverywhere.LayoutInflater;
@@ -194,9 +193,15 @@ public class AddonSlider extends IAddon {
                 mSliderView.dispatchRestoreInstanceState(state);
             }
             View contentView = mSliderView.getContentView();
-            mSliderView.setContentView(contentView.findViewById(R.id.contentView));
-            mSliderView.setLeftView(contentView.findViewById(R.id.leftView));
-            mSliderView.setRightView(contentView.findViewById(R.id.rightView));
+            if (mSliderView.getContentView() == null) {
+                mSliderView.setContentView(contentView.findViewById(R.id.contentView));
+            }
+            if (mSliderView.getLeftView() == null) {
+                mSliderView.setLeftView(contentView.findViewById(R.id.leftView));
+            }
+            if (mSliderView.getRightView() == null) {
+                mSliderView.setRightView(contentView.findViewById(R.id.rightView));
+            }
             if (mSliderView.getContentView() == null && mSliderView.getLeftView() == null
                     && mSliderView.getRightView() == null) {
                 mSliderView.setContentView(contentView);
