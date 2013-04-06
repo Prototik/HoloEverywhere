@@ -26,6 +26,7 @@ public class AddonSlider extends IAddon {
         private boolean mForceNotRestoreInstance = false;
         private boolean mRejectContentView = true;
         private SliderView mSliderView;
+        private View mView;
 
         @Override
         public void disableShadow() {
@@ -34,30 +35,13 @@ public class AddonSlider extends IAddon {
 
         @Override
         public View findViewById(int id) {
-            if (mSliderView != null) {
-                View view = mSliderView.getContentView();
+            if (mView != null) {
+                View view = mView.findViewById(id);
                 if (view != null) {
-                    view = view.findViewById(id);
-                    if (view != null) {
-                        return view;
-                    }
-                }
-                view = mSliderView.getLeftView();
-                if (view != null) {
-                    view = view.findViewById(id);
-                    if (view != null) {
-                        return view;
-                    }
-                }
-                view = mSliderView.getRightView();
-                if (view != null) {
-                    view = view.findViewById(id);
-                    if (view != null) {
-                        return view;
-                    }
+                    return view;
                 }
             }
-            return null;
+            return mSliderView != null ? mSliderView.findViewById(id) : null;
         }
 
         public void forceNotRestoreInstance() {
@@ -184,7 +168,7 @@ public class AddonSlider extends IAddon {
         public void onPostCreate(Bundle savedInstanceState) {
             mRejectContentView = false;
             if (!mAddonEnabled) {
-                get().setContentView(mSliderView.getContentView());
+                get().setContentView(mView);
                 mSliderView = null;
                 return;
             }
@@ -193,13 +177,21 @@ public class AddonSlider extends IAddon {
                 SavedState state = savedInstanceState.getParcelable(KEY_SLIDER_STATE);
                 mSliderView.dispatchRestoreInstanceState(state);
             }
-            View contentView = mSliderView.getContentView();
-            mSliderView.setContentView(contentView.findViewById(R.id.contentView));
-            mSliderView.setLeftView(contentView.findViewById(R.id.leftView));
-            mSliderView.setRightView(contentView.findViewById(R.id.rightView));
+            View view = mView.findViewById(R.id.contentView);
+            if (view != null) {
+                mSliderView.setContentView(view);
+            }
+            view = mView.findViewById(R.id.leftView);
+            if (view != null) {
+                mSliderView.setLeftView(view);
+            }
+            view = mView.findViewById(R.id.rightView);
+            if (view != null) {
+                mSliderView.setRightView(view);
+            }
             if (mSliderView.getContentView() == null && mSliderView.getLeftView() == null
                     && mSliderView.getRightView() == null) {
-                mSliderView.setContentView(contentView);
+                mSliderView.setContentView(mView);
             }
             TypedArray a = get().obtainStyledAttributes(new int[] {
                     android.R.attr.windowBackground
@@ -209,7 +201,7 @@ public class AddonSlider extends IAddon {
             if (mDragWithActionBar) {
                 get().setContentView(mSliderView.getContentView());
                 ViewGroup decorView = (ViewGroup) get().getWindow().getDecorView();
-                View view = decorView.getChildAt(0);
+                view = decorView.getChildAt(0);
                 view.setBackgroundResource(windowBackground);
                 decorView.removeView(view);
                 mSliderView.setContentView(view);
@@ -268,7 +260,7 @@ public class AddonSlider extends IAddon {
         @Deprecated
         public boolean setContentView(View view, LayoutParams params) {
             if (mRejectContentView) {
-                mSliderView.setContentView(view);
+                mView = view;
                 return true;
             } else {
                 return false;

@@ -301,7 +301,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
         mTouchSlop = mViewConfiguration.getScaledTouchSlop();
     }
 
-    private void attachView(View view, int width, boolean matchParentWidth) {
+    private void attachView(View view, boolean matchParentWidth) {
         if (view == null) {
             return;
         }
@@ -311,6 +311,13 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
             }
             addViewInLayout(view, -1, obtainParams(matchParentWidth));
         }
+    }
+
+    private void attachView(View view, int width, boolean matchParentWidth) {
+        if (view == null) {
+            return;
+        }
+        attachView(view, matchParentWidth);
         final int pWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
         final int pHeight = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
         view.measure(MeasureSpec.makeMeasureSpec(width > 0 && width < pWidth ? width : pWidth,
@@ -792,7 +799,13 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
 
     @Override
     public void setContentView(View view) {
-        mContentView = obtainView(view);
+        if (view == mContentView) {
+            return;
+        }
+        if (mContentView != null) {
+            removeViewInLayout(mContentView);
+        }
+        attachView(mContentView = obtainView(view), true);
         requestLayout();
     }
 
@@ -827,7 +840,13 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
 
     @Override
     public void setLeftView(View view) {
-        mLeftView = obtainView(view);
+        if (view == mLeftView) {
+            return;
+        }
+        if (mLeftView != null) {
+            removeViewInLayout(mLeftView);
+        }
+        attachView(mLeftView = obtainView(view), false);
         requestLayout();
     }
 
@@ -879,9 +898,14 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
 
     @Override
     public void setRightView(View view) {
-        mRightView = obtainView(view);
+        if (view == mRightView) {
+            return;
+        }
+        if (mRightView != null) {
+            removeViewInLayout(mRightView);
+        }
+        attachView(mRightView = obtainView(view), false);
         requestLayout();
-        postInvalidate();
     }
 
     public void setRightViewShadow(float rightViewShadow) {

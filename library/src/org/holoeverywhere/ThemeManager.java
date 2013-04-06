@@ -179,17 +179,18 @@ public final class ThemeManager {
         public int getThemeResource(ThemeTag themeTag);
     }
 
+    public static interface ThemeSetter {
+        public void setupThemes();
+    }
+
     private static int _DEFAULT_THEME;
     public static final int _START_RESOURCES_ID = 0x01000000;
     private static ThemeGetter _THEME_GETTER;
     private static int _THEME_MASK = 0;
     private static int _THEME_MODIFIER = 0;
     private static final String _THEME_TAG = ":holoeverywhere:theme";
-    private static final SparseIntArray _THEMES_MAP = new SparseIntArray();
 
-    public static int getThemeMask() {
-        return _THEME_MASK;
-    }
+    private static final SparseIntArray _THEMES_MAP = new SparseIntArray();
 
     public static final int COLOR_SCHEME_MASK;
     /**
@@ -232,6 +233,8 @@ public final class ThemeManager {
      * Flag indicates on the theme without action bar
      */
     public static final int NO_ACTION_BAR;
+
+    private static List<ThemeSetter> sThemeSetters;
 
     /**
      * Flag indicates on the theme with wallpaper background
@@ -338,6 +341,10 @@ public final class ThemeManager {
     public static int getTheme(Intent intent, boolean applyModifier) {
         return prepareFlags(intent.getIntExtra(ThemeManager._THEME_TAG,
                 ThemeManager._DEFAULT_THEME), applyModifier);
+    }
+
+    public static int getThemeMask() {
+        return _THEME_MASK;
     }
 
     /**
@@ -625,6 +632,19 @@ public final class ThemeManager {
         return i & ThemeManager._THEME_MASK;
     }
 
+    public static void registerThemeSetter(ThemeSetter themeSetter) {
+        if (themeSetter == null) {
+            return;
+        }
+        if (sThemeSetters == null) {
+            sThemeSetters = new ArrayList<ThemeManager.ThemeSetter>();
+        }
+        if (!sThemeSetters.contains(themeSetter)) {
+            sThemeSetters.add(themeSetter);
+            themeSetter.setupThemes();
+        }
+    }
+
     /**
      * Reset all themes to default
      */
@@ -708,32 +728,6 @@ public final class ThemeManager {
                 setter.setupThemes();
             }
         }
-    }
-
-    public static interface ThemeSetter {
-        public void setupThemes();
-    }
-
-    private static List<ThemeSetter> sThemeSetters;
-
-    public static void registerThemeSetter(ThemeSetter themeSetter) {
-        if (themeSetter == null) {
-            return;
-        }
-        if (sThemeSetters == null) {
-            sThemeSetters = new ArrayList<ThemeManager.ThemeSetter>();
-        }
-        if (!sThemeSetters.contains(themeSetter)) {
-            sThemeSetters.add(themeSetter);
-            themeSetter.setupThemes();
-        }
-    }
-
-    public static void unregisterThemeSetter(ThemeSetter themeSetter) {
-        if (sThemeSetters == null || themeSetter == null) {
-            return;
-        }
-        sThemeSetters.remove(themeSetter);
     }
 
     /**
@@ -921,6 +915,13 @@ public final class ThemeManager {
                 }
             }
         }
+    }
+
+    public static void unregisterThemeSetter(ThemeSetter themeSetter) {
+        if (sThemeSetters == null || themeSetter == null) {
+            return;
+        }
+        sThemeSetters.remove(themeSetter);
     }
 
     private ThemeManager() {

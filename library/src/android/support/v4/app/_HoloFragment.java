@@ -34,7 +34,7 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     private Activity mActivity;
     private boolean mDestoryChildFragments = true;
 
-    protected int getContainerId() {
+    public final int getContainerId() {
         return mContainerId;
     }
 

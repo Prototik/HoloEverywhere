@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Dialog;
+import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.widget.ListView;
 
 import android.annotation.SuppressLint;
@@ -19,6 +20,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -104,12 +106,14 @@ public final class PreferenceScreen extends PreferenceGroup implements
 
     private static class SavedState extends BaseSavedState {
         Bundle dialogBundle;
-        boolean isDialogShowing;
+        Fragment.SavedState fragmentState;
+        boolean isShowing;
 
         public SavedState(Parcel source) {
             super(source);
-            isDialogShowing = source.readInt() == 1;
+            isShowing = source.readInt() == 1;
             dialogBundle = source.readBundle();
+            fragmentState = source.readParcelable(Fragment.SavedState.class.getClassLoader());
         }
 
         public SavedState(Parcelable superState) {
@@ -119,8 +123,9 @@ public final class PreferenceScreen extends PreferenceGroup implements
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
-            dest.writeInt(isDialogShowing ? 1 : 0);
+            dest.writeInt(isShowing ? 1 : 0);
             dest.writeBundle(dialogBundle);
+            dest.writeParcelable(fragmentState, flags);
         }
     }
 
@@ -180,9 +185,54 @@ public final class PreferenceScreen extends PreferenceGroup implements
                 || getPreferenceCount() == 0) {
             return;
         }
-
-        showDialog(null);
+        processShow(null, null);
     }
+
+    private void processShow(Bundle dialogState, Fragment.SavedState fragmentState) {
+        PreferenceFragment f = super.getPreferenceManager().getFragment();
+        if (f == null) {
+            showDialog(dialogState);
+        }
+        final int id = f.getContainerId();
+        if (id > 0) {
+            mInnerFragment = new InnerFragment();
+            mInnerFragment.mPreferenceScreen = this;
+            mInnerFragment.setInitialSavedState(fragmentState);
+            f.getFragmentManager().beginTransaction().replace(id, mInnerFragment)
+                    .addToBackStack("preferencescreen-" + getKey() + "-" + f).commit();
+        } else {
+            showDialog(dialogState);
+        }
+    }
+
+    public static final class InnerFragment extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            return LayoutInflater.inflate(mPreferenceScreen.getContext(),
+                    R.layout.preference_list_fragment, container, false);
+        }
+
+        PreferenceScreen mPreferenceScreen;
+
+        @Override
+        public void onDetach() {
+            mPreferenceScreen.mInnerFragment = null;
+            super.onDetach();
+        }
+
+        @Override
+        public void onViewCreated(View view, Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
+            if (mPreferenceScreen.mListView != null) {
+                mPreferenceScreen.mListView.setAdapter(null);
+            }
+            mPreferenceScreen.mListView = (ListView) view.findViewById(android.R.id.list);
+            mPreferenceScreen.bind(mPreferenceScreen.mListView);
+        }
+    }
+
+    private InnerFragment mInnerFragment;
 
     protected ListAdapter onCreateRootAdapter() {
         return new PreferenceGroupAdapter(this);
@@ -211,29 +261,26 @@ public final class PreferenceScreen extends PreferenceGroup implements
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
-        if (state == null || !state.getClass().equals(SavedState.class)) {
-            super.onRestoreInstanceState(state);
-            return;
-        }
-
         SavedState myState = (SavedState) state;
         super.onRestoreInstanceState(myState.getSuperState());
-        if (myState.isDialogShowing) {
-            showDialog(myState.dialogBundle);
+        if (myState.isShowing) {
+            processShow(myState.dialogBundle, myState.fragmentState);
         }
     }
 
     @Override
     protected Parcelable onSaveInstanceState() {
-        final Parcelable superState = super.onSaveInstanceState();
-        final Dialog dialog = mDialog;
-        if (dialog == null || !dialog.isShowing()) {
-            return superState;
+        final SavedState myState = new SavedState(super.onSaveInstanceState());
+        if (mDialog != null) {
+            myState.isShowing = true;
+            myState.dialogBundle = mDialog.onSaveInstanceState();
+        } else if (mInnerFragment != null) {
+            myState.isShowing = true;
+            myState.fragmentState = mInnerFragment.getFragmentManager().
+                    saveFragmentInstanceState(mInnerFragment);
+        } else {
+            myState.isShowing = false;
         }
-
-        final SavedState myState = new SavedState(superState);
-        myState.isDialogShowing = true;
-        myState.dialogBundle = dialog.onSaveInstanceState();
         return myState;
     }
 
