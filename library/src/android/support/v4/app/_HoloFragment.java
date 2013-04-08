@@ -32,7 +32,7 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
         IHoloFragment {
     private static final int INTERNAL_DECOR_VIEW_ID = 0x7f999999;
     private Activity mActivity;
-    private boolean mDestoryChildFragments = true;
+    private boolean mDetachChildFragments = true;
 
     public final int getContainerId() {
         return mContainerId;
@@ -112,8 +112,8 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
         return mActivity.getSystemService(name);
     }
 
-    public boolean isDestoryChildFragments() {
-        return mDestoryChildFragments;
+    public boolean isDetachChildFragments() {
+        return mDetachChildFragments;
     }
 
     public void onAttach(Activity activity) {
@@ -184,16 +184,13 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mChildFragmentManager != null && mDestoryChildFragments) {
-            synchronized (mChildFragmentManager) {
-                for (Fragment fragment : mChildFragmentManager.mActive) {
-                    if (fragment == null) {
-                        continue;
-                    }
-                    mChildFragmentManager.removeFragment(fragment, 0, 0);
+        if (mChildFragmentManager != null && mDetachChildFragments) {
+            for (Fragment fragment : mChildFragmentManager.mActive) {
+                if (fragment == null || !fragment.mFromLayout) {
+                    continue;
                 }
+                mChildFragmentManager.detachFragment(fragment, 0, 0);
             }
-            mChildFragmentManager = null;
         }
     }
 
@@ -270,10 +267,11 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     }
 
     /**
-     * If true fragment will be destory all child fragments after destory view
+     * If true this fragment will be detach all inflated child fragments after
+     * destory view
      */
-    public void setDestoryChildFragments(boolean destoryChildFragments) {
-        mDestoryChildFragments = destoryChildFragments;
+    public void setDetachChildFragments(boolean detachChildFragments) {
+        mDetachChildFragments = detachChildFragments;
     }
 
     @Override
