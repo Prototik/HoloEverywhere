@@ -30,6 +30,7 @@
 		<module>Bug359</module>
 		<module>Bug361</module>
 		<module>Bug364</module>
+		<module>Bug391</module>
 	</modules>
 
 	<build>
