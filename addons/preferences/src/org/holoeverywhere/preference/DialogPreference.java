@@ -294,10 +294,7 @@ public abstract class DialogPreference extends Preference implements
 
     protected void showDialog(Bundle state) {
         mWhichButtonClicked = DialogInterface.BUTTON_NEGATIVE;
-        /**
-         * FIXME #380, unwrap of context not needed
-         */
-        mDialog = onCreateDialog(PreferenceInit.unwrap(getContext()));
+        mDialog = onCreateDialog(getContext());
         getPreferenceManager().registerOnActivityDestroyListener(this);
         if (state != null) {
             mDialog.onRestoreInstanceState(state);
