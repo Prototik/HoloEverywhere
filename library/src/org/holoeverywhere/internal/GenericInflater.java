@@ -223,10 +223,7 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
     protected T onCreateItem(String name, AttributeSet attrs)
             throws ClassNotFoundException {
         for (String sPackage : mPackages) {
-            try {
-                return createItem(name, sPackage + ".", attrs);
-            } catch (Exception e) {
-            }
+            return createItem(name, sPackage + ".", attrs);
         }
         return null;
     }
