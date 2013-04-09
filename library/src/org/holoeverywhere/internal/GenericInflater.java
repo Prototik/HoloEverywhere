@@ -1,14 +1,14 @@
 
 package org.holoeverywhere.internal;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 import android.content.Context;
 import android.content.res.XmlResourceParser;
@@ -223,10 +223,7 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
     protected T onCreateItem(String name, AttributeSet attrs)
             throws ClassNotFoundException {
         for (String sPackage : mPackages) {
-            try {
-                return createItem(name, sPackage + ".", attrs);
-            } catch (Exception e) {
-            }
+            return createItem(name, sPackage + ".", attrs);
         }
         return null;
     }
