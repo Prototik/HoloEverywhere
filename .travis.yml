@@ -5,10 +5,12 @@ branches:
     - master
 
 notifications:
-  email: false
+  email:
+    - prototypegamez@gmail.com
 
 before_install:
-  - wget "https://my.owndrive.com/public.php?service=files&t=d238bd41ebef0e377a81781cf7bb56f1&download" -O android.tgz
+  - wget http://dl.google.com/android/android-sdk_r21-linux.tgz -O android.tgz
   - tar -zxf android.tgz
-  - export ANDROID_HOME=`pwd`/android-sdk-light
+  - export ANDROID_HOME=`pwd`/android-sdk-linux
   - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+  - android update sdk --filter platform-tools,android-16 --no-ui --force

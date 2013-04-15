@@ -20,6 +20,7 @@ Bringing Holo Theme from Android 4.1 to 2.1 and above.
 
 ## Featured implementations
  * [Project Euler](https://play.google.com/store/apps/details?id=ie.cathalcoffey.android.projecteuler)
+ * [Meditation Assistant](https://play.google.com/store/apps/details?id=sh.ftp.rocketninelabs.meditationassistant)
 
 Write to [Sergey](mailto:prototypegamez@gmail.com) for add your application to this list.
 
