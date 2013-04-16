@@ -189,7 +189,7 @@ public class DevelopersFragment extends ListFragment {
 
     private void prepareAdapter(DevelopersAdapter adapter) {
         Developer developer;
-        
+
         developer = new Developer(R.string.developer_sergey, R.string.developer_sergey_description);
         developer.link(new GPlusLink("103272077758668000975"));
         developer.link(new GithubLink("Prototik"));

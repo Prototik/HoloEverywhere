@@ -1,8 +1,4 @@
 {
-	"attrs": [
-	          "sliderMenuItemViewStyle$reference",
-	          "sliderMenuItemStyle$reference"
-    ],
 	"styleable": {
 		"Slider": [
 		            "leftDragBound$integer|fraction|reference|dimension",   
@@ -22,17 +18,6 @@
 		            "touchModeRightMargin$reference|dimension",
 		            "touchModeMargin$reference|dimension"
 		],
-		"SliderMenu.ItemView": [
-		    "sliderMenuItemViewTextAppearance$reference",
-		    "sliderMenuItemViewBackground$reference|color",
-		    "sliderMenuItemViewSelectionHandler$reference|color"
-        ],
-        "SliderMenu.Item": [
-            "title",
-            "icon"
-        ],
-        "SliderMenu.Group": [
-        ]
 	},
 	"output": "values/attrs.xml"
 }

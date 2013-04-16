@@ -76,10 +76,6 @@ public class ListsChoiceModeModalFragment extends ListsBaseFragment implements
         updateSubtitle(mLastActionMode = mode);
     }
 
-    private void updateSubtitle(ActionMode mode) {
-        mode.setSubtitle("Checked: " + mList.getCheckedItemCount());
-    }
-
     @Override
     public void onMenuClick(int position) {
         if (mLastActionMode != null) {
@@ -102,5 +98,9 @@ public class ListsChoiceModeModalFragment extends ListsBaseFragment implements
         mList.setMultiChoiceModeListener(this);
         setListAdapter(ArrayAdapter.createFromResource(getActivity(), R.array.adjectives,
                 R.layout.simple_list_item_multiple_choice));
+    }
+
+    private void updateSubtitle(ActionMode mode) {
+        mode.setSubtitle("Checked: " + mList.getCheckedItemCount());
     }
 }

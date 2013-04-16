@@ -199,16 +199,24 @@ public class AddonSlider extends IAddon {
             final int windowBackground = a.getResourceId(0, 0);
             a.recycle();
             if (mDragWithActionBar) {
-                get().setContentView(mSliderView.getContentView());
+                final View v = mSliderView.getContentView();
+                if (v.getParent() != null) {
+                    ((ViewGroup) v).removeView(v);
+                }
+                get().setContentView(v);
                 ViewGroup decorView = (ViewGroup) get().getWindow().getDecorView();
                 view = decorView.getChildAt(0);
-                view.setBackgroundResource(windowBackground);
+                if (view.getBackground() == null) {
+                    view.setBackgroundResource(windowBackground);
+                }
                 decorView.removeView(view);
                 mSliderView.setContentView(view);
                 decorView.addView(mSliderView, 0);
             } else {
-                if (windowBackground > 0 && mSliderView.getContentView() != null) {
-                    mSliderView.getContentView().setBackgroundResource(windowBackground);
+                final View contentView = mSliderView.getContentView();
+                if (windowBackground > 0 && contentView != null
+                        && contentView.getBackground() == null) {
+                    contentView.setBackgroundResource(windowBackground);
                 }
                 get().setContentView(mSliderView);
             }

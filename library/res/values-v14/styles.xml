@@ -8,6 +8,8 @@
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="android:itemBackground">?selectableItemBackground</item>
+        <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
+        <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
         <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
         <item name="android:windowMinWidthMinor">?windowMinWidthMinor</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
@@ -53,10 +55,12 @@
         <item name="spinnerStyle">@style/Holo.Spinner</item>
         <item name="switchStyle">@style/Holo.Switch</item>
         <item name="switchStyleOld">@style/Holo.Switch.Old</item>
-        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Large</item>
-        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Small</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
         <!--End of block BaseDark-->
+        <!--Include block: BaseBarDark-->
+        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Large</item>
+        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Small</item>
+        <!--End of block BaseBarDark-->
         <item name="holoTheme">dark</item>
     </style>
     <style name="Holo.Theme.Light" parent="Theme.Sherlock.Light">
@@ -68,6 +72,8 @@
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="android:itemBackground">?selectableItemBackground</item>
+        <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
+        <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
         <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
         <item name="android:windowMinWidthMinor">?windowMinWidthMinor</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
@@ -113,10 +119,12 @@
         <item name="spinnerStyle">@style/Holo.Spinner.Light</item>
         <item name="switchStyle">@style/Holo.Switch.Light</item>
         <item name="switchStyleOld">@style/Holo.Switch.Light.Old</item>
-        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
-        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block BaseLight-->
+        <!--Include block: BaseBarLight-->
+        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
+        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
+        <!--End of block BaseBarLight-->
         <item name="holoTheme">light</item>
     </style>
     <style name="Holo.Theme.Light.DarkActionBar" parent="Theme.Sherlock.Light.DarkActionBar">
@@ -128,6 +136,8 @@
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="android:itemBackground">?selectableItemBackground</item>
+        <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
+        <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
         <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
         <item name="android:windowMinWidthMinor">?windowMinWidthMinor</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
@@ -173,10 +183,12 @@
         <item name="spinnerStyle">@style/Holo.Spinner.Light</item>
         <item name="switchStyle">@style/Holo.Switch.Light</item>
         <item name="switchStyleOld">@style/Holo.Switch.Light.Old</item>
-        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
-        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block BaseLight-->
+        <!--Include block: BaseBarDark-->
+        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Large</item>
+        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Small</item>
+        <!--End of block BaseBarDark-->
         <item name="holoTheme">mixed</item>
     </style>
 </resources>
