@@ -368,6 +368,16 @@ public class DialogFragment extends Fragment implements
         return dialogTransaction;
     }
 
+    /**
+     * 
+     * @deprecate This method was deprecated because there were problems at
+     *            2.1-2.3 on restore instance state when
+     *            <code>tag == null</code>. Use {@link #show(FragmentManager)}
+     *            instead.
+     * @see <a
+     *      href="https://github.com/Prototik/HoloEverywhere/issues/298#issuecomment-13344718">DialogFragment#show
+     *      deprecated</a>
+     */
     @Deprecated
     public int show(FragmentManager manager, String tag) {
         return show(manager.beginTransaction(), tag);
@@ -377,6 +387,16 @@ public class DialogFragment extends Fragment implements
         return show(null, ft);
     }
 
+    /**
+     * 
+     * @deprecate This method was deprecated because there were problems at
+     *            2.1-2.3 on restore instance state when
+     *            <code>tag == null</code>. Use
+     *            {@link #show(FragmentTransaction)} instead.
+     * @see <a
+     *      href="https://github.com/Prototik/HoloEverywhere/issues/298#issuecomment-13344718">DialogFragment#show
+     *      deprecated</a>
+     */
     @Deprecated
     public int show(FragmentTransaction transaction, String tag) {
         mDismissed = false;
