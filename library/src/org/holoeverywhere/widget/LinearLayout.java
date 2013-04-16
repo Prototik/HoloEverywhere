@@ -37,37 +37,6 @@ public class LinearLayout extends android.widget.LinearLayout {
         init(attrs, defStyleRes);
     }
 
-    void drawDividersVertical(Canvas canvas) {
-        final int count = getChildCount();
-        for (int i = 0; i < count; i++) {
-            final View child = getChildAt(i);
-            if (child != null && child.getVisibility() != GONE) {
-                if (hasDividerBeforeChildAt(i)) {
-                    final LayoutParams lp = (LayoutParams) child.getLayoutParams();
-                    final int top = child.getTop() - lp.topMargin;
-                    // - mDividerHeight;
-                    drawHorizontalDivider(canvas, top);
-                }
-            }
-        }
-        if (hasDividerBeforeChildAt(count)) {
-            final View child = getChildAt(count - 1);
-            int bottom = 0;
-            if (child == null) {
-                bottom = getHeight() - getPaddingBottom();
-                // - mDividerHeight;
-            } else {
-                final LayoutParams lp = (LayoutParams) child.getLayoutParams();
-                bottom = child.getBottom() + lp.bottomMargin;
-            }
-            drawHorizontalDivider(canvas, bottom);
-        }
-    }
-
-    protected boolean isLayoutRtl() {
-        return false;
-    }
-
     void drawDividersHorizontal(Canvas canvas) {
         final int count = getChildCount();
         final boolean isLayoutRtl = isLayoutRtl();
@@ -80,8 +49,7 @@ public class LinearLayout extends android.widget.LinearLayout {
                     if (isLayoutRtl) {
                         position = child.getRight() + lp.rightMargin;
                     } else {
-                        position = child.getLeft() - lp.leftMargin;
-                        // - mDividerWidth;
+                        position = child.getLeft() - lp.leftMargin - mDividerWidth;
                     }
                     drawVerticalDivider(canvas, position);
                 }
@@ -95,19 +63,42 @@ public class LinearLayout extends android.widget.LinearLayout {
                 if (isLayoutRtl) {
                     position = getPaddingLeft();
                 } else {
-                    position = getWidth() - getPaddingRight();
-                    // - mDividerWidth;
+                    position = getWidth() - getPaddingRight() - mDividerWidth;
                 }
             } else {
                 final LayoutParams lp = (LayoutParams) child.getLayoutParams();
                 if (isLayoutRtl) {
-                    position = child.getLeft() - lp.leftMargin;
-                    // - mDividerWidth;
+                    position = child.getLeft() - lp.leftMargin - mDividerWidth;
                 } else {
                     position = child.getRight() + lp.rightMargin;
                 }
             }
             drawVerticalDivider(canvas, position);
+        }
+    }
+
+    void drawDividersVertical(Canvas canvas) {
+        final int count = getChildCount();
+        for (int i = 0; i < count; i++) {
+            final View child = getChildAt(i);
+            if (child != null && child.getVisibility() != GONE) {
+                if (hasDividerBeforeChildAt(i)) {
+                    final LayoutParams lp = (LayoutParams) child.getLayoutParams();
+                    final int top = child.getTop() - lp.topMargin - mDividerHeight;
+                    drawHorizontalDivider(canvas, top);
+                }
+            }
+        }
+        if (hasDividerBeforeChildAt(count)) {
+            final View child = getChildAt(count - 1);
+            int bottom = 0;
+            if (child == null) {
+                bottom = getHeight() - getPaddingBottom() - mDividerHeight;
+            } else {
+                final LayoutParams lp = (LayoutParams) child.getLayoutParams();
+                bottom = child.getBottom() + lp.bottomMargin;
+            }
+            drawHorizontalDivider(canvas, bottom);
         }
     }
 
@@ -177,6 +168,10 @@ public class LinearLayout extends android.widget.LinearLayout {
                     R.styleable.LinearLayout_dividerPadding, 0);
         }
         a.recycle();
+    }
+
+    protected boolean isLayoutRtl() {
+        return false;
     }
 
     @SuppressLint("NewApi")

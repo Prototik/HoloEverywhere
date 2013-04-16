@@ -202,9 +202,12 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         }
     }
 
-    private class DropdownPopup extends ListPopupWindow implements SpinnerPopup {
+    private class DropdownPopup extends ListPopupWindow implements SpinnerPopup,
+            PopupWindow.OnDismissListener {
         private ListAdapter mAdapter;
         private CharSequence mHintText;
+
+        private boolean mSelectionSetted = false;
 
         public DropdownPopup(Context context, AttributeSet attrs, int defStyle) {
             super(context, attrs, R.attr.listPopupWindowStyle);
@@ -228,6 +231,11 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         @Override
         public CharSequence getHintText() {
             return mHintText;
+        }
+
+        @Override
+        public void onDismiss() {
+            mSelectionSetted = false;
         }
 
         @Override
@@ -278,7 +286,11 @@ public class Spinner extends AbsSpinner implements OnClickListener {
             setInputMethodMode(ListPopupWindow.INPUT_METHOD_NOT_NEEDED);
             super.show();
             getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-            setSelection(Spinner.this.getSelectedItemPosition());
+            if (!mSelectionSetted) {
+                mSelectionSetted = true;
+                setSelection(Spinner.this.getSelectedItemPosition());
+            }
+            setOnDismissListener(this);
         }
     }
 
