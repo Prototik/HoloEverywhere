@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:holo="http://schemas.android.com/apk/res-auto" >
-	<CheckBoxPreference
-		holo:id="@+id/node1"
-		holo:title="XML Node" />
-	<!-- Here will be added second node -->
-</PreferenceScreen>
