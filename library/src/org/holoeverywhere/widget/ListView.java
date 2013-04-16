@@ -73,7 +73,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             mWrapped.onDestroyActionMode(mode);
             mChoiceActionMode = null;
             clearChoices();
-            invalidateViews();
+            updateOnScreenCheckedViews();
             setLongClickable(true);
         }
 
@@ -350,7 +350,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     }
 
     public ListAdapter getAdapterSource() {
-        return mAdapter.getWrappedAdapter();
+        return mAdapter == null ? null : mAdapter.getWrappedAdapter();
     }
 
     @Override
@@ -509,7 +509,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
         if (gainFocus && getSelectedItemPosition() < 0 && !isInTouchMode()) {
             if (!mIsAttached && mAdapter != null) {
-                invalidateViews();
+                updateOnScreenCheckedViews();
             }
         }
     }
@@ -561,19 +561,6 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     }
 
     public View onPrepareView(View view, int position) {
-        if (mEnableModalBackgroundWrapper && !(view instanceof ModalBackgroundWrapper)) {
-            if (view.getParent() != null) {
-                ((ViewGroup) view.getParent()).removeView(view);
-            }
-            ModalBackgroundWrapper wrapper = new ModalBackgroundWrapper(getContext());
-            wrapper.addView(view);
-            view = wrapper;
-        } else if (!mEnableModalBackgroundWrapper && view instanceof ModalBackgroundWrapper) {
-            view = ((ModalBackgroundWrapper) view).getChildAt(0);
-            if (view.getParent() != null) {
-                ((ViewGroup) view.getParent()).removeView(view);
-            }
-        }
         if (mChoiceMode != CHOICE_MODE_NONE) {
             if (mCheckStates != null) {
                 setStateOnView(view, mCheckStates.get(position));
@@ -638,8 +625,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
         if (hasWindowFocus) {
-            invalidate();
-            invalidateViews();
+            updateOnScreenCheckedViews();
         }
     }
 
@@ -742,7 +728,6 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         } else {
             setPadding(0, top, 0, bottom);
         }
-        invalidate();
     }
 
     @Override

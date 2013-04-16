@@ -354,19 +354,6 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
 
     @Override
     public View onPrepareView(View view, int position) {
-        if (mEnableModalBackgroundWrapper && !(view instanceof ModalBackgroundWrapper)) {
-            if (view.getParent() != null) {
-                ((ViewGroup) view.getParent()).removeView(view);
-            }
-            ModalBackgroundWrapper wrapper = new ModalBackgroundWrapper(getContext());
-            wrapper.addView(view);
-            view = wrapper;
-        } else if (!mEnableModalBackgroundWrapper && view instanceof ModalBackgroundWrapper) {
-            view = ((ModalBackgroundWrapper) view).getChildAt(0);
-            if (view.getParent() != null) {
-                ((ViewGroup) view.getParent()).removeView(view);
-            }
-        }
         if (mCheckStates != null) {
             setStateOnView(view, mCheckStates.get(position));
         } else {

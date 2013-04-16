@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:state_checked="true" android:state_focused="false" android:state_pressed="false"><color android:color="#8833b5e5" />
-	</item>
-	<item android:state_checked="true" android:state_focused="false" android:state_pressed="true"><color android:color="#BB33b5e5" />
-	</item>
-	<item android:drawable="@drawable/list_selector_holo_dark"/>
-</selector>

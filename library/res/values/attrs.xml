@@ -73,7 +73,6 @@
     <attr name="listPreferredItemHeightLarge" format="dimension"/>
     <attr name="maxDate" format="reference|string"/>
     <attr name="minDate" format="reference|string"/>
-    <attr name="modalBackgroundWrapper" format="reference"/>
     <attr name="multiChoiceItemLayout" format="reference"/>
     <attr name="numberPickerDownButtonStyle" format="reference"/>
     <attr name="numberPickerInputTextStyle" format="reference"/>

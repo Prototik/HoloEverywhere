@@ -37,42 +37,15 @@ public class LinearLayout extends android.widget.LinearLayout {
         init(attrs, defStyleRes);
     }
 
-    void drawDividersHorizontal(Canvas canvas) {
-        final int count = getChildCount();
-        for (int i = 0; i < count; i++) {
-            final View child = getChildAt(i);
-            if (child != null && child.getVisibility() != View.GONE) {
-                if (hasDividerBeforeChildAt(i)) {
-                    final LayoutParams lp = (LayoutParams) child
-                            .getLayoutParams();
-                    final int left = child.getLeft() - lp.leftMargin;
-                    drawVerticalDivider(canvas, left);
-                }
-            }
-        }
-        if (hasDividerBeforeChildAt(count)) {
-            final View child = getChildAt(count - 1);
-            int right = 0;
-            if (child == null) {
-                right = getWidth() - getPaddingRight();
-            } else {
-                final LayoutParams lp = (LayoutParams) child.getLayoutParams();
-                right = child.getRight() + lp.rightMargin;
-            }
-            drawVerticalDivider(canvas, right);
-        }
-    }
-
     void drawDividersVertical(Canvas canvas) {
         final int count = getChildCount();
         for (int i = 0; i < count; i++) {
             final View child = getChildAt(i);
-
-            if (child != null && child.getVisibility() != View.GONE) {
+            if (child != null && child.getVisibility() != GONE) {
                 if (hasDividerBeforeChildAt(i)) {
-                    final LayoutParams lp = (LayoutParams) child
-                            .getLayoutParams();
+                    final LayoutParams lp = (LayoutParams) child.getLayoutParams();
                     final int top = child.getTop() - lp.topMargin;
+                    // - mDividerHeight;
                     drawHorizontalDivider(canvas, top);
                 }
             }
@@ -82,6 +55,7 @@ public class LinearLayout extends android.widget.LinearLayout {
             int bottom = 0;
             if (child == null) {
                 bottom = getHeight() - getPaddingBottom();
+                // - mDividerHeight;
             } else {
                 final LayoutParams lp = (LayoutParams) child.getLayoutParams();
                 bottom = child.getBottom() + lp.bottomMargin;
@@ -90,16 +64,62 @@ public class LinearLayout extends android.widget.LinearLayout {
         }
     }
 
+    protected boolean isLayoutRtl() {
+        return false;
+    }
+
+    void drawDividersHorizontal(Canvas canvas) {
+        final int count = getChildCount();
+        final boolean isLayoutRtl = isLayoutRtl();
+        for (int i = 0; i < count; i++) {
+            final View child = getChildAt(i);
+            if (child != null && child.getVisibility() != GONE) {
+                if (hasDividerBeforeChildAt(i)) {
+                    final LayoutParams lp = (LayoutParams) child.getLayoutParams();
+                    final int position;
+                    if (isLayoutRtl) {
+                        position = child.getRight() + lp.rightMargin;
+                    } else {
+                        position = child.getLeft() - lp.leftMargin;
+                        // - mDividerWidth;
+                    }
+                    drawVerticalDivider(canvas, position);
+                }
+            }
+        }
+
+        if (hasDividerBeforeChildAt(count)) {
+            final View child = getChildAt(count - 1);
+            int position;
+            if (child == null) {
+                if (isLayoutRtl) {
+                    position = getPaddingLeft();
+                } else {
+                    position = getWidth() - getPaddingRight();
+                    // - mDividerWidth;
+                }
+            } else {
+                final LayoutParams lp = (LayoutParams) child.getLayoutParams();
+                if (isLayoutRtl) {
+                    position = child.getLeft() - lp.leftMargin;
+                    // - mDividerWidth;
+                } else {
+                    position = child.getRight() + lp.rightMargin;
+                }
+            }
+            drawVerticalDivider(canvas, position);
+        }
+    }
+
     void drawHorizontalDivider(Canvas canvas, int top) {
-        mDivider.setBounds(getPaddingLeft() + mDividerPadding, top, getWidth()
-                - getPaddingRight() - mDividerPadding, top + mDividerHeight);
+        mDivider.setBounds(getPaddingLeft() + mDividerPadding, top,
+                getWidth() - getPaddingRight() - mDividerPadding, top + mDividerHeight);
         mDivider.draw(canvas);
     }
 
     void drawVerticalDivider(Canvas canvas, int left) {
-        mDivider.setBounds(left, getPaddingTop() + mDividerPadding, left
-                + mDividerWidth, getHeight() - getPaddingBottom()
-                - mDividerPadding);
+        mDivider.setBounds(left, getPaddingTop() + mDividerPadding,
+                left + mDividerWidth, getHeight() - getPaddingBottom() - mDividerPadding);
         mDivider.draw(canvas);
     }
 
@@ -202,14 +222,14 @@ public class LinearLayout extends android.widget.LinearLayout {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (mDivider != null) {
-            if (getOrientation() == android.widget.LinearLayout.VERTICAL) {
-                drawDividersVertical(canvas);
-            } else {
-                drawDividersHorizontal(canvas);
-            }
+        if (mDivider == null) {
+            return;
         }
-        super.onDraw(canvas);
+        if (getOrientation() == android.widget.LinearLayout.VERTICAL) {
+            drawDividersVertical(canvas);
+        } else {
+            drawDividersHorizontal(canvas);
+        }
     }
 
     @Override
