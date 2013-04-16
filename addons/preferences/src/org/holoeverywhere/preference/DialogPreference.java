@@ -3,7 +3,6 @@ package org.holoeverywhere.preference;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.AlertDialog;
-import org.holoeverywhere.app.Application;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -52,7 +51,9 @@ public abstract class DialogPreference extends Preference implements
     private int mDialogLayoutResId;
     private CharSequence mDialogMessage;
     private CharSequence mDialogTitle;
+    private InputMethodManager mInputMethodManager;
     private CharSequence mNegativeButtonText;
+
     private CharSequence mPositiveButtonText;
 
     private int mWhichButtonClicked;
@@ -197,8 +198,6 @@ public abstract class DialogPreference extends Preference implements
 
     protected void onDialogClosed(boolean positiveResult) {
     }
-
-    private InputMethodManager mInputMethodManager;
 
     @Override
     public void onDismiss(DialogInterface dialog) {

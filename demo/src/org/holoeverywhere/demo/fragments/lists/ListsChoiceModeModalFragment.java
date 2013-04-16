@@ -52,6 +52,7 @@ public class ListsChoiceModeModalFragment extends ListsBaseFragment implements
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         mLastActionMode = mode;
         mode.setTitle(R.string.library_name);
+        updateSubtitle(mode);
         getMenuInflater().inflate(R.menu.lists_choice_mode_modal, menu);
         return true;
     }
@@ -72,7 +73,10 @@ public class ListsChoiceModeModalFragment extends ListsBaseFragment implements
 
     @Override
     public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-        mLastActionMode = mode;
+        updateSubtitle(mLastActionMode = mode);
+    }
+
+    private void updateSubtitle(ActionMode mode) {
         mode.setSubtitle("Checked: " + mList.getCheckedItemCount());
     }
 

@@ -77,6 +77,7 @@ public class DialogFragment extends Fragment implements
     boolean mShowsDialog = true;
     int mStyle = STYLE_NORMAL;
     int mTheme = 0;
+    private CharSequence mTitle;
     boolean mViewDestroyed;
     private DialogType type = DialogType.Dialog;
 
@@ -129,6 +130,10 @@ public class DialogFragment extends Fragment implements
             return super.getLayoutInflater(savedInstanceState);
         }
         mDialog = onCreateDialog(savedInstanceState);
+        if (mTitle != null) {
+            mDialog.setTitle(mTitle);
+            mTitle = null;
+        }
         switch (mStyle) {
             case STYLE_NO_INPUT:
                 mDialog.getWindow().addFlags(
@@ -314,6 +319,18 @@ public class DialogFragment extends Fragment implements
         if (theme != 0) {
             mTheme = theme;
         }
+    }
+
+    public void setTitle(CharSequence title) {
+        if (mDialog != null) {
+            mDialog.setTitle(title);
+        } else {
+            mTitle = title;
+        }
+    }
+
+    public void setTitle(int resId) {
+        setTitle(getText(resId));
     }
 
     public DialogTransaction show() {

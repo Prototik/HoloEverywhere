@@ -9,6 +9,7 @@ import org.holoeverywhere.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -72,6 +73,16 @@ public class WindowDecorView extends ContextMenuDecorView {
                     mFixedHeightMinor = new TypedValue());
         }
         a.recycle();
+    }
+
+    @Override
+    protected boolean fitSystemWindows(Rect insets) {
+        int left = Math.max(getPaddingLeft(), insets.left);
+        int top = Math.max(getPaddingTop(), insets.top);
+        int right = Math.max(getPaddingRight(), insets.right);
+        int bottom = Math.max(getPaddingBottom(), insets.bottom);
+        setPadding(left, top, right, bottom);
+        return true;
     }
 
     @Override

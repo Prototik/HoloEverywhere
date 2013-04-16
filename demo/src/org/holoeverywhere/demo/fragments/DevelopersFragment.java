@@ -189,18 +189,18 @@ public class DevelopersFragment extends ListFragment {
 
     private void prepareAdapter(DevelopersAdapter adapter) {
         Developer developer;
-
-        developer = new Developer(R.string.developer_christophe,
-                R.string.developer_christophe_description);
-        developer.link(new GPlusLink("108315424589085456181"));
-        developer.link(new GithubLink("ChristopheVersieux"));
-        add(developer);
-
+        
         developer = new Developer(R.string.developer_sergey, R.string.developer_sergey_description);
         developer.link(new GPlusLink("103272077758668000975"));
         developer.link(new GithubLink("Prototik"));
         developer.link(new EmailLink("prototypegamez@gmail.com", "HoloEverywhere"));
         developer.link(new HabrahabrLink("Prototik"));
+        add(developer);
+
+        developer = new Developer(R.string.developer_christophe,
+                R.string.developer_christophe_description);
+        developer.link(new GPlusLink("108315424589085456181"));
+        developer.link(new GithubLink("ChristopheVersieux"));
         add(developer);
     }
 }

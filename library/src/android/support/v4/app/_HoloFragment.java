@@ -1,3 +1,4 @@
+
 package android.support.v4.app;
 
 import org.holoeverywhere.HoloEverywhere;
@@ -31,7 +32,12 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
         IHoloFragment {
     private static final int INTERNAL_DECOR_VIEW_ID = 0x7f999999;
     private Activity mActivity;
-    private boolean mDetachChildFragments = true;
+    boolean mDetachChildFragments = true;
+    boolean mDontSaveMe = false;
+
+    protected void dontSaveMe() {
+        mDontSaveMe = true;
+    }
 
     public final int getContainerId() {
         return mContainerId;
@@ -183,7 +189,8 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mChildFragmentManager != null && mChildFragmentManager.mActive != null && mDetachChildFragments) {
+        if (mChildFragmentManager != null && mChildFragmentManager.mActive != null
+                && mDetachChildFragments) {
             for (Fragment fragment : mChildFragmentManager.mActive) {
                 if (fragment == null || !fragment.mFromLayout) {
                     continue;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.holoeverywhere</groupId>
@@ -182,7 +183,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.0</version>
+					<version>3.1</version>
 					<inherited>true</inherited>
 					<configuration>
 						<source>${java.version}</source>
@@ -201,29 +202,9 @@
 				</plugin>
 
 				<plugin>
-					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-					<artifactId>android-maven-plugin</artifactId>
-					<version>3.5.1</version>
-					<inherited>true</inherited>
-					<extensions>true</extensions>
-					<configuration>
-						<sign>
-							<debug>false</debug>
-						</sign>
-						<zipalign>
-							<skip>true</skip>
-						</zipalign>
-						<undeployBeforeDeploy>true</undeployBeforeDeploy>
-						<proguard>
-							<skip>true</skip>
-						</proguard>
-					</configuration>
-				</plugin>
-
-				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
-					<version>2.4</version>
+					<version>2.4.1</version>
 					<configuration>
 						<autoVersionSubmodules>true</autoVersionSubmodules>
 						<tagNameFormat>holoeverywhere-@{project.version}</tagNameFormat>
@@ -292,6 +273,26 @@
 					<configuration>
 						<skip>true</skip>
 						<skipDeploy>true</skipDeploy>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+					<artifactId>android-maven-plugin</artifactId>
+					<version>3.5.3</version>
+					<inherited>true</inherited>
+					<extensions>true</extensions>
+					<configuration>
+						<sign>
+							<debug>false</debug>
+						</sign>
+						<zipalign>
+							<skip>true</skip>
+						</zipalign>
+						<undeployBeforeDeploy>true</undeployBeforeDeploy>
+						<proguard>
+							<skip>true</skip>
+						</proguard>
 					</configuration>
 				</plugin>
 

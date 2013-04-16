@@ -66,7 +66,9 @@
 			holo:title="@string/preference_number_picker_title" />
 	</PreferenceCategory>
 	<PreferenceCategory holo:title="@string/preference_other" >
-		<PreferenceScreen holo:title="@string/preference_unsupported" >
+		<PreferenceScreen
+			holo:id="@+id/otherPrefs"
+			holo:title="@string/preference_unsupported" >
 			<SeekBarPreference
 				holo:id="@+id/seek_bar"
 				holo:defaultValue="25"
