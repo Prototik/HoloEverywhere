@@ -201,7 +201,7 @@ public class AddonSlider extends IAddon {
             if (mDragWithActionBar) {
                 final View v = mSliderView.getContentView();
                 if (v.getParent() != null) {
-                    ((ViewGroup) v).removeView(v);
+                    ((ViewGroup) v.getParent()).removeView(v);
                 }
                 get().setContentView(v);
                 ViewGroup decorView = (ViewGroup) get().getWindow().getDecorView();
