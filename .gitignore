@@ -2,3 +2,6 @@
 target/
 bin/
 gen/
+
+# Ant
+local.properties
