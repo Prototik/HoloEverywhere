@@ -22,15 +22,19 @@ import android.view.View;
 
 public class OtherFragment extends ListFragment {
     private final class ActivityListener implements OnOtherItemClickListener {
-        private Class<? extends Activity> mClass;
+        private Intent mIntent;
 
         public ActivityListener(Class<? extends Activity> clazz) {
-            mClass = clazz;
+            this(new Intent(getSupportActivity(), clazz));
+        }
+
+        public ActivityListener(Intent intent) {
+            mIntent = intent;
         }
 
         @Override
         public void onClick(OtherItem otherItem) {
-            startActivity(new Intent(getSupportActivity(), mClass));
+            startActivity(mIntent);
         }
     }
 
@@ -111,6 +115,10 @@ public class OtherFragment extends ListFragment {
 
     public void addItemActivity(CharSequence label, Class<? extends Activity> clazz) {
         addItem(label, new ActivityListener(clazz));
+    }
+
+    public void addItem(CharSequence label, Intent activityIntent) {
+        addItem(label, new ActivityListener(activityIntent));
     }
 
     public void addItemWithLongClick(CharSequence label, OnOtherItemClickListener listener) {

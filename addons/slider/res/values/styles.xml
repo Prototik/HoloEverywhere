@@ -3,6 +3,7 @@
         <item name="dragBound">25%</item>
         <item name="scrollInterpolator">@interpolator/decelerate_quint</item>
         <item name="shadow">55%</item>
+        <item name="shadowColor">#1E1E1E</item>
         <item name="shadowInterpolator">@interpolator/decelerate_quad</item>
         <item name="touchMode">leftright</item>
         <item name="touchModeMargin">@dimen/sliderTouchModeMargin</item>

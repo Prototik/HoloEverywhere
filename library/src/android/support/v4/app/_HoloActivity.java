@@ -37,7 +37,6 @@ import android.view.View.OnCreateContextMenuListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
-import com.actionbarsherlock.internal.view.menu.ContextMenuBackWrapper;
 import com.actionbarsherlock.internal.view.menu.ContextMenuCallbackGetter;
 import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView.ContextMenuListenersProvider;
 import com.actionbarsherlock.internal.view.menu.ContextMenuItemWrapper;
@@ -389,15 +388,13 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         final android.view.ContextMenu nativeMenu;
         if (menu instanceof ContextMenuWrapper) {
             nativeMenu = ((ContextMenuWrapper) menu).unwrap();
-        } else {
-            nativeMenu = new ContextMenuBackWrapper(menu);
-        }
-        super.onCreateContextMenu(nativeMenu, view, menuInfo);
-        if (view instanceof ContextMenuCallbackGetter) {
-            final OnCreateContextMenuListener l = ((ContextMenuCallbackGetter) view)
-                    .getOnCreateContextMenuListener();
-            if (l != null) {
-                l.onCreateContextMenu(nativeMenu, view, menuInfo);
+            super.onCreateContextMenu(nativeMenu, view, menuInfo);
+            if (view instanceof ContextMenuCallbackGetter) {
+                final OnCreateContextMenuListener l = ((ContextMenuCallbackGetter) view)
+                        .getOnCreateContextMenuListener();
+                if (l != null) {
+                    l.onCreateContextMenu(nativeMenu, view, menuInfo);
+                }
             }
         }
     }
@@ -575,14 +572,13 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
             }
         } else {
             if ((resid & ThemeManager.COLOR_SCHEME_MASK) == 0) {
-                int theme = ThemeManager.getTheme(getIntent(), false)
-                        & ThemeManager.COLOR_SCHEME_MASK;
+                int theme = ThemeManager.getTheme(getIntent(), false);
                 if (theme == 0) {
-                    theme = ThemeManager.getTheme(getParentActivityIntent(), false)
-                            & ThemeManager.COLOR_SCHEME_MASK;
+                    theme = ThemeManager.getTheme(getParentActivityIntent(), false);
                 }
+                theme &= ThemeManager.COLOR_SCHEME_MASK;
                 if (theme != 0) {
-                    resid |= theme & ThemeManager.COLOR_SCHEME_MASK;
+                    resid |= theme;
                 }
             }
             setTheme(ThemeManager.getThemeResource(resid, modifyGlobal));

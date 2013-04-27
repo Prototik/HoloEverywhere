@@ -45,6 +45,8 @@ public interface ISlider {
      */
     public View getLeftView();
 
+    public int getLeftViewShadowColor();
+
     /**
      * Last computed or setted by user width for left view
      */
@@ -77,6 +79,8 @@ public interface ISlider {
      * Current right view
      */
     public View getRightView();
+
+    public int getRightViewShadowColor();
 
     /**
      * Last computed or setted by user width for right view
@@ -133,6 +137,13 @@ public interface ISlider {
     public void setBlockLongMove(boolean blockLongMove);
 
     /**
+     * Set left view via layout resource
+     * 
+     * @see #getContentView()
+     */
+    public void setContentView(int layoutId);
+
+    /**
      * Set content view. Slider wouldn't be search leftView/rightView into this
      * view and set id contentView on this.
      * 
@@ -161,11 +172,20 @@ public interface ISlider {
     public void setLeftTranslateFactor(float leftTranslateFactor);
 
     /**
+     * Set left view via layout resource
+     * 
+     * @see #getLeftView()
+     */
+    public void setLeftView(int layoutId);
+
+    /**
      * Set left view
      * 
      * @see #getLeftView()
      */
     public void setLeftView(View view);
+
+    public void setLeftViewShadowColor(int leftViewShadowColor);
 
     /**
      * Hardly set left view width in pixels. If value negative - width will be
@@ -199,17 +219,28 @@ public interface ISlider {
     public void setRightTranslateFactor(float rightTranslateFactor);
 
     /**
+     * Set left view via layout resource
+     * 
+     * @see #getRightView()
+     */
+    public void setRightView(int layoutId);
+
+    /**
      * Set right view
      * 
      * @see #getRightView()
      */
     public void setRightView(View view);
 
+    public void setRightViewShadowColor(int rightViewShadowColor);
+
     /**
      * Hardly set right view width in pixels. If value negative - width will be
      * computed automatically
      */
     public void setRightViewWidth(int rightViewWidth);
+
+    public void setShadowColor(int shadowColor);
 
     /**
      * @see #getTouchMode()

@@ -29,6 +29,8 @@ import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Fullscreen;
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Fullscreen_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_Wallpaper;
+import static org.holoeverywhere.R.style.Holo_Theme_Dialog;
+import static org.holoeverywhere.R.style.Holo_Theme_Dialog_Light;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,12 +112,18 @@ import android.util.SparseIntArray;
  * </tr>
  * <tr>
  * <td>{@link #DIALOG}</td>
+ * <td>{@link R.style#Holo_Theme_Dialog}</td>
+ * <td>{@link R.style#Holo_Theme_Dialog_Light}</td>
+ * <td>{@link R.style#Holo_Theme_Dialog_Light}</td>
+ * </tr>
+ * <tr>
+ * <td>{@link #DIALOG_WHEN_LARGE}</td>
  * <td>{@link R.style#Holo_Theme_DialogWhenLarge}</td>
  * <td>{@link R.style#Holo_Theme_Light_DialogWhenLarge}</td>
  * <td>{@link R.style#Holo_Theme_Light_DialogWhenLarge}</td>
  * </tr>
  * <tr>
- * <td>{@link #DIALOG} | {@link #NO_ACTION_BAR}</td>
+ * <td>{@link #DIALOG_WHEN_LARGE} | {@link #NO_ACTION_BAR}</td>
  * <td>{@link R.style#Holo_Theme_DialogWhenLarge_NoActionBar}</td>
  * <td>{@link R.style#Holo_Theme_Light_DialogWhenLarge_NoActionBar}</td>
  * <td>{@link R.style#Holo_Theme_Light_DialogWhenLarge_NoActionBar}</td>
@@ -161,7 +169,8 @@ public final class ThemeManager {
          * Class-container for theme flags.
          */
         public static final class ThemeTag {
-            public final boolean dark, fullscreen, light, mixed, noActionBar, wallpaper, dialog;
+            public final boolean dark, fullscreen, light, mixed, noActionBar, wallpaper, dialog,
+                    dialogWhenLarge;
             public final int flags;
 
             private ThemeTag(int flags) {
@@ -173,6 +182,7 @@ public final class ThemeManager {
                 fullscreen = isFullScreen(flags);
                 wallpaper = isWallpaper(flags);
                 dialog = isDialog(flags);
+                dialogWhenLarge = isDialogWhenLarge(flags);
             }
         }
 
@@ -198,9 +208,13 @@ public final class ThemeManager {
      */
     public static final int DARK;
     /**
-     * Flag indicates on the dialog-when-large theme.
+     * Flag indicates on the dialog theme.
      */
     public static final int DIALOG;
+    /**
+     * Flag indicates on the dialog-when-large theme.
+     */
+    public static final int DIALOG_WHEN_LARGE;
     /**
      * Flag indicates on the fullscreen theme
      */
@@ -249,6 +263,7 @@ public final class ThemeManager {
         NO_ACTION_BAR = makeNewFlag();
         WALLPAPER = makeNewFlag();
         DIALOG = makeNewFlag();
+        DIALOG_WHEN_LARGE = makeNewFlag();
 
         COLOR_SCHEME_MASK = DARK | LIGHT | MIXED;
 
@@ -456,6 +471,18 @@ public final class ThemeManager {
         return ThemeManager.isDialog(ThemeManager.getTheme(intent));
     }
 
+    public static boolean isDialogWhenLarge(Activity activity) {
+        return ThemeManager.isDialog(ThemeManager.getTheme(activity));
+    }
+
+    public static boolean isDialogWhenLarge(int i) {
+        return ThemeManager.is(i, ThemeManager.DIALOG_WHEN_LARGE);
+    }
+
+    public static boolean isDialogWhenLarge(Intent intent) {
+        return ThemeManager.isDialog(ThemeManager.getTheme(intent));
+    }
+
     public static boolean isFullScreen(Activity activity) {
         return ThemeManager.isFullScreen(ThemeManager.getTheme(activity));
     }
@@ -646,6 +673,13 @@ public final class ThemeManager {
     }
 
     /**
+     * Remove theme from the intent extras.
+     */
+    public static void removeTheme(Activity activity) {
+        activity.getIntent().removeExtra(_THEME_TAG);
+    }
+
+    /**
      * Reset all themes to default
      */
     public static void reset() {
@@ -663,6 +697,12 @@ public final class ThemeManager {
                 Holo_Theme_NoActionBar);
         map(DARK | NO_ACTION_BAR | FULLSCREEN,
                 Holo_Theme_NoActionBar_Fullscreen);
+        map(DARK | DIALOG,
+                Holo_Theme_Dialog);
+        map(DARK | DIALOG_WHEN_LARGE,
+                Holo_Theme_DialogWhenLarge);
+        map(DARK | DIALOG_WHEN_LARGE | NO_ACTION_BAR,
+                Holo_Theme_DialogWhenLarge_NoActionBar);
 
         map(DARK | WALLPAPER,
                 Holo_Theme_Wallpaper);
@@ -681,6 +721,12 @@ public final class ThemeManager {
                 Holo_Theme_Light_NoActionBar);
         map(LIGHT | NO_ACTION_BAR | FULLSCREEN,
                 Holo_Theme_Light_NoActionBar_Fullscreen);
+        map(LIGHT | DIALOG,
+                Holo_Theme_Dialog_Light);
+        map(LIGHT | DIALOG_WHEN_LARGE,
+                Holo_Theme_Light_DialogWhenLarge);
+        map(LIGHT | DIALOG_WHEN_LARGE | NO_ACTION_BAR,
+                Holo_Theme_Light_DialogWhenLarge_NoActionBar);
 
         map(LIGHT | WALLPAPER,
                 Holo_Theme_Light_Wallpaper);
@@ -699,6 +745,12 @@ public final class ThemeManager {
                 Holo_Theme_Light_DarkActionBar_NoActionBar);
         map(MIXED | NO_ACTION_BAR | FULLSCREEN,
                 Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen);
+        map(MIXED | DIALOG,
+                Holo_Theme_Dialog_Light);
+        map(MIXED | DIALOG_WHEN_LARGE,
+                Holo_Theme_Light_DialogWhenLarge);
+        map(MIXED | DIALOG_WHEN_LARGE | NO_ACTION_BAR,
+                Holo_Theme_Light_DialogWhenLarge_NoActionBar);
 
         map(MIXED | WALLPAPER,
                 Holo_Theme_Light_DarkActionBar_Wallpaper);
@@ -708,20 +760,6 @@ public final class ThemeManager {
                 Holo_Theme_Light_DarkActionBar_Fullscreen_Wallpaper);
         map(MIXED | NO_ACTION_BAR | FULLSCREEN | WALLPAPER,
                 Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen_Wallpaper);
-
-        map(DARK | DIALOG,
-                Holo_Theme_DialogWhenLarge);
-        map(LIGHT | DIALOG,
-                Holo_Theme_Light_DialogWhenLarge);
-        map(MIXED | DIALOG,
-                Holo_Theme_Light_DialogWhenLarge);
-
-        map(DARK | DIALOG,
-                Holo_Theme_DialogWhenLarge_NoActionBar);
-        map(LIGHT | DIALOG,
-                Holo_Theme_Light_DialogWhenLarge_NoActionBar);
-        map(MIXED | DIALOG,
-                Holo_Theme_Light_DialogWhenLarge_NoActionBar);
 
         if (sThemeSetters != null) {
             for (ThemeSetter setter : sThemeSetters) {

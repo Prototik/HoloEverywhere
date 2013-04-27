@@ -19,6 +19,10 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 
 public class AddonSlider extends IAddon {
+    static {
+        LayoutInflater.register(SliderView.class);
+    }
+
     public static class AddonSliderA extends IAddonActivity implements ISlider {
         private static final String KEY_SLIDER_STATE = "holo:slider:state";
         private boolean mAddonEnabled = true;
@@ -74,6 +78,11 @@ public class AddonSlider extends IAddon {
         }
 
         @Override
+        public int getLeftViewShadowColor() {
+            return mSliderView.getLeftViewShadowColor();
+        }
+
+        @Override
         public int getLeftViewWidth() {
             return mSliderView.getLeftViewWidth();
         }
@@ -101,6 +110,11 @@ public class AddonSlider extends IAddon {
         @Override
         public View getRightView() {
             return mSliderView.getRightView();
+        }
+
+        @Override
+        public int getRightViewShadowColor() {
+            return mSliderView.getRightViewShadowColor();
         }
 
         @Override
@@ -252,8 +266,9 @@ public class AddonSlider extends IAddon {
             mSliderView.setBlockLongMove(blockLongMove);
         }
 
-        public void setContentView(int layout) {
-            setContentView(LayoutInflater.inflate(get(), layout));
+        @Override
+        public void setContentView(int layoutId) {
+            mSliderView.setContentView(layoutId);
         }
 
         @Override
@@ -299,13 +314,19 @@ public class AddonSlider extends IAddon {
             mSliderView.setLeftTranslateFactor(leftTranslateFactor);
         }
 
-        public void setLeftView(int layout) {
-            setLeftView(LayoutInflater.inflate(get(), layout));
+        @Override
+        public void setLeftView(int layoutId) {
+            mSliderView.setLeftView(layoutId);
         }
 
         @Override
         public void setLeftView(View view) {
             mSliderView.setLeftView(view);
+        }
+
+        @Override
+        public void setLeftViewShadowColor(int leftViewShadowColor) {
+            mSliderView.setLeftViewShadowColor(leftViewShadowColor);
         }
 
         @Override
@@ -338,8 +359,9 @@ public class AddonSlider extends IAddon {
             mSliderView.setRightTranslateFactor(rightTranslateFactor);
         }
 
-        public void setRightView(int layout) {
-            setRightView(LayoutInflater.inflate(get(), layout));
+        @Override
+        public void setRightView(int layoutId) {
+            mSliderView.setRightView(layoutId);
         }
 
         @Override
@@ -348,8 +370,18 @@ public class AddonSlider extends IAddon {
         }
 
         @Override
+        public void setRightViewShadowColor(int rightViewShadowColor) {
+            mSliderView.setRightViewShadowColor(rightViewShadowColor);
+        }
+
+        @Override
         public void setRightViewWidth(int rightViewWidth) {
             mSliderView.setRightViewWidth(rightViewWidth);
+        }
+
+        @Override
+        public void setShadowColor(int shadowColor) {
+            mSliderView.setShadowColor(shadowColor);
         }
 
         @Override

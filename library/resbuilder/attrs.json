@@ -141,11 +141,23 @@
         "LayerDrawable": "android:opacity",
         "LayerDrawableItem": "android:left/android:top/android:right/android:bottom/android:drawable/android:id",
         "LinearLayout": [
+			"android:orientation",
+			"android:gravity",
+			"android:baselineAligned",
+			"android:baselineAlignedChildIndex",
+			"android:weightSum",
+			"android:measureWithLargestChild",
+			"android:divider",
             "android:showDividers",
-            "showDividers$flag/none 0/beginning 1/middle 2/end 4/all 7",
             "android:dividerPadding",
-            "dividerPadding$dimension",
-            "android:divider"
+            "showDividers$flag/none 0/beginning 1/middle 2/end 4/all 7",
+            "dividerPadding$dimension"
+        ],
+        "LinearLayout_Layout": [
+			"android:layout_width",
+			"android:layout_height",
+			"android:layout_weight",
+			"android:layout_gravity"
         ],
         "MenuView": [
             "android:itemTextAppearance",

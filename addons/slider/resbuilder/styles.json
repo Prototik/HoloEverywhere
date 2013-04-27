@@ -5,6 +5,7 @@
 		"Holo.Slider": {
 			"dragBound": "25%",
 			"shadow": "55%",
+			"shadowColor": "#1E1E1E",
 			"translateFactor": "40%",
 			"shadowInterpolator": "@interpolator/decelerate_quad",
 			"translateInterpolator": "@interpolator/linear",

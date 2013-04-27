@@ -3,13 +3,17 @@
     <attr name="dragBound" format="integer|fraction|reference|dimension"/>
     <attr name="leftDragBound" format="integer|fraction|reference|dimension"/>
     <attr name="leftShadow" format="float|fraction|reference|dimension"/>
+    <attr name="leftShadowColor" format="color|reference"/>
     <attr name="leftTranslateFactor" format="float|fraction|reference|dimension"/>
     <attr name="rightDragBound" format="integer|fraction|reference|dimension"/>
     <attr name="rightShadow" format="float|fraction|reference|dimension"/>
+    <attr name="rightShadowColor" format="color|reference"/>
     <attr name="rightTranslateFactor" format="float|fraction|reference|dimension"/>
     <attr name="scrollInterpolator" format="reference"/>
     <attr name="shadow" format="float|fraction|reference|dimension"/>
+    <attr name="shadowColor" format="color|reference"/>
     <attr name="shadowInterpolator" format="reference"/>
+    <attr name="sliderStyle" format="reference"/>
     <attr name="touchMode" format="enum">
         <enum name="fullscreen" value="4"/>
         <enum name="left" value="1"/>
@@ -27,12 +31,15 @@
         <attr name="dragBound"/>
         <attr name="leftDragBound"/>
         <attr name="leftShadow"/>
+        <attr name="leftShadowColor"/>
         <attr name="leftTranslateFactor"/>
         <attr name="rightDragBound"/>
         <attr name="rightShadow"/>
+        <attr name="rightShadowColor"/>
         <attr name="rightTranslateFactor"/>
         <attr name="scrollInterpolator"/>
         <attr name="shadow"/>
+        <attr name="shadowColor"/>
         <attr name="shadowInterpolator"/>
         <attr name="touchMode"/>
         <attr name="touchModeLeftMargin"/>

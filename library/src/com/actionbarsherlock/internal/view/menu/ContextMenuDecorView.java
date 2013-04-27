@@ -8,7 +8,6 @@ import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewDebug.ExportedProperty;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
@@ -49,40 +48,12 @@ public class ContextMenuDecorView extends FrameLayout implements
         }
         removeAllViews();
         if (params == null) {
-            params = view.getLayoutParams();
+            params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT);
         }
-        if (params == null) {
-            params = new FrameLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                    android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-        }
-        addView(view, params);
-    }
-
-    @Override
-    @ExportedProperty(deepExport = true, prefix = "layout_")
-    public ViewGroup.LayoutParams getLayoutParams() {
-        if (getChildCount() == 0) {
-            return super.getLayoutParams();
-        }
-        final View child = unwrap();
-        ViewGroup.LayoutParams params = super.getLayoutParams();
-        if (params == null) {
-            params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-            setLayoutParams(params);
-        }
-        ViewGroup.LayoutParams childParams = child.getLayoutParams();
-        if (childParams == null) {
-            child.setLayoutParams(params);
-            return params;
-        }
-        if (params.width != childParams.width) {
-            params.width = childParams.width;
-        }
-        if (params.height != childParams.height) {
-            params.height = childParams.height;
-        }
-        return params;
+        setLayoutParams(params);
+        addView(view, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
     }
 
     @Override

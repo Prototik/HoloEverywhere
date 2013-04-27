@@ -4,13 +4,13 @@ package org.holoeverywhere.slider;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
+import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.slider.DrawerView.Drawer;
 import org.holoeverywhere.widget.Scroller;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -80,10 +80,9 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
             if (progress < -100 || progress > 0) {
                 return;
             }
-            canvas.drawColor(Color.argb(
-                    (int) (mShadowInterpolator.getInterpolation((100 + progress) / 100f
-                            * mSlider.mLeftViewShadow) * 255f),
-                    30, 30, 30));
+            final int alpha = (int) (mShadowInterpolator.getInterpolation((100 + progress) / 100f
+                    * mSlider.mLeftViewShadow) * 0xFF);
+            canvas.drawColor(alpha << 24 | mSlider.mLeftViewShadowColor);
         }
 
         @Override
@@ -91,10 +90,9 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
             if (progress < 0 || progress > 100) {
                 return;
             }
-            canvas.drawColor(Color.argb(
-                    (int) (mShadowInterpolator.getInterpolation((100 - progress) / 100f
-                            * mSlider.mRightViewShadow) * 255f),
-                    30, 30, 30));
+            final int alpha = (int) (mShadowInterpolator.getInterpolation((100 - progress) / 100f
+                    * mSlider.mRightViewShadow) * 0xFF);
+            canvas.drawColor(alpha << 24 | mSlider.mRightViewShadowColor);
         }
 
         @Override
@@ -197,6 +195,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     private static final int DRAG_IDLE = 0;
     private static final int DRAG_NOP = 2;
     private static final int DRAG_PERFORM = 1;
+    private static final int SHADOW_COLOR_MASK = 0x00FFFFFF;
     private static final int STATE_CONTENT_OPENED = 0;
     private static final int STATE_LEFT_OPENED = 1;
     private static final int STATE_RIGHT_OPENED = 2;
@@ -211,6 +210,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     private float mLeftTranslateFactor;
     private View mLeftView, mRightView, mContentView;
     private float mLeftViewShadow;
+    private int mLeftViewShadowColor;
     private int mLeftViewWidth;
     private boolean mLeftViewWidthSetted = false, mRightViewWidthSetted = false;
     private OnSlideListener mOnSlideListener;
@@ -218,6 +218,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     private int mRightDragBound;
     private float mRightTranslateFactor;
     private float mRightViewShadow;
+    private int mRightViewShadowColor;
     private int mRightViewWidth;
     private final Scroller mScroller;
     private int mScrollOnLayoutTarget = -1;
@@ -226,6 +227,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     private final Rect mTempRect = new Rect();
     private TouchMode mTouchMode = TouchMode.LeftRight;
     private int mTouchModeLeftMargin;
+
     private int mTouchModeRightMargin;
     private final int mTouchSlop;
 
@@ -236,7 +238,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     }
 
     public SliderView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs, R.attr.sliderStyle);
     }
 
     public SliderView(Context context, AttributeSet attrs, int defStyle) {
@@ -257,6 +259,10 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
         setLeftViewShadow(getPercentValue(a, R.styleable.Slider_leftShadow, shadow));
         setRightViewShadow(getPercentValue(a, R.styleable.Slider_rightShadow, shadow));
 
+        final int shadowColor = a.getColor(R.styleable.Slider_shadowColor, 0x1E1E1E);
+        setLeftViewShadowColor(a.getColor(R.styleable.Slider_leftShadowColor, shadowColor));
+        setRightViewShadowColor(a.getColor(R.styleable.Slider_rightShadowColor, shadowColor));
+
         final float translateFactor = getPercentValue(a, R.styleable.Slider_translateFactor, .3f);
         setLeftTranslateFactor(getPercentValue(a, R.styleable.Slider_leftTranslateFactor,
                 translateFactor));
@@ -275,7 +281,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
                 R.interpolator.linear);
 
         if (a.hasValue(R.styleable.Slider_touchMode)) {
-            switch (a.getInt(R.styleable.Slider_touchMode, 3)) {
+            switch (a.getInt(R.styleable.Slider_touchMode, -1)) {
                 case 0:
                     setTouchMode(TouchMode.None);
                     break;
@@ -401,6 +407,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     }
 
     @Override
+    public int getLeftViewShadowColor() {
+        return mLeftViewShadowColor;
+    }
+
+    @Override
     public int getLeftViewWidth() {
         return mLeftViewWidth;
     }
@@ -463,6 +474,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
 
     public float getRightViewShadow() {
         return mRightViewShadow;
+    }
+
+    @Override
+    public int getRightViewShadowColor() {
+        return mRightViewShadowColor;
     }
 
     @Override
@@ -798,6 +814,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     }
 
     @Override
+    public void setContentView(int layoutId) {
+        setContentView(LayoutInflater.inflate(getContext(), layoutId, this, false));
+    }
+
+    @Override
     public void setContentView(View view) {
         if (view == mContentView) {
             return;
@@ -839,6 +860,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     }
 
     @Override
+    public void setLeftView(int layoutId) {
+        setLeftView(LayoutInflater.inflate(getContext(), layoutId, this, false));
+    }
+
+    @Override
     public void setLeftView(View view) {
         if (view == mLeftView) {
             return;
@@ -853,6 +879,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     public void setLeftViewShadow(float leftViewShadow) {
         mLeftViewShadow = leftViewShadow;
         postInvalidate();
+    }
+
+    @Override
+    public void setLeftViewShadowColor(int leftViewShadowColor) {
+        mLeftViewShadowColor = leftViewShadowColor & SHADOW_COLOR_MASK;
     }
 
     @Override
@@ -897,6 +928,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     }
 
     @Override
+    public void setRightView(int layoutId) {
+        setRightView(LayoutInflater.inflate(getContext(), layoutId, this, false));
+    }
+
+    @Override
     public void setRightView(View view) {
         if (view == mRightView) {
             return;
@@ -914,11 +950,22 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     }
 
     @Override
+    public void setRightViewShadowColor(int rightViewShadowColor) {
+        mRightViewShadowColor = rightViewShadowColor & SHADOW_COLOR_MASK;
+    }
+
+    @Override
     public void setRightViewWidth(int rightViewWidth) {
         mRightViewWidth = rightViewWidth;
         mRightViewWidthSetted = rightViewWidth > 0;
         requestLayout();
         postInvalidate();
+    }
+
+    @Override
+    public void setShadowColor(int shadowColor) {
+        setLeftViewShadowColor(shadowColor);
+        setRightViewShadowColor(shadowColor);
     }
 
     @Override

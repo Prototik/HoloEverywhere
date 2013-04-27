@@ -369,7 +369,6 @@ public class DialogFragment extends Fragment implements
     }
 
     /**
-     * 
      * @deprecate This method was deprecated because there were problems at
      *            2.1-2.3 on restore instance state when
      *            <code>tag == null</code>. Use {@link #show(FragmentManager)}
@@ -388,7 +387,6 @@ public class DialogFragment extends Fragment implements
     }
 
     /**
-     * 
      * @deprecate This method was deprecated because there were problems at
      *            2.1-2.3 on restore instance state when
      *            <code>tag == null</code>. Use
