@@ -7,6 +7,7 @@ import org.holoeverywhere.app.TabSwipeActivity;
 import org.holoeverywhere.widget.TextView;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,14 +17,36 @@ public class DemoTabsActivity extends TabSwipeActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             TextView textView = new TextView(getSupportActivity());
-            textView.setText("Position: " + getArguments().getInt("position"));
+            textView.setTextAppearance(getSupportActivity(), R.style.Holo_TextAppearance_Medium);
+            textView.setGravity(Gravity.CENTER);
+            textView.setBackgroundResource(getArguments().getInt("color"));
+            textView.setText(getArguments().getCharSequence("text"));
             return textView;
         }
     }
 
     private static Bundle make(int i) {
         Bundle bundle = new Bundle();
-        bundle.putInt("position", i);
+        int color;
+        CharSequence text;
+        switch (i) {
+            case 1:
+                color = R.color.holo_blue_dark;
+                text = "I'm perfect! Maybe...";
+                break;
+            case 2:
+                color = R.color.holo_green_dark;
+                text = "Love and dru... friends. Yea.";
+                break;
+            case 3:
+                color = R.color.holo_red_dark;
+                text = "I'm angry!!! Argh!!";
+                break;
+            default:
+                return null;
+        }
+        bundle.putCharSequence("text", text);
+        bundle.putInt("color", color);
         return bundle;
     }
 
