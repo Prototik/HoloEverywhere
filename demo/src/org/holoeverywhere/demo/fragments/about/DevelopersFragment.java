@@ -1,5 +1,5 @@
 
-package org.holoeverywhere.demo.fragments;
+package org.holoeverywhere.demo.fragments.about;
 
 import java.util.ArrayList;
 import java.util.List;

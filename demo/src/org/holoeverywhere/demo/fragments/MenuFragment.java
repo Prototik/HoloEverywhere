@@ -7,6 +7,7 @@ import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.demo.DemoActivity;
 import org.holoeverywhere.demo.R;
+import org.holoeverywhere.demo.fragments.about.AboutFragment;
 import org.holoeverywhere.demo.widget.DemoListRowView;
 import org.holoeverywhere.widget.LinearLayout;
 
