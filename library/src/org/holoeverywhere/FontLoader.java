@@ -73,6 +73,7 @@ public final class FontLoader {
         }
 
         public boolean isValid() {
+
             return typeface != null || font > 0;
         }
     }
@@ -179,7 +180,7 @@ public final class FontLoader {
         Typeface typeface = FontLoader.FONT_CACHE.get(font);
         if (typeface == null) {
             try {
-                File file = new File(context.getApplicationInfo().dataDir + "/fonts");
+                File file = new File(context.getCacheDir(), "fonts");
                 if (!file.exists()) {
                     file.mkdirs();
                 }
