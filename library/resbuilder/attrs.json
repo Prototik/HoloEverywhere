@@ -153,12 +153,6 @@
             "showDividers$flag/none 0/beginning 1/middle 2/end 4/all 7",
             "dividerPadding$dimension"
         ],
-        "LinearLayout_Layout": [
-			"android:layout_width",
-			"android:layout_height",
-			"android:layout_weight",
-			"android:layout_gravity"
-        ],
         "MenuView": [
             "android:itemTextAppearance",
             "android:horizontalDivider",

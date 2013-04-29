@@ -1,14 +1,20 @@
 {
     "data": {
-        "Holo.Theme | BaseDark BaseBarDark < Theme.Sherlock": {
+        "Holo.Theme | HoloBase BaseDark BaseBarDark < Theme.Sherlock": {
             "holoTheme": "dark"
         },
-        "Holo.Theme.Light | BaseLight BaseBarLight < Theme.Sherlock.Light": {
+        "Holo.Theme.Light | HoloBase BaseLight BaseBarLight < Theme.Sherlock.Light": {
             "holoTheme": "light"
         },
-        "Holo.Theme.Light.DarkActionBar | BaseLight BaseBarDark < Theme.Sherlock.Light.DarkActionBar": {
+        "Holo.Theme.Light.DarkActionBar | HoloBase BaseLight BaseBarDark < Theme.Sherlock.Light.DarkActionBar": {
             "holoTheme": "mixed"
         }
+    },
+    "blocks": {
+    	"HoloBase": {
+            "textAppearanceLargePopupMenu": "?android:textAppearanceLargePopupMenu",
+            "textAppearanceSmallPopupMenu": "?android:textAppearanceSmallPopupMenu"
+    	}
     },
     "include": [
         {

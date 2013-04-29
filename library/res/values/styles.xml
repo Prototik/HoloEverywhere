@@ -559,8 +559,6 @@
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="android:itemBackground">?selectableItemBackground</item>
-        <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
-        <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
         <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
         <item name="android:windowMinWidthMinor">?windowMinWidthMinor</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
@@ -675,12 +673,11 @@
         <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_dark</item>
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_dark</item>
         <item name="android:seekBarStyle">@style/Holo.SeekBar</item>
-        <!--End of block HoloDark-->
-        <!--Include block: HoloBarDark-->
-        <!--Include block: BaseBarDark-->
         <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Large</item>
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Small</item>
-        <!--End of block BaseBarDark-->
+        <!--End of block HoloDark-->
+        <!--Include block: HoloBarDark-->
+        <!-- Block not found: BaseBarDark -->
         <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>
         <item name="android:panelColorBackground">#000000</item>
         <item name="android:panelColorForeground">@color/primary_text_holo_dark</item>
@@ -722,8 +719,6 @@
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="android:itemBackground">?selectableItemBackground</item>
-        <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
-        <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
         <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
         <item name="android:windowMinWidthMinor">?windowMinWidthMinor</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
@@ -838,12 +833,11 @@
         <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
         <item name="android:seekBarStyle">@style/Holo.SeekBar.Light</item>
-        <!--End of block HoloLight-->
-        <!--Include block: HoloBarLight-->
-        <!--Include block: BaseBarLight-->
         <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
-        <!--End of block BaseBarLight-->
+        <!--End of block HoloLight-->
+        <!--Include block: HoloBarLight-->
+        <!-- Block not found: BaseBarLight -->
         <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_light</item>
         <item name="android:panelColorBackground">#FFFFFF</item>
         <item name="android:panelColorForeground">@color/primary_text_holo_light</item>
@@ -862,8 +856,6 @@
         <item name="android:dividerHorizontal">?dividerHorizontal</item>
         <item name="android:dividerVertical">?dividerVertical</item>
         <item name="android:itemBackground">?selectableItemBackground</item>
-        <item name="android:textAppearanceLargePopupMenu">?textAppearanceLargePopupMenu</item>
-        <item name="android:textAppearanceSmallPopupMenu">?textAppearanceSmallPopupMenu</item>
         <item name="android:windowMinWidthMajor">?windowMinWidthMajor</item>
         <item name="android:windowMinWidthMinor">?windowMinWidthMinor</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
@@ -978,12 +970,11 @@
         <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
         <item name="android:seekBarStyle">@style/Holo.SeekBar.Light</item>
+        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
+        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
         <!--End of block HoloLight-->
         <!--Include block: HoloBarDark-->
-        <!--Include block: BaseBarDark-->
-        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Large</item>
-        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Small</item>
-        <!--End of block BaseBarDark-->
+        <!-- Block not found: BaseBarDark -->
         <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>
         <item name="android:panelColorBackground">#000000</item>
         <item name="android:panelColorForeground">@color/primary_text_holo_dark</item>

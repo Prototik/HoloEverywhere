@@ -7,8 +7,6 @@
             "android:dividerHorizontal": "?dividerHorizontal",
             "android:dividerVertical": "?dividerVertical",
             "android:itemBackground": "?selectableItemBackground",
-            "android:textAppearanceLargePopupMenu": "?textAppearanceLargePopupMenu",
-            "android:textAppearanceSmallPopupMenu": "?textAppearanceSmallPopupMenu",
             "android:windowMinWidthMajor": "?windowMinWidthMajor",
             "android:windowMinWidthMinor": "?windowMinWidthMinor",
             "buttonBarButtonStyle": "?borderlessButtonStyle",
@@ -31,14 +29,6 @@
             "textAppearanceListItem": "?android:textAppearanceLarge",
             "textAppearanceListItemSmall": "?android:attr/textAppearanceMedium",
             "timePickerStyle": "@style/Holo.TimePicker"
-        },
-        "BaseBarDark": {
-            "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.PopupMenu.Large",
-            "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.PopupMenu.Small"
-        },
-        "BaseBarLight": {
-            "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.PopupMenu.Light.Large",
-            "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.PopupMenu.Light.Small"
         },
         "BaseDark | Base": {
             "alertDialogStyle": "@style/Holo.AlertDialog",

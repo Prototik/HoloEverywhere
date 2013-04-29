@@ -50,7 +50,9 @@
             "android:ratingBarStyleSmall": "@style/Holo.RatingBar.Small",
             "android:scrollbarThumbHorizontal": "@drawable/scrollbar_handle_holo_dark",
             "android:scrollbarThumbVertical": "@drawable/scrollbar_handle_holo_dark",
-            "android:seekBarStyle": "@style/Holo.SeekBar"
+            "android:seekBarStyle": "@style/Holo.SeekBar",
+            "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.PopupMenu.Large",
+            "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.PopupMenu.Small"
         },
         "HoloLight | BaseLight Holo TextLight": {
             "android:buttonStyle": "@style/Holo.Button.Light",
@@ -73,7 +75,9 @@
             "android:ratingBarStyleSmall": "@style/Holo.RatingBar.Small.Light",
             "android:scrollbarThumbHorizontal": "@drawable/scrollbar_handle_holo_light",
             "android:scrollbarThumbVertical": "@drawable/scrollbar_handle_holo_light",
-            "android:seekBarStyle": "@style/Holo.SeekBar.Light"
+            "android:seekBarStyle": "@style/Holo.SeekBar.Light",
+            "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.PopupMenu.Light.Large",
+            "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.PopupMenu.Light.Small"
         }
     },
     "data": {

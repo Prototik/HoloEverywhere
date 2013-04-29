@@ -17,62 +17,6 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 public class LinearLayout extends android.widget.LinearLayout {
-    public static class LayoutParams extends android.widget.LinearLayout.LayoutParams {
-        @ViewDebug.ExportedProperty(category = "layout", mapping = {
-                @ViewDebug.IntToString(from = -1, to = "NONE"),
-                @ViewDebug.IntToString(from = Gravity.NO_GRAVITY, to = "NONE"),
-                @ViewDebug.IntToString(from = Gravity.TOP, to = "TOP"),
-                @ViewDebug.IntToString(from = Gravity.BOTTOM, to = "BOTTOM"),
-                @ViewDebug.IntToString(from = Gravity.LEFT, to = "LEFT"),
-                @ViewDebug.IntToString(from = Gravity.RIGHT, to = "RIGHT"),
-                @ViewDebug.IntToString(from = Gravity.START, to = "START"),
-                @ViewDebug.IntToString(from = Gravity.END, to = "END"),
-                @ViewDebug.IntToString(from = Gravity.CENTER_VERTICAL, to = "CENTER_VERTICAL"),
-                @ViewDebug.IntToString(from = Gravity.FILL_VERTICAL, to = "FILL_VERTICAL"),
-                @ViewDebug.IntToString(from = Gravity.CENTER_HORIZONTAL, to = "CENTER_HORIZONTAL"),
-                @ViewDebug.IntToString(from = Gravity.FILL_HORIZONTAL, to = "FILL_HORIZONTAL"),
-                @ViewDebug.IntToString(from = Gravity.CENTER, to = "CENTER"),
-                @ViewDebug.IntToString(from = Gravity.FILL, to = "FILL")
-        })
-        public int gravity = -1;
-
-        @ViewDebug.ExportedProperty(category = "layout")
-        public float weight;
-
-        public LayoutParams(Context c, AttributeSet attrs) {
-            super(c, attrs);
-            TypedArray a =
-                    c.obtainStyledAttributes(attrs, R.styleable.LinearLayout_Layout);
-            weight = a.getFloat(R.styleable.LinearLayout_Layout_android_layout_weight, 0);
-            gravity = a.getInt(R.styleable.LinearLayout_Layout_android_layout_gravity, -1);
-            a.recycle();
-        }
-
-        public LayoutParams(int width, int height) {
-            super(width, height);
-            weight = 0;
-        }
-
-        public LayoutParams(int width, int height, float weight) {
-            super(width, height);
-            this.weight = weight;
-        }
-
-        public LayoutParams(MarginLayoutParams source) {
-            super(source);
-        }
-
-        public LayoutParams(ViewGroup.LayoutParams p) {
-            super(p);
-        }
-
-        @Override
-        public String debug(String output) {
-            return output + "LinearLayout.LayoutParams={width=" + width + ", height=" + height
-                    + " weight=" + weight + "}";
-        }
-    }
-
     public static final int HORIZONTAL = 0;
     private static final int INDEX_BOTTOM = 2;
     private static final int INDEX_CENTER_VERTICAL = 0;
@@ -435,7 +379,7 @@ public class LinearLayout extends android.widget.LinearLayout {
         return mDividerWidth;
     }
 
-    protected int getLayoutDirection() {
+    public int getLayoutDirection() {
         return LAYOUT_DIRECTION_LTR;
     }
 
