@@ -1,0 +1,3 @@
+[submodule "contrib/ActionBarSherlock"]
+	path = contrib/ActionBarSherlock
+	url = git@github.com:wtcdev/ActionBarSherlock.git
