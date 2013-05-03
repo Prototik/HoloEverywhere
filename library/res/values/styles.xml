@@ -665,6 +665,11 @@
         <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
         <item name="android:listSeparatorTextViewStyle">@style/Holo.TextView.ListSeparator</item>
         <item name="android:listViewStyle">@style/Holo.ListView</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>
+        <item name="android:panelColorBackground">#000000</item>
+        <item name="android:panelColorForeground">@color/primary_text_holo_dark</item>
+        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_dark</item>
+        <item name="android:panelTextAppearance">@style/Holo.TextAppearance</item>
         <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal</item>
         <item name="android:radioButtonStyle">@style/Holo.CompoundButton.RadioButton</item>
         <item name="android:ratingBarStyle">@style/Holo.RatingBar</item>
@@ -678,11 +683,6 @@
         <!--End of block BackportDark-->
         <!--Include block: BackportBarDark-->
         <!--Include block: BarDark-->
-        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>
-        <item name="android:panelColorBackground">#000000</item>
-        <item name="android:panelColorForeground">@color/primary_text_holo_dark</item>
-        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_dark</item>
-        <item name="android:panelTextAppearance">@style/Holo.TextAppearance</item>
         <!--End of block BarDark-->
         <!--End of block BackportBarDark-->
         <item name="holoTheme">dark</item>
@@ -826,6 +826,11 @@
         <item name="android:listSelector">@drawable/list_selector_holo_light</item>
         <item name="android:listSeparatorTextViewStyle">@style/Holo.TextView.ListSeparator.Light</item>
         <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_light</item>
+        <item name="android:panelColorBackground">#FFFFFF</item>
+        <item name="android:panelColorForeground">@color/primary_text_holo_light</item>
+        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_light</item>
+        <item name="android:panelTextAppearance">@style/Holo.TextAppearance.Light</item>
         <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal.Light</item>
         <item name="android:radioButtonStyle">@style/Holo.CompoundButton.RadioButton.Light</item>
         <item name="android:ratingBarStyle">@style/Holo.RatingBar.Light</item>
@@ -839,11 +844,6 @@
         <!--End of block BackportLight-->
         <!--Include block: BackportBarLight-->
         <!--Include block: BarLight-->
-        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_light</item>
-        <item name="android:panelColorBackground">#FFFFFF</item>
-        <item name="android:panelColorForeground">@color/primary_text_holo_light</item>
-        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_light</item>
-        <item name="android:panelTextAppearance">@style/Holo.TextAppearance.Light</item>
         <!--End of block BarLight-->
         <!--End of block BackportBarLight-->
         <item name="holoTheme">light</item>
@@ -964,6 +964,11 @@
         <item name="android:listSelector">@drawable/list_selector_holo_light</item>
         <item name="android:listSeparatorTextViewStyle">@style/Holo.TextView.ListSeparator.Light</item>
         <item name="android:listViewStyle">@style/Holo.ListView.Light</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_light</item>
+        <item name="android:panelColorBackground">#FFFFFF</item>
+        <item name="android:panelColorForeground">@color/primary_text_holo_light</item>
+        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_light</item>
+        <item name="android:panelTextAppearance">@style/Holo.TextAppearance.Light</item>
         <item name="android:progressBarStyleHorizontal">@style/Holo.ProgressBar.Horizontal.Light</item>
         <item name="android:radioButtonStyle">@style/Holo.CompoundButton.RadioButton.Light</item>
         <item name="android:ratingBarStyle">@style/Holo.RatingBar.Light</item>
@@ -977,11 +982,6 @@
         <!--End of block BackportLight-->
         <!--Include block: BackportBarDark-->
         <!--Include block: BarDark-->
-        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>
-        <item name="android:panelColorBackground">#000000</item>
-        <item name="android:panelColorForeground">@color/primary_text_holo_dark</item>
-        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_dark</item>
-        <item name="android:panelTextAppearance">@style/Holo.TextAppearance</item>
         <!--End of block BarDark-->
         <!--End of block BackportBarDark-->
         <item name="holoTheme">mixed</item>

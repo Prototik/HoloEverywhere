@@ -65,11 +65,6 @@
         <!--Include block: HoloBar-->
         <!--End of block HoloBar-->
         <!--Include block: BarDark-->
-        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>
-        <item name="android:panelColorBackground">#000000</item>
-        <item name="android:panelColorForeground">@color/primary_text_holo_dark</item>
-        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_dark</item>
-        <item name="android:panelTextAppearance">@style/Holo.TextAppearance</item>
         <!--End of block BarDark-->
         <!--End of block HoloBarDark-->
         <item name="holoTheme">dark</item>
@@ -140,11 +135,6 @@
         <!--Include block: HoloBar-->
         <!--End of block HoloBar-->
         <!--Include block: BarLight-->
-        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_light</item>
-        <item name="android:panelColorBackground">#FFFFFF</item>
-        <item name="android:panelColorForeground">@color/primary_text_holo_light</item>
-        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_light</item>
-        <item name="android:panelTextAppearance">@style/Holo.TextAppearance.Light</item>
         <!--End of block BarLight-->
         <!--End of block HoloBarLight-->
         <item name="holoTheme">light</item>
@@ -215,11 +205,6 @@
         <!--Include block: HoloBar-->
         <!--End of block HoloBar-->
         <!--Include block: BarDark-->
-        <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>
-        <item name="android:panelColorBackground">#000000</item>
-        <item name="android:panelColorForeground">@color/primary_text_holo_dark</item>
-        <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_dark</item>
-        <item name="android:panelTextAppearance">@style/Holo.TextAppearance</item>
         <!--End of block BarDark-->
         <!--End of block HoloBarDark-->
         <item name="holoTheme">mixed</item>

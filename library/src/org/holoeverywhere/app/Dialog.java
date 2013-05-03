@@ -52,9 +52,12 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
     }
 
     public Dialog(Context context, int theme) {
-        super(new ContextThemeWrapperPlus(context, checkTheme(context, theme)),
-                checkTheme(context, theme));
+        this(context, checkTheme(context, theme), -1);
         setCancelable(true);
+    }
+
+    private Dialog(Context context, int theme, int fallback) {
+        super(new ContextThemeWrapperPlus(context, theme), theme);
     }
 
     @Override

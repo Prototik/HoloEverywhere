@@ -5,14 +5,10 @@
             "textAppearanceSmallPopupMenu": "?android:textAppearanceSmallPopupMenu"
         },
         "HoloBar": {},
-        "HoloBarDark | HoloBar BarDark": {
-        },
-        "HoloBarLight | HoloBar BarLight": {
-        },
-        "HoloDark | Holo Dark": {
-        },
-        "HoloLight | Holo Light": {
-        }
+        "HoloBarDark | HoloBar BarDark": {},
+        "HoloBarLight | HoloBar BarLight": {},
+        "HoloDark | Holo Dark": {},
+        "HoloLight | Holo Light": {}
     },
     "data": {
         "Holo.Theme | HoloDark HoloBarDark < Theme.Sherlock": {

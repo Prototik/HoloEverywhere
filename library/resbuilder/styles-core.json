@@ -1,19 +1,7 @@
 {
     "blocks": {
-        "BarDark": {
-            "android:panelBackground": "@drawable/menu_hardkey_panel_holo_dark",
-            "android:panelColorBackground": "#000000",
-            "android:panelColorForeground": "@color/primary_text_holo_dark",
-            "android:panelFullBackground": "@drawable/menu_background_fill_parent_width_holo_dark",
-            "android:panelTextAppearance": "@style/Holo.TextAppearance"
-        },
-        "BarLight": {
-            "android:panelBackground": "@drawable/menu_hardkey_panel_holo_light",
-            "android:panelColorBackground": "#FFFFFF",
-            "android:panelColorForeground": "@color/primary_text_holo_light",
-            "android:panelFullBackground": "@drawable/menu_background_fill_parent_width_holo_light",
-            "android:panelTextAppearance": "@style/Holo.TextAppearance.Light"
-        },
+        "BarDark": {},
+        "BarLight": {},
         "Base": {
             "activatedBackgroundIndicator": "@drawable/activated_background_holo",
             "android:activatedBackgroundIndicator": "?activatedBackgroundIndicator",
