@@ -1,4 +1,5 @@
-![HoloEverywhere](http://holoeverywhere.org/github-res/logo.png "HoloEverywhere")
+![HoloEverywhere](http://holoeverywhere.org/github-res/logo.png "HoloEverywhere")  
+[![Build Status](https://travis-ci.org/Prototik/HoloEverywhere.png?branch=master)](https://travis-ci.org/Prototik/HoloEverywhere)
 
 ## What is it?
 Bringing Holo Theme from Android 4.1 to 2.1 and above.
