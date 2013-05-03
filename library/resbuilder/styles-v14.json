@@ -6,16 +6,12 @@
         },
         "HoloBar": {},
         "HoloBarDark | HoloBar BarDark": {
-            "android:panelColorForeground": "@color/primary_text_holo_dark"
         },
         "HoloBarLight | HoloBar BarLight": {
-            "android:panelColorForeground": "@color/primary_text_holo_light"
         },
         "HoloDark | Holo Dark": {
-            "android:panelColorForeground": "@color/primary_text_holo_dark"
         },
         "HoloLight | Holo Light": {
-            "android:panelColorForeground": "@color/primary_text_holo_light"
         }
     },
     "data": {
