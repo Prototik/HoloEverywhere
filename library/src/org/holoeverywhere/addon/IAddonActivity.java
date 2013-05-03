@@ -54,10 +54,6 @@ public abstract class IAddonActivity extends IAddonBase<Activity> {
 
     }
 
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        return false;
-    }
-
     public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
         return false;
     }

@@ -26,9 +26,7 @@ public class PopupMenu implements MenuBuilder.Callback, MenuPresenter.Callback {
     private Context mContext;
     private OnDismissListener mDismissListener;
     private MenuBuilder mMenu;
-
     private OnMenuItemClickListener mMenuItemClickListener;
-
     private PopupMenuHelper mPopup;
 
     public PopupMenu(Context context, View anchor) {
