@@ -550,8 +550,23 @@
         <item name="android:textAppearance">@style/Holo.TextAppearance.TextView.SpinnerItem.Light</item>
     </style>
     <style name="Holo.Theme" parent="Theme.Sherlock">
-        <!--Include block: HoloDark-->
-        <!--Include block: BaseDark-->
+        <!--Include block: BackportDark-->
+        <!--Include block: Backport-->
+        <item name="android:divider">?android:listDivider</item>
+        <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
+        <item name="android:gridViewStyle">@style/Holo.GridView</item>
+        <item name="android:itemTextAppearance">@style/Holo.TextAppearance.Widget.IconMenu.Item</item>
+        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
+        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
+        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarSize">10dp</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
+        <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
+        <!--End of block Backport-->
+        <!--Include block: Dark-->
         <!--Include block: Base-->
         <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
@@ -605,22 +620,7 @@
         <item name="switchStyle">@style/Holo.Switch</item>
         <item name="switchStyleOld">@style/Holo.Switch.Old</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
-        <!--End of block BaseDark-->
-        <!--Include block: Holo-->
-        <item name="android:divider">?android:listDivider</item>
-        <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
-        <item name="android:gridViewStyle">@style/Holo.GridView</item>
-        <item name="android:itemTextAppearance">@style/Holo.TextAppearance.Widget.IconMenu.Item</item>
-        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
-        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
-        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
-        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
-        <item name="android:scrollbarFadeDuration">250</item>
-        <item name="android:scrollbarSize">10dp</item>
-        <item name="android:scrollbarTrackHorizontal">@null</item>
-        <item name="android:scrollbarTrackVertical">@null</item>
-        <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
-        <!--End of block Holo-->
+        <!--End of block Dark-->
         <!--Include block: TextDark-->
         <!--Include block: Text-->
         <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
@@ -675,15 +675,16 @@
         <item name="android:seekBarStyle">@style/Holo.SeekBar</item>
         <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Large</item>
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Small</item>
-        <!--End of block HoloDark-->
-        <!--Include block: HoloBarDark-->
-        <!-- Block not found: BaseBarDark -->
+        <!--End of block BackportDark-->
+        <!--Include block: BackportBarDark-->
+        <!--Include block: BarDark-->
         <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>
         <item name="android:panelColorBackground">#000000</item>
         <item name="android:panelColorForeground">@color/primary_text_holo_dark</item>
         <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_dark</item>
         <item name="android:panelTextAppearance">@style/Holo.TextAppearance</item>
-        <!--End of block HoloBarDark-->
+        <!--End of block BarDark-->
+        <!--End of block BackportBarDark-->
         <item name="holoTheme">dark</item>
     </style>
     <style name="Holo.Theme.DialogWhenLarge" parent="Holo.Theme"/>
@@ -710,8 +711,23 @@
         <!--End of block Wallpaper-->
     </style>
     <style name="Holo.Theme.Light" parent="Theme.Sherlock.Light">
-        <!--Include block: HoloLight-->
-        <!--Include block: BaseLight-->
+        <!--Include block: BackportLight-->
+        <!--Include block: Backport-->
+        <item name="android:divider">?android:listDivider</item>
+        <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
+        <item name="android:gridViewStyle">@style/Holo.GridView</item>
+        <item name="android:itemTextAppearance">@style/Holo.TextAppearance.Widget.IconMenu.Item</item>
+        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
+        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
+        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarSize">10dp</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
+        <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
+        <!--End of block Backport-->
+        <!--Include block: Light-->
         <!--Include block: Base-->
         <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
@@ -765,22 +781,7 @@
         <item name="switchStyle">@style/Holo.Switch.Light</item>
         <item name="switchStyleOld">@style/Holo.Switch.Light.Old</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
-        <!--End of block BaseLight-->
-        <!--Include block: Holo-->
-        <item name="android:divider">?android:listDivider</item>
-        <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
-        <item name="android:gridViewStyle">@style/Holo.GridView</item>
-        <item name="android:itemTextAppearance">@style/Holo.TextAppearance.Widget.IconMenu.Item</item>
-        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
-        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
-        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
-        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
-        <item name="android:scrollbarFadeDuration">250</item>
-        <item name="android:scrollbarSize">10dp</item>
-        <item name="android:scrollbarTrackHorizontal">@null</item>
-        <item name="android:scrollbarTrackVertical">@null</item>
-        <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
-        <!--End of block Holo-->
+        <!--End of block Light-->
         <!--Include block: TextLight-->
         <!--Include block: Text-->
         <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
@@ -835,20 +836,36 @@
         <item name="android:seekBarStyle">@style/Holo.SeekBar.Light</item>
         <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
-        <!--End of block HoloLight-->
-        <!--Include block: HoloBarLight-->
-        <!-- Block not found: BaseBarLight -->
+        <!--End of block BackportLight-->
+        <!--Include block: BackportBarLight-->
+        <!--Include block: BarLight-->
         <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_light</item>
         <item name="android:panelColorBackground">#FFFFFF</item>
         <item name="android:panelColorForeground">@color/primary_text_holo_light</item>
         <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_light</item>
         <item name="android:panelTextAppearance">@style/Holo.TextAppearance.Light</item>
-        <!--End of block HoloBarLight-->
+        <!--End of block BarLight-->
+        <!--End of block BackportBarLight-->
         <item name="holoTheme">light</item>
     </style>
     <style name="Holo.Theme.Light.DarkActionBar" parent="Theme.Sherlock.Light.DarkActionBar">
-        <!--Include block: HoloLight-->
-        <!--Include block: BaseLight-->
+        <!--Include block: BackportLight-->
+        <!--Include block: Backport-->
+        <item name="android:divider">?android:listDivider</item>
+        <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
+        <item name="android:gridViewStyle">@style/Holo.GridView</item>
+        <item name="android:itemTextAppearance">@style/Holo.TextAppearance.Widget.IconMenu.Item</item>
+        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
+        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
+        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
+        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
+        <item name="android:scrollbarFadeDuration">250</item>
+        <item name="android:scrollbarSize">10dp</item>
+        <item name="android:scrollbarTrackHorizontal">@null</item>
+        <item name="android:scrollbarTrackVertical">@null</item>
+        <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
+        <!--End of block Backport-->
+        <!--Include block: Light-->
         <!--Include block: Base-->
         <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
         <item name="android:activatedBackgroundIndicator">?activatedBackgroundIndicator</item>
@@ -902,22 +919,7 @@
         <item name="switchStyle">@style/Holo.Switch.Light</item>
         <item name="switchStyleOld">@style/Holo.Switch.Light.Old</item>
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
-        <!--End of block BaseLight-->
-        <!--Include block: Holo-->
-        <item name="android:divider">?android:listDivider</item>
-        <item name="android:dropDownItemStyle">@style/Holo.DropDownItem</item>
-        <item name="android:gridViewStyle">@style/Holo.GridView</item>
-        <item name="android:itemTextAppearance">@style/Holo.TextAppearance.Widget.IconMenu.Item</item>
-        <item name="android:progressBarStyle">@style/Holo.ProgressBar</item>
-        <item name="android:progressBarStyleLarge">@style/Holo.ProgressBar.Large</item>
-        <item name="android:progressBarStyleSmall">@style/Holo.ProgressBar.Small</item>
-        <item name="android:scrollbarDefaultDelayBeforeFade">300</item>
-        <item name="android:scrollbarFadeDuration">250</item>
-        <item name="android:scrollbarSize">10dp</item>
-        <item name="android:scrollbarTrackHorizontal">@null</item>
-        <item name="android:scrollbarTrackVertical">@null</item>
-        <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
-        <!--End of block Holo-->
+        <!--End of block Light-->
         <!--Include block: TextLight-->
         <!--Include block: Text-->
         <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
@@ -972,15 +974,16 @@
         <item name="android:seekBarStyle">@style/Holo.SeekBar.Light</item>
         <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
-        <!--End of block HoloLight-->
-        <!--Include block: HoloBarDark-->
-        <!-- Block not found: BaseBarDark -->
+        <!--End of block BackportLight-->
+        <!--Include block: BackportBarDark-->
+        <!--Include block: BarDark-->
         <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>
         <item name="android:panelColorBackground">#000000</item>
         <item name="android:panelColorForeground">@color/primary_text_holo_dark</item>
         <item name="android:panelFullBackground">@drawable/menu_background_fill_parent_width_holo_dark</item>
         <item name="android:panelTextAppearance">@style/Holo.TextAppearance</item>
-        <!--End of block HoloBarDark-->
+        <!--End of block BarDark-->
+        <!--End of block BackportBarDark-->
         <item name="holoTheme">mixed</item>
     </style>
     <style name="Holo.Theme.Light.DarkActionBar.Fullscreen">
