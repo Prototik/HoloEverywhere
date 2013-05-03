@@ -1,16 +1,32 @@
 language: java
+jdk: openjdk7
 
 branches:
   only:
     - master
+
+
+env:
+  global:
+    # Your Sonatype login
+    - SONATYPE_USERNAME=prototik
+    # Your Sonatype password, encrypted by 'travis encrypt -r GitHubLogin/Repo SONATYPE_PASSWORD=pass'
+    - secure: "jSxn2aM6h3pLVR+NurKRiTDwtbfkzTcaHVQ3VD9Yw8f1X73v5NiocuoMdYUg\nMfU4YiEeYmyDlRjzsn0D0s6uBLB7COgBH8G8P0RXeRG4DUDWJQr/mn6mBwvi\n1hghJQBXMuV3g2e41/AYnBA909xVTe1UJ1OWKPvpQk5Q4vBUxHI="
 
 notifications:
   email:
     - prototypegamez@gmail.com
 
 before_install:
+  - sudo apt-get update -qq
+  - if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch; fi
   - wget http://dl.google.com/android/android-sdk_r21-linux.tgz
   - tar -zxf android-sdk_r21-linux.tgz
   - export ANDROID_HOME=`pwd`/android-sdk-linux
-  - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+  - export PATH=${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${PATH}
   - android update sdk --filter platform-tools,android-16 --no-ui --force
+  - export NEW_MAVEN_CONFIG=`pwd`/.maven.xml
+  - python2 .travisConfigCreator.py
+
+install: mvn clean install -B -DskipTests=true --settings ${NEW_MAVEN_CONFIG}
+script: mvn clean deploy -B -DskipTests=true --settings ${NEW_MAVEN_CONFIG} -DrepositoryId=holoeverywhere-repo-snapshots
