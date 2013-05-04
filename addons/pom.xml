@@ -17,6 +17,5 @@
 	<modules>
 		<module>slider</module>
 		<module>preferences</module>
-		<module>roboguice</module>
 	</modules>
 </project>
