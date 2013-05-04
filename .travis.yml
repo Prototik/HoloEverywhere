@@ -29,4 +29,4 @@ before_install:
   - python2 .travisConfigCreator.py
 
 install: mvn clean install -B -DskipTests=true --settings ${NEW_MAVEN_CONFIG}
-script: mvn clean deploy -B -DskipTests=true --settings ${NEW_MAVEN_CONFIG} -DrepositoryId=holoeverywhere-repo-snapshots
+script: if [[ `git log -1 --pretty=%B ${TRAVIS_COMMIT}` == *"[deploy snapshot]"* ]]; then mvn clean deploy -B -DskipTests=true --settings ${NEW_MAVEN_CONFIG} -DrepositoryId=holoeverywhere-repo-snapshots; fi
