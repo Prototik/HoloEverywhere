@@ -8,16 +8,16 @@ Bringing Holo Theme from Android 4.1 to 2.1 and above.
 [![Donate](http://holoeverywhere.org/github-res/donate_button.png)][Donate]
 
 ## Screenshots
-![Screenshot 1](http://holoeverywhere.org/img/screenshots/1.png "Screenshot 1")
-![Screenshot 2](http://holoeverywhere.org/img/screenshots/2.png "Screenshot 2")
-![Screenshot 3](http://holoeverywhere.org/img/screenshots/3.png "Screenshot 3")
-![Screenshot 4](http://holoeverywhere.org/img/screenshots/4.png "Screenshot 4")
-![Screenshot 5](http://holoeverywhere.org/img/screenshots/5.png "Screenshot 5")
-![Screenshot 6](http://holoeverywhere.org/img/screenshots/6.png "Screenshot 6")
-![Screenshot 7](http://holoeverywhere.org/img/screenshots/7.png "Screenshot 7")
-![Screenshot 8](http://holoeverywhere.org/img/screenshots/8.png "Screenshot 8")
-![Screenshot 9](http://holoeverywhere.org/img/screenshots/9.png "Screenshot 9")
-![Screenshot 10](http://holoeverywhere.org/img/screenshots/10.png "Screenshot 10")
+![Screenshot 1](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/img/screenshots/1.png "Screenshot 1")
+![Screenshot 2](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/img/screenshots/2.png "Screenshot 2")
+![Screenshot 3](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/img/screenshots/3.png "Screenshot 3")
+![Screenshot 4](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/img/screenshots/4.png "Screenshot 4")
+![Screenshot 5](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/img/screenshots/5.png "Screenshot 5")
+![Screenshot 6](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/img/screenshots/6.png "Screenshot 6")
+![Screenshot 7](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/img/screenshots/7.png "Screenshot 7")
+![Screenshot 8](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/img/screenshots/8.png "Screenshot 8")
+![Screenshot 9](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/img/screenshots/9.png "Screenshot 9")
+![Screenshot 10](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/img/screenshots/10.png "Screenshot 10")
 
 ## Featured implementations
  * [Project Euler](https://play.google.com/store/apps/details?id=ie.cathalcoffey.android.projecteuler)
