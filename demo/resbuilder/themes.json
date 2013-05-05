@@ -32,5 +32,11 @@
 			"sliderStyle": "@style/Holo.Demo.Slider.Light"
 		}
 	},
+    "include": [
+        {
+            "name": "themes-core.json:styles", 
+            "type": "only blocks"
+        }
+    ],
 	"output": "values/themes.xml"
 }

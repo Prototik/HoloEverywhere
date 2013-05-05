@@ -13,6 +13,7 @@
             "buttonBarButtonStyle": "?borderlessButtonStyle",
             "buttonBarStyle": "@style/Holo.ButtonBar",
             "datePickerStyle": "@style/Holo.DatePicker",
+            "dialogItemTextAppearance": "?textAppearanceListItemSmall",
             "dividerHorizontal": "?android:listDivider",
             "dividerVertical": "?android:listDivider",
             "dropdownListPreferredItemHeight": "?listPreferredItemHeightSmall",
@@ -29,7 +30,6 @@
             "panelMenuListWidth": "250dp",
             "textAppearanceListItem": "?android:textAppearanceLarge",
             "textAppearanceListItemSmall": "?android:textAppearanceMedium",
-            "dialogItemTextAppearance": "?textAppearanceListItemSmall",
             "timePickerStyle": "@style/Holo.TimePicker"
         },
         "Dark | Base": {

@@ -23,7 +23,11 @@
         <!-- Block not found: DemoThemeBarDark -->
     </style>
     <style name="Holo.Demo.Theme.Fullscreen">
-        <!-- Block not found: Fullscreen -->
+        <!--Include block: Fullscreen-->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowContentOverlay">@null</item>
+        <!--End of block Fullscreen-->
     </style>
     <style name="Holo.Demo.Theme.Light" parent="Holo.Theme.Light">
         <!--Include block: DemoThemeLight-->
@@ -48,9 +52,17 @@
         <!-- Block not found: DemoThemeBarDark -->
     </style>
     <style name="Holo.Demo.Theme.Light.DarkActionBar.Fullscreen">
-        <!-- Block not found: Fullscreen -->
+        <!--Include block: Fullscreen-->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowContentOverlay">@null</item>
+        <!--End of block Fullscreen-->
     </style>
     <style name="Holo.Demo.Theme.Light.Fullscreen">
-        <!-- Block not found: Fullscreen -->
+        <!--Include block: Fullscreen-->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowContentOverlay">@null</item>
+        <!--End of block Fullscreen-->
     </style>
 </resources>
