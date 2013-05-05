@@ -18,6 +18,8 @@
     <attr name="datePickerStyle" format="reference"/>
     <attr name="dateTextAppearance" format="reference"/>
     <attr name="detailsElementBackground" format="reference"/>
+    <attr name="dialogItemBackground" format="reference|color"/>
+    <attr name="dialogItemTextAppearance" format="reference"/>
     <attr name="dialogTheme" format="reference"/>
     <attr name="disableChildrenWhenDisabled" format="boolean"/>
     <attr name="dividerHorizontal" format="reference"/>
@@ -257,12 +259,12 @@
     <declare-styleable name="MenuView">
         <attr name="android:headerBackground"/>
         <attr name="android:horizontalDivider"/>
-        <attr name="android:itemBackground"/>
         <attr name="android:itemIconDisabledAlpha"/>
-        <attr name="android:itemTextAppearance"/>
         <attr name="android:preserveIconSpacing"/>
         <attr name="android:verticalDivider"/>
         <attr name="android:windowAnimationStyle"/>
+        <attr name="dialogItemBackground"/>
+        <attr name="dialogItemTextAppearance"/>
     </declare-styleable>
     <declare-styleable name="NumberPicker">
         <attr name="android:fadingEdgeLength"/>

@@ -36,23 +36,28 @@ public class MenusFragments extends OtherFragment {
         private final OnMenuItemClickListener mOnMenuItemClickListener = new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
+                boolean result = false;
                 final int id = menuItem.getItemId();
                 for (int i : RADIOS) {
                     if (i == id) {
                         mRadioState = id;
-                        return true;
+                        result = true;
                     }
                 }
                 for (int i : CHECKBOXS) {
                     if (i == id) {
                         mCheckboxsState.put(id, !mCheckboxsState.get(id, false));
-                        return true;
+                        result = true;
                     }
                 }
-                return false;
+                if (result && mFragment != null) {
+                    mFragment.getSupportActivity().supportInvalidateOptionsMenu();
+                }
+                return result;
             }
         };
         private int mRadioState = RADIOS[0];
+        private MenusFragments mFragment;
 
         public MenuHelper() {
         }
@@ -84,6 +89,10 @@ public class MenusFragments extends OtherFragment {
             dest.writeSparseBooleanArray(mCheckboxsState);
             dest.writeInt(mRadioState);
         }
+
+        public void setFragment(MenusFragments fragment) {
+            mFragment = fragment;
+        }
     }
 
     private static final int[] CHECKBOXS = {
@@ -113,11 +122,19 @@ public class MenusFragments extends OtherFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState == null) {
-            mDemoMenuHelper = new MenuHelper();
-        } else {
+        if (savedInstanceState != null) {
             mDemoMenuHelper = savedInstanceState.getParcelable(KEY_MENU_STATE);
         }
+        if (mDemoMenuHelper == null) {
+            mDemoMenuHelper = new MenuHelper();
+        }
+        mDemoMenuHelper.setFragment(this);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        mDemoMenuHelper.makeMenu(menu, inflater);
     }
 
     @Override

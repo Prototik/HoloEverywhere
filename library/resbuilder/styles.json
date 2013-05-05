@@ -363,74 +363,6 @@
         "Holo.Switch.TextAppearance.Light < Holo.TextAppearance.Small.Light": {
             "android:textSize": "12sp"
         },
-        "Holo.TextAppearance | ColorsDark": {
-            "android:textColorLink": "@color/holo_blue_light",
-            "android:textSize": "16sp",
-            "android:textStyle": "normal"
-        },
-        "Holo.TextAppearance.CalendarView.WeekDayView < Holo.TextAppearance": {
-            "android:textColor": "#505050",
-            "android:textStyle": "bold"
-        },
-        "Holo.TextAppearance.DropDownItem": {
-            "android:textColor": "?android:textColorPrimaryDisableOnly"
-        },
-        "Holo.TextAppearance.Inverse | ColorsLight": {},
-        "Holo.TextAppearance.Inverse.Light | ColorsDark": {},
-        "Holo.TextAppearance.Large": {
-            "android:textSize": "22sp"
-        },
-        "Holo.TextAppearance.Large.Inverse | ColorsLight": {},
-        "Holo.TextAppearance.Large.Inverse.Light | ColorsDark": {},
-        "Holo.TextAppearance.Large.Light | ColorsLight": {},
-        "Holo.TextAppearance.Light | ColorsLight": {},
-        "Holo.TextAppearance.Medium": {
-            "android:textSize": "18sp"
-        },
-        "Holo.TextAppearance.Medium.Inverse | ColorsLight": {},
-        "Holo.TextAppearance.Medium.Inverse.Light | ColorsDark": {},
-        "Holo.TextAppearance.Medium.Light | ColorsLight": {},
-        "Holo.TextAppearance.PopupMenu | ColorsDark": {},
-        "Holo.TextAppearance.PopupMenu.Large": {
-            "android:textSize": "18sp"
-        },
-        "Holo.TextAppearance.PopupMenu.Light | ColorsLight": {},
-        "Holo.TextAppearance.PopupMenu.Light.Large": {
-            "android:textSize": "18sp"
-        },
-        "Holo.TextAppearance.PopupMenu.Light.Small": {
-            "android:textSize": "14sp"
-        },
-        "Holo.TextAppearance.PopupMenu.Small": {
-            "android:textSize": "14sp"
-        },
-        "Holo.TextAppearance.Small": {
-            "android:textColor": "@color/secondary_text_holo_dark",
-            "android:textColorHighlight": "@color/highlighted_text_holo_dark",
-            "android:textColorHint": "@color/hint_foreground_holo_dark",
-            "android:textSize": "14sp"
-        },
-        "Holo.TextAppearance.Small.Inverse": {
-            "android:textColor": "@color/secondary_text_holo_light",
-            "android:textColorHighlight": "@color/highlighted_text_holo_light",
-            "android:textColorHint": "@color/hint_foreground_holo_light"
-        },
-        "Holo.TextAppearance.Small.Inverse.Light": {
-            "android:textColor": "@color/secondary_text_holo_dark",
-            "android:textColorHighlight": "@color/highlighted_text_holo_dark",
-            "android:textColorHint": "@color/hint_foreground_holo_dark"
-        },
-        "Holo.TextAppearance.Small.Light": {
-            "android:textColor": "@color/secondary_text_holo_light",
-            "android:textColorHighlight": "@color/highlighted_text_holo_light",
-            "android:textColorHint": "@color/hint_foreground_holo_light"
-        },
-        "Holo.TextAppearance.TextView": {},
-        "Holo.TextAppearance.TextView.SpinnerItem | ColorsDark": {},
-        "Holo.TextAppearance.TextView.SpinnerItem.Light | ColorsLight": {},
-        "Holo.TextAppearance.Widget.IconMenu.Item < @android:style/TextAppearance.Widget.IconMenu.Item": {
-            "android:textColor": "?android:panelColorForeground"
-        },
         "Holo.TextView": {
             "android:textAppearance": "?android:attr/textAppearanceSmall"
         },
@@ -470,5 +402,6 @@
         "Holo.TimePicker": {
             "layout": "@layout/time_picker_holo"
         }
-    }
+    },
+    "output": "values/styles.xml"
 }

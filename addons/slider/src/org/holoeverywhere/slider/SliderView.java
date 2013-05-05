@@ -227,10 +227,8 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     private final Rect mTempRect = new Rect();
     private TouchMode mTouchMode = TouchMode.LeftRight;
     private int mTouchModeLeftMargin;
-
     private int mTouchModeRightMargin;
     private final int mTouchSlop;
-
     private final ViewConfiguration mViewConfiguration;
 
     public SliderView(Context context) {

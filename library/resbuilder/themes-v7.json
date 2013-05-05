@@ -5,6 +5,7 @@
             "android:dropDownItemStyle": "@style/Holo.DropDownItem",
             "android:gridViewStyle": "@style/Holo.GridView",
             "android:itemTextAppearance": "@style/Holo.TextAppearance.Widget.IconMenu.Item",
+            "android:itemBackground": "?selectableItemBackground",
             "android:progressBarStyle": "@style/Holo.ProgressBar",
             "android:progressBarStyleLarge": "@style/Holo.ProgressBar.Large",
             "android:progressBarStyleSmall": "@style/Holo.ProgressBar.Small",
@@ -15,8 +16,20 @@
             "android:scrollbarTrackVertical": "@null",
             "android:spinnerItemStyle": "@style/Holo.TextView.SpinnerItem"
         },
-        "BackportBarDark | BarDark": {},
-        "BackportBarLight | BarLight": {},
+        "BackportBarDark | BarDark": {
+            "android:panelBackground": "@drawable/menu_hardkey_panel_holo_dark",
+            "android:panelColorBackground": "#000000",
+            "android:panelColorForeground": "@color/primary_text_holo_dark",
+            "android:panelFullBackground": "@drawable/menu_background_fill_parent_width_holo_dark",
+            "android:panelTextAppearance": "@style/Holo.TextAppearance"
+        },
+        "BackportBarLight | BarLight": {
+            "android:panelBackground": "@drawable/menu_hardkey_panel_holo_light",
+            "android:panelColorBackground": "#FFFFFF",
+            "android:panelColorForeground": "@color/primary_text_holo_light",
+            "android:panelFullBackground": "@drawable/menu_background_fill_parent_width_holo_light",
+            "android:panelTextAppearance": "@style/Holo.TextAppearance.Light"
+        },
         "BackportDark | Backport Dark TextDark": {
             "android:buttonStyle": "@style/Holo.Button",
             "android:buttonStyleToggle": "@style/Holo.Button.Toggle",
@@ -31,11 +44,6 @@
             "android:listSelector": "@drawable/list_selector_holo_dark",
             "android:listSeparatorTextViewStyle": "@style/Holo.TextView.ListSeparator",
             "android:listViewStyle": "@style/Holo.ListView",
-            "android:panelBackground": "@drawable/menu_hardkey_panel_holo_dark",
-            "android:panelColorBackground": "#000000",
-            "android:panelColorForeground": "@color/primary_text_holo_dark",
-            "android:panelFullBackground": "@drawable/menu_background_fill_parent_width_holo_dark",
-            "android:panelTextAppearance": "@style/Holo.TextAppearance",
             "android:progressBarStyleHorizontal": "@style/Holo.ProgressBar.Horizontal",
             "android:radioButtonStyle": "@style/Holo.CompoundButton.RadioButton",
             "android:ratingBarStyle": "@style/Holo.RatingBar",
@@ -61,11 +69,6 @@
             "android:listSelector": "@drawable/list_selector_holo_light",
             "android:listSeparatorTextViewStyle": "@style/Holo.TextView.ListSeparator.Light",
             "android:listViewStyle": "@style/Holo.ListView.Light",
-            "android:panelBackground": "@drawable/menu_hardkey_panel_holo_light",
-            "android:panelColorBackground": "#FFFFFF",
-            "android:panelColorForeground": "@color/primary_text_holo_light",
-            "android:panelFullBackground": "@drawable/menu_background_fill_parent_width_holo_light",
-            "android:panelTextAppearance": "@style/Holo.TextAppearance.Light",
             "android:progressBarStyleHorizontal": "@style/Holo.ProgressBar.Horizontal.Light",
             "android:radioButtonStyle": "@style/Holo.CompoundButton.RadioButton.Light",
             "android:ratingBarStyle": "@style/Holo.RatingBar.Light",
@@ -115,7 +118,7 @@
         "Holo.Theme.Wallpaper | Wallpaper": {}
     },
     "include": [
-        "styles-core.json:styles"
+        "themes-core.json:styles"
     ],
-    "output": "values/styles.xml"
+    "output": "values/themes.xml"
 }

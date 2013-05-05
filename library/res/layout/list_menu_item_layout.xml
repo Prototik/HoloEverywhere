@@ -20,7 +20,7 @@
 			android:ellipsize="marquee"
 			android:fadingEdge="horizontal"
 			android:singleLine="true"
-			android:textAppearance="?textAppearanceListItemSmall" />
+			android:textAppearance="?dialogItemTextAppearance" />
 		<TextView
 			android:id="@+id/shortcut"
 			android:layout_width="wrap_content"

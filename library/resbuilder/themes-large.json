@@ -3,5 +3,5 @@
         "Holo.Theme.DialogWhenLarge < Holo.Theme.Dialog.FixedSize": {},
         "Holo.Theme.Light.DialogWhenLarge < Holo.Theme.Dialog.Light.FixedSize": {}
     },
-    "output": "values-large/styles.xml"
+    "output": "values-large/themes.xml"
 }

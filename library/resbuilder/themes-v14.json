@@ -5,8 +5,14 @@
             "textAppearanceSmallPopupMenu": "?android:textAppearanceSmallPopupMenu"
         },
         "HoloBar": {},
-        "HoloBarDark | HoloBar BarDark": {},
-        "HoloBarLight | HoloBar BarLight": {},
+        "HoloBarDark | HoloBar BarDark": {
+            "android:textAppearanceLargePopupMenu": "@style/Holo.TextAppearance",
+            "android:textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.Small"
+        },
+        "HoloBarLight | HoloBar BarLight": {
+            "android:textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.Light",
+            "android:textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.Small.Light"
+        },
         "HoloDark | Holo Dark": {},
         "HoloLight | Holo Light": {}
     },
@@ -22,10 +28,7 @@
         }
     },
     "include": [
-        {
-            "name": "styles-core.json:styles",
-            "type": "only blocks"
-        }
+        "themes-core.json:styles"
     ],
-    "output": "values-v14/styles.xml"
+    "output": "values-v14/themes.xml"
 }

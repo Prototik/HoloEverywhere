@@ -154,11 +154,11 @@
             "dividerPadding$dimension"
         ],
         "MenuView": [
-            "android:itemTextAppearance",
+            "dialogItemTextAppearance$reference",
             "android:horizontalDivider",
             "android:verticalDivider",
             "android:headerBackground",
-            "android:itemBackground",
+            "dialogItemBackground$reference|color",
             "android:windowAnimationStyle",
             "android:itemIconDisabledAlpha",
             "android:preserveIconSpacing"

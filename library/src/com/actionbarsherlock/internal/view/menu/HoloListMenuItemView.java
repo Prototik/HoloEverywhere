@@ -41,10 +41,9 @@ public class HoloListMenuItemView extends LinearLayout implements
         super(context, attrs);
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.MenuView, defStyle, 0);
-        mBackground = a
-                .getDrawable(R.styleable.MenuView_android_itemBackground);
+        mBackground = a.getDrawable(R.styleable.MenuView_dialogItemBackground);
         mTextAppearance = a.getResourceId(
-                R.styleable.MenuView_android_itemTextAppearance, -1);
+                R.styleable.MenuView_dialogItemTextAppearance, -1);
         mPreserveIconSpacing = a.getBoolean(
                 R.styleable.MenuView_android_preserveIconSpacing, false);
         mTextAppearanceContext = context;

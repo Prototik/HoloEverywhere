@@ -8,7 +8,6 @@
             "android:dialogTheme": "?dialogTheme",
             "android:dividerHorizontal": "?dividerHorizontal",
             "android:dividerVertical": "?dividerVertical",
-            "android:itemBackground": "?selectableItemBackground",
             "android:windowMinWidthMajor": "?windowMinWidthMajor",
             "android:windowMinWidthMinor": "?windowMinWidthMinor",
             "buttonBarButtonStyle": "?borderlessButtonStyle",
@@ -29,7 +28,8 @@
             "numberPickerStyle": "@style/Holo.NumberPicker",
             "panelMenuListWidth": "250dp",
             "textAppearanceListItem": "?android:textAppearanceLarge",
-            "textAppearanceListItemSmall": "?android:attr/textAppearanceMedium",
+            "textAppearanceListItemSmall": "?android:textAppearanceMedium",
+            "dialogItemTextAppearance": "?textAppearanceListItemSmall",
             "timePickerStyle": "@style/Holo.TimePicker"
         },
         "Dark | Base": {
@@ -98,9 +98,5 @@
             "android:windowBackground": "@android:color/transparent",
             "android:windowShowWallpaper": true
         }
-    },
-    "include": [
-        "widgets.json:styles",
-        "text.json:styles"
-    ]
+    }
 }
