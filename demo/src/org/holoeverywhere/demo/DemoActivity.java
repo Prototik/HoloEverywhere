@@ -6,6 +6,7 @@ import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Activity.Addons;
 import org.holoeverywhere.app.Fragment;
+import org.holoeverywhere.demo.fragments.DemoTabsFragment;
 import org.holoeverywhere.demo.fragments.MenuFragment;
 import org.holoeverywhere.demo.fragments.MenuFragment.OnMenuClickListener;
 
@@ -116,6 +117,6 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
     }
 
     public void startDemoTabsActivity() {
-        startActivity(new Intent(this, DemoTabsActivity.class));
+        startActivity(new Intent(this, DemoTabsFragment.class));
     }
 }

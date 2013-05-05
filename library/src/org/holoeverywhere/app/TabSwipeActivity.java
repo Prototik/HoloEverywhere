@@ -1,169 +1,110 @@
 
 package org.holoeverywhere.app;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.holoeverywhere.ITabSwipe;
 import org.holoeverywhere.R;
+import org.holoeverywhere.widget.FrameLayout;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
 
 /**
  * This activity class implement tabs + swipe navigation pattern<br />
  * <br />
  * Part of HoloEverywhere
  */
-public abstract class TabSwipeActivity extends Activity {
-    public static class TabInfo {
-        public Bundle fragmentArguments;
-        public Class<? extends Fragment> fragmentClass;
-        public CharSequence title;
-
-        protected Tab makeActionBarTab(TabSwipeActivity tabSwipeActivity) {
-            Tab tab = tabSwipeActivity.getSupportActionBar().newTab();
-            tab.setText(title);
-            tab.setTabListener(tabSwipeActivity.mAdapter);
-            return tab;
-        }
-    }
-
-    private final class TabSwipeAdapter extends FragmentStatePagerAdapter implements
-            OnPageChangeListener, TabListener {
-        public TabSwipeAdapter() {
-            super(getSupportFragmentManager());
-        }
-
-        @Override
-        public int getCount() {
-            return mTabs.size();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            final TabInfo info = mTabs.get(position);
-            return Fragment.instantiate(info.fragmentClass, info.fragmentArguments);
-        }
-
-        @Override
-        public void onPageScrolled(int position, float percent, int pixels) {
-            // Do nothing
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int scrollState) {
-            // Do nothing
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            dispatchTabSelected(position);
-        }
-
-        @Override
-        public void onTabReselected(Tab tab, FragmentTransaction ft) {
-            // Do nothing
-        }
-
-        @Override
-        public void onTabSelected(Tab tab, FragmentTransaction ft) {
-            dispatchTabSelected(tab.getPosition());
-        }
-
-        @Override
-        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-            // Do nothing
-        }
-    }
-
-    private TabSwipeAdapter mAdapter;
+public abstract class TabSwipeActivity extends Activity implements
+        ITabSwipe<TabSwipeFragment.TabInfo> {
     private int mCustomLayout = -1;
-    private boolean mSmoothScroll = true;
-    private List<TabInfo> mTabs = new ArrayList<TabInfo>();
-    private ViewPager mViewPager;
+    private InnerFragment mFragment;
 
-    public TabInfo addTab(CharSequence title, Class<? extends Fragment> fragmentClass) {
-        return addTab(title, fragmentClass, null);
+    @Override
+    public TabSwipeFragment.TabInfo addTab(CharSequence title,
+            Class<? extends Fragment> fragmentClass) {
+        return mFragment.addTab(title, fragmentClass);
     }
 
-    public TabInfo addTab(CharSequence title, Class<? extends Fragment> fragmentClass,
-            Bundle fragmentArguments) {
-        TabInfo info = new TabInfo();
-        info.title = title;
-        info.fragmentClass = fragmentClass;
-        info.fragmentArguments = fragmentArguments;
-        return addTab(info);
+    @Override
+    public TabSwipeFragment.TabInfo addTab(CharSequence title,
+            Class<? extends Fragment> fragmentClass, Bundle fragmentArguments) {
+        return mFragment.addTab(title, fragmentClass, fragmentArguments);
     }
 
-    public TabInfo addTab(int title, Class<? extends Fragment> fragmentClass) {
-        return addTab(getText(title), fragmentClass, null);
+    @Override
+    public TabSwipeFragment.TabInfo addTab(int title,
+            Class<? extends Fragment> fragmentClass) {
+        return mFragment.addTab(title, fragmentClass);
     }
 
-    public TabInfo addTab(int title, Class<? extends Fragment> fragmentClass,
-            Bundle fragmentArguments) {
-        return addTab(getText(title), fragmentClass, fragmentArguments);
+    @Override
+    public TabSwipeFragment.TabInfo addTab(int title,
+            Class<? extends Fragment> fragmentClass, Bundle fragmentArguments) {
+        return mFragment.addTab(title, fragmentClass, fragmentArguments);
     }
 
-    public TabInfo addTab(TabInfo tabInfo) {
-        mTabs.add(tabInfo);
-        getSupportActionBar().addTab(tabInfo.makeActionBarTab(this));
-        notifyChanged();
-        return tabInfo;
+    @Override
+    public TabSwipeFragment.TabInfo addTab(
+            TabSwipeFragment.TabInfo tabInfo) {
+        return mFragment.addTab(tabInfo);
     }
 
-    public TabInfo addTab(TabInfo tabInfo, int position) {
-        mTabs.add(position, tabInfo);
-        getSupportActionBar().addTab(tabInfo.makeActionBarTab(this), position);
-        notifyChanged();
-        return tabInfo;
+    @Override
+    public TabSwipeFragment.TabInfo addTab(
+            TabSwipeFragment.TabInfo tabInfo, int position) {
+        return mFragment.addTab(tabInfo, position);
     }
 
-    private void dispatchTabSelected(int position) {
-        boolean notify = false;
-        if (mViewPager.getCurrentItem() != position) {
-            mViewPager.setCurrentItem(position, mSmoothScroll);
-            notify = true;
-        }
-        if (getSupportActionBar().getSelectedNavigationIndex() != position) {
-            getSupportActionBar().selectTab(getSupportActionBar().getTabAt(position));
-            notify = true;
-        }
-        if (notify) {
-            onTabSelected(position);
-        }
+    @Override
+    public OnTabSelectedListener getOnTabSelectedListener() {
+        return mFragment.getOnTabSelectedListener();
     }
 
+    @Override
     public boolean isSmoothScroll() {
-        return mSmoothScroll;
+        return mFragment.isSmoothScroll();
     }
 
-    private void notifyChanged() {
-        if (mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
+    public static class InnerFragment extends TabSwipeFragment {
+        private boolean mTabsWasHandled = false;
+        private TabSwipeActivity mActivity;
+
+        @Override
+        protected void onHandleTabs() {
+            mTabsWasHandled = true;
+            if (mActivity != null) {
+                mActivity.onHandleTabs();
+            }
+        }
+
+        public void setActivity(TabSwipeActivity activity) {
+            if (activity == null) {
+                return;
+            }
+            mActivity = activity;
+            if (mTabsWasHandled) {
+                mActivity.onHandleTabs();
+            }
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(mCustomLayout > 0 ? mCustomLayout : R.layout.tab_swipe);
-        mViewPager = (ViewPager) findViewById(R.id.tabSwipePager);
-        if (mViewPager == null) {
-            throw new IllegalStateException(
-                    "Add ViewPager to your custom layout with id @id/tabSwipePager");
+        mFragment = (InnerFragment) getSupportFragmentManager().findFragmentById(R.id.contentPanel);
+        if (mFragment == null) {
+            mFragment = new InnerFragment();
         }
-        mAdapter = new TabSwipeAdapter();
-        onHandleTabs();
-        mViewPager.setAdapter(mAdapter);
-        mViewPager.setOnPageChangeListener(mAdapter);
-        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        mFragment.setActivity(this);
+        if (mCustomLayout > 0) {
+            mFragment.setCustomLayout(mCustomLayout);
+        }
+        if (mFragment.isDetached()) {
+            FrameLayout layout = new FrameLayout(this);
+            layout.setId(R.id.contentPanel);
+            setContentView(layout);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.contentPanel, mFragment).commit();
+            getSupportFragmentManager().executePendingTransactions();
+        }
     }
 
     /**
@@ -171,39 +112,34 @@ public abstract class TabSwipeActivity extends Activity {
      */
     protected abstract void onHandleTabs();
 
-    protected void onTabSelected(int position) {
-
+    @Override
+    public TabSwipeFragment.TabInfo removeTab(int position) {
+        return mFragment.removeTab(position);
     }
 
-    public TabInfo removeTab(int position) {
-        TabInfo tabInfo = mTabs.remove(position);
-        getSupportActionBar().removeTabAt(position);
-        notifyChanged();
-        return tabInfo;
+    @Override
+    public TabSwipeFragment.TabInfo removeTab(
+            TabSwipeFragment.TabInfo tabInfo) {
+        return mFragment.removeTab(tabInfo);
     }
 
-    public TabInfo removeTab(TabInfo tabInfo) {
-        for (int i = 0; i < mTabs.size(); i++) {
-            if (mTabs.get(i) == tabInfo) {
-                return removeTab(i);
-            }
-        }
-        return tabInfo;
+    @Override
+    public void setCurrentTab(int position) {
+        mFragment.setCurrentTab(position);
     }
 
-    /**
-     * If you want custom layout for this activity - call this method before
-     * super.onCreate<br />
-     * Your layout should be contains ViewPager with id @id/tabSwipePager
-     */
+    @Override
     public void setCustomLayout(int customLayout) {
         mCustomLayout = customLayout;
     }
 
-    /**
-     * Smooth scroll of ViewPager when user click on tab
-     */
+    @Override
+    public void setOnTabSelectedListener(OnTabSelectedListener onTabSelectedListener) {
+        mFragment.setOnTabSelectedListener(onTabSelectedListener);
+    }
+
+    @Override
     public void setSmoothScroll(boolean smoothScroll) {
-        mSmoothScroll = smoothScroll;
+        mFragment.setSmoothScroll(smoothScroll);
     }
 }
