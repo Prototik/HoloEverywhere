@@ -245,6 +245,19 @@ public abstract class TabSwipeFragment extends Fragment implements ITabSwipe<Tab
     }
 
     @Override
+    public void reloadTabs() {
+        removeAllTabs();
+        onHandleTabs();
+    }
+
+    @Override
+    public void removeAllTabs() {
+        getSupportActionBar().removeAllTabs();
+        mTabs.clear();
+        notifyChanged();
+    }
+
+    @Override
     public TabInfo removeTab(int position) {
         TabInfo tabInfo = mTabs.remove(position);
         getSupportActionBar().removeTabAt(position);

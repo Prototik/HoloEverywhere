@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 public class LicensesFragment extends ListFragment {
     private static final class License {
         private String mLicenseText;
-
         private final int mLicenseTextRawId;
         private final String mProject;
 

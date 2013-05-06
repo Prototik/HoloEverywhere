@@ -33,6 +33,7 @@ public class MenusFragments extends OtherFragment {
         };
 
         private SparseBooleanArray mCheckboxsState = new SparseBooleanArray(CHECKBOXS.length);
+        private MenusFragments mFragment;
         private final OnMenuItemClickListener mOnMenuItemClickListener = new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -57,7 +58,6 @@ public class MenusFragments extends OtherFragment {
             }
         };
         private int mRadioState = RADIOS[0];
-        private MenusFragments mFragment;
 
         public MenuHelper() {
         }
@@ -84,14 +84,14 @@ public class MenusFragments extends OtherFragment {
             }
         }
 
+        public void setFragment(MenusFragments fragment) {
+            mFragment = fragment;
+        }
+
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeSparseBooleanArray(mCheckboxsState);
             dest.writeInt(mRadioState);
-        }
-
-        public void setFragment(MenusFragments fragment) {
-            mFragment = fragment;
         }
     }
 
@@ -133,13 +133,13 @@ public class MenusFragments extends OtherFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        mDemoMenuHelper.makeMenu(menu, inflater);
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        mDemoMenuHelper.makeMenu(menu, getMenuInflater());
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        mDemoMenuHelper.makeMenu(menu, getMenuInflater());
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        mDemoMenuHelper.makeMenu(menu, inflater);
     }
 
     @Override

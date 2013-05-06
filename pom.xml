@@ -15,8 +15,8 @@
 	</parent>
 
 	<name>HoloEverywhere Parent</name>
-	<description>Android library bringing Holo Theme to Android 1.6 and above.</description>
-	<url>https://github.com/ChristopheVersieux/HoloEverywhere</url>
+	<description>Backport Holo Theme from Android 4.* to 2.1+</description>
+	<url>https://github.com/Prototik/HoloEverywhere</url>
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
@@ -25,19 +25,18 @@
 		<module>addons</module>
 		<module>application</module>
 		<module>demo</module>
-		<module>resbuilder</module>
 	</modules>
 
 	<scm>
-		<url>https://github.com/ChristopheVersieux/HoloEverywhere</url>
-		<connection>scm:git:git://github.com/ChristopheVersieux/HoloEverywhere.git</connection>
-		<developerConnection>scm:git:git@github.com:ChristopheVersieux/HoloEverywhere.git</developerConnection>
-		<tag>holoeverywhere-1.5.1</tag>
+		<url>https://github.com/Prototik/HoloEverywhere</url>
+		<connection>scm:git:git://github.com/Prototik/HoloEverywhere.git</connection>
+		<developerConnection>scm:git:git@github.com:Prototik/HoloEverywhere.git</developerConnection>
+		<tag>stable</tag>
 	</scm>
 
 	<ciManagement>
-		<system>jenkins</system>
-		<url>http://ci.holoeverywhere.org/</url>
+		<system>travis</system>
+		<url>http://travis-ci.org/Prototik/HoloEverywhere</url>
 	</ciManagement>
 
 	<developers>
@@ -62,7 +61,7 @@
 
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/ChristopheVersieux/HoloEverywhere/issues</url>
+		<url>https://github.com/Prototik/HoloEverywhere/issues</url>
 	</issueManagement>
 
 	<distributionManagement>
@@ -90,7 +89,7 @@
 	<licenses>
 		<license>
 			<name>LGPLv3</name>
-			<url>https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/LICENSE</url>
+			<url>https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE</url>
 			<distribution>repo</distribution>
 			<comments>Copyright (c) 2012 Christophe Versieux, Sergey Shatunov</comments>
 		</license>
@@ -108,7 +107,7 @@
 		<android-support.version>r12</android-support.version>
 		<android.sdk.platform>16</android.sdk.platform>
 
-		<github.downloads.repositoryOwner>ChristopheVersieux</github.downloads.repositoryOwner>
+		<github.downloads.repositoryOwner>Prototik</github.downloads.repositoryOwner>
 		<github.downloads.repositoryName>HoloEverywhere</github.downloads.repositoryName>
 
 		<holo.resbuilder.buildAll>true</holo.resbuilder.buildAll>

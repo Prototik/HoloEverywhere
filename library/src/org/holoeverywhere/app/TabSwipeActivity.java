@@ -14,7 +14,31 @@ import android.os.Bundle;
  */
 public abstract class TabSwipeActivity extends Activity implements
         ITabSwipe<TabSwipeFragment.TabInfo> {
+    public static class InnerFragment extends TabSwipeFragment {
+        private TabSwipeActivity mActivity;
+        private boolean mTabsWasHandled = false;
+
+        @Override
+        protected void onHandleTabs() {
+            mTabsWasHandled = true;
+            if (mActivity != null) {
+                mActivity.onHandleTabs();
+            }
+        }
+
+        public void setActivity(TabSwipeActivity activity) {
+            if (activity == null) {
+                return;
+            }
+            mActivity = activity;
+            if (mTabsWasHandled) {
+                mActivity.onHandleTabs();
+            }
+        }
+    }
+
     private int mCustomLayout = -1;
+
     private InnerFragment mFragment;
 
     @Override
@@ -63,29 +87,6 @@ public abstract class TabSwipeActivity extends Activity implements
         return mFragment.isSmoothScroll();
     }
 
-    public static class InnerFragment extends TabSwipeFragment {
-        private boolean mTabsWasHandled = false;
-        private TabSwipeActivity mActivity;
-
-        @Override
-        protected void onHandleTabs() {
-            mTabsWasHandled = true;
-            if (mActivity != null) {
-                mActivity.onHandleTabs();
-            }
-        }
-
-        public void setActivity(TabSwipeActivity activity) {
-            if (activity == null) {
-                return;
-            }
-            mActivity = activity;
-            if (mTabsWasHandled) {
-                mActivity.onHandleTabs();
-            }
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +112,16 @@ public abstract class TabSwipeActivity extends Activity implements
      * Add your tabs here
      */
     protected abstract void onHandleTabs();
+
+    @Override
+    public void reloadTabs() {
+        mFragment.reloadTabs();
+    }
+
+    @Override
+    public void removeAllTabs() {
+        mFragment.removeAllTabs();
+    }
 
     @Override
     public TabSwipeFragment.TabInfo removeTab(int position) {

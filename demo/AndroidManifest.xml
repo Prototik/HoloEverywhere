@@ -9,7 +9,6 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
-		<activity android:name="org.holoeverywhere.demo.fragments.DemoTabsFragment"/>
 		<activity android:name=".DemoDialogActivity"/>
 		<uses-library android:name="android.test.runner" android:required="false"/>
 		<activity android:name=".test.app.TestActivity" android:theme="@style/Holo.Theme"/>

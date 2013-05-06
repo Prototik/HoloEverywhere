@@ -43,6 +43,10 @@ public interface ITabSwipe<T extends TabInfo> {
 
     public boolean isSmoothScroll();
 
+    public void reloadTabs();
+
+    public void removeAllTabs();
+
     public T removeTab(int position);
 
     public T removeTab(T tabInfo);
