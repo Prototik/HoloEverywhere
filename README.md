@@ -7,6 +7,11 @@ Bringing Holo Theme from Android 4.1 to 2.1 and above.
 [![Play Store](http://holoeverywhere.org/github-res/play_store_button.png)][Play Store]  
 [![Donate](http://holoeverywhere.org/github-res/donate_button.png)][Donate]
 
+## How to use?
+### [Eclipse](wiki/Import-in-IDE#eclipse)
+### [Eclipse + Maven](wiki/Import-in-IDE#eclipse--maven)
+### [IntelliJ IDEA](wiki/Import-in-IDE#intellij-idea)
+
 ## Screenshots
 ![Screenshot 1](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/img/screenshots/1.png "Screenshot 1")
 ![Screenshot 2](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/img/screenshots/2.png "Screenshot 2")
@@ -25,43 +30,6 @@ Bringing Holo Theme from Android 4.1 to 2.1 and above.
  * [Ragnabase MVP](https://play.google.com/store/apps/details?id=com.ragnabase.mvp)
 
 Write to [Sergey](mailto:prototypegamez@gmail.com) for add your application to this list.
-
-## How to use? ([Maven][Build with Maven])
-
-* You should clone git stable branch, init and update submodules:
-
-```
-git clone --branch stable git://github.com/Prototik/HoloEverywhere.git HoloEverywhere
-cd HoloEverywhere
-git submodule update --init --recursive
-```
-Git will be swear on detached HEAD state, ignore it.
-
-You also may use git GUI programs
-
-* Replace `contrib/ActionBarSherlock/library/libs/android-support-v4.jar` by `support-library/android-support-v4-r12.jar`
-
-* Import ActionBarSherlock from `contrib/ActionBarSherlock/library` folder
-
-* Import HoloEverywhere from `library` folder
-
-* Add `HoloEverywhere Library` project as library into your project (Properties/Android/Library/Add)
-
-* Extend the Activities from `org.holoeverywhere.app.***Activity`
-
-Example:
-
-```
-import org.holoeverywhere.app.ListActivity;
-
-public class MainActivity extends ListActivity { ...
-```
-Also you should cast view to with the same name from package `org.holoeverywhere.widget`, if possible. This, for example, ProgressBar and Spinner:
-```
-import org.holoeverywhere.widget.ProgressBar;
-
-ProgressBar bar = (ProgressBar) findViewById(R.id.progress_bar);
-```
 
 ## Contact
 
