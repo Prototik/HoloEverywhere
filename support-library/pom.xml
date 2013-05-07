@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<groupId>org.holoeverywhere</groupId>
 	<artifactId>support-library</artifactId>
 	<name>HoloEverywhere Support Library</name>
+	<version>r12</version>
 	<packaging>pom</packaging>
-
-	<parent>
-		<groupId>org.holoeverywhere</groupId>
-		<artifactId>parent</artifactId>
-		<version>1.5.1-SNAPSHOT</version>
-	</parent>
 
 	<build>
 		<plugins>
@@ -19,7 +16,7 @@
 				<version>2.4</version>
 				<executions>
 					<execution>
-						<id>install-jar</id>
+						<id>install-basic-jar</id>
 						<phase>install</phase>
 						<goals>
 							<goal>install-file</goal>
@@ -30,6 +27,22 @@
 							<groupId>com.google.android</groupId>
 							<artifactId>support-v4</artifactId>
 							<version>r12</version>
+							<packaging>jar</packaging>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>install-jar</id>
+						<phase>install</phase>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+						<configuration>
+							<file>${project.basedir}/android-support-v4-r12.jar</file>
+							<generatePom>true</generatePom>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.artifactId}</artifactId>
+							<version>${project.version}</version>
 							<packaging>jar</packaging>
 						</configuration>
 					</execution>
