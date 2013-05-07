@@ -163,7 +163,7 @@
 				<plugin>
 					<groupId>org.holoeverywhere</groupId>
 					<artifactId>resbuilder</artifactId>
-					<version>${project.version}</version>
+					<version>2.0.0</version>
 					<inherited>true</inherited>
 					<executions>
 						<execution>
