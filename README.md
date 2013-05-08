@@ -8,9 +8,9 @@ Bringing Holo Theme from Android 4.1 to 2.1 and above.
 [![Donate](http://holoeverywhere.org/github-res/donate_button.png)][Donate]
 
 ## How to use?
-### [Eclipse](wiki/Import-in-IDE#eclipse)
-### [Eclipse + Maven](wiki/Import-in-IDE#eclipse--maven)
-### [IntelliJ IDEA](wiki/Import-in-IDE#intellij-idea)
+### [Eclipse](https://github.com/Prototik/HoloEverywhere/wiki/Import-in-IDE#eclipse)
+### [Eclipse + Maven](https://github.com/Prototik/HoloEverywhere/wiki/Import-in-IDE#eclipse--maven)
+### [IntelliJ IDEA](https://github.com/Prototik/HoloEverywhere/wiki/Import-in-IDE#intellij-idea)
 
 ## Screenshots
 ![Screenshot 1](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/img/screenshots/1.png "Screenshot 1")
