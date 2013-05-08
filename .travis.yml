@@ -5,7 +5,6 @@ branches:
   only:
     - master
 
-
 env:
   global:
     # Your Sonatype login
@@ -17,16 +16,5 @@ notifications:
   email:
     - prototypegamez@gmail.com
 
-before_install:
-  - sudo apt-get update -qq
-  - if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch; fi
-  - wget http://dl.google.com/android/android-sdk_r21-linux.tgz
-  - tar -zxf android-sdk_r21-linux.tgz
-  - export ANDROID_HOME=`pwd`/android-sdk-linux
-  - export PATH=${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${PATH}
-  - android update sdk --filter platform-tools,android-16 --no-ui --force
-  - export NEW_MAVEN_CONFIG=`pwd`/.maven.xml
-  - python2 .travisConfigCreator.py
-
-install: mvn clean install -B -DskipTests=true --settings ${NEW_MAVEN_CONFIG}
-script: if [[ `git log -1 --pretty=%B ${TRAVIS_COMMIT}` == *"[deploy snapshot]"* ]]; then mvn clean deploy -B -DskipTests=true --settings ${NEW_MAVEN_CONFIG} -DrepositoryId=holoeverywhere-repo-snapshots; fi
+install: python2 .travis.py
+script: echo Tests skipped
