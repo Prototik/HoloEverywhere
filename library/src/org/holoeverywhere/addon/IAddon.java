@@ -1,4 +1,3 @@
-
 package org.holoeverywhere.addon;
 
 import java.util.HashMap;
@@ -56,7 +55,9 @@ public abstract class IAddon {
     @SuppressWarnings("unchecked")
     public <T, V extends IAddonBase<T>> V obtain(T object) {
         try {
-            V addon = (V) mStatesMap.get(object);
+            WeakReference<V> addonRef = (WeakReference<V>) mStatesMap
+    				.get(object);
+            V addon = addonRef == null ? null : addonRef.get();
             if (addon != null) {
                 return addon;
             }
@@ -70,7 +71,7 @@ public abstract class IAddon {
             }
             addon = ((Class<V>) mTypesMap.get(clazz)).newInstance();
             addon.attach(object);
-            mStatesMap.put(object, addon);
+            mStatesMap.put(object, new WeakReference<V>(addon));
             return addon;
         } catch (Exception e) {
             throw new RuntimeException(e);
