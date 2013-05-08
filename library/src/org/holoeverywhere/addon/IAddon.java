@@ -1,5 +1,6 @@
 package org.holoeverywhere.addon;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
