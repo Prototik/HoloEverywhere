@@ -8,6 +8,7 @@
             "android:dialogTheme": "?dialogTheme",
             "android:dividerHorizontal": "?dividerHorizontal",
             "android:dividerVertical": "?dividerVertical",
+            "android:dropDownListViewStyle": "?dropDownListViewStyle",
             "android:windowMinWidthMajor": "?windowMinWidthMajor",
             "android:windowMinWidthMinor": "?windowMinWidthMinor",
             "buttonBarButtonStyle": "?borderlessButtonStyle",
@@ -98,5 +99,11 @@
             "android:windowBackground": "@android:color/transparent",
             "android:windowShowWallpaper": true
         }
-    }
+    },
+    "data": {
+    	"Holo.Base.Theme | Dark BarDark < Theme.Sherlock": {},
+    	"Holo.Base.Theme.Light | Light BarLight < Theme.Sherlock.Light": {},
+    	"Holo.Base.Theme.Light.DarkActionBar | Light BarDark < Theme.Sherlock.Light.DarkActionBar": {}
+    },
+    "output": "values/themes-core.xml"
 }

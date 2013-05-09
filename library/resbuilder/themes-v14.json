@@ -5,30 +5,33 @@
             "textAppearanceSmallPopupMenu": "?android:textAppearanceSmallPopupMenu"
         },
         "HoloBar": {},
-        "HoloBarDark | HoloBar BarDark": {
+        "HoloBarDark | HoloBar": {
             "android:textAppearanceLargePopupMenu": "@style/Holo.TextAppearance",
             "android:textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.Small"
         },
-        "HoloBarLight | HoloBar BarLight": {
+        "HoloBarLight | HoloBar": {
             "android:textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.Light",
             "android:textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.Small.Light"
         },
-        "HoloDark | Holo Dark": {},
-        "HoloLight | Holo Light": {}
+        "HoloDark | Holo": {},
+        "HoloLight | Holo": {}
     },
     "data": {
-        "Holo.Theme | HoloDark HoloBarDark < Theme.Sherlock": {
+        "Holo.Theme | HoloDark HoloBarDark < Holo.Base.Theme": {
             "holoTheme": "dark"
         },
-        "Holo.Theme.Light | HoloLight HoloBarLight < Theme.Sherlock.Light": {
+        "Holo.Theme.Light | HoloLight HoloBarLight < Holo.Base.Theme.Light": {
             "holoTheme": "light"
         },
-        "Holo.Theme.Light.DarkActionBar | HoloLight HoloBarDark < Theme.Sherlock.Light.DarkActionBar": {
+        "Holo.Theme.Light.DarkActionBar | HoloLight HoloBarDark < Holo.Base.Theme.Light.DarkActionBar": {
             "holoTheme": "mixed"
         }
     },
     "include": [
-        "themes-core.json:styles"
+        {
+            "name": "themes-core.json:styles",
+            "type": "only blocks"
+        }
     ],
     "output": "values-v14/themes.xml"
 }

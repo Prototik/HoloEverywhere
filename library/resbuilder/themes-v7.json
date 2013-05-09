@@ -16,21 +16,21 @@
             "android:scrollbarTrackVertical": "@null",
             "android:spinnerItemStyle": "@style/Holo.TextView.SpinnerItem"
         },
-        "BackportBarDark | BarDark": {
+        "BackportBarDark": {
             "android:panelBackground": "@drawable/menu_hardkey_panel_holo_dark",
             "android:panelColorBackground": "#000000",
             "android:panelColorForeground": "@color/primary_text_holo_dark",
             "android:panelFullBackground": "@drawable/menu_background_fill_parent_width_holo_dark",
             "android:panelTextAppearance": "@style/Holo.TextAppearance"
         },
-        "BackportBarLight | BarLight": {
+        "BackportBarLight": {
             "android:panelBackground": "@drawable/menu_hardkey_panel_holo_light",
             "android:panelColorBackground": "#FFFFFF",
             "android:panelColorForeground": "@color/primary_text_holo_light",
             "android:panelFullBackground": "@drawable/menu_background_fill_parent_width_holo_light",
             "android:panelTextAppearance": "@style/Holo.TextAppearance.Light"
         },
-        "BackportDark | Backport Dark TextDark": {
+        "BackportDark | Backport TextDark": {
             "android:buttonStyle": "@style/Holo.Button",
             "android:buttonStyleToggle": "@style/Holo.Button.Toggle",
             "android:checkboxStyle": "@style/Holo.CompoundButton.CheckBox",
@@ -55,7 +55,7 @@
             "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.PopupMenu.Large",
             "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.PopupMenu.Small"
         },
-        "BackportLight | Backport Light TextLight": {
+        "BackportLight | Backport TextLight": {
             "android:buttonStyle": "@style/Holo.Button.Light",
             "android:buttonStyleToggle": "@style/Holo.Button.Toggle.Light",
             "android:checkboxStyle": "@style/Holo.CompoundButton.CheckBox.Light",
@@ -82,17 +82,17 @@
         }
     },
     "data": {
-        "Holo.Theme | BackportDark BackportBarDark < Theme.Sherlock": {
+        "Holo.Theme | BackportDark BackportBarDark < Holo.Base.Theme": {
             "holoTheme": "dark"
         },
         "Holo.Theme.DialogWhenLarge < Holo.Theme": {},
         "Holo.Theme.DialogWhenLarge.NoActionBar | NoActionBar": {},
         "Holo.Theme.Fullscreen | Fullscreen": {},
         "Holo.Theme.Fullscreen.Wallpaper | Wallpaper": {},
-        "Holo.Theme.Light | BackportLight BackportBarLight < Theme.Sherlock.Light": {
+        "Holo.Theme.Light | BackportLight BackportBarLight < Holo.Base.Theme.Light": {
             "holoTheme": "light"
         },
-        "Holo.Theme.Light.DarkActionBar | BackportLight BackportBarDark < Theme.Sherlock.Light.DarkActionBar": {
+        "Holo.Theme.Light.DarkActionBar | BackportLight BackportBarDark < Holo.Base.Theme.Light.DarkActionBar": {
             "holoTheme": "mixed"
         },
         "Holo.Theme.Light.DarkActionBar.Fullscreen | Fullscreen": {},
@@ -118,7 +118,10 @@
         "Holo.Theme.Wallpaper | Wallpaper": {}
     },
     "include": [
-        "themes-core.json:styles"
+         {
+        	 "name": "themes-core.json:styles",
+        	 "type": "only blocks"
+         }
     ],
     "output": "values/themes.xml"
 }

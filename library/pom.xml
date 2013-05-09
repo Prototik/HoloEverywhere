@@ -45,6 +45,7 @@
 					<inputFiles>
 						<file>strings.json:strings</file>
 						<file>styles.json:styles</file>
+						<file>themes-core.json:styles</file>
 						<file>themes-v7.json:styles</file>
 						<file>themes-v14.json:styles</file>
 						<file>themes-large.json:styles</file>
