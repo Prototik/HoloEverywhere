@@ -1,3 +1,4 @@
+
 package org.holoeverywhere.addon;
 
 import java.lang.ref.WeakReference;
@@ -50,15 +51,14 @@ public abstract class IAddon {
         return addon(classname).obtain(object);
     }
 
-    private final Map<Object, Object> mStatesMap = new WeakHashMap<Object, Object>();
+    private final Map<Object, WeakReference<?>> mStatesMap = new WeakHashMap<Object, WeakReference<?>>();
     private final Map<Class<?>, Class<? extends IAddonBase<?>>> mTypesMap = new HashMap<Class<?>, Class<? extends IAddonBase<?>>>();
 
     @SuppressWarnings("unchecked")
     public <T, V extends IAddonBase<T>> V obtain(T object) {
         try {
-            WeakReference<V> addonRef = (WeakReference<V>) mStatesMap
-    				.get(object);
-            V addon = addonRef == null ? null : addonRef.get();
+            WeakReference<V> ref = (WeakReference<V>) mStatesMap.get(object);
+            V addon = ref == null ? null : ref.get();
             if (addon != null) {
                 return addon;
             }

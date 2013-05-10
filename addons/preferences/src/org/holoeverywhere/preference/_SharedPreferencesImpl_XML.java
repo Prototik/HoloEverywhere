@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.preference;
 
+import java.lang.ref.WeakReference;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -133,16 +134,19 @@ public final class _SharedPreferencesImpl_XML extends _SharedPreferencesBase {
 
     private static final class ListenerWrapper implements
             android.content.SharedPreferences.OnSharedPreferenceChangeListener {
-        private static final Map<OnSharedPreferenceChangeListener, ListenerWrapper> INSTANCES = new WeakHashMap<OnSharedPreferenceChangeListener, ListenerWrapper>();
+        private static final Map<OnSharedPreferenceChangeListener, WeakReference<ListenerWrapper>> sInstances =
+                new WeakHashMap<OnSharedPreferenceChangeListener, WeakReference<ListenerWrapper>>();
 
-        public static synchronized ListenerWrapper obtain(
+        private static synchronized ListenerWrapper obtain(
                 SharedPreferences prefs,
                 OnSharedPreferenceChangeListener listener) {
-            ListenerWrapper t = ListenerWrapper.INSTANCES.get(listener);
-            if (t == null) {
-                INSTANCES.put(listener, t = new ListenerWrapper(prefs, listener));
+            WeakReference<ListenerWrapper> ref = sInstances.get(listener);
+            ListenerWrapper wrapper = ref == null ? null : ref.get();
+            if (wrapper == null) {
+                sInstances.put(listener, new WeakReference<ListenerWrapper>(
+                        wrapper = new ListenerWrapper(prefs, listener)));
             }
-            return t;
+            return wrapper;
         }
 
         private OnSharedPreferenceChangeListener listener;
