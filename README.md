@@ -1,4 +1,5 @@
-![HoloEverywhere](http://holoeverywhere.org/github-res/logo.png "HoloEverywhere")  
+![HoloEverywhere](http://holoeverywhere.org/github-res/logo.png "HoloEverywhere")
+
 [![Build Status](https://travis-ci.org/Prototik/HoloEverywhere.png?branch=master)](https://travis-ci.org/Prototik/HoloEverywhere)
 
 ## What is it?
@@ -29,6 +30,7 @@ Bringing Holo Theme from Android 4.1 to 2.1 and above.
  * [Meditation Assistant](https://play.google.com/store/apps/details?id=sh.ftp.rocketninelabs.meditationassistant)
  * [Ragnabase MVP](https://play.google.com/store/apps/details?id=com.ragnabase.mvp)
  * [noodles - To Do List](https://play.google.com/store/apps/details?id=com.makeramen.noodles)
+
 Write to [Sergey](mailto:prototypegamez@gmail.com) for add your application to this list.
 
 ## Contact
@@ -41,7 +43,7 @@ Sergey:
 Christophe:
   * [Google Plus](https://plus.google.com/108315424589085456181/posts "Google Plus")
 
-### License
+## License
 LGPLv3, full text of license see [here][License]
 
 [Play Store]: https://play.google.com/store/apps/details?id=org.holoeverywhere.demo "Play Store"
