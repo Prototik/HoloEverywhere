@@ -102,7 +102,19 @@ public final class PreferenceScreen extends PreferenceGroup implements
         }
     }
 
-    private static class SavedState extends BaseSavedState {
+    public static class SavedState extends BaseSavedState {
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel source) {
+                return new SavedState(source);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+
         Bundle dialogBundle;
         boolean isShowing;
 
