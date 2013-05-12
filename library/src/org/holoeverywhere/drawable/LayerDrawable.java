@@ -470,6 +470,9 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
         if (paddingChanged) {
             onBoundsChange(getBounds());
         }
+        if (changed) {
+            invalidateSelf();
+        }
         return changed;
     }
 
