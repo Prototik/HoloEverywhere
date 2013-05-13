@@ -531,6 +531,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
             mContextMenuListeners = new WeakHashMap<View, ContextMenuListener>();
         }
         mContextMenuListeners.put(view, listener);
+        view.setLongClickable(true);
     }
 
     @Override
