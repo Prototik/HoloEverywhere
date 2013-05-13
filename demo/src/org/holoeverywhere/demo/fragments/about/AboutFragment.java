@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.demo.fragments.about;
 
+import org.holoeverywhere.IntentCompat;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.demo.fragments.OtherFragment;
@@ -23,7 +24,7 @@ public class AboutFragment extends OtherFragment {
         @Override
         public void onClick(OtherItem item) {
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            intent = Intent.createChooser(intent, getText(R.string.select_browser));
+            intent = IntentCompat.createChooser(intent, getText(R.string.select_browser));
             if (intent != null) {
                 getActivity().startActivity(intent);
             }
@@ -48,7 +49,7 @@ public class AboutFragment extends OtherFragment {
 
     @Override
     protected void onHandleData() {
-        addItem("GitHub", "https://github.com/ChristopheVersieux/HoloEverywhere");
+        addItem("GitHub", "https://github.com/Prototik/HoloEverywhere");
         addItem("Play Store", "market://details?id=org.holoeverywhere.demo");
         addItem("Developers", DevelopersFragment.class);
         addItem("Open source licenses", LicensesFragment.class);

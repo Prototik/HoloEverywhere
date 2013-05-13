@@ -4,11 +4,11 @@ package org.holoeverywhere;
 import static org.holoeverywhere.R.style.Holo_Theme;
 import static org.holoeverywhere.R.style.Holo_Theme_Dialog;
 import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge;
-import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_NoActionBar;
 import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_Light;
-import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_Light_NoActionBar;
 import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_Light_DarkActionBar;
 import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_Light_DarkActionBar_NoActionBar;
+import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_Light_NoActionBar;
+import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_NoActionBar;
 import static org.holoeverywhere.R.style.Holo_Theme_Dialog_Light;
 import static org.holoeverywhere.R.style.Holo_Theme_Fullscreen;
 import static org.holoeverywhere.R.style.Holo_Theme_Fullscreen_Wallpaper;
@@ -129,7 +129,8 @@ import android.util.SparseIntArray;
  * <td>{@link #DIALOG_WHEN_LARGE} | {@link #NO_ACTION_BAR}</td>
  * <td>{@link R.style#Holo_Theme_DialogWhenLarge_NoActionBar}</td>
  * <td>{@link R.style#Holo_Theme_DialogWhenLarge_Light_NoActionBar}</td>
- * <td>{@link R.style#Holo_Theme_DialogWhenLarge_Light_DarkActionBar_NoActionBar}</td>
+ * <td>
+ * {@link R.style#Holo_Theme_DialogWhenLarge_Light_DarkActionBar_NoActionBar}</td>
  * </tr>
  * </table>
  * <br />

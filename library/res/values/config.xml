@@ -5,5 +5,6 @@
 	<integer name="config_shortAnimTime">200</integer>
 	<integer name="config_mediumAnimTime">400</integer>
 	<integer name="config_longAnimTime">500</integer>
+	<integer name="config_maxResolverActivityColumns">2</integer>
 	<dimen name="config_prefDialogWidth">320dp</dimen>
 </resources>

@@ -31,6 +31,11 @@
         "date_time_set",
         "ringtone_picker_title",
         "ringtone_default",
-        "ringtone_silent"
+        "ringtone_silent",
+        "activity_resolver_use_always",
+        "activity_resolver_use_once",
+        "noApplications",
+        "whichApplication",
+        "chooseActivity"
     ]
 }

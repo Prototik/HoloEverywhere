@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.holoeverywhere.ArrayAdapter;
+import org.holoeverywhere.IntentCompat;
 import org.holoeverywhere.app.ListFragment;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.widget.AdapterView;
@@ -117,7 +118,7 @@ public class DevelopersFragment extends ListFragment {
                     to
             });
             intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-            intent = Intent.createChooser(intent, getText(R.string.select_email_programm));
+            intent = IntentCompat.createChooser(intent, getText(R.string.select_email_programm));
             if (intent != null) {
                 getActivity().startActivity(intent);
             }
@@ -155,7 +156,7 @@ public class DevelopersFragment extends ListFragment {
         @Override
         public void onClick() {
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            intent = Intent.createChooser(intent, getText(R.string.select_browser));
+            intent = IntentCompat.createChooser(intent, getText(R.string.select_browser));
             if (intent != null) {
                 getActivity().startActivity(intent);
             }

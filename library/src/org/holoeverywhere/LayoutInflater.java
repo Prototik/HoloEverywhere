@@ -589,7 +589,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
         View view;
         String newName = LayoutInflater.sRemaps.get(name);
         if (newName != null) {
-            view = tryCreateView(newName, null, attrs);
+            view = _createView(newName, null, attrs);
             if (view != null) {
                 return view;
             }
@@ -598,9 +598,13 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
             return _createView(name, null, attrs);
         }
         for (int i = sPackages.size() - 1; i >= 0; i--) {
-            view = tryCreateView(name, sPackages.get(i) + ".", attrs);
-            if (view != null) {
-                return view;
+            try {
+                view = _createView(name, sPackages.get(i) + ".", attrs);
+                if (view != null) {
+                    return view;
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
         throw new ClassNotFoundException("Could not find class: " + name);
@@ -818,13 +822,5 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
             }
         }
         return this;
-    }
-
-    protected View tryCreateView(String name, String prefix, AttributeSet attrs) {
-        try {
-            return _createView(name, prefix, attrs);
-        } catch (Exception e) {
-            return null;
-        }
     }
 }

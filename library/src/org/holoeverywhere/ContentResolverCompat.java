@@ -1,5 +1,5 @@
 
-package org.holoeverywhere.internal;
+package org.holoeverywhere;
 
 import java.io.FileNotFoundException;
 import java.util.List;

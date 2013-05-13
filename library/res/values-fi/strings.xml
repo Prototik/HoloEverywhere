@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
+    <string name="activity_resolver_use_always">"Aina"</string>
+    <string name="activity_resolver_use_once">"Vain kerran"</string>
     <string name="candidates_style">"kandidaatit"</string>
     <string name="capital_off">"POIS"</string>
     <string name="capital_on">"PÄÄLLÄ"</string>
+    <string name="chooseActivity">"Valitse toiminto"</string>
     <string name="date_picker_decrement_day_button">"Vähennä päivien määrää."</string>
     <string name="date_picker_decrement_month_button">"Vähennä kuukausien määrää."</string>
     <string name="date_picker_decrement_year_button">"Vähennä vuosien määrää."</string>
@@ -12,6 +15,7 @@
     <string name="date_time_done">"Valmis"</string>
     <string name="date_time_set">"Aseta"</string>
     <string name="loading">"Ladataan…"</string>
+    <string name="noApplications">"Yksikään sovellus ei voi suorittaa tätä toimintoa."</string>
     <string name="number_picker_decrement_button">"Vähennä"</string>
     <string name="number_picker_increment_button">"Lisää"</string>
     <string name="number_picker_increment_scroll_action">"Lisää tai vähennä arvoa liu\'uttamalla ylös tai alas."</string>
@@ -26,4 +30,5 @@
     <string name="time_picker_increment_hour_button">"Lisää tuntien määrää."</string>
     <string name="time_picker_increment_minute_button">"Lisää minuuttien määrää."</string>
     <string name="time_picker_increment_set_pm_button">"Aseta ip"</string>
+    <string name="whichApplication">"Tee toiminto käyttäen sovellusta"</string>
 </resources>

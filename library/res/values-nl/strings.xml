@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
+    <string name="activity_resolver_use_always">"Altijd"</string>
+    <string name="activity_resolver_use_once">"Eén keer"</string>
     <string name="candidates_style">"kandidaten"</string>
     <string name="capital_off">"UIT"</string>
     <string name="capital_on">"AAN"</string>
+    <string name="chooseActivity">"Een actie selecteren"</string>
     <string name="date_picker_decrement_day_button">"Lagere waarde voor dag"</string>
     <string name="date_picker_decrement_month_button">"Lagere waarde voor maand"</string>
     <string name="date_picker_decrement_year_button">"Lagere waarde voor jaar"</string>
@@ -12,6 +15,7 @@
     <string name="date_time_done">"Gereed"</string>
     <string name="date_time_set">"Instellen"</string>
     <string name="loading">"Laden..."</string>
+    <string name="noApplications">"Geen enkele app kan deze actie uitvoeren."</string>
     <string name="number_picker_decrement_button">"Verlagen"</string>
     <string name="number_picker_increment_button">"Verhogen"</string>
     <string name="number_picker_increment_scroll_action">"Veeg omhoog om te verhogen en omlaag om te verlagen."</string>
@@ -26,4 +30,5 @@
     <string name="time_picker_increment_hour_button">"Hogere waarde voor uren"</string>
     <string name="time_picker_increment_minute_button">"Hogere waarde voor minuten"</string>
     <string name="time_picker_increment_set_pm_button">"PM instellen"</string>
+    <string name="whichApplication">"Actie voltooien met"</string>
 </resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:divider="?dividerHorizontal"
+	android:dividerPadding="0dip"
+	android:orientation="vertical"
+	android:showDividers="middle" >
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1" >
+		<GridView
+			android:id="@+id/resolver_grid"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_gravity="center"
+			android:clipToPadding="false"
+			android:columnWidth="128dp"
+			android:numColumns="4"
+			android:padding="16dp"
+			android:scrollbarStyle="outsideOverlay" />
+	</FrameLayout>
+	<LinearLayout
+		android:id="@+id/button_bar"
+		style="?buttonBarStyle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:measureWithLargestChild="true"
+		android:orientation="horizontal"
+		android:visibility="gone" >
+		<Button
+			android:id="@+id/button_always"
+			style="?buttonBarButtonStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="end"
+			android:layout_weight="1"
+			android:enabled="false"
+			android:maxLines="2"
+			android:minHeight="@dimen/alert_dialog_button_bar_height"
+			android:onClick="onButtonClick"
+			android:text="@string/activity_resolver_use_always"
+			android:textSize="14sp" />
+		<Button
+			android:id="@+id/button_once"
+			style="?buttonBarButtonStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="start"
+			android:layout_weight="1"
+			android:enabled="false"
+			android:maxLines="2"
+			android:minHeight="@dimen/alert_dialog_button_bar_height"
+			android:onClick="onButtonClick"
+			android:text="@string/activity_resolver_use_once"
+			android:textSize="14sp" />
+	</LinearLayout>
+</LinearLayout>

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
+    <string name="activity_resolver_use_always">"Siempre"</string>
+    <string name="activity_resolver_use_once">"Solo una vez"</string>
     <string name="candidates_style">"candidatos"</string>
     <string name="capital_off">"NO"</string>
     <string name="capital_on">"SÍ"</string>
+    <string name="chooseActivity">"Seleccionar una acción"</string>
     <string name="date_picker_decrement_day_button">"Reducir días"</string>
     <string name="date_picker_decrement_month_button">"Reducir mes"</string>
     <string name="date_picker_decrement_year_button">"Reducir año"</string>
@@ -12,6 +15,7 @@
     <string name="date_time_done">"Listo"</string>
     <string name="date_time_set">"Establecer"</string>
     <string name="loading">"Cargando..."</string>
+    <string name="noApplications">"Ninguna aplicación puede realizar esta acción."</string>
     <string name="number_picker_decrement_button">"Reducir"</string>
     <string name="number_picker_increment_button">"Aumentar"</string>
     <string name="number_picker_increment_scroll_action">"Desliza el dedo hacia arriba para aumentar y hacia abajo para disminuir."</string>
@@ -26,4 +30,5 @@
     <string name="time_picker_increment_hour_button">"Aumentar horas"</string>
     <string name="time_picker_increment_minute_button">"Aumentar minutos"</string>
     <string name="time_picker_increment_set_pm_button">"Establecer p.m."</string>
+    <string name="whichApplication">"Completar acción utilizando"</string>
 </resources>
