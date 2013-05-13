@@ -52,6 +52,24 @@
         <item name="holoTheme">dark</item>
     </style>
     <style name="Holo.Theme.DialogWhenLarge" parent="Holo.Theme"/>
+    <style name="Holo.Theme.DialogWhenLarge.Light" parent="Holo.Theme.Light"/>
+    <style name="Holo.Theme.DialogWhenLarge.Light.DarkActionBar" parent="Holo.Theme.Light.DarkActionBar"/>
+    <style name="Holo.Theme.DialogWhenLarge.Light.DarkActionBar.NoActionBar">
+        <!--Include block: NoActionBar-->
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!--End of block NoActionBar-->
+    </style>
+    <style name="Holo.Theme.DialogWhenLarge.Light.NoActionBar">
+        <!--Include block: NoActionBar-->
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!--End of block NoActionBar-->
+    </style>
     <style name="Holo.Theme.DialogWhenLarge.NoActionBar">
         <!--Include block: NoActionBar-->
         <item name="android:windowActionBar">false</item>
@@ -227,15 +245,6 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowShowWallpaper">true</item>
         <!--End of block Wallpaper-->
-    </style>
-    <style name="Holo.Theme.Light.DialogWhenLarge" parent="Holo.Theme.Light"/>
-    <style name="Holo.Theme.Light.DialogWhenLarge.NoActionBar">
-        <!--Include block: NoActionBar-->
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <!--End of block NoActionBar-->
     </style>
     <style name="Holo.Theme.Light.Fullscreen">
         <!--Include block: Fullscreen-->

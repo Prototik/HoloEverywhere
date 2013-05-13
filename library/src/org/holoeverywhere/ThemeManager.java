@@ -5,6 +5,10 @@ import static org.holoeverywhere.R.style.Holo_Theme;
 import static org.holoeverywhere.R.style.Holo_Theme_Dialog;
 import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge;
 import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_NoActionBar;
+import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_Light;
+import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_Light_NoActionBar;
+import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_Light_DarkActionBar;
+import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_Light_DarkActionBar_NoActionBar;
 import static org.holoeverywhere.R.style.Holo_Theme_Dialog_Light;
 import static org.holoeverywhere.R.style.Holo_Theme_Fullscreen;
 import static org.holoeverywhere.R.style.Holo_Theme_Fullscreen_Wallpaper;
@@ -17,8 +21,6 @@ import static org.holoeverywhere.R.style.Holo_Theme_Light_DarkActionBar_NoAction
 import static org.holoeverywhere.R.style.Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_Light_DarkActionBar_NoActionBar_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_Light_DarkActionBar_Wallpaper;
-import static org.holoeverywhere.R.style.Holo_Theme_Light_DialogWhenLarge;
-import static org.holoeverywhere.R.style.Holo_Theme_Light_DialogWhenLarge_NoActionBar;
 import static org.holoeverywhere.R.style.Holo_Theme_Light_Fullscreen;
 import static org.holoeverywhere.R.style.Holo_Theme_Light_Fullscreen_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_Light_NoActionBar;
@@ -38,6 +40,7 @@ import java.util.List;
 import org.holoeverywhere.ThemeManager.ThemeGetter.ThemeTag;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
+import org.holoeverywhere.app.ContextThemeWrapperPlus;
 import org.holoeverywhere.preference.PreferenceManagerHelper;
 
 import android.annotation.SuppressLint;
@@ -119,14 +122,14 @@ import android.util.SparseIntArray;
  * <tr>
  * <td>{@link #DIALOG_WHEN_LARGE}</td>
  * <td>{@link R.style#Holo_Theme_DialogWhenLarge}</td>
- * <td>{@link R.style#Holo_Theme_Light_DialogWhenLarge}</td>
- * <td>{@link R.style#Holo_Theme_Light_DialogWhenLarge}</td>
+ * <td>{@link R.style#Holo_Theme_DialogWhenLarge_Light}</td>
+ * <td>{@link R.style#Holo_Theme_DialogWhenLarge_Light_DarkActionBar}</td>
  * </tr>
  * <tr>
  * <td>{@link #DIALOG_WHEN_LARGE} | {@link #NO_ACTION_BAR}</td>
  * <td>{@link R.style#Holo_Theme_DialogWhenLarge_NoActionBar}</td>
- * <td>{@link R.style#Holo_Theme_Light_DialogWhenLarge_NoActionBar}</td>
- * <td>{@link R.style#Holo_Theme_Light_DialogWhenLarge_NoActionBar}</td>
+ * <td>{@link R.style#Holo_Theme_DialogWhenLarge_Light_NoActionBar}</td>
+ * <td>{@link R.style#Holo_Theme_DialogWhenLarge_Light_DarkActionBar_NoActionBar}</td>
  * </tr>
  * </table>
  * <br />
@@ -314,6 +317,17 @@ public final class ThemeManager {
             intent.putExtra(_THEME_TAG, hasSourceTheme ? getTheme(sourceIntent)
                     : _DEFAULT_THEME);
         }
+    }
+
+    public static Context context(Context context, int theme) {
+        return context(context, theme, true);
+    }
+
+    public static Context context(Context context, int theme, boolean applyModifier) {
+        while (context instanceof ContextThemeWrapperPlus) {
+            context = ((ContextThemeWrapperPlus) context).getBaseContext();
+        }
+        return new ContextThemeWrapperPlus(context, getThemeResource(theme, applyModifier));
     }
 
     /**
@@ -724,9 +738,9 @@ public final class ThemeManager {
         map(LIGHT | DIALOG,
                 Holo_Theme_Dialog_Light);
         map(LIGHT | DIALOG_WHEN_LARGE,
-                Holo_Theme_Light_DialogWhenLarge);
+                Holo_Theme_DialogWhenLarge_Light);
         map(LIGHT | DIALOG_WHEN_LARGE | NO_ACTION_BAR,
-                Holo_Theme_Light_DialogWhenLarge_NoActionBar);
+                Holo_Theme_DialogWhenLarge_Light_NoActionBar);
 
         map(LIGHT | WALLPAPER,
                 Holo_Theme_Light_Wallpaper);
@@ -748,9 +762,9 @@ public final class ThemeManager {
         map(MIXED | DIALOG,
                 Holo_Theme_Dialog_Light);
         map(MIXED | DIALOG_WHEN_LARGE,
-                Holo_Theme_Light_DialogWhenLarge);
+                Holo_Theme_DialogWhenLarge_Light_DarkActionBar);
         map(MIXED | DIALOG_WHEN_LARGE | NO_ACTION_BAR,
-                Holo_Theme_Light_DialogWhenLarge_NoActionBar);
+                Holo_Theme_DialogWhenLarge_Light_DarkActionBar_NoActionBar);
 
         map(MIXED | WALLPAPER,
                 Holo_Theme_Light_DarkActionBar_Wallpaper);
