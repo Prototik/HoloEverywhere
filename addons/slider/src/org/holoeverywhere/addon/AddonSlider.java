@@ -2,6 +2,7 @@
 package org.holoeverywhere.addon;
 
 import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.addon.IAddon.Addon;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.slider.ISlider;
 import org.holoeverywhere.slider.R;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 
+@Addon(weight = 40)
 public class AddonSlider extends IAddon {
     static {
         LayoutInflater.register(SliderView.class);

@@ -6,7 +6,7 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.util.List;
+import java.util.Collection;
 
 import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.ThemeManager;
@@ -14,7 +14,6 @@ import org.holoeverywhere.addon.AddonSherlock;
 import org.holoeverywhere.addon.AddonSherlock.AddonSherlockA;
 import org.holoeverywhere.addon.IAddon;
 import org.holoeverywhere.addon.IAddonActivity;
-import org.holoeverywhere.addon.IAddonAttacher;
 import org.holoeverywhere.addon.IAddonBasicAttacher;
 
 import android.content.Intent;
@@ -79,7 +78,7 @@ public abstract class Activity extends _HoloActivity {
      */
     @Deprecated
     public static final String ADDON_SLIDING_MENU = ADDON_SLIDER;
-    private final IAddonAttacher<IAddonActivity> mAttacher =
+    private final IAddonBasicAttacher<IAddonActivity, Activity> mAttacher =
             new IAddonBasicAttacher<IAddonActivity, Activity>(this);
 
     private boolean mCreatedByThemeManager = false;
@@ -112,7 +111,7 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
-    public void addon(List<Class<? extends IAddon>> classes) {
+    public void addon(Collection<Class<? extends IAddon>> classes) {
         mAttacher.addon(classes);
     }
 
@@ -189,7 +188,7 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
-    public List<Class<? extends IAddon>> obtainAddonsList() {
+    public Collection<Class<? extends IAddon>> obtainAddonsList() {
         return mAttacher.obtainAddonsList();
     }
 
@@ -245,6 +244,7 @@ public abstract class Activity extends _HoloActivity {
         if (mCreatedByThemeManager) {
             mFirstRun = false;
         }
+        mAttacher.inhert(getSupportApplication());
         forceInit(state);
         performAddonAction(new AddonCallback<IAddonActivity>() {
             @Override

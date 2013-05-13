@@ -604,7 +604,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
                     return view;
                 }
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
         }
         throw new ClassNotFoundException("Could not find class: " + name);

@@ -1,7 +1,7 @@
 
 package org.holoeverywhere.app;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.addon.IAddon;
@@ -65,7 +65,7 @@ public class Fragment extends _HoloFragment {
     }
 
     @Override
-    public void addon(List<Class<? extends IAddon>> classes) {
+    public void addon(Collection<Class<? extends IAddon>> classes) {
         mAttacher.addon(classes);
     }
 
@@ -94,7 +94,7 @@ public class Fragment extends _HoloFragment {
     }
 
     @Override
-    public List<Class<? extends IAddon>> obtainAddonsList() {
+    public Collection<Class<? extends IAddon>> obtainAddonsList() {
         return mAttacher.obtainAddonsList();
     }
 
@@ -102,7 +102,7 @@ public class Fragment extends _HoloFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mAttacher.reset();
-        addon(activity.obtainAddonsList());
+        mAttacher.inhert(activity);
     }
 
     @Override

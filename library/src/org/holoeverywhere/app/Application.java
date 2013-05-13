@@ -2,6 +2,7 @@
 package org.holoeverywhere.app;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.holoeverywhere.HoloEverywhere;
@@ -13,6 +14,7 @@ import org.holoeverywhere.SystemServiceManager;
 import org.holoeverywhere.SystemServiceManager.SuperSystemService;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.ThemeManager.SuperStartActivity;
+import org.holoeverywhere.addon.AddonSherlock;
 import org.holoeverywhere.addon.IAddon;
 import org.holoeverywhere.addon.IAddonApplication;
 import org.holoeverywhere.addon.IAddonAttacher;
@@ -31,6 +33,7 @@ public class Application extends android.app.Application implements
     private static Application sLastInstance;
     static {
         SystemServiceManager.register(LayoutInflaterCreator.class);
+        addInitialAddon(AddonSherlock.class);
     }
 
     public static void addInitialAddon(Class<? extends IAddon> clazz) {
@@ -47,7 +50,7 @@ public class Application extends android.app.Application implements
     public static void init() {
     }
 
-    private final IAddonAttacher<IAddonApplication> mAttacher =
+    private final IAddonBasicAttacher<IAddonApplication, Application> mAttacher =
             new IAddonBasicAttacher<IAddonApplication, Application>(this);
 
     public Application() {
@@ -60,7 +63,7 @@ public class Application extends android.app.Application implements
     }
 
     @Override
-    public void addon(List<Class<? extends IAddon>> classes) {
+    public void addon(Collection<Class<? extends IAddon>> classes) {
         mAttacher.addon(classes);
     }
 
@@ -115,20 +118,20 @@ public class Application extends android.app.Application implements
     }
 
     @Override
-    public List<Class<? extends IAddon>> obtainAddonsList() {
+    public Collection<Class<? extends IAddon>> obtainAddonsList() {
         return mAttacher.obtainAddonsList();
     }
 
     @Override
     public void onCreate() {
         addon(sInitialAddons);
-        lockAttaching();
         performAddonAction(new AddonCallback<IAddonApplication>() {
             @Override
             public void justAction(IAddonApplication addon) {
                 addon.onPreCreate();
             }
         });
+        lockAttaching();
         super.onCreate();
         performAddonAction(new AddonCallback<IAddonApplication>() {
             @Override

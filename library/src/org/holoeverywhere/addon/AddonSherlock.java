@@ -1,7 +1,9 @@
 
 package org.holoeverywhere.addon;
 
+import org.holoeverywhere.addon.IAddon.Addon;
 import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.Application;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -21,6 +23,7 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.ActionMode.Callback;
 import com.actionbarsherlock.view.MenuInflater;
 
+@Addon(inhert = true, weight = 50)
 public class AddonSherlock extends IAddon {
     public static class AddonSherlockA extends IAddonActivity {
         private boolean mIgnoreNativeCreate = false;
@@ -195,6 +198,16 @@ public class AddonSherlock extends IAddon {
         }
     }
 
+    public static class AddonSherlockApplication extends IAddonApplication {
+        @Override
+        public void onCreate() {
+            ActionBarSherlock.unregisterImplementation(ActionBarSherlockNative.class);
+            ActionBarSherlock.unregisterImplementation(ActionBarSherlockCompat.class);
+            ActionBarSherlock.registerImplementation(HoloActionBarSherlockNative.class);
+            ActionBarSherlock.registerImplementation(HoloActionBarSherlockCompat.class);
+        }
+    }
+
     @ActionBarSherlock.Implementation(api = 7)
     private static class HoloActionBarSherlockCompat extends ActionBarSherlockCompat {
         public HoloActionBarSherlockCompat(android.app.Activity activity, int flags) {
@@ -225,14 +238,8 @@ public class AddonSherlock extends IAddon {
         }
     }
 
-    static {
-        ActionBarSherlock.unregisterImplementation(ActionBarSherlockNative.class);
-        ActionBarSherlock.unregisterImplementation(ActionBarSherlockCompat.class);
-        ActionBarSherlock.registerImplementation(HoloActionBarSherlockNative.class);
-        ActionBarSherlock.registerImplementation(HoloActionBarSherlockCompat.class);
-    }
-
     public AddonSherlock() {
         register(Activity.class, AddonSherlockA.class);
+        register(Application.class, AddonSherlockApplication.class);
     }
 }

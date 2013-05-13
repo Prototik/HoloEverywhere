@@ -1,6 +1,10 @@
 
 package org.holoeverywhere.addon;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +13,14 @@ import java.util.WeakHashMap;
 import org.holoeverywhere.HoloEverywhere;
 
 public abstract class IAddon {
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    public @interface Addon {
+        public boolean inhert() default false;
+
+        public int weight() default -1;
+    }
+
     private static final Map<Class<? extends IAddon>, IAddon> sAddonsMap = new HashMap<Class<? extends IAddon>, IAddon>();
 
     @SuppressWarnings("unchecked")
@@ -71,7 +83,7 @@ public abstract class IAddon {
                 clazz = clazz.getSuperclass();
             }
             addon = ((Class<V>) mTypesMap.get(clazz)).newInstance();
-            addon.attach(object);
+            addon.attach(object, this);
             mStatesMap.put(object, new WeakReference<V>(addon));
             return addon;
         } catch (Exception e) {
