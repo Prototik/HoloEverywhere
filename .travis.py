@@ -54,7 +54,7 @@ def main():
 def unsecure():
 	print " # [UNSECURE] Runned in unsecure mode"
 	print " # [UNSECURE] Maven build"
-	call("mvn", "clean", "install", "--batch-mode", "-DskipTests=true")
+	call(["mvn", "clean", "install", "--batch-mode", "-DskipTests=true"])
 
 def secure():	
 	print " # [SECURE] Secure mode, deploy feature is enabled"
