@@ -64,9 +64,8 @@ public class IAddonThemes implements ThemeSetter {
         }
         AddonThemeWrapper wrapper = null;
         if (mContexts != null) {
-			WeakReference<AddonThemeWrapper> wrapperReference = mContexts
-					.get(context);
-			wrapper = wrapperReference == null ? null : wrapperReference.get();
+            WeakReference<AddonThemeWrapper> ref = mContexts.get(context);
+            wrapper = ref == null ? null : ref.get();
         }
         if (wrapper == null) {
             final int theme = themeResolver.resolveThemeForContext(context, invalidTheme);
@@ -75,10 +74,9 @@ public class IAddonThemes implements ThemeSetter {
             }
             wrapper = new AddonThemeWrapper(context, theme);
             if (mContexts == null) {
-				mContexts = new WeakHashMap<Context, WeakReference<AddonThemeWrapper>>();
+                mContexts = new WeakHashMap<Context, WeakReference<AddonThemeWrapper>>();
             }
-			mContexts.put(context,
-					new WeakReference<AddonThemeWrapper>(wrapper));
+            mContexts.put(context, new WeakReference<AddonThemeWrapper>(wrapper));
         }
         return wrapper;
     }
