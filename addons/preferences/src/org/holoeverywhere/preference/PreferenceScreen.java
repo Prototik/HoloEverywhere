@@ -17,7 +17,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -140,8 +139,6 @@ public final class PreferenceScreen extends PreferenceGroup implements
     private ListView mListView;
     private ListAdapter mRootAdapter;
 
-    private final String TAG = getClass().getSimpleName();
-
     public PreferenceScreen(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.preferenceScreenStyle);
     }
@@ -176,7 +173,7 @@ public final class PreferenceScreen extends PreferenceGroup implements
             method.setAccessible(true);
             return (Integer) method.invoke(context);
         } catch (Exception e) {
-            Log.e(TAG, "Failed getting context theme", e);
+            e.printStackTrace();
             return R.style.Holo_Theme_NoActionBar;
         }
     }

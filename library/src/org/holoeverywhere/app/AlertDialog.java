@@ -28,18 +28,18 @@ public class AlertDialog extends Dialog implements DialogInterface,
                 Context.class, int.class
         };
         private Class<? extends AlertDialog> mDialogClass;
-        private final AlertController.AlertParams P;
+        private final AlertController.AlertParams mParams;
 
         public Builder(Context context) {
             this(context, 0);
         }
 
         public Builder(Context context, int theme) {
-            P = new AlertParams(context, theme);
+            mParams = new AlertParams(context, theme);
         }
 
         public Builder addButtonBehavior(int buttonBehavior) {
-            P.mButtonBehavior |= buttonBehavior;
+            mParams.mButtonBehavior |= buttonBehavior;
             return this;
         }
 
@@ -48,45 +48,45 @@ public class AlertDialog extends Dialog implements DialogInterface,
             if (mDialogClass != null) {
                 try {
                     dialog = mDialogClass.getConstructor(CONSTRUCTOR_SIGNATURE).newInstance(
-                            P.mContext, P.mTheme);
+                            mParams.mContext, mParams.mTheme);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             if (dialog == null) {
-                dialog = new AlertDialog(P.mContext, P.mTheme);
+                dialog = new AlertDialog(mParams.mContext, mParams.mTheme);
             }
-            P.apply(dialog.mAlert);
-            dialog.setCancelable(P.mCancelable);
-            if (P.mCancelable) {
+            mParams.apply(dialog.mAlert);
+            dialog.setCancelable(mParams.mCancelable);
+            if (mParams.mCancelable) {
                 dialog.setCanceledOnTouchOutside(true);
             }
-            if (P.mOnCancelListener != null) {
-                dialog.setOnCancelListener(P.mOnCancelListener);
+            if (mParams.mOnCancelListener != null) {
+                dialog.setOnCancelListener(mParams.mOnCancelListener);
             }
-            if (P.mOnKeyListener != null) {
-                dialog.setOnKeyListener(P.mOnKeyListener);
+            if (mParams.mOnKeyListener != null) {
+                dialog.setOnKeyListener(mParams.mOnKeyListener);
             }
-            if (P.mOnDismissListener != null) {
-                dialog.setOnDismissListener(P.mOnDismissListener);
+            if (mParams.mOnDismissListener != null) {
+                dialog.setOnDismissListener(mParams.mOnDismissListener);
             }
             return dialog;
         }
 
         public Context getContext() {
-            return P.mContext;
+            return mParams.mContext;
         }
 
         public Builder removeButtonBehavior(int buttonBehavior) {
-            P.mButtonBehavior |= buttonBehavior;
-            P.mButtonBehavior ^= buttonBehavior;
+            mParams.mButtonBehavior |= buttonBehavior;
+            mParams.mButtonBehavior ^= buttonBehavior;
             return this;
         }
 
         public Builder setAdapter(final ListAdapter adapter,
                 final OnClickListener listener) {
-            P.mAdapter = adapter;
-            P.mOnClickListener = listener;
+            mParams.mAdapter = adapter;
+            mParams.mOnClickListener = listener;
             return this;
         }
 
@@ -100,243 +100,243 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
 
         public Builder setButtonBehavior(int buttonBehavior) {
-            P.mButtonBehavior = buttonBehavior;
+            mParams.mButtonBehavior = buttonBehavior;
             return this;
         }
 
         public Builder setCancelable(boolean cancelable) {
-            P.mCancelable = cancelable;
+            mParams.mCancelable = cancelable;
             return this;
         }
 
         public Builder setCheckedItem(int checkedItem) {
-            P.mCheckedItem = checkedItem;
+            mParams.mCheckedItem = checkedItem;
             return this;
         }
 
         public Builder setCursor(final Cursor cursor,
                 final OnClickListener listener, String labelColumn) {
-            P.mCursor = cursor;
-            P.mLabelColumn = labelColumn;
-            P.mOnClickListener = listener;
+            mParams.mCursor = cursor;
+            mParams.mLabelColumn = labelColumn;
+            mParams.mOnClickListener = listener;
             return this;
         }
 
         public Builder setCustomTitle(View customTitleView) {
-            P.mCustomTitleView = customTitleView;
+            mParams.mCustomTitleView = customTitleView;
             return this;
         }
 
         public Builder setIcon(Drawable icon) {
-            P.mIcon = icon;
+            mParams.mIcon = icon;
             return this;
         }
 
         public Builder setIcon(int iconId) {
-            P.mIconId = iconId;
+            mParams.mIconId = iconId;
             return this;
         }
 
         public Builder setIconAttribute(int attrId) {
             TypedValue out = new TypedValue();
-            P.mContext.getTheme().resolveAttribute(attrId, out, true);
-            P.mIconId = out.resourceId;
+            mParams.mContext.getTheme().resolveAttribute(attrId, out, true);
+            mParams.mIconId = out.resourceId;
             return this;
         }
 
         public Builder setInverseBackgroundForced(boolean useInverseBackground) {
-            P.mForceInverseBackground = useInverseBackground;
+            mParams.mForceInverseBackground = useInverseBackground;
             return this;
         }
 
         public Builder setItems(CharSequence[] items,
                 final OnClickListener listener) {
-            P.mItems = items;
-            P.mOnClickListener = listener;
+            mParams.mItems = items;
+            mParams.mOnClickListener = listener;
             return this;
         }
 
         public Builder setItems(int itemsId, final OnClickListener listener) {
-            P.mItems = P.mContext.getResources().getTextArray(itemsId);
-            P.mOnClickListener = listener;
+            mParams.mItems = mParams.mContext.getResources().getTextArray(itemsId);
+            mParams.mOnClickListener = listener;
             return this;
         }
 
         public Builder setMessage(CharSequence message) {
-            P.mMessage = message;
+            mParams.mMessage = message;
             return this;
         }
 
         public Builder setMessage(int messageId) {
-            P.mMessage = P.mContext.getText(messageId);
+            mParams.mMessage = mParams.mContext.getText(messageId);
             return this;
         }
 
         public Builder setMultiChoiceItems(CharSequence[] items,
                 boolean[] checkedItems,
                 final OnMultiChoiceClickListener listener) {
-            P.mItems = items;
-            P.mOnCheckboxClickListener = listener;
-            P.mCheckedItems = checkedItems;
-            P.mIsMultiChoice = true;
+            mParams.mItems = items;
+            mParams.mOnCheckboxClickListener = listener;
+            mParams.mCheckedItems = checkedItems;
+            mParams.mIsMultiChoice = true;
             return this;
         }
 
         public Builder setMultiChoiceItems(Cursor cursor,
                 String isCheckedColumn, String labelColumn,
                 final OnMultiChoiceClickListener listener) {
-            P.mCursor = cursor;
-            P.mOnCheckboxClickListener = listener;
-            P.mIsCheckedColumn = isCheckedColumn;
-            P.mLabelColumn = labelColumn;
-            P.mIsMultiChoice = true;
+            mParams.mCursor = cursor;
+            mParams.mOnCheckboxClickListener = listener;
+            mParams.mIsCheckedColumn = isCheckedColumn;
+            mParams.mLabelColumn = labelColumn;
+            mParams.mIsMultiChoice = true;
             return this;
         }
 
         public Builder setMultiChoiceItems(int itemsId, boolean[] checkedItems,
                 final OnMultiChoiceClickListener listener) {
-            P.mItems = P.mContext.getResources().getTextArray(itemsId);
-            P.mOnCheckboxClickListener = listener;
-            P.mCheckedItems = checkedItems;
-            P.mIsMultiChoice = true;
+            mParams.mItems = mParams.mContext.getResources().getTextArray(itemsId);
+            mParams.mOnCheckboxClickListener = listener;
+            mParams.mCheckedItems = checkedItems;
+            mParams.mIsMultiChoice = true;
             return this;
         }
 
         public Builder setNegativeButton(CharSequence text,
                 final OnClickListener listener) {
-            P.mNegativeButtonText = text;
-            P.mNegativeButtonListener = listener;
+            mParams.mNegativeButtonText = text;
+            mParams.mNegativeButtonListener = listener;
             return this;
         }
 
         public Builder setNegativeButton(int textId,
                 final OnClickListener listener) {
-            P.mNegativeButtonText = P.mContext.getText(textId);
-            P.mNegativeButtonListener = listener;
+            mParams.mNegativeButtonText = mParams.mContext.getText(textId);
+            mParams.mNegativeButtonListener = listener;
             return this;
         }
 
         public Builder setNeutralButton(CharSequence text,
                 final OnClickListener listener) {
-            P.mNeutralButtonText = text;
-            P.mNeutralButtonListener = listener;
+            mParams.mNeutralButtonText = text;
+            mParams.mNeutralButtonListener = listener;
             return this;
         }
 
         public Builder setNeutralButton(int textId,
                 final OnClickListener listener) {
-            P.mNeutralButtonText = P.mContext.getText(textId);
-            P.mNeutralButtonListener = listener;
+            mParams.mNeutralButtonText = mParams.mContext.getText(textId);
+            mParams.mNeutralButtonListener = listener;
             return this;
         }
 
         public Builder setOnCancelListener(OnCancelListener onCancelListener) {
-            P.mOnCancelListener = onCancelListener;
+            mParams.mOnCancelListener = onCancelListener;
             return this;
         }
 
         public Builder setOnDismissListener(OnDismissListener onDismissListener) {
-            P.mOnDismissListener = onDismissListener;
+            mParams.mOnDismissListener = onDismissListener;
             return this;
         }
 
         public Builder setOnItemSelectedListener(
                 final AdapterView.OnItemSelectedListener listener) {
-            P.mOnItemSelectedListener = listener;
+            mParams.mOnItemSelectedListener = listener;
             return this;
         }
 
         public Builder setOnKeyListener(OnKeyListener onKeyListener) {
-            P.mOnKeyListener = onKeyListener;
+            mParams.mOnKeyListener = onKeyListener;
             return this;
         }
 
         public Builder setOnPrepareListViewListener(
                 OnPrepareListViewListener listener) {
-            P.mOnPrepareListViewListener = listener;
+            mParams.mOnPrepareListViewListener = listener;
             return this;
         }
 
         public Builder setPositiveButton(CharSequence text,
                 final OnClickListener listener) {
-            P.mPositiveButtonText = text;
-            P.mPositiveButtonListener = listener;
+            mParams.mPositiveButtonText = text;
+            mParams.mPositiveButtonListener = listener;
             return this;
         }
 
         public Builder setPositiveButton(int textId,
                 final OnClickListener listener) {
-            P.mPositiveButtonText = P.mContext.getText(textId);
-            P.mPositiveButtonListener = listener;
+            mParams.mPositiveButtonText = mParams.mContext.getText(textId);
+            mParams.mPositiveButtonListener = listener;
             return this;
         }
 
         public Builder setSingleChoiceItems(CharSequence[] items,
                 int checkedItem, final OnClickListener listener) {
-            P.mItems = items;
-            P.mOnClickListener = listener;
-            P.mCheckedItem = checkedItem;
-            P.mIsSingleChoice = true;
+            mParams.mItems = items;
+            mParams.mOnClickListener = listener;
+            mParams.mCheckedItem = checkedItem;
+            mParams.mIsSingleChoice = true;
             return this;
         }
 
         public Builder setSingleChoiceItems(Cursor cursor, int checkedItem,
                 String labelColumn, final OnClickListener listener) {
-            P.mCursor = cursor;
-            P.mOnClickListener = listener;
-            P.mCheckedItem = checkedItem;
-            P.mLabelColumn = labelColumn;
-            P.mIsSingleChoice = true;
+            mParams.mCursor = cursor;
+            mParams.mOnClickListener = listener;
+            mParams.mCheckedItem = checkedItem;
+            mParams.mLabelColumn = labelColumn;
+            mParams.mIsSingleChoice = true;
             return this;
         }
 
         public Builder setSingleChoiceItems(int itemsId, int checkedItem,
                 final OnClickListener listener) {
-            P.mItems = P.mContext.getResources().getTextArray(itemsId);
-            P.mOnClickListener = listener;
-            P.mCheckedItem = checkedItem;
-            P.mIsSingleChoice = true;
+            mParams.mItems = mParams.mContext.getResources().getTextArray(itemsId);
+            mParams.mOnClickListener = listener;
+            mParams.mCheckedItem = checkedItem;
+            mParams.mIsSingleChoice = true;
             return this;
         }
 
         public Builder setSingleChoiceItems(ListAdapter adapter,
                 int checkedItem, final OnClickListener listener) {
-            P.mAdapter = adapter;
-            P.mOnClickListener = listener;
-            P.mCheckedItem = checkedItem;
-            P.mIsSingleChoice = true;
+            mParams.mAdapter = adapter;
+            mParams.mOnClickListener = listener;
+            mParams.mCheckedItem = checkedItem;
+            mParams.mIsSingleChoice = true;
             return this;
         }
 
         public Builder setTheme(int theme) {
-            P.mTheme = theme;
+            mParams.mTheme = theme;
             return this;
         }
 
         public Builder setTitle(CharSequence title) {
-            P.mTitle = title;
+            mParams.mTitle = title;
             return this;
         }
 
         public Builder setTitle(int titleId) {
-            P.mTitle = P.mContext.getText(titleId);
+            mParams.mTitle = mParams.mContext.getText(titleId);
             return this;
         }
 
         public Builder setView(View view) {
-            P.mView = view;
-            P.mViewSpacingSpecified = false;
+            mParams.mView = view;
+            mParams.mViewSpacingSpecified = false;
             return this;
         }
 
         public Builder setView(View view, int viewSpacingLeft,
                 int viewSpacingTop, int viewSpacingRight, int viewSpacingBottom) {
-            P.mView = view;
-            P.mViewSpacingSpecified = true;
-            P.mViewSpacingLeft = viewSpacingLeft;
-            P.mViewSpacingTop = viewSpacingTop;
-            P.mViewSpacingRight = viewSpacingRight;
-            P.mViewSpacingBottom = viewSpacingBottom;
+            mParams.mView = view;
+            mParams.mViewSpacingSpecified = true;
+            mParams.mViewSpacingLeft = viewSpacingLeft;
+            mParams.mViewSpacingTop = viewSpacingTop;
+            mParams.mViewSpacingRight = viewSpacingRight;
+            mParams.mViewSpacingBottom = viewSpacingBottom;
             return this;
         }
 

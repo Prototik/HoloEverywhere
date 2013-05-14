@@ -210,10 +210,10 @@ public class _SharedPreferencesImpl_JSON extends _SharedPreferencesBase {
     }
 
     private static final Map<String, ImplReference> refs = new HashMap<String, ImplReference>();
+    private static final String TAG = _SharedPreferencesImpl_JSON.class.getSimpleName();
     private String charset;
     private File file;
     private final String fileTag;
-    private final String TAG = getClass().getSimpleName();
 
     @SuppressLint("NewApi")
     public _SharedPreferencesImpl_JSON(Context context, String name, int mode) {

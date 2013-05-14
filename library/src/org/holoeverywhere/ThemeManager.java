@@ -159,12 +159,12 @@ public final class ThemeManager {
      * 
      * <pre>
      * ThemeGetter getter = new ThemeGetter() {
-     * 	public int getThemeResource(ThemeTag themeTag) {
-     * 		if(themeTag.fullscreen) { // theme has {@link ThemeManager#FULLSCREEN} flag
-     * 			return R.style.CustomThemeWithFullscreenFlag;
-     * 		}
-     * 		return 0; // default behavior
-     * 	}
+     *   public int getThemeResource(ThemeTag themeTag) {
+     *     if(themeTag.fullscreen) { // theme has {@link ThemeManager#FULLSCREEN} flag
+     *       return R.style.CustomThemeWithFullscreenFlag;
+     *     }
+     *     return 0; // default behavior
+     *   }
      * }
      * </pre>
      */

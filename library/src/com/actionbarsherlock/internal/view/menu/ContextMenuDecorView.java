@@ -5,7 +5,6 @@ import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.widget.FrameLayout;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +23,6 @@ public class ContextMenuDecorView extends FrameLayout implements
     private ContextMenuListener mListener;
     private MenuDialogHelper mMenuDialogHelper;
     private ContextMenuListenersProvider mProvider;
-
-    private final String TAG = getClass().getSimpleName();
 
     public ContextMenuDecorView(Context context) {
         super(context);
@@ -62,9 +59,6 @@ public class ContextMenuDecorView extends FrameLayout implements
         if (mListener == null) {
             return;
         }
-        if (HoloEverywhere.DEBUG) {
-            Log.v(TAG, "Calling onContextMenuClosed on " + mListener);
-        }
         mListener.onContextMenuClosed((ContextMenu) menu);
     }
 
@@ -77,9 +71,6 @@ public class ContextMenuDecorView extends FrameLayout implements
     public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
         if (mListener == null) {
             return false;
-        }
-        if (HoloEverywhere.DEBUG) {
-            Log.v(TAG, "Calling onContextItemSelected on " + mListener);
         }
         if (menu instanceof ContextMenuBuilder
                 && item instanceof MenuItemImpl) {

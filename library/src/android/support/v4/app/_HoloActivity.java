@@ -30,7 +30,6 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
@@ -135,7 +134,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
     private int mLastThemeResourceId = 0;
     private MenuInflater mMenuInflater;
     private final List<WeakReference<OnWindowFocusChangeListener>> mOnWindowFocusChangeListeners = new ArrayList<WeakReference<OnWindowFocusChangeListener>>();
-    private final String TAG = getClass().getSimpleName();
 
     @Override
     public void addContentView(View view, LayoutParams params) {
@@ -329,7 +327,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
             onContextMenuClosed(new ContextMenuWrapper(
                     (android.view.ContextMenu) menu));
         } else {
-            Log.w(TAG, "onContextMenuClosed: menu is not ContextMenu instance");
             super.onContextMenuClosed(menu);
         }
     }

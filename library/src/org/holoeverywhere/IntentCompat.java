@@ -19,10 +19,6 @@ public final class IntentCompat {
      *      android:excludeFromRecents="true"
      *      android:multiprocess="true" /&gt;
      * </pre>
-     * 
-     * @param target
-     * @param title
-     * @return
      */
     public static Intent createChooser(Intent target, CharSequence title) {
         if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
