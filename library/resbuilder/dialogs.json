@@ -14,12 +14,12 @@
             "listPreferredItemPaddingLeft": "16dip",
             "listPreferredItemPaddingRight": "16dip",
             "windowActionBar": false,
-            "windowNoTitle": true,
             "windowActionModeOverlay": true,
             "windowAnimationStyle": "@style/Holo.Animation.Dialog",
             "windowContentOverlay": "@null",
             "windowMinWidthMajor": "@dimen/dialog_min_width_major",
-            "windowMinWidthMinor": "@dimen/dialog_min_width_minor"
+            "windowMinWidthMinor": "@dimen/dialog_min_width_minor",
+            "windowNoTitle": true
         },
         "FixedSize": {
             "windowFixedHeightMajor": "@dimen/dialog_fixed_height_major",

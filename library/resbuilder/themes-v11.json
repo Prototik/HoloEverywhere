@@ -1,20 +1,18 @@
 {
     "blocks": {
         "Holo": {
+            "android:activatedBackgroundIndicator": "?activatedBackgroundIndicator",
+            "android:dialogTheme": "?dialogTheme",
+            "android:dividerHorizontal": "?dividerHorizontal",
+            "android:dividerVertical": "?dividerVertical",
             "android:textAppearanceLargePopupMenu": "?textAppearanceLargePopupMenu",
             "android:textAppearanceSmallPopupMenu": "?textAppearanceSmallPopupMenu",
             "android:windowMinWidthMajor": "?windowMinWidthMajor",
-            "android:windowMinWidthMinor": "?windowMinWidthMinor",
-            "android:dividerHorizontal": "?dividerHorizontal",
-            "android:dividerVertical": "?dividerVertical",
-            "android:dialogTheme": "?dialogTheme",
-            "android:activatedBackgroundIndicator": "?activatedBackgroundIndicator",
+            "android:windowMinWidthMinor": "?windowMinWidthMinor"
         },
         "HoloBar": {},
-        "HoloBarDark | HoloBar": {
-        },
-        "HoloBarLight | HoloBar": {
-        },
+        "HoloBarDark | HoloBar": {},
+        "HoloBarLight | HoloBar": {},
         "HoloDark | Holo": {},
         "HoloLight | Holo": {}
     },

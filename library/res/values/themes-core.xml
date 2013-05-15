@@ -26,6 +26,37 @@
         <item name="textAppearanceListItemSmall">?android:textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <!--End of block Base-->
+        <!--Include block: TextDark-->
+        <!--Include block: Text-->
+        <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
+        <item name="android:textCheckMark">?android:checkMark</item>
+        <item name="android:textCheckMarkInverse">?android:checkMark</item>
+        <item name="android:textColorLink">@color/holo_blue_light</item>
+        <!--End of block Text-->
+        <item name="android:textAppearance">@style/Holo.TextAppearance</item>
+        <item name="android:textAppearanceInverse">@style/Holo.TextAppearance.Inverse</item>
+        <item name="android:textAppearanceLarge">@style/Holo.TextAppearance.Large</item>
+        <item name="android:textAppearanceLargeInverse">@style/Holo.TextAppearance.Large.Inverse</item>
+        <item name="android:textAppearanceMedium">@style/Holo.TextAppearance.Medium</item>
+        <item name="android:textAppearanceMediumInverse">@style/Holo.TextAppearance.Medium.Inverse</item>
+        <item name="android:textAppearanceSmall">@style/Holo.TextAppearance.Small</item>
+        <item name="android:textAppearanceSmallInverse">@style/Holo.TextAppearance.Small.Inverse</item>
+        <item name="android:textColorHighlight">@color/highlighted_text_holo_dark</item>
+        <item name="android:textColorHint">@color/hint_foreground_holo_dark</item>
+        <item name="android:textColorHintInverse">@color/hint_foreground_holo_light</item>
+        <item name="android:textColorPrimary">@color/primary_text_holo_dark</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/primary_text_disable_only_holo_dark</item>
+        <item name="android:textColorPrimaryInverse">@color/primary_text_holo_light</item>
+        <item name="android:textColorPrimaryInverseDisableOnly">@color/primary_text_disable_only_holo_light</item>
+        <item name="android:textColorPrimaryInverseNoDisable">@color/primary_text_nodisable_holo_light</item>
+        <item name="android:textColorPrimaryNoDisable">@color/primary_text_nodisable_holo_dark</item>
+        <item name="android:textColorSecondary">@color/secondary_text_holo_dark</item>
+        <item name="android:textColorSecondaryInverse">@color/secondary_text_holo_light</item>
+        <item name="android:textColorSecondaryInverseNoDisable">@color/secondary_text_nodisable_holo_light</item>
+        <item name="android:textColorSecondaryNoDisable">@color/secondary_text_nodisable_holo_dark</item>
+        <item name="android:textColorTertiary">@color/tertiary_text_holo_dark</item>
+        <item name="android:textColorTertiaryInverse">@color/tertiary_text_holo_light</item>
+        <!--End of block TextDark-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
@@ -82,6 +113,37 @@
         <item name="textAppearanceListItemSmall">?android:textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <!--End of block Base-->
+        <!--Include block: TextLight-->
+        <!--Include block: Text-->
+        <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
+        <item name="android:textCheckMark">?android:checkMark</item>
+        <item name="android:textCheckMarkInverse">?android:checkMark</item>
+        <item name="android:textColorLink">@color/holo_blue_light</item>
+        <!--End of block Text-->
+        <item name="android:textAppearance">@style/Holo.TextAppearance.Light</item>
+        <item name="android:textAppearanceInverse">@style/Holo.TextAppearance.Inverse.Light</item>
+        <item name="android:textAppearanceLarge">@style/Holo.TextAppearance.Large.Light</item>
+        <item name="android:textAppearanceLargeInverse">@style/Holo.TextAppearance.Large.Inverse.Light</item>
+        <item name="android:textAppearanceMedium">@style/Holo.TextAppearance.Medium.Light</item>
+        <item name="android:textAppearanceMediumInverse">@style/Holo.TextAppearance.Medium.Inverse.Light</item>
+        <item name="android:textAppearanceSmall">@style/Holo.TextAppearance.Small.Light</item>
+        <item name="android:textAppearanceSmallInverse">@style/Holo.TextAppearance.Small.Inverse.Light</item>
+        <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
+        <item name="android:textColorHint">@color/hint_foreground_holo_light</item>
+        <item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
+        <item name="android:textColorPrimary">@color/primary_text_holo_light</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/primary_text_disable_only_holo_light</item>
+        <item name="android:textColorPrimaryInverse">@color/primary_text_holo_dark</item>
+        <item name="android:textColorPrimaryInverseDisableOnly">@color/primary_text_disable_only_holo_dark</item>
+        <item name="android:textColorPrimaryInverseNoDisable">@color/primary_text_nodisable_holo_dark</item>
+        <item name="android:textColorPrimaryNoDisable">@color/primary_text_nodisable_holo_light</item>
+        <item name="android:textColorSecondary">@color/secondary_text_holo_light</item>
+        <item name="android:textColorSecondaryInverse">@color/secondary_text_holo_dark</item>
+        <item name="android:textColorSecondaryInverseNoDisable">@color/secondary_text_nodisable_holo_dark</item>
+        <item name="android:textColorSecondaryNoDisable">@color/secondary_text_nodisable_holo_light</item>
+        <item name="android:textColorTertiary">@color/tertiary_text_holo_light</item>
+        <item name="android:textColorTertiaryInverse">@color/tertiary_text_holo_dark</item>
+        <!--End of block TextLight-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
@@ -138,6 +200,37 @@
         <item name="textAppearanceListItemSmall">?android:textAppearanceMedium</item>
         <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <!--End of block Base-->
+        <!--Include block: TextLight-->
+        <!--Include block: Text-->
+        <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
+        <item name="android:textCheckMark">?android:checkMark</item>
+        <item name="android:textCheckMarkInverse">?android:checkMark</item>
+        <item name="android:textColorLink">@color/holo_blue_light</item>
+        <!--End of block Text-->
+        <item name="android:textAppearance">@style/Holo.TextAppearance.Light</item>
+        <item name="android:textAppearanceInverse">@style/Holo.TextAppearance.Inverse.Light</item>
+        <item name="android:textAppearanceLarge">@style/Holo.TextAppearance.Large.Light</item>
+        <item name="android:textAppearanceLargeInverse">@style/Holo.TextAppearance.Large.Inverse.Light</item>
+        <item name="android:textAppearanceMedium">@style/Holo.TextAppearance.Medium.Light</item>
+        <item name="android:textAppearanceMediumInverse">@style/Holo.TextAppearance.Medium.Inverse.Light</item>
+        <item name="android:textAppearanceSmall">@style/Holo.TextAppearance.Small.Light</item>
+        <item name="android:textAppearanceSmallInverse">@style/Holo.TextAppearance.Small.Inverse.Light</item>
+        <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
+        <item name="android:textColorHint">@color/hint_foreground_holo_light</item>
+        <item name="android:textColorHintInverse">@color/hint_foreground_holo_dark</item>
+        <item name="android:textColorPrimary">@color/primary_text_holo_light</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/primary_text_disable_only_holo_light</item>
+        <item name="android:textColorPrimaryInverse">@color/primary_text_holo_dark</item>
+        <item name="android:textColorPrimaryInverseDisableOnly">@color/primary_text_disable_only_holo_dark</item>
+        <item name="android:textColorPrimaryInverseNoDisable">@color/primary_text_nodisable_holo_dark</item>
+        <item name="android:textColorPrimaryNoDisable">@color/primary_text_nodisable_holo_light</item>
+        <item name="android:textColorSecondary">@color/secondary_text_holo_light</item>
+        <item name="android:textColorSecondaryInverse">@color/secondary_text_holo_dark</item>
+        <item name="android:textColorSecondaryInverseNoDisable">@color/secondary_text_nodisable_holo_dark</item>
+        <item name="android:textColorSecondaryNoDisable">@color/secondary_text_nodisable_holo_light</item>
+        <item name="android:textColorTertiary">@color/tertiary_text_holo_light</item>
+        <item name="android:textColorTertiaryInverse">@color/tertiary_text_holo_dark</item>
+        <!--End of block TextLight-->
         <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>

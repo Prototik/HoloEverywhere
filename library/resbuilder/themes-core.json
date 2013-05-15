@@ -33,10 +33,9 @@
             "textAppearanceListItemSmall": "?android:textAppearanceMedium",
             "timePickerStyle": "@style/Holo.TimePicker"
         },
-        "Dark | Base": {
+        "Dark | Base TextDark": {
             "alertDialogStyle": "@style/Holo.AlertDialog",
             "alertDialogTheme": "@style/Holo.Theme.Dialog.Alert",
-            "popupWindowStyle": "@style/Holo.PopupWindow",
             "android:windowBackground": "@drawable/background_holo_dark",
             "autoCompleteTextViewStyle": "@style/Holo.AutoCompleteTextView",
             "borderlessButtonStyle": "@style/Holo.Button.Borderless",
@@ -49,6 +48,7 @@
             "fastScrollTrackDrawable": "@drawable/fastscroll_track_holo_dark",
             "listDividerAlertDialog": "@drawable/list_divider_holo_dark",
             "listPopupWindowStyle": "@style/Holo.ListPopupWindow",
+            "popupWindowStyle": "@style/Holo.PopupWindow",
             "segmentedButtonStyle": "@style/Holo.SegmentedButton",
             "selectableItemBackground": "@drawable/item_background_holo_dark",
             "spinnerDropDownItemStyle": "@style/Holo.TextView.SpinnerItem.DropDown",
@@ -63,10 +63,9 @@
             "android:windowFullscreen": true,
             "windowContentOverlay": "@null"
         },
-        "Light | Base": {
+        "Light | Base TextLight": {
             "alertDialogStyle": "@style/Holo.AlertDialog.Light",
             "alertDialogTheme": "@style/Holo.Theme.Dialog.Alert.Light",
-            "popupWindowStyle": "@style/Holo.PopupWindow.Light",
             "android:windowBackground": "@drawable/background_holo_light",
             "autoCompleteTextViewStyle": "@style/Holo.AutoCompleteTextView.Light",
             "borderlessButtonStyle": "@style/Holo.Button.Borderless.Light",
@@ -79,6 +78,7 @@
             "fastScrollTrackDrawable": "@drawable/fastscroll_track_holo_light",
             "listDividerAlertDialog": "@drawable/list_divider_holo_light",
             "listPopupWindowStyle": "@style/Holo.ListPopupWindow.Light",
+            "popupWindowStyle": "@style/Holo.PopupWindow.Light",
             "segmentedButtonStyle": "@style/Holo.SegmentedButton.Light",
             "selectableItemBackground": "@drawable/item_background_holo_light",
             "spinnerDropDownItemStyle": "@style/Holo.TextView.SpinnerItem.DropDown.Light",
@@ -101,9 +101,15 @@
         }
     },
     "data": {
-    	"Holo.Base.Theme | Dark BarDark < Theme.Sherlock": {},
-    	"Holo.Base.Theme.Light | Light BarLight < Theme.Sherlock.Light": {},
-    	"Holo.Base.Theme.Light.DarkActionBar | Light BarDark < Theme.Sherlock.Light.DarkActionBar": {}
+        "Holo.Base.Theme | Dark BarDark < Theme.Sherlock": {},
+        "Holo.Base.Theme.Light | Light BarLight < Theme.Sherlock.Light": {},
+        "Holo.Base.Theme.Light.DarkActionBar | Light BarDark < Theme.Sherlock.Light.DarkActionBar": {}
     },
+    "include": [
+        {
+            "name": "text.json:styles",
+            "type": "only blocks"
+        }
+    ],
     "output": "values/themes-core.xml"
 }

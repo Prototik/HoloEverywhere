@@ -17,7 +17,6 @@
         <item name="android:scrollbarTrackVertical">@null</item>
         <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
         <!--End of block Backport-->
-        <!-- Block not found: TextDark -->
         <item name="android:buttonStyle">@style/Holo.Button</item>
         <item name="android:buttonStyleToggle">@style/Holo.Button.Toggle</item>
         <item name="android:checkboxStyle">@style/Holo.CompoundButton.CheckBox</item>
@@ -108,7 +107,6 @@
         <item name="android:scrollbarTrackVertical">@null</item>
         <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
         <!--End of block Backport-->
-        <!-- Block not found: TextLight -->
         <item name="android:buttonStyle">@style/Holo.Button.Light</item>
         <item name="android:buttonStyleToggle">@style/Holo.Button.Toggle.Light</item>
         <item name="android:checkboxStyle">@style/Holo.CompoundButton.CheckBox.Light</item>
@@ -158,7 +156,6 @@
         <item name="android:scrollbarTrackVertical">@null</item>
         <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
         <!--End of block Backport-->
-        <!-- Block not found: TextLight -->
         <item name="android:buttonStyle">@style/Holo.Button.Light</item>
         <item name="android:buttonStyleToggle">@style/Holo.Button.Toggle.Light</item>
         <item name="android:checkboxStyle">@style/Holo.CompoundButton.CheckBox.Light</item>
