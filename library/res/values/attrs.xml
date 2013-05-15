@@ -82,6 +82,7 @@
     <attr name="numberPickerUpButtonStyle" format="reference"/>
     <attr name="panelMenuListWidth" format="dimension"/>
     <attr name="popupPromptView" format="reference"/>
+    <attr name="popupWindowStyle" format="reference"/>
     <attr name="preferenceTheme" format="reference">
         <enum name="dark" value="1"/>
         <enum name="light" value="2"/>

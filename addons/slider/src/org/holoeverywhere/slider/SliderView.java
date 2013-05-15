@@ -644,17 +644,7 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
             mRightView.layout(r, t, r + mRightViewWidth, b);
         }
         if (mScrollOnLayoutTarget > 0) {
-            switch (mScrollOnLayoutTarget) {
-                case STATE_CONTENT_OPENED:
-                    showContentView(false);
-                    break;
-                case STATE_LEFT_OPENED:
-                    showLeftView(false);
-                    break;
-                case STATE_RIGHT_OPENED:
-                    showRightView(false);
-                    break;
-            }
+            show(mScrollOnLayoutTarget, false, false);
             mScrollOnLayoutTarget = -1;
         }
     }

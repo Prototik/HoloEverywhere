@@ -29,6 +29,7 @@
         "switchStyle$reference",
         "switchStyleOld$reference",
         "calendarViewStyle$reference",
+        "popupWindowStyle$reference",
         {
             "enum": [
                 "top 0x30",

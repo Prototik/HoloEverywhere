@@ -39,8 +39,6 @@
         <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_dark</item>
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_dark</item>
         <item name="android:seekBarStyle">@style/Holo.SeekBar</item>
-        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Large</item>
-        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Small</item>
         <!--End of block BackportDark-->
         <!--Include block: BackportBarDark-->
         <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>
@@ -132,8 +130,6 @@
         <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
         <item name="android:seekBarStyle">@style/Holo.SeekBar.Light</item>
-        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
-        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
         <!--End of block BackportLight-->
         <!--Include block: BackportBarLight-->
         <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_light</item>
@@ -184,8 +180,6 @@
         <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_handle_holo_light</item>
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_handle_holo_light</item>
         <item name="android:seekBarStyle">@style/Holo.SeekBar.Light</item>
-        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Large</item>
-        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.PopupMenu.Light.Small</item>
         <!--End of block BackportLight-->
         <!--Include block: BackportBarDark-->
         <item name="android:panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>

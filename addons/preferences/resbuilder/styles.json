@@ -5,8 +5,8 @@
             }, 
             "Holo.PreferenceCategory": {
                 "layout": "@layout/preference_category_holo", 
-                "selectable": "false", 
-                "shouldDisableView": "false"
+                "selectable": false, 
+                "shouldDisableView": false
             }, 
             "Holo.PreferenceCheckBox < Holo.PreferenceTwoState": {
                 "widgetLayout": "@layout/preference_widget_checkbox"
@@ -43,9 +43,9 @@
                 "borderTop": "0dip"
             }, 
             "Holo.PreferenceInformation": {
-                "enabled": "false", 
+                "enabled": false, 
                 "layout": "@layout/preference_information_holo", 
-                "shouldDisableView": "false"
+                "shouldDisableView": false
             }, 
             "Holo.PreferencePanel": {}, 
             "Holo.PreferenceRingtone": {

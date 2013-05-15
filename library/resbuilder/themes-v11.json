@@ -1,17 +1,19 @@
 {
     "blocks": {
         "Holo": {
-            "textAppearanceLargePopupMenu": "?android:textAppearanceLargePopupMenu",
-            "textAppearanceSmallPopupMenu": "?android:textAppearanceSmallPopupMenu"
+            "android:textAppearanceLargePopupMenu": "?textAppearanceLargePopupMenu",
+            "android:textAppearanceSmallPopupMenu": "?textAppearanceSmallPopupMenu",
+            "android:windowMinWidthMajor": "?windowMinWidthMajor",
+            "android:windowMinWidthMinor": "?windowMinWidthMinor",
+            "android:dividerHorizontal": "?dividerHorizontal",
+            "android:dividerVertical": "?dividerVertical",
+            "android:dialogTheme": "?dialogTheme",
+            "android:activatedBackgroundIndicator": "?activatedBackgroundIndicator",
         },
         "HoloBar": {},
         "HoloBarDark | HoloBar": {
-            "android:textAppearanceLargePopupMenu": "@style/Holo.TextAppearance",
-            "android:textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.Small"
         },
         "HoloBarLight | HoloBar": {
-            "android:textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.Light",
-            "android:textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.Small.Light"
         },
         "HoloDark | Holo": {},
         "HoloLight | Holo": {}
@@ -33,5 +35,5 @@
             "type": "only blocks"
         }
     ],
-    "output": "values-v14/themes.xml"
+    "output": "values-v11/themes.xml"
 }

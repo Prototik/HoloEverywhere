@@ -180,7 +180,7 @@ public class PopupWindow {
     }
 
     public PopupWindow(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.popupWindowStyle);
+        this(context, attrs, R.attr.popupWindowStyle);
     }
 
     public PopupWindow(Context context, AttributeSet attrs, int defStyle) {

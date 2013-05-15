@@ -31,8 +31,8 @@
         },
         "Holo.Button": {
             "android:background": "@drawable/btn_default_holo_dark",
-            "android:clickable": "true",
-            "android:focusable": "true",
+            "android:clickable": true,
+            "android:focusable": true,
             "android:gravity": "center",
             "android:minHeight": "48dip",
             "android:minWidth": "64dip",
@@ -121,8 +121,8 @@
             "weekSeparatorLineColor": "#7F08002A"
         },
         "Holo.CompoundButton": {
-            "android:clickable": "true",
-            "android:focusable": "true",
+            "android:clickable": true,
+            "android:focusable": true,
             "android:gravity": "center_vertical|left",
             "android:textAppearance": "?android:attr/textAppearance",
             "android:textColor": "?android:attr/textColorPrimaryDisableOnly"
@@ -138,11 +138,11 @@
         },
         "Holo.CompoundButton.RadioButton.Light": {},
         "Holo.DatePicker": {
-            "calendarViewShown": "false",
+            "calendarViewShown": false,
             "endYear": "2100",
-            "forceShownState": "false",
+            "forceShownState": false,
             "layout": "@layout/date_picker_holo",
-            "spinnersShown": "true",
+            "spinnersShown": true,
             "startYear": "1900"
         },
         "Holo.DropDownItem": {
@@ -153,9 +153,9 @@
         },
         "Holo.EditText": {
             "android:background": "@drawable/edit_text_holo_dark",
-            "android:clickable": "true",
-            "android:focusable": "true",
-            "android:focusableInTouchMode": "true",
+            "android:clickable": true,
+            "android:focusable": true,
+            "android:focusableInTouchMode": true,
             "android:gravity": "center_vertical",
             "android:textAppearance": "?android:textAppearanceMediumInverse",
             "android:textColor": "?android:textColorPrimary"
@@ -170,7 +170,7 @@
             "android:paddingLeft": "2sp",
             "android:paddingRight": "2sp",
             "android:paddingTop": "13sp",
-            "android:singleLine": "true",
+            "android:singleLine": true,
             "android:textSize": "18sp"
         },
         "Holo.ExpandableListView < Holo.ListView": {
@@ -190,8 +190,8 @@
         },
         "Holo.ImageButton": {
             "android:background": "@drawable/btn_default_holo_dark",
-            "android:clickable": "true",
-            "android:focusable": "true",
+            "android:clickable": true,
+            "android:focusable": true,
             "android:scaleType": "center"
         },
         "Holo.ImageButton.Light": {
@@ -261,7 +261,7 @@
         },
         "Holo.RatingBar < @android:Widget.RatingBar": {
             "android:indeterminateDrawable": "@drawable/ratingbar_full_holo_dark",
-            "android:indeterminateOnly": "false",
+            "android:indeterminateOnly": false,
             "android:maxHeight": "57dip",
             "android:minHeight": "57dip",
             "android:progressDrawable": "@drawable/ratingbar_full_holo_dark",
@@ -269,8 +269,8 @@
         },
         "Holo.RatingBar.Indicator": {
             "android:indeterminateDrawable": "@drawable/ratingbar_holo_dark",
-            "android:indeterminateOnly": "false",
-            "android:isIndicator": "true",
+            "android:indeterminateOnly": false,
+            "android:isIndicator": true,
             "android:maxHeight": "35dip",
             "android:minHeight": "35dip",
             "android:progressDrawable": "@drawable/ratingbar_holo_dark",
@@ -295,9 +295,9 @@
             "android:progressDrawable": "@drawable/ratingbar_small_holo_light"
         },
         "Holo.SeekBar < @android:Widget.SeekBar": {
-            "android:focusable": "true",
+            "android:focusable": true,
             "android:indeterminateDrawable": "@drawable/scrubber_progress_horizontal_holo_dark",
-            "android:indeterminateOnly": "false",
+            "android:indeterminateOnly": false,
             "android:maxHeight": "13dip",
             "android:minHeight": "13dip",
             "android:paddingLeft": "16dip",
@@ -321,7 +321,7 @@
         },
         "Holo.Spinner": {
             "android:background": "@drawable/spinner_background_holo_dark",
-            "android:clickable": "true",
+            "android:clickable": true,
             "android:dropDownSelector": "@drawable/list_selector_holo_dark",
             "android:dropDownWidth": "wrap_content",
             "android:gravity": "left|center_vertical",
@@ -372,11 +372,11 @@
             "android:layout_height": "wrap_content",
             "android:layout_width": "match_parent",
             "android:paddingLeft": "8dip",
-            "android:textAllCaps": "true",
+            "android:textAllCaps": true,
             "android:textColor": "?android:textColorSecondary",
             "android:textSize": "14sp",
             "android:textStyle": "bold",
-            "textAllCaps": "true"
+            "textAllCaps": true
         },
         "Holo.TextView.ListSeparator.Light": {
             "android:background": "@drawable/list_section_divider_holo_light"

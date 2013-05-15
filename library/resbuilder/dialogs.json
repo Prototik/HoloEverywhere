@@ -76,7 +76,7 @@
         },
         "Holo.DialogWindowTitle": {
             "android:maxLines": "1",
-            "android:scrollHorizontally": "true",
+            "android:scrollHorizontally": true,
             "android:textAppearance": "@style/Holo.TextAppearance.DialogWindowTitle"
         },
         "Holo.DialogWindowTitle.Light": {

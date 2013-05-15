@@ -1,16 +1,16 @@
 {
     "blocks": {
-        "BarDark": {},
-        "BarLight": {},
+        "BarDark": {
+            "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance",
+            "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.Small"
+        },
+        "BarLight": {
+            "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.Light",
+            "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.Small.Light"
+        },
         "Base": {
             "activatedBackgroundIndicator": "@drawable/activated_background_holo",
-            "android:activatedBackgroundIndicator": "?activatedBackgroundIndicator",
-            "android:dialogTheme": "?dialogTheme",
-            "android:dividerHorizontal": "?dividerHorizontal",
-            "android:dividerVertical": "?dividerVertical",
             "android:dropDownListViewStyle": "?dropDownListViewStyle",
-            "android:windowMinWidthMajor": "?windowMinWidthMajor",
-            "android:windowMinWidthMinor": "?windowMinWidthMinor",
             "buttonBarButtonStyle": "?borderlessButtonStyle",
             "buttonBarStyle": "@style/Holo.ButtonBar",
             "datePickerStyle": "@style/Holo.DatePicker",
@@ -36,7 +36,7 @@
         "Dark | Base": {
             "alertDialogStyle": "@style/Holo.AlertDialog",
             "alertDialogTheme": "@style/Holo.Theme.Dialog.Alert",
-            "android:popupWindowStyle": "@style/Holo.PopupWindow",
+            "popupWindowStyle": "@style/Holo.PopupWindow",
             "android:windowBackground": "@drawable/background_holo_dark",
             "autoCompleteTextViewStyle": "@style/Holo.AutoCompleteTextView",
             "borderlessButtonStyle": "@style/Holo.Button.Borderless",
@@ -66,7 +66,7 @@
         "Light | Base": {
             "alertDialogStyle": "@style/Holo.AlertDialog.Light",
             "alertDialogTheme": "@style/Holo.Theme.Dialog.Alert.Light",
-            "android:popupWindowStyle": "@style/Holo.PopupWindow.Light",
+            "popupWindowStyle": "@style/Holo.PopupWindow.Light",
             "android:windowBackground": "@drawable/background_holo_light",
             "autoCompleteTextViewStyle": "@style/Holo.AutoCompleteTextView.Light",
             "borderlessButtonStyle": "@style/Holo.Button.Borderless.Light",
