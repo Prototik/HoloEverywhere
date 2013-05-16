@@ -62,8 +62,9 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
 
     @Override
     public void addContentView(View view, LayoutParams params) {
-        requestDecorView();
-        mDecorView.addView(view, params);
+        if (requestDecorView(view, params, -1)) {
+            mDecorView.addView(view, params);
+        }
     }
 
     @Override
@@ -141,16 +142,21 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
         mContextMenuListeners.put(view, listener);
     }
 
-    private void requestDecorView() {
+    private boolean requestDecorView(View view, LayoutParams params, int layoutRes) {
         if (mDecorView != null) {
-            return;
+            return true;
         }
         mDecorView = new WindowDecorView(getContext());
         mDecorView.setId(android.R.id.content);
         mDecorView.setProvider(this);
-        getWindow().setContentView(mDecorView,
-                new LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                        android.view.ViewGroup.LayoutParams.MATCH_PARENT));
+        if (view != null) {
+            mDecorView.addView(view, params);
+        } else if (layoutRes > 0) {
+            getLayoutInflater().inflate(layoutRes, mDecorView, true);
+        }
+        getWindow().setContentView(mDecorView, new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        return false;
     }
 
     @Override
@@ -161,9 +167,10 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
 
     @Override
     public void setContentView(int layoutResID) {
-        requestDecorView();
-        mDecorView.removeAllViewsInLayout();
-        getLayoutInflater().inflate(layoutResID, mDecorView, true);
+        if (requestDecorView(null, null, layoutResID)) {
+            mDecorView.removeAllViewsInLayout();
+            getLayoutInflater().inflate(layoutResID, mDecorView, true);
+        }
     }
 
     @Override
@@ -173,9 +180,10 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
 
     @Override
     public void setContentView(View view, LayoutParams params) {
-        requestDecorView();
-        mDecorView.removeAllViewsInLayout();
-        mDecorView.addView(view, params);
+        if (requestDecorView(view, params, -1)) {
+            mDecorView.removeAllViewsInLayout();
+            mDecorView.addView(view, params);
+        }
     }
 
     @Override

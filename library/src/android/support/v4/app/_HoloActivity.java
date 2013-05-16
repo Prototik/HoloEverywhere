@@ -139,8 +139,9 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
 
     @Override
     public void addContentView(View view, LayoutParams params) {
-        requestDecorView();
-        mDecorView.addView(view, params);
+        if (requestDecorView(view, params, -1)) {
+            mDecorView.addView(view, params);
+        }
     }
 
     @Override
@@ -465,7 +466,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
-        requestDecorView();
+        requestDecorView(null, null, -1);
         super.onPostCreate(savedInstanceState);
     }
 
@@ -529,26 +530,32 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         view.setLongClickable(true);
     }
 
-    private void requestDecorView() {
+    private boolean requestDecorView(View view, LayoutParams params, int layoutRes) {
         if (mDecorView != null) {
-            return;
+            return true;
         }
         mDecorView = new WindowDecorView(this);
         mDecorView.setId(android.R.id.content);
         mDecorView.setProvider(this);
-        final LayoutParams params = new LayoutParams(
+        if (view != null) {
+            mDecorView.addView(view, params);
+        } else if (layoutRes > 0) {
+            getLayoutInflater().inflate(layoutRes, mDecorView, true);
+        }
+        final LayoutParams p = new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         performAddonAction(new AddonCallback<IAddonActivity>() {
             @Override
             public boolean action(IAddonActivity addon) {
-                return addon.installDecorView(mDecorView, params);
+                return addon.installDecorView(mDecorView, p);
             }
 
             @Override
             public void justPost() {
-                getWindow().setContentView(mDecorView, params);
+                getWindow().setContentView(mDecorView, p);
             }
         });
+        return false;
     }
 
     @Override
@@ -560,9 +567,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
 
     @Override
     public void setContentView(int layoutResID) {
-        requestDecorView();
-        mDecorView.removeAllViewsInLayout();
-        getLayoutInflater().inflate(layoutResID, mDecorView, true);
+        if (requestDecorView(null, null, layoutResID)) {
+            mDecorView.removeAllViewsInLayout();
+            getLayoutInflater().inflate(layoutResID, mDecorView, true);
+        }
     }
 
     @Override
@@ -572,9 +580,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
 
     @Override
     public void setContentView(View view, LayoutParams params) {
-        requestDecorView();
-        mDecorView.removeAllViewsInLayout();
-        mDecorView.addView(view, params);
+        if (requestDecorView(view, params, -1)) {
+            mDecorView.removeAllViewsInLayout();
+            mDecorView.addView(view, params);
+        }
     }
 
     public void setForceThemeApply(boolean forceThemeApply) {
