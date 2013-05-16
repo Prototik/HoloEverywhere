@@ -6,7 +6,7 @@
 	<groupId>org.holoeverywhere</groupId>
 	<artifactId>support-library</artifactId>
 	<name>HoloEverywhere Support Library</name>
-	<version>r12</version>
+	<version>r13</version>
 	<packaging>pom</packaging>
 
 	<build>
@@ -30,11 +30,11 @@
 							<goal>install-file</goal>
 						</goals>
 						<configuration>
-							<file>${project.basedir}/android-support-v4-r12.jar</file>
+							<file>${project.basedir}/android-support-v4-${project.version}.jar</file>
 							<generatePom>true</generatePom>
 							<groupId>com.google.android</groupId>
 							<artifactId>support-v4</artifactId>
-							<version>r12</version>
+							<version>${project.version}</version>
 							<packaging>jar</packaging>
 						</configuration>
 					</execution>
@@ -46,7 +46,7 @@
 							<goal>install-file</goal>
 						</goals>
 						<configuration>
-							<file>${project.basedir}/android-support-v4-r12.jar</file>
+							<file>${project.basedir}/android-support-v4-${project.version}.jar</file>
 							<generatePom>true</generatePom>
 							<groupId>${project.groupId}</groupId>
 							<artifactId>${project.artifactId}</artifactId>

@@ -104,7 +104,7 @@
 		<noa.version>2.4.0</noa.version>
 		<junit.version>4.8.1</junit.version>
 		<android.version>4.1.1.4</android.version>
-		<android-support.version>r12</android-support.version>
+		<android-support.version>r13</android-support.version>
 		<android.sdk.platform>16</android.sdk.platform>
 
 		<github.downloads.repositoryOwner>Prototik</github.downloads.repositoryOwner>
