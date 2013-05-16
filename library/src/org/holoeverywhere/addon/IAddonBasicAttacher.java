@@ -72,6 +72,9 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
     }
 
     public void inhert(Collection<Class<? extends IAddon>> sourceClasses) {
+        if (sourceClasses == null || sourceClasses.size() == 0) {
+            return;
+        }
         List<Class<? extends IAddon>> classes = new ArrayList<Class<? extends IAddon>>();
         for (Class<? extends IAddon> clazz : sourceClasses) {
             if (!clazz.isAnnotationPresent(Addon.class)) {
