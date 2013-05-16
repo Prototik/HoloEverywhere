@@ -89,7 +89,7 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
     }
 
     public void inhert(IAddonAttacher<?> attacher) {
-        inhert(attacher.obtainAddonsList());
+        inhert(attacher == null ? null : attacher.obtainAddonsList());
     }
 
     @Override
