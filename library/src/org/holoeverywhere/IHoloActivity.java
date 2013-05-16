@@ -7,7 +7,6 @@ import org.holoeverywhere.addon.IAddonActivity;
 import org.holoeverywhere.addon.IAddonAttacher;
 
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 
 import com.actionbarsherlock.ActionBarSherlock.OnActionModeFinishedListener;
 import com.actionbarsherlock.ActionBarSherlock.OnActionModeStartedListener;
@@ -46,8 +45,6 @@ public interface IHoloActivity extends IHolo, SuperStartActivity,
     public boolean onOptionsItemSelected(MenuItem item);
 
     public boolean onPrepareOptionsMenu(Menu menu);
-
-    public View prepareDecorView(View view);
 
     public void requestWindowFeature(long featureId);
 

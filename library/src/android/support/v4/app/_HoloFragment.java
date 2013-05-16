@@ -30,7 +30,6 @@ import com.actionbarsherlock.view.MenuItem;
 
 public abstract class _HoloFragment extends android.support.v4.app.Fragment implements
         IHoloFragment {
-    private static final int INTERNAL_DECOR_VIEW_ID = 0x7f999999;
     private Activity mActivity;
     boolean mDetachChildFragments = true;
     boolean mDontSaveMe = false;
@@ -176,8 +175,14 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     @Override
     public final View onCreateView(android.view.LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
-        return prepareDecorView(onCreateView(getLayoutInflater(),
-                container, savedInstanceState));
+        ContextMenuDecorView decorView = new ContextMenuDecorView(mActivity);
+        decorView.setProvider(this);
+        final View view = onCreateView(getLayoutInflater(), decorView, savedInstanceState);
+        if (view == null) {
+            return null;
+        }
+        decorView.addView(view);
+        return decorView;
     }
 
     @Override
@@ -247,20 +252,6 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
 
     public boolean openContextMenu(View v) {
         return v.showContextMenu();
-    }
-
-    @Override
-    public View prepareDecorView(View v) {
-        if (v == null) {
-            return v;
-        }
-        if (v instanceof ContextMenuDecorView) {
-            ((ContextMenuDecorView) v).setProvider(this);
-        }
-        ContextMenuDecorView view = new ContextMenuDecorView(mActivity, v, null);
-        view.setId(INTERNAL_DECOR_VIEW_ID);
-        view.setProvider(this);
-        return view;
     }
 
     @Override

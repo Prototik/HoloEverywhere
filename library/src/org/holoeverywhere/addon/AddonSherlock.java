@@ -32,12 +32,6 @@ public class AddonSherlock extends IAddon {
         private ActionBarSherlock mSherlock;
 
         @Override
-        public boolean addContentView(View view, LayoutParams params) {
-            getSherlock().addContentView(view, params);
-            return true;
-        }
-
-        @Override
         public boolean closeOptionsMenu() {
             return getSherlock().dispatchCloseOptionsMenu();
         }
@@ -60,6 +54,12 @@ public class AddonSherlock extends IAddon {
                 mSherlock = ActionBarSherlock.wrap(get(), ActionBarSherlock.FLAG_DELEGATE);
             }
             return mSherlock;
+        }
+
+        @Override
+        public boolean installDecorView(View view, LayoutParams params) {
+            getSherlock().setContentView(view, params);
+            return true;
         }
 
         @Override
@@ -157,12 +157,6 @@ public class AddonSherlock extends IAddon {
         @Override
         public boolean requestWindowFeature(int featureId) {
             return getSherlock().requestFeature(featureId);
-        }
-
-        @Override
-        public boolean setContentView(View view, LayoutParams params) {
-            getSherlock().setContentView(view, params);
-            return true;
         }
 
         public void setProgress(int progress) {

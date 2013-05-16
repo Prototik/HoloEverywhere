@@ -43,7 +43,5 @@ public interface IHoloFragment extends IHolo, OnPrepareOptionsMenuListener,
     public void onInflate(Activity activity, AttributeSet attrs,
             Bundle savedInstanceState);
 
-    public View prepareDecorView(View view);
-
     public ActionMode startActionMode(ActionMode.Callback callback);
 }

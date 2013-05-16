@@ -11,10 +11,6 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 public abstract class IAddonActivity extends IAddonBase<Activity> {
-    public boolean addContentView(View view, LayoutParams params) {
-        return false;
-    }
-
     public boolean closeOptionsMenu() {
         return false;
     }
@@ -25,6 +21,10 @@ public abstract class IAddonActivity extends IAddonBase<Activity> {
 
     public View findViewById(int id) {
         return null;
+    }
+
+    public boolean installDecorView(View view, LayoutParams params) {
+        return false;
     }
 
     public boolean invalidateOptionsMenu() {
@@ -119,10 +119,6 @@ public abstract class IAddonActivity extends IAddonBase<Activity> {
     }
 
     public boolean requestWindowFeature(int featureId) {
-        return false;
-    }
-
-    public boolean setContentView(View view, LayoutParams params) {
         return false;
     }
 }

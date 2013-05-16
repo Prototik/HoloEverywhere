@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.support.v4.app._HoloActivity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.internal.view.menu.MenuItemWrapper;
@@ -80,30 +79,10 @@ public abstract class Activity extends _HoloActivity {
     public static final String ADDON_SLIDING_MENU = ADDON_SLIDER;
     private final IAddonBasicAttacher<IAddonActivity, Activity> mAttacher =
             new IAddonBasicAttacher<IAddonActivity, Activity>(this);
-
     private boolean mCreatedByThemeManager = false;
-
     private final FindViewAction mFindViewAction = new FindViewAction();
-
     private boolean mFirstRun = true;
-
     private final KeyEventAction mKeyEventAction = new KeyEventAction();
-
-    @Override
-    public void addContentView(View sView, final LayoutParams params) {
-        final View view = prepareDecorView(sView, params);
-        performAddonAction(new AddonCallback<IAddonActivity>() {
-            @Override
-            public boolean action(IAddonActivity addon) {
-                return addon.addContentView(view, params);
-            }
-
-            @Override
-            public void justPost() {
-                getWindow().addContentView(view, params);
-            }
-        });
-    }
 
     @Override
     public <T extends IAddonActivity> T addon(Class<? extends IAddon> clazz) {
@@ -552,32 +531,6 @@ public abstract class Activity extends _HoloActivity {
         Bundle bundle = new Bundle(getClassLoader());
         onSaveInstanceState(bundle);
         return bundle.size() > 0 ? bundle : null;
-    }
-
-    @Override
-    public void setContentView(final int layoutResId) {
-        setContentView(getLayoutInflater().makeDecorView(layoutResId));
-    }
-
-    @Override
-    public void setContentView(View view) {
-        setContentView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-    }
-
-    @Override
-    public void setContentView(View sView, final LayoutParams params) {
-        final View view = prepareDecorView(sView, params);
-        performAddonAction(new AddonCallback<IAddonActivity>() {
-            @Override
-            public boolean action(IAddonActivity addon) {
-                return addon.setContentView(view, params);
-            }
-
-            @Override
-            public void justPost() {
-                getWindow().setContentView(view, params);
-            }
-        });
     }
 
     @Override

@@ -14,6 +14,7 @@ import org.holoeverywhere.IHoloActivity;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.SystemServiceManager;
 import org.holoeverywhere.ThemeManager;
+import org.holoeverywhere.addon.IAddonActivity;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
 import org.holoeverywhere.app.ContextThemeWrapperPlus;
@@ -33,7 +34,6 @@ import android.os.Parcelable;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
 import com.actionbarsherlock.internal.view.menu.ContextMenuCallbackGetter;
@@ -129,15 +129,18 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
     private Context mActionBarContext;
     private Holo mConfig;
     private Map<View, ContextMenuListener> mContextMenuListeners;
+    private WindowDecorView mDecorView;
     private boolean mForceThemeApply = false;
     private boolean mInited = false;
     private int mLastThemeResourceId = 0;
     private MenuInflater mMenuInflater;
+
     private final List<WeakReference<OnWindowFocusChangeListener>> mOnWindowFocusChangeListeners = new ArrayList<WeakReference<OnWindowFocusChangeListener>>();
 
     @Override
     public void addContentView(View view, LayoutParams params) {
-        super.addContentView(prepareDecorView(view), params);
+        requestDecorView();
+        mDecorView.addView(view, params);
     }
 
     @Override
@@ -272,6 +275,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
             setTheme(ThemeManager.getDefaultTheme());
         }
         return super.getTheme();
+    }
+
+    protected final WindowDecorView getWindowDecorView() {
+        return mDecorView;
     }
 
     protected void init(Holo config) {
@@ -456,6 +463,12 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         return false;
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        requestDecorView();
+        super.onPostCreate(savedInstanceState);
+    }
+
     protected void onPostInit(Holo config, Bundle savedInstanceState) {
 
     }
@@ -500,21 +513,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
     }
 
     @Override
-    public View prepareDecorView(View view) {
-        return prepareDecorView(view, null);
-    }
-
-    public View prepareDecorView(View v, ViewGroup.LayoutParams params) {
-        if (v instanceof WindowDecorView) {
-            ((WindowDecorView) v).setProvider(this);
-            return v;
-        }
-        WindowDecorView decor = new WindowDecorView(this, v, params);
-        decor.setProvider(this);
-        return decor;
-    }
-
-    @Override
     public void registerForContextMenu(View view) {
         if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
             super.registerForContextMenu(view);
@@ -531,11 +529,52 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         view.setLongClickable(true);
     }
 
+    private void requestDecorView() {
+        if (mDecorView != null) {
+            return;
+        }
+        mDecorView = new WindowDecorView(this);
+        mDecorView.setId(android.R.id.content);
+        mDecorView.setProvider(this);
+        final LayoutParams params = new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        performAddonAction(new AddonCallback<IAddonActivity>() {
+            @Override
+            public boolean action(IAddonActivity addon) {
+                return addon.installDecorView(mDecorView, params);
+            }
+
+            @Override
+            public void justPost() {
+                getWindow().setContentView(mDecorView, params);
+            }
+        });
+    }
+
     @Override
     public void requestWindowFeature(long featureId) {
         if (!mInited) {
             createConfig(null).requestWindowFeature((int) featureId);
         }
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        requestDecorView();
+        mDecorView.removeAllViewsInLayout();
+        getLayoutInflater().inflate(layoutResID, mDecorView, true);
+    }
+
+    @Override
+    public void setContentView(View view) {
+        setContentView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+    }
+
+    @Override
+    public void setContentView(View view, LayoutParams params) {
+        requestDecorView();
+        mDecorView.removeAllViewsInLayout();
+        mDecorView.addView(view, params);
     }
 
     public void setForceThemeApply(boolean forceThemeApply) {

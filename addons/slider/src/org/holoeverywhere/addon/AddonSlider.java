@@ -16,7 +16,6 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 
 @Addon(weight = 40)
@@ -30,9 +29,7 @@ public class AddonSlider extends IAddon {
         private boolean mAddonEnabled = true;
         private boolean mDragWithActionBar = false;
         private boolean mForceNotRestoreInstance = false;
-        private boolean mRejectContentView = true;
         private SliderView mSliderView;
-        private View mView;
 
         @Override
         public void disableShadow() {
@@ -41,12 +38,6 @@ public class AddonSlider extends IAddon {
 
         @Override
         public View findViewById(int id) {
-            if (mView != null) {
-                View view = mView.findViewById(id);
-                if (view != null) {
-                    return view;
-                }
-            }
             return mSliderView != null ? mSliderView.findViewById(id) : null;
         }
 
@@ -182,9 +173,7 @@ public class AddonSlider extends IAddon {
 
         @Override
         public void onPostCreate(Bundle savedInstanceState) {
-            mRejectContentView = false;
             if (!mAddonEnabled) {
-                get().setContentView(mView);
                 mSliderView = null;
                 return;
             }
@@ -193,48 +182,37 @@ public class AddonSlider extends IAddon {
                 SavedState state = savedInstanceState.getParcelable(KEY_SLIDER_STATE);
                 mSliderView.dispatchRestoreInstanceState(state);
             }
-            View view = mView.findViewById(R.id.contentView);
-            if (view != null) {
-                mSliderView.setContentView(view);
+            final View contentView = get().findViewById(R.id.contentView);
+            if (contentView == null) {
+                throw new IllegalStateException(
+                        "You should specify your content view by @id/contentView");
             }
-            view = mView.findViewById(R.id.leftView);
-            if (view != null) {
-                mSliderView.setLeftView(view);
-            }
-            view = mView.findViewById(R.id.rightView);
-            if (view != null) {
-                mSliderView.setRightView(view);
-            }
-            if (mSliderView.getContentView() == null && mSliderView.getLeftView() == null
-                    && mSliderView.getRightView() == null) {
-                mSliderView.setContentView(mView);
-            }
+            final ViewGroup parent = (ViewGroup) contentView.getParent();
+            mSliderView.setLeftView(get().findViewById(R.id.leftView));
+            mSliderView.setRightView(get().findViewById(R.id.rightView));
             TypedArray a = get().obtainStyledAttributes(new int[] {
                     android.R.attr.windowBackground
             });
             final int windowBackground = a.getResourceId(0, 0);
             a.recycle();
             if (mDragWithActionBar) {
-                final View v = mSliderView.getContentView();
-                if (v.getParent() != null) {
-                    ((ViewGroup) v.getParent()).removeView(v);
-                }
-                get().setContentView(v);
                 ViewGroup decorView = (ViewGroup) get().getWindow().getDecorView();
-                view = decorView.getChildAt(0);
-                if (view.getBackground() == null) {
-                    view.setBackgroundResource(windowBackground);
-                }
+                View view = decorView.getChildAt(0);
                 decorView.removeView(view);
                 mSliderView.setContentView(view);
                 decorView.addView(mSliderView, 0);
+                if (view.getBackground() == null) {
+                    view.setBackgroundResource(windowBackground);
+                }
             } else {
-                final View contentView = mSliderView.getContentView();
                 if (windowBackground > 0 && contentView != null
                         && contentView.getBackground() == null) {
                     contentView.setBackgroundResource(windowBackground);
                 }
-                get().setContentView(mSliderView);
+                final int viewIndex = parent.indexOfChild(contentView);
+                parent.removeViewAt(viewIndex);
+                mSliderView.setContentView(contentView);
+                parent.addView(mSliderView, viewIndex);
             }
         }
 
@@ -276,20 +254,6 @@ public class AddonSlider extends IAddon {
         @Override
         public void setContentView(View view) {
             mSliderView.setContentView(view);
-        }
-
-        /**
-         * Doesn't call this manually!
-         */
-        @Override
-        @Deprecated
-        public boolean setContentView(View view, LayoutParams params) {
-            if (mRejectContentView) {
-                mView = view;
-                return true;
-            } else {
-                return false;
-            }
         }
 
         @Override

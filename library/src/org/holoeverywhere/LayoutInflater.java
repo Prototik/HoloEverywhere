@@ -16,7 +16,6 @@ import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemServic
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.internal.DialogTitle;
 import org.holoeverywhere.internal.NumberPickerEditText;
-import org.holoeverywhere.internal.WindowDecorView;
 import org.holoeverywhere.widget.FrameLayout;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -561,10 +560,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
             }
             return FontLoader.apply(result);
         }
-    }
-
-    public WindowDecorView makeDecorView(int layout) {
-        return WindowDecorView.inflateDecorView(this, layout);
     }
 
     public LayoutInflater obtainFragmentChildInflater(Fragment fragment) {

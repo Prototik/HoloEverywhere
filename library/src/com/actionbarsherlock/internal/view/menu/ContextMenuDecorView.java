@@ -8,7 +8,6 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
 import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.MenuItem;
@@ -26,32 +25,8 @@ public class ContextMenuDecorView extends FrameLayout implements
 
     public ContextMenuDecorView(Context context) {
         super(context);
-    }
-
-    public ContextMenuDecorView(Context context, View view, ViewGroup.LayoutParams params) {
-        this(context);
-        if (view != null) {
-            attachView(view, params);
-        }
-    }
-
-    public synchronized void attachView(View view, ViewGroup.LayoutParams params) {
-        if (view == null) {
-            throw new NullPointerException("View cannot be null");
-        }
-        ViewParent parent = view.getParent();
-        if (parent != null && parent instanceof ViewGroup) {
-            ((ViewGroup) parent).removeView(view);
-        }
-        removeAllViews();
-        if (params == null) {
-            params = new FrameLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                    android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-        }
-        setLayoutParams(params);
-        addView(view, new FrameLayout.LayoutParams(
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT));
+        setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     @Override
@@ -122,9 +97,5 @@ public class ContextMenuDecorView extends FrameLayout implements
         } else {
             return false;
         }
-    }
-
-    public View unwrap() {
-        return getChildCount() > 0 ? getChildAt(0) : null;
     }
 }
