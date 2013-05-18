@@ -88,10 +88,10 @@
 
 	<licenses>
 		<license>
-			<name>LGPLv3</name>
+			<name>MIT License</name>
 			<url>https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE</url>
 			<distribution>repo</distribution>
-			<comments>Copyright (c) 2012 Christophe Versieux, Sergey Shatunov</comments>
+			<comments>Copyright (c) 2013 Sergey Shatunov</comments>
 		</license>
 	</licenses>
 

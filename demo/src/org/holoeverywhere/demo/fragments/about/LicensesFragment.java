@@ -65,7 +65,7 @@ public class LicensesFragment extends ListFragment {
     private LicensesAdapter mAdapter;
 
     private void addLicenses() {
-        mAdapter.add(new License("HoloEverywhere", R.raw.license_lgpl3));
+        mAdapter.add(new License("HoloEverywhere", R.raw.license_mit));
         mAdapter.add(new License("ActionBarSherlock", R.raw.license_apache2));
     }
 
