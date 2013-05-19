@@ -5,12 +5,11 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.util.WeaklyMap;
 
 public abstract class IAddon {
     @Retention(RetentionPolicy.RUNTIME)
@@ -63,14 +62,13 @@ public abstract class IAddon {
         return addon(classname).obtain(object);
     }
 
-    private final Map<Object, WeakReference<?>> mStatesMap = new WeakHashMap<Object, WeakReference<?>>();
+    private final Map<Object, Object> mStatesMap = new WeaklyMap<Object, Object>();
     private final Map<Class<?>, Class<? extends IAddonBase<?>>> mTypesMap = new HashMap<Class<?>, Class<? extends IAddonBase<?>>>();
 
     @SuppressWarnings("unchecked")
     public <T, V extends IAddonBase<T>> V obtain(T object) {
         try {
-            WeakReference<V> ref = (WeakReference<V>) mStatesMap.get(object);
-            V addon = ref == null ? null : ref.get();
+            V addon = (V) mStatesMap.get(object);
             if (addon != null) {
                 return addon;
             }
@@ -84,7 +82,7 @@ public abstract class IAddon {
             }
             addon = ((Class<V>) mTypesMap.get(clazz)).newInstance();
             addon.attach(object, this);
-            mStatesMap.put(object, new WeakReference<V>(addon));
+            mStatesMap.put(object, addon);
             return addon;
         } catch (Exception e) {
             throw new RuntimeException(e);

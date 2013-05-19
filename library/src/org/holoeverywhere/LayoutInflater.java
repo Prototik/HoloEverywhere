@@ -2,20 +2,19 @@
 package org.holoeverywhere;
 
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator;
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.internal.DialogTitle;
 import org.holoeverywhere.internal.NumberPickerEditText;
+import org.holoeverywhere.util.WeaklyMap;
 import org.holoeverywhere.widget.FrameLayout;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -149,7 +148,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
     };
     private static final Map<Class<?>, Method> sFinishInflateMethods =
             new HashMap<Class<?>, Method>(100);
-    private static final Map<Context, WeakReference<LayoutInflater>> sInstances = new WeakHashMap<Context, WeakReference<LayoutInflater>>();
+    private static final Map<Context, LayoutInflater> sInstances = new WeaklyMap<Context, LayoutInflater>();
     private static OnInitInflaterListener sListener;
     private static final List<String> sPackages = new ArrayList<String>();
     private static final Map<String, String> sRemaps = new HashMap<String, String>();
@@ -185,14 +184,9 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
     }
 
     public static LayoutInflater from(Context context) {
-        LayoutInflater inflater = null;
-        WeakReference<LayoutInflater> reference = sInstances.get(context);
-        if (reference != null) {
-            inflater = reference.get();
-        }
+        LayoutInflater inflater = sInstances.get(context);
         if (inflater == null) {
-            sInstances.put(context, new WeakReference<LayoutInflater>(
-                    inflater = new LayoutInflater(context)));
+            sInstances.put(context, inflater = new LayoutInflater(context));
         }
         return inflater;
     }
@@ -294,9 +288,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
     private Filter mFilter;
     private HashMap<String, Boolean> mFilterMap;
     private FragmentActivity mFragmentActivity;
-
-    private WeakHashMap<Fragment, WeakReference<LayoutInflater>> mFragmentChildInstances;
-
+    private Map<Fragment, LayoutInflater> mFragmentChildInstances;
     private LayoutInflater mParentInflater;
 
     protected LayoutInflater(android.view.LayoutInflater original,
@@ -567,13 +559,12 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
             return mParentInflater.obtainFragmentChildInflater(fragment);
         }
         if (mFragmentChildInstances == null) {
-            mFragmentChildInstances = new WeakHashMap<Fragment, WeakReference<LayoutInflater>>();
+            mFragmentChildInstances = new WeaklyMap<Fragment, LayoutInflater>();
         }
-        WeakReference<LayoutInflater> reference = mFragmentChildInstances.get(fragment);
-        LayoutInflater inflater = reference == null ? null : reference.get();
+        LayoutInflater inflater = mFragmentChildInstances.get(fragment);
         if (inflater == null) {
-            inflater = new LayoutInflater(this, mContext, fragment);
-            mFragmentChildInstances.put(fragment, new WeakReference<LayoutInflater>(inflater));
+            mFragmentChildInstances.put(fragment,
+                    inflater = new LayoutInflater(this, mContext, fragment));
         }
         return inflater;
     }

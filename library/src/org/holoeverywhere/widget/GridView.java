@@ -7,7 +7,6 @@ import java.util.List;
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.IHoloActivity.OnWindowFocusChangeListener;
 import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.util.LongSparseArray;
 import org.holoeverywhere.widget.HeaderViewListAdapter.ViewInfo;
 import org.holoeverywhere.widget.ListAdapterWrapper.ListAdapterCallback;
 
@@ -16,6 +15,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.support.v4.util.LongSparseArray;
 import android.util.AttributeSet;
 import android.util.SparseBooleanArray;
 import android.view.ContextMenu.ContextMenuInfo;

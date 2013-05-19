@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
@@ -22,6 +21,7 @@ import org.holoeverywhere.internal.WindowDecorView;
 import org.holoeverywhere.preference.PreferenceManagerHelper;
 import org.holoeverywhere.preference.SharedPreferences;
 import org.holoeverywhere.util.SparseIntArray;
+import org.holoeverywhere.util.WeaklyMap;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -524,7 +524,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
 
     public void registerForContextMenu(View view, ContextMenuListener listener) {
         if (mContextMenuListeners == null) {
-            mContextMenuListeners = new WeakHashMap<View, ContextMenuListener>();
+            mContextMenuListeners = new WeaklyMap<View, ContextMenuListener>();
         }
         mContextMenuListeners.put(view, listener);
         view.setLongClickable(true);

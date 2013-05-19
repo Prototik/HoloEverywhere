@@ -1,13 +1,12 @@
 
 package org.holoeverywhere.addon;
 
-import java.lang.ref.WeakReference;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.ThemeManager.ThemeSetter;
 import org.holoeverywhere.app.ContextThemeWrapperPlus;
+import org.holoeverywhere.util.WeaklyMap;
 
 import android.content.Context;
 
@@ -22,7 +21,7 @@ public class IAddonThemes implements ThemeSetter {
         public int resolveThemeForContext(Context context, int invalidTheme);
     }
 
-    private Map<Context, WeakReference<AddonThemeWrapper>> mContexts;
+    private Map<Context, AddonThemeWrapper> mContexts;
     private int mDarkTheme = -1;
     private final ThemeResolver mDefaultThemeResolver = new ThemeResolver() {
         @Override
@@ -64,8 +63,7 @@ public class IAddonThemes implements ThemeSetter {
         }
         AddonThemeWrapper wrapper = null;
         if (mContexts != null) {
-            WeakReference<AddonThemeWrapper> ref = mContexts.get(context);
-            wrapper = ref == null ? null : ref.get();
+            wrapper = mContexts.get(context);
         }
         if (wrapper == null) {
             final int theme = themeResolver.resolveThemeForContext(context, invalidTheme);
@@ -74,9 +72,9 @@ public class IAddonThemes implements ThemeSetter {
             }
             wrapper = new AddonThemeWrapper(context, theme);
             if (mContexts == null) {
-                mContexts = new WeakHashMap<Context, WeakReference<AddonThemeWrapper>>();
+                mContexts = new WeaklyMap<Context, AddonThemeWrapper>();
             }
-            mContexts.put(context, new WeakReference<AddonThemeWrapper>(wrapper));
+            mContexts.put(context, wrapper);
         }
         return wrapper;
     }

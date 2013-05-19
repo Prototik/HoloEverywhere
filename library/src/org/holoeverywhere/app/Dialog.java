@@ -2,12 +2,12 @@
 package org.holoeverywhere.app;
 
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 import org.holoeverywhere.internal.WindowDecorView;
+import org.holoeverywhere.util.WeaklyMap;
 
 import android.content.Context;
 import android.util.TypedValue;
@@ -137,7 +137,7 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
 
     public void registerForContextMenu(View view, ContextMenuListener listener) {
         if (mContextMenuListeners == null) {
-            mContextMenuListeners = new WeakHashMap<View, ContextMenuListener>();
+            mContextMenuListeners = new WeaklyMap<View, ContextMenuListener>();
         }
         mContextMenuListeners.put(view, listener);
     }
