@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<?xml version="1.0" encoding="UTF-8"?><resources>
 	<dimen name="preference_screen_side_margin">96dp</dimen>
 	<dimen name="preference_screen_side_margin_negative">-100dp</dimen>
 	<dimen name="preference_widget_width">64dp</dimen>

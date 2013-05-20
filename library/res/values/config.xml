@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<?xml version="1.0" encoding="UTF-8"?><resources>
 	<integer name="config_activityShortDur">150</integer>
 	<integer name="config_activityDefaultDur">220</integer>
 	<integer name="config_shortAnimTime">200</integer>

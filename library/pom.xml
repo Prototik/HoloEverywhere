@@ -53,6 +53,14 @@
 						<file>text.json:styles</file>
 						<file>attrs.json:attrs</file>
 					</inputFiles>
+					<optimizeXmlIncludeDirs>
+						<dir>${project.basedir}/res</dir>
+					</optimizeXmlIncludeDirs>
+					<optimizeImageIncludeDirs>
+						<dir>${project.basedir}/res/drawable-mdpi</dir>
+						<dir>${project.basedir}/res/drawable-hdpi</dir>
+						<dir>${project.basedir}/res/drawable-xhdpi</dir>
+					</optimizeImageIncludeDirs>
 				</configuration>
 			</plugin>
 

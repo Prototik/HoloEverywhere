@@ -52,7 +52,10 @@
 		"SeekBarPreference": "max",
 		"SeekBarDialogPreference": "max",
 		"TimePreference": "is24HourView",
-		"DatePreference": ""
+		"DatePreference": "",
+	    "Intent": "action$string/data$string/mimeType$string/targetPackage$string/targetClass$string",
+	    "IntentCategory": "name$string",
+	    "Extra": "name/value$string|integer|color|float|boolean"
 	},
 	"output": "values/attrs.xml"	
 }

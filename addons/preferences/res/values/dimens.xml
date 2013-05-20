@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<?xml version="1.0" encoding="UTF-8"?><resources>
 	<dimen name="preference_screen_header_vertical_padding">0dp</dimen>
 	<dimen name="preference_screen_header_padding_side">16dip</dimen>
-	<integer name="preference_screen_header_scrollbarStyle">0x02000000</integer> <!-- outsideOverlay -->
-	<integer name="preference_fragment_scrollbarStyle">0x02000000</integer> <!-- outsideOverlay -->
+	<integer name="preference_screen_header_scrollbarStyle">0x02000000</integer> 
+	<integer name="preference_fragment_scrollbarStyle">0x02000000</integer> 
 	<dimen name="preference_item_padding_side">8dip</dimen>
 	<dimen name="preference_item_padding_inner">8dip</dimen>
 	<dimen name="preference_child_padding_side">16dip</dimen>
