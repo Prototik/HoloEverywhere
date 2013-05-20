@@ -4,9 +4,9 @@
 	android:id="@+id/parentPanel"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:layout_marginLeft="8dip"
-	android:layout_marginRight="8dip"
-	android:orientation="vertical" >
+	android:orientation="vertical"
+	android:paddingLeft="8dp"
+	android:paddingRight="8dp" >
 	<LinearLayout
 		android:id="@+id/topPanel"
 		android:layout_width="match_parent"
