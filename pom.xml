@@ -17,6 +17,7 @@
 	<modules>
 		<module>Bug407</module>
 		<module>Bug418</module>
+		<module>Bug458</module>
 	</modules>
 
 	<build>
