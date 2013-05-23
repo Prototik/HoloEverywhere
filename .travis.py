@@ -46,27 +46,29 @@ def main():
 	os.environ["PATH"] += ":" + os.environ["ANDROID_HOME"] + "/platform-tools"
 	call(["android", "update", "sdk", "--filter", "platform-tools,android-16", "--no-ui", "--force"], True)
 
+	print " # Install support library r13"
+	call(["mvn", "install:install-file",
+	"-Dfile=android-support-v4-r13.jar",
+	"-DgroupId=com.google.android", "-DartifactId=support-v4",
+	"-Dversion=r13", "-Dpackaging=jar", "-DgeneratePom=true"], True)
+
 	if os.environ["TRAVIS_SECURE_ENV_VARS"] == "false":
 		unsecure();
 	else:
 		secure();
 		
 def unsecure():
-	print " # [UNSECURE] Runned in unsecure mode"
-	print " # [UNSECURE] Maven build"
+	print " # [UNSECURE] Build"
 	call(["mvn", "clean", "install", "--batch-mode", "-DskipTests=true"])
 
 def secure():	
-	print " # [SECURE] Secure mode, deploy feature is enabled"
 	if "[deploy snapshot]" in call_output(["git", "log", "-1", "--pretty=%B", os.environ["TRAVIS_COMMIT"]]):
-		print " # [SECURE] Prepare for deployment..."
+		print " # [SECURE] Build + Deploy..."
 		maven_config = os.getcwd() + "/.maven.xml"
 		create_maven_config(maven_config, os.environ["SONATYPE_USERNAME"], os.environ["SONATYPE_PASSWORD"])
-		print " # [SECURE] Maven build + deploy"
 		call(["mvn", "clean", "install", "deploy", "--batch-mode", "-DskipTests=true", "-DrepositoryId=holoeverywhere-repo-snapshots", "--settings=" + maven_config])
 	else:
-		print " # [SECURE] Skip snapshot deployment, only build"
-		print " # [SECURE] Maven build"
+		print " # [SECURE] Build"
 		call(["mvn", "clean", "install", "--batch-mode", "-DskipTests=true"])
 
 def create_maven_config(filename, username, password):  

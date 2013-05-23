@@ -20,7 +20,6 @@
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
-		<module>support-library</module>
 		<module>library</module>
 		<module>addons</module>
 		<module>application</module>
