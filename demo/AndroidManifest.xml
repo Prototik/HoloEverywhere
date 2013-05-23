@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="org.holoeverywhere.demo"
 	android:installLocation="auto"
-	android:versionCode="1005000"
-	android:versionName="1.5.0" >
+	android:versionCode="1006000"
+	android:versionName="1.6.0" >
 	<uses-sdk
 		android:minSdkVersion="7"
 		android:targetSdkVersion="16" />
@@ -27,17 +27,17 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".DemoDialogActivity" />
-		<uses-library
-			android:name="android.test.runner"
-			android:required="false" />
-		<activity
-			android:name=".test.app.TestActivity"
-			android:theme="@style/Holo.Theme" />
 		<activity
 			android:name="org.holoeverywhere.ChooserActivity"
 			android:excludeFromRecents="true"
 			android:finishOnCloseSystemDialogs="true"
 			android:multiprocess="true"
 			android:theme="@style/Holo.Theme.Dialog.Alert.Light" />
+		<uses-library
+			android:name="android.test.runner"
+			android:required="false" />
+		<activity
+			android:name=".test.app.TestActivity"
+			android:theme="@style/Holo.Theme" />
 	</application>
 </manifest>
