@@ -12,7 +12,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
-import android.os.Build.VERSION;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -71,7 +70,7 @@ public final class FontLoader {
         protected Typeface mTypeface;
 
         private HoloFont(int font) {
-            this(font, VERSION.SDK_INT >= 11);
+            this(font, false);
         }
 
         private HoloFont(int font, boolean ignore) {
@@ -147,12 +146,15 @@ public final class FontLoader {
 
     }
 
+    private static HoloFont sDefaultFont = HoloFont.ROBOTO;
     private static final SparseArray<Typeface> sFontCache = new SparseArray<Typeface>();
-
     private static final String TAG = FontLoader.class.getSimpleName();
 
     public static <T extends View> T apply(T view) {
-        return apply(view, HoloFont.ROBOTO);
+        if (sDefaultFont == null) {
+            return view;
+        }
+        return apply(view, sDefaultFont);
     }
 
     public static <T extends View> T apply(T view, FontSelector fontSelector) {
@@ -272,6 +274,14 @@ public final class FontLoader {
         }
     }
 
+    public static void setDefaultFont(HoloFont defaultFont) {
+        sDefaultFont = defaultFont;
+    }
+
     private FontLoader() {
+    }
+
+    public static HoloFont getDefaultFont() {
+        return sDefaultFont;
     }
 }
