@@ -1,0 +1,23 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:0.4.2'
+  }
+}
+
+allprojects {
+  group = 'org.holoeverywhere'
+  version = '1.6.2-SNAPSHOT'
+
+  repositories {
+    mavenCentral()
+    maven {
+      url "https://github.com/dahlgren/abs-aar/raw/master"
+    }
+  }
+}
+
+apply plugin: 'android-reporting'
