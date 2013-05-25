@@ -1,7 +1,6 @@
 
 package org.holoeverywhere.app;
 
-import org.holoeverywhere.ITabSwipe;
 import org.holoeverywhere.R;
 import org.holoeverywhere.widget.FrameLayout;
 
@@ -13,7 +12,7 @@ import android.os.Bundle;
  * Part of HoloEverywhere
  */
 public abstract class TabSwipeActivity extends Activity implements
-        ITabSwipe<TabSwipeFragment.TabInfo> {
+        TabSwipeInterface<TabSwipeFragment.TabInfo> {
     public static class InnerFragment extends TabSwipeFragment {
         private TabSwipeActivity mActivity;
         private boolean mTabsWasHandled = false;

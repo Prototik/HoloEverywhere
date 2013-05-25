@@ -10,7 +10,7 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".DemoDialogActivity"/>
-		<activity android:excludeFromRecents="true" android:finishOnCloseSystemDialogs="true" android:multiprocess="true" android:name="org.holoeverywhere.ChooserActivity" android:theme="@style/Holo.Theme.Dialog.Alert.Light"/>
+		<activity android:excludeFromRecents="true" android:finishOnCloseSystemDialogs="true" android:multiprocess="true" android:name="org.holoeverywhere.content.ChooserActivity" android:theme="@style/Holo.Theme.Dialog.Alert.Light"/>
 		<uses-library android:name="android.test.runner" android:required="false"/>
 		<activity android:name=".test.app.TestActivity" android:theme="@style/Holo.Theme"/>
 	</application>

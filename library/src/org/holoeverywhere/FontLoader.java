@@ -207,6 +207,10 @@ public final class FontLoader {
         return view;
     }
 
+    public static HoloFont getDefaultFont() {
+        return sDefaultFont;
+    }
+
     private static <T extends View> T internalApply(T view, FontSelector fontSelector) {
         if (view instanceof TextView) {
             TextView textView = (TextView) view;
@@ -279,9 +283,5 @@ public final class FontLoader {
     }
 
     private FontLoader() {
-    }
-
-    public static HoloFont getDefaultFont() {
-        return sDefaultFont;
     }
 }

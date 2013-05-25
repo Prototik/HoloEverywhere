@@ -1,5 +1,5 @@
 
-package org.holoeverywhere;
+package org.holoeverywhere.content;
 
 import org.holoeverywhere.app.Application;
 

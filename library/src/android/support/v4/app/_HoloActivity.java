@@ -9,11 +9,13 @@ import java.util.Map;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
-import org.holoeverywhere.IHoloActivity;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.SystemServiceManager;
+import org.holoeverywhere.SystemServiceManager.SuperSystemService;
 import org.holoeverywhere.ThemeManager;
+import org.holoeverywhere.ThemeManager.SuperStartActivity;
 import org.holoeverywhere.addon.IAddonActivity;
+import org.holoeverywhere.addon.IAddonAttacher;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
 import org.holoeverywhere.app.ContextThemeWrapperPlus;
@@ -36,18 +38,28 @@ import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
 import android.view.ViewGroup.LayoutParams;
 
+import com.actionbarsherlock.ActionBarSherlock.OnActionModeFinishedListener;
+import com.actionbarsherlock.ActionBarSherlock.OnActionModeStartedListener;
+import com.actionbarsherlock.ActionBarSherlock.OnCreatePanelMenuListener;
+import com.actionbarsherlock.ActionBarSherlock.OnMenuItemSelectedListener;
+import com.actionbarsherlock.ActionBarSherlock.OnPreparePanelListener;
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.internal.view.menu.ContextMenuCallbackGetter;
 import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView.ContextMenuListenersProvider;
 import com.actionbarsherlock.internal.view.menu.ContextMenuItemWrapper;
 import com.actionbarsherlock.internal.view.menu.ContextMenuListener;
 import com.actionbarsherlock.internal.view.menu.ContextMenuWrapper;
+import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public abstract class _HoloActivity extends Watson implements IHoloActivity,
-        ContextMenuListenersProvider {
+public abstract class _HoloActivity extends Watson implements SuperStartActivity,
+        OnCreatePanelMenuListener, OnPreparePanelListener,
+        OnMenuItemSelectedListener, OnActionModeStartedListener,
+        OnActionModeFinishedListener, SuperSystemService, ContextMenuListener,
+        ContextMenuListenersProvider, IAddonAttacher<IAddonActivity> {
     public static final class Holo implements Parcelable {
         public static final Parcelable.Creator<Holo> CREATOR = new Creator<Holo>() {
             @Override
@@ -125,16 +137,26 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         }
     }
 
+    public static interface OnWindowFocusChangeListener {
+        public void onWindowFocusChanged(boolean hasFocus);
+    }
+
     private static final String CONFIG_KEY = "holo:config:activity";
+
     private Context mActionBarContext;
+
     private Holo mConfig;
+
     private Map<View, ContextMenuListener> mContextMenuListeners;
+
     private WindowDecorView mDecorView;
+
     private boolean mForceThemeApply = false;
+
     private boolean mInited = false;
+
     private int mLastThemeResourceId = 0;
     private MenuInflater mMenuInflater;
-
     private final List<WeakReference<OnWindowFocusChangeListener>> mOnWindowFocusChangeListeners = new ArrayList<WeakReference<OnWindowFocusChangeListener>>();
 
     @Override
@@ -144,7 +166,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         }
     }
 
-    @Override
     public void addOnWindowFocusChangeListener(OnWindowFocusChangeListener listener) {
         synchronized (mOnWindowFocusChangeListeners) {
             Iterator<WeakReference<OnWindowFocusChangeListener>> i = mOnWindowFocusChangeListeners
@@ -202,12 +223,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         return mContextMenuListeners.get(view);
     }
 
-    @Override
     public SharedPreferences getDefaultSharedPreferences() {
         return PreferenceManagerHelper.getDefaultSharedPreferences(this);
     }
 
-    @Override
     public SharedPreferences getDefaultSharedPreferences(PreferenceImpl impl) {
         return PreferenceManagerHelper.getDefaultSharedPreferences(this, impl);
     }
@@ -221,7 +240,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         return LayoutInflater.from(this);
     }
 
-    @Override
     public SharedPreferences getSharedPreferences(PreferenceImpl impl,
             String name, int mode) {
         return PreferenceManagerHelper.wrap(this, impl, name, mode);
@@ -231,6 +249,8 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
     public SharedPreferences getSharedPreferences(String name, int mode) {
         return PreferenceManagerHelper.wrap(this, name, mode);
     }
+
+    public abstract ActionBar getSupportActionBar();
 
     /**
      * @return Themed context for using in action bar
@@ -251,7 +271,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         return mActionBarContext;
     }
 
-    @Override
     public Application getSupportApplication() {
         return Application.getLastInstance();
     }
@@ -298,7 +317,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         supportInvalidateOptionsMenu();
     }
 
-    @Override
     public boolean isForceThemeApply() {
         return mForceThemeApply;
     }
@@ -558,7 +576,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         return false;
     }
 
-    @Override
     public void requestWindowFeature(long featureId) {
         if (!mInited) {
             createConfig(null).requestWindowFeature((int) featureId);
@@ -590,6 +607,16 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         mForceThemeApply = forceThemeApply;
     }
 
+    public abstract void setSupportProgress(int progress);
+
+    public abstract void setSupportProgressBarIndeterminate(boolean indeterminate);
+
+    public abstract void setSupportProgressBarIndeterminateVisibility(boolean visible);
+
+    public abstract void setSupportProgressBarVisibility(boolean visible);
+
+    public abstract void setSupportSecondaryProgress(int secondaryProgress);
+
     @Override
     public void setTheme(int resid) {
         setTheme(resid, true);
@@ -606,7 +633,10 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
             if ((resid & ThemeManager.COLOR_SCHEME_MASK) == 0) {
                 int theme = ThemeManager.getTheme(getIntent(), false);
                 if (theme == 0) {
-                    theme = ThemeManager.getTheme(getParentActivityIntent(), false);
+                    final android.app.Activity activity = getParent();
+                    if (activity != null) {
+                        theme = ThemeManager.getTheme(activity.getIntent(), false);
+                    }
                 }
                 theme &= ThemeManager.COLOR_SCHEME_MASK;
                 if (theme != 0) {
@@ -617,11 +647,15 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         }
     }
 
+    public abstract ActionMode startActionMode(ActionMode.Callback callback);
+
+    @SuppressLint("NewApi")
     @Override
     public void startActivities(Intent[] intents) {
         startActivities(intents, null);
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void startActivities(Intent[] intents, Bundle options) {
         for (Intent intent : intents) {
@@ -629,16 +663,19 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         }
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void startActivity(Intent intent) {
         startActivity(intent, null);
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void startActivity(Intent intent, Bundle options) {
         startActivityForResult(intent, -1, options);
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         startActivityForResult(intent, requestCode, null);
@@ -654,7 +691,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         }
     }
 
-    @Override
     public android.content.SharedPreferences superGetSharedPreferences(
             String name, int mode) {
         return super.getSharedPreferences(name, mode);
@@ -676,6 +712,7 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         }
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void supportInvalidateOptionsMenu() {
         if (VERSION.SDK_INT >= 11) {

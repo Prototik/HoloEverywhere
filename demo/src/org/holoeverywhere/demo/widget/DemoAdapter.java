@@ -1,7 +1,7 @@
 
 package org.holoeverywhere.demo.widget;
 
-import org.holoeverywhere.ArrayAdapter;
+import org.holoeverywhere.widget.ArrayAdapter;
 import org.holoeverywhere.widget.ListView;
 
 import android.content.Context;

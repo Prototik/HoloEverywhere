@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.holoeverywhere.HoloEverywhere;
-import org.holoeverywhere.IHoloActivity.OnWindowFocusChangeListener;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.widget.HeaderViewListAdapter.ViewInfo;
 import org.holoeverywhere.widget.ListAdapterWrapper.ListAdapterCallback;
@@ -15,6 +14,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.support.v4.app._HoloActivity.OnWindowFocusChangeListener;
 import android.support.v4.util.LongSparseArray;
 import android.util.AttributeSet;
 import android.util.SparseBooleanArray;
@@ -55,6 +55,7 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
             return false;
         }
 
+        @SuppressLint("NewApi")
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             mWrapped.onDestroyActionMode(mode);
@@ -64,6 +65,7 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
             setLongClickable(true);
         }
 
+        @SuppressLint("NewApi")
         @Override
         public void onItemCheckedStateChanged(ActionMode mode,
                 int position, long id, boolean checked) {
@@ -99,6 +101,7 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         }
     }
 
+    @SuppressLint("InlinedApi")
     public static final int CHOICE_MODE_MULTIPLE_MODAL = AbsListView.CHOICE_MODE_MULTIPLE_MODAL;
 
     private static final boolean USE_ACTIVATED = VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB;
@@ -276,10 +279,12 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         return mForceHeaderListAdapter;
     }
 
+    @SuppressLint("NewApi")
     public boolean isInScrollingContainer() {
         ViewParent p = getParent();
         while (p != null && p instanceof ViewGroup) {
-            if (((ViewGroup) p).shouldDelayChildPressedState()) {
+            if (VERSION.SDK_INT >= VERSION_CODES.ICE_CREAM_SANDWICH
+                    && ((ViewGroup) p).shouldDelayChildPressedState()) {
                 return true;
             }
             p = p.getParent();
@@ -636,6 +641,7 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         super.setOnScrollListener(mOnScrollListener = l);
     }
 
+    @SuppressLint("NewApi")
     protected final void setStateOnView(View child, boolean value) {
         if (child instanceof Checkable) {
             ((Checkable) child).setChecked(value);

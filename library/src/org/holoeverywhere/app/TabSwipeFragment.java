@@ -4,7 +4,6 @@ package org.holoeverywhere.app;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.holoeverywhere.ITabSwipe;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 import org.holoeverywhere.app.TabSwipeFragment.TabInfo;
@@ -26,8 +25,8 @@ import com.actionbarsherlock.app.ActionBar.TabListener;
  * <br />
  * Part of HoloEverywhere
  */
-public abstract class TabSwipeFragment extends Fragment implements ITabSwipe<TabInfo> {
-    public static class TabInfo implements ITabSwipe.TabInfo {
+public abstract class TabSwipeFragment extends Fragment implements TabSwipeInterface<TabInfo> {
+    public static class TabInfo implements TabSwipeInterface.TabInfo {
         public Bundle fragmentArguments;
         public Class<? extends Fragment> fragmentClass;
         public CharSequence title;

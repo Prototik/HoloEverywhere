@@ -1,5 +1,5 @@
 
-package org.holoeverywhere;
+package org.holoeverywhere.content;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 public class ContentResolverCompat {
-
     public static class OpenResourceIdResult {
         public int id;
         public Resources r;
@@ -63,5 +62,4 @@ public class ContentResolverCompat {
     private ContentResolverCompat() {
 
     }
-
 }

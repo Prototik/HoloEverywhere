@@ -1,6 +1,7 @@
 
-package org.holoeverywhere;
+package org.holoeverywhere.content;
 
+import org.holoeverywhere.R;
 import org.holoeverywhere.app.ResolverActivity;
 
 import android.content.Intent;

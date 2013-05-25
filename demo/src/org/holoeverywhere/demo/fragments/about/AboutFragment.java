@@ -1,8 +1,8 @@
 
 package org.holoeverywhere.demo.fragments.about;
 
-import org.holoeverywhere.IntentCompat;
 import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.content.IntentCompat;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.demo.fragments.OtherFragment;
 import org.holoeverywhere.widget.ListView;

@@ -1,5 +1,5 @@
 
-package org.holoeverywhere;
+package org.holoeverywhere.widget;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,6 +7,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import org.holoeverywhere.FontLoader;
+import org.holoeverywhere.LayoutInflater;
 
 import android.content.Context;
 import android.util.Log;

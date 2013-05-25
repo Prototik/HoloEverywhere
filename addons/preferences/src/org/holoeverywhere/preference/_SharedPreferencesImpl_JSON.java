@@ -32,6 +32,20 @@ import android.os.Build.VERSION;
 import android.util.Log;
 
 public class _SharedPreferencesImpl_JSON extends _SharedPreferencesBase {
+    private class ClearJSONManipulate implements FutureJSONManipulate {
+        @Override
+        public boolean onJSONManipulate(JSONObject object) {
+            @SuppressWarnings("unchecked")
+            Iterator<String> iterator = object.keys();
+            while (iterator.hasNext()) {
+                final String key = iterator.next();
+                object.remove(key);
+                notifyOnChange(key);
+            }
+            return true;
+        }
+    }
+
     private final class CouldNotCreateStorage extends RuntimeException {
         private static final long serialVersionUID = -8602981054023098742L;
 
@@ -43,8 +57,9 @@ public class _SharedPreferencesImpl_JSON extends _SharedPreferencesBase {
     private final class EditorImpl extends _BaseEditor {
         private final List<FutureJSONManipulate> manipulate = new ArrayList<FutureJSONManipulate>();
 
-        private void add(FutureJSONManipulate t) {
+        private EditorImpl add(FutureJSONManipulate t) {
             manipulate.add(t);
+            return this;
         }
 
         @Override
@@ -69,8 +84,7 @@ public class _SharedPreferencesImpl_JSON extends _SharedPreferencesBase {
 
         @Override
         public Editor clear() {
-            manipulate.clear();
-            return this;
+            return add(new ClearJSONManipulate());
         }
 
         @Override
@@ -78,81 +92,69 @@ public class _SharedPreferencesImpl_JSON extends _SharedPreferencesBase {
             try {
                 apply();
                 return true;
-            } catch (RuntimeException e) {
+            } catch (Exception e) {
                 return false;
             }
         }
 
         @Override
         public Editor putBoolean(String key, boolean value) {
-            add(new PutValueJSONManipulate(key, value));
-            return this;
+            return add(new PutValueJSONManipulate(key, value));
         }
 
         @Override
         public Editor putFloat(String key, float value) {
-            add(new PutValueJSONManipulate(key, (double) value));
-            return this;
+            return add(new PutValueJSONManipulate(key, (double) value));
         }
 
         @Override
         public Editor putFloatSet(String key, Set<Float> value) {
-            add(new PutValueJSONManipulate(key, value));
-            return this;
+            return add(new PutValueJSONManipulate(key, value));
         }
 
         @Override
         public Editor putInt(String key, int value) {
-            add(new PutValueJSONManipulate(key, value));
-            return this;
+            return add(new PutValueJSONManipulate(key, value));
         }
 
         @Override
         public Editor putIntSet(String key, Set<Integer> value) {
-            add(new PutValueJSONManipulate(key, value));
-            return this;
+            return add(new PutValueJSONManipulate(key, value));
         }
 
         @Override
         public Editor putJSONArray(String key, JSONArray value) {
-            add(new PutValueJSONManipulate(key, value));
-            return this;
+            return add(new PutValueJSONManipulate(key, value));
         }
 
         @Override
         public Editor putJSONObject(String key, JSONObject value) {
-            add(new PutValueJSONManipulate(key, value));
-            return this;
+            return add(new PutValueJSONManipulate(key, value));
         }
 
         @Override
         public Editor putLong(String key, long value) {
-            add(new PutValueJSONManipulate(key, value));
-            return this;
+            return add(new PutValueJSONManipulate(key, value));
         }
 
         @Override
         public Editor putLongSet(String key, Set<Long> value) {
-            add(new PutValueJSONManipulate(key, value));
-            return this;
+            return add(new PutValueJSONManipulate(key, value));
         }
 
         @Override
         public Editor putString(String key, String value) {
-            add(new PutValueJSONManipulate(key, value));
-            return this;
+            return add(new PutValueJSONManipulate(key, value));
         }
 
         @Override
         public Editor putStringSet(String key, Set<String> value) {
-            add(new PutValueJSONManipulate(key, value));
-            return this;
+            return add(new PutValueJSONManipulate(key, value));
         }
 
         @Override
         public Editor remove(String key) {
-            add(new RemoveValueJSONManipulate(key));
-            return this;
+            return add(new RemoveValueJSONManipulate(key));
         }
 
     }

@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
-import org.holoeverywhere.IHolo;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.LayoutInflater.LayoutInflaterCreator;
 import org.holoeverywhere.SystemServiceManager;
@@ -28,7 +27,7 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 
 public class Application extends android.app.Application implements
-        IHolo, SuperStartActivity, SuperSystemService, IAddonAttacher<IAddonApplication> {
+        SuperStartActivity, SuperSystemService, IAddonAttacher<IAddonApplication> {
     private static List<Class<? extends IAddon>> sInitialAddons;
     private static Application sLastInstance;
     static {
@@ -72,22 +71,18 @@ public class Application extends android.app.Application implements
         return mAttacher.addon(classname);
     }
 
-    @Override
     public SharedPreferences getDefaultSharedPreferences() {
         return PreferenceManagerHelper.getDefaultSharedPreferences(this);
     }
 
-    @Override
     public SharedPreferences getDefaultSharedPreferences(PreferenceImpl impl) {
         return PreferenceManagerHelper.getDefaultSharedPreferences(this, impl);
     }
 
-    @Override
     public LayoutInflater getLayoutInflater() {
         return LayoutInflater.from(this);
     }
 
-    @Override
     public SharedPreferences getSharedPreferences(PreferenceImpl impl, String name, int mode) {
         return PreferenceManagerHelper.wrap(this, impl, name, mode);
     }
@@ -97,7 +92,6 @@ public class Application extends android.app.Application implements
         return PreferenceManagerHelper.wrap(this, name, mode);
     }
 
-    @Override
     public Application getSupportApplication() {
         return this;
     }

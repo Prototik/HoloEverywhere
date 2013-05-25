@@ -4,12 +4,12 @@ package org.holoeverywhere.demo.fragments.about;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.holoeverywhere.ArrayAdapter;
-import org.holoeverywhere.IntentCompat;
 import org.holoeverywhere.app.ListFragment;
+import org.holoeverywhere.content.IntentCompat;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.widget.AdapterView;
 import org.holoeverywhere.widget.AdapterView.OnItemClickListener;
+import org.holoeverywhere.widget.ArrayAdapter;
 import org.holoeverywhere.widget.Spinner;
 import org.holoeverywhere.widget.TextView;
 

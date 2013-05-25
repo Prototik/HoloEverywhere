@@ -29,8 +29,7 @@ public class MenuFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            if (mCurrentPage != mPosition || getSupportFragmentManager()
-                    .getBackStackEntryCount() > 0) {
+            if (mCurrentPage != mPosition || getFragmentManager().getBackStackEntryCount() > 0) {
                 mCurrentPage = mPosition;
                 if (mOnMenuClickListener != null) {
                     mOnMenuClickListener.onMenuClick(mPosition);

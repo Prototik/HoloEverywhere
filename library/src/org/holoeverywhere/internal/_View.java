@@ -1,16 +1,14 @@
 
 package org.holoeverywhere.internal;
 
-import org.holoeverywhere.IHoloActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEventSource;
 
-import com.actionbarsherlock.view.ActionMode;
-
+@SuppressLint("NewApi")
 public class _View extends android.view.View implements Drawable.Callback,
         KeyEvent.Callback, AccessibilityEventSource {
     public static final int[] PRESSED_STATE_SET, SUPPORT_EMPTY_STATE_SET,
@@ -227,10 +225,5 @@ public class _View extends android.view.View implements Drawable.Callback,
                 & android.view.View.MEASURED_STATE_MASK
                 | getMeasuredHeight() >> android.view.View.MEASURED_HEIGHT_STATE_SHIFT
                 & android.view.View.MEASURED_STATE_MASK >> android.view.View.MEASURED_HEIGHT_STATE_SHIFT;
-    }
-
-    public ActionMode startActionMode(ActionMode.Callback actionModeCallback) {
-        return ((IHoloActivity) getContext())
-                .startActionMode(actionModeCallback);
     }
 }

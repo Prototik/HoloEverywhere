@@ -1,12 +1,11 @@
 
-package org.holoeverywhere;
+package org.holoeverywhere.app;
 
-import org.holoeverywhere.ITabSwipe.TabInfo;
-import org.holoeverywhere.app.Fragment;
+import org.holoeverywhere.app.TabSwipeInterface.TabInfo;
 
 import android.os.Bundle;
 
-public interface ITabSwipe<T extends TabInfo> {
+public interface TabSwipeInterface<T extends TabInfo> {
     public static interface OnTabSelectedListener {
         public void onTabSelected(int position);
     }

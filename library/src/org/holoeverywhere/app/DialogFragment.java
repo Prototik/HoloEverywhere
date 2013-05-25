@@ -334,7 +334,7 @@ public class DialogFragment extends Fragment implements
     }
 
     public DialogTransaction show() {
-        return show(getSupportFragmentManager());
+        return show(getFragmentManager());
     }
 
     public DialogTransaction show(Activity activity) {

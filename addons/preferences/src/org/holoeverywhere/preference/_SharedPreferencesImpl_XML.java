@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-import org.holoeverywhere.IHoloActivity;
+import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -188,12 +188,10 @@ public final class _SharedPreferencesImpl_XML extends _SharedPreferencesBase {
     private final android.content.SharedPreferences prefs;
 
     public _SharedPreferencesImpl_XML(Context context, String name, int mode) {
-        if (context instanceof IHoloActivity) {
-            prefs = ((IHoloActivity) context).superGetSharedPreferences(name,
-                    mode);
+        if (context instanceof Activity) {
+            prefs = ((Activity) context).superGetSharedPreferences(name, mode);
         } else if (context instanceof Application) {
-            prefs = ((Application) context).superGetSharedPreferences(name,
-                    mode);
+            prefs = ((Application) context).superGetSharedPreferences(name, mode);
         } else {
             prefs = context.getSharedPreferences(name, mode);
         }

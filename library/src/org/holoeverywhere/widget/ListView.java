@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.holoeverywhere.HoloEverywhere;
-import org.holoeverywhere.IHoloActivity.OnWindowFocusChangeListener;
 import org.holoeverywhere.R;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.drawable.DrawableCompat;
@@ -23,6 +22,7 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.app._HoloActivity.OnWindowFocusChangeListener;
 import android.support.v4.util.LongSparseArray;
 import android.util.AttributeSet;
 import android.util.SparseBooleanArray;
@@ -77,6 +77,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             setLongClickable(true);
         }
 
+        @SuppressLint("NewApi")
         @Override
         public void onItemCheckedStateChanged(ActionMode mode,
                 int position, long id, boolean checked) {
@@ -165,6 +166,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     }
 
     public static final int CHOICE_MODE_MULTIPLE = AbsListView.CHOICE_MODE_MULTIPLE;
+    @SuppressLint("InlinedApi")
     public static final int CHOICE_MODE_MULTIPLE_MODAL = AbsListView.CHOICE_MODE_MULTIPLE_MODAL;
     public static final int CHOICE_MODE_NONE = AbsListView.CHOICE_MODE_NONE;
     public static final int CHOICE_MODE_SINGLE = AbsListView.CHOICE_MODE_SINGLE;
@@ -354,6 +356,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     }
 
     @Override
+    @SuppressLint("NewApi")
     public int getCheckedItemCount() {
         return mCheckedItemCount;
     }
@@ -464,6 +467,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         return mForceHeaderListAdapter;
     }
 
+    @SuppressLint("NewApi")
     public boolean isInScrollingContainer() {
         ViewParent p = getParent();
         while (p != null && p instanceof ViewGroup) {
@@ -968,6 +972,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         setSelector(DrawableCompat.getDrawable(getResources(), resID));
     }
 
+    @SuppressLint("NewApi")
     protected final void setStateOnView(View child, boolean value) {
         if (child instanceof Checkable) {
             ((Checkable) child).setChecked(value);
