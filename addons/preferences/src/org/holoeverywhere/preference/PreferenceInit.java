@@ -77,8 +77,7 @@ public class PreferenceInit {
         LayoutInflater.register(PreferenceFrameLayout.class);
         LayoutInflater.register(FragmentBreadCrumbs.class);
 
-        map(R.style.Holo_Internal_Preference, R.style.Holo_Internal_Preference_Light,
-                R.style.Holo_Internal_Preference_Light_DarkActionBar);
+        map(R.style.Holo_Internal_Preference, R.style.Holo_Internal_Preference_Light);
     }
 
     public static Context context(Context context) {

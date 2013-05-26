@@ -142,19 +142,12 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
     }
 
     private static final String CONFIG_KEY = "holo:config:activity";
-
     private Context mActionBarContext;
-
     private Holo mConfig;
-
     private Map<View, ContextMenuListener> mContextMenuListeners;
-
     private WindowDecorView mDecorView;
-
     private boolean mForceThemeApply = false;
-
     private boolean mInited = false;
-
     private int mLastThemeResourceId = 0;
     private MenuInflater mMenuInflater;
     private final List<WeakReference<OnWindowFocusChangeListener>> mOnWindowFocusChangeListeners = new ArrayList<WeakReference<OnWindowFocusChangeListener>>();
@@ -296,6 +289,10 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
             setTheme(ThemeManager.getDefaultTheme());
         }
         return super.getTheme();
+    }
+
+    public LayoutInflater getThemedLayoutInflater() {
+        return getLayoutInflater();
     }
 
     protected final WindowDecorView getWindowDecorView() {
@@ -559,7 +556,7 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
         if (view != null) {
             mDecorView.addView(view, params);
         } else if (layoutRes > 0) {
-            getLayoutInflater().inflate(layoutRes, mDecorView, true);
+            getThemedLayoutInflater().inflate(layoutRes, mDecorView, true);
         }
         final LayoutParams p = new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -587,7 +584,7 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
     public void setContentView(int layoutResID) {
         if (requestDecorView(null, null, layoutResID)) {
             mDecorView.removeAllViewsInLayout();
-            getLayoutInflater().inflate(layoutResID, mDecorView, true);
+            getThemedLayoutInflater().inflate(layoutResID, mDecorView, true);
             onContentChanged();
         }
     }

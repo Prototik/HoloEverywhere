@@ -376,11 +376,6 @@ public abstract class PreferenceActivity extends ListActivity implements
         return mHeaders;
     }
 
-    @Override
-    public LayoutInflater getLayoutInflater() {
-        return LayoutInflater.from(getThemedContext());
-    }
-
     protected Button getNextButton() {
         return mNextButton;
     }
@@ -403,6 +398,11 @@ public abstract class PreferenceActivity extends ListActivity implements
             mThemedContext = PreferenceInit.context(this);
         }
         return mThemedContext;
+    }
+
+    @Override
+    public LayoutInflater getThemedLayoutInflater() {
+        return LayoutInflater.from(getThemedContext());
     }
 
     public boolean hasHeaders() {
