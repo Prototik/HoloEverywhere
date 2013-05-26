@@ -8,6 +8,7 @@ import org.holoeverywhere.addon.IAddonThemes.ThemeResolver;
 import org.holoeverywhere.app.Activity;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 
@@ -18,9 +19,11 @@ public class PreferenceInit {
         public int resolveThemeForContext(Context context, int invalidTheme) {
             int theme, mod = 0;
             TypedValue outValue = new TypedValue();
-            context.obtainStyledAttributes(new int[] {
+            TypedArray a;
+            (a = context.obtainStyledAttributes(new int[] {
                     R.attr.preferenceTheme
-            }).getValue(0, outValue);
+            })).getValue(0, outValue);
+            a.recycle();
             switch (outValue.type) {
                 case TypedValue.TYPE_REFERENCE:
                     if (new ContextThemeWrapper(context, theme = outValue.resourceId)
@@ -74,7 +77,8 @@ public class PreferenceInit {
         LayoutInflater.register(PreferenceFrameLayout.class);
         LayoutInflater.register(FragmentBreadCrumbs.class);
 
-        map(R.style.Holo_Internal_Preference, R.style.Holo_Internal_Preference_Light);
+        map(R.style.Holo_Internal_Preference, R.style.Holo_Internal_Preference_Light,
+                R.style.Holo_Internal_Preference_Light_DarkActionBar);
     }
 
     public static Context context(Context context) {

@@ -263,15 +263,10 @@ public abstract class PreferenceActivity extends ListActivity implements
     private final ArrayList<Header> mHeaders = new ArrayList<Header>();
     private FrameLayout mListFooter;
     private Button mNextButton;
-
     private PreferenceManager mPreferenceManager;
-
     private ViewGroup mPrefsContainer;
-
     private Bundle mSavedInstanceState;
-
     private boolean mSinglePane;
-
     private Context mThemedContext;
 
     @Deprecated
@@ -381,6 +376,11 @@ public abstract class PreferenceActivity extends ListActivity implements
         return mHeaders;
     }
 
+    @Override
+    public LayoutInflater getLayoutInflater() {
+        return LayoutInflater.from(getThemedContext());
+    }
+
     protected Button getNextButton() {
         return mNextButton;
     }
@@ -398,7 +398,7 @@ public abstract class PreferenceActivity extends ListActivity implements
         return null;
     }
 
-    protected Context getThemedContext() {
+    public Context getThemedContext() {
         if (mThemedContext == null) {
             mThemedContext = PreferenceInit.context(this);
         }
@@ -846,11 +846,6 @@ public abstract class PreferenceActivity extends ListActivity implements
             throw new RuntimeException(
                     "Modern two-pane PreferenceActivity requires use of a PreferenceFragment");
         }
-    }
-
-    @Override
-    public void setContentView(int layoutResId) {
-        setContentView(LayoutInflater.inflate(getThemedContext(), layoutResId));
     }
 
     public void setListFooter(View view) {

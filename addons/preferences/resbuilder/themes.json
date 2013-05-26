@@ -23,7 +23,8 @@
 		},
 		"data": {
 			"Holo.Internal.Preference | PreferenceBase < Holo.Theme": {},
-			"Holo.Internal.Preference.Light | PreferenceBase < Holo.Theme.Light": {}
+			"Holo.Internal.Preference.Light | PreferenceBase < Holo.Theme.Light": {},
+			"Holo.Internal.Preference.Light.DarkActionBar | PreferenceBase < Holo.Theme.Light.DarkActionBar": {}
 		},
 		"output": "values/themes.xml"
 }

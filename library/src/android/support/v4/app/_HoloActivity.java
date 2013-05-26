@@ -163,6 +163,7 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
     public void addContentView(View view, LayoutParams params) {
         if (requestDecorView(view, params, -1)) {
             mDecorView.addView(view, params);
+            onContentChanged();
         }
     }
 
@@ -587,6 +588,7 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
         if (requestDecorView(null, null, layoutResID)) {
             mDecorView.removeAllViewsInLayout();
             getLayoutInflater().inflate(layoutResID, mDecorView, true);
+            onContentChanged();
         }
     }
 
@@ -600,6 +602,7 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
         if (requestDecorView(view, params, -1)) {
             mDecorView.removeAllViewsInLayout();
             mDecorView.addView(view, params);
+            onContentChanged();
         }
     }
 
