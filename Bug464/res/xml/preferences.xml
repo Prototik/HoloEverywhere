@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:holo="http://schemas.android.com/apk/res-auto" >
+	<PreferenceCategory holo:title="Category" >
+		<Preference
+			holo:id="@+id/item"
+			holo:title="Item" />
+		<CheckBoxPreference
+			holo:id="@+id/checkbox"
+			holo:title="CheckBox" />
+	</PreferenceCategory>
+</PreferenceScreen>

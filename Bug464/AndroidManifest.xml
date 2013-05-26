@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="org.holoeverywhere.bug.i458"
+	package="org.holoeverywhere.bug.i464"
 	android:versionCode="1"
 	android:versionName="1.0" >
 	<uses-sdk
@@ -9,7 +9,7 @@
 	<application
 		android:name="org.holoeverywhere.app.Application"
 		android:allowBackup="true"
-		android:label="HE Bug #458"
+		android:label="HE Bug #464"
 		android:theme="@style/Holo.Theme.Light.DarkActionBar" >
 		<activity android:name=".MainActivity" >
 			<intent-filter>
