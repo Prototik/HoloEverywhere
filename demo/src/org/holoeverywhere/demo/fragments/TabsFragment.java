@@ -12,7 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class DemoTabsFragment extends TabSwipeFragment {
+public class TabsFragment extends TabSwipeFragment {
     public static class TabFragment extends Fragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -12,6 +12,9 @@ import org.holoeverywhere.demo.fragments.MenuFragment.OnMenuClickListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
@@ -23,11 +26,6 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
     public AddonSliderA addonSlider() {
         return addon(AddonSlider.class);
-    }
-
-    private int computeMenuWidth() {
-        return (int) getResources().getFraction(R.dimen.demo_menu_width,
-                getResources().getDisplayMetrics().widthPixels, 1);
     }
 
     @Override
@@ -45,24 +43,20 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         final ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle(R.string.library_name);
 
-        setContentView(R.layout.content);
-
         final AddonSliderA slider = addonSlider();
+        slider.setDrawerLayout(R.layout.content);
 
-        if (findViewById(R.id.customMenuFrame) == null) {
+        if (slider.isAddonEnabled()) {
             // Phone
             mStaticMenu = false;
             actionbar.setDisplayHomeAsUpEnabled(true);
-            slider.setLeftViewWidth(computeMenuWidth());
-            slider.setDragWithActionBar(true);
+            slider.setOverlayActionBar(true);
         } else {
             // Tablet
             mStaticMenu = true;
-            slider.setAddonEnabled(false);
         }
 
         mMenuFragment = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.leftView);
-
         getSupportFragmentManager().addOnBackStackChangedListener(this);
     }
 
@@ -84,11 +78,8 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
-        if (isCreatedByThemeManager()) {
-            /**
-             * Keep slider closed even if was be opened before activity restart
-             */
-            addonSlider().forceNotRestoreInstance();
+        if (isCreatedByThemeManager() && addonSlider().isAddonEnabled()) {
+            addonSlider().openContentView();
         }
         super.onPostCreate(savedInstanceState);
     }
@@ -106,6 +97,19 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         }
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+        printViewHierarchy((ViewGroup) getWindow().getDecorView(), "");
+    }
+
+    public static void printViewHierarchy(ViewGroup vg, String prefix) {
+        for (int i = 0; i < vg.getChildCount(); i++) {
+            View v = vg.getChildAt(i);
+            String desc = prefix + "| " + "[" + i + "/" + (vg.getChildCount() - 1) + "] "
+                    + v.getClass().getSimpleName() + " " + v.getId();
+            Log.v("POPKA", desc);
+            if (v instanceof ViewGroup) {
+                printViewHierarchy((ViewGroup) v, "  " + prefix);
+            }
+        }
     }
 
     public void setOnMenuClickListener(OnMenuClickListener onMenuClickListener) {

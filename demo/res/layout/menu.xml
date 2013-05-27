@@ -3,6 +3,7 @@
 	xmlns:holo="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:background="?menuBackground"
 	android:orientation="vertical" >
 	<LinearLayout
 		android:id="@+id/menuList"
@@ -13,6 +14,7 @@
 		android:orientation="vertical"
 		holo:showDividers="middle|end" />
 	<DemoThemePicker
+		holo:id="@+id/themePicker"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical" />

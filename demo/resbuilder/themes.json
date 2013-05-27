@@ -9,15 +9,7 @@
 		"Holo.Demo.Theme.Light.DarkActionBar | DemoThemeLight DemoThemeBarDark < Holo.Theme.Light.DarkActionBar": {},
 		"Holo.Demo.Theme.Fullscreen | Fullscreen": {},
 		"Holo.Demo.Theme.Light.Fullscreen | Fullscreen": {},
-		"Holo.Demo.Theme.Light.DarkActionBar.Fullscreen | Fullscreen": {},
-		"Holo.Demo.Slider < Holo.Slider": {
-			"shadowColor": "#001E2F",
-			"shadow": "90%"
-		},
-		"Holo.Demo.Slider.Light": {
-			"shadowColor": "#6AA8CB",
-			"shadow": "30%"
-		}
+		"Holo.Demo.Theme.Light.DarkActionBar.Fullscreen | Fullscreen": {}
 	},
 	"blocks": {
 		"DemoTheme": {
@@ -26,10 +18,16 @@
 			"homeAsUpIndicator": "@drawable/home_as_up_indicator",
 		},
 		"DemoThemeDark | DemoTheme": {
-			"sliderStyle": "@style/Holo.Demo.Slider"
 		},
 		"DemoThemeLight | DemoTheme": {
-			"sliderStyle": "@style/Holo.Demo.Slider.Light"
+		},
+		"DemoThemeBar": {
+		},
+		"DemoThemeBarDark | DemoThemeBar": {
+			"menuBackground": "#dd222222"
+		},
+		"DemoThemeBarLight | DemoThemeBar": {
+			"menuBackground": "#dddddddd"
 		}
 	},
     "include": [

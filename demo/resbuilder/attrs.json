@@ -1,7 +1,8 @@
 {
 	"attrs": [
 		"disableMusicIcon$reference",
-		"demoListRowViewStyle$reference"
+		"demoListRowViewStyle$reference",
+		"menuBackground$reference|color"
 	],
 	"styleable": {
 		"WidgetContainer": "titleLayout$reference/android:text/android:layout",

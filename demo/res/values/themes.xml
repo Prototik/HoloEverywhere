@@ -3,14 +3,6 @@
     <style name="Holo.Demo.ListRowView">
         <item name="android:background">?selectableItemBackground</item>
     </style>
-    <style name="Holo.Demo.Slider" parent="Holo.Slider">
-        <item name="shadow">90%</item>
-        <item name="shadowColor">#001E2F</item>
-    </style>
-    <style name="Holo.Demo.Slider.Light">
-        <item name="shadow">30%</item>
-        <item name="shadowColor">#6AA8CB</item>
-    </style>
     <style name="Holo.Demo.Theme" parent="Holo.Theme">
         <!--Include block: DemoThemeDark-->
         <!--Include block: DemoTheme-->
@@ -18,9 +10,12 @@
         <item name="demoListRowViewStyle">@style/Holo.Demo.ListRowView</item>
         <item name="homeAsUpIndicator">@drawable/home_as_up_indicator</item>
         <!--End of block DemoTheme-->
-        <item name="sliderStyle">@style/Holo.Demo.Slider</item>
         <!--End of block DemoThemeDark-->
-        <!-- Block not found: DemoThemeBarDark -->
+        <!--Include block: DemoThemeBarDark-->
+        <!--Include block: DemoThemeBar-->
+        <!--End of block DemoThemeBar-->
+        <item name="menuBackground">#dd222222</item>
+        <!--End of block DemoThemeBarDark-->
     </style>
     <style name="Holo.Demo.Theme.Fullscreen">
         <!--Include block: Fullscreen-->
@@ -36,9 +31,12 @@
         <item name="demoListRowViewStyle">@style/Holo.Demo.ListRowView</item>
         <item name="homeAsUpIndicator">@drawable/home_as_up_indicator</item>
         <!--End of block DemoTheme-->
-        <item name="sliderStyle">@style/Holo.Demo.Slider.Light</item>
         <!--End of block DemoThemeLight-->
-        <!-- Block not found: DemoThemeBarLight -->
+        <!--Include block: DemoThemeBarLight-->
+        <!--Include block: DemoThemeBar-->
+        <!--End of block DemoThemeBar-->
+        <item name="menuBackground">#dddddddd</item>
+        <!--End of block DemoThemeBarLight-->
     </style>
     <style name="Holo.Demo.Theme.Light.DarkActionBar" parent="Holo.Theme.Light.DarkActionBar">
         <!--Include block: DemoThemeLight-->
@@ -47,9 +45,12 @@
         <item name="demoListRowViewStyle">@style/Holo.Demo.ListRowView</item>
         <item name="homeAsUpIndicator">@drawable/home_as_up_indicator</item>
         <!--End of block DemoTheme-->
-        <item name="sliderStyle">@style/Holo.Demo.Slider.Light</item>
         <!--End of block DemoThemeLight-->
-        <!-- Block not found: DemoThemeBarDark -->
+        <!--Include block: DemoThemeBarDark-->
+        <!--Include block: DemoThemeBar-->
+        <!--End of block DemoThemeBar-->
+        <item name="menuBackground">#dd222222</item>
+        <!--End of block DemoThemeBarDark-->
     </style>
     <style name="Holo.Demo.Theme.Light.DarkActionBar.Fullscreen">
         <!--Include block: Fullscreen-->

@@ -134,7 +134,7 @@ public class OtherFragment extends ListFragment {
         addItem("Pickers", PickersFragment.class);
         addItem("Menus", MenusFragments.class);
         addItem("Calendar", CalendarFragment.class);
-        addItem("Tabs + Swipe", DemoTabsFragment.class);
+        addItem("Tabs + Swipe", TabsFragment.class);
     }
 
     protected void onPrepareListView(ListView list) {
