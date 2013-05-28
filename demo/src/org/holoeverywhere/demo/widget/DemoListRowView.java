@@ -26,16 +26,22 @@ public class DemoListRowView extends LinearLayout {
         this(context, attrs, R.attr.demoListRowViewStyle);
     }
 
-    @SuppressWarnings("deprecation")
     public DemoListRowView(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, -1);
+    }
+
+    @SuppressWarnings("deprecation")
+    public DemoListRowView(Context context, AttributeSet attrs, int defStyleAttr, int layout) {
         super(context, attrs, defStyleAttr);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DemoListRowView,
                 defStyleAttr, R.style.Holo_Demo_ListRowView);
-        final int gravity = a.getInt(R.styleable.DemoListRowView_android_gravity, Gravity.LEFT), layout;
-        if ((gravity & Gravity.LEFT) != 0) {
-            layout = R.layout.demo_list_row_view_left;
-        } else {
-            layout = R.layout.demo_list_row_view_bottom;
+        if (layout <= 0) {
+            final int gravity = a.getInt(R.styleable.DemoListRowView_android_gravity, Gravity.LEFT);
+            if ((gravity & Gravity.LEFT) != 0) {
+                layout = R.layout.demo_list_row_view_left;
+            } else {
+                layout = R.layout.demo_list_row_view_bottom;
+            }
         }
         LayoutInflater.inflate(context, layout, this, true);
         selectionHandler = findViewById(R.id.selectionHandler);

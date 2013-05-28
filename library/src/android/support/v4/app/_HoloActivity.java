@@ -31,6 +31,7 @@ import android.content.Intent;
 import android.content.res.Resources.Theme;
 import android.os.Build.VERSION;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -151,6 +152,7 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
     private int mLastThemeResourceId = 0;
     private MenuInflater mMenuInflater;
     private final List<WeakReference<OnWindowFocusChangeListener>> mOnWindowFocusChangeListeners = new ArrayList<WeakReference<OnWindowFocusChangeListener>>();
+    private Handler mUserHandler;
 
     @Override
     public void addContentView(View view, LayoutParams params) {
@@ -293,6 +295,13 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
 
     public LayoutInflater getThemedLayoutInflater() {
         return getLayoutInflater();
+    }
+
+    public Handler getUserHandler() {
+        if (mUserHandler == null) {
+            mUserHandler = new Handler(getMainLooper());
+        }
+        return mUserHandler;
     }
 
     protected final WindowDecorView getWindowDecorView() {

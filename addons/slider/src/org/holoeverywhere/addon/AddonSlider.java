@@ -163,6 +163,15 @@ public class AddonSlider extends IAddon {
             closeDrawers();
         }
 
+        public void openContentViewDelayed(int delay) {
+            handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    openContentView();
+                }
+            }, delay);
+        }
+
         public void openDrawer(int gravity) {
             requestDrawerLayout().openDrawer(gravity);
         }

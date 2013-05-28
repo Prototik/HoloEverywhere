@@ -180,7 +180,6 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     private ActionMode mChoiceActionMode;
     private int mChoiceMode;
     private ContextMenuInfo mContextMenuInfo;
-    private boolean mEnableModalBackgroundWrapper;
     private boolean mFastScrollEnabled;
     private FastScroller mFastScroller;
     private final List<ViewInfo> mFooterViewInfos = new ArrayList<ViewInfo>(),
@@ -833,18 +832,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             if (mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
                 clearChoices();
                 setLongClickable(true);
-                setEnableModalBackgroundWrapper(true);
             }
-        }
-    }
-
-    public void setEnableModalBackgroundWrapper(boolean enableModalBackgroundWrapper) {
-        if (enableModalBackgroundWrapper == mEnableModalBackgroundWrapper) {
-            return;
-        }
-        mEnableModalBackgroundWrapper = enableModalBackgroundWrapper;
-        if (mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
         }
     }
 
