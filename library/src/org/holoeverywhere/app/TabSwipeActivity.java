@@ -89,21 +89,17 @@ public abstract class TabSwipeActivity extends Activity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FrameLayout layout = new FrameLayout(this);
+        layout.setId(R.id.contentPanel);
+        setContentView(layout);
         mFragment = (InnerFragment) getSupportFragmentManager().findFragmentById(R.id.contentPanel);
         if (mFragment == null) {
-            mFragment = new InnerFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.contentPanel, mFragment = new InnerFragment()).commit();
         }
         mFragment.setActivity(this);
         if (mCustomLayout > 0) {
             mFragment.setCustomLayout(mCustomLayout);
-        }
-        if (mFragment.isDetached()) {
-            FrameLayout layout = new FrameLayout(this);
-            layout.setId(R.id.contentPanel);
-            setContentView(layout);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.contentPanel, mFragment).commit();
-            getSupportFragmentManager().executePendingTransactions();
         }
     }
 
