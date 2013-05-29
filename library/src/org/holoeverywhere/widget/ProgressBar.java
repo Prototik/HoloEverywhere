@@ -129,7 +129,7 @@ public class ProgressBar extends android.widget.ProgressBar {
         }
     }
 
-    protected static class SavedState extends BaseSavedState {
+    static class SavedState extends BaseSavedState {
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
             @Override
             public SavedState createFromParcel(Parcel in) {
