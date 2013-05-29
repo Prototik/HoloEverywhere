@@ -6,62 +6,59 @@ import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Activity.Addons;
 import org.holoeverywhere.app.Fragment;
-import org.holoeverywhere.demo.fragments.MenuFragment;
-import org.holoeverywhere.demo.fragments.MenuFragment.OnMenuClickListener;
+import org.holoeverywhere.demo.fragments.MainFragment;
+import org.holoeverywhere.demo.fragments.OtherFragment;
+import org.holoeverywhere.demo.fragments.SettingsFragment;
+import org.holoeverywhere.demo.fragments.about.AboutFragment;
+import org.holoeverywhere.slider.SliderMenu;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
 @Addons(Activity.ADDON_SLIDER)
 public class DemoActivity extends Activity implements OnBackStackChangedListener {
-    private MenuFragment mMenuFragment;
-    private boolean mStaticMenu;
-
     public AddonSliderA addonSlider() {
         return addon(AddonSlider.class);
     }
 
     @Override
     public void onBackStackChanged() {
-        if (mStaticMenu) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(
-                    getSupportFragmentManager().getBackStackEntryCount() > 0);
-        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(addonSlider().isAddonEnabled() ? true :
+                getSupportFragmentManager().getBackStackEntryCount() > 0);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final ActionBar actionbar = getSupportActionBar();
-        actionbar.setTitle(R.string.library_name);
-
         final AddonSliderA slider = addonSlider();
         slider.setDrawerLayout(R.layout.content);
+        slider.setOverlayActionBar(true);
 
-        if (slider.isAddonEnabled()) {
-            // Phone
-            mStaticMenu = false;
-            actionbar.setDisplayHomeAsUpEnabled(true);
-            slider.setOverlayActionBar(true);
-        } else {
-            // Tablet
-            mStaticMenu = true;
-        }
+        final SliderMenu sliderMenu = slider.obtainSliderMenu();
 
-        mMenuFragment = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.leftView);
+        sliderMenu.add(R.string.demo, MainFragment.class, SliderMenu.BLUE);
+        sliderMenu.add(R.string.settings, SettingsFragment.class, SliderMenu.GREEN);
+        sliderMenu.add(R.string.other, OtherFragment.class, SliderMenu.ORANGE);
+        sliderMenu.add(R.string.about, AboutFragment.class, SliderMenu.PURPLE);
+
+        sliderMenu.makeDefaultMenu(getSupportActionBarContext());
+
         getSupportFragmentManager().addOnBackStackChangedListener(this);
+        onBackStackChanged();
+
+        getSupportActionBar().setTitle(R.string.library_name);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (!mStaticMenu && getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                if (addonSlider().isAddonEnabled()
+                        && getSupportFragmentManager().getBackStackEntryCount() == 0) {
                     addonSlider().toggle();
                 } else {
                     onBackPressed();
@@ -71,14 +68,6 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
                 return super.onOptionsItemSelected(item);
         }
         return true;
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        if (isCreatedByThemeManager() && addonSlider().isAddonEnabled()) {
-            addonSlider().openContentView();
-        }
-        super.onPostCreate(savedInstanceState);
     }
 
     public void replaceFragment(Fragment fragment) {
@@ -94,11 +83,5 @@ public class DemoActivity extends Activity implements OnBackStackChangedListener
         }
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
-    }
-
-    public void setOnMenuClickListener(OnMenuClickListener onMenuClickListener) {
-        if (mMenuFragment != null) {
-            mMenuFragment.setOnMenuClickListener(onMenuClickListener);
-        }
     }
 }

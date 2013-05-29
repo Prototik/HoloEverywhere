@@ -4,6 +4,7 @@ package org.holoeverywhere.addon;
 import org.holoeverywhere.addon.IAddon.Addon;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.slider.R;
+import org.holoeverywhere.slider.SliderMenu;
 import org.holoeverywhere.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
@@ -22,8 +23,8 @@ public class AddonSlider extends IAddon {
     public static class AddonSliderA extends IAddonActivity {
         private boolean mAddonEnabled = true;
         private DrawerLayout mDrawerLayout;
-
         private boolean mOverlayActionBar = false;
+        private SliderMenu mSliderMenu;
 
         private void attach(View view, int gravity) {
             if (view == null) {
@@ -128,9 +129,19 @@ public class AddonSlider extends IAddon {
             return mOverlayActionBar;
         }
 
+        public SliderMenu obtainSliderMenu() {
+            if (mSliderMenu == null) {
+                mSliderMenu = new SliderMenu(this);
+            }
+            return mSliderMenu;
+        }
+
         @SuppressLint("NewApi")
         @Override
         public void onPostCreate(Bundle savedInstanceState) {
+            if (mSliderMenu != null) {
+                mSliderMenu.onPostCreate(savedInstanceState);
+            }
             if (!mAddonEnabled) {
                 return;
             }
@@ -157,6 +168,21 @@ public class AddonSlider extends IAddon {
             }
             setLeftView(leftView);
             setRightView(rightView);
+        }
+
+        @Override
+        public void onResume() {
+            if (mSliderMenu != null) {
+                mSliderMenu.onResume();
+            }
+        }
+
+        @Override
+        public void onSaveInstanceState(Bundle outState) {
+            super.onSaveInstanceState(outState);
+            if (mSliderMenu != null) {
+                mSliderMenu.onSaveInstanceState(outState);
+            }
         }
 
         public void openContentView() {
