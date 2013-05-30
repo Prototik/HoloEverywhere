@@ -39,12 +39,13 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
         OnCreateOptionsMenuListener, OnOptionsItemSelectedListener, ContextMenuListener,
         ContextMenuListenersProvider, IAddonAttacher<IAddonFragment> {
     private Activity mActivity;
-
     boolean mDetachChildFragments = true;
-    boolean mDontSaveMe = false;
 
-    protected void dontSaveMe() {
-        mDontSaveMe = true;
+    private void fixClassloader(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            return;
+        }
+        savedInstanceState.setClassLoader(HoloEverywhere.class.getClassLoader());
     }
 
     public final int getContainerId() {
@@ -245,6 +246,12 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     }
 
     @Override
+    void performActivityCreated(Bundle savedInstanceState) {
+        fixClassloader(savedInstanceState);
+        super.performActivityCreated(savedInstanceState);
+    }
+
+    @Override
     public void registerForContextMenu(View view) {
         if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
             super.registerForContextMenu(view);
@@ -259,6 +266,14 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
      */
     public void setDetachChildFragments(boolean detachChildFragments) {
         mDetachChildFragments = detachChildFragments;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if (isVisibleToUser) {
+            fixClassloader(mSavedFragmentState);
+        }
+        super.setUserVisibleHint(isVisibleToUser);
     }
 
     public abstract ActionMode startActionMode(ActionMode.Callback callback);
