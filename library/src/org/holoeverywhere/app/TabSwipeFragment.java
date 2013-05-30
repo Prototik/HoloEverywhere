@@ -276,7 +276,7 @@ public abstract class TabSwipeFragment extends Fragment implements TabSwipeInter
 
     @Override
     public void setCurrentTab(int position) {
-        dispatchTabSelected(Math.min(0, Math.max(position, mTabs.size() - 1)));
+        dispatchTabSelected(Math.max(0, Math.min(position, mTabs.size() - 1)));
     }
 
     /**
