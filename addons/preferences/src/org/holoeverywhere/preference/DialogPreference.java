@@ -3,6 +3,7 @@ package org.holoeverywhere.preference;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.AlertDialog;
+import org.holoeverywhere.app.ContextThemeWrapperPlus;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -47,11 +48,13 @@ public abstract class DialogPreference extends Preference implements
 
     private AlertDialog.Builder mBuilder;
     private Dialog mDialog;
+    private Context mDialogContext;
     private Drawable mDialogIcon;
     private int mDialogLayoutResId;
     private CharSequence mDialogMessage;
     private CharSequence mDialogTitle;
     private InputMethodManager mInputMethodManager;
+
     private CharSequence mNegativeButtonText;
 
     private CharSequence mPositiveButtonText;
@@ -92,6 +95,18 @@ public abstract class DialogPreference extends Preference implements
         return mDialog;
     }
 
+    protected Context getDialogContext(boolean alert) {
+        if (mDialogContext != null) {
+            return mDialogContext;
+        }
+        final TypedArray a = getContext().obtainStyledAttributes(new int[] {
+                alert ? R.attr.alertDialogTheme : R.attr.dialogTheme
+        });
+        final int theme = a.getResourceId(0, R.style.Holo_Theme_Dialog_Alert);
+        a.recycle();
+        return mDialogContext = new ContextThemeWrapperPlus(getContext(), theme);
+    }
+
     public Drawable getDialogIcon() {
         return mDialogIcon;
     }
@@ -122,11 +137,9 @@ public abstract class DialogPreference extends Preference implements
 
     @Override
     public void onActivityDestroy() {
-
         if (mDialog == null || !mDialog.isShowing()) {
             return;
         }
-
         mDialog.dismiss();
     }
 
@@ -161,12 +174,12 @@ public abstract class DialogPreference extends Preference implements
     }
 
     protected Dialog onCreateDialog(Context context) {
-        mBuilder = new AlertDialog.Builder(context);
+        mBuilder = new AlertDialog.Builder(getDialogContext(true));
         mBuilder.setTitle(mDialogTitle);
         mBuilder.setIcon(mDialogIcon);
         mBuilder.setPositiveButton(mPositiveButtonText, this);
         mBuilder.setNegativeButton(mNegativeButtonText, this);
-        View contentView = onCreateDialogView(context);
+        View contentView = onCreateDialogView(mBuilder.getContext());
         if (contentView != null) {
             onBindDialogView(contentView);
             mBuilder.setView(contentView);

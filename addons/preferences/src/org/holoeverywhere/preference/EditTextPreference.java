@@ -46,8 +46,7 @@ public class EditTextPreference extends DialogPreference {
 
     public EditTextPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        context = getContext();
-        mEditText = new EditText(context, attrs);
+        mEditText = new EditText(getDialogContext(true));
         mEditText.setId(R.id.edit);
         mEditText.setEnabled(true);
     }
@@ -113,7 +112,6 @@ public class EditTextPreference extends DialogPreference {
             super.onRestoreInstanceState(state);
             return;
         }
-
         SavedState myState = (SavedState) state;
         super.onRestoreInstanceState(myState.getSuperState());
         setText(myState.text);
@@ -138,11 +136,8 @@ public class EditTextPreference extends DialogPreference {
 
     public void setText(String text) {
         final boolean wasBlocking = shouldDisableDependents();
-
         mText = text;
-
         persistString(text);
-
         final boolean isBlocking = shouldDisableDependents();
         if (isBlocking != wasBlocking) {
             notifyDependencyChange(isBlocking);
