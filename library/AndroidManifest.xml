@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1006000" android:versionName="1.6.0" package="org.holoeverywhere">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1006001" android:versionName="1.6.1" package="org.holoeverywhere">
 	<uses-sdk android:minSdkVersion="7" android:targetSdkVersion="16"/>
 </manifest>
