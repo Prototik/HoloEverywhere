@@ -3,6 +3,7 @@
     <attr name="alertDialogCenterButtons" format="boolean"/>
     <attr name="alertDialogStyle" format="reference"/>
     <attr name="alertDialogTheme" format="reference"/>
+    <attr name="alertDialogTitleDividerColor" format="reference|color"/>
     <attr name="autoCompleteTextViewStyle" format="reference"/>
     <attr name="borderlessButtonStyle" format="reference"/>
     <attr name="bottomBright" format="reference|color"/>

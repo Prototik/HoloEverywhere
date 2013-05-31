@@ -1,5 +1,9 @@
 {
     "blocks": {
+        "AlertDialog": {
+            "alertDialogTitleDividerColor": "@color/holo_blue_light",
+            "android:windowBackground": "@android:color/transparent"
+        },
         "Dialog": {
             "android:colorBackgroundCacheHint": "@null",
             "android:windowActionBar": false,
@@ -94,11 +98,11 @@
             "android:windowBackground": "@drawable/dialog_full_holo_dark",
             "android:windowTitleStyle": "@style/Holo.DialogWindowTitle"
         },
-        "Holo.Theme.Dialog.Alert < Holo.Theme.Dialog": {
-            "android:windowBackground": "@android:color/transparent"
+        "Holo.Theme.Dialog.Alert | AlertDialog < Holo.Theme.Dialog": {
+            "alertDialogStyle": "@style/Holo.AlertDialog"
         },
-        "Holo.Theme.Dialog.Alert.Light < Holo.Theme.Dialog.Light": {
-            "android:windowBackground": "@android:color/transparent"
+        "Holo.Theme.Dialog.Alert.Light | AlertDialog < Holo.Theme.Dialog.Light": {
+            "alertDialogStyle": "@style/Holo.AlertDialog.Light"
         },
         "Holo.Theme.Dialog.FixedSize | FixedSize": {},
         "Holo.Theme.Dialog.Light | Dialog < Holo.Theme.Light": {

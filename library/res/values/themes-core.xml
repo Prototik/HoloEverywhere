@@ -57,7 +57,6 @@
         <item name="android:textColorTertiary">@color/tertiary_text_holo_dark</item>
         <item name="android:textColorTertiaryInverse">@color/tertiary_text_holo_light</item>
         <!--End of block TextDark-->
-        <item name="alertDialogStyle">@style/Holo.AlertDialog</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert</item>
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView</item>
@@ -144,7 +143,6 @@
         <item name="android:textColorTertiary">@color/tertiary_text_holo_light</item>
         <item name="android:textColorTertiaryInverse">@color/tertiary_text_holo_dark</item>
         <!--End of block TextLight-->
-        <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
@@ -231,7 +229,6 @@
         <item name="android:textColorTertiary">@color/tertiary_text_holo_light</item>
         <item name="android:textColorTertiaryInverse">@color/tertiary_text_holo_dark</item>
         <!--End of block TextLight-->
-        <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
         <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>

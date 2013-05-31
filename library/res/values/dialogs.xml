@@ -76,10 +76,18 @@
         <item name="android:windowTitleStyle">@style/Holo.DialogWindowTitle</item>
     </style>
     <style name="Holo.Theme.Dialog.Alert" parent="Holo.Theme.Dialog">
+        <!--Include block: AlertDialog-->
+        <item name="alertDialogTitleDividerColor">@color/holo_blue_light</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+        <!--End of block AlertDialog-->
+        <item name="alertDialogStyle">@style/Holo.AlertDialog</item>
     </style>
     <style name="Holo.Theme.Dialog.Alert.Light" parent="Holo.Theme.Dialog.Light">
+        <!--Include block: AlertDialog-->
+        <item name="alertDialogTitleDividerColor">@color/holo_blue_light</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+        <!--End of block AlertDialog-->
+        <item name="alertDialogStyle">@style/Holo.AlertDialog.Light</item>
     </style>
     <style name="Holo.Theme.Dialog.FixedSize">
         <!--Include block: FixedSize-->

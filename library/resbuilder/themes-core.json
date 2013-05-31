@@ -34,7 +34,6 @@
             "timePickerStyle": "@style/Holo.TimePicker"
         },
         "Dark | Base TextDark": {
-            "alertDialogStyle": "@style/Holo.AlertDialog",
             "alertDialogTheme": "@style/Holo.Theme.Dialog.Alert",
             "android:windowBackground": "@drawable/background_holo_dark",
             "autoCompleteTextViewStyle": "@style/Holo.AutoCompleteTextView",
@@ -64,7 +63,6 @@
             "windowContentOverlay": "@null"
         },
         "Light | Base TextLight": {
-            "alertDialogStyle": "@style/Holo.AlertDialog.Light",
             "alertDialogTheme": "@style/Holo.Theme.Dialog.Alert.Light",
             "android:windowBackground": "@drawable/background_holo_light",
             "autoCompleteTextViewStyle": "@style/Holo.AutoCompleteTextView.Light",

@@ -5,7 +5,7 @@
 			<ImageView android:layout_width="wrap_content" android:paddingRight="8dip" android:layout_height="wrap_content" android:id="@+id/icon" android:contentDescription="@string/loading"></ImageView>
 			<Internal.DialogTitle android:layout_width="match_parent" style="?android:attr/windowTitleStyle" android:ellipsize="end" android:singleLine="true" android:layout_height="wrap_content" android:id="@+id/alertTitle"></Internal.DialogTitle>
 		</LinearLayout>
-		<View android:layout_width="match_parent" android:layout_height="2dip" android:id="@+id/titleDivider" android:background="@color/holo_blue_light" android:visibility="gone"></View>
+		<View android:layout_width="match_parent" android:layout_height="2dip" android:id="@+id/titleDivider" android:background="?alertDialogTitleDividerColor" android:visibility="gone"></View>
 	</LinearLayout>
 	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1" android:id="@+id/contentPanel" android:orientation="vertical">
 		<ScrollView android:layout_width="match_parent" android:clipToPadding="false" android:layout_height="wrap_content" android:id="@+id/scrollView">

@@ -174,12 +174,14 @@ public abstract class DialogPreference extends Preference implements
     }
 
     protected Dialog onCreateDialog(Context context) {
-        mBuilder = new AlertDialog.Builder(getDialogContext(true));
+        context = getDialogContext(true);
+        mBuilder = new AlertDialog.Builder(context,
+                ((ContextThemeWrapperPlus) context).getThemeResource());
         mBuilder.setTitle(mDialogTitle);
         mBuilder.setIcon(mDialogIcon);
         mBuilder.setPositiveButton(mPositiveButtonText, this);
         mBuilder.setNegativeButton(mNegativeButtonText, this);
-        View contentView = onCreateDialogView(mBuilder.getContext());
+        View contentView = onCreateDialogView(context);
         if (contentView != null) {
             onBindDialogView(contentView);
             mBuilder.setView(contentView);

@@ -2,6 +2,7 @@
     "attrs": [
         "listPreferredItemHeight$dimension",
         "alertDialogCenterButtons$boolean",
+        "alertDialogTitleDividerColor$reference|color",
         "buttonBarStyle$reference",
         "buttonBarButtonStyle$reference",
         "borderlessButtonStyle$reference",
