@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.LayoutInflater;
 
 import android.content.Context;
@@ -182,7 +181,7 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
         View view;
         TextView text = null;
         if (convertView == null) {
-            view = FontLoader.apply(mInflater.inflate(resource, parent, false));
+            view = mInflater.inflate(resource, parent, false);
         } else {
             view = convertView;
         }

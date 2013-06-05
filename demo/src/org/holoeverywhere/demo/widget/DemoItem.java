@@ -38,7 +38,7 @@ public class DemoItem {
 
     protected DemoListRowView makeView(View convertView, ViewGroup parent) {
         if (convertView == null) {
-            return FontLoader.apply(new DemoListRowView(parent.getContext()));
+            return FontLoader.applyDefaultFont(new DemoListRowView(parent.getContext()));
         } else {
             return (DemoListRowView) convertView;
         }

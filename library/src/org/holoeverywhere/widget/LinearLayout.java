@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewDebug;
@@ -164,20 +165,12 @@ public class LinearLayout extends android.widget.LinearLayout {
         mUseLargestChild = a.getBoolean(R.styleable.LinearLayout_android_measureWithLargestChild,
                 false);
         setDividerDrawable(a.getDrawable(R.styleable.LinearLayout_android_divider));
-
-        if (a.hasValue(R.styleable.LinearLayout_showDividers)) {
-            mShowDividers = a.getInt(R.styleable.LinearLayout_showDividers, SHOW_DIVIDER_NONE);
-        } else {
-            mShowDividers = a.getInt(R.styleable.LinearLayout_android_showDividers,
-                    SHOW_DIVIDER_NONE);
-        }
-
-        if (a.hasValue(R.styleable.LinearLayout_dividerPadding)) {
-            mDividerPadding = a.getDimensionPixelSize(R.styleable.LinearLayout_dividerPadding, 0);
-        } else {
-            mDividerPadding = a.getDimensionPixelSize(
-                    R.styleable.LinearLayout_android_dividerPadding, 0);
-        }
+        TypedValue value = new TypedValue();
+        a.getValue(R.styleable.LinearLayout_android_showDividers, value);
+        mShowDividers = value.data;
+        a.getValue(R.styleable.LinearLayout_android_dividerPadding, value);
+        mDividerPadding = TypedValue.complexToDimensionPixelSize(value.data, context.getResources()
+                .getDisplayMetrics());
 
         a.recycle();
     }

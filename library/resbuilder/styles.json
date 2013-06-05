@@ -85,18 +85,15 @@
         "Holo.ButtonBar": {
             "android:background": "@null",
             "android:divider": "?dividerVertical",
-            "android:dividerPadding": "12dip",
+            "android:dividerPadding": "12dp",
             "android:paddingBottom": "0dip",
             "android:paddingLeft": "0dip",
             "android:paddingRight": "0dip",
             "android:paddingTop": "0dip",
             "android:showDividers": "middle",
-            "dividerPadding": "12dip",
-            "showDividers": "middle"
         },
         "Holo.ButtonBar.AlertDialog": {
-            "android:dividerPadding": "0dip",
-            "dividerPadding": "0dip"
+            "android:dividerPadding": "0dp"
         },
         "Holo.CalendarView": {
             "dateTextAppearance": "?android:textAppearanceSmall",
@@ -313,8 +310,7 @@
         "Holo.SegmentedButton": {
             "android:background": "@drawable/btn_group_holo_dark",
             "android:divider": "?dividerVertical",
-            "android:showDividers": "middle",
-            "showDividers": "middle"
+            "android:showDividers": "middle"
         },
         "Holo.SegmentedButton.Light": {
             "android:background": "@drawable/btn_group_holo_light"

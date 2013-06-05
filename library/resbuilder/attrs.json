@@ -151,9 +151,7 @@
             "android:measureWithLargestChild",
             "android:divider",
             "android:showDividers",
-            "android:dividerPadding",
-            "showDividers$flag/none 0/beginning 1/middle 2/end 4/all 7",
-            "dividerPadding$dimension"
+            "android:dividerPadding"
         ],
         "MenuView": [
             "dialogItemTextAppearance$reference",

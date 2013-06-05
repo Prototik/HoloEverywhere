@@ -5,7 +5,6 @@ import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Locale;
 
-import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 import org.holoeverywhere.internal.NumberPickerEditText;
@@ -128,7 +127,6 @@ public class TimePicker extends FrameLayout {
                 R.styleable.TimePicker_layout, R.layout.time_picker_holo);
         attributesArray.recycle();
         LayoutInflater.inflate(mContext, layoutResourceId, this, true);
-        FontLoader.apply(this);
         mHourSpinner = (NumberPicker) findViewById(R.id.hour);
         mHourSpinner
                 .setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {

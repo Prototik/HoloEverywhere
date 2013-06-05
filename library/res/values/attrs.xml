@@ -24,7 +24,6 @@
     <attr name="dialogTheme" format="reference"/>
     <attr name="disableChildrenWhenDisabled" format="boolean"/>
     <attr name="dividerHorizontal" format="reference"/>
-    <attr name="dividerPadding" format="dimension"/>
     <attr name="dropDownHorizontalOffset" format="dimension"/>
     <attr name="dropDownVerticalOffset" format="dimension"/>
     <attr name="endYear" format="integer"/>
@@ -96,13 +95,6 @@
     <attr name="selectionDivider" format="reference"/>
     <attr name="selectionDividerHeight" format="dimension"/>
     <attr name="selectionDividersDistance" format="dimension"/>
-    <attr name="showDividers">
-        <flag name="all" value="7"/>
-        <flag name="beginning" value="1"/>
-        <flag name="end" value="4"/>
-        <flag name="middle" value="2"/>
-        <flag name="none" value="0"/>
-    </attr>
     <attr name="showWeekNumber" format="boolean"/>
     <attr name="shownWeekCount" format="integer"/>
     <attr name="singleChoiceItemLayout" format="reference"/>
@@ -255,8 +247,6 @@
         <attr name="android:orientation"/>
         <attr name="android:showDividers"/>
         <attr name="android:weightSum"/>
-        <attr name="dividerPadding"/>
-        <attr name="showDividers"/>
     </declare-styleable>
     <declare-styleable name="MenuView">
         <attr name="android:headerBackground"/>

@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 
@@ -532,7 +531,6 @@ public class CalendarView extends FrameLayout {
                         CalendarView.UNSCALED_WEEK_SEPARATOR_LINE_WIDTH,
                         displayMetrics);
         LayoutInflater.inflate(context, R.layout.calendar_view, this, true);
-        FontLoader.apply(this);
         mListView = (ListView) findViewById(R.id.list);
         mDayNamesHeader = (ViewGroup) findViewById(R.id.day_names);
         mMonthName = (TextView) findViewById(R.id.month_name);

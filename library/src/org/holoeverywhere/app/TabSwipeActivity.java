@@ -5,6 +5,7 @@ import org.holoeverywhere.R;
 import org.holoeverywhere.widget.FrameLayout;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 
 /**
  * This activity class implement tabs + swipe navigation pattern<br />
@@ -36,8 +37,7 @@ public abstract class TabSwipeActivity extends Activity implements
         }
     }
 
-    private int mCustomLayout = -1;
-
+    private int mCustomLayout = 0;
     private InnerFragment mFragment;
 
     @Override
@@ -92,15 +92,19 @@ public abstract class TabSwipeActivity extends Activity implements
         FrameLayout layout = new FrameLayout(this);
         layout.setId(R.id.contentPanel);
         setContentView(layout);
-        mFragment = (InnerFragment) getSupportFragmentManager().findFragmentById(R.id.contentPanel);
+        final FragmentManager fm = getSupportFragmentManager();
+        mFragment = (InnerFragment) fm.findFragmentById(R.id.contentPanel);
         if (mFragment == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.contentPanel, mFragment = new InnerFragment()).commit();
+            mFragment = new InnerFragment();
         }
         mFragment.setActivity(this);
-        if (mCustomLayout > 0) {
+        if (mCustomLayout != 0) {
             mFragment.setCustomLayout(mCustomLayout);
         }
+        if (!mFragment.isAdded()) {
+            fm.beginTransaction().replace(R.id.contentPanel, mFragment).commit();
+        }
+        fm.executePendingTransactions();
     }
 
     /**

@@ -111,12 +111,11 @@ public abstract class TabSwipeFragment extends Fragment implements TabSwipeInter
     }
 
     private TabSwipeAdapter mAdapter;
-    private int mCustomLayout = -1;
+    private int mCustomLayout = 0;
     private OnTabSelectedListener mOnTabSelectedListener;
     private int mPrevNavigationMode = ActionBar.NAVIGATION_MODE_STANDARD;
     private boolean mSmoothScroll = true;
     private List<TabInfo> mTabs = new ArrayList<TabInfo>();
-
     private ViewPager mViewPager;
 
     @Override
@@ -201,7 +200,7 @@ public abstract class TabSwipeFragment extends Fragment implements TabSwipeInter
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(mCustomLayout > 0 ? mCustomLayout : R.layout.tab_swipe, container,
+        return inflater.inflate(mCustomLayout != 0 ? mCustomLayout : R.layout.tab_swipe, container,
                 false);
     }
 

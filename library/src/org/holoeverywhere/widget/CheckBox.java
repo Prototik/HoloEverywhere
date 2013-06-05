@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.widget;
 
+import org.holoeverywhere.FontLoader.FontStyleProvider;
 import org.holoeverywhere.R;
 
 import android.annotation.SuppressLint;
@@ -9,9 +10,12 @@ import android.content.res.TypedArray;
 import android.os.Build.VERSION;
 import android.util.AttributeSet;
 
-public class CheckBox extends android.widget.CheckBox {
+public class CheckBox extends android.widget.CheckBox implements FontStyleProvider {
     private boolean allCaps = false;
+    private int mFontStyle;
+
     private CharSequence originalText;
+
     private BufferType originalType;
 
     public CheckBox(Context context) {
@@ -40,12 +44,18 @@ public class CheckBox extends android.widget.CheckBox {
         if (text != null) {
             setText(text);
         }
+        mFontStyle = TextView.parseFontStyle(context, attrs, defStyle);
     }
 
     @Override
     @SuppressLint("NewApi")
     public void dispatchDisplayHint(int hint) {
         onDisplayHint(hint);
+    }
+
+    @Override
+    public int getFontStyle() {
+        return mFontStyle;
     }
 
     public boolean isAllCaps() {

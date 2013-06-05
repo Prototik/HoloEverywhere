@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.widget;
 
+import org.holoeverywhere.FontLoader.FontStyleProvider;
 import org.holoeverywhere.R;
 
 import android.annotation.SuppressLint;
@@ -9,9 +10,12 @@ import android.content.res.TypedArray;
 import android.os.Build.VERSION;
 import android.util.AttributeSet;
 
-public class Button extends android.widget.Button {
+public class Button extends android.widget.Button implements FontStyleProvider {
     private boolean allCaps = false;
+    private int mFontStyle;
+
     private CharSequence originalText;
+
     private BufferType originalType;
 
     public Button(Context context) {
@@ -40,12 +44,18 @@ public class Button extends android.widget.Button {
         if (text != null) {
             setText(text);
         }
+        mFontStyle = TextView.parseFontStyle(context, attrs, defStyle);
     }
 
     @Override
     @SuppressLint("NewApi")
     public void dispatchDisplayHint(int hint) {
         onDisplayHint(hint);
+    }
+
+    @Override
+    public int getFontStyle() {
+        return mFontStyle;
     }
 
     public boolean isAllCaps() {
