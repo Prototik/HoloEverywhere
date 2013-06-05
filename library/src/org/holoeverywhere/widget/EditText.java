@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.widget;
 
+import org.holoeverywhere.FontLoader.FontStyleProvider;
 import org.holoeverywhere.R;
 
 import android.annotation.SuppressLint;
@@ -9,11 +10,9 @@ import android.content.res.TypedArray;
 import android.os.Build.VERSION;
 import android.util.AttributeSet;
 
-import com.actionbarsherlock.internal.view.menu.ContextMenuCallbackGetter;
-
-public class EditText extends android.widget.EditText implements ContextMenuCallbackGetter {
+public class EditText extends android.widget.EditText implements FontStyleProvider {
     private boolean allCaps = false;
-    private OnCreateContextMenuListener mOnCreateContextMenuListener;
+    private int mFontStyle;
     private CharSequence originalText;
 
     private BufferType originalType;
@@ -44,6 +43,7 @@ public class EditText extends android.widget.EditText implements ContextMenuCall
         if (text != null) {
             setText(text);
         }
+        mFontStyle = TextView.parseFontStyle(context, attrs, defStyle);
     }
 
     @Override
@@ -53,8 +53,8 @@ public class EditText extends android.widget.EditText implements ContextMenuCall
     }
 
     @Override
-    public OnCreateContextMenuListener getOnCreateContextMenuListener() {
-        return mOnCreateContextMenuListener;
+    public int getFontStyle() {
+        return mFontStyle;
     }
 
     public boolean isAllCaps() {
@@ -73,11 +73,6 @@ public class EditText extends android.widget.EditText implements ContextMenuCall
     public void setAllCaps(boolean allCaps) {
         this.allCaps = allCaps;
         updateTextState();
-    }
-
-    @Override
-    public void setOnCreateContextMenuListener(OnCreateContextMenuListener l) {
-        super.setOnCreateContextMenuListener(mOnCreateContextMenuListener = l);
     }
 
     @Override

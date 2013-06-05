@@ -1,287 +1,312 @@
 
 package org.holoeverywhere;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
+import static org.holoeverywhere.widget.TextView.TEXT_STYLE_BLACK;
+import static org.holoeverywhere.widget.TextView.TEXT_STYLE_BOLD;
+import static org.holoeverywhere.widget.TextView.TEXT_STYLE_CONDENDSED;
+import static org.holoeverywhere.widget.TextView.TEXT_STYLE_ITALIC;
+import static org.holoeverywhere.widget.TextView.TEXT_STYLE_LIGHT;
+import static org.holoeverywhere.widget.TextView.TEXT_STYLE_MEDIUM;
+import static org.holoeverywhere.widget.TextView.TEXT_STYLE_NORMAL;
+import static org.holoeverywhere.widget.TextView.TEXT_STYLE_THIN;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import android.annotation.SuppressLint;
+import org.holoeverywhere.util.SparseArray;
+
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Typeface;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-public final class FontLoader {
-    public static interface FontSelector {
-        public HoloFont getFontForView(View view);
-    }
+public class FontLoader {
+    public static class Font {
+        private Context mContext;
+        private int mFontStyle;
+        private Typeface mTypeface;
+        private boolean mTypefaceLoaded = false;
 
-    public static class HoloFont implements FontSelector {
-        public static final HoloFont ROBOTO;
-        public static final HoloFont ROBOTO_BOLD;
-        public static final HoloFont ROBOTO_BOLD_ITALIC;
-        public static final HoloFont ROBOTO_ITALIC;
-        public static final HoloFont ROBOTO_REGULAR;
-
-        static {
-            ROBOTO = makeFont(
-                    ROBOTO_REGULAR = makeFont(R.raw.roboto_regular),
-                    ROBOTO_BOLD = makeFont(R.raw.roboto_bold),
-                    ROBOTO_ITALIC = makeFont(R.raw.roboto_italic),
-                    ROBOTO_BOLD_ITALIC = makeFont(R.raw.roboto_bolditalic)
-                    );
+        public Font() {
         }
 
-        public static HoloFont makeFont(HoloFont regular, HoloFont bold, HoloFont italic,
-                HoloFont boldItalic) {
-            return new HoloFontMerger(regular, bold, italic, boldItalic);
-        }
-
-        public static HoloFont makeFont(int rawResourceId) {
-            return new HoloFont(rawResourceId);
-        }
-
-        public static HoloFont makeFont(int rawResourceId, boolean ignore) {
-            return new HoloFont(rawResourceId, ignore);
-        }
-
-        public static HoloFont makeFont(Typeface typeface) {
-            return new HoloFont(typeface);
-        }
-
-        /**
-         * Font raw resource id
-         */
-        protected int mFontId;
-        /**
-         * If this flag setted this font doesn't modify any view
-         */
-        protected boolean mIgnore;
-        /**
-         * Loaded typeface
-         */
-        protected Typeface mTypeface;
-
-        private HoloFont(int font) {
-            this(font, false);
-        }
-
-        private HoloFont(int font, boolean ignore) {
-            mFontId = font;
-            mIgnore = ignore;
-            mTypeface = null;
-        }
-
-        private HoloFont(Typeface typeface) {
-            mFontId = -1;
-            mIgnore = false;
-            mTypeface = typeface;
-        }
-
-        public <T extends View> T apply(T view) {
-            if (mIgnore || mTypeface == null && mFontId <= 0 || view == null) {
-                return view;
+        protected final void assertParent() {
+            if (mContext == null) {
+                throw new IllegalStateException(
+                        "Cannot load typeface without attaching font instance to FontLoader");
             }
-            return FontLoader.apply(view, obtainTypeface(view.getContext()));
         }
 
-        @Override
-        public HoloFont getFontForView(View view) {
-            return this;
+        public final Context getContext() {
+            return mContext;
         }
 
-        public Typeface obtainTypeface(Context context) {
-            if (mTypeface != null) {
-                return mTypeface;
-            }
-            if (mTypeface == null && mFontId > 0) {
-                mTypeface = loadTypeface(context, mFontId);
+        public int getFontStyle() {
+            return mFontStyle;
+        }
+
+        public Typeface getTypeface(int fontStyle) {
+            if (!mTypefaceLoaded) {
+                mTypeface = loadTypeface();
+                mTypefaceLoaded = true;
             }
             return mTypeface;
         }
+
+        public Typeface loadTypeface() {
+            return null;
+        }
+
+        protected final void resetTypeface() {
+            mTypeface = null;
+            mTypefaceLoaded = false;
+        }
+
+        public Font setFontStyle(int fontStyle) {
+            mFontStyle = fontStyle;
+            return this;
+        }
     }
 
-    private static final class HoloFontMerger extends HoloFont {
-        private HoloFont mBold;
-        private HoloFont mBoldItalic;
-        private HoloFont mItalic;
-        private HoloFont mRegular;
+    public static class FontCollector extends Font {
+        private final SparseArray<Font> mFonts = new SparseArray<Font>();
 
-        public HoloFontMerger(HoloFont regular, HoloFont bold, HoloFont italic, HoloFont boldItalic) {
-            super(regular.mFontId, false);
-            mRegular = regular;
-            mBold = bold;
-            mItalic = italic;
-            mBoldItalic = boldItalic;
+        @Override
+        public Typeface getTypeface(int fontStyle) {
+            Font font = mFonts.get(fontStyle);
+            if (font != null) {
+                font.mContext = getContext();
+                return font.getTypeface(fontStyle);
+            }
+            return null;
+        }
+
+        public void register(Font font) {
+            final int fontStyle = font.getFontStyle();
+            if (mFonts.get(fontStyle) != null) {
+                throw new IllegalStateException("Could not register font " + font
+                        + " with the fontStyle " + fontStyle + ": already exists");
+            }
+            if (font instanceof FontCollector) {
+                final SparseArray<Font> fonts = ((FontCollector) font).mFonts;
+                for (int i = 0; i < fonts.size(); i++) {
+                    register(fonts.valueAt(i));
+                }
+                return;
+            }
+            mFonts.put(fontStyle, font);
+        }
+
+        public void unregister(Font font) {
+            unregister(font.getFontStyle());
+        }
+
+        public void unregister(int fontStyle) {
+            mFonts.delete(fontStyle);
+        }
+    }
+
+    public static interface FontStyleProvider {
+        public int getFontStyle();
+
+        public void setTypeface(Typeface typeface);
+    }
+
+    public static class RawFont extends Font {
+        private int mRawResourceId;
+
+        public RawFont(int rawResourceId) {
+            mRawResourceId = rawResourceId;
         }
 
         @Override
-        public HoloFont getFontForView(View view) {
-            if (!(view instanceof TextView)) {
-                return super.getFontForView(view);
-            }
-            TextView textView = (TextView) view;
-            Typeface typeface = textView.getTypeface();
-            if (typeface == null) {
-                return mRegular;
-            }
-            final boolean bold = typeface.isBold(), italic = typeface.isItalic();
-            if (bold && italic) {
-                return mBoldItalic;
-            } else if (bold) {
-                return mBold;
-            } else if (italic) {
-                return mItalic;
+        public Typeface loadTypeface() {
+            assertParent();
+            return loadTypeface(true);
+        }
+
+        protected Typeface loadTypeface(boolean allowFileReusage) {
+            return loadTypeface(new File(getContext().getCacheDir(), "font_0x"
+                    + Integer.toHexString(mRawResourceId)), allowFileReusage);
+        }
+
+        private Typeface loadTypeface(File file, boolean allowFileReusage) {
+            if (file.exists() && allowFileReusage) {
+                try {
+                    Typeface typeface = Typeface.createFromFile(file);
+                    if (typeface == null) {
+                        throw new NullPointerException();
+                    }
+                    return typeface;
+                } catch (Exception e) {
+                    return loadTypeface(false);
+                }
             } else {
-                return mRegular;
+                try {
+                    InputStream is = getContext().getResources().openRawResource(mRawResourceId);
+                    OutputStream os = new FileOutputStream(file);
+                    byte[] buffer = new byte[1024];
+                    int c;
+                    while ((c = is.read(buffer)) > 0) {
+                        os.write(buffer, 0, c);
+                    }
+                    os.flush();
+                    os.close();
+                    is.close();
+                    return loadTypeface(file, allowFileReusage);
+                } catch (Exception e) {
+                    return null;
+                }
             }
         }
 
+        public void setRawResourceId(int rawResourceId) {
+            mRawResourceId = rawResourceId;
+            resetTypeface();
+        }
     }
 
-    private static HoloFont sDefaultFont = HoloFont.ROBOTO;
-    private static final SparseArray<Typeface> sFontCache = new SparseArray<Typeface>();
-    private static final String TAG = FontLoader.class.getSimpleName();
+    public static class RawLazyFont extends RawFont {
+        private String mRawResourceName;
 
-    public static <T extends View> T apply(T view) {
-        if (sDefaultFont == null) {
+        public RawLazyFont(String rawResourceName) {
+            super(0);
+            mRawResourceName = rawResourceName;
+        }
+
+        @Override
+        public Typeface loadTypeface() {
+            assertParent();
+            final int id = getContext().getResources().getIdentifier(mRawResourceName,
+                    "raw", getContext().getPackageName());
+            if (id == 0) {
+                throw new IllegalStateException("Could not find font in raw resources: "
+                        + mRawResourceName);
+            }
+            setRawResourceId(id);
+            return loadTypeface(true);
+        }
+    }
+
+    public static final FontCollector ROBOTO;
+    public static final Font ROBOTO_BLACK;
+    public static final Font ROBOTO_BLACKITALIC;
+    public static final Font ROBOTO_BOLD;
+    public static final Font ROBOTO_BOLDCONDENSED;
+    public static final Font ROBOTO_BOLDCONDENSEDITALIC;
+    public static final Font ROBOTO_BOLDITALIC;
+    public static final Font ROBOTO_CONDENSED;
+    public static final Font ROBOTO_CONDENSEDITALIC;
+    public static final Font ROBOTO_ITALIC;
+    public static final Font ROBOTO_LIGHT;
+    public static final Font ROBOTO_LIGHTITALIC;
+    public static final Font ROBOTO_MEDIUM;
+    public static final Font ROBOTO_MEDIUMITALIC;
+    public static final Font ROBOTO_REGULAR;
+    public static final Font ROBOTO_THIN;
+    public static final Font ROBOTO_THINITALIC;
+    private static Font sDefaultFont;
+
+    static {
+        ROBOTO_REGULAR = new RawFont(R.raw.roboto_regular)
+                .setFontStyle(TEXT_STYLE_NORMAL);
+        ROBOTO_BOLD = new RawFont(R.raw.roboto_bold)
+                .setFontStyle(TEXT_STYLE_BOLD);
+        ROBOTO_ITALIC = new RawFont(R.raw.roboto_italic)
+                .setFontStyle(TEXT_STYLE_ITALIC);
+        ROBOTO_BOLDITALIC = new RawFont(R.raw.roboto_bolditalic)
+                .setFontStyle(TEXT_STYLE_BOLD | TEXT_STYLE_ITALIC);
+
+        ROBOTO_BLACK = new RawLazyFont("roboto_black")
+                .setFontStyle(TEXT_STYLE_BLACK);
+        ROBOTO_BLACKITALIC = new RawLazyFont("roboto_blackitalic")
+                .setFontStyle(TEXT_STYLE_BLACK | TEXT_STYLE_ITALIC);
+        ROBOTO_BOLDCONDENSED = new RawLazyFont("roboto_boldcondensed")
+                .setFontStyle(TEXT_STYLE_BOLD | TEXT_STYLE_CONDENDSED);
+        ROBOTO_BOLDCONDENSEDITALIC = new RawLazyFont("roboto_boldcondenseditalic")
+                .setFontStyle(TEXT_STYLE_BOLD | TEXT_STYLE_CONDENDSED | TEXT_STYLE_ITALIC);
+        ROBOTO_CONDENSED = new RawLazyFont("roboto_condensed")
+                .setFontStyle(TEXT_STYLE_CONDENDSED);
+        ROBOTO_CONDENSEDITALIC = new RawLazyFont("roboto_condenseditalic")
+                .setFontStyle(TEXT_STYLE_CONDENDSED | TEXT_STYLE_ITALIC);
+        ROBOTO_LIGHT = new RawLazyFont("roboto_light")
+                .setFontStyle(TEXT_STYLE_LIGHT);
+        ROBOTO_LIGHTITALIC = new RawLazyFont("roboto_lightitalic")
+                .setFontStyle(TEXT_STYLE_LIGHT | TEXT_STYLE_ITALIC);
+        ROBOTO_MEDIUM = new RawLazyFont("roboto_medium")
+                .setFontStyle(TEXT_STYLE_MEDIUM);
+        ROBOTO_MEDIUMITALIC = new RawLazyFont("roboto_mediumitalic")
+                .setFontStyle(TEXT_STYLE_MEDIUM | TEXT_STYLE_ITALIC);
+        ROBOTO_THIN = new RawLazyFont("roboto_thin")
+                .setFontStyle(TEXT_STYLE_THIN);
+        ROBOTO_THINITALIC = new RawLazyFont("roboto_thinitalic")
+                .setFontStyle(TEXT_STYLE_THIN | TEXT_STYLE_ITALIC);
+
+        sDefaultFont = ROBOTO = new FontCollector();
+        ROBOTO.register(ROBOTO_REGULAR);
+        ROBOTO.register(ROBOTO_BOLD);
+        ROBOTO.register(ROBOTO_ITALIC);
+        ROBOTO.register(ROBOTO_BOLDITALIC);
+        ROBOTO.register(ROBOTO_BLACK);
+        ROBOTO.register(ROBOTO_BLACKITALIC);
+        ROBOTO.register(ROBOTO_BOLDCONDENSED);
+        ROBOTO.register(ROBOTO_BOLDCONDENSEDITALIC);
+        ROBOTO.register(ROBOTO_CONDENSED);
+        ROBOTO.register(ROBOTO_CONDENSEDITALIC);
+        ROBOTO.register(ROBOTO_LIGHT);
+        ROBOTO.register(ROBOTO_LIGHTITALIC);
+        ROBOTO.register(ROBOTO_MEDIUM);
+        ROBOTO.register(ROBOTO_MEDIUMITALIC);
+        ROBOTO.register(ROBOTO_THIN);
+        ROBOTO.register(ROBOTO_THINITALIC);
+    }
+
+    public static <T extends View> T apply(T view, Font font) {
+        if (view == null || font == null) {
             return view;
         }
+        font.mContext = view.getContext();
+        applyInternal(view, font);
+        return view;
+    }
+
+    public static <T extends View> T applyDefaultFont(T view) {
         return apply(view, sDefaultFont);
     }
 
-    public static <T extends View> T apply(T view, FontSelector fontSelector) {
-        if (view == null || view.getContext() == null
-                || view.getContext().isRestricted()) {
-            Log.e(FontLoader.TAG, "View or context is invalid");
-            return view;
-        }
-        return internalApply(view, fontSelector);
-    }
-
-    public static <T extends View> T apply(T view, HoloFont font) {
-        return apply(view, (FontSelector) font);
-    }
-
-    @SuppressLint("NewApi")
-    public static <T extends View> T apply(T view, int font) {
-        if (view == null || view.getContext() == null
-                || view.getContext().isRestricted()) {
-            Log.e(FontLoader.TAG, "View or context is invalid");
-            return view;
-        }
-        Typeface typeface = FontLoader.loadTypeface(view.getContext(), font);
-        if (typeface == null) {
-            Log.v(FontLoader.TAG, "Font " + font + " not found in resources");
-            return view;
-        } else {
-            return FontLoader.apply(view, typeface);
-        }
-    }
-
-    public static <T extends View> T apply(T view, Typeface typeface) {
-        if (view == null || view.getContext() == null
-                || view.getContext().isRestricted()) {
-            return view;
-        }
-        if (typeface == null) {
-            Log.v(FontLoader.TAG, "Font is null");
-            return view;
-        }
-        if (view instanceof TextView) {
-            ((TextView) view).setTypeface(typeface);
-        }
+    private static void applyInternal(View view, Font font) {
         if (view instanceof ViewGroup) {
-            ViewGroup group = (ViewGroup) view;
-            for (int i = 0; i < group.getChildCount(); i++) {
-                FontLoader.apply(group.getChildAt(i), typeface);
+            final ViewGroup vg = (ViewGroup) view;
+            final int childCount = vg.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                applyInternal(vg.getChildAt(i), font);
             }
         }
-        return view;
+        if (view instanceof FontStyleProvider) {
+            if (view.getTag(R.id.fontLoaderTag) == font) {
+                return;
+            }
+            final FontStyleProvider provider = (FontStyleProvider) view;
+            final Typeface typeface = font.getTypeface(provider.getFontStyle());
+            if (typeface != null) {
+                provider.setTypeface(typeface);
+                view.setTag(R.id.fontLoaderTag, font);
+            }
+        }
+
     }
 
-    public static HoloFont getDefaultFont() {
+    public static Font getDefaultFont() {
         return sDefaultFont;
     }
 
-    private static <T extends View> T internalApply(T view, FontSelector fontSelector) {
-        if (view instanceof TextView) {
-            TextView textView = (TextView) view;
-            HoloFont font = fontSelector.getFontForView(textView);
-            if (font != null && !font.mIgnore) {
-                Typeface typeface = font.obtainTypeface(view.getContext());
-                if (typeface != null) {
-                    textView.setTypeface(typeface);
-                }
-            }
-        } else if (view instanceof ViewGroup) {
-            ViewGroup group = (ViewGroup) view;
-            final int childCount = group.getChildCount();
-            for (int i = 0; i < childCount; i++) {
-                internalApply(group.getChildAt(i), fontSelector);
-            }
-        }
-        return view;
-    }
-
-    public static Typeface loadTypeface(Context context, int font) {
-        Typeface typeface = FontLoader.sFontCache.get(font);
-        if (typeface == null) {
-            try {
-                File file = new File(context.getCacheDir(), "fonts");
-                if (!file.exists()) {
-                    file.mkdirs();
-                }
-                file = new File(file, "font_0x" + Integer.toHexString(font));
-                FontLoader.sFontCache.put(font,
-                        typeface = readTypeface(file, context.getResources(), font, true));
-            } catch (Exception e) {
-                Log.e(FontLoader.TAG, "Error of loading font", e);
-            }
-        }
-        return typeface;
-    }
-
-    private static Typeface readTypeface(File file, Resources res, int font,
-            boolean allowReadExistsFile) throws Exception {
-        try {
-            if (!allowReadExistsFile || !file.exists()) {
-                InputStream is = new BufferedInputStream(res.openRawResource(font));
-                OutputStream os = new ByteArrayOutputStream(Math.max(is.available(), 1024));
-                byte[] buffer = new byte[1024];
-                int read;
-                while ((read = is.read(buffer)) > 0) {
-                    os.write(buffer, 0, read);
-                }
-                is.close();
-                os.flush();
-                buffer = ((ByteArrayOutputStream) os).toByteArray();
-                os.close();
-                os = new FileOutputStream(file);
-                os.write(buffer);
-                os.flush();
-                os.close();
-            }
-            return Typeface.createFromFile(file);
-        } catch (Exception e) {
-            if (allowReadExistsFile) {
-                return readTypeface(file, res, font, false);
-            }
-            throw e;
-        }
-    }
-
-    public static void setDefaultFont(HoloFont defaultFont) {
+    public static void setDefaultFont(Font defaultFont) {
         sDefaultFont = defaultFont;
     }
 
     private FontLoader() {
+
     }
 }

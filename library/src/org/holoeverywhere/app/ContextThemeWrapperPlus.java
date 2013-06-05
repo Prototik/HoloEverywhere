@@ -12,7 +12,7 @@ public class ContextThemeWrapperPlus extends ContextThemeWrapper implements Supe
 
     public ContextThemeWrapperPlus(Context base, int themeres) {
         super(base, themeres);
-        this.mTheme = themeres;
+        mTheme = themeres;
     }
 
     @Override
