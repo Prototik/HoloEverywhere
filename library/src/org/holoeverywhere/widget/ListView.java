@@ -246,7 +246,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         TypedArray a = context.obtainStyledAttributes(attrs, new int[] {
                 android.R.attr.choiceMode,              // 16843051
                 android.R.attr.fastScrollEnabled,       // 16843302
-                android.R.attr.setOverscrollHeader,     // 16843458
+                android.R.attr.overScrollHeader,        // 16843458
                 android.R.attr.overScrollFooter,        // 16843459
                 android.R.attr.fastScrollAlwaysVisible, // 16843573
         }, defStyle, R.style.Holo_ListView);
@@ -256,7 +256,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         if (!a.hasValue(3) && VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) { // overScrollFooter
             super.setOverscrollFooter(null);
         }
-        if (!a.hasValue(2) && VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) { // setOverscrollHeader
+        if (!a.hasValue(2) && VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) { // overScrollHeader
             super.setOverscrollHeader(null);
         }
         a.recycle();
