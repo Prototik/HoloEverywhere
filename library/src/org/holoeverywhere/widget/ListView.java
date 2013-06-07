@@ -241,20 +241,22 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         }
         super.setFastScrollEnabled(false);
         super.setChoiceMode(CHOICE_MODE_NONE);
+        // http://stackoverflow.com/questions/8675709/getting-style-attributes-dynamically/9087694#9087694
+        // There are special requirements on how it is structured -- the resource identifiers need to be in sorted order, as this is part of the optimization to quickly retrieving them
         TypedArray a = context.obtainStyledAttributes(attrs, new int[] {
-                android.R.attr.fastScrollEnabled,
-                android.R.attr.fastScrollAlwaysVisible,
-                android.R.attr.choiceMode,
-                android.R.attr.overScrollFooter,
-                android.R.attr.overScrollHeader
+                android.R.attr.choiceMode,              // 16843051
+                android.R.attr.fastScrollEnabled,       // 16843302
+                android.R.attr.setOverscrollHeader,     // 16843458
+                android.R.attr.overScrollFooter,        // 16843459
+                android.R.attr.fastScrollAlwaysVisible, // 16843573
         }, defStyle, R.style.Holo_ListView);
-        setFastScrollEnabled(a.getBoolean(0, false));
-        setFastScrollAlwaysVisible(a.getBoolean(1, false));
-        setChoiceMode(a.getInt(2, CHOICE_MODE_NONE));
-        if (!a.hasValue(3) && VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) {
+        setFastScrollEnabled(a.getBoolean(1, false)); // fastScrollEnabled
+        setFastScrollAlwaysVisible(a.getBoolean(4, false)); // fastScrollAlwaysVisible
+        setChoiceMode(a.getInt(0, CHOICE_MODE_NONE)); // choiceMode
+        if (!a.hasValue(3) && VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) { // overScrollFooter
             super.setOverscrollFooter(null);
         }
-        if (!a.hasValue(4) && VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) {
+        if (!a.hasValue(2) && VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) { // setOverscrollHeader
             super.setOverscrollHeader(null);
         }
         a.recycle();
