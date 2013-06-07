@@ -56,23 +56,26 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
      */
     @SuppressLint("InlinedApi")
     public static int parseFontStyle(Context context, AttributeSet attrs, int defStyleAttr) {
+        // http://stackoverflow.com/questions/8675709/getting-style-attributes-dynamically/9087694#9087694
+        // There are special requirements on how it is structured -- the resource identifiers need to be in sorted order, as this is part of the optimization to quickly retrieving them
         TypedArray a = context.obtainStyledAttributes(attrs, new int[] {
-                android.R.attr.fontFamily,
-                android.R.attr.typeface,
-                android.R.attr.textStyle
+            android.R.attr.typeface,   // 16842902
+            android.R.attr.textStyle,  // 16842903
+            android.R.attr.fontFamily, // 16843692
         }, defStyleAttr, 0);
+
         final TypedValue value = new TypedValue();
-        a.getValue(0, value);
+        a.getValue(2, value);
         if (value.string != null) {
             a.recycle();
             return parse(value.string.toString());
         } else {
             int i = TEXT_STYLE_NORMAL;
-            a.getValue(1, value);
+            a.getValue(0, value);
             if (value.string != null) {
                 i |= parse(value.string.toString());
             }
-            i |= a.getInt(2, TEXT_STYLE_NORMAL);
+            i |= a.getInt(1, TEXT_STYLE_NORMAL);
             a.recycle();
             return i;
         }
