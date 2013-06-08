@@ -1,23 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:orientation="vertical" >
+	<ImageView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:src="@drawable/about_angle_left" />
+	<ImageView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true"
+		android:src="@drawable/about_angle_right" />
 	<TextView
+		android:id="@+id/aboutTitle"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="6dp"
+		android:fontFamily="roboto-light"
 		android:gravity="center"
 		android:lines="1"
 		android:text="@string/library_name"
 		android:textColor="@color/holo_blue_light"
-		android:textSize="36sp"
+		android:textSize="32sp"
 		android:textStyle="bold" />
 	<TextView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginBottom="16dp"
-		android:layout_marginTop="18dp"
+		android:layout_below="@id/aboutTitle"
 		android:gravity="center"
+		android:paddingBottom="18dp"
+		android:paddingTop="16dp"
 		android:text="@string/about_text" />
-</LinearLayout>
+</RelativeLayout>

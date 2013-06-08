@@ -133,6 +133,7 @@ public class OtherFragment extends ListFragment {
         addItem("Dialogs", DialogsFragment.class);
         addItem("Pickers", PickersFragment.class);
         addItem("Menus", MenusFragments.class);
+        addItem("Font Palette", FontPalette.class);
         addItem("Calendar", CalendarFragment.class);
         addItem("Tabs + Swipe", TabsFragment.class);
     }

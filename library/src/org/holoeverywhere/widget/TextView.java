@@ -12,11 +12,21 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 
 public class TextView extends android.widget.TextView implements FontStyleProvider {
+    private static final int[] Font = {
+            android.R.attr.typeface, // 16842902
+            android.R.attr.textStyle, // 16842903
+            android.R.attr.fontFamily, // 16843692
+    };
+    private static final int Font_fontFamily = 2;
+    private static final int Font_textStyle = 1;
+    private static final int Font_typeface = 0;
     public static final int TEXT_STYLE_BLACK = 1 << 3;
     public static final int TEXT_STYLE_BOLD = 1 << 0;
     public static final int TEXT_STYLE_CONDENDSED = 1 << 4;
     public static final int TEXT_STYLE_ITALIC = 1 << 1;
+
     public static final int TEXT_STYLE_LIGHT = 1 << 2;
+
     public static final int TEXT_STYLE_MEDIUM = 1 << 5;
     public static final int TEXT_STYLE_NORMAL = 0;
     public static final int TEXT_STYLE_THIN = 1 << 6;
@@ -57,25 +67,22 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
     @SuppressLint("InlinedApi")
     public static int parseFontStyle(Context context, AttributeSet attrs, int defStyleAttr) {
         // http://stackoverflow.com/questions/8675709/getting-style-attributes-dynamically/9087694#9087694
-        // There are special requirements on how it is structured -- the resource identifiers need to be in sorted order, as this is part of the optimization to quickly retrieving them
-        TypedArray a = context.obtainStyledAttributes(attrs, new int[] {
-            android.R.attr.typeface,   // 16842902
-            android.R.attr.textStyle,  // 16842903
-            android.R.attr.fontFamily, // 16843692
-        }, defStyleAttr, 0);
-
+        // There are special requirements on how it is structured -- the
+        // resource identifiers need to be in sorted order, as this is part of
+        // the optimization to quickly retrieving them
+        TypedArray a = context.obtainStyledAttributes(attrs, Font, defStyleAttr, 0);
         final TypedValue value = new TypedValue();
-        a.getValue(2, value);
+        a.getValue(Font_fontFamily, value);
         if (value.string != null) {
             a.recycle();
             return parse(value.string.toString());
         } else {
             int i = TEXT_STYLE_NORMAL;
-            a.getValue(0, value);
+            a.getValue(Font_typeface, value);
             if (value.string != null) {
                 i |= parse(value.string.toString());
             }
-            i |= a.getInt(1, TEXT_STYLE_NORMAL);
+            i |= a.getInt(Font_textStyle, TEXT_STYLE_NORMAL);
             a.recycle();
             return i;
         }
@@ -83,9 +90,7 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
 
     private boolean allCaps = false;
     private int mFontStyle;
-
     private CharSequence originalText;
-
     private BufferType originalType;
 
     public TextView(Context context) {
