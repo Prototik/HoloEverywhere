@@ -4,6 +4,12 @@
 		"Holo.Demo.ListRowView": {
 			"android:background": "?selectableItemBackground"
 		},
+		"Holo.Demo.FontViewer": {
+		    "android:layout_width": "match_parent",
+		    "android:layout_height": "?listPreferredItemHeightSmall",
+		    "android:gravity": "center",
+		    "android:textAppearance": "?android:textAppearanceMedium"
+		},
 		"Holo.Demo.Theme | DemoThemeDark DemoThemeBarDark < Holo.Theme": {},
 		"Holo.Demo.Theme.Light | DemoThemeLight DemoThemeBarLight < Holo.Theme.Light": {},
 		"Holo.Demo.Theme.Light.DarkActionBar | DemoThemeLight DemoThemeBarDark < Holo.Theme.Light.DarkActionBar": {},

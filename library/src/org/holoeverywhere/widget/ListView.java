@@ -242,12 +242,14 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         super.setFastScrollEnabled(false);
         super.setChoiceMode(CHOICE_MODE_NONE);
         // http://stackoverflow.com/questions/8675709/getting-style-attributes-dynamically/9087694#9087694
-        // There are special requirements on how it is structured -- the resource identifiers need to be in sorted order, as this is part of the optimization to quickly retrieving them
+        // There are special requirements on how it is structured -- the
+        // resource identifiers need to be in sorted order, as this is part of
+        // the optimization to quickly retrieving them
         TypedArray a = context.obtainStyledAttributes(attrs, new int[] {
-                android.R.attr.choiceMode,              // 16843051
-                android.R.attr.fastScrollEnabled,       // 16843302
-                android.R.attr.overScrollHeader,        // 16843458
-                android.R.attr.overScrollFooter,        // 16843459
+                android.R.attr.choiceMode, // 16843051
+                android.R.attr.fastScrollEnabled, // 16843302
+                android.R.attr.overScrollHeader, // 16843458
+                android.R.attr.overScrollFooter, // 16843459
                 android.R.attr.fastScrollAlwaysVisible, // 16843573
         }, defStyle, R.style.Holo_ListView);
         setFastScrollEnabled(a.getBoolean(1, false)); // fastScrollEnabled

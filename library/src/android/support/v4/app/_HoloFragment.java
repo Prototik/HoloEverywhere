@@ -269,6 +269,14 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     }
 
     @Override
+    public void setInitialSavedState(SavedState state) {
+        if (state != null) {
+            fixClassloader(state.mState);
+        }
+        super.setInitialSavedState(state);
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if (isVisibleToUser) {
             fixClassloader(mSavedFragmentState);

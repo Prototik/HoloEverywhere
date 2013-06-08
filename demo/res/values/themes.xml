@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
     <style name="Holo.Demo"/>
+    <style name="Holo.Demo.FontViewer">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_height">?listPreferredItemHeightSmall</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
     <style name="Holo.Demo.ListRowView">
         <item name="android:background">?selectableItemBackground</item>
     </style>

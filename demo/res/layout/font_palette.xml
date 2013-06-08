@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" >
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:divider="?dividerVertical"
+		android:orientation="vertical"
+		android:showDividers="beginning|middle|end" >
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-regular"
+			android:text="Roboto Regular" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-bold"
+			android:text="Roboto Bold" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-italic"
+			android:text="Roboto Italic" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-bolditalic"
+			android:text="Roboto Bold Italic" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-black"
+			android:text="Roboto Black" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-blackitalic"
+			android:text="Roboto Black Italic" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-boldcondensed"
+			android:text="Roboto Bold Condensed" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-boldcondenseditalic"
+			android:text="Roboto Bold Condensed Italic" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-condensed"
+			android:text="Roboto Condensed" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-condenseditalic"
+			android:text="Roboto Condensed Italic" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-light"
+			android:text="Roboto Light" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-lightitalic"
+			android:text="Roboto Light Italic" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-medium"
+			android:text="Roboto Medium" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-mediumitalic"
+			android:text="Roboto Medium Italic" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-thin"
+			android:text="Roboto Thin" />
+		<TextView
+			style="@style/Holo.Demo.FontViewer"
+			android:fontFamily="roboto-thinitalic"
+			android:text="Roboto Thin Italic" />
+	</LinearLayout>
+</ScrollView>
