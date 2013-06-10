@@ -19,6 +19,7 @@ import org.holoeverywhere.addon.IAddonAttacher;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
 import org.holoeverywhere.app.ContextThemeWrapperPlus;
+import org.holoeverywhere.internal.ActivityDecorView;
 import org.holoeverywhere.internal.WindowDecorView;
 import org.holoeverywhere.preference.PreferenceManagerHelper;
 import org.holoeverywhere.preference.SharedPreferences;
@@ -55,6 +56,7 @@ import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 
 public abstract class _HoloActivity extends Watson implements SuperStartActivity,
         OnCreatePanelMenuListener, OnPreparePanelListener,
@@ -559,7 +561,11 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
         if (mDecorView != null) {
             return true;
         }
-        mDecorView = new WindowDecorView(this);
+        boolean isOverlay = false;
+        SparseIntArray windowFeatures = mConfig.windowFeatures;
+        if(windowFeatures != null && windowFeatures.get((int) Window.FEATURE_ACTION_BAR_OVERLAY, 0) > 0)
+            isOverlay = true;
+        mDecorView = new ActivityDecorView(this, isOverlay);
         mDecorView.setId(android.R.id.content);
         mDecorView.setProvider(this);
         if (view != null) {
