@@ -36,11 +36,20 @@ public class Fragment extends _HoloFragment {
         }
     }
 
+    /**
+     * @deprecated Use {@link #instantiate(Class)} instead.
+     *             {@link #instantiate(Context, String)} is sucks, don't use it!
+     */
     @Deprecated
     public static Fragment instantiate(Context context, String fname) {
         return instantiate(context, fname, null);
     }
 
+    /**
+     * @deprecated Use {@link #instantiate(Class, Bundle)} instead.
+     *             {@link #instantiate(Context, String, Bundle)} is sucks, don't
+     *             use it!
+     */
     @SuppressWarnings("unchecked")
     @Deprecated
     public static Fragment instantiate(Context context, String fname, Bundle args) {
