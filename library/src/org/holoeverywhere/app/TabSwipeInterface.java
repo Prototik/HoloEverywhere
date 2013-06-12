@@ -1,16 +1,12 @@
 
 package org.holoeverywhere.app;
 
-import org.holoeverywhere.app.TabSwipeInterface.TabInfo;
+import org.holoeverywhere.app.TabSwipeInterface.ITabInfo;
 
 import android.os.Bundle;
 
-public interface TabSwipeInterface<T extends TabInfo> {
-    public static interface OnTabSelectedListener {
-        public void onTabSelected(int position);
-    }
-
-    public static interface TabInfo {
+public interface TabSwipeInterface<T extends ITabInfo> {
+    public static interface ITabInfo {
         public Bundle getFragmentArguments();
 
         public Class<? extends Fragment> getFragmentClass();
@@ -22,6 +18,10 @@ public interface TabSwipeInterface<T extends TabInfo> {
         public void setFragmentClass(Class<? extends Fragment> fragmentClass);
 
         public void setTitle(CharSequence title);
+    }
+
+    public static interface OnTabSelectedListener {
+        public void onTabSelected(int position);
     }
 
     public T addTab(CharSequence title, Class<? extends Fragment> fragmentClass);
@@ -51,8 +51,6 @@ public interface TabSwipeInterface<T extends TabInfo> {
     public T removeTab(T tabInfo);
 
     public void setCurrentTab(int position);
-
-    public void setCustomLayout(int customLayout);
 
     public void setOnTabSelectedListener(OnTabSelectedListener onTabSelectedListener);
 

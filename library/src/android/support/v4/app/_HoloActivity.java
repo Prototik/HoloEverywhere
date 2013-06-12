@@ -324,6 +324,10 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
         supportInvalidateOptionsMenu();
     }
 
+    public boolean isDecorViewInited() {
+        return mDecorView != null;
+    }
+
     public boolean isForceThemeApply() {
         return mForceThemeApply;
     }
