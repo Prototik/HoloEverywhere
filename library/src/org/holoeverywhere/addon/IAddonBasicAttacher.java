@@ -30,7 +30,8 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
     }
 
     private final Map<Class<? extends IAddon>, V> mAddons = new HashMap<Class<? extends IAddon>, V>();
-    private final Set<V> mAddonsList = new TreeSet<V>(new AddonComparator());
+    private final Set<V> mAddonsSet = new TreeSet<V>(new AddonComparator());
+    private List<V> mAddonsList;
     private boolean mLockAttaching = false;
     private Z mObject;
 
@@ -51,7 +52,8 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
                 return null;
             }
             mAddons.put(clazz, addon);
-            mAddonsList.add(addon);
+            mAddonsSet.add(addon);
+            mAddonsList = null;
         }
         return addon;
     }
@@ -109,15 +111,16 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
 
     @Override
     public boolean performAddonAction(AddonCallback<V> callback) {
-        if (mAddons.size() == 0) {
-            return false;
+        if (mAddonsSet.size() == 0) {
+            return callback.post();
         }
-        callback.pre();
-        boolean result = false;
-        for (V addon : mAddonsList) {
-            result = callback.performAction(addon);
-            if (callback.mStopped) {
-                return result;
+        if (mAddonsList == null) {
+            mAddonsList = new ArrayList<V>(mAddonsSet);
+        }
+        final int addonCount = mAddonsList.size();
+        for (int i = 0; i < addonCount; i++) {
+            if (callback.action(mAddonsList.get(i))) {
+                return true;
             }
         }
         return callback.post();
@@ -125,7 +128,8 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
 
     public void reset() {
         mAddons.clear();
-        mAddonsList.clear();
+        mAddonsSet.clear();
+        mAddonsList = null;
         mLockAttaching = false;
     }
 }
