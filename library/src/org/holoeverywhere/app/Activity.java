@@ -50,7 +50,7 @@ public abstract class Activity extends _HoloActivity {
 
         @Override
         public boolean post() {
-            return (mView = Activity.super.findViewById(mId)) != null;
+            return (mView = getWindow().findViewById(mId)) != null;
         }
     }
 

@@ -30,8 +30,8 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
     }
 
     private final Map<Class<? extends IAddon>, V> mAddons = new HashMap<Class<? extends IAddon>, V>();
-    private final Set<V> mAddonsSet = new TreeSet<V>(new AddonComparator());
     private List<V> mAddonsList;
+    private final Set<V> mAddonsSet = new TreeSet<V>(new AddonComparator());
     private boolean mLockAttaching = false;
     private Z mObject;
 
