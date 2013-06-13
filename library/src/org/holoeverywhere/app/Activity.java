@@ -507,10 +507,7 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     public void requestWindowFeature(long featureIdLong) {
-        if (!super.isInited()) {
-            super.requestWindowFeature(featureIdLong);
-            return;
-        }
+        super.requestWindowFeature(featureIdLong);
         final int featureId = (int) featureIdLong;
         performAddonAction(new AddonCallback<IAddonActivity>() {
             @Override

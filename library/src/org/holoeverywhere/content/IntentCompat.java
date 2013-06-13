@@ -3,6 +3,7 @@ package org.holoeverywhere.content;
 
 import org.holoeverywhere.app.Application;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Intent;
 import android.os.Build.VERSION;
@@ -13,13 +14,12 @@ public final class IntentCompat {
      * Declare chooser activity in manifest:
      * 
      * <pre>
-     *  &lt;activity android:name="org.holoeverywhere.ChooserActivity"
+     *  &lt;activity android:name="org.holoeverywhere.content.ChooserActivity"
      *      android:theme="@style/Holo.Theme.Dialog.Alert.Light"
-     *      android:finishOnCloseSystemDialogs="true"
-     *      android:excludeFromRecents="true"
-     *      android:multiprocess="true" /&gt;
+     *      android:excludeFromRecents="true" /&gt;
      * </pre>
      */
+    @SuppressLint("NewApi")
     public static Intent createChooser(Intent target, CharSequence title) {
         if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
             return Intent.createChooser(target, title);
@@ -32,7 +32,7 @@ public final class IntentCompat {
         }
         int permFlags = target.getFlags()
                 & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        if (permFlags != 0) {
+        if (permFlags != 0 && VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
             ClipData targetClipData = target.getClipData();
             if (targetClipData == null && target.getData() != null) {
                 ClipData.Item item = new ClipData.Item(target.getData());
