@@ -64,11 +64,7 @@ public class WindowDecorView extends ContextMenuDecorView {
 
     @Override
     protected boolean fitSystemWindows(Rect insets) {
-        int left = Math.max(getPaddingLeft(), insets.left);
-        int top = Math.max(getPaddingTop(), insets.top);
-        int right = Math.max(getPaddingRight(), insets.right);
-        int bottom = Math.max(getPaddingBottom(), insets.bottom);
-        setPadding(left, top, right, bottom);
+        setPadding(insets.left, insets.top, insets.right, insets.bottom);
         return true;
     }
 
