@@ -3,30 +3,21 @@ package org.holoeverywhere.widget;
 
 import org.holoeverywhere.FontLoader.FontStyleProvider;
 import org.holoeverywhere.R;
+import org.holoeverywhere.text.AllCapsTransformationMethod;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.os.Build.VERSION;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 
 public class TextView extends android.widget.TextView implements FontStyleProvider {
-    private static final int[] Font = {
-            android.R.attr.typeface, // 16842902
-            android.R.attr.textStyle, // 16842903
-            android.R.attr.fontFamily, // 16843692
-    };
-    private static final int Font_fontFamily = 2;
-    private static final int Font_textStyle = 1;
-    private static final int Font_typeface = 0;
     public static final int TEXT_STYLE_BLACK = 1 << 3;
     public static final int TEXT_STYLE_BOLD = 1 << 0;
     public static final int TEXT_STYLE_CONDENDSED = 1 << 4;
     public static final int TEXT_STYLE_ITALIC = 1 << 1;
-
     public static final int TEXT_STYLE_LIGHT = 1 << 2;
-
     public static final int TEXT_STYLE_MEDIUM = 1 << 5;
     public static final int TEXT_STYLE_NORMAL = 0;
     public static final int TEXT_STYLE_THIN = 1 << 6;
@@ -66,32 +57,76 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
      */
     @SuppressLint("InlinedApi")
     public static int parseFontStyle(Context context, AttributeSet attrs, int defStyleAttr) {
-        // http://stackoverflow.com/questions/8675709/getting-style-attributes-dynamically/9087694#9087694
-        // There are special requirements on how it is structured -- the
-        // resource identifiers need to be in sorted order, as this is part of
-        // the optimization to quickly retrieving them
-        TypedArray a = context.obtainStyledAttributes(attrs, Font, defStyleAttr, 0);
+        final TypedArray a = context.obtainStyledAttributes(attrs,
+                R.styleable.TextAppearance, defStyleAttr, 0);
+        final int result = parseFontStyle(a);
+        a.recycle();
+        return result;
+    }
+
+    public static int parseFontStyle(TypedArray a) {
         final TypedValue value = new TypedValue();
-        a.getValue(Font_fontFamily, value);
+        a.getValue(R.styleable.TextAppearance_android_fontFamily, value);
         if (value.string != null) {
             a.recycle();
             return parse(value.string.toString());
         } else {
             int i = TEXT_STYLE_NORMAL;
-            a.getValue(Font_typeface, value);
+            a.getValue(R.styleable.TextAppearance_android_typeface, value);
             if (value.string != null) {
                 i |= parse(value.string.toString());
             }
-            i |= a.getInt(Font_textStyle, TEXT_STYLE_NORMAL);
+            i |= a.getInt(R.styleable.TextAppearance_android_textStyle, TEXT_STYLE_NORMAL);
             a.recycle();
             return i;
         }
     }
 
-    private boolean allCaps = false;
+    public static <T extends android.widget.TextView & FontStyleProvider> void setTextAppearance(
+            T textView, Context context, int resid) {
+        if (resid == 0) {
+            return;
+        }
+        TypedArray appearance = context.obtainStyledAttributes(resid,
+                R.styleable.TextAppearance);
+        setTextAppearance(textView, appearance);
+        appearance.recycle();
+    }
+
+    public static <T extends android.widget.TextView & FontStyleProvider> void setTextAppearance(
+            T textView, TypedArray appearance) {
+        int color;
+        ColorStateList colors;
+        int ts;
+        color = appearance.getColor(
+                R.styleable.TextAppearance_android_textColorHighlight, 0);
+        if (color != 0) {
+            textView.setHighlightColor(color);
+        }
+        colors = appearance.getColorStateList(R.styleable.TextAppearance_android_textColor);
+        if (colors != null) {
+            textView.setTextColor(colors);
+        }
+        ts = appearance.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, 0);
+        if (ts != 0) {
+            // textView.setRawTextSize(ts);
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, ts);
+        }
+        colors = appearance.getColorStateList(R.styleable.TextAppearance_android_textColorHint);
+        if (colors != null) {
+            textView.setHintTextColor(colors);
+        }
+        colors = appearance.getColorStateList(R.styleable.TextAppearance_android_textColorLink);
+        if (colors != null) {
+            textView.setLinkTextColor(colors);
+        }
+        if (appearance.getBoolean(R.styleable.TextAppearance_android_textAllCaps, false)) {
+            textView.setTransformationMethod(new AllCapsTransformationMethod(textView.getContext()));
+        }
+        textView.setFontStyle(parseFontStyle(appearance));
+    }
+
     private int mFontStyle;
-    private CharSequence originalText;
-    private BufferType originalType;
 
     public TextView(Context context) {
         this(context, null);
@@ -103,29 +138,12 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
 
     public TextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        TypedArray a = getContext().obtainStyledAttributes(attrs,
-                R.styleable.TextView, defStyle, 0);
-        if (a.hasValue(R.styleable.TextView_android_textAllCaps)) {
-            allCaps = a.getBoolean(R.styleable.TextView_android_textAllCaps,
-                    false);
-        } else {
-            allCaps = a.getBoolean(R.styleable.TextView_textAllCaps, false);
-        }
-        CharSequence text = null;
-        if (a.hasValue(R.styleable.TextView_android_text)) {
-            text = a.getText(R.styleable.TextView_android_text);
-        }
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TextView, defStyle, 0);
+        TextView.setTextAppearance(this, context,
+                a.getResourceId(R.styleable.TextView_android_textAppearance, 0));
+        TextView.setTextAppearance(this,
+                context.obtainStyledAttributes(attrs, R.styleable.TextAppearance, defStyle, 0));
         a.recycle();
-        if (text != null) {
-            setText(text);
-        }
-        mFontStyle = TextView.parseFontStyle(context, attrs, defStyle);
-    }
-
-    @Override
-    @SuppressLint("NewApi")
-    public void dispatchDisplayHint(int hint) {
-        onDisplayHint(hint);
     }
 
     @Override
@@ -133,37 +151,22 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
         return mFontStyle;
     }
 
-    public boolean isAllCaps() {
-        return allCaps;
-    }
-
-    @Override
-    @SuppressLint("NewApi")
-    protected void onDisplayHint(int hint) {
-        if (VERSION.SDK_INT >= 8) {
-            super.onDisplayHint(hint);
-        }
-    }
-
     @Override
     public void setAllCaps(boolean allCaps) {
-        this.allCaps = allCaps;
-        updateTextState();
+        if (allCaps) {
+            setTransformationMethod(new AllCapsTransformationMethod(getContext()));
+        } else {
+            setTransformationMethod(null);
+        }
     }
 
     @Override
-    public void setText(CharSequence text, BufferType type) {
-        originalText = text;
-        originalType = type;
-        updateTextState();
+    public void setFontStyle(int mFontStyle) {
+        this.mFontStyle = mFontStyle;
     }
 
-    private void updateTextState() {
-        if (originalText == null) {
-            super.setText(null, originalType);
-            return;
-        }
-        super.setText(allCaps ? originalText.toString().toUpperCase()
-                : originalText, originalType);
+    @Override
+    public void setTextAppearance(Context context, int resid) {
+        TextView.setTextAppearance(this, context, resid);
     }
 }

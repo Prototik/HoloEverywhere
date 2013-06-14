@@ -1,0 +1,9 @@
+{
+    "output": "values/attrs.xml",
+    "styleable": {
+        "SliderMenu": [
+            "textAppearanceSliderItem$reference",
+            "textAppearanceSliderItemInverse$reference"
+        ]
+    }
+}

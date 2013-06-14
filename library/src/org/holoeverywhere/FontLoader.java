@@ -111,6 +111,8 @@ public class FontLoader {
     public static interface FontStyleProvider {
         public int getFontStyle();
 
+        public void setFontStyle(int fontStyle);
+
         public void setTypeface(Typeface typeface);
     }
 

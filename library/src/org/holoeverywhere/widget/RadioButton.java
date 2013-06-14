@@ -3,20 +3,14 @@ package org.holoeverywhere.widget;
 
 import org.holoeverywhere.FontLoader.FontStyleProvider;
 import org.holoeverywhere.R;
+import org.holoeverywhere.text.AllCapsTransformationMethod;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build.VERSION;
 import android.util.AttributeSet;
 
 public class RadioButton extends android.widget.RadioButton implements FontStyleProvider {
-    private boolean allCaps = false;
     private int mFontStyle;
-
-    private CharSequence originalText;
-
-    private BufferType originalType;
 
     public RadioButton(Context context) {
         this(context, null);
@@ -28,29 +22,12 @@ public class RadioButton extends android.widget.RadioButton implements FontStyle
 
     public RadioButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        TypedArray a = getContext().obtainStyledAttributes(attrs,
-                R.styleable.TextView, defStyle, 0);
-        if (a.hasValue(R.styleable.TextView_android_textAllCaps)) {
-            allCaps = a.getBoolean(R.styleable.TextView_android_textAllCaps,
-                    false);
-        } else {
-            allCaps = a.getBoolean(R.styleable.TextView_textAllCaps, false);
-        }
-        CharSequence text = null;
-        if (a.hasValue(R.styleable.TextView_android_text)) {
-            text = a.getText(R.styleable.TextView_android_text);
-        }
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TextView, defStyle, 0);
+        TextView.setTextAppearance(this, context,
+                a.getResourceId(R.styleable.TextView_android_textAppearance, 0));
+        TextView.setTextAppearance(this,
+                context.obtainStyledAttributes(attrs, R.styleable.TextAppearance, defStyle, 0));
         a.recycle();
-        if (text != null) {
-            setText(text);
-        }
-        mFontStyle = TextView.parseFontStyle(context, attrs, defStyle);
-    }
-
-    @Override
-    @SuppressLint("NewApi")
-    public void dispatchDisplayHint(int hint) {
-        onDisplayHint(hint);
     }
 
     @Override
@@ -58,37 +35,22 @@ public class RadioButton extends android.widget.RadioButton implements FontStyle
         return mFontStyle;
     }
 
-    public boolean isAllCaps() {
-        return allCaps;
-    }
-
-    @Override
-    @SuppressLint("NewApi")
-    protected void onDisplayHint(int hint) {
-        if (VERSION.SDK_INT >= 8) {
-            super.onDisplayHint(hint);
-        }
-    }
-
     @Override
     public void setAllCaps(boolean allCaps) {
-        this.allCaps = allCaps;
-        updateTextState();
+        if (allCaps) {
+            setTransformationMethod(new AllCapsTransformationMethod(getContext()));
+        } else {
+            setTransformationMethod(null);
+        }
     }
 
     @Override
-    public void setText(CharSequence text, BufferType type) {
-        originalText = text;
-        originalType = type;
-        updateTextState();
+    public void setFontStyle(int mFontStyle) {
+        this.mFontStyle = mFontStyle;
     }
 
-    private void updateTextState() {
-        if (originalText == null) {
-            super.setText(null, originalType);
-            return;
-        }
-        super.setText(allCaps ? originalText.toString().toUpperCase()
-                : originalText, originalType);
+    @Override
+    public void setTextAppearance(Context context, int resid) {
+        TextView.setTextAppearance(this, context, resid);
     }
 }

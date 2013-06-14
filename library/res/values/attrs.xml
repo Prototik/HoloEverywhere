@@ -111,7 +111,6 @@
     <attr name="switchStyle" format="reference"/>
     <attr name="switchStyleOld" format="reference"/>
     <attr name="switchTextAppearance" format="reference"/>
-    <attr name="textAllCaps" format="boolean"/>
     <attr name="textAppearanceListItem" format="reference"/>
     <attr name="textColorAlertDialogListItem" format="reference"/>
     <attr name="textOff" format="reference|string"/>
@@ -338,6 +337,7 @@
         <attr name="track"/>
     </declare-styleable>
     <declare-styleable name="TextAppearance">
+        <attr name="android:fontFamily"/>
         <attr name="android:textAllCaps"/>
         <attr name="android:textColor"/>
         <attr name="android:textColorHighlight"/>
@@ -348,9 +348,7 @@
         <attr name="android:typeface"/>
     </declare-styleable>
     <declare-styleable name="TextView">
-        <attr name="android:text"/>
-        <attr name="android:textAllCaps"/>
-        <attr name="textAllCaps"/>
+        <attr name="android:textAppearance"/>
     </declare-styleable>
     <declare-styleable name="TimePicker">
         <attr name="layout"/>

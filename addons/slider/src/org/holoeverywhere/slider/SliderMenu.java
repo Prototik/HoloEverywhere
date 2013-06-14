@@ -8,6 +8,7 @@ import java.util.List;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
+import org.holoeverywhere.addon.IAddonThemes;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.app.ListFragment;
 import org.holoeverywhere.widget.ListView;
@@ -183,19 +184,50 @@ public class SliderMenu implements OnBackStackChangedListener {
         }
     }
 
+    private static final IAddonThemes sThemes;
+    public static final int THEME_FLAG;
+    static {
+        sThemes = new IAddonThemes();
+        THEME_FLAG = sThemes.getThemeFlag();
+        map(R.style.Holo_Internal_SliderTheme, R.style.Holo_Internal_SliderTheme_Light);
+    }
+
+    /**
+     * Remap all SliderMenu themes
+     */
+    public static void map(int theme) {
+        map(theme, theme, theme);
+    }
+
+    /**
+     * Remap SliderMenu themes, splited by dark and light color scheme. For
+     * mixed color scheme will be using light theme
+     */
+    public static void map(int darkTheme, int lightTheme) {
+        map(darkTheme, lightTheme, lightTheme);
+    }
+
+    /**
+     * Remap SliderMenu themes, splited by color scheme
+     */
+    public static void map(int darkTheme, int lightTheme, int mixedTheme) {
+        sThemes.map(darkTheme, lightTheme, mixedTheme);
+    }
+
     private final class SliderMenuAdapter extends BaseAdapter implements OnItemClickListener {
         private final int mDefaultTextAppearance;
         private final int mDefaultTextAppearanceInverse;
         private final LayoutInflater mLayoutInflater;
 
         private SliderMenuAdapter(Context context) {
+            context = sThemes.context(context);
             mLayoutInflater = LayoutInflater.from(context);
-            TypedArray a = context.obtainStyledAttributes(new int[] {
-                    android.R.attr.textAppearanceMedium, android.R.attr.textAppearanceMediumInverse
-            });
-            mDefaultTextAppearance = a.getResourceId(0,
+            TypedArray a = context.obtainStyledAttributes(R.styleable.SliderMenu);
+            mDefaultTextAppearance = a.getResourceId(
+                    R.styleable.SliderMenu_textAppearanceSliderItem,
                     R.style.Holo_TextAppearance_Medium);
-            mDefaultTextAppearanceInverse = a.getResourceId(1,
+            mDefaultTextAppearanceInverse = a.getResourceId(
+                    R.styleable.SliderMenu_textAppearanceSliderItemInverse,
                     R.style.Holo_TextAppearance_Medium_Inverse);
             a.recycle();
         }
