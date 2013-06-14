@@ -236,9 +236,10 @@
             "android:textColorLink",
             "android:textStyle",
             "android:textColor",
-            "android:textAllCaps"
+            "android:textAllCaps",
+            "android:fontFamily"
         ],
-        "TextView": "textAllCaps$boolean/android:textAllCaps/android:text",
+        "TextView": "android:textAppearance",
         "TimePicker": "layout",
         "WindowSizes": [
             "windowMinWidthMajor",

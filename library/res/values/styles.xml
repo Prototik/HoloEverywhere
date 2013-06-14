@@ -371,7 +371,6 @@
         <item name="android:textColor">?android:textColorSecondary</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="textAllCaps">true</item>
     </style>
     <style name="Holo.TextView.ListSeparator.Light">
         <item name="android:background">@drawable/list_section_divider_holo_light</item>

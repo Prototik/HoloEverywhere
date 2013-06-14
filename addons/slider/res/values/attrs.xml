@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?><resources>
+    <!--Start attrs definition block-->
+    <attr name="textAppearanceSliderItem" format="reference"/>
+    <attr name="textAppearanceSliderItemInverse" format="reference"/>
+    <!--Start styleable definition block-->
+    <declare-styleable name="SliderMenu">
+        <attr name="textAppearanceSliderItem"/>
+        <attr name="textAppearanceSliderItemInverse"/>
+    </declare-styleable>
+    <!--End of any blocks-->
+</resources>
