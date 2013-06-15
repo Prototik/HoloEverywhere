@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.widget;
 
+import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.FontLoader.FontStyleProvider;
 import org.holoeverywhere.R;
 import org.holoeverywhere.text.AllCapsTransformationMethod;
@@ -22,7 +23,31 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
     public static final int TEXT_STYLE_NORMAL = 0;
     public static final int TEXT_STYLE_THIN = 1 << 6;
 
-    private static int parse(String string) {
+    public static <T extends android.widget.TextView & FontStyleProvider> void construct(
+            T textView, Context context, AttributeSet attrs, int defStyle) {
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TextView, defStyle, 0);
+        final int textAppearance = a.getResourceId(R.styleable.TextView_android_textAppearance, 0);
+        a.recycle();
+        TextView.setTextAppearance(textView, context, textAppearance);
+
+        a = context.obtainStyledAttributes(attrs, R.styleable.TextAppearance, defStyle, 0);
+        TextView.setTextAppearance(textView, a);
+        a.recycle();
+    }
+
+    /**
+     * Looks ugly? Yea, i know.
+     */
+    @SuppressLint("InlinedApi")
+    private static int[] parseFontStyle(Context context, AttributeSet attrs, int defStyleAttr) {
+        final TypedArray a = context.obtainStyledAttributes(attrs,
+                R.styleable.TextAppearance, defStyleAttr, 0);
+        final int[] result = parseFontStyle(a);
+        a.recycle();
+        return result;
+    }
+
+    private static int parseFontStyle(String string) {
         int c = string.lastIndexOf('-');
         if (c > 0) {
             string = string.substring(c + 1);
@@ -52,34 +77,36 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
         return i;
     }
 
-    /**
-     * Looks ugly? Yea, i know.
-     */
-    @SuppressLint("InlinedApi")
-    public static int parseFontStyle(Context context, AttributeSet attrs, int defStyleAttr) {
-        final TypedArray a = context.obtainStyledAttributes(attrs,
-                R.styleable.TextAppearance, defStyleAttr, 0);
-        final int result = parseFontStyle(a);
-        a.recycle();
-        return result;
+    private static int[] parseFontStyle(TypedArray a) {
+        boolean force = true;
+        int fontStyle = TEXT_STYLE_NORMAL;
+        TypedValue value = new TypedValue();
+        a.getValue(R.styleable.TextAppearance_android_fontFamily, value);
+        if (value.string == null) {
+            a.getValue(R.styleable.TextAppearance_android_typeface, value);
+        }
+        if (value.string == null) {
+            force = false;
+        } else {
+            fontStyle = parseFontStyle(value.string.toString());
+        }
+        fontStyle |= a.getInt(R.styleable.TextAppearance_android_textStyle, TEXT_STYLE_NORMAL);
+        return new int[] {
+                fontStyle, force ? 1 : 0
+        };
     }
 
-    public static int parseFontStyle(TypedArray a) {
-        final TypedValue value = new TypedValue();
-        a.getValue(R.styleable.TextAppearance_android_fontFamily, value);
-        if (value.string != null) {
-            a.recycle();
-            return parse(value.string.toString());
+    public static void setAllCaps(android.widget.TextView textView, boolean allCaps) {
+        if (allCaps) {
+            textView.setTransformationMethod(new AllCapsTransformationMethod(textView.getContext()));
         } else {
-            int i = TEXT_STYLE_NORMAL;
-            a.getValue(R.styleable.TextAppearance_android_typeface, value);
-            if (value.string != null) {
-                i |= parse(value.string.toString());
-            }
-            i |= a.getInt(R.styleable.TextAppearance_android_textStyle, TEXT_STYLE_NORMAL);
-            a.recycle();
-            return i;
+            textView.setTransformationMethod(null);
         }
+    }
+
+    public static <T extends android.widget.TextView & FontStyleProvider> void setFontStyle(
+            T textView, int fontStyle) {
+        FontLoader.applyDefaultFont(textView);
     }
 
     public static <T extends android.widget.TextView & FontStyleProvider> void setTextAppearance(
@@ -95,21 +122,18 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
 
     public static <T extends android.widget.TextView & FontStyleProvider> void setTextAppearance(
             T textView, TypedArray appearance) {
-        int color;
-        ColorStateList colors;
-        int ts;
-        color = appearance.getColor(
+        int color = appearance.getColor(
                 R.styleable.TextAppearance_android_textColorHighlight, 0);
         if (color != 0) {
             textView.setHighlightColor(color);
         }
-        colors = appearance.getColorStateList(R.styleable.TextAppearance_android_textColor);
+        ColorStateList colors = appearance
+                .getColorStateList(R.styleable.TextAppearance_android_textColor);
         if (colors != null) {
             textView.setTextColor(colors);
         }
-        ts = appearance.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, 0);
+        int ts = appearance.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, 0);
         if (ts != 0) {
-            // textView.setRawTextSize(ts);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, ts);
         }
         colors = appearance.getColorStateList(R.styleable.TextAppearance_android_textColorHint);
@@ -123,7 +147,8 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
         if (appearance.getBoolean(R.styleable.TextAppearance_android_textAllCaps, false)) {
             textView.setTransformationMethod(new AllCapsTransformationMethod(textView.getContext()));
         }
-        textView.setFontStyle(parseFontStyle(appearance));
+        int[] fontStyle = parseFontStyle(appearance);
+        textView.setFontStyle(fontStyle[0] | (fontStyle[1] == 0 ? textView.getFontStyle() : 0));
     }
 
     private int mFontStyle;
@@ -138,12 +163,7 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
 
     public TextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TextView, defStyle, 0);
-        TextView.setTextAppearance(this, context,
-                a.getResourceId(R.styleable.TextView_android_textAppearance, 0));
-        TextView.setTextAppearance(this,
-                context.obtainStyledAttributes(attrs, R.styleable.TextAppearance, defStyle, 0));
-        a.recycle();
+        TextView.construct(this, context, attrs, defStyle);
     }
 
     @Override
@@ -153,16 +173,13 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
 
     @Override
     public void setAllCaps(boolean allCaps) {
-        if (allCaps) {
-            setTransformationMethod(new AllCapsTransformationMethod(getContext()));
-        } else {
-            setTransformationMethod(null);
-        }
+        TextView.setAllCaps(this, allCaps);
     }
 
     @Override
-    public void setFontStyle(int mFontStyle) {
-        this.mFontStyle = mFontStyle;
+    public void setFontStyle(int fontStyle) {
+        mFontStyle = fontStyle;
+        TextView.setFontStyle(this, fontStyle);
     }
 
     @Override

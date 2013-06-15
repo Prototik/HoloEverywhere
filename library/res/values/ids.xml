@@ -8,5 +8,6 @@
 	<item name="increment" type="id"></item>
 	<item name="decrement" type="id"></item>
 	<item name="empty" type="id"></item>
-	<item name="fontLoaderTag" type="id"></item>
+	<item name="fontLoaderFont" type="id"></item>
+	<item name="fontLoaderFontStyle" type="id"></item>
 </resources>

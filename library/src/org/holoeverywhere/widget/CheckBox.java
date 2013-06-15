@@ -2,11 +2,8 @@
 package org.holoeverywhere.widget;
 
 import org.holoeverywhere.FontLoader.FontStyleProvider;
-import org.holoeverywhere.R;
-import org.holoeverywhere.text.AllCapsTransformationMethod;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
 public class CheckBox extends android.widget.CheckBox implements FontStyleProvider {
@@ -22,12 +19,7 @@ public class CheckBox extends android.widget.CheckBox implements FontStyleProvid
 
     public CheckBox(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TextView, defStyle, 0);
-        TextView.setTextAppearance(this, context,
-                a.getResourceId(R.styleable.TextView_android_textAppearance, 0));
-        TextView.setTextAppearance(this,
-                context.obtainStyledAttributes(attrs, R.styleable.TextAppearance, defStyle, 0));
-        a.recycle();
+        TextView.construct(this, context, attrs, defStyle);
     }
 
     @Override
@@ -37,16 +29,13 @@ public class CheckBox extends android.widget.CheckBox implements FontStyleProvid
 
     @Override
     public void setAllCaps(boolean allCaps) {
-        if (allCaps) {
-            setTransformationMethod(new AllCapsTransformationMethod(getContext()));
-        } else {
-            setTransformationMethod(null);
-        }
+        TextView.setAllCaps(this, allCaps);
     }
 
     @Override
-    public void setFontStyle(int mFontStyle) {
-        this.mFontStyle = mFontStyle;
+    public void setFontStyle(int fontStyle) {
+        mFontStyle = fontStyle;
+        TextView.setFontStyle(this, fontStyle);
     }
 
     @Override
