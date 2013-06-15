@@ -24,8 +24,7 @@
 		android:lines="1"
 		android:text="@string/library_name"
 		android:textColor="@color/holo_blue_light"
-		android:textSize="32sp"
-		android:textStyle="bold" />
+		android:textSize="32sp" />
 	<TextView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

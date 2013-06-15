@@ -550,7 +550,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
             } finally {
                 mConstructorArgs[1] = null;
             }
-            return FontLoader.applyDefaultFont(result);
+            return result;
         }
     }
 

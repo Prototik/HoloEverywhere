@@ -287,17 +287,16 @@ public class FontLoader {
             }
         }
         if (view instanceof FontStyleProvider) {
-            if (view.getTag(R.id.fontLoaderTag) == font) {
+            final FontStyleProvider provider = (FontStyleProvider) view;
+            final int fontStyle = provider.getFontStyle();
+            if (view.getTag(R.id.fontLoaderFont) == font &&
+                    ((Integer) view.getTag(R.id.fontLoaderFontStyle)).intValue() == fontStyle) {
                 return;
             }
-            final FontStyleProvider provider = (FontStyleProvider) view;
-            final Typeface typeface = font.getTypeface(provider.getFontStyle());
-            if (typeface != null) {
-                provider.setTypeface(typeface);
-                view.setTag(R.id.fontLoaderTag, font);
-            }
+            provider.setTypeface(font.getTypeface(fontStyle));
+            view.setTag(R.id.fontLoaderFont, font);
+            view.setTag(R.id.fontLoaderFontStyle, fontStyle);
         }
-
     }
 
     public static Font getDefaultFont() {
