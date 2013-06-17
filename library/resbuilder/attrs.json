@@ -55,6 +55,11 @@
     ],
     "output": "values/attrs.xml",
     "styleable": {
+    	"AbsListView": [
+    	    "android:choiceMode",
+    	    "android:fastScrollEnabled",
+    	    "android:fastScrollAlwaysVisible"
+    	],
         "AbsSpinner": "android:entries",
         "AlertDialog": [
             "fullDark$reference|color",

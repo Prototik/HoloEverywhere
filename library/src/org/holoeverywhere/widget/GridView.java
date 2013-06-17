@@ -1,19 +1,27 @@
 
 package org.holoeverywhere.widget;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.R;
 import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.drawable.DrawableCompat;
+import org.holoeverywhere.widget.FastScroller.FastScrollerCallback;
 import org.holoeverywhere.widget.HeaderViewListAdapter.ViewInfo;
 import org.holoeverywhere.widget.ListAdapterWrapper.ListAdapterCallback;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app._HoloActivity.OnWindowFocusChangeListener;
 import android.support.v4.util.LongSparseArray;
 import android.util.AttributeSet;
@@ -21,6 +29,7 @@ import android.util.SparseBooleanArray;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewDebug.ExportedProperty;
 import android.view.ViewGroup;
@@ -36,10 +45,9 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class GridView extends android.widget.GridView implements OnWindowFocusChangeListener,
-        ContextMenuInfoGetter, ListAdapterCallback {
-    private final class MultiChoiceModeWrapper implements
-            org.holoeverywhere.widget.ListView.MultiChoiceModeListener {
-        private org.holoeverywhere.widget.ListView.MultiChoiceModeListener mWrapped;
+        ContextMenuInfoGetter, FastScrollerCallback {
+    private final class MultiChoiceModeWrapper implements ListView.MultiChoiceModeListener {
+        private ListView.MultiChoiceModeListener mWrapped;
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
@@ -55,13 +63,12 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
             return false;
         }
 
-        @SuppressLint("NewApi")
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             mWrapped.onDestroyActionMode(mode);
             mChoiceActionMode = null;
             clearChoices();
-            invalidateViews();
+            updateOnScreenCheckedViews();
             setLongClickable(true);
         }
 
@@ -80,7 +87,7 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
             return mWrapped.onPrepareActionMode(mode, menu);
         }
 
-        public void setWrapped(org.holoeverywhere.widget.ListView.MultiChoiceModeListener wrapped) {
+        public void setWrapped(ListView.MultiChoiceModeListener wrapped) {
             mWrapped = wrapped;
         }
     }
@@ -101,11 +108,64 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         }
     }
 
+    static final class SavedState extends BaseSavedState {
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel parcel) {
+                return new SavedState(parcel);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+        int checkedItemCount;
+        LongSparseArray<Integer> checkIdState;
+        SparseBooleanArray checkState;
+        boolean inActionMode;
+
+        public SavedState(Parcel in) {
+            super(in);
+            inActionMode = in.readByte() != 0;
+            checkedItemCount = in.readInt();
+            checkState = in.readSparseBooleanArray();
+            final int N = in.readInt();
+            if (N > 0) {
+                checkIdState = new LongSparseArray<Integer>();
+                for (int i = 0; i < N; i++) {
+                    final long key = in.readLong();
+                    final int value = in.readInt();
+                    checkIdState.put(key, value);
+                }
+            }
+        }
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeByte((byte) (inActionMode ? 1 : 0));
+            out.writeInt(checkedItemCount);
+            out.writeSparseBooleanArray(checkState);
+            final int N = checkIdState != null ? checkIdState.size() : 0;
+            out.writeInt(N);
+            for (int i = 0; i < N; i++) {
+                out.writeLong(checkIdState.keyAt(i));
+                out.writeInt(checkIdState.valueAt(i));
+            }
+        }
+    }
+
+    public static final int CHOICE_MODE_MULTIPLE = AbsListView.CHOICE_MODE_MULTIPLE;
     @SuppressLint("InlinedApi")
     public static final int CHOICE_MODE_MULTIPLE_MODAL = AbsListView.CHOICE_MODE_MULTIPLE_MODAL;
-
+    public static final int CHOICE_MODE_NONE = AbsListView.CHOICE_MODE_NONE;
+    public static final int CHOICE_MODE_SINGLE = AbsListView.CHOICE_MODE_SINGLE;
     private static final boolean USE_ACTIVATED = VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB;
-
     private Activity mActivity;
     private ListAdapterWrapper mAdapter;
     private boolean mAdapterHasStableIds;
@@ -115,16 +175,39 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
     private ActionMode mChoiceActionMode;
     private int mChoiceMode;
     private ContextMenuInfo mContextMenuInfo;
-    private boolean mEnableModalBackgroundWrapper;
     private boolean mFastScrollEnabled;
+    private FastScroller<GridView> mFastScroller;
     private final List<ViewInfo> mFooterViewInfos = new ArrayList<ViewInfo>(),
             mHeaderViewInfos = new ArrayList<ViewInfo>();
+    private boolean mForceFastScrollAlwaysVisibleDisable = false;
     private boolean mForceHeaderListAdapter = false;
     private boolean mIsAttached;
     private int mLastScrollState = OnScrollListener.SCROLL_STATE_IDLE;
+    private final ListAdapterCallback mListAdapterCallback = new ListAdapterCallback() {
+        @Override
+        public void onChanged() {
+            if (mFastScroller != null) {
+                mFastScroller.onSectionsChanged();
+            }
+        }
+
+        @Override
+        public void onInvalidated() {
+            if (mFastScroller != null) {
+                mFastScroller.onSectionsChanged();
+            }
+        }
+
+        @Override
+        public View onPrepareView(View view, int position) {
+            return GridView.this.onPrepareView(view, position);
+        }
+    };
     private MultiChoiceModeWrapper mMultiChoiceModeCallback;
     private final OnItemLongClickListenerWrapper mOnItemLongClickListenerWrapper;
     private OnScrollListener mOnScrollListener;
+    private boolean mPaddingFromScroller = false;
+    private int mVerticalScrollbarPosition = SCROLLBAR_POSITION_DEFAULT;
 
     public GridView(Context context) {
         this(context, null);
@@ -147,6 +230,19 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         mOnItemLongClickListenerWrapper = new OnItemLongClickListenerWrapper();
         super.setOnItemLongClickListener(mOnItemLongClickListenerWrapper);
         setLongClickable(false);
+
+        if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
+            super.setFastScrollAlwaysVisible(false);
+        }
+        super.setFastScrollEnabled(false);
+        super.setChoiceMode(CHOICE_MODE_NONE);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsListView,
+                defStyle, R.style.Holo_ListView);
+        setFastScrollEnabled(a.getBoolean(R.styleable.AbsListView_android_fastScrollEnabled, false));
+        setFastScrollAlwaysVisible(a.getBoolean(
+                R.styleable.AbsListView_android_fastScrollAlwaysVisible, false));
+        setChoiceMode(a.getInt(R.styleable.AbsListView_android_choiceMode, CHOICE_MODE_NONE));
+        a.recycle();
     }
 
     public void addFooterView(View v) {
@@ -203,11 +299,33 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         return new AdapterContextMenuInfo(view, position, id);
     }
 
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        if (mFastScroller != null) {
+            final int scrollY = getScrollY();
+            if (scrollY != 0) {
+                int restoreCount = canvas.save();
+                canvas.translate(0, scrollY);
+                mFastScroller.draw(canvas);
+                canvas.restoreToCount(restoreCount);
+            } else {
+                mFastScroller.draw(canvas);
+            }
+        }
+
+    }
+
     public Activity getActivity() {
         return mActivity;
     }
 
+    public ListAdapter getAdapterSource() {
+        return mAdapter == null ? null : mAdapter.getWrappedAdapter();
+    }
+
     @Override
+    @SuppressLint("NewApi")
     public int getCheckedItemCount() {
         return mCheckedItemCount;
     }
@@ -242,11 +360,6 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         return null;
     }
 
-    @Deprecated
-    public long[] getCheckItemIds() {
-        return getCheckedItemIds();
-    }
-
     @Override
     public int getChoiceMode() {
         return mChoiceMode;
@@ -265,8 +378,45 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         return mHeaderViewInfos.size();
     }
 
+    @Override
+    public int getVerticalScrollbarPosition() {
+        return mVerticalScrollbarPosition;
+    }
+
+    @Override
+    public int getVerticalScrollbarWidth() {
+        mForceFastScrollAlwaysVisibleDisable = true;
+        final int superWidth = super.getVerticalScrollbarWidth();
+        mForceFastScrollAlwaysVisibleDisable = false;
+        if (isFastScrollAlwaysVisible()) {
+            return Math.max(superWidth, mFastScroller.getWidth());
+        }
+        return superWidth;
+    }
+
+    void invokeOnItemScrollListener() {
+        final int mFirstPosition = getFirstVisiblePosition();
+        final int mItemCount = getCount();
+        if (mFastScroller != null) {
+            mFastScroller.onScroll(this, mFirstPosition, getChildCount(), mItemCount);
+        }
+        if (mOnScrollListener != null) {
+            mOnScrollListener.onScroll(this, mFirstPosition, getChildCount(), mItemCount);
+        }
+        onScrollChanged(0, 0, 0, 0);
+    }
+
+    @Override
     public boolean isAttached() {
         return mIsAttached;
+    }
+
+    @Override
+    public boolean isFastScrollAlwaysVisible() {
+        if (mForceFastScrollAlwaysVisibleDisable) {
+            return false;
+        }
+        return mFastScrollEnabled && mFastScroller.isAlwaysShowEnabled();
     }
 
     @Override
@@ -279,6 +429,7 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         return mForceHeaderListAdapter;
     }
 
+    @Override
     @SuppressLint("NewApi")
     public boolean isInScrollingContainer() {
         ViewParent p = getParent();
@@ -300,15 +451,18 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         return false;
     }
 
+    public boolean isPaddingFromScroller() {
+        return mPaddingFromScroller;
+    }
+
+    protected boolean isVerticalScrollBarHidden() {
+        return mFastScroller != null && mFastScroller.isVisible();
+    }
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mIsAttached = true;
-    }
-
-    @Override
-    public void onChanged() {
-
     }
 
     @Override
@@ -322,14 +476,20 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
         if (gainFocus && getSelectedItemPosition() < 0 && !isInTouchMode()) {
             if (!mIsAttached && mAdapter != null) {
-                invalidateViews();
+                updateOnScreenCheckedViews();
             }
         }
     }
 
     @Override
-    public void onInvalidated() {
-
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (!mIsAttached) {
+            return false;
+        }
+        if (mFastScroller != null && mFastScroller.onInterceptTouchEvent(ev)) {
+            return true;
+        }
+        return super.onInterceptTouchEvent(ev);
     }
 
     @Override
@@ -358,21 +518,81 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
     }
 
     @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        final int mOldItemCount = getCount();
+        super.onLayout(changed, l, t, r, b);
+        final int mItemCount = getCount();
+        if (mFastScroller != null && mItemCount != mOldItemCount) {
+            mFastScroller.onItemCountChanged(mOldItemCount, mItemCount);
+        }
+    }
+
     public View onPrepareView(View view, int position) {
-        if (mCheckStates != null) {
-            setStateOnView(view, mCheckStates.get(position));
-        } else {
-            setStateOnView(view, false);
+        if (mChoiceMode != CHOICE_MODE_NONE) {
+            if (mCheckStates != null) {
+                setStateOnView(view, mCheckStates.get(position));
+            } else {
+                setStateOnView(view, false);
+            }
         }
         return view;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        SavedState ss = (SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        if (ss.checkState != null) {
+            mCheckStates = ss.checkState;
+        }
+        if (ss.checkIdState != null) {
+            mCheckedIdStates = ss.checkIdState;
+        }
+        mCheckedItemCount = ss.checkedItemCount;
+        if (ss.inActionMode && mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL
+                && mMultiChoiceModeCallback != null) {
+            mChoiceActionMode = startActionMode(mMultiChoiceModeCallback);
+        }
+        requestLayout();
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        SavedState ss = new SavedState(super.onSaveInstanceState());
+        ss.inActionMode = mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL && mChoiceActionMode != null;
+        ss.checkState = mCheckStates;
+        ss.checkIdState = mCheckedIdStates;
+        ss.checkedItemCount = mCheckedItemCount;
+        return ss;
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        if (mFastScroller != null) {
+            mFastScroller.onSizeChanged(w, h, oldw, oldh);
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        if (!isEnabled()) {
+            return isClickable() || isLongClickable();
+        }
+        if (!mIsAttached) {
+            return false;
+        }
+        if (mFastScroller != null && mFastScroller.onTouchEvent(ev)) {
+            return true;
+        }
+        return super.onTouchEvent(ev);
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
         if (hasWindowFocus) {
-            invalidate();
-            invalidateViews();
+            updateOnScreenCheckedViews();
         }
     }
 
@@ -455,6 +675,28 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         return handled;
     }
 
+    protected void recomputePaddingFromScroller() {
+        final int left = getPaddingLeft();
+        final int top = getPaddingTop();
+        final int right = getPaddingRight();
+        final int bottom = getPaddingBottom();
+        if (mPaddingFromScroller) {
+            final int scrollbarWidth = getVerticalScrollbarWidth();
+            switch (mVerticalScrollbarPosition) {
+                case SCROLLBAR_POSITION_LEFT:
+                    setPadding(scrollbarWidth, top, right, bottom);
+                    break;
+                case SCROLLBAR_POSITION_RIGHT:
+                case SCROLLBAR_POSITION_DEFAULT:
+                default:
+                    setPadding(left, top, scrollbarWidth, bottom);
+                    break;
+            }
+        } else {
+            setPadding(0, top, 0, bottom);
+        }
+    }
+
     public boolean removeFooterView(View v) {
         if (mFooterViewInfos.size() > 0) {
             boolean result = false;
@@ -492,7 +734,8 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         }
     }
 
-    protected void reportScrollStateChange(int newState) {
+    @Override
+    public void reportScrollStateChange(int newState) {
         if (newState != mLastScrollState) {
             if (mOnScrollListener != null) {
                 mLastScrollState = newState;
@@ -515,9 +758,9 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         } else if (mForceHeaderListAdapter || mHeaderViewInfos.size() > 0
                 || mFooterViewInfos.size() > 0) {
             mAdapter = new HeaderViewListAdapter(mHeaderViewInfos, mFooterViewInfos, adapter,
-                    this);
+                    mListAdapterCallback);
         } else {
-            mAdapter = new ListAdapterWrapper(adapter, this);
+            mAdapter = new ListAdapterWrapper(adapter, mListAdapterCallback);
         }
         if (mAdapter != null) {
             mAdapterHasStableIds = mAdapter.hasStableIds();
@@ -552,18 +795,44 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
             if (mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
                 clearChoices();
                 setLongClickable(true);
-                setEnableModalBackgroundWrapper(true);
             }
         }
     }
 
-    public void setEnableModalBackgroundWrapper(boolean enableModalBackgroundWrapper) {
-        if (enableModalBackgroundWrapper == mEnableModalBackgroundWrapper) {
-            return;
+    @Override
+    public void setFastScrollAlwaysVisible(boolean alwaysShow) {
+        if (alwaysShow && !mFastScrollEnabled) {
+            setFastScrollEnabled(true);
         }
-        mEnableModalBackgroundWrapper = enableModalBackgroundWrapper;
-        if (mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
+        if (mFastScroller != null) {
+            mFastScroller.setAlwaysShow(alwaysShow);
+        }
+        try {
+            Method method = View.class.getDeclaredMethod("computeOpaqueFlags");
+            method.setAccessible(true);
+            method.invoke(this);
+            method = View.class.getDeclaredMethod("recomputePadding");
+            method.setAccessible(true);
+            method.invoke(this);
+        } catch (Exception e) {
+        }
+        if (alwaysShow) {
+            setPaddingFromScroller(true);
+        }
+    }
+
+    @Override
+    public void setFastScrollEnabled(boolean enabled) {
+        mFastScrollEnabled = enabled;
+        if (enabled) {
+            if (mFastScroller == null) {
+                mFastScroller = new FastScroller<GridView>(getContext(), this);
+            }
+        } else {
+            if (mFastScroller != null) {
+                mFastScroller.stop();
+                mFastScroller = null;
+            }
         }
     }
 
@@ -620,11 +889,9 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
             }
         }
         updateOnScreenCheckedViews();
-        invalidateViews();
     }
 
-    public void setMultiChoiceModeListener(
-            org.holoeverywhere.widget.ListView.MultiChoiceModeListener listener) {
+    public void setMultiChoiceModeListener(ListView.MultiChoiceModeListener listener) {
         if (mMultiChoiceModeCallback == null) {
             mMultiChoiceModeCallback = new MultiChoiceModeWrapper();
         }
@@ -641,6 +908,20 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         super.setOnScrollListener(mOnScrollListener = l);
     }
 
+    public void setPaddingFromScroller(boolean paddingFromScroller) {
+        mPaddingFromScroller = paddingFromScroller;
+        recomputePaddingFromScroller();
+    }
+
+    public void setSelectionAfterHeaderView() {
+        setSelection(mHeaderViewInfos.size());
+    }
+
+    @Override
+    public void setSelector(int resID) {
+        setSelector(DrawableCompat.getDrawable(getResources(), resID));
+    }
+
     @SuppressLint("NewApi")
     protected final void setStateOnView(View child, boolean value) {
         if (child instanceof Checkable) {
@@ -648,6 +929,15 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
         } else if (USE_ACTIVATED) {
             child.setActivated(value);
         }
+    }
+
+    @Override
+    public void setVerticalScrollbarPosition(int position) {
+        mVerticalScrollbarPosition = position;
+        if (mFastScroller != null) {
+            mFastScroller.setScrollbarPosition(position);
+        }
+        recomputePaddingFromScroller();
     }
 
     @Override

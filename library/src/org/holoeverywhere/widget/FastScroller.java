@@ -2,6 +2,7 @@
 package org.holoeverywhere.widget;
 
 import org.holoeverywhere.R;
+import org.holoeverywhere.widget.FastScroller.FastScrollerCallback;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -25,7 +26,15 @@ import android.widget.ListAdapter;
 import android.widget.SectionIndexer;
 import android.widget.WrapperListAdapter;
 
-class FastScroller {
+class FastScroller<T extends AbsListView & FastScrollerCallback> {
+    public static interface FastScrollerCallback {
+        public boolean isAttached();
+
+        public boolean isInScrollingContainer();
+
+        public void reportScrollStateChange(int state);
+    }
+
     public class ScrollFade implements Runnable {
         static final int ALPHA_MAX = 208;
         static final long FADE_DURATION = 200;
@@ -103,7 +112,7 @@ class FastScroller {
     private Handler mHandler = new Handler();
     float mInitialTouchY;
     private int mItemCount = -1;
-    ListView mList;
+    T mList;
     ListAdapter mListAdapter;
     private int mListOffset;
     private boolean mLongList;
@@ -132,7 +141,7 @@ class FastScroller {
     private Drawable mTrackDrawable;
     private int mVisibleItem;
 
-    public FastScroller(Context context, ListView listView) {
+    public FastScroller(Context context, T listView) {
         mList = listView;
         init(context);
     }
@@ -166,7 +175,7 @@ class FastScroller {
         }
         final int y = mThumbY;
         final int viewWidth = mList.getWidth();
-        final FastScroller.ScrollFade scrollFade = mScrollFade;
+        final ScrollFade scrollFade = mScrollFade;
         int alpha = -1;
         if (mState == STATE_EXIT) {
             alpha = scrollFade.getAlpha();
@@ -654,7 +663,7 @@ class FastScroller {
                 expList.setSelectionFromTop(expList.getFlatListPosition(
                         ExpandableListView.getPackedPositionForGroup(index + mListOffset)), 0);
             } else if (mList instanceof ListView) {
-                mList.setSelectionFromTop(index + mListOffset, 0);
+                ((ListView) mList).setSelectionFromTop(index + mListOffset, 0);
             } else {
                 mList.setSelection(index + mListOffset);
             }
@@ -668,7 +677,7 @@ class FastScroller {
                 expList.setSelectionFromTop(expList.getFlatListPosition(
                         ExpandableListView.getPackedPositionForGroup(index + mListOffset)), 0);
             } else if (mList instanceof ListView) {
-                mList.setSelectionFromTop(index + mListOffset, 0);
+                ((ListView) mList).setSelectionFromTop(index + mListOffset, 0);
             } else {
                 mList.setSelection(index + mListOffset);
             }

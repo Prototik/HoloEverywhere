@@ -134,6 +134,11 @@
     <attr name="windowMinHeightMajor" format="dimension|fraction"/>
     <attr name="windowMinHeightMinor" format="dimension|fraction"/>
     <!--Start styleable definition block-->
+    <declare-styleable name="AbsListView">
+        <attr name="android:choiceMode"/>
+        <attr name="android:fastScrollAlwaysVisible"/>
+        <attr name="android:fastScrollEnabled"/>
+    </declare-styleable>
     <declare-styleable name="AbsSpinner">
         <attr name="android:entries"/>
     </declare-styleable>

@@ -9,6 +9,7 @@ import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.R;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.drawable.DrawableCompat;
+import org.holoeverywhere.widget.FastScroller.FastScrollerCallback;
 import org.holoeverywhere.widget.HeaderViewListAdapter.ViewInfo;
 import org.holoeverywhere.widget.ListAdapterWrapper.ListAdapterCallback;
 
@@ -45,7 +46,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class ListView extends android.widget.ListView implements OnWindowFocusChangeListener,
-        ContextMenuInfoGetter {
+        ContextMenuInfoGetter, FastScrollerCallback {
     public interface MultiChoiceModeListener extends ActionMode.Callback {
         public void onItemCheckedStateChanged(ActionMode mode, int position,
                 long id, boolean checked);
@@ -181,7 +182,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     private int mChoiceMode;
     private ContextMenuInfo mContextMenuInfo;
     private boolean mFastScrollEnabled;
-    private FastScroller mFastScroller;
+    private FastScroller<ListView> mFastScroller;
     private final List<ViewInfo> mFooterViewInfos = new ArrayList<ViewInfo>(),
             mHeaderViewInfos = new ArrayList<ViewInfo>();
     private boolean mForceFastScrollAlwaysVisibleDisable = false;
@@ -241,26 +242,12 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         }
         super.setFastScrollEnabled(false);
         super.setChoiceMode(CHOICE_MODE_NONE);
-        // http://stackoverflow.com/questions/8675709/getting-style-attributes-dynamically/9087694#9087694
-        // There are special requirements on how it is structured -- the
-        // resource identifiers need to be in sorted order, as this is part of
-        // the optimization to quickly retrieving them
-        TypedArray a = context.obtainStyledAttributes(attrs, new int[] {
-                android.R.attr.choiceMode, // 16843051
-                android.R.attr.fastScrollEnabled, // 16843302
-                android.R.attr.overScrollHeader, // 16843458
-                android.R.attr.overScrollFooter, // 16843459
-                android.R.attr.fastScrollAlwaysVisible, // 16843573
-        }, defStyle, R.style.Holo_ListView);
-        setFastScrollEnabled(a.getBoolean(1, false)); // fastScrollEnabled
-        setFastScrollAlwaysVisible(a.getBoolean(4, false)); // fastScrollAlwaysVisible
-        setChoiceMode(a.getInt(0, CHOICE_MODE_NONE)); // choiceMode
-        if (!a.hasValue(3) && VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) { // overScrollFooter
-            super.setOverscrollFooter(null);
-        }
-        if (!a.hasValue(2) && VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) { // overScrollHeader
-            super.setOverscrollHeader(null);
-        }
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsListView,
+                defStyle, R.style.Holo_ListView);
+        setFastScrollEnabled(a.getBoolean(R.styleable.AbsListView_android_fastScrollEnabled, false));
+        setFastScrollAlwaysVisible(a.getBoolean(
+                R.styleable.AbsListView_android_fastScrollAlwaysVisible, false));
+        setChoiceMode(a.getInt(R.styleable.AbsListView_android_choiceMode, CHOICE_MODE_NONE));
         a.recycle();
     }
 
@@ -448,6 +435,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         onScrollChanged(0, 0, 0, 0);
     }
 
+    @Override
     public boolean isAttached() {
         return mIsAttached;
     }
@@ -470,6 +458,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         return mForceHeaderListAdapter;
     }
 
+    @Override
     @SuppressLint("NewApi")
     public boolean isInScrollingContainer() {
         ViewParent p = getParent();
@@ -776,7 +765,8 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         }
     }
 
-    protected void reportScrollStateChange(int newState) {
+    @Override
+    public void reportScrollStateChange(int newState) {
         if (newState != mLastScrollState) {
             if (mOnScrollListener != null) {
                 mLastScrollState = newState;
@@ -867,7 +857,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         mFastScrollEnabled = enabled;
         if (enabled) {
             if (mFastScroller == null) {
-                mFastScroller = new FastScroller(getContext(), this);
+                mFastScroller = new FastScroller<ListView>(getContext(), this);
             }
         } else {
             if (mFastScroller != null) {
