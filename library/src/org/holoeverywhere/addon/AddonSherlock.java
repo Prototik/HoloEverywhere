@@ -3,7 +3,6 @@ package org.holoeverywhere.addon;
 
 import org.holoeverywhere.addon.IAddon.Addon;
 import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.Application;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -233,7 +232,7 @@ public class AddonSherlock extends IAddon {
     }
 
     public AddonSherlock() {
-        register(Activity.class, AddonSherlockA.class);
-        register(Application.class, AddonSherlockApplication.class);
+        registerApplication(AddonSherlockApplication.class);
+        registerActivity(AddonSherlockA.class);
     }
 }

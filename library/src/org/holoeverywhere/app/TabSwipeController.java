@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.holoeverywhere.app.TabSwipeController.TabInfo;
+import org.holoeverywhere.widget.ViewPager;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -110,7 +110,9 @@ public abstract class TabSwipeController implements TabSwipeInterface<TabInfo> {
     private OnTabSelectedListener mOnTabSelectedListener;
     private int mPrevNavigationMode = ActionBar.NAVIGATION_MODE_STANDARD;
     private boolean mSmoothScroll = true;
+    private boolean mSwipeEnabled = true;
     private List<TabInfo> mTabs = new ArrayList<TabInfo>();
+
     private ViewPager mViewPager;
 
     public TabSwipeController(Context context, FragmentManager fragmentManager, ActionBar actionBar) {
@@ -185,6 +187,7 @@ public abstract class TabSwipeController implements TabSwipeInterface<TabInfo> {
             reloadTabs();
             mViewPager.setAdapter(mAdapter);
             mViewPager.setOnPageChangeListener(mAdapter);
+            mViewPager.setSwipeEnabled(mSwipeEnabled);
         }
     }
 
@@ -211,6 +214,11 @@ public abstract class TabSwipeController implements TabSwipeInterface<TabInfo> {
     @Override
     public boolean isSmoothScroll() {
         return mSmoothScroll;
+    }
+
+    @Override
+    public boolean isSwipeEnabled() {
+        return mSwipeEnabled;
     }
 
     protected Tab makeActionBarTab(TabInfo tabInfo) {
@@ -288,4 +296,14 @@ public abstract class TabSwipeController implements TabSwipeInterface<TabInfo> {
         mSmoothScroll = smoothScroll;
     }
 
+    @Override
+    public void setSwipeEnabled(boolean swipeEnabled) {
+        if (mSwipeEnabled == swipeEnabled) {
+            return;
+        }
+        mSwipeEnabled = swipeEnabled;
+        if (mViewPager != null) {
+            mViewPager.setSwipeEnabled(swipeEnabled);
+        }
+    }
 }

@@ -2,7 +2,6 @@
 package org.holoeverywhere.addon;
 
 import org.holoeverywhere.addon.IAddon.Addon;
-import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.slider.R;
 import org.holoeverywhere.slider.SliderMenu;
 import org.holoeverywhere.widget.DrawerLayout;
@@ -321,6 +320,6 @@ public class AddonSlider extends IAddon {
     }
 
     public AddonSlider() {
-        register(Activity.class, AddonSliderA.class);
+        registerActivity(AddonSliderA.class);
     }
 }

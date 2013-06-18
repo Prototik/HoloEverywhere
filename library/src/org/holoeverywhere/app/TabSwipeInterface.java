@@ -42,6 +42,8 @@ public interface TabSwipeInterface<T extends ITabInfo> {
 
     public boolean isSmoothScroll();
 
+    public boolean isSwipeEnabled();
+
     public void reloadTabs();
 
     public void removeAllTabs();
@@ -55,4 +57,6 @@ public interface TabSwipeInterface<T extends ITabInfo> {
     public void setOnTabSelectedListener(OnTabSelectedListener onTabSelectedListener);
 
     public void setSmoothScroll(boolean smoothScroll);
+
+    public void setSwipeEnabled(boolean swipeEnabled);
 }

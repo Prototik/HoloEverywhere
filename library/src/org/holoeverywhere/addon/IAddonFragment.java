@@ -11,6 +11,10 @@ public abstract class IAddonFragment extends IAddonBase<Fragment> {
 
     }
 
+    public void onDestroyView() {
+
+    }
+
     public void onPreCreate(Bundle savedInstanceState) {
 
     }

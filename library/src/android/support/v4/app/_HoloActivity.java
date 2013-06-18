@@ -103,6 +103,7 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
         public boolean requireRoboguice = false;
         public boolean requireSherlock = true;
         public boolean requireSlider = false;
+        public boolean requireTabber = false;
         private SparseIntArray windowFeatures;
 
         public Holo() {
@@ -115,6 +116,7 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
             requireSherlock = source.readInt() == 1;
             requireSlider = source.readInt() == 1;
             requireRoboguice = source.readInt() == 1;
+            requireTabber = source.readInt() == 1;
             windowFeatures = source.readParcelable(SparseIntArray.class.getClassLoader());
         }
 
@@ -137,6 +139,7 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
             dest.writeInt(requireSherlock ? 1 : 0);
             dest.writeInt(requireSlider ? 1 : 0);
             dest.writeInt(requireRoboguice ? 1 : 0);
+            dest.writeInt(requireTabber ? 1 : 0);
             dest.writeParcelable(windowFeatures, flags);
         }
     }

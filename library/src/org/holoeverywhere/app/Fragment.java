@@ -133,6 +133,17 @@ public class Fragment extends _HoloFragment {
     }
 
     @Override
+    public void onDestroyView() {
+        performAddonAction(new AddonCallback<IAddonFragment>() {
+            @Override
+            public void justAction(IAddonFragment addon) {
+                addon.onDestroyView();
+            }
+        });
+        super.onDestroyView();
+    }
+
+    @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         performAddonAction(new AddonCallback<IAddonFragment>() {

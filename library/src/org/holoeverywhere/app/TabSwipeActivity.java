@@ -1,127 +1,120 @@
 
 package org.holoeverywhere.app;
 
-import org.holoeverywhere.R;
+import org.holoeverywhere.addon.AddonTabber;
+import org.holoeverywhere.addon.AddonTabber.AddonTabberA;
+import org.holoeverywhere.addon.AddonTabber.AddonTabberCallback;
 import org.holoeverywhere.app.TabSwipeController.TabInfo;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 
 /**
  * This activity class implement tabs + swipe navigation pattern<br />
  * <br />
  * Part of HoloEverywhere
  */
-public abstract class TabSwipeActivity extends Activity implements TabSwipeInterface<TabInfo> {
-    private TabSwipeController mController;
+public abstract class TabSwipeActivity extends Activity
+        implements TabSwipeInterface<TabInfo>, AddonTabberCallback {
+    private AddonTabberA mTabber;
+
+    protected AddonTabberA addonTabber() {
+        if (mTabber == null) {
+            mTabber = addon(AddonTabber.class);
+        }
+        return mTabber;
+    }
 
     @Override
     public TabInfo addTab(CharSequence title, Class<? extends Fragment> fragmentClass) {
-        return mController.addTab(title, fragmentClass);
+        return addonTabber().addTab(title, fragmentClass);
     }
 
     @Override
     public TabInfo addTab(CharSequence title, Class<? extends Fragment> fragmentClass,
             Bundle fragmentArguments) {
-        return mController.addTab(title, fragmentClass, fragmentArguments);
+        return addonTabber().addTab(title, fragmentClass, fragmentArguments);
     }
 
     @Override
     public TabInfo addTab(int title, Class<? extends Fragment> fragmentClass) {
-        return mController.addTab(title, fragmentClass);
+        return addonTabber().addTab(title, fragmentClass);
     }
 
     @Override
     public TabInfo addTab(int title, Class<? extends Fragment> fragmentClass,
             Bundle fragmentArguments) {
-        return mController.addTab(title, fragmentClass, fragmentArguments);
+        return addonTabber().addTab(title, fragmentClass, fragmentArguments);
     }
 
     @Override
     public TabInfo addTab(TabInfo tabInfo) {
-        return mController.addTab(tabInfo);
+        return addonTabber().addTab(tabInfo);
     }
 
     @Override
     public TabInfo addTab(TabInfo tabInfo, int position) {
-        return mController.addTab(tabInfo, position);
-    }
-
-    protected TabSwipeController createController() {
-        return new TabSwipeController(this, getSupportFragmentManager(), getSupportActionBar()) {
-            @Override
-            public void onHandleTabs() {
-                TabSwipeActivity.this.onHandleTabs();
-            }
-        };
+        return addonTabber().addTab(tabInfo, position);
     }
 
     @Override
     public OnTabSelectedListener getOnTabSelectedListener() {
-        return mController.getOnTabSelectedListener();
+        return addonTabber().getOnTabSelectedListener();
     }
 
     @Override
     public boolean isSmoothScroll() {
-        return mController.isSmoothScroll();
+        return addonTabber().isSmoothScroll();
     }
 
     @Override
-    public void onContentChanged() {
-        super.onContentChanged();
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.tabSwipePager);
-        if (viewPager == null) {
-            throw new IllegalStateException("Add ViewPager with id @+id/tabSwipePager to your "
-                    + this + " fragment");
-        }
-        if (mController == null) {
-            mController = createController();
-        }
-        mController.bind(viewPager);
+    public boolean isSwipeEnabled() {
+        return addonTabber().isSwipeEnabled();
     }
 
-    protected abstract void onHandleTabs();
-
     @Override
-    protected void onPostCreate(Bundle sSavedInstanceState) {
-        if (!isDecorViewInited()) {
-            setContentView(R.layout.tab_swipe);
-        }
-        super.onPostCreate(sSavedInstanceState);
+    protected Holo onCreateConfig(Bundle savedInstanceState) {
+        final Holo config = super.onCreateConfig(savedInstanceState);
+        config.requireTabber = true;
+        return config;
     }
 
     @Override
     public void reloadTabs() {
-        mController.reloadTabs();
+        addonTabber().reloadTabs();
     }
 
     @Override
     public void removeAllTabs() {
-        mController.removeAllTabs();
+        addonTabber().removeAllTabs();
     }
 
     @Override
     public TabInfo removeTab(int position) {
-        return mController.removeTab(position);
+        return addonTabber().removeTab(position);
     }
 
     @Override
     public TabInfo removeTab(TabInfo tabInfo) {
-        return mController.removeTab(tabInfo);
+        return addonTabber().removeTab(tabInfo);
     }
 
     @Override
     public void setCurrentTab(int position) {
-        mController.setCurrentTab(position);
+        addonTabber().setCurrentTab(position);
     }
 
     @Override
     public void setOnTabSelectedListener(OnTabSelectedListener onTabSelectedListener) {
-        mController.setOnTabSelectedListener(onTabSelectedListener);
+        addonTabber().setOnTabSelectedListener(onTabSelectedListener);
     }
 
     @Override
     public void setSmoothScroll(boolean smoothScroll) {
-        mController.setSmoothScroll(smoothScroll);
+        addonTabber().setSmoothScroll(smoothScroll);
+    }
+
+    @Override
+    public void setSwipeEnabled(boolean swipeEnabled) {
+        addonTabber().setSwipeEnabled(swipeEnabled);
     }
 }

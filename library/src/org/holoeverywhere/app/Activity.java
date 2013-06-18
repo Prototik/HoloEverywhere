@@ -76,11 +76,11 @@ public abstract class Activity extends _HoloActivity {
      */
     @Deprecated
     public static final String ADDON_SLIDING_MENU = ADDON_SLIDER;
+    public static final String ADDON_TABBER = "Tabber";
     private final IAddonBasicAttacher<IAddonActivity, Activity> mAttacher =
             new IAddonBasicAttacher<IAddonActivity, Activity>(this);
     private boolean mCreatedByThemeManager = false;
     private final FindViewAction mFindViewAction = new FindViewAction();
-    private boolean mFirstRun = true;
     private final KeyEventAction mKeyEventAction = new KeyEventAction();
 
     @Override
@@ -156,10 +156,6 @@ public abstract class Activity extends _HoloActivity {
         return mCreatedByThemeManager;
     }
 
-    public boolean isFirstRun() {
-        return mFirstRun;
-    }
-
     @Override
     public void lockAttaching() {
         mAttacher.lockAttaching();
@@ -214,13 +210,9 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mFirstRun = savedInstanceState == null;
         final Bundle state = instanceState(savedInstanceState);
         mCreatedByThemeManager = getIntent().getBooleanExtra(
                 ThemeManager.KEY_CREATED_BY_THEME_MANAGER, false);
-        if (mCreatedByThemeManager) {
-            mFirstRun = false;
-        }
         mAttacher.inhert(getSupportApplication());
         forceInit(state);
         performAddonAction(new AddonCallback<IAddonActivity>() {
@@ -386,6 +378,8 @@ public abstract class Activity extends _HoloActivity {
                     config.requireSlider = true;
                 } else if (ADDON_ROBOGUICE.equals(addon)) {
                     config.requireRoboguice = true;
+                } else if (ADDON_TABBER.equals(addon)) {
+                    config.requireTabber = true;
                 } else {
                     addon(addon);
                 }

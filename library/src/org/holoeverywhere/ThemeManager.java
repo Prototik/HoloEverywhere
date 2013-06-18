@@ -203,7 +203,6 @@ public final class ThemeManager {
     private static int _THEME_MASK = 0;
     private static int _THEME_MODIFIER = 0;
     private static final String _THEME_TAG = ":holoeverywhere:theme";
-
     private static final SparseIntArray _THEMES_MAP = new SparseIntArray();
 
     public static final int COLOR_SCHEME_MASK;

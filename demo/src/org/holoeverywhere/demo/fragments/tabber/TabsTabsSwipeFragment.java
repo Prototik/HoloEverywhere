@@ -1,5 +1,5 @@
 
-package org.holoeverywhere.demo.fragments;
+package org.holoeverywhere.demo.fragments.tabber;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Fragment;
@@ -12,7 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class TabsFragment extends TabSwipeFragment {
+public class TabsTabsSwipeFragment extends TabSwipeFragment {
     public static class TabFragment extends Fragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +52,7 @@ public class TabsFragment extends TabSwipeFragment {
     }
 
     @Override
-    protected void onHandleTabs() {
+    public void onHandleTabs() {
         addTab("Tab #1", TabFragment.class, make(1));
         addTab("Tab #2", TabFragment.class, make(2));
         addTab("Tab #3", TabFragment.class, make(3));

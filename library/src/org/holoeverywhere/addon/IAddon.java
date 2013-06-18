@@ -9,12 +9,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.Application;
+import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.util.WeaklyMap;
 
 public abstract class IAddon {
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
     public @interface Addon {
+        public Class<? extends IAddon>[] conflict() default {};
+
+        public String[] conflictStrings() default {};
+
         public boolean inhert() default false;
 
         public int weight() default -1;
@@ -91,6 +98,18 @@ public abstract class IAddon {
 
     public <T> void register(Class<T> clazz, Class<? extends IAddonBase<T>> addonClazz) {
         mTypesMap.put(clazz, addonClazz);
+    }
+
+    public void registerActivity(Class<? extends IAddonActivity> addonClazz) {
+        register(Activity.class, addonClazz);
+    }
+
+    public void registerApplication(Class<? extends IAddonApplication> addonClazz) {
+        register(Application.class, addonClazz);
+    }
+
+    public void registerFragment(Class<? extends IAddonFragment> addonClazz) {
+        register(Fragment.class, addonClazz);
     }
 
     public void unregister(Class<?> clazz) {
