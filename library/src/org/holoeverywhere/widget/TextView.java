@@ -1,8 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import java.util.Locale;
-
 import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.FontLoader.FontStyleProvider;
 import org.holoeverywhere.R;
@@ -16,15 +14,6 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 
 public class TextView extends android.widget.TextView implements FontStyleProvider {
-    public static final int TEXT_STYLE_BLACK = 1 << 3;
-    public static final int TEXT_STYLE_BOLD = 1 << 0;
-    public static final int TEXT_STYLE_CONDENDSED = 1 << 4;
-    public static final int TEXT_STYLE_ITALIC = 1 << 1;
-    public static final int TEXT_STYLE_LIGHT = 1 << 2;
-    public static final int TEXT_STYLE_MEDIUM = 1 << 5;
-    public static final int TEXT_STYLE_NORMAL = 0;
-    public static final int TEXT_STYLE_THIN = 1 << 6;
-
     public static <T extends android.widget.TextView & FontStyleProvider> void construct(
             T textView, Context context, AttributeSet attrs, int defStyle) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TextView, defStyle, 0);
@@ -49,43 +38,9 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
         return result;
     }
 
-    private static Object[] parseFontStyle(String string) {
-        String fontFamily = null;
-        int c = string.lastIndexOf('-');
-        if (c > 0) {
-            fontFamily = string.substring(0, c).toLowerCase(Locale.ENGLISH);
-            string = string.substring(c + 1);
-        }
-        int i = TEXT_STYLE_NORMAL;
-        if (string.contains("bold")) {
-            i |= TEXT_STYLE_BOLD;
-        }
-        if (string.contains("italic")) {
-            i |= TEXT_STYLE_ITALIC;
-        }
-        if (string.contains("light")) {
-            i |= TEXT_STYLE_LIGHT;
-        }
-        if (string.contains("black")) {
-            i |= TEXT_STYLE_BLACK;
-        }
-        if (string.contains("condensed")) {
-            i |= TEXT_STYLE_CONDENDSED;
-        }
-        if (string.contains("medium")) {
-            i |= TEXT_STYLE_MEDIUM;
-        }
-        if (string.contains("thin")) {
-            i |= TEXT_STYLE_THIN;
-        }
-        return new Object[] {
-                i, fontFamily
-        };
-    }
-
     private static Object[] parseFontStyle(TypedArray a) {
         boolean force = true;
-        int fontStyle = TEXT_STYLE_NORMAL;
+        int fontStyle = FontLoader.TEXT_STYLE_NORMAL;
         String fontFamily = null;
         TypedValue value = new TypedValue();
         a.getValue(R.styleable.TextAppearance_android_fontFamily, value);
@@ -95,11 +50,12 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
         if (value.string == null) {
             force = false;
         } else {
-            Object[] z = parseFontStyle(value.string.toString());
+            Object[] z = FontLoader.parseFontStyle(value.string.toString());
             fontStyle = (Integer) z[0];
             fontFamily = (String) z[1];
         }
-        fontStyle |= a.getInt(R.styleable.TextAppearance_android_textStyle, TEXT_STYLE_NORMAL);
+        fontStyle |= a.getInt(R.styleable.TextAppearance_android_textStyle,
+                FontLoader.TEXT_STYLE_NORMAL);
         return new Object[] {
                 force, fontStyle, fontFamily
         };

@@ -1,19 +1,15 @@
 
 package org.holoeverywhere;
 
-import static org.holoeverywhere.widget.TextView.TEXT_STYLE_BLACK;
-import static org.holoeverywhere.widget.TextView.TEXT_STYLE_BOLD;
-import static org.holoeverywhere.widget.TextView.TEXT_STYLE_CONDENDSED;
-import static org.holoeverywhere.widget.TextView.TEXT_STYLE_ITALIC;
-import static org.holoeverywhere.widget.TextView.TEXT_STYLE_LIGHT;
-import static org.holoeverywhere.widget.TextView.TEXT_STYLE_MEDIUM;
-import static org.holoeverywhere.widget.TextView.TEXT_STYLE_NORMAL;
-import static org.holoeverywhere.widget.TextView.TEXT_STYLE_THIN;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.holoeverywhere.util.SparseArray;
 
@@ -339,6 +335,20 @@ public class FontLoader {
         }
     }
 
+    private static final class RobotoRawFont extends RawFont {
+        public RobotoRawFont(int rawResourceId) {
+            super(rawResourceId);
+            setFontFamily("roboto");
+        }
+    }
+
+    private static final class RobotoRawLazyFont extends RawLazyFont {
+        public RobotoRawLazyFont(String rawResourceName) {
+            super(rawResourceName);
+            setFontFamily("roboto");
+        }
+    }
+
     public static final FontCollector ROBOTO;
     public static final Font ROBOTO_BLACK;
     public static final Font ROBOTO_BLACKITALIC;
@@ -356,41 +366,62 @@ public class FontLoader {
     public static final Font ROBOTO_REGULAR;
     public static final Font ROBOTO_THIN;
     public static final Font ROBOTO_THINITALIC;
-    private static Font sDefaultFont;
 
+    private static Font sDefaultFont;
+    private static List<String> sFontStyleKeys;
+    private static final Map<String, Integer> sFontStyleMapping = new HashMap<String, Integer>();
+    private static int sNextTextStyleOffset = 0;
+
+    public static final int TEXT_STYLE_BLACK;
+    public static final int TEXT_STYLE_BOLD;
+    public static final int TEXT_STYLE_CONDENDSED;
+    public static final int TEXT_STYLE_ITALIC;
+    public static final int TEXT_STYLE_LIGHT;
+    public static final int TEXT_STYLE_MEDIUM;
+    public static final int TEXT_STYLE_NORMAL;
+    public static final int TEXT_STYLE_THIN;
     static {
-        ROBOTO_REGULAR = new RawFont(R.raw.roboto_regular)
+        TEXT_STYLE_NORMAL = 0;
+        TEXT_STYLE_BOLD = registerTextStyle("bold");
+        TEXT_STYLE_ITALIC = registerTextStyle("italic");
+        TEXT_STYLE_BLACK = registerTextStyle("black");
+        TEXT_STYLE_CONDENDSED = registerTextStyle("condensed");
+        TEXT_STYLE_LIGHT = registerTextStyle("light");
+        TEXT_STYLE_MEDIUM = registerTextStyle("medium");
+        TEXT_STYLE_THIN = registerTextStyle("thin");
+
+        ROBOTO_REGULAR = new RobotoRawFont(R.raw.roboto_regular)
                 .setFontStyle(TEXT_STYLE_NORMAL);
-        ROBOTO_BOLD = new RawFont(R.raw.roboto_bold)
+        ROBOTO_BOLD = new RobotoRawFont(R.raw.roboto_bold)
                 .setFontStyle(TEXT_STYLE_BOLD);
-        ROBOTO_ITALIC = new RawFont(R.raw.roboto_italic)
+        ROBOTO_ITALIC = new RobotoRawFont(R.raw.roboto_italic)
                 .setFontStyle(TEXT_STYLE_ITALIC);
-        ROBOTO_BOLDITALIC = new RawFont(R.raw.roboto_bolditalic)
+        ROBOTO_BOLDITALIC = new RobotoRawFont(R.raw.roboto_bolditalic)
                 .setFontStyle(TEXT_STYLE_BOLD | TEXT_STYLE_ITALIC);
 
-        ROBOTO_BLACK = new RawLazyFont("roboto_black")
+        ROBOTO_BLACK = new RobotoRawLazyFont("roboto_black")
                 .setFontStyle(TEXT_STYLE_BLACK);
-        ROBOTO_BLACKITALIC = new RawLazyFont("roboto_blackitalic")
+        ROBOTO_BLACKITALIC = new RobotoRawLazyFont("roboto_blackitalic")
                 .setFontStyle(TEXT_STYLE_BLACK | TEXT_STYLE_ITALIC);
-        ROBOTO_BOLDCONDENSED = new RawLazyFont("roboto_boldcondensed")
+        ROBOTO_BOLDCONDENSED = new RobotoRawLazyFont("roboto_boldcondensed")
                 .setFontStyle(TEXT_STYLE_BOLD | TEXT_STYLE_CONDENDSED);
-        ROBOTO_BOLDCONDENSEDITALIC = new RawLazyFont("roboto_boldcondenseditalic")
+        ROBOTO_BOLDCONDENSEDITALIC = new RobotoRawLazyFont("roboto_boldcondenseditalic")
                 .setFontStyle(TEXT_STYLE_BOLD | TEXT_STYLE_CONDENDSED | TEXT_STYLE_ITALIC);
-        ROBOTO_CONDENSED = new RawLazyFont("roboto_condensed")
+        ROBOTO_CONDENSED = new RobotoRawLazyFont("roboto_condensed")
                 .setFontStyle(TEXT_STYLE_CONDENDSED);
-        ROBOTO_CONDENSEDITALIC = new RawLazyFont("roboto_condenseditalic")
+        ROBOTO_CONDENSEDITALIC = new RobotoRawLazyFont("roboto_condenseditalic")
                 .setFontStyle(TEXT_STYLE_CONDENDSED | TEXT_STYLE_ITALIC);
-        ROBOTO_LIGHT = new RawLazyFont("roboto_light")
+        ROBOTO_LIGHT = new RobotoRawLazyFont("roboto_light")
                 .setFontStyle(TEXT_STYLE_LIGHT);
-        ROBOTO_LIGHTITALIC = new RawLazyFont("roboto_lightitalic")
+        ROBOTO_LIGHTITALIC = new RobotoRawLazyFont("roboto_lightitalic")
                 .setFontStyle(TEXT_STYLE_LIGHT | TEXT_STYLE_ITALIC);
-        ROBOTO_MEDIUM = new RawLazyFont("roboto_medium")
+        ROBOTO_MEDIUM = new RobotoRawLazyFont("roboto_medium")
                 .setFontStyle(TEXT_STYLE_MEDIUM);
-        ROBOTO_MEDIUMITALIC = new RawLazyFont("roboto_mediumitalic")
+        ROBOTO_MEDIUMITALIC = new RobotoRawLazyFont("roboto_mediumitalic")
                 .setFontStyle(TEXT_STYLE_MEDIUM | TEXT_STYLE_ITALIC);
-        ROBOTO_THIN = new RawLazyFont("roboto_thin")
+        ROBOTO_THIN = new RobotoRawLazyFont("roboto_thin")
                 .setFontStyle(TEXT_STYLE_THIN);
-        ROBOTO_THINITALIC = new RawLazyFont("roboto_thinitalic")
+        ROBOTO_THINITALIC = new RobotoRawLazyFont("roboto_thinitalic")
                 .setFontStyle(TEXT_STYLE_THIN | TEXT_STYLE_ITALIC);
 
         sDefaultFont = ROBOTO = new FontCollector().allowAnyFontFamily();
@@ -455,6 +486,39 @@ public class FontLoader {
 
     public static Font getDefaultFont() {
         return sDefaultFont;
+    }
+
+    public static Object[] parseFontStyle(String string) {
+        String fontFamily = null;
+        int c = string.lastIndexOf('-');
+        if (c > 0) {
+            fontFamily = string.substring(0, c).toLowerCase(Locale.ENGLISH);
+            string = string.substring(c + 1);
+        }
+        if (sFontStyleKeys == null) {
+            sFontStyleKeys = new ArrayList<String>(sFontStyleMapping.keySet());
+        }
+        int textStyle = TEXT_STYLE_NORMAL;
+        for (int i = 0; i < sFontStyleKeys.size(); i++) {
+            final String key = sFontStyleKeys.get(i);
+            if (string.contains(key)) {
+                textStyle |= sFontStyleMapping.get(key);
+            }
+        }
+        return new Object[] {
+                textStyle,
+                fontFamily == null && textStyle == TEXT_STYLE_NORMAL ? string : fontFamily
+        };
+    }
+
+    public static int registerTextStyle(String modifier) {
+        if (sNextTextStyleOffset >= 32) {
+            throw new IllegalStateException("Too much text styles!");
+        }
+        final int flag = 1 << sNextTextStyleOffset++;
+        sFontStyleMapping.put(modifier.toLowerCase(Locale.ENGLISH), flag);
+        sFontStyleKeys = null;
+        return flag;
     }
 
     public static void setDefaultFont(Font defaultFont) {
