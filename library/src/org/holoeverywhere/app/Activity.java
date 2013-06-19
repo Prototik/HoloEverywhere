@@ -8,7 +8,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.Collection;
 
-import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.AddonSherlock;
 import org.holoeverywhere.addon.AddonSherlock.AddonSherlockA;
@@ -51,7 +50,7 @@ public abstract class Activity extends _HoloActivity {
 
         @Override
         public boolean post() {
-            return (mView = Activity.super.findViewById(mId)) != null;
+            return (mView = getWindow().findViewById(mId)) != null;
         }
     }
 
@@ -211,7 +210,6 @@ public abstract class Activity extends _HoloActivity {
                 addon.onContentChanged();
             }
         });
-        FontLoader.apply(getWindow().getDecorView());
     }
 
     @Override
@@ -509,10 +507,7 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     public void requestWindowFeature(long featureIdLong) {
-        if (!super.isInited()) {
-            super.requestWindowFeature(featureIdLong);
-            return;
-        }
+        super.requestWindowFeature(featureIdLong);
         final int featureId = (int) featureIdLong;
         performAddonAction(new AddonCallback<IAddonActivity>() {
             @Override

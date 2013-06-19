@@ -5,8 +5,6 @@ import java.util.Collection;
 
 public interface IAddonAttacher<V extends IAddonBase<?>> {
     public abstract static class AddonCallback<V> {
-        public boolean mStopped = false;
-
         public boolean action(V addon) {
             justAction(addon);
             return false;
@@ -20,25 +18,9 @@ public interface IAddonAttacher<V extends IAddonBase<?>> {
 
         }
 
-        public boolean performAction(V addon) {
-            if (action(addon)) {
-                stop();
-                return true;
-            }
-            return false;
-        }
-
         public boolean post() {
             justPost();
             return false;
-        }
-
-        public void pre() {
-
-        }
-
-        public void stop() {
-            mStopped = true;
         }
     }
 

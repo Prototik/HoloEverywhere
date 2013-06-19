@@ -15,7 +15,7 @@
 		android:layout_weight="1"
 		android:orientation="horizontal"
 		android:divider="?dividerHorizontal"
-		holo:showDividers="middle" >
+		android:showDividers="middle" >
 		<DemoListRowView
 			android:id="@+id/dark"
 			android:layout_width="0dp"

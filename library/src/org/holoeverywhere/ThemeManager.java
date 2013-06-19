@@ -278,7 +278,7 @@ public final class ThemeManager {
      * Apply theme from intent. Only system use, don't call it!
      */
     public static void applyTheme(Activity activity) {
-        ThemeManager.applyTheme(activity, activity.isForceThemeApply());
+        ThemeManager.applyTheme(activity, false);
     }
 
     /**

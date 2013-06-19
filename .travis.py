@@ -51,7 +51,7 @@ def main():
 	"-Dfile=android-support-v4-r13.jar",
 	"-DgroupId=com.google.android", "-DartifactId=support-v4",
 	"-Dversion=r13", "-Dpackaging=jar", "-DgeneratePom=true"], True)
-
+	
 	if os.environ["TRAVIS_SECURE_ENV_VARS"] == "false":
 		unsecure();
 	else:
@@ -63,10 +63,21 @@ def unsecure():
 
 def secure():	
 	if "[deploy snapshot]" in call_output(["git", "log", "-1", "--pretty=%B", os.environ["TRAVIS_COMMIT"]]):
-		print " # [SECURE] Build + Deploy..."
+		print " # [SECURE] Generate one-time keystore..."
+		keystore = os.getcwd() + "/holoeverywhere.jks"
+		alias = "holoeverywhere"
+		keypass = "holoeverywhere"
+		storepass = "holoeverywhere"
+		call(["keytool", "-genkey", "-keystore", keystore, "-alias", alias, "-storepass", storepass, "-keypass", keypass,
+			"-keyalg", "RSA", "-keysize", "2048", "-validity", "120", "-dname", "CN=HoloEverywhere One-Time Key,O=HoloEverywhere,C=US"]);
+		
+		print " # [SECURE] Create maven config"
 		maven_config = os.getcwd() + "/.maven.xml"
-		create_maven_config(maven_config, os.environ["SONATYPE_USERNAME"], os.environ["SONATYPE_PASSWORD"])
-		call(["mvn", "clean", "install", "deploy", "--batch-mode", "-DskipTests=true", "-DrepositoryId=holoeverywhere-repo-snapshots", "--settings=" + maven_config])
+		create_maven_config(maven_config, username = os.environ["SONATYPE_USERNAME"], password = os.environ["SONATYPE_PASSWORD"])
+			
+		print " # [SECURE] Build & Deploy..."
+		call(["mvn", "clean", "install", "deploy", "--batch-mode", "-DskipTests=true", "-DrepositoryId=holoeverywhere-repo-snapshots", "--settings=" + maven_config,
+			"-Dholo.sign.keystore=" + keystore, "-Dholo.sign.alias=" + alias, "-Dholo.sign.storepass=" + storepass, "-Dholo.sign.keypass=" + keypass])
 	else:
 		print " # [SECURE] Build"
 		call(["mvn", "clean", "install", "--batch-mode", "-DskipTests=true"])
@@ -75,6 +86,7 @@ def create_maven_config(filename, username, password):
 	m2 = xml.dom.minidom.parse(os.path.expanduser("~") + '/.m2/settings.xml')
 
 	settings = m2.getElementsByTagName("settings")[0]
+	
 	serversNodes = settings.getElementsByTagName("servers")
 	if not serversNodes:
 		serversNode = m2.createElement("servers")
@@ -97,7 +109,7 @@ def create_maven_config(filename, username, password):
 	serverNode.appendChild(serverPass)
  
 	serversNode.appendChild(serverNode)
-  
+	
 	f = open(filename, 'w')
 	f.write(m2.toxml())
 	f.close()

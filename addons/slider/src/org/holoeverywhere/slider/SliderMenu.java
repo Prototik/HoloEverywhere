@@ -8,6 +8,7 @@ import java.util.List;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
+import org.holoeverywhere.addon.IAddonThemes;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.app.ListFragment;
 import org.holoeverywhere.widget.ListView;
@@ -21,6 +22,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +31,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 
-public class SliderMenu {
+public class SliderMenu implements OnBackStackChangedListener {
     public static enum SelectionBehavior {
         BackgroundWhenSelected, Default, OnlyBackground, OnlyHandler;
     }
@@ -182,19 +184,50 @@ public class SliderMenu {
         }
     }
 
+    private static final IAddonThemes sThemes;
+    public static final int THEME_FLAG;
+    static {
+        sThemes = new IAddonThemes();
+        THEME_FLAG = sThemes.getThemeFlag();
+        map(R.style.Holo_Internal_SliderTheme, R.style.Holo_Internal_SliderTheme_Light);
+    }
+
+    /**
+     * Remap all SliderMenu themes
+     */
+    public static void map(int theme) {
+        map(theme, theme, theme);
+    }
+
+    /**
+     * Remap SliderMenu themes, splited by dark and light color scheme. For
+     * mixed color scheme will be using light theme
+     */
+    public static void map(int darkTheme, int lightTheme) {
+        map(darkTheme, lightTheme, lightTheme);
+    }
+
+    /**
+     * Remap SliderMenu themes, splited by color scheme
+     */
+    public static void map(int darkTheme, int lightTheme, int mixedTheme) {
+        sThemes.map(darkTheme, lightTheme, mixedTheme);
+    }
+
     private final class SliderMenuAdapter extends BaseAdapter implements OnItemClickListener {
         private final int mDefaultTextAppearance;
         private final int mDefaultTextAppearanceInverse;
         private final LayoutInflater mLayoutInflater;
 
         private SliderMenuAdapter(Context context) {
+            context = sThemes.context(context);
             mLayoutInflater = LayoutInflater.from(context);
-            TypedArray a = context.obtainStyledAttributes(new int[] {
-                    android.R.attr.textAppearanceMedium, android.R.attr.textAppearanceMediumInverse
-            });
-            mDefaultTextAppearance = a.getResourceId(0,
+            TypedArray a = context.obtainStyledAttributes(R.styleable.SliderMenu);
+            mDefaultTextAppearance = a.getResourceId(
+                    R.styleable.SliderMenu_textAppearanceSliderItem,
                     R.style.Holo_TextAppearance_Medium);
-            mDefaultTextAppearanceInverse = a.getResourceId(1,
+            mDefaultTextAppearanceInverse = a.getResourceId(
+                    R.styleable.SliderMenu_textAppearanceSliderItemInverse,
                     R.style.Holo_TextAppearance_Medium_Inverse);
             a.recycle();
         }
@@ -265,23 +298,19 @@ public class SliderMenu {
     }
 
     private SliderMenuAdapter mAdapter;
-
     private final AddonSliderA mAddon;
-
     private int mCurrentPage = -1;
-
+    private final FragmentManager mFragmentManager;
     private int mFuturePosition = -1;
-
+    private boolean mIgnoreBackStack = false;
     private int mInitialPage = 0;
-
     private boolean mInverseTextColorWhenSelected = false;
-
     private final List<SliderItem> mItems;
-
     private SelectionBehavior mSelectionBehavior = SelectionBehavior.Default;
 
     public SliderMenu(AddonSliderA addon) {
         mAddon = addon;
+        mFragmentManager = mAddon.get().getSupportFragmentManager();
         mItems = new ArrayList<SliderItem>();
     }
 
@@ -432,30 +461,35 @@ public class SliderMenu {
         return view;
     }
 
-    protected void changePage(int position, SliderItem item) {
-        final FragmentManager fm = mAddon.get().getSupportFragmentManager();
+    protected void changePage(int position) {
+        changePage(position, mItems.get(position));
+    }
+
+    private void changePage(int position, SliderItem item) {
+        mIgnoreBackStack = true;
         if (mCurrentPage >= 0) {
             final SliderItem lastItem = mAdapter.getItem(mCurrentPage);
             final WeakReference<Fragment> ref = lastItem.mLastFragment;
             final Fragment fragment = ref == null ? null : ref.get();
-            if (fragment != null && lastItem.mSaveState) {
+            if (fragment != null && fragment.isAdded() && lastItem.mSaveState) {
                 if (!fragment.isDetached()) {
-                    fm.beginTransaction().detach(fragment).commit();
-                    fm.executePendingTransactions();
+                    mFragmentManager.beginTransaction().detach(fragment).commit();
+                    mFragmentManager.executePendingTransactions();
                 }
-                lastItem.mSavedState = fm.saveFragmentInstanceState(fragment);
+                lastItem.mSavedState = mFragmentManager.saveFragmentInstanceState(fragment);
             }
         }
         mCurrentPage = position;
         mAdapter.notifyDataSetInvalidated();
-        while (fm.popBackStackImmediate()) {
+        while (mFragmentManager.popBackStackImmediate()) {
         }
         final Fragment fragment = Fragment.instantiate(item.mFragmentClass);
         if (item.mSavedState != null) {
             fragment.setInitialSavedState(item.mSavedState);
         }
         item.mLastFragment = new WeakReference<Fragment>(fragment);
-        replaceFragment(fm, fragment);
+        replaceFragment(mFragmentManager, fragment);
+        mIgnoreBackStack = false;
     }
 
     public int getInitialPage() {
@@ -486,8 +520,7 @@ public class SliderMenu {
 
     public void makeDefaultMenu(Context context) {
         setInverseTextColorWhenSelected(ThemeManager.getThemeType(mAddon.get()) != ThemeManager.LIGHT);
-        ListFragment menuFragment = (ListFragment) mAddon.get().getSupportFragmentManager()
-                .findFragmentById(R.id.leftView);
+        ListFragment menuFragment = (ListFragment) mFragmentManager.findFragmentById(R.id.leftView);
         if (menuFragment == null) {
             mAddon.get().getSupportFragmentManager().findFragmentById(R.id.rightView);
         }
@@ -503,10 +536,27 @@ public class SliderMenu {
         }
     }
 
+    @Override
+    public void onBackStackChanged() {
+        if (mIgnoreBackStack || mCurrentPage < 0 || mCurrentPage >= mItems.size()) {
+            return;
+        }
+        SliderItem item = mItems.get(mCurrentPage);
+        WeakReference<Fragment> ref = item.mLastFragment;
+        Fragment fragment = ref == null ? null : ref.get();
+        if (fragment == null || !item.mSaveState) {
+            return;
+        }
+        if (fragment.isAdded() && fragment.isDetached() && !fragment.isVisible()) {
+            item.mSavedState = mFragmentManager.saveFragmentInstanceState(fragment);
+        }
+    }
+
     public void onPostCreate(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             mCurrentPage = savedInstanceState.getInt(KEY_CURRENT_PAGE, 0);
         }
+        mAddon.get().getSupportFragmentManager().addOnBackStackChangedListener(this);
     }
 
     public void onResume() {

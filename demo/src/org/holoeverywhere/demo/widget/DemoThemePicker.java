@@ -56,9 +56,10 @@ public class DemoThemePicker extends FrameLayout {
     public DemoThemePicker(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         int layout;
-        TypedArray a = context.obtainStyledAttributes(attrs, new int[] {
-                android.R.attr.orientation
-        }, defStyleAttr, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, new
+                int[] {
+                    android.R.attr.orientation
+                }, defStyleAttr, 0);
         boolean horizontal = a.getInt(0, 0) == LinearLayout.HORIZONTAL;
         a.recycle();
         if (horizontal) {
@@ -67,9 +68,12 @@ public class DemoThemePicker extends FrameLayout {
             layout = R.layout.theme_picker_vertical;
         }
         addView(LayoutInflater.inflate(context, layout, this, false));
-        findViewById(R.id.dark).setOnClickListener(new ThemeChangeListener(ThemeManager.DARK));
-        findViewById(R.id.light).setOnClickListener(new ThemeChangeListener(ThemeManager.LIGHT));
-        findViewById(R.id.mixed).setOnClickListener(new ThemeChangeListener(ThemeManager.MIXED));
+        findViewById(R.id.dark).setOnClickListener(new
+                ThemeChangeListener(ThemeManager.DARK));
+        findViewById(R.id.light).setOnClickListener(new
+                ThemeChangeListener(ThemeManager.LIGHT));
+        findViewById(R.id.mixed).setOnClickListener(new
+                ThemeChangeListener(ThemeManager.MIXED));
     }
 
     public void setActivity(Activity activity) {

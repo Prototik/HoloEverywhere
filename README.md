@@ -5,7 +5,7 @@
 ## What is it?
 Bringing Holo Theme from Android 4.1 to 2.1 and above.
 ## Links
-[![Play Store](http://holoeverywhere.org/github-res/play_store_button.png)][Play Store]  
+[![Demo APK](http://holoeverywhere.org/github-res/demo_button.png)][Demo APK]  
 [![Donate](http://holoeverywhere.org/github-res/donate_button.png)][Donate]
 
 ## How to use?
@@ -46,7 +46,7 @@ Christophe:
 ## License
 MIT License, full text of license see [here][License]
 
-[Play Store]: https://play.google.com/store/apps/details?id=org.holoeverywhere.demo "Play Store"
+[Demo APK]: https://oss.sonatype.org/content/repositories/releases/org/holoeverywhere/demo/1.6.1/demo-1.6.1-aligned.apk "Demo APK"
 [Donate]: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=X7E7U7HNR36YN&lc=US&item_name=HoloEverywhere&currency_code=USD&bn=PP%2dDonationsBF%3adonate_button%2epng%3aNonHosted "Donate"
 [Build with Maven]: https://github.com/Prototik/HoloEverywhere/wiki/Maven "Build with maven"
 [License]: https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE "LGPLv3"

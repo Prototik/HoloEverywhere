@@ -10,6 +10,7 @@ import java.util.Map;
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.R;
 import org.holoeverywhere.SystemServiceManager;
 import org.holoeverywhere.SystemServiceManager.SuperSystemService;
 import org.holoeverywhere.ThemeManager;
@@ -29,6 +30,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources.Theme;
+import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +41,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 
 import com.actionbarsherlock.ActionBarSherlock.OnActionModeFinishedListener;
 import com.actionbarsherlock.ActionBarSherlock.OnActionModeStartedListener;
@@ -61,6 +65,22 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
         OnMenuItemSelectedListener, OnActionModeStartedListener,
         OnActionModeFinishedListener, SuperSystemService, ContextMenuListener,
         ContextMenuListenersProvider, IAddonAttacher<IAddonActivity> {
+    private final class ActivityDecorView extends WindowDecorView {
+        public ActivityDecorView() {
+            super(_HoloActivity.this);
+        }
+
+        @Override
+        protected boolean fitSystemWindows(Rect insets) {
+            final SparseIntArray windowFeatures = createConfig(null).windowFeatures;
+            if (windowFeatures != null
+                    && windowFeatures.get(Window.FEATURE_ACTION_BAR_OVERLAY, 0) != 0) {
+                return false;
+            }
+            return super.fitSystemWindows(insets);
+        }
+    }
+
     public static final class Holo implements Parcelable {
         public static final Parcelable.Creator<Holo> CREATOR = new Creator<Holo>() {
             @Override
@@ -78,8 +98,6 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
             return new Holo();
         }
 
-        public boolean applyImmediately = false;
-        public boolean forceThemeApply = false;
         public boolean ignoreApplicationInstanceCheck = false;
         public boolean ignoreThemeCheck = false;
         public boolean requireRoboguice = false;
@@ -92,13 +110,11 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
         }
 
         private Holo(Parcel source) {
-            forceThemeApply = source.readInt() == 1;
             ignoreThemeCheck = source.readInt() == 1;
             ignoreApplicationInstanceCheck = source.readInt() == 1;
             requireSherlock = source.readInt() == 1;
             requireSlider = source.readInt() == 1;
             requireRoboguice = source.readInt() == 1;
-            applyImmediately = source.readInt() == 1;
             windowFeatures = source.readParcelable(SparseIntArray.class.getClassLoader());
         }
 
@@ -111,18 +127,16 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
             if (windowFeatures == null) {
                 windowFeatures = new SparseIntArray();
             }
-            windowFeatures.put(feature, 1);
+            windowFeatures.put(feature, feature);
         }
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(forceThemeApply ? 1 : 0);
             dest.writeInt(ignoreThemeCheck ? 1 : 0);
             dest.writeInt(ignoreApplicationInstanceCheck ? 1 : 0);
             dest.writeInt(requireSherlock ? 1 : 0);
             dest.writeInt(requireSlider ? 1 : 0);
             dest.writeInt(requireRoboguice ? 1 : 0);
-            dest.writeInt(applyImmediately ? 1 : 0);
             dest.writeParcelable(windowFeatures, flags);
         }
     }
@@ -147,7 +161,6 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
     private Holo mConfig;
     private Map<View, ContextMenuListener> mContextMenuListeners;
     private WindowDecorView mDecorView;
-    private boolean mForceThemeApply = false;
     private boolean mInited = false;
     private int mLastThemeResourceId = 0;
     private MenuInflater mMenuInflater;
@@ -308,24 +321,13 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
         return mDecorView;
     }
 
-    protected void init(Holo config) {
-        init(config, null);
-    }
-
-    protected void init(Holo config, Bundle savedInstanceState) {
-        mConfig = config;
-        if (mConfig.applyImmediately) {
-            onInit(mConfig, savedInstanceState);
-        }
-    }
-
     @Override
     public void invalidateOptionsMenu() {
         supportInvalidateOptionsMenu();
     }
 
-    public boolean isForceThemeApply() {
-        return mForceThemeApply;
+    public boolean isDecorViewInited() {
+        return mDecorView != null;
     }
 
     public boolean isInited() {
@@ -468,17 +470,17 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
                     }
                 }
             }
-            boolean forceThemeApply = isForceThemeApply();
-            if (config.forceThemeApply) {
-                setForceThemeApply(forceThemeApply = true);
-            }
-            if (mLastThemeResourceId == 0) {
-                forceThemeApply = true;
-            }
-            ThemeManager.applyTheme(activity, forceThemeApply);
+            ThemeManager.applyTheme(activity, mLastThemeResourceId == 0);
             if (!config.ignoreThemeCheck && ThemeManager.getThemeType(this) == ThemeManager.INVALID) {
                 throw new HoloThemeException(activity);
             }
+            TypedArray a = obtainStyledAttributes(new int[] {
+                    android.R.attr.windowActionBarOverlay, R.attr.windowActionBarOverlay
+            });
+            if (a.getBoolean(0, false) || a.getBoolean(1, false)) {
+                requestWindowFeature((long) Window.FEATURE_ACTION_BAR_OVERLAY);
+            }
+            a.recycle();
         }
         onPostInit(config, savedInstanceState);
         lockAttaching();
@@ -559,7 +561,7 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
         if (mDecorView != null) {
             return true;
         }
-        mDecorView = new WindowDecorView(this);
+        mDecorView = new ActivityDecorView();
         mDecorView.setId(android.R.id.content);
         mDecorView.setProvider(this);
         if (view != null) {
@@ -584,9 +586,7 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
     }
 
     public void requestWindowFeature(long featureId) {
-        if (!mInited) {
-            createConfig(null).requestWindowFeature((int) featureId);
-        }
+        createConfig(null).requestWindowFeature((int) featureId);
     }
 
     @Override
@@ -610,10 +610,6 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
             mDecorView.addView(view, params);
             onContentChanged();
         }
-    }
-
-    public void setForceThemeApply(boolean forceThemeApply) {
-        mForceThemeApply = forceThemeApply;
     }
 
     public abstract void setSupportProgress(int progress);

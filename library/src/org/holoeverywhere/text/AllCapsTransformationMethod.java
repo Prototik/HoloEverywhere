@@ -8,7 +8,7 @@ import android.graphics.Rect;
 import android.view.View;
 
 public class AllCapsTransformationMethod implements TransformationMethod {
-    private boolean mEnabled;
+    private boolean mEnabled = true;
     private Locale mLocale;
 
     public AllCapsTransformationMethod(Context context) {
