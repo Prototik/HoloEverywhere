@@ -23,31 +23,57 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class FontLoader {
-    public static class Font {
+    public static class Font implements Cloneable {
         private Context mContext;
+        private String mFontFamily;
         private int mFontStyle;
+        private boolean mLockModifing = false;
         private Typeface mTypeface;
         private boolean mTypefaceLoaded = false;
 
         public Font() {
         }
 
-        protected final void assertParent() {
+        public Font(Font font) {
+            mContext = font.mContext;
+            mFontStyle = font.mFontStyle;
+            mTypeface = font.mTypeface;
+            mTypefaceLoaded = font.mTypefaceLoaded;
+            mFontFamily = font.mFontFamily;
+        }
+
+        protected final void assertContext() {
             if (mContext == null) {
                 throw new IllegalStateException(
                         "Cannot load typeface without attaching font instance to FontLoader");
             }
         }
 
+        protected final void assertModifing() {
+            if (mLockModifing) {
+                throw new IllegalStateException(
+                        "Cannot modify typeface after attaching to FontCollector");
+            }
+        }
+
+        @Override
+        public Font clone() {
+            return new Font(this);
+        }
+
         public final Context getContext() {
             return mContext;
+        }
+
+        public String getFontFamily() {
+            return mFontFamily;
         }
 
         public int getFontStyle() {
             return mFontStyle;
         }
 
-        public Typeface getTypeface(int fontStyle) {
+        public Typeface getTypeface(String fontFamily, int fontStyle) {
             if (!mTypefaceLoaded) {
                 mTypeface = loadTypeface();
                 mTypefaceLoaded = true;
@@ -59,9 +85,19 @@ public class FontLoader {
             return null;
         }
 
+        public void lock() {
+            mLockModifing = true;
+        }
+
         protected final void resetTypeface() {
             mTypeface = null;
             mTypefaceLoaded = false;
+        }
+
+        public Font setFontFamily(String fontFamily) {
+            assertModifing();
+            mFontFamily = fontFamily;
+            return this;
         }
 
         public Font setFontStyle(int fontStyle) {
@@ -71,47 +107,134 @@ public class FontLoader {
     }
 
     public static class FontCollector extends Font {
-        private final SparseArray<Font> mFonts = new SparseArray<Font>();
+        private static final String DEFAULT_FONT_FAMILY = "FONT-FAMILY-DEFAULT";
+        private boolean mAllowAnyFontFamily;
+        private Font mDefaultFont;
+        private final SparseArray<SparseArray<Font>> mFonts;
+        private Font mLastUsedFont;
+
+        public FontCollector() {
+            mFonts = new SparseArray<SparseArray<Font>>();
+        }
+
+        public FontCollector(Font font) {
+            super(font);
+            if (font instanceof FontCollector) {
+                FontCollector fontCollector = (FontCollector) font;
+                mFonts = fontCollector.mFonts.clone();
+                mAllowAnyFontFamily = fontCollector.mAllowAnyFontFamily;
+                if (fontCollector.mDefaultFont != null) {
+                    mDefaultFont = fontCollector.mDefaultFont.clone();
+                }
+            } else {
+                mFonts = new SparseArray<SparseArray<Font>>();
+            }
+        }
+
+        public FontCollector allowAnyFontFamily() {
+            mAllowAnyFontFamily = true;
+            return this;
+        }
+
+        public FontCollector asDefaultFont() {
+            mDefaultFont = mLastUsedFont;
+            return this;
+        }
 
         @Override
-        public Typeface getTypeface(int fontStyle) {
-            Font font = mFonts.get(fontStyle);
+        public FontCollector clone() {
+            return new FontCollector(this);
+        }
+
+        public Font getDefaultFont() {
+            return mDefaultFont;
+        }
+
+        @Override
+        public Typeface getTypeface(String fontFamily, int fontStyle) {
+            if (fontFamily == null) {
+                fontFamily = DEFAULT_FONT_FAMILY;
+            }
+            SparseArray<Font> fontFamilyArray = mFonts.get(fontFamily.hashCode());
+            if (fontFamilyArray == null) {
+                if (mAllowAnyFontFamily && mFonts.size() > 0) {
+                    fontFamilyArray = mFonts.valueAt(0);
+                } else if (mDefaultFont != null) {
+                    mDefaultFont.mContext = getContext();
+                    return mDefaultFont.getTypeface(fontFamily, fontStyle);
+                } else {
+                    return null;
+                }
+            }
+            final Font font = fontFamilyArray.get(fontStyle, mDefaultFont);
             if (font != null) {
                 font.mContext = getContext();
-                return font.getTypeface(fontStyle);
+                return font.getTypeface(fontFamily, fontStyle);
             }
             return null;
         }
 
-        public void register(Font font) {
-            final int fontStyle = font.getFontStyle();
-            if (mFonts.get(fontStyle) != null) {
-                throw new IllegalStateException("Could not register font " + font
-                        + " with the fontStyle " + fontStyle + ": already exists");
+        public FontCollector register(Font font) {
+            return register(font, DEFAULT_FONT_FAMILY);
+        }
+
+        private FontCollector register(Font font, String defaultFontFamily) {
+            if (font == null || defaultFontFamily == null) {
+                return this;
             }
+            final String fontFamily = font.mFontFamily == null
+                    ? defaultFontFamily : font.mFontFamily;
+            final int fontFamilyHashCode = fontFamily.hashCode();
+            final int fontStyle = font.mFontStyle;
             if (font instanceof FontCollector) {
-                final SparseArray<Font> fonts = ((FontCollector) font).mFonts;
-                for (int i = 0; i < fonts.size(); i++) {
-                    register(fonts.valueAt(i));
+                final SparseArray<SparseArray<Font>> fontsAllArray = ((FontCollector) font).mFonts;
+                for (int i = 0; i < fontsAllArray.size(); i++) {
+                    SparseArray<Font> fonts = fontsAllArray.valueAt(i);
+                    for (int z = 0; z < fonts.size(); z++) {
+                        register(fonts.valueAt(z), fontFamily);
+                    }
                 }
-                return;
+                mLastUsedFont = font;
+                return this;
             }
-            mFonts.put(fontStyle, font);
+            SparseArray<Font> fontFamilyArray = mFonts.get(fontFamilyHashCode);
+            if (fontFamilyArray == null) {
+                mFonts.put(fontFamilyHashCode, fontFamilyArray = new SparseArray<Font>());
+            }
+            fontFamilyArray.put(fontStyle, font);
+            mLastUsedFont = font;
+            font.lock();
+            return this;
         }
 
-        public void unregister(Font font) {
-            unregister(font.getFontStyle());
+        public FontCollector setDefaultFont(Font defaultFont) {
+            mDefaultFont = defaultFont;
+            if (defaultFont != null) {
+                setFontFamily(defaultFont.getFontFamily());
+                setFontStyle(defaultFont.getFontStyle());
+            }
+            return this;
         }
 
-        public void unregister(int fontStyle) {
-            mFonts.delete(fontStyle);
+        public FontCollector unregister(Font font) {
+            final String fontFamily = font.mFontFamily == null
+                    ? DEFAULT_FONT_FAMILY : font.mFontFamily;
+            final int fontFamilyHashCode = fontFamily.hashCode();
+            SparseArray<Font> fontFamilyArray = mFonts.get(fontFamilyHashCode);
+            fontFamilyArray.remove(font.getFontStyle());
+            if (fontFamilyArray.size() == 0) {
+                mFonts.remove(fontFamilyHashCode);
+            }
+            return this;
         }
     }
 
     public static interface FontStyleProvider {
+        public String getFontFamily();
+
         public int getFontStyle();
 
-        public void setFontStyle(int fontStyle);
+        public void setFontStyle(String fontFamily, int fontStyle);
 
         public void setTypeface(Typeface typeface);
     }
@@ -119,13 +242,25 @@ public class FontLoader {
     public static class RawFont extends Font {
         private int mRawResourceId;
 
+        public RawFont(Font font) {
+            super(font);
+            if (font instanceof RawFont) {
+                mRawResourceId = ((RawFont) font).mRawResourceId;
+            }
+        }
+
         public RawFont(int rawResourceId) {
             mRawResourceId = rawResourceId;
         }
 
         @Override
+        public RawFont clone() {
+            return new RawFont(this);
+        }
+
+        @Override
         public Typeface loadTypeface() {
-            assertParent();
+            assertContext();
             return loadTypeface(true);
         }
 
@@ -173,14 +308,26 @@ public class FontLoader {
     public static class RawLazyFont extends RawFont {
         private String mRawResourceName;
 
+        public RawLazyFont(Font font) {
+            super(font);
+            if (font instanceof RawLazyFont) {
+                mRawResourceName = ((RawLazyFont) font).mRawResourceName;
+            }
+        }
+
         public RawLazyFont(String rawResourceName) {
             super(0);
             mRawResourceName = rawResourceName;
         }
 
         @Override
+        public RawLazyFont clone() {
+            return new RawLazyFont(this);
+        }
+
+        @Override
         public Typeface loadTypeface() {
-            assertParent();
+            assertContext();
             final int id = getContext().getResources().getIdentifier(mRawResourceName,
                     "raw", getContext().getPackageName());
             if (id == 0) {
@@ -246,8 +393,8 @@ public class FontLoader {
         ROBOTO_THINITALIC = new RawLazyFont("roboto_thinitalic")
                 .setFontStyle(TEXT_STYLE_THIN | TEXT_STYLE_ITALIC);
 
-        sDefaultFont = ROBOTO = new FontCollector();
-        ROBOTO.register(ROBOTO_REGULAR);
+        sDefaultFont = ROBOTO = new FontCollector().allowAnyFontFamily();
+        ROBOTO.register(ROBOTO_REGULAR).asDefaultFont();
         ROBOTO.register(ROBOTO_BOLD);
         ROBOTO.register(ROBOTO_ITALIC);
         ROBOTO.register(ROBOTO_BOLDITALIC);
@@ -289,14 +436,21 @@ public class FontLoader {
         if (view instanceof FontStyleProvider) {
             final FontStyleProvider provider = (FontStyleProvider) view;
             final int fontStyle = provider.getFontStyle();
-            if (view.getTag(R.id.fontLoaderFont) == font &&
-                    ((Integer) view.getTag(R.id.fontLoaderFontStyle)).intValue() == fontStyle) {
+            final String fontFamily = provider.getFontFamily();
+            if (view.getTag(R.id.fontLoaderFont) == font
+                    && equals(view.getTag(R.id.fontLoaderFontStyle), fontStyle)
+                    && equals(view.getTag(R.id.fontLoaderFontFamily), fontFamily)) {
                 return;
             }
-            provider.setTypeface(font.getTypeface(fontStyle));
+            provider.setTypeface(font.getTypeface(fontFamily, fontStyle));
             view.setTag(R.id.fontLoaderFont, font);
             view.setTag(R.id.fontLoaderFontStyle, fontStyle);
+            view.setTag(R.id.fontLoaderFontFamily, fontFamily);
         }
+    }
+
+    private static boolean equals(Object o1, Object o2) {
+        return o1 == null ? o2 == null : o1.equals(o2);
     }
 
     public static Font getDefaultFont() {

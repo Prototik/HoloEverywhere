@@ -7,6 +7,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 public class Button extends android.widget.Button implements FontStyleProvider {
+    private String mFontFamily;
+
     private int mFontStyle;
 
     public Button(Context context) {
@@ -23,6 +25,11 @@ public class Button extends android.widget.Button implements FontStyleProvider {
     }
 
     @Override
+    public String getFontFamily() {
+        return mFontFamily;
+    }
+
+    @Override
     public int getFontStyle() {
         return mFontStyle;
     }
@@ -33,9 +40,10 @@ public class Button extends android.widget.Button implements FontStyleProvider {
     }
 
     @Override
-    public void setFontStyle(int fontStyle) {
+    public void setFontStyle(String fontFamily, int fontStyle) {
+        mFontFamily = fontFamily;
         mFontStyle = fontStyle;
-        TextView.setFontStyle(this, fontStyle);
+        TextView.setFontStyle(this, fontFamily, fontStyle);
     }
 
     @Override

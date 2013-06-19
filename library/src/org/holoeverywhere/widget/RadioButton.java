@@ -7,6 +7,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 public class RadioButton extends android.widget.RadioButton implements FontStyleProvider {
+    private String mFontFamily;
+
     private int mFontStyle;
 
     public RadioButton(Context context) {
@@ -23,6 +25,11 @@ public class RadioButton extends android.widget.RadioButton implements FontStyle
     }
 
     @Override
+    public String getFontFamily() {
+        return mFontFamily;
+    }
+
+    @Override
     public int getFontStyle() {
         return mFontStyle;
     }
@@ -33,9 +40,10 @@ public class RadioButton extends android.widget.RadioButton implements FontStyle
     }
 
     @Override
-    public void setFontStyle(int fontStyle) {
+    public void setFontStyle(String fontFamily, int fontStyle) {
+        mFontFamily = fontFamily;
         mFontStyle = fontStyle;
-        TextView.setFontStyle(this, fontStyle);
+        TextView.setFontStyle(this, fontFamily, fontStyle);
     }
 
     @Override

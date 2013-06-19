@@ -1,6 +1,8 @@
 
 package org.holoeverywhere.widget;
 
+import java.util.Locale;
+
 import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.FontLoader.FontStyleProvider;
 import org.holoeverywhere.R;
@@ -39,17 +41,19 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
      * Looks ugly? Yea, i know.
      */
     @SuppressLint("InlinedApi")
-    private static int[] parseFontStyle(Context context, AttributeSet attrs, int defStyleAttr) {
+    private static Object[] parseFontStyle(Context context, AttributeSet attrs, int defStyleAttr) {
         final TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.TextAppearance, defStyleAttr, 0);
-        final int[] result = parseFontStyle(a);
+        final Object[] result = parseFontStyle(a);
         a.recycle();
         return result;
     }
 
-    private static int parseFontStyle(String string) {
+    private static Object[] parseFontStyle(String string) {
+        String fontFamily = null;
         int c = string.lastIndexOf('-');
         if (c > 0) {
+            fontFamily = string.substring(0, c).toLowerCase(Locale.ENGLISH);
             string = string.substring(c + 1);
         }
         int i = TEXT_STYLE_NORMAL;
@@ -74,12 +78,15 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
         if (string.contains("thin")) {
             i |= TEXT_STYLE_THIN;
         }
-        return i;
+        return new Object[] {
+                i, fontFamily
+        };
     }
 
-    private static int[] parseFontStyle(TypedArray a) {
+    private static Object[] parseFontStyle(TypedArray a) {
         boolean force = true;
         int fontStyle = TEXT_STYLE_NORMAL;
+        String fontFamily = null;
         TypedValue value = new TypedValue();
         a.getValue(R.styleable.TextAppearance_android_fontFamily, value);
         if (value.string == null) {
@@ -88,11 +95,13 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
         if (value.string == null) {
             force = false;
         } else {
-            fontStyle = parseFontStyle(value.string.toString());
+            Object[] z = parseFontStyle(value.string.toString());
+            fontStyle = (Integer) z[0];
+            fontFamily = (String) z[1];
         }
         fontStyle |= a.getInt(R.styleable.TextAppearance_android_textStyle, TEXT_STYLE_NORMAL);
-        return new int[] {
-                fontStyle, force ? 1 : 0
+        return new Object[] {
+                force, fontStyle, fontFamily
         };
     }
 
@@ -105,7 +114,7 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
     }
 
     public static <T extends android.widget.TextView & FontStyleProvider> void setFontStyle(
-            T textView, int fontStyle) {
+            T textView, String fontFamily, int fontStyle) {
         FontLoader.applyDefaultFont(textView);
     }
 
@@ -147,9 +156,12 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
         if (appearance.getBoolean(R.styleable.TextAppearance_android_textAllCaps, false)) {
             textView.setTransformationMethod(new AllCapsTransformationMethod(textView.getContext()));
         }
-        int[] fontStyle = parseFontStyle(appearance);
-        textView.setFontStyle(fontStyle[0] | (fontStyle[1] == 0 ? textView.getFontStyle() : 0));
+        Object[] font = parseFontStyle(appearance);
+        textView.setFontStyle((String) font[2], (Integer) font[1]
+                | ((Boolean) font[0] ? 0 : textView.getFontStyle()));
     }
+
+    private String mFontFamily;
 
     private int mFontStyle;
 
@@ -167,6 +179,11 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
     }
 
     @Override
+    public String getFontFamily() {
+        return mFontFamily;
+    }
+
+    @Override
     public int getFontStyle() {
         return mFontStyle;
     }
@@ -177,9 +194,10 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
     }
 
     @Override
-    public void setFontStyle(int fontStyle) {
+    public void setFontStyle(String fontFamily, int fontStyle) {
+        mFontFamily = fontFamily;
         mFontStyle = fontStyle;
-        TextView.setFontStyle(this, fontStyle);
+        TextView.setFontStyle(this, fontFamily, fontStyle);
     }
 
     @Override

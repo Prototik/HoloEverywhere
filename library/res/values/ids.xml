@@ -10,4 +10,5 @@
 	<item name="empty" type="id"></item>
 	<item name="fontLoaderFont" type="id"></item>
 	<item name="fontLoaderFontStyle" type="id"></item>
+	<item name="fontLoaderFontFamily" type="id"></item>
 </resources>
