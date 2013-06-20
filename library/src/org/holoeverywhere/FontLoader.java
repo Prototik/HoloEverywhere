@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.holoeverywhere.util.SparseArray;
-
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.View;
@@ -106,24 +104,24 @@ public class FontLoader {
         private static final String DEFAULT_FONT_FAMILY = "FONT-FAMILY-DEFAULT";
         private boolean mAllowAnyFontFamily;
         private Font mDefaultFont;
-        private final SparseArray<SparseArray<Font>> mFonts;
+        private final List<Font> mFonts;
         private Font mLastUsedFont;
 
         public FontCollector() {
-            mFonts = new SparseArray<SparseArray<Font>>();
+            mFonts = new ArrayList<Font>();
         }
 
         public FontCollector(Font font) {
             super(font);
             if (font instanceof FontCollector) {
                 FontCollector fontCollector = (FontCollector) font;
-                mFonts = fontCollector.mFonts.clone();
+                mFonts = new ArrayList<Font>(fontCollector.mFonts);
                 mAllowAnyFontFamily = fontCollector.mAllowAnyFontFamily;
                 if (fontCollector.mDefaultFont != null) {
                     mDefaultFont = fontCollector.mDefaultFont.clone();
                 }
             } else {
-                mFonts = new SparseArray<SparseArray<Font>>();
+                mFonts = new ArrayList<Font>();
             }
         }
 
@@ -151,55 +149,32 @@ public class FontLoader {
             if (fontFamily == null) {
                 fontFamily = DEFAULT_FONT_FAMILY;
             }
-            SparseArray<Font> fontFamilyArray = mFonts.get(fontFamily.hashCode());
-            if (fontFamilyArray == null) {
-                if (mAllowAnyFontFamily && mFonts.size() > 0) {
-                    fontFamilyArray = mFonts.valueAt(0);
-                } else if (mDefaultFont != null) {
-                    mDefaultFont.mContext = getContext();
-                    return mDefaultFont.getTypeface(fontFamily, fontStyle);
-                } else {
-                    return null;
+            for (int i = 0; i < mFonts.size(); i++) {
+                Font font = mFonts.get(i);
+                if ((mAllowAnyFontFamily || fontFamily.equals(font.mFontFamily))
+                        && font.mFontStyle == fontStyle) {
+                    return getTypeface(font, fontFamily, fontStyle);
                 }
             }
-            final Font font = fontFamilyArray.get(fontStyle, mDefaultFont);
-            if (font != null) {
-                font.mContext = getContext();
-                return font.getTypeface(fontFamily, fontStyle);
+            if (mDefaultFont != null) {
+                mDefaultFont.mContext = getContext();
+                return getTypeface(mDefaultFont, fontFamily, fontStyle);
             }
             return null;
         }
 
-        public FontCollector register(Font font) {
-            return register(font, DEFAULT_FONT_FAMILY);
+        private Typeface getTypeface(Font font, String fontFamily, int fontStyle) {
+            font.mContext = getContext();
+            return font.getTypeface(fontFamily, fontStyle);
         }
 
-        private FontCollector register(Font font, String defaultFontFamily) {
-            if (font == null || defaultFontFamily == null) {
+        public FontCollector register(Font font) {
+            if (font == null) {
                 return this;
             }
-            final String fontFamily = font.mFontFamily == null
-                    ? defaultFontFamily : font.mFontFamily;
-            final int fontFamilyHashCode = fontFamily.hashCode();
-            final int fontStyle = font.mFontStyle;
-            if (font instanceof FontCollector) {
-                final SparseArray<SparseArray<Font>> fontsAllArray = ((FontCollector) font).mFonts;
-                for (int i = 0; i < fontsAllArray.size(); i++) {
-                    SparseArray<Font> fonts = fontsAllArray.valueAt(i);
-                    for (int z = 0; z < fonts.size(); z++) {
-                        register(fonts.valueAt(z), fontFamily);
-                    }
-                }
-                mLastUsedFont = font;
-                return this;
-            }
-            SparseArray<Font> fontFamilyArray = mFonts.get(fontFamilyHashCode);
-            if (fontFamilyArray == null) {
-                mFonts.put(fontFamilyHashCode, fontFamilyArray = new SparseArray<Font>());
-            }
-            fontFamilyArray.put(fontStyle, font);
-            mLastUsedFont = font;
             font.lock();
+            mFonts.add(font);
+            mLastUsedFont = font;
             return this;
         }
 
@@ -213,13 +188,17 @@ public class FontLoader {
         }
 
         public FontCollector unregister(Font font) {
-            final String fontFamily = font.mFontFamily == null
-                    ? DEFAULT_FONT_FAMILY : font.mFontFamily;
-            final int fontFamilyHashCode = fontFamily.hashCode();
-            SparseArray<Font> fontFamilyArray = mFonts.get(fontFamilyHashCode);
-            fontFamilyArray.remove(font.getFontStyle());
-            if (fontFamilyArray.size() == 0) {
-                mFonts.remove(fontFamilyHashCode);
+            mFonts.remove(font);
+            return this;
+        }
+
+        public FontCollector unregister(String fontFamily, int fontStyle) {
+            for (int i = 0; i < mFonts.size(); i++) {
+                final Font font = mFonts.get(i);
+                if (FontLoader.equals(fontFamily, font.mFontFamily) && font.mFontStyle == fontStyle) {
+                    mFonts.remove(font);
+                    return this;
+                }
             }
             return this;
         }
