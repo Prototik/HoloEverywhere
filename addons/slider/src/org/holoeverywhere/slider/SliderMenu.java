@@ -473,8 +473,8 @@ public class SliderMenu implements OnBackStackChangedListener {
             final SliderItem lastItem = mAdapter.getItem(mCurrentPage);
             Fragment fragment = lastItem.mLastFragment;
             if (fragment == null) {
-                final WeakReference<Fragment> ref = lastItem.mLastFragmentRef;
-                fragment = ref == null ? null : ref.get();
+                fragment = lastItem.mLastFragmentRef == null ?
+                        null : lastItem.mLastFragmentRef.get();
             }
             if (fragment != null && fragment.isAdded() && lastItem.mSaveState) {
                 if (!fragment.isDetached()) {
@@ -494,8 +494,7 @@ public class SliderMenu implements OnBackStackChangedListener {
         }
         Fragment fragment = item.mLastFragment;
         if (fragment == null) {
-            final WeakReference<Fragment> ref = item.mLastFragmentRef;
-            fragment = ref == null ? null : ref.get();
+            fragment = item.mLastFragmentRef == null ? null : item.mLastFragmentRef.get();
         }
         if (fragment == null) {
             fragment = Fragment.instantiate(item.mFragmentClass);
@@ -562,8 +561,10 @@ public class SliderMenu implements OnBackStackChangedListener {
             return;
         }
         SliderItem item = mItems.get(mCurrentPage);
-        WeakReference<Fragment> ref = item.mLastFragmentRef;
-        Fragment fragment = ref == null ? null : ref.get();
+        Fragment fragment = item.mLastFragment;
+        if (fragment == null) {
+            fragment = item.mLastFragmentRef == null ? null : item.mLastFragmentRef.get();
+        }
         if (fragment == null || !item.mSaveState) {
             return;
         }
