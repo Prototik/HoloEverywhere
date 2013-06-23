@@ -63,6 +63,7 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
             return false;
         }
 
+        @SuppressLint("NewApi")
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             mWrapped.onDestroyActionMode(mode);
@@ -233,9 +234,9 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
 
         if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
             super.setFastScrollAlwaysVisible(false);
+            super.setChoiceMode(CHOICE_MODE_NONE);
         }
         super.setFastScrollEnabled(false);
-        super.setChoiceMode(CHOICE_MODE_NONE);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsListView,
                 defStyle, R.style.Holo_ListView);
         setFastScrollEnabled(a.getBoolean(R.styleable.AbsListView_android_fastScrollEnabled, false));
