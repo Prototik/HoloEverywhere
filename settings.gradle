@@ -1,0 +1,4 @@
+include 'library'
+include 'addons:preferences'
+include 'addons:slider'
+include 'demo'
