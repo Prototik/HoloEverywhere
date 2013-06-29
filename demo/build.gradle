@@ -1,0 +1,24 @@
+apply plugin: 'android'
+
+dependencies {
+  compile project(':library')
+  compile project(':addons:preferences')
+  compile project(':addons:slider')
+}
+
+android {
+  compileSdkVersion 17
+  buildToolsVersion '17'
+
+  defaultConfig {
+    targetSdkVersion 17
+  }
+
+  sourceSets {
+    main {
+      manifest.srcFile 'AndroidManifest.xml'
+      java.srcDirs = ['src']
+      res.srcDirs = ['res']
+    }
+  }
+}
