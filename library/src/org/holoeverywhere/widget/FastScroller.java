@@ -28,6 +28,8 @@ import android.widget.WrapperListAdapter;
 
 class FastScroller<T extends AbsListView & FastScrollerCallback> {
     public static interface FastScrollerCallback {
+        public int getVerticalScrollbarPosition();
+
         public boolean isAttached();
 
         public boolean isInScrollingContainer();
@@ -382,7 +384,7 @@ class FastScroller<T extends AbsListView & FastScrollerCallback> {
         mScaledTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         mMatchDragPosition = context.getApplicationInfo().targetSdkVersion >=
                 android.os.Build.VERSION_CODES.HONEYCOMB;
-        setScrollbarPosition(mList.getVerticalScrollbarPosition());
+        setScrollbarPosition(((FastScrollerCallback) mList).getVerticalScrollbarPosition());
     }
 
     public boolean isAlwaysShowEnabled() {
