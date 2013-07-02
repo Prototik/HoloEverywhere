@@ -144,6 +144,11 @@ public class FontLoader {
             return mDefaultFont;
         }
 
+        private Typeface getTypeface(Font font, String fontFamily, int fontStyle) {
+            font.mContext = getContext();
+            return font.getTypeface(fontFamily, fontStyle);
+        }
+
         @Override
         public Typeface getTypeface(String fontFamily, int fontStyle) {
             if (fontFamily == null) {
@@ -161,11 +166,6 @@ public class FontLoader {
                 return getTypeface(mDefaultFont, fontFamily, fontStyle);
             }
             return null;
-        }
-
-        private Typeface getTypeface(Font font, String fontFamily, int fontStyle) {
-            font.mContext = getContext();
-            return font.getTypeface(fontFamily, fontStyle);
         }
 
         public FontCollector register(Font font) {

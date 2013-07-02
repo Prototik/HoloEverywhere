@@ -86,10 +86,12 @@ public class DatePicker extends FrameLayout {
     private static class SavedState extends BaseSavedState {
         @SuppressWarnings("all")
         public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+            @Override
             public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);
             }
 
+            @Override
             public SavedState[] newArray(int size) {
                 return new SavedState[size];
             }
