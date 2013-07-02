@@ -5,6 +5,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
@@ -24,6 +25,7 @@ import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -54,6 +56,7 @@ public class SliderMenu implements OnBackStackChangedListener {
         };
         private int mBackgroundColor = 0;
         private int mCustomLayout = 0;
+        private Bundle mFragmentArguments;
         private Class<? extends Fragment> mFragmentClass;
         private CharSequence mLabel;
         private WeakReference<Fragment> mLastFragment;
@@ -62,7 +65,6 @@ public class SliderMenu implements OnBackStackChangedListener {
         private int mSelectionHandlerColor = 0;
         private SliderMenu mSliderMenu;
         private int mTextAppereance = 0;
-
         private int mTextAppereanceInverse = 0;
 
         public SliderItem() {
@@ -76,12 +78,12 @@ public class SliderMenu implements OnBackStackChangedListener {
             }
             mSavedState = source.readParcelable(Fragment.SavedState.class.getClassLoader());
             mSaveState = source.readInt() == 1;
-            mLabel = source.readString();
             mCustomLayout = source.readInt();
             mBackgroundColor = source.readInt();
             mSelectionHandlerColor = source.readInt();
             mTextAppereance = source.readInt();
             mTextAppereanceInverse = source.readInt();
+            mLabel = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
         }
 
         @Override
@@ -95,6 +97,10 @@ public class SliderMenu implements OnBackStackChangedListener {
 
         public int getCustomLayout() {
             return mCustomLayout;
+        }
+
+        public Bundle getFragmentArguments() {
+            return mFragmentArguments;
         }
 
         public Class<? extends Fragment> getFragmentClass() {
@@ -133,6 +139,10 @@ public class SliderMenu implements OnBackStackChangedListener {
 
         public void setCustomLayout(int customLayout) {
             mCustomLayout = customLayout;
+        }
+
+        public void setFragmentArguments(Bundle fragmentArguments) {
+            mFragmentArguments = fragmentArguments;
         }
 
         public void setFragmentClass(Class<? extends Fragment> fragmentClass) {
@@ -175,43 +185,13 @@ public class SliderMenu implements OnBackStackChangedListener {
             dest.writeString(mFragmentClass == null ? null : mFragmentClass.getName());
             dest.writeParcelable(mSaveState ? mSavedState : null, flags);
             dest.writeInt(mSaveState ? 1 : 0);
-            dest.writeString(String.valueOf(mLabel));
             dest.writeInt(mCustomLayout);
             dest.writeInt(mBackgroundColor);
             dest.writeInt(mSelectionHandlerColor);
             dest.writeInt(mTextAppereance);
             dest.writeInt(mTextAppereanceInverse);
+            TextUtils.writeToParcel(mLabel, dest, flags);
         }
-    }
-
-    private static final IAddonThemes sThemes;
-    public static final int THEME_FLAG;
-    static {
-        sThemes = new IAddonThemes();
-        THEME_FLAG = sThemes.getThemeFlag();
-        map(R.style.Holo_Internal_SliderTheme, R.style.Holo_Internal_SliderTheme_Light);
-    }
-
-    /**
-     * Remap all SliderMenu themes
-     */
-    public static void map(int theme) {
-        map(theme, theme, theme);
-    }
-
-    /**
-     * Remap SliderMenu themes, splited by dark and light color scheme. For
-     * mixed color scheme will be using light theme
-     */
-    public static void map(int darkTheme, int lightTheme) {
-        map(darkTheme, lightTheme, lightTheme);
-    }
-
-    /**
-     * Remap SliderMenu themes, splited by color scheme
-     */
-    public static void map(int darkTheme, int lightTheme, int mixedTheme) {
-        sThemes.map(darkTheme, lightTheme, mixedTheme);
     }
 
     private final class SliderMenuAdapter extends BaseAdapter implements OnItemClickListener {
@@ -291,6 +271,37 @@ public class SliderMenu implements OnBackStackChangedListener {
             R.color.holo_red_dark, R.color.holo_red_light
     };
 
+    private static final IAddonThemes sThemes;
+    public static final int THEME_FLAG;
+
+    static {
+        sThemes = new IAddonThemes();
+        THEME_FLAG = sThemes.getThemeFlag();
+        map(R.style.Holo_Internal_SliderTheme, R.style.Holo_Internal_SliderTheme_Light);
+    }
+
+    /**
+     * Remap all SliderMenu themes
+     */
+    public static void map(int theme) {
+        map(theme, theme, theme);
+    }
+
+    /**
+     * Remap SliderMenu themes, splited by dark and light color scheme. For
+     * mixed color scheme will be using light theme
+     */
+    public static void map(int darkTheme, int lightTheme) {
+        map(darkTheme, lightTheme, lightTheme);
+    }
+
+    /**
+     * Remap SliderMenu themes, splited by color scheme
+     */
+    public static void map(int darkTheme, int lightTheme, int mixedTheme) {
+        sThemes.map(darkTheme, lightTheme, mixedTheme);
+    }
+
     private static void setTextAppearance(TextView textView, int resid) {
         if (resid != 0) {
             textView.setTextAppearance(textView.getContext(), resid);
@@ -315,13 +326,20 @@ public class SliderMenu implements OnBackStackChangedListener {
     }
 
     public void add(CharSequence label, Class<? extends Fragment> fragmentClass) {
-        add(label, fragmentClass, null);
+        add(label, fragmentClass, null, null);
     }
 
-    public void add(CharSequence label, Class<? extends Fragment> fragmentClass, int[] colors) {
+    public void add(CharSequence label, Class<? extends Fragment> fragmentClass,
+            Bundle fragmentArguments) {
+        add(label, fragmentClass, fragmentArguments, null);
+    }
+
+    public void add(CharSequence label, Class<? extends Fragment> fragmentClass,
+            Bundle fragmentArguments, int[] colors) {
         SliderItem item = new SliderItem();
         item.setLabel(label);
         item.setFragmentClass(fragmentClass);
+        item.setFragmentArguments(fragmentArguments);
         if (colors != null && colors.length >= 2) {
             final Resources res = mAddon.get().getResources();
             item.setBackgroundColor(res.getColor(colors[0]));
@@ -330,12 +348,28 @@ public class SliderMenu implements OnBackStackChangedListener {
         add(item);
     }
 
-    public void add(int label, Class<? extends Fragment> fragmentClass) {
-        add(label, fragmentClass, null);
+    public void add(CharSequence label, Class<? extends Fragment> fragmentClass,
+            int[] colors) {
+        add(label, fragmentClass, null, colors);
     }
 
-    public void add(int label, Class<? extends Fragment> fragmentClass, int[] colors) {
-        add(mAddon.get().getResources().getText(label), fragmentClass, colors);
+    public void add(int label, Class<? extends Fragment> fragmentClass) {
+        add(label, fragmentClass, null, null);
+    }
+
+    public void add(int label, Class<? extends Fragment> fragmentClass,
+            Bundle fragmentArguments) {
+        add(label, fragmentClass, fragmentArguments, null);
+    }
+
+    public void add(int label, Class<? extends Fragment> fragmentClass,
+            Bundle fragmentArguments, int[] colors) {
+        add(mAddon.get().getText(label), fragmentClass, fragmentArguments, colors);
+    }
+
+    public void add(int label, Class<? extends Fragment> fragmentClass,
+            int[] colors) {
+        add(label, fragmentClass, null, colors);
     }
 
     public void add(SliderItem item) {
@@ -486,6 +520,10 @@ public class SliderMenu implements OnBackStackChangedListener {
         final Fragment fragment = Fragment.instantiate(item.mFragmentClass);
         if (item.mSavedState != null) {
             fragment.setInitialSavedState(item.mSavedState);
+        }
+        if (item.mFragmentArguments != null) {
+            item.mFragmentArguments.setClassLoader(HoloEverywhere.class.getClassLoader());
+            fragment.setArguments(item.mFragmentArguments);
         }
         item.mLastFragment = new WeakReference<Fragment>(fragment);
         replaceFragment(mFragmentManager, fragment);
