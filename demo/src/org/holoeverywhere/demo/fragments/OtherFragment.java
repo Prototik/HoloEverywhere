@@ -51,8 +51,8 @@ public class OtherFragment extends ListFragment {
             if (fragment instanceof DialogFragment) {
                 ((DialogFragment) fragment).show(getSupportActivity());
             } else {
-                ((DemoActivity) getSupportActivity()).replaceFragment(fragment,
-                        "fragment-" + mClass.getName());
+                ((DemoActivity) getSupportActivity()).addonSlider()
+                        .obtainSliderMenu().replaceFragment(fragment);
             }
         }
     }

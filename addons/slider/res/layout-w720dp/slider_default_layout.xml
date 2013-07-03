@@ -6,8 +6,8 @@
 	android:orientation="horizontal" >
 	<fragment
 		android:id="@id/leftView"
-		android:name=".fragments.MenuFragment"
-		android:layout_width="300dp"
+		android:name="org.holoeverywhere.slider._SliderMenuFragment"
+		android:layout_width="@dimen/menu_width"
 		android:layout_height="match_parent" />
 	<FrameLayout
 		android:id="@id/contentView"

@@ -59,6 +59,10 @@ public abstract class IAddonActivity extends IAddonBase<Activity> {
 
     }
 
+    public boolean onHomePressed() {
+        return false;
+    }
+
     public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
         return false;
     }

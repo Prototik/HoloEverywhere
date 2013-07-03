@@ -5,4 +5,9 @@
 		android:id="@id/contentView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" />
+	<fragment
+		android:id="@id/leftView"
+		android:name="org.holoeverywhere.slider._SliderMenuFragment"
+		android:layout_width="@dimen/menu_width"
+		android:layout_height="match_parent" />
 </DrawerLayout>

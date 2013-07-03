@@ -19,39 +19,42 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 
 public abstract class TabSwipeController implements TabSwipeInterface<TabInfo> {
-    public static class TabInfo implements TabSwipeInterface.ITabInfo {
-        public Bundle fragmentArguments;
-        public Class<? extends Fragment> fragmentClass;
-        public CharSequence title;
+    public static class TabInfo implements TabSwipeInterface.ITabInfo<TabInfo> {
+        private Bundle mFragmentArguments;
+        private Class<? extends Fragment> mFragmentClass;
+        private CharSequence mTitle;
 
         @Override
         public Bundle getFragmentArguments() {
-            return fragmentArguments;
+            return mFragmentArguments;
         }
 
         @Override
         public Class<? extends Fragment> getFragmentClass() {
-            return fragmentClass;
+            return mFragmentClass;
         }
 
         @Override
         public CharSequence getTitle() {
-            return title;
+            return mTitle;
         }
 
         @Override
-        public void setFragmentArguments(Bundle fragmentArguments) {
-            this.fragmentArguments = fragmentArguments;
+        public TabInfo setFragmentArguments(Bundle fragmentArguments) {
+            mFragmentArguments = fragmentArguments;
+            return this;
         }
 
         @Override
-        public void setFragmentClass(Class<? extends Fragment> fragmentClass) {
-            this.fragmentClass = fragmentClass;
+        public TabInfo setFragmentClass(Class<? extends Fragment> fragmentClass) {
+            mFragmentClass = fragmentClass;
+            return this;
         }
 
         @Override
-        public void setTitle(CharSequence title) {
-            this.title = title;
+        public TabInfo setTitle(CharSequence title) {
+            mTitle = title;
+            return this;
         }
     }
 
@@ -69,7 +72,7 @@ public abstract class TabSwipeController implements TabSwipeInterface<TabInfo> {
         @Override
         public Fragment getItem(int position) {
             final TabInfo info = mTabs.get(position);
-            return Fragment.instantiate(info.fragmentClass, info.fragmentArguments);
+            return Fragment.instantiate(info.mFragmentClass, info.mFragmentArguments);
         }
 
         @Override
@@ -141,9 +144,9 @@ public abstract class TabSwipeController implements TabSwipeInterface<TabInfo> {
     public TabInfo addTab(CharSequence title, Class<? extends Fragment> fragmentClass,
             Bundle fragmentArguments) {
         TabInfo info = new TabInfo();
-        info.title = title;
-        info.fragmentClass = fragmentClass;
-        info.fragmentArguments = fragmentArguments;
+        info.mTitle = title;
+        info.mFragmentClass = fragmentClass;
+        info.mFragmentArguments = fragmentArguments;
         return addTab(info);
     }
 
@@ -223,7 +226,7 @@ public abstract class TabSwipeController implements TabSwipeInterface<TabInfo> {
 
     protected Tab makeActionBarTab(TabInfo tabInfo) {
         Tab tab = mActionBar.newTab();
-        tab.setText(tabInfo.title);
+        tab.setText(tabInfo.mTitle);
         tab.setTabListener(mAdapter);
         return tab;
     }

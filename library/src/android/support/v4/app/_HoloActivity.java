@@ -426,6 +426,10 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
         LayoutInflater.removeInstance(this);
     }
 
+    public boolean onHomePressed() {
+        return false;
+    }
+
     /**
      * Do not override this method. Use {@link #onPreInit(Holo, Bundle)} and
      * {@link #onPostInit(Holo, Bundle)}
@@ -491,6 +495,9 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home && onHomePressed()) {
+            return true;
+        }
         return false;
     }
 

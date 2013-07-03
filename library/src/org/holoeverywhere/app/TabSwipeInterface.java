@@ -5,19 +5,19 @@ import org.holoeverywhere.app.TabSwipeInterface.ITabInfo;
 
 import android.os.Bundle;
 
-public interface TabSwipeInterface<T extends ITabInfo> {
-    public static interface ITabInfo {
+public interface TabSwipeInterface<T extends ITabInfo<T>> {
+    public static interface ITabInfo<T extends ITabInfo<T>> {
         public Bundle getFragmentArguments();
 
         public Class<? extends Fragment> getFragmentClass();
 
         public CharSequence getTitle();
 
-        public void setFragmentArguments(Bundle fragmentArguments);
+        public T setFragmentArguments(Bundle fragmentArguments);
 
-        public void setFragmentClass(Class<? extends Fragment> fragmentClass);
+        public T setFragmentClass(Class<? extends Fragment> fragmentClass);
 
-        public void setTitle(CharSequence title);
+        public T setTitle(CharSequence title);
     }
 
     public static interface OnTabSelectedListener {

@@ -34,6 +34,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 
+import com.actionbarsherlock.app.ActionBar;
+
 public class SliderMenu implements OnBackStackChangedListener {
     public static enum SelectionBehavior {
         BackgroundWhenSelected, Default, OnlyBackground, OnlyHandler;
@@ -65,6 +67,7 @@ public class SliderMenu implements OnBackStackChangedListener {
         private boolean mSaveState = true;
         private int mSelectionHandlerColor = 0;
         private SliderMenu mSliderMenu;
+        private String mTag;
         private int mTextAppereance = 0;
         private int mTextAppereanceInverse = 0;
 
@@ -114,6 +117,10 @@ public class SliderMenu implements OnBackStackChangedListener {
 
         public int getSelectionHandlerColor() {
             return mSelectionHandlerColor;
+        }
+
+        public String getTag() {
+            return mTag;
         }
 
         public int getTextAppereance() {
@@ -171,6 +178,10 @@ public class SliderMenu implements OnBackStackChangedListener {
 
         public void setSelectionHandlerColor(int selectionHandlerColor) {
             mSelectionHandlerColor = selectionHandlerColor;
+        }
+
+        public void setTag(String tag) {
+            mTag = tag;
         }
 
         public void setTextAppereance(int textAppereance) {
@@ -309,11 +320,13 @@ public class SliderMenu implements OnBackStackChangedListener {
         }
     }
 
+    private ActionBar mActionBar;
     private SliderMenuAdapter mAdapter;
     private final AddonSliderA mAddon;
     private int mCurrentPage = -1;
     private final FragmentManager mFragmentManager;
     private int mFuturePosition = -1;
+    private boolean mHandleHomeKey;
     private boolean mIgnoreBackStack = false;
     private int mInitialPage = 0;
     private boolean mInverseTextColorWhenSelected = false;
@@ -322,20 +335,21 @@ public class SliderMenu implements OnBackStackChangedListener {
 
     public SliderMenu(AddonSliderA addon) {
         mAddon = addon;
+        mActionBar = addon.get().getSupportActionBar();
         mFragmentManager = mAddon.get().getSupportFragmentManager();
         mItems = new ArrayList<SliderItem>();
     }
 
-    public void add(CharSequence label, Class<? extends Fragment> fragmentClass) {
-        add(label, fragmentClass, null, null);
+    public SliderItem add(CharSequence label, Class<? extends Fragment> fragmentClass) {
+        return add(label, fragmentClass, null, null);
     }
 
-    public void add(CharSequence label, Class<? extends Fragment> fragmentClass,
+    public SliderItem add(CharSequence label, Class<? extends Fragment> fragmentClass,
             Bundle fragmentArguments) {
-        add(label, fragmentClass, fragmentArguments, null);
+        return add(label, fragmentClass, fragmentArguments, null);
     }
 
-    public void add(CharSequence label, Class<? extends Fragment> fragmentClass,
+    public SliderItem add(CharSequence label, Class<? extends Fragment> fragmentClass,
             Bundle fragmentArguments, int[] colors) {
         SliderItem item = new SliderItem();
         item.setLabel(label);
@@ -346,34 +360,34 @@ public class SliderMenu implements OnBackStackChangedListener {
             item.setBackgroundColor(res.getColor(colors[0]));
             item.setSelectionHandlerColor(res.getColor(colors[1]));
         }
-        add(item);
+        return add(item);
     }
 
-    public void add(CharSequence label, Class<? extends Fragment> fragmentClass,
+    public SliderItem add(CharSequence label, Class<? extends Fragment> fragmentClass,
             int[] colors) {
-        add(label, fragmentClass, null, colors);
+        return add(label, fragmentClass, null, colors);
     }
 
-    public void add(int label, Class<? extends Fragment> fragmentClass) {
-        add(label, fragmentClass, null, null);
+    public SliderItem add(int label, Class<? extends Fragment> fragmentClass) {
+        return add(label, fragmentClass, null, null);
     }
 
-    public void add(int label, Class<? extends Fragment> fragmentClass,
+    public SliderItem add(int label, Class<? extends Fragment> fragmentClass,
             Bundle fragmentArguments) {
-        add(label, fragmentClass, fragmentArguments, null);
+        return add(label, fragmentClass, fragmentArguments, null);
     }
 
-    public void add(int label, Class<? extends Fragment> fragmentClass,
+    public SliderItem add(int label, Class<? extends Fragment> fragmentClass,
             Bundle fragmentArguments, int[] colors) {
-        add(mAddon.get().getText(label), fragmentClass, fragmentArguments, colors);
+        return add(mAddon.get().getText(label), fragmentClass, fragmentArguments, colors);
     }
 
-    public void add(int label, Class<? extends Fragment> fragmentClass,
+    public SliderItem add(int label, Class<? extends Fragment> fragmentClass,
             int[] colors) {
-        add(label, fragmentClass, null, colors);
+        return add(label, fragmentClass, null, colors);
     }
 
-    public void add(SliderItem item) {
+    public SliderItem add(SliderItem item) {
         if (item.mSliderMenu != null) {
             throw new IllegalArgumentException("Item already has a parent: "
                     + item + " (" + item.mSliderMenu + ")");
@@ -381,9 +395,10 @@ public class SliderMenu implements OnBackStackChangedListener {
         item.mSliderMenu = this;
         mItems.add(item);
         notifyChanged();
+        return item;
     }
 
-    public void add(SliderItem item, int position) {
+    public SliderItem add(SliderItem item, int position) {
         if (item.mSliderMenu != null) {
             throw new IllegalArgumentException("Item already has a parent: "
                     + item + " (" + item.mSliderMenu + ")");
@@ -391,6 +406,7 @@ public class SliderMenu implements OnBackStackChangedListener {
         item.mSliderMenu = this;
         mItems.add(position, item);
         notifyChanged();
+        return item;
     }
 
     public void bind(ListFragment listFragment) {
@@ -506,12 +522,14 @@ public class SliderMenu implements OnBackStackChangedListener {
             final SliderItem lastItem = mAdapter.getItem(mCurrentPage);
             final WeakReference<Fragment> ref = lastItem.mLastFragment;
             final Fragment fragment = ref == null ? null : ref.get();
-            if (fragment != null && fragment.isAdded() && lastItem.mSaveState) {
+            if (fragment != null && fragment.isAdded()) {
                 if (!fragment.isDetached()) {
                     mFragmentManager.beginTransaction().detach(fragment).commit();
                     mFragmentManager.executePendingTransactions();
                 }
-                lastItem.mSavedState = mFragmentManager.saveFragmentInstanceState(fragment);
+                if (lastItem.mSaveState) {
+                    lastItem.mSavedState = mFragmentManager.saveFragmentInstanceState(fragment);
+                }
             }
         }
         mCurrentPage = position;
@@ -527,8 +545,21 @@ public class SliderMenu implements OnBackStackChangedListener {
             fragment.setArguments(item.mFragmentArguments);
         }
         item.mLastFragment = new WeakReference<Fragment>(fragment);
-        replaceFragment(mFragmentManager, fragment);
+        final String tag;
+        if (item.mTag != null) {
+            tag = item.mTag;
+        } else {
+            tag = "fragment-" + fragment.hashCode();
+        }
+        clearBackStack();
+        replaceFragment(mFragmentManager, fragment, tag, false);
         mIgnoreBackStack = false;
+    }
+
+    private void clearBackStack() {
+        while (mFragmentManager.popBackStackImmediate()) {
+            ;
+        }
     }
 
     public int getInitialPage() {
@@ -549,6 +580,10 @@ public class SliderMenu implements OnBackStackChangedListener {
         }
     }
 
+    public boolean isHandleHomeKey() {
+        return mHandleHomeKey;
+    }
+
     public boolean isInverseTextColorWhenSelected() {
         return mInverseTextColorWhenSelected;
     }
@@ -566,7 +601,7 @@ public class SliderMenu implements OnBackStackChangedListener {
         setInverseTextColorWhenSelected(ThemeManager.getThemeType(mAddon.get()) != ThemeManager.LIGHT);
         ListFragment menuFragment = (ListFragment) mFragmentManager.findFragmentById(R.id.leftView);
         if (menuFragment == null) {
-            mAddon.get().getSupportFragmentManager().findFragmentById(R.id.rightView);
+            menuFragment = (ListFragment) mFragmentManager.findFragmentById(R.id.rightView);
         }
         if (menuFragment == null) {
             throw new IllegalStateException("Couldn't find ListFragment for menu");
@@ -582,6 +617,10 @@ public class SliderMenu implements OnBackStackChangedListener {
 
     @Override
     public void onBackStackChanged() {
+        if (mHandleHomeKey) {
+            mActionBar.setDisplayHomeAsUpEnabled(mAddon.isAddonEnabled() ? true :
+                    mFragmentManager.getBackStackEntryCount() > 0);
+        }
         if (mIgnoreBackStack || mCurrentPage < 0 || mCurrentPage >= mItems.size()) {
             return;
         }
@@ -596,11 +635,27 @@ public class SliderMenu implements OnBackStackChangedListener {
         }
     }
 
+    public boolean onHomePressed() {
+        if (mHandleHomeKey) {
+            if (mAddon.isAddonEnabled()
+                    && mFragmentManager.getBackStackEntryCount() == 0) {
+                mAddon.toggle();
+            } else {
+                mAddon.get().onBackPressed();
+            }
+            return true;
+        }
+        return false;
+    }
+
     public void onPostCreate(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             mCurrentPage = savedInstanceState.getInt(KEY_CURRENT_PAGE, 0);
         }
+        mIgnoreBackStack = true;
         mAddon.get().getSupportFragmentManager().addOnBackStackChangedListener(this);
+        onBackStackChanged();
+        mIgnoreBackStack = false;
     }
 
     public void onResume() {
@@ -625,9 +680,28 @@ public class SliderMenu implements OnBackStackChangedListener {
         notifyChanged();
     }
 
-    protected void replaceFragment(FragmentManager fm, Fragment fragment) {
-        fm.beginTransaction().replace(R.id.contentView, fragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
+    public void replaceFragment(Fragment newFragment) {
+        replaceFragment(newFragment, null, true);
+    }
+
+    public void replaceFragment(Fragment newFragment, String tag, boolean addToBackStack) {
+        if (!addToBackStack) {
+            clearBackStack();
+        }
+        replaceFragment(mFragmentManager, newFragment, tag, addToBackStack);
+    }
+
+    private void replaceFragment(FragmentManager fm, Fragment fragment, String tag,
+            boolean addToBackStack) {
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.contentView, fragment, tag);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        if (addToBackStack) {
+            ft.addToBackStack(tag);
+            ft.commitAllowingStateLoss();
+        } else {
+            ft.commit();
+        }
     }
 
     public void setCurrentPage(int position) {
@@ -649,6 +723,10 @@ public class SliderMenu implements OnBackStackChangedListener {
         if (mAddon.isAddonEnabled()) {
             mAddon.openContentViewDelayed(40);
         }
+    }
+
+    public void setHandleHomeKey(boolean handleHomeKey) {
+        mHandleHomeKey = handleHomeKey;
     }
 
     public void setInitialPage(int initialPage) {

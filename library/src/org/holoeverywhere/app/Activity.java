@@ -28,8 +28,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.internal.view.menu.MenuItemWrapper;
 import com.actionbarsherlock.internal.view.menu.MenuWrapper;
 import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 public abstract class Activity extends _HoloActivity {
     @Retention(RetentionPolicy.RUNTIME)
@@ -236,11 +234,6 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
-    }
-
-    @Override
     public boolean onCreatePanelMenu(final int featureId, final android.view.Menu menu) {
         return performAddonAction(new AddonCallback<IAddonActivity>() {
             @Override
@@ -264,6 +257,21 @@ public abstract class Activity extends _HoloActivity {
             }
         });
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onHomePressed() {
+        return performAddonAction(new AddonCallback<IAddonActivity>() {
+            @Override
+            public boolean action(IAddonActivity addon) {
+                return addon.onHomePressed();
+            }
+
+            @Override
+            public boolean post() {
+                return Activity.super.onHomePressed();
+            }
+        });
     }
 
     @Override
@@ -311,11 +319,6 @@ public abstract class Activity extends _HoloActivity {
     @Override
     public final boolean onOptionsItemSelected(android.view.MenuItem item) {
         return onOptionsItemSelected(new MenuItemWrapper(item));
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return false;
     }
 
     @Override
@@ -390,11 +393,6 @@ public abstract class Activity extends _HoloActivity {
     @Override
     public final boolean onPrepareOptionsMenu(android.view.Menu menu) {
         return onPrepareOptionsMenu(new MenuWrapper(menu));
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return true;
     }
 
     @Override
