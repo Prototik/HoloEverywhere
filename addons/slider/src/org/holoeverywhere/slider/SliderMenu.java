@@ -10,6 +10,7 @@ import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
 import org.holoeverywhere.addon.IAddonThemes;
+import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.app.ListFragment;
 import org.holoeverywhere.widget.ListView;
@@ -553,7 +554,12 @@ public class SliderMenu implements OnBackStackChangedListener {
     }
 
     public void makeDefaultMenu() {
-        makeDefaultMenu(mAddon.get());
+        makeDefaultMenu(false);
+    }
+
+    public void makeDefaultMenu(boolean useActionBarStyle) {
+        final Activity activity = mAddon.get();
+        makeDefaultMenu(useActionBarStyle ? activity.getSupportActionBarContext() : activity);
     }
 
     public void makeDefaultMenu(Context context) {

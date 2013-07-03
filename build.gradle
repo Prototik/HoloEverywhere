@@ -17,6 +17,9 @@ allprojects {
     maven {
       url "https://github.com/dahlgren/abs-aar/raw/master"
     }
+    maven {
+	  url System.getenv()['ANDROID_HOME'] + "/extras/android/m2repository"
+    }
   }
 }
 
