@@ -61,7 +61,7 @@ public class ListPopupWindow {
             if (view instanceof android.widget.TextView) {
                 ((android.widget.TextView) view).setHorizontallyScrolling(true);
             }
-            return view;
+            return super.onPrepareView(view, position);
         }
     }
 
