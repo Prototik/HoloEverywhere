@@ -42,7 +42,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         setButton(DialogInterface.BUTTON_NEGATIVE,
                 getContext().getText(android.R.string.cancel), this);
         setIcon(0);
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.date_picker_dialog, null);
         setView(view);
         mDatePicker = (DatePicker) view.findViewById(R.id.datePicker);
