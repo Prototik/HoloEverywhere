@@ -48,9 +48,9 @@ def main():
 
 	print " # Install support library r13"
 	call(["mvn", "install:install-file",
-	"-Dfile=android-support-v4-r13.jar",
+	"-Dfile=library/libs/android-support-v4-r13.1.jar",
 	"-DgroupId=com.google.android", "-DartifactId=support-v4",
-	"-Dversion=r13", "-Dpackaging=jar", "-DgeneratePom=true"], True)
+	"-Dversion=r13.1", "-Dpackaging=jar", "-DgeneratePom=true"], True)
 	
 	if os.environ["TRAVIS_SECURE_ENV_VARS"] == "false":
 		unsecure();
