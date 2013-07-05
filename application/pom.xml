@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.holoeverywhere</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.6.2-SNAPSHOT</version>
+		<version>1.6.8</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -18,14 +18,14 @@
 			<dependency>
 				<groupId>org.holoeverywhere</groupId>
 				<artifactId>addon-slider</artifactId>
-				<version>1.6.2-SNAPSHOT</version>
+				<version>1.6.8</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.holoeverywhere</groupId>
 				<artifactId>addon-preferences</artifactId>
-				<version>1.6.2-SNAPSHOT</version>
+				<version>1.6.8</version>
 				<type>apklib</type>
 			</dependency>
 		</dependencies>
@@ -47,7 +47,7 @@
 		<dependency>
 			<groupId>org.holoeverywhere</groupId>
 			<artifactId>library</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<version>1.6.8</version>
 			<type>apklib</type>
 		</dependency>
 	</dependencies>
