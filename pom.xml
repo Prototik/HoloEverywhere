@@ -201,8 +201,7 @@
 					<version>2.4.1</version>
 					<configuration>
 						<autoVersionSubmodules>true</autoVersionSubmodules>
-						<tagNameFormat>holoeverywhere-@{project.version}</tagNameFormat>
-						<scmCommentPrefix>Release: </scmCommentPrefix>
+						<tagNameFormat>v@{project.version}</tagNameFormat>
 					</configuration>
 				</plugin>
 
