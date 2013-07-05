@@ -47,7 +47,7 @@ Christophe:
 ## License
 MIT License, full text of license see [here][License]
 
-[Demo APK]: https://oss.sonatype.org/content/repositories/releases/org/holoeverywhere/demo/1.6.1/demo-1.6.1-aligned.apk "Demo APK"
+[Demo APK]: https://oss.sonatype.org/content/repositories/releases/org/holoeverywhere/demo/1.6.8/demo-1.6.8-aligned.apk "Demo APK"
 [Donate]: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=X7E7U7HNR36YN&lc=US&item_name=HoloEverywhere&currency_code=USD&bn=PP%2dDonationsBF%3adonate_button%2epng%3aNonHosted "Donate"
 [Build with Maven]: https://github.com/Prototik/HoloEverywhere/wiki/Maven "Build with maven"
 [License]: https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE "LGPLv3"
