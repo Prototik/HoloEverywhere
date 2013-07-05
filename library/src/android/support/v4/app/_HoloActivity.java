@@ -417,7 +417,7 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return false;
+        return true;
     }
 
     @Override
@@ -517,7 +517,7 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        return false;
+        return true;
     }
 
     @Override
