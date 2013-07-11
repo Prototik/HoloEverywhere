@@ -274,7 +274,7 @@ public class ProgressBar extends android.widget.ProgressBar {
         } else {
             invalidate();
         }
-        if (callBackToApp && id == R.id.progress) {
+        if (callBackToApp && id == android.R.id.progress) {
             onProgressRefresh(scale, fromUser);
         }
     }
@@ -629,7 +629,7 @@ public class ProgressBar extends android.widget.ProgressBar {
             if (mProgress > max) {
                 mProgress = max;
             }
-            refreshProgress(R.id.progress, mProgress, false);
+            refreshProgress(android.R.id.progress, mProgress, false);
         }
     }
 
@@ -650,7 +650,7 @@ public class ProgressBar extends android.widget.ProgressBar {
         }
         if (progress != mProgress) {
             mProgress = progress;
-            refreshProgress(R.id.progress, mProgress, fromUser);
+            refreshProgress(android.R.id.progress, mProgress, fromUser);
         }
     }
 
@@ -679,8 +679,8 @@ public class ProgressBar extends android.widget.ProgressBar {
         if (needUpdate) {
             updateDrawableBounds(getWidth(), getHeight());
             updateDrawableState();
-            doRefreshProgress(R.id.progress, mProgress, false, false);
-            doRefreshProgress(R.id.secondaryProgress, mSecondaryProgress,
+            doRefreshProgress(android.R.id.progress, mProgress, false, false);
+            doRefreshProgress(android.R.id.secondaryProgress, mSecondaryProgress,
                     false, false);
         }
     }
@@ -698,7 +698,7 @@ public class ProgressBar extends android.widget.ProgressBar {
         }
         if (secondaryProgress != mSecondaryProgress) {
             mSecondaryProgress = secondaryProgress;
-            refreshProgress(R.id.secondaryProgress, mSecondaryProgress, false);
+            refreshProgress(android.R.id.secondaryProgress, mSecondaryProgress, false);
         }
     }
 
@@ -765,7 +765,7 @@ public class ProgressBar extends android.widget.ProgressBar {
             for (int i = 0; i < N; i++) {
                 int id = background.getId(i);
                 outDrawables[i] = tileify(background.getDrawable(i),
-                        id == R.id.progress || id == R.id.secondaryProgress);
+                        id == android.R.id.progress || id == android.R.id.secondaryProgress);
             }
             LayerDrawable newBg = new LayerDrawable(outDrawables);
             for (int i = 0; i < N; i++) {
