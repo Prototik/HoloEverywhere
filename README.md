@@ -28,6 +28,7 @@ Bringing Holo Theme from Android 4.1 to 2.1 and above.
 ## Featured implementations
  * [Project Euler](https://play.google.com/store/apps/details?id=ie.cathalcoffey.android.projecteuler)
  * [TimeAct To-Do](https://play.google.com/store/apps/details?id=timeact.app.task.manager)
+ * [UnixAdmin](https://play.google.com/store/apps/details?id=org.kidinov.unixadmin)
  * [Meditation Assistant](https://play.google.com/store/apps/details?id=sh.ftp.rocketninelabs.meditationassistant)
  * [Ragnabase MVP](https://play.google.com/store/apps/details?id=com.ragnabase.mvp)
  * [noodles - To Do List](https://play.google.com/store/apps/details?id=com.makeramen.noodles)
