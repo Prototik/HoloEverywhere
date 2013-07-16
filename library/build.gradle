@@ -1,9 +1,7 @@
 apply plugin: 'android-library'
 
 dependencies {
-  // compile 'com.android.support:support-v4:13.0.0'
-  file 'libs/android-support-v4-r13.1.jar'
-  compile 'com.actionbarsherlock:actionbarsherlock:4.3.2-SNAPSHOT'
+  compile 'com.actionbarsherlock:actionbarsherlock:4.3.2-SNAPSHOT@aar'
 }
 
 android {

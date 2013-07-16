@@ -1,4 +1,3 @@
 [submodule "ActionBarSherlock"]
 	path = ActionBarSherlock
-	url = https://github.com/JakeWharton/ActionBarSherlock.git
-	branch = dev
+	url = https://github.com/Prototik/ActionBarSherlock.git
