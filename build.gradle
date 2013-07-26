@@ -16,7 +16,7 @@ allprojects {
     mavenLocal()
     mavenCentral()
     maven {
-      url "https://github.com/Prototik/ActionBarSherlock-Repo/raw/master"
+      url "https://github.com/Prototik/HoloEverywhere/raw/repo"
     }
   }
   
