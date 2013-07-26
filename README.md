@@ -1,12 +1,12 @@
-![HoloEverywhere](http://holoeverywhere.org/github-res/logo.png "HoloEverywhere")
+![HoloEverywhere](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/github-res/logo.png "HoloEverywhere")
 
 [![Build Status](https://travis-ci.org/Prototik/HoloEverywhere.png?branch=master)](https://travis-ci.org/Prototik/HoloEverywhere)
 
 ## What is it?
 Bringing Holo Theme from Android 4.1 to 2.1 and above.
 ## Links
-[![Demo APK](http://holoeverywhere.org/github-res/demo_button.png)][Demo APK]  
-[![Donate](http://holoeverywhere.org/github-res/donate_button.png)][Donate]
+[![Demo APK](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/github-res/demo_button.png)][Demo APK]  
+[![Donate](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/github-res/donate_button.png)][Donate]
 
 ## How to use?
 ### [Eclipse](https://github.com/Prototik/HoloEverywhere/wiki/Import-in-IDE#eclipse)
@@ -53,4 +53,4 @@ MIT License, full text of license see [here][License]
 [Demo APK]: https://oss.sonatype.org/content/repositories/releases/org/holoeverywhere/demo/1.6.8/demo-1.6.8-aligned.apk "Demo APK"
 [Donate]: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=X7E7U7HNR36YN&lc=US&item_name=HoloEverywhere&currency_code=USD&bn=PP%2dDonationsBF%3adonate_button%2epng%3aNonHosted "Donate"
 [Build with Maven]: https://github.com/Prototik/HoloEverywhere/wiki/Maven "Build with maven"
-[License]: https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE "LGPLv3"
+[License]: https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE "MIT License"
