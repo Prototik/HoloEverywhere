@@ -1,11 +1,6 @@
 
 package org.holoeverywhere.app;
 
-import java.text.NumberFormat;
-
-import org.holoeverywhere.R;
-import org.holoeverywhere.widget.ProgressBar;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -17,6 +12,11 @@ import android.text.Spanned;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.TextView;
+
+import org.holoeverywhere.R;
+import org.holoeverywhere.widget.ProgressBar;
+
+import java.text.NumberFormat;
 
 public class ProgressDialog extends AlertDialog {
     public static final int STYLE_HORIZONTAL = 1;

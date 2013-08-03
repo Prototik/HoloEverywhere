@@ -1,6 +1,11 @@
 
 package org.holoeverywhere;
 
+import android.content.Context;
+import android.graphics.Typeface;
+import android.view.View;
+import android.view.ViewGroup;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -10,11 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import android.content.Context;
-import android.graphics.Typeface;
-import android.view.View;
-import android.view.ViewGroup;
 
 public class FontLoader {
     public static class Font implements Cloneable {

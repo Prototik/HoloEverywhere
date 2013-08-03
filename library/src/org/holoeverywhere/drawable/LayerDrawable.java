@@ -1,12 +1,6 @@
 
 package org.holoeverywhere.drawable;
 
-import java.io.IOException;
-
-import org.holoeverywhere.R;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -18,6 +12,12 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 import android.view.View;
+
+import org.holoeverywhere.R;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
 
 public class LayerDrawable extends Drawable implements Drawable.Callback {
     static class ChildDrawable {

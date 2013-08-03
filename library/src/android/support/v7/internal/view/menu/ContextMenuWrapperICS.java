@@ -1,15 +1,15 @@
 
-package com.actionbarsherlock.internal.view.menu;
+package android.support.v7.internal.view.menu;
 
 import android.graphics.drawable.Drawable;
+import android.support.v4.internal.view.SupportContextMenu;
+import android.view.ContextMenu;
 import android.view.View;
 
-import com.actionbarsherlock.view.ContextMenu;
+public class ContextMenuWrapperICS extends MenuWrapperICS implements SupportContextMenu {
+    private ContextMenu nativeMenu;
 
-public class ContextMenuWrapper extends MenuWrapper implements ContextMenu {
-    private android.view.ContextMenu nativeMenu;
-
-    public ContextMenuWrapper(android.view.ContextMenu nativeMenu) {
+    public ContextMenuWrapperICS(ContextMenu nativeMenu) {
         super(nativeMenu);
         this.nativeMenu = nativeMenu;
     }
@@ -20,37 +20,37 @@ public class ContextMenuWrapper extends MenuWrapper implements ContextMenu {
     }
 
     @Override
-    public ContextMenu setHeaderIcon(Drawable icon) {
+    public SupportContextMenu setHeaderIcon(Drawable icon) {
         nativeMenu.setHeaderIcon(icon);
         return this;
     }
 
     @Override
-    public ContextMenu setHeaderIcon(int iconRes) {
+    public SupportContextMenu setHeaderIcon(int iconRes) {
         nativeMenu.setHeaderIcon(iconRes);
         return this;
     }
 
     @Override
-    public ContextMenu setHeaderTitle(CharSequence title) {
+    public SupportContextMenu setHeaderTitle(CharSequence title) {
         nativeMenu.setHeaderTitle(title);
         return this;
     }
 
     @Override
-    public ContextMenu setHeaderTitle(int titleRes) {
+    public SupportContextMenu setHeaderTitle(int titleRes) {
         nativeMenu.setHeaderTitle(titleRes);
         return this;
     }
 
     @Override
-    public ContextMenu setHeaderView(View view) {
+    public SupportContextMenu setHeaderView(View view) {
         nativeMenu.setHeaderView(view);
         return this;
     }
 
     @Override
-    public android.view.ContextMenu unwrap() {
+    public ContextMenu getWrappedObject() {
         return nativeMenu;
     }
 }

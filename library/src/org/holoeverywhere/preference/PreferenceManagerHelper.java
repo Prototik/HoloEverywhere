@@ -1,11 +1,11 @@
 
 package org.holoeverywhere.preference;
 
-import org.holoeverywhere.HoloEverywhere;
-import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
-
 import android.content.Context;
 import android.util.Log;
+
+import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 
 public class PreferenceManagerHelper {
     static interface PreferenceManagerImpl {

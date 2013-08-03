@@ -1,6 +1,8 @@
 
 package org.holoeverywhere.addon;
 
+import org.holoeverywhere.addon.IAddon.Addon;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -10,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-
-import org.holoeverywhere.addon.IAddon.Addon;
 
 public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IAddonAttacher<V> {
     private final class AddonComparator implements Comparator<V> {

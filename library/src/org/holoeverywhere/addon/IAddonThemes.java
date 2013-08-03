@@ -1,14 +1,14 @@
 
 package org.holoeverywhere.addon;
 
-import java.util.Map;
+import android.content.Context;
 
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.ThemeManager.ThemeSetter;
 import org.holoeverywhere.app.ContextThemeWrapperPlus;
 import org.holoeverywhere.util.WeaklyMap;
 
-import android.content.Context;
+import java.util.Map;
 
 public class IAddonThemes implements ThemeSetter {
     private static final class AddonThemeWrapper extends ContextThemeWrapperPlus {

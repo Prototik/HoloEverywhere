@@ -1,13 +1,13 @@
 
 package org.holoeverywhere.preference;
 
-import java.util.Map;
-import java.util.Set;
+import android.os.Bundle;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.os.Bundle;
+import java.util.Map;
+import java.util.Set;
 
 public interface SharedPreferences extends android.content.SharedPreferences {
     public static interface Editor extends

@@ -1,20 +1,20 @@
 
 package org.holoeverywhere.internal;
 
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
 import android.content.Context;
 import android.content.res.XmlResourceParser;
 import android.util.AttributeSet;
 import android.util.Xml;
 import android.view.InflateException;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
     public interface Factory<T> {

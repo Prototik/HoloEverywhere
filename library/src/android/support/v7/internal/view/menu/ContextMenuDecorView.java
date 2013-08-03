@@ -1,23 +1,18 @@
 
-package com.actionbarsherlock.internal.view.menu;
-
-import org.holoeverywhere.HoloEverywhere;
-import org.holoeverywhere.widget.FrameLayout;
+package android.support.v7.internal.view.menu;
 
 import android.content.Context;
+import android.support.v4.internal.view.SupportContextMenu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.actionbarsherlock.view.ContextMenu;
-import com.actionbarsherlock.view.MenuItem;
+import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.widget.FrameLayout;
 
 public class ContextMenuDecorView extends FrameLayout implements
         MenuPresenter.Callback, MenuBuilder.Callback {
-    public interface ContextMenuListenersProvider {
-        public ContextMenuListener getContextMenuListener(View view);
-    }
-
     private ContextMenuBuilder mContextMenu;
     private ContextMenuListener mListener;
     private MenuDialogHelper mMenuDialogHelper;
@@ -34,7 +29,7 @@ public class ContextMenuDecorView extends FrameLayout implements
         if (mListener == null) {
             return;
         }
-        mListener.onContextMenuClosed((ContextMenu) menu);
+        mListener.onContextMenuClosed((SupportContextMenu) menu);
     }
 
     @Override
@@ -43,16 +38,16 @@ public class ContextMenuDecorView extends FrameLayout implements
     }
 
     @Override
-    public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
+    public boolean onMenuItemSelected(MenuBuilder menuBuilder, MenuItem menuItem) {
         if (mListener == null) {
             return false;
         }
-        if (menu instanceof ContextMenuBuilder
-                && item instanceof MenuItemImpl) {
-            ((MenuItemImpl) item).setMenuInfo(((ContextMenuBuilder) menu)
+        if (menuBuilder instanceof ContextMenuBuilder
+                && menuItem instanceof MenuItemImpl) {
+            ((MenuItemImpl) menuItem).setMenuInfo(((ContextMenuBuilder) menuBuilder)
                     .getContextMenuInfo());
         }
-        return mListener.onContextItemSelected(item);
+        return mListener.onContextItemSelected(menuItem);
     }
 
     @Override
@@ -97,5 +92,9 @@ public class ContextMenuDecorView extends FrameLayout implements
         } else {
             return false;
         }
+    }
+
+    public interface ContextMenuListenersProvider {
+        public ContextMenuListener getContextMenuListener(View view);
     }
 }

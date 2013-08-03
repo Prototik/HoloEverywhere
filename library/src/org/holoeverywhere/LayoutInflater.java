@@ -1,24 +1,6 @@
 
 package org.holoeverywhere;
 
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.holoeverywhere.SystemServiceManager.SystemServiceCreator;
-import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
-import org.holoeverywhere.app.Fragment;
-import org.holoeverywhere.internal.DialogTitle;
-import org.holoeverywhere.internal.NumberPickerEditText;
-import org.holoeverywhere.util.WeaklyMap;
-import org.holoeverywhere.widget.FrameLayout;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -32,6 +14,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app._HoloFragmentInflater;
+import android.support.v7.internal.view.menu.ExpandedMenuView;
+import android.support.v7.internal.widget.ActionBarContainer;
+import android.support.v7.internal.widget.ActionBarView;
 import android.util.AttributeSet;
 import android.util.Xml;
 import android.view.InflateException;
@@ -39,10 +24,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 
-import com.actionbarsherlock.internal.view.menu.ExpandedMenuView;
-import com.actionbarsherlock.internal.view.menu.HoloListMenuItemView;
-import com.actionbarsherlock.internal.widget.ActionBarContainer;
-import com.actionbarsherlock.internal.widget.ActionBarView;
+import org.holoeverywhere.SystemServiceManager.SystemServiceCreator;
+import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
+import org.holoeverywhere.app.Fragment;
+import org.holoeverywhere.internal.DialogTitle;
+import org.holoeverywhere.internal.NumberPickerEditText;
+import org.holoeverywhere.util.WeaklyMap;
+import org.holoeverywhere.widget.FrameLayout;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LayoutInflater extends android.view.LayoutInflater implements Cloneable {
     private static class BlinkLayout extends FrameLayout {
@@ -168,7 +166,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
         registerPackage(HoloEverywhere.PACKAGE + ".widget");
 
         asInternal(ActionBarView.class);
-        asInternal(HoloListMenuItemView.class);
         asInternal(ExpandedMenuView.class);
         asInternal(ActionBarContainer.class);
         asInternal(DialogTitle.class);

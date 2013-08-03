@@ -1,11 +1,11 @@
 
 package org.holoeverywhere.internal;
 
-import org.holoeverywhere.widget.EditText;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.inputmethod.EditorInfo;
+
+import org.holoeverywhere.widget.EditText;
 
 public class NumberPickerEditText extends EditText {
     public NumberPickerEditText(Context context, AttributeSet attrs) {

@@ -1,9 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import org.holoeverywhere.R;
-import org.holoeverywhere.widget.FastScroller.FastScrollerCallback;
-
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -25,6 +22,9 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ListAdapter;
 import android.widget.SectionIndexer;
 import android.widget.WrapperListAdapter;
+
+import org.holoeverywhere.R;
+import org.holoeverywhere.widget.FastScroller.FastScrollerCallback;
 
 class FastScroller<T extends AbsListView & FastScrollerCallback> {
     public static interface FastScrollerCallback {

@@ -1,11 +1,11 @@
 
 package org.holoeverywhere.widget;
 
-import org.holoeverywhere.R;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.Gravity;
+
+import org.holoeverywhere.R;
 
 public class Toast extends android.widget.Toast {
     public static final int LENGTH_LONG = android.widget.Toast.LENGTH_LONG;

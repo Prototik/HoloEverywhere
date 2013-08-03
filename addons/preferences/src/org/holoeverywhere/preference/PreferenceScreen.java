@@ -1,13 +1,6 @@
 
 package org.holoeverywhere.preference;
 
-import java.lang.reflect.Method;
-
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.Dialog;
-import org.holoeverywhere.widget.ListView;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +8,7 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v7.internal.widget.ActionBarView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -23,118 +17,15 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 
-import com.actionbarsherlock.internal.view.menu.MenuItemWrapper;
-import com.actionbarsherlock.internal.widget.ActionBarView;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window.Callback;
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.Dialog;
+import org.holoeverywhere.widget.ListView;
+
+import java.lang.reflect.Method;
 
 public final class PreferenceScreen extends PreferenceGroup implements
         AdapterView.OnItemClickListener, DialogInterface.OnDismissListener {
-    private final class PreferenceDialog extends Dialog implements Callback {
-        public PreferenceDialog(Context context, int theme) {
-            super(context, theme);
-        }
-
-        @Override
-        public void onAttachedToWindow() {
-            super.onAttachedToWindow();
-            prepareActionBar();
-        }
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            prepareActionBar();
-        }
-
-        @Override
-        public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
-            return onMenuItemSelected(featureId, new MenuItemWrapper(item));
-        }
-
-        @Override
-        public boolean onMenuItemSelected(int featureId, MenuItem item) {
-            if (featureId == Window.FEATURE_OPTIONS_PANEL && item.getItemId() == android.R.id.home
-                    && mDialog != null) {
-                mDialog.dismiss();
-                return true;
-            }
-            return false;
-        }
-
-        private void prepareActionBar() {
-            if (VERSION.SDK_INT < 11) {
-                ActionBarView actionBarView = (ActionBarView) findViewById(R.id.abs__action_bar);
-                if (actionBarView != null) {
-                    actionBarView.setWindowCallback(mDialog);
-                }
-            }
-        }
-
-        @Override
-        public void setContentView(View view) {
-            if (VERSION.SDK_INT >= 11) {
-                super.setContentView(view);
-            } else {
-                FrameLayout content = (FrameLayout) findViewById(R.id.abs__content);
-                if (content == null) {
-                    View container = getLayoutInflater().inflate(R.layout.abs__screen_action_bar);
-                    content = (FrameLayout) container.findViewById(R.id.abs__content);
-                    super.setContentView(container);
-                }
-                content.removeAllViews();
-                content.addView(view);
-            }
-        }
-
-        @Override
-        public void setTitle(CharSequence title) {
-            super.setTitle(title);
-            if (VERSION.SDK_INT < 11) {
-                ((ActionBarView) findViewById(R.id.abs__action_bar)).setTitle(title);
-            }
-        }
-
-        @Override
-        public void setTitle(int titleId) {
-            setTitle(getContext().getText(titleId));
-        }
-    }
-
-    public static class SavedState extends BaseSavedState {
-        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
-            @Override
-            public SavedState createFromParcel(Parcel source) {
-                return new SavedState(source);
-            }
-
-            @Override
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
-
-        Bundle dialogBundle;
-        boolean isShowing;
-
-        public SavedState(Parcel source) {
-            super(source);
-            isShowing = source.readInt() == 1;
-            dialogBundle = source.readBundle();
-        }
-
-        public SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
-            dest.writeInt(isShowing ? 1 : 0);
-            dest.writeBundle(dialogBundle);
-        }
-    }
-
     private PreferenceDialog mDialog;
     private ListView mListView;
     private ListAdapter mRootAdapter;
@@ -204,7 +95,7 @@ public final class PreferenceScreen extends PreferenceGroup implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
-            long id) {
+                            long id) {
         if (parent instanceof ListView) {
             position -= ((ListView) parent).getHeaderViewsCount();
         }
@@ -268,5 +159,104 @@ public final class PreferenceScreen extends PreferenceGroup implements
         }
         getPreferenceManager().addPreferencesScreen(dialog);
         dialog.show();
+    }
+
+    public static class SavedState extends BaseSavedState {
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel source) {
+                return new SavedState(source);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+        Bundle dialogBundle;
+        boolean isShowing;
+
+        public SavedState(Parcel source) {
+            super(source);
+            isShowing = source.readInt() == 1;
+            dialogBundle = source.readBundle();
+        }
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeInt(isShowing ? 1 : 0);
+            dest.writeBundle(dialogBundle);
+        }
+    }
+
+    private final class PreferenceDialog extends Dialog {
+        public PreferenceDialog(Context context, int theme) {
+            super(context, theme);
+        }
+
+        @Override
+        public void onAttachedToWindow() {
+            super.onAttachedToWindow();
+            prepareActionBar();
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            prepareActionBar();
+        }
+
+        @Override
+        public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
+            if (featureId == Window.FEATURE_OPTIONS_PANEL && item.getItemId() == android.R.id.home
+                    && mDialog != null) {
+                mDialog.dismiss();
+                return true;
+            }
+            return false;
+        }
+
+        private void prepareActionBar() {
+            if (VERSION.SDK_INT < 11) {
+                ActionBarView actionBarView = (ActionBarView) findViewById(R.id.action_bar);
+                if (actionBarView != null) {
+                    actionBarView.setWindowCallback(mDialog);
+                }
+            }
+        }
+
+        @Override
+        public void setContentView(View view) {
+            if (VERSION.SDK_INT >= 11) {
+                super.setContentView(view);
+            } else {
+                FrameLayout content = (FrameLayout) findViewById(R.id.action_bar_activity_content);
+                if (content == null) {
+                    View container = getLayoutInflater().inflate(R.layout.abc_action_bar_decor);
+                    content = (FrameLayout) container.findViewById(R.id.action_bar_activity_content);
+                    super.setContentView(container);
+                }
+                content.removeAllViews();
+                content.addView(view);
+            }
+        }
+
+        @Override
+        public void setTitle(CharSequence title) {
+            super.setTitle(title);
+            if (VERSION.SDK_INT < 11) {
+                ((ActionBarView) findViewById(R.id.action_bar)).setTitle(title);
+            }
+        }
+
+        @Override
+        public void setTitle(int titleId) {
+            setTitle(getContext().getText(titleId));
+        }
     }
 }

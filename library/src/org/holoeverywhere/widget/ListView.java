@@ -1,18 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.holoeverywhere.HoloEverywhere;
-import org.holoeverywhere.R;
-import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.drawable.DrawableCompat;
-import org.holoeverywhere.widget.FastScroller.FastScrollerCallback;
-import org.holoeverywhere.widget.HeaderViewListAdapter.ViewInfo;
-import org.holoeverywhere.widget.ListAdapterWrapper.ListAdapterCallback;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -25,6 +13,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.app._HoloActivity.OnWindowFocusChangeListener;
 import android.support.v4.util.LongSparseArray;
+import android.support.v7.internal.view.menu.ContextMenuBuilder.ContextMenuInfoGetter;
+import android.support.v7.view.ActionMode;
 import android.util.AttributeSet;
 import android.util.SparseBooleanArray;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -39,11 +29,20 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Checkable;
 import android.widget.ListAdapter;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import com.actionbarsherlock.internal.view.menu.ContextMenuBuilder.ContextMenuInfoGetter;
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.R;
+import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.drawable.DrawableCompat;
+import org.holoeverywhere.widget.FastScroller.FastScrollerCallback;
+import org.holoeverywhere.widget.HeaderViewListAdapter.ViewInfo;
+import org.holoeverywhere.widget.ListAdapterWrapper.ListAdapterCallback;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListView extends android.widget.ListView implements OnWindowFocusChangeListener,
         ContextMenuInfoGetter, FastScrollerCallback {
@@ -580,7 +579,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         mCheckedItemCount = ss.checkedItemCount;
         if (ss.inActionMode && mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL
                 && mMultiChoiceModeCallback != null) {
-            mChoiceActionMode = startActionMode(mMultiChoiceModeCallback);
+            mChoiceActionMode = startSupportActionMode(mMultiChoiceModeCallback);
         }
         requestLayout();
     }
@@ -683,7 +682,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             final int longPressPosition, final long longPressId) {
         if (mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
             if (mChoiceActionMode == null &&
-                    (mChoiceActionMode = startActionMode(mMultiChoiceModeCallback)) != null) {
+                    (mChoiceActionMode = startSupportActionMode(mMultiChoiceModeCallback)) != null) {
                 setItemChecked(longPressPosition, true);
                 performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             }
@@ -877,7 +876,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             return;
         }
         if (value && mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL && mChoiceActionMode == null) {
-            mChoiceActionMode = startActionMode(mMultiChoiceModeCallback);
+            mChoiceActionMode = startSupportActionMode(mMultiChoiceModeCallback);
         }
         if (mChoiceMode == CHOICE_MODE_MULTIPLE || mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
             boolean oldValue = mCheckStates.get(position);
@@ -992,9 +991,9 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         return false;
     }
 
-    public ActionMode startActionMode(ActionMode.Callback callback) {
+    public ActionMode startSupportActionMode(ActionMode.Callback callback) {
         if (mActivity != null) {
-            return mActivity.startActionMode(callback);
+            return mActivity.startSupportActionMode(callback);
         }
         throw new RuntimeException("HoloEverywhere.ListView (" + this
                 + ") don't have reference on Activity");

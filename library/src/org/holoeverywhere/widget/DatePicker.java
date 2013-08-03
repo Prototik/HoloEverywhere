@@ -1,16 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.R;
-import org.holoeverywhere.internal.NumberPickerEditText;
-import org.holoeverywhere.util.Arrays;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -30,6 +20,16 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.R;
+import org.holoeverywhere.internal.NumberPickerEditText;
+import org.holoeverywhere.util.Arrays;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class DatePicker extends FrameLayout {
     private final class Callback implements NumberPicker.OnValueChangeListener,

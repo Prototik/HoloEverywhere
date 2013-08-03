@@ -1,11 +1,11 @@
 
 package org.holoeverywhere.app;
 
-import org.holoeverywhere.SystemServiceManager;
-import org.holoeverywhere.SystemServiceManager.SuperSystemService;
-
 import android.content.Context;
 import android.view.ContextThemeWrapper;
+
+import org.holoeverywhere.SystemServiceManager;
+import org.holoeverywhere.SystemServiceManager.SuperSystemService;
 
 public class ContextThemeWrapperPlus extends ContextThemeWrapper implements SuperSystemService {
     private int mTheme;

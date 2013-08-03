@@ -1,18 +1,18 @@
 
 package org.holoeverywhere.addon;
 
+import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.Application;
+import org.holoeverywhere.app.Fragment;
+import org.holoeverywhere.util.WeaklyMap;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.holoeverywhere.HoloEverywhere;
-import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.Application;
-import org.holoeverywhere.app.Fragment;
-import org.holoeverywhere.util.WeaklyMap;
 
 public abstract class IAddon {
     @Retention(RetentionPolicy.RUNTIME)

@@ -1,6 +1,10 @@
 
 package org.holoeverywhere;
 
+import android.content.Context;
+
+import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -8,10 +12,6 @@ import java.lang.annotation.Target;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
-
-import android.content.Context;
 
 /**
  * Manager of system services

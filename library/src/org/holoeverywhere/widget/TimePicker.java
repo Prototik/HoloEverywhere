@@ -1,14 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import java.text.DateFormatSymbols;
-import java.util.Calendar;
-import java.util.Locale;
-
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.R;
-import org.holoeverywhere.internal.NumberPickerEditText;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -24,6 +16,14 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.R;
+import org.holoeverywhere.internal.NumberPickerEditText;
+
+import java.text.DateFormatSymbols;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class TimePicker extends FrameLayout {
     public interface OnTimeChangedListener {

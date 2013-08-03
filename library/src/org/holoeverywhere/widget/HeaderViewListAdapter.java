@@ -1,14 +1,14 @@
 
 package org.holoeverywhere.widget;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ListAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HeaderViewListAdapter extends ListAdapterWrapper implements Filterable {
     public static final class ViewInfo {

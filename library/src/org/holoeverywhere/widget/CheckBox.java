@@ -1,10 +1,10 @@
 
 package org.holoeverywhere.widget;
 
-import org.holoeverywhere.FontLoader.FontStyleProvider;
-
 import android.content.Context;
 import android.util.AttributeSet;
+
+import org.holoeverywhere.FontLoader.FontStyleProvider;
 
 public class CheckBox extends android.widget.CheckBox implements FontStyleProvider {
     private String mFontFamily;

@@ -1,13 +1,13 @@
 
 package org.holoeverywhere.content;
 
-import org.holoeverywhere.app.Application;
-
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Intent;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+
+import org.holoeverywhere.app.Application;
 
 public final class IntentCompat {
     /**

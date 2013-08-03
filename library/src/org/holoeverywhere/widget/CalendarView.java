@@ -1,14 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.R;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -34,6 +26,14 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.R;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class CalendarView extends FrameLayout {
     public interface OnDateChangeListener {

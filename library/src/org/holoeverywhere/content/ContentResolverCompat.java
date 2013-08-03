@@ -1,14 +1,14 @@
 
 package org.holoeverywhere.content;
 
-import java.io.FileNotFoundException;
-import java.util.List;
-
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.text.TextUtils;
+
+import java.io.FileNotFoundException;
+import java.util.List;
 
 public class ContentResolverCompat {
     public static class OpenResourceIdResult {

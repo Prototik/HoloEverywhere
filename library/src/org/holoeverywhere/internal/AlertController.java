@@ -1,19 +1,6 @@
 
 package org.holoeverywhere.internal;
 
-import java.lang.ref.WeakReference;
-
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.R;
-import org.holoeverywhere.app.AlertDialog;
-import org.holoeverywhere.widget.ArrayAdapter;
-import org.holoeverywhere.widget.Button;
-import org.holoeverywhere.widget.CheckedTextView;
-import org.holoeverywhere.widget.FrameLayout;
-import org.holoeverywhere.widget.LinearLayout;
-import org.holoeverywhere.widget.ListView;
-import org.holoeverywhere.widget.TextView;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
@@ -38,6 +25,19 @@ import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ScrollView;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.R;
+import org.holoeverywhere.app.AlertDialog;
+import org.holoeverywhere.widget.ArrayAdapter;
+import org.holoeverywhere.widget.Button;
+import org.holoeverywhere.widget.CheckedTextView;
+import org.holoeverywhere.widget.FrameLayout;
+import org.holoeverywhere.widget.LinearLayout;
+import org.holoeverywhere.widget.ListView;
+import org.holoeverywhere.widget.TextView;
+
+import java.lang.ref.WeakReference;
 
 public class AlertController {
     public static interface AlertDecorViewInstaller {

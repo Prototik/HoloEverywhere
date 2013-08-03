@@ -1,24 +1,19 @@
 
-package com.actionbarsherlock.internal.view.menu;
-
-import java.lang.reflect.Method;
+package android.support.v7.internal.view.menu;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.os.IBinder;
+import android.support.v4.internal.view.SupportContextMenu;
 import android.util.EventLog;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 
-import com.actionbarsherlock.view.ContextMenu;
+import java.lang.reflect.Method;
 
-public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
-    public static interface ContextMenuInfoGetter {
-        public ContextMenuInfo getContextMenuInfo();
-    }
-
+public class ContextMenuBuilder extends MenuBuilder implements SupportContextMenu {
     private ContextMenuInfo mContextMenuInfo;
     private ContextMenuListener mListener;
 
@@ -54,28 +49,28 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
     }
 
     @Override
-    public ContextMenu setHeaderIcon(Drawable icon) {
-        return (ContextMenu) super.setHeaderIconInt(icon);
+    public SupportContextMenu setHeaderIcon(Drawable icon) {
+        return (SupportContextMenu) super.setHeaderIconInt(icon);
     }
 
     @Override
-    public ContextMenu setHeaderIcon(int iconRes) {
-        return (ContextMenu) super.setHeaderIconInt(iconRes);
+    public SupportContextMenu setHeaderIcon(int iconRes) {
+        return (SupportContextMenu) super.setHeaderIconInt(iconRes);
     }
 
     @Override
-    public ContextMenu setHeaderTitle(CharSequence title) {
-        return (ContextMenu) super.setHeaderTitleInt(title);
+    public SupportContextMenu setHeaderTitle(CharSequence title) {
+        return (SupportContextMenu) super.setHeaderTitleInt(title);
     }
 
     @Override
-    public ContextMenu setHeaderTitle(int titleRes) {
-        return (ContextMenu) super.setHeaderTitleInt(titleRes);
+    public SupportContextMenu setHeaderTitle(int titleRes) {
+        return (SupportContextMenu) super.setHeaderTitleInt(titleRes);
     }
 
     @Override
-    public ContextMenu setHeaderView(View view) {
-        return (ContextMenu) super.setHeaderViewInt(view);
+    public SupportContextMenu setHeaderView(View view) {
+        return (SupportContextMenu) super.setHeaderViewInt(view);
     }
 
     @SuppressLint("NewApi")
@@ -95,5 +90,9 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
             return helper;
         }
         return null;
+    }
+
+    public static interface ContextMenuInfoGetter {
+        public ContextMenuInfo getContextMenuInfo();
     }
 }

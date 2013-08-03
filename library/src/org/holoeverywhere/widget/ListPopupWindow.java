@@ -1,8 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import org.holoeverywhere.R;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -24,6 +22,8 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
+
+import org.holoeverywhere.R;
 
 public class ListPopupWindow {
     private static class DropDownListView extends ListView {

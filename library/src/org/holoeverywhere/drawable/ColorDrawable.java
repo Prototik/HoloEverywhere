@@ -1,12 +1,6 @@
 
 package org.holoeverywhere.drawable;
 
-import java.io.IOException;
-
-import org.holoeverywhere.R;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -15,6 +9,12 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+
+import org.holoeverywhere.R;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
 
 public class ColorDrawable extends android.graphics.drawable.ColorDrawable {
     final static class ColorState extends ConstantState {

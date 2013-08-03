@@ -1,12 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import java.util.ArrayList;
-
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.R;
-import org.holoeverywhere.internal.NumberPickerEditText;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -37,6 +31,12 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.R;
+import org.holoeverywhere.internal.NumberPickerEditText;
+
+import java.util.ArrayList;
 
 public class NumberPicker extends LinearLayout {
     class BeginSoftInputOnLongPressCommand implements Runnable {

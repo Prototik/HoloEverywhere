@@ -1,17 +1,17 @@
 
 package org.holoeverywhere.drawable;
 
-import java.io.IOException;
-
-import org.holoeverywhere.R;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.StateSet;
+
+import org.holoeverywhere.R;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
 
 public class StateListDrawable extends DrawableContainer {
     static final class StateListState extends DrawableContainerState {

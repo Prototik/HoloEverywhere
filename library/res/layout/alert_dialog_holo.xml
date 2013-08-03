@@ -1,4 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:holo="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:paddingLeft="8dp" android:paddingRight="8dp" android:layout_height="wrap_content" android:id="@+id/parentPanel" android:orientation="vertical">
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:paddingLeft="8dp"
+              android:paddingRight="8dp"
+              android:layout_height="wrap_content"
+              android:id="@+id/parentPanel"
+              android:orientation="vertical">
 	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/topPanel" android:orientation="vertical">
 		<View android:layout_width="match_parent" android:layout_height="2dip" android:id="@+id/titleDividerTop" android:background="@color/holo_blue_light" android:visibility="gone"></View>
 		<LinearLayout android:layout_width="match_parent" android:layout_marginRight="16dip" android:layout_marginLeft="16dip" android:gravity="center_vertical|left" android:minHeight="@dimen/alert_dialog_title_height" android:layout_height="wrap_content" android:id="@+id/title_template" android:orientation="horizontal">

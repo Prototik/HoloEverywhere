@@ -1,17 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import java.util.ArrayList;
-
-import org.holoeverywhere.R;
-import org.holoeverywhere.drawable.DrawableCompat;
-import org.holoeverywhere.internal._View;
-import org.holoeverywhere.util.Pool;
-import org.holoeverywhere.util.Poolable;
-import org.holoeverywhere.util.PoolableManager;
-import org.holoeverywhere.util.Pools;
-import org.holoeverywhere.util.ReflectHelper;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -45,6 +34,17 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
+
+import org.holoeverywhere.R;
+import org.holoeverywhere.drawable.DrawableCompat;
+import org.holoeverywhere.internal._View;
+import org.holoeverywhere.util.Pool;
+import org.holoeverywhere.util.Poolable;
+import org.holoeverywhere.util.PoolableManager;
+import org.holoeverywhere.util.Pools;
+import org.holoeverywhere.util.ReflectHelper;
+
+import java.util.ArrayList;
 
 public class ProgressBar extends android.widget.ProgressBar {
     private class AccessibilityEventSender implements Runnable {

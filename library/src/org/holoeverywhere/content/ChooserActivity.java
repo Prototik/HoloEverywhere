@@ -1,13 +1,13 @@
 
 package org.holoeverywhere.content;
 
-import org.holoeverywhere.R;
-import org.holoeverywhere.app.ResolverActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+
+import org.holoeverywhere.R;
+import org.holoeverywhere.app.ResolverActivity;
 
 public class ChooserActivity extends ResolverActivity {
     @Override

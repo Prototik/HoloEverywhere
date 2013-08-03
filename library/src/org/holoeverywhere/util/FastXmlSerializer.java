@@ -1,6 +1,8 @@
 
 package org.holoeverywhere.util;
 
+import org.xmlpull.v1.XmlSerializer;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -12,8 +14,6 @@ import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.UnsupportedCharsetException;
-
-import org.xmlpull.v1.XmlSerializer;
 
 public class FastXmlSerializer implements XmlSerializer {
     private static final int BUFFER_LEN = 8192;

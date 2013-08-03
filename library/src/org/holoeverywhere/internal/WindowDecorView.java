@@ -1,18 +1,17 @@
 
 package org.holoeverywhere.internal;
 
-import static android.view.View.MeasureSpec.AT_MOST;
-import static android.view.View.MeasureSpec.EXACTLY;
-
-import org.holoeverywhere.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
+import android.support.v7.internal.view.menu.ContextMenuDecorView;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
-import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView;
+import org.holoeverywhere.R;
+
+import static android.view.View.MeasureSpec.AT_MOST;
+import static android.view.View.MeasureSpec.EXACTLY;
 
 public class WindowDecorView extends ContextMenuDecorView {
     private TypedValue mFixedHeightMajor;

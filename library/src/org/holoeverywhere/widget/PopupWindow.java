@@ -1,12 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import java.lang.ref.WeakReference;
-
-import org.holoeverywhere.R;
-import org.holoeverywhere.drawable.DrawableCompat;
-import org.holoeverywhere.drawable.StateListDrawable;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -27,6 +21,12 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnScrollChangedListener;
 import android.view.WindowManager;
+
+import org.holoeverywhere.R;
+import org.holoeverywhere.drawable.DrawableCompat;
+import org.holoeverywhere.drawable.StateListDrawable;
+
+import java.lang.ref.WeakReference;
 
 public class PopupWindow {
     public interface OnDismissListener {

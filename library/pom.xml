@@ -21,15 +21,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.actionbarsherlock</groupId>
-			<artifactId>actionbarsherlock</artifactId>
-			<type>apklib</type>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.android</groupId>
+			<groupId>com.android.support</groupId>
 			<artifactId>support-v4</artifactId>
 		</dependency>
+
+        <dependency>
+            <groupId>com.android.support</groupId>
+            <artifactId>appcompat-v7</artifactId>
+            <type>aar</type>
+        </dependency>
 	</dependencies>
 
 	<build>

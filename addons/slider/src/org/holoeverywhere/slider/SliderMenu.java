@@ -34,7 +34,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 
-import com.actionbarsherlock.app.ActionBar;
+import android.support.v7.app.ActionBar;
 
 public class SliderMenu implements OnBackStackChangedListener {
     public static enum SelectionBehavior {

@@ -1,22 +1,23 @@
 
 package org.holoeverywhere.app;
 
-import java.util.Collection;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app._HoloFragment;
+import android.view.View;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.addon.IAddon;
 import org.holoeverywhere.addon.IAddonBasicAttacher;
 import org.holoeverywhere.addon.IAddonFragment;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app._HoloFragment;
-import android.view.View;
-
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.ActionMode.Callback;
+import java.util.Collection;
 
 public class Fragment extends _HoloFragment {
+    private final IAddonBasicAttacher<IAddonFragment, Fragment> mAttacher =
+            new IAddonBasicAttacher<IAddonFragment, Fragment>(this);
+    private LayoutInflater mLayoutInflater;
+
     public static <T extends Fragment> T instantiate(Class<T> clazz) {
         return instantiate(clazz, null);
     }
@@ -38,7 +39,7 @@ public class Fragment extends _HoloFragment {
 
     /**
      * @deprecated Use {@link #instantiate(Class)} instead.
-     *             {@link #instantiate(Context, String)} is sucks, don't use it!
+     * {@link #instantiate(Context, String)} is sucks, don't use it!
      */
     @Deprecated
     public static Fragment instantiate(Context context, String fname) {
@@ -47,8 +48,8 @@ public class Fragment extends _HoloFragment {
 
     /**
      * @deprecated Use {@link #instantiate(Class, Bundle)} instead.
-     *             {@link #instantiate(Context, String, Bundle)} is sucks, don't
-     *             use it!
+     * {@link #instantiate(Context, String, Bundle)} is sucks, don't
+     * use it!
      */
     @SuppressWarnings("unchecked")
     @Deprecated
@@ -62,11 +63,6 @@ public class Fragment extends _HoloFragment {
                     + " empty constructor that is public", e);
         }
     }
-
-    private final IAddonBasicAttacher<IAddonFragment, Fragment> mAttacher =
-            new IAddonBasicAttacher<IAddonFragment, Fragment>(this);
-
-    private LayoutInflater mLayoutInflater;
 
     @Override
     public <T extends IAddonFragment> T addon(Class<? extends IAddon> clazz) {
@@ -157,10 +153,5 @@ public class Fragment extends _HoloFragment {
     @Override
     public boolean performAddonAction(AddonCallback<IAddonFragment> callback) {
         return mAttacher.performAddonAction(callback);
-    }
-
-    @Override
-    public ActionMode startActionMode(Callback callback) {
-        return getSupportActivity().startActionMode(callback);
     }
 }

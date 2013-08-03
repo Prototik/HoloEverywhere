@@ -98,11 +98,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<java.version>1.6</java.version>
-		<abs.version>4.3.1</abs.version>
 		<noa.version>2.4.0</noa.version>
 		<junit.version>4.8.1</junit.version>
 		<android.version>4.1.1.4</android.version>
-		<android-support.version>r13.1</android-support.version>
 		<android.sdk.platform>16</android.sdk.platform>
 
 		<github.downloads.repositoryOwner>Prototik</github.downloads.repositoryOwner>
@@ -121,13 +119,20 @@
 				<scope>provided</scope>
 			</dependency>
 
-			<dependency>
-				<groupId>com.google.android</groupId>
-				<artifactId>support-v4</artifactId>
-				<version>${android-support.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>com.android.support</groupId>
+                <artifactId>support-v4</artifactId>
+                <version>18.0.1</version>
+            </dependency>
 
-			<dependency>
+            <dependency>
+                <groupId>com.android.support</groupId>
+                <artifactId>appcompat-v7</artifactId>
+                <version>18.0.0</version>
+                <type>aar</type>
+            </dependency>
+
+            <dependency>
 				<groupId>com.google.android</groupId>
 				<artifactId>android-test</artifactId>
 				<version>${android.version}</version>
@@ -138,19 +143,6 @@
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>${junit.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.actionbarsherlock</groupId>
-				<artifactId>actionbarsherlock</artifactId>
-				<version>${abs.version}</version>
-				<type>apklib</type>
-			</dependency>
-
-			<dependency>
-				<groupId>com.nineoldandroids</groupId>
-				<artifactId>library</artifactId>
-				<version>${noa.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

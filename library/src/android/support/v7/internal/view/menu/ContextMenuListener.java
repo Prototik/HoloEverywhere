@@ -1,11 +1,10 @@
 
-package com.actionbarsherlock.internal.view.menu;
+package android.support.v7.internal.view.menu;
 
+import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuItem;
 import android.view.View;
-
-import com.actionbarsherlock.view.ContextMenu;
-import com.actionbarsherlock.view.MenuItem;
 
 public interface ContextMenuListener {
     public boolean onContextItemSelected(MenuItem item);

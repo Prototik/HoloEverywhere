@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
-    <style name="Holo.Base.Theme" parent="Theme.Sherlock">
+    <style name="Holo.Base.Theme" parent="Theme.AppCompat">
         <!--Include block: Dark-->
         <!--Include block: Base-->
         <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
@@ -85,7 +85,7 @@
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.Small</item>
         <!--End of block BarDark-->
     </style>
-    <style name="Holo.Base.Theme.Light" parent="Theme.Sherlock.Light">
+    <style name="Holo.Base.Theme.Light" parent="Theme.AppCompat.Light">
         <!--Include block: Light-->
         <!--Include block: Base-->
         <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
@@ -171,7 +171,7 @@
         <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.Small.Light</item>
         <!--End of block BarLight-->
     </style>
-    <style name="Holo.Base.Theme.Light.DarkActionBar" parent="Theme.Sherlock.Light.DarkActionBar">
+    <style name="Holo.Base.Theme.Light.DarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <!--Include block: Light-->
         <!--Include block: Base-->
         <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>

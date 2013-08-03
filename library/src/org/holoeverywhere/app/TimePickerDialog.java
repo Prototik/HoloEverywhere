@@ -1,15 +1,15 @@
 
 package org.holoeverywhere.app;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.R;
-import org.holoeverywhere.widget.TimePicker;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.View;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.R;
+import org.holoeverywhere.widget.TimePicker;
 
 public class TimePickerDialog extends AlertDialog implements OnClickListener,
         TimePicker.OnTimeChangedListener {

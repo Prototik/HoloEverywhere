@@ -1,16 +1,16 @@
 apply plugin: 'android-library'
 
 dependencies {
-  compile 'com.actionbarsherlock:actionbarsherlock:4.3.2-SNAPSHOT@aar'
   compile 'com.android.support:support-v4:18.0.1@jar'
+  compile 'com.android.support:appcompat-v7:18.0.0@aar'
 }
 
 android {
-  compileSdkVersion 17
-  buildToolsVersion '17'
+  compileSdkVersion 18
+  buildToolsVersion '18.0.1'
 
   defaultConfig {
-    targetSdkVersion 17
+    targetSdkVersion 18
   }
 
   sourceSets {

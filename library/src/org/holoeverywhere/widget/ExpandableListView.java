@@ -1,11 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import java.util.ArrayList;
-
-import org.holoeverywhere.R;
-import org.holoeverywhere.widget.ExpandableListConnector.PositionMetadata;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -24,6 +19,11 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.ExpandableListAdapter;
 import android.widget.ListAdapter;
+
+import org.holoeverywhere.R;
+import org.holoeverywhere.widget.ExpandableListConnector.PositionMetadata;
+
+import java.util.ArrayList;
 
 public class ExpandableListView extends ListView {
     public static class ExpandableListContextMenuInfo implements ContextMenu.ContextMenuInfo {

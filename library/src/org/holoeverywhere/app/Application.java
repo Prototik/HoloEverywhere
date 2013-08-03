@@ -1,9 +1,10 @@
 
 package org.holoeverywhere.app;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Build.VERSION;
+import android.os.Bundle;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
@@ -13,7 +14,6 @@ import org.holoeverywhere.SystemServiceManager;
 import org.holoeverywhere.SystemServiceManager.SuperSystemService;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.ThemeManager.SuperStartActivity;
-import org.holoeverywhere.addon.AddonSherlock;
 import org.holoeverywhere.addon.IAddon;
 import org.holoeverywhere.addon.IAddonApplication;
 import org.holoeverywhere.addon.IAddonAttacher;
@@ -21,10 +21,9 @@ import org.holoeverywhere.addon.IAddonBasicAttacher;
 import org.holoeverywhere.preference.PreferenceManagerHelper;
 import org.holoeverywhere.preference.SharedPreferences;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.Build.VERSION;
-import android.os.Bundle;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class Application extends android.app.Application implements
         SuperStartActivity, SuperSystemService, IAddonAttacher<IAddonApplication> {
@@ -32,7 +31,6 @@ public class Application extends android.app.Application implements
     private static Application sLastInstance;
     static {
         SystemServiceManager.register(LayoutInflaterCreator.class);
-        addInitialAddon(AddonSherlock.class);
     }
 
     public static void addInitialAddon(Class<? extends IAddon> clazz) {

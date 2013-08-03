@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
     <!--Start attrs definition block-->
+    <attr name="activatedBackgroundIndicator" format="reference"/>
     <attr name="alertDialogCenterButtons" format="boolean"/>
     <attr name="alertDialogStyle" format="reference"/>
     <attr name="alertDialogTheme" format="reference"/>
@@ -80,7 +81,6 @@
     <attr name="numberPickerInputTextStyle" format="reference"/>
     <attr name="numberPickerStyle" format="reference"/>
     <attr name="numberPickerUpButtonStyle" format="reference"/>
-    <attr name="panelMenuListWidth" format="dimension"/>
     <attr name="popupPromptView" format="reference"/>
     <attr name="popupWindowStyle" format="reference"/>
     <attr name="preferenceTheme" format="reference">
@@ -99,6 +99,7 @@
     <attr name="shownWeekCount" format="integer"/>
     <attr name="singleChoiceItemLayout" format="reference"/>
     <attr name="solidColor" format="color|reference"/>
+    <attr name="spinnerItemStyle" format="reference"/>
     <attr name="spinnerMode" format="enum">
         <enum name="dialog" value="0"/>
         <enum name="dropdown" value="1"/>
@@ -127,12 +128,18 @@
     <attr name="weekDayTextAppearance" format="reference"/>
     <attr name="weekNumberColor" format="color|reference"/>
     <attr name="weekSeparatorLineColor" format="color|reference"/>
+    <attr name="windowActionModeOverlay" format="boolean"/>
+    <attr name="windowAnimationStyle" format="reference"/>
+    <attr name="windowContentOverlay" format="boolean"/>
     <attr name="windowFixedHeightMajor" format="dimension|fraction"/>
     <attr name="windowFixedHeightMinor" format="dimension|fraction"/>
     <attr name="windowFixedWidthMajor" format="dimension|fraction"/>
     <attr name="windowFixedWidthMinor" format="dimension|fraction"/>
     <attr name="windowMinHeightMajor" format="dimension|fraction"/>
     <attr name="windowMinHeightMinor" format="dimension|fraction"/>
+    <attr name="windowMinWidthMajor" format="reference"/>
+    <attr name="windowMinWidthMinor" format="reference"/>
+    <attr name="windowNoTitle" format="boolean"/>
     <!--Start styleable definition block-->
     <declare-styleable name="AbsListView">
         <attr name="android:choiceMode"/>

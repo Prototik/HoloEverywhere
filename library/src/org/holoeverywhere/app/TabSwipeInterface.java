@@ -1,9 +1,9 @@
 
 package org.holoeverywhere.app;
 
-import org.holoeverywhere.app.TabSwipeInterface.ITabInfo;
-
 import android.os.Bundle;
+
+import org.holoeverywhere.app.TabSwipeInterface.ITabInfo;
 
 public interface TabSwipeInterface<T extends ITabInfo<T>> {
     public static interface ITabInfo<T extends ITabInfo<T>> {

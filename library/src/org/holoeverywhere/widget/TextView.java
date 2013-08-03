@@ -1,17 +1,17 @@
 
 package org.holoeverywhere.widget;
 
-import org.holoeverywhere.FontLoader;
-import org.holoeverywhere.FontLoader.FontStyleProvider;
-import org.holoeverywhere.R;
-import org.holoeverywhere.text.AllCapsTransformationMethod;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+
+import org.holoeverywhere.FontLoader;
+import org.holoeverywhere.FontLoader.FontStyleProvider;
+import org.holoeverywhere.R;
+import org.holoeverywhere.text.AllCapsTransformationMethod;
 
 public class TextView extends android.widget.TextView implements FontStyleProvider {
     public static <T extends android.widget.TextView & FontStyleProvider> void construct(

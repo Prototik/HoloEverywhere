@@ -99,9 +99,9 @@
         }
     },
     "data": {
-        "Holo.Base.Theme | Dark BarDark < Theme.Sherlock": {},
-        "Holo.Base.Theme.Light | Light BarLight < Theme.Sherlock.Light": {},
-        "Holo.Base.Theme.Light.DarkActionBar | Light BarDark < Theme.Sherlock.Light.DarkActionBar": {}
+        "Holo.Base.Theme | Dark BarDark < Theme.AppCompat": {},
+        "Holo.Base.Theme.Light | Light BarLight < Theme.AppCompat.Light": {},
+        "Holo.Base.Theme.Light.DarkActionBar | Light BarDark < Theme.AppCompat.Light.DarkActionBar": {}
     },
     "include": [
         {

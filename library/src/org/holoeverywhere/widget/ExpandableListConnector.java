@@ -1,9 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import android.database.DataSetObserver;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -14,6 +11,9 @@ import android.widget.BaseAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class ExpandableListConnector extends BaseAdapter implements Filterable {
     static class GroupMetadata implements Parcelable, Comparable<GroupMetadata> {

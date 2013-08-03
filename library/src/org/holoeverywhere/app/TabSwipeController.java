@@ -1,22 +1,21 @@
 
 package org.holoeverywhere.app;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.holoeverywhere.app.TabSwipeController.TabInfo;
-import org.holoeverywhere.widget.ViewPager;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
+import android.support.v7.app.ActionBar.TabListener;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
+import org.holoeverywhere.app.TabSwipeController.TabInfo;
+import org.holoeverywhere.widget.ViewPager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class TabSwipeController implements TabSwipeInterface<TabInfo> {
     public static class TabInfo implements TabSwipeInterface.ITabInfo<TabInfo> {

@@ -1,8 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import org.holoeverywhere.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -16,6 +14,8 @@ import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+
+import org.holoeverywhere.R;
 
 public class LinearLayout extends android.widget.LinearLayout {
     public static final int HORIZONTAL = 0;

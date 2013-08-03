@@ -1,15 +1,6 @@
 
 package org.holoeverywhere.drawable;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.ref.WeakReference;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 import android.content.res.TypedArray;
@@ -20,6 +11,15 @@ import android.support.v4.util.LongSparseArray;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.util.Xml;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class DrawableCompat {
     private static final Map<String, Class<? extends Drawable>> CLASS_MAP = new HashMap<String, Class<? extends Drawable>>();

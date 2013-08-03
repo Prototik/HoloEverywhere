@@ -22,7 +22,6 @@
         "datePickerStyle$reference",
         "timePickerStyle$reference",
         "autoCompleteTextViewStyle$reference",
-        "panelMenuListWidth$dimension",
         "textAppearanceListItem$reference",
         "detailsElementBackground$reference",
         "holoTheme/invalid 0/dark 1/light 2/mixed 3/preference 4",
@@ -31,6 +30,14 @@
         "switchStyleOld$reference",
         "calendarViewStyle$reference",
         "popupWindowStyle$reference",
+        "activatedBackgroundIndicator$reference",
+        "spinnerItemStyle$reference",
+        "windowActionModeOverlay$boolean",
+        "windowAnimationStyle$reference",
+        "windowContentOverlay$boolean",
+        "windowMinWidthMajor$reference",
+        "windowMinWidthMinor$reference",
+        "windowNoTitle$boolean",
         {
             "enum": [
                 "top 0x30",

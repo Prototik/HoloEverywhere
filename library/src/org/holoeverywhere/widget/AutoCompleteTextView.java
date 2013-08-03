@@ -1,9 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.R;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -28,6 +25,9 @@ import android.widget.AdapterView;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ListAdapter;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.R;
 
 public class AutoCompleteTextView extends EditText implements
         Filter.FilterListener {

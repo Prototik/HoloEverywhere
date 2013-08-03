@@ -1,6 +1,9 @@
 
 package org.holoeverywhere.addon;
 
+import android.os.Bundle;
+import android.view.View;
+
 import org.holoeverywhere.R;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Fragment;
@@ -8,9 +11,6 @@ import org.holoeverywhere.app.TabSwipeController;
 import org.holoeverywhere.app.TabSwipeController.TabInfo;
 import org.holoeverywhere.app.TabSwipeInterface;
 import org.holoeverywhere.widget.ViewPager;
-
-import android.os.Bundle;
-import android.view.View;
 
 public class AddonTabber extends IAddon {
     public static class AddonTabberA extends IAddonActivity implements TabSwipeInterface<TabInfo> {

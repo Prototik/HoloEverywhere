@@ -1,21 +1,6 @@
 
 package org.holoeverywhere.app;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.R;
-import org.holoeverywhere.internal.AlertController;
-import org.holoeverywhere.widget.Button;
-import org.holoeverywhere.widget.GridView;
-import org.holoeverywhere.widget.ListView;
-import org.holoeverywhere.widget.TextView;
-
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -41,6 +26,21 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.R;
+import org.holoeverywhere.internal.AlertController;
+import org.holoeverywhere.widget.Button;
+import org.holoeverywhere.widget.GridView;
+import org.holoeverywhere.widget.ListView;
+import org.holoeverywhere.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 public abstract class ResolverActivity extends AlertActivity implements
         AdapterView.OnItemClickListener {

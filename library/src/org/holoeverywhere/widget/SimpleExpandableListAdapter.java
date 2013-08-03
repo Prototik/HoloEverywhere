@@ -1,14 +1,14 @@
 
 package org.holoeverywhere.widget;
 
-import java.util.List;
-import java.util.Map;
-
-import org.holoeverywhere.LayoutInflater;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.holoeverywhere.LayoutInflater;
+
+import java.util.List;
+import java.util.Map;
 
 public class SimpleExpandableListAdapter extends BaseExpandableListAdapter {
     private List<? extends List<? extends Map<String, ?>>> mChildData;

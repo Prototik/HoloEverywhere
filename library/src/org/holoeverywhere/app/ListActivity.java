@@ -1,14 +1,14 @@
 
 package org.holoeverywhere.app;
 
-import org.holoeverywhere.R;
-import org.holoeverywhere.widget.ListView;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
+
+import org.holoeverywhere.R;
+import org.holoeverywhere.widget.ListView;
 
 public abstract class ListActivity extends Activity {
     protected ListAdapter mAdapter;

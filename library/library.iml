@@ -6,6 +6,7 @@
         <option name="SELECTED_BUILD_VARIANT" value="Debug" />
         <option name="ASSEMBLE_TASK_NAME" value="bundleDebug" />
         <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleTest" />
+        <option name="SOURCE_GEN_TASK_NAME" value="TODO" />
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
         <option name="LIBRARY_PROJECT" value="true" />
@@ -66,10 +67,10 @@
       <excludeFolder url="file://$MODULE_DIR$/build/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
-    <orderEntry type="jdk" jdkName="Android 4.2.2 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android 4.3 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="support-v4-13.0.1" level="project" />
-    <orderEntry type="library" name="ComActionbarsherlockActionbarsherlock432SNAPSHOT.aar" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-18.0.1" level="project" />
+    <orderEntry type="library" exported="" name="ComAndroidSupportAppcompatV71800.aar" level="project" />
   </component>
 </module>
 

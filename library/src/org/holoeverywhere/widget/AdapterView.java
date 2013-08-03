@@ -1,9 +1,6 @@
 
 package org.holoeverywhere.widget;
 
-import org.holoeverywhere.internal._ViewGroup;
-import org.holoeverywhere.util.ReflectHelper;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -18,6 +15,9 @@ import android.view.ViewDebug;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Adapter;
+
+import org.holoeverywhere.internal._ViewGroup;
+import org.holoeverywhere.util.ReflectHelper;
 
 public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
     class AdapterDataSetObserver extends DataSetObserver {

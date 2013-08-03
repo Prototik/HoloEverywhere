@@ -1,12 +1,12 @@
 
 package org.holoeverywhere.app;
 
+import android.os.Bundle;
+
 import org.holoeverywhere.addon.AddonTabber;
 import org.holoeverywhere.addon.AddonTabber.AddonTabberA;
 import org.holoeverywhere.addon.AddonTabber.AddonTabberCallback;
 import org.holoeverywhere.app.TabSwipeController.TabInfo;
-
-import android.os.Bundle;
 
 /**
  * This activity class implement tabs + swipe navigation pattern<br />

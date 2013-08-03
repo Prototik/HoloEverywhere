@@ -2,16 +2,15 @@
 package org.holoeverywhere.widget;
 
 import android.content.Context;
+import android.support.v7.internal.view.menu.MenuBuilder;
+import android.support.v7.internal.view.menu.MenuPopupHelper;
+import android.support.v7.internal.view.menu.MenuPresenter;
+import android.support.v7.internal.view.menu.MenuPopupHelper;
+import android.support.v7.internal.view.menu.SubMenuBuilder;
+import android.support.v7.internal.view.SupportMenuInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-
-import com.actionbarsherlock.internal.view.menu.MenuBuilder;
-import com.actionbarsherlock.internal.view.menu.MenuPopupHelper;
-import com.actionbarsherlock.internal.view.menu.MenuPresenter;
-import com.actionbarsherlock.internal.view.menu.PopupMenuHelper;
-import com.actionbarsherlock.internal.view.menu.SubMenuBuilder;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
 public class PopupMenu implements MenuBuilder.Callback, MenuPresenter.Callback {
     public interface OnDismissListener {
@@ -27,14 +26,14 @@ public class PopupMenu implements MenuBuilder.Callback, MenuPresenter.Callback {
     private OnDismissListener mDismissListener;
     private MenuBuilder mMenu;
     private OnMenuItemClickListener mMenuItemClickListener;
-    private PopupMenuHelper mPopup;
+    private MenuPopupHelper mPopup;
 
     public PopupMenu(Context context, View anchor) {
         mContext = context;
         mMenu = new MenuBuilder(context);
         mMenu.setCallback(this);
         mAnchor = anchor;
-        mPopup = new PopupMenuHelper(context, mMenu, mAnchor);
+        mPopup = new MenuPopupHelper(context, mMenu, mAnchor);
         mPopup.setCallback(this);
     }
 
@@ -46,8 +45,8 @@ public class PopupMenu implements MenuBuilder.Callback, MenuPresenter.Callback {
         return mMenu;
     }
 
-    public MenuInflater getMenuInflater() {
-        return new MenuInflater(mContext);
+    public SupportMenuInflater getMenuInflater() {
+        return new SupportMenuInflater(mContext);
     }
 
     public void inflate(int menuRes) {

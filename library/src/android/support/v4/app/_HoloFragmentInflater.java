@@ -1,8 +1,6 @@
 
 package android.support.v4.app;
 
-import org.holoeverywhere.LayoutInflater;
-
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.TypedArray;
@@ -10,6 +8,8 @@ import android.support.v4.app.FragmentActivity.FragmentTag;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.holoeverywhere.LayoutInflater;
 
 public class _HoloFragmentInflater {
     private static View inflate(AttributeSet attrs, View parent, FragmentActivity activity,

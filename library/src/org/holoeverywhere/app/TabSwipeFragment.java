@@ -1,16 +1,16 @@
 
 package org.holoeverywhere.app;
 
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 import org.holoeverywhere.addon.AddonTabber;
 import org.holoeverywhere.addon.AddonTabber.AddonTabberCallback;
 import org.holoeverywhere.addon.AddonTabber.AddonTabberF;
 import org.holoeverywhere.app.TabSwipeController.TabInfo;
-
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
 
 /**
  * This fragment class implement tabs + swipe navigation pattern<br />

@@ -1,6 +1,23 @@
 
 package org.holoeverywhere;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.TypedArray;
+import android.os.Build.VERSION;
+import android.os.Bundle;
+import android.util.SparseIntArray;
+
+import org.holoeverywhere.ThemeManager.ThemeGetter.ThemeTag;
+import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.Application;
+import org.holoeverywhere.app.ContextThemeWrapperPlus;
+import org.holoeverywhere.preference.PreferenceManagerHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.holoeverywhere.R.style.Holo_Theme;
 import static org.holoeverywhere.R.style.Holo_Theme_Dialog;
 import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge;
@@ -33,23 +50,6 @@ import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Fullscreen;
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Fullscreen_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_Wallpaper;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.holoeverywhere.ThemeManager.ThemeGetter.ThemeTag;
-import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.Application;
-import org.holoeverywhere.app.ContextThemeWrapperPlus;
-import org.holoeverywhere.preference.PreferenceManagerHelper;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.TypedArray;
-import android.os.Build.VERSION;
-import android.os.Bundle;
-import android.util.SparseIntArray;
 
 /**
  * ThemeManager for using different themes in activity, dialogs, etc. <br />

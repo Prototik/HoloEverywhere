@@ -1,9 +1,5 @@
 package org.holoeverywhere.widget;
 
-import org.holoeverywhere.R;
-import org.holoeverywhere.text.AllCapsTransformationMethod;
-import org.holoeverywhere.text.TransformationMethod;
-
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -26,6 +22,10 @@ import android.view.ViewConfiguration;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.CompoundButton;
+
+import org.holoeverywhere.R;
+import org.holoeverywhere.text.AllCapsTransformationMethod;
+import org.holoeverywhere.text.TransformationMethod;
 
 public class Switch extends CompoundButton {
     private static final int[] CHECKED_STATE_SET = {
