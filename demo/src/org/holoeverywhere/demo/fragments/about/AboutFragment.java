@@ -1,8 +1,9 @@
 
-package org.holoeverywhere.demo.fragments;
+package org.holoeverywhere.demo.fragments.about;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.demo.R;
+import org.holoeverywhere.demo.fragments.OtherFragment;
 import org.holoeverywhere.widget.ListView;
 
 import android.content.Intent;
@@ -50,6 +51,7 @@ public class AboutFragment extends OtherFragment {
         addItem("GitHub", "https://github.com/ChristopheVersieux/HoloEverywhere");
         addItem("Play Store", "market://details?id=org.holoeverywhere.demo");
         addItem("Developers", DevelopersFragment.class);
+        addItem("Open source licenses", LicensesFragment.class);
     }
 
     @Override

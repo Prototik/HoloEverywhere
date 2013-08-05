@@ -2,8 +2,10 @@
 package org.holoeverywhere;
 
 import static org.holoeverywhere.R.style.Holo_Theme;
+import static org.holoeverywhere.R.style.Holo_Theme_Dialog;
 import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge;
 import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_NoActionBar;
+import static org.holoeverywhere.R.style.Holo_Theme_Dialog_Light;
 import static org.holoeverywhere.R.style.Holo_Theme_Fullscreen;
 import static org.holoeverywhere.R.style.Holo_Theme_Fullscreen_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_Light;
@@ -29,8 +31,6 @@ import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Fullscreen;
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Fullscreen_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_NoActionBar_Wallpaper;
 import static org.holoeverywhere.R.style.Holo_Theme_Wallpaper;
-import static org.holoeverywhere.R.style.Holo_Theme_Dialog;
-import static org.holoeverywhere.R.style.Holo_Theme_Dialog_Light;
 
 import java.util.ArrayList;
 import java.util.List;

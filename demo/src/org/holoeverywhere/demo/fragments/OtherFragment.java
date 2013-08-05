@@ -96,6 +96,10 @@ public class OtherFragment extends ListFragment {
         addItem(label, new FragmentListener(clazz));
     }
 
+    public void addItem(CharSequence label, Intent activityIntent) {
+        addItem(label, new ActivityListener(activityIntent));
+    }
+
     public void addItem(CharSequence label, OnOtherItemClickListener listener) {
         addItem(label, listener, false);
     }
@@ -115,10 +119,6 @@ public class OtherFragment extends ListFragment {
 
     public void addItemActivity(CharSequence label, Class<? extends Activity> clazz) {
         addItem(label, new ActivityListener(clazz));
-    }
-
-    public void addItem(CharSequence label, Intent activityIntent) {
-        addItem(label, new ActivityListener(activityIntent));
     }
 
     public void addItemWithLongClick(CharSequence label, OnOtherItemClickListener listener) {
