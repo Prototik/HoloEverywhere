@@ -254,12 +254,6 @@
         <attr name="dividerPadding"/>
         <attr name="showDividers"/>
     </declare-styleable>
-    <declare-styleable name="LinearLayout_Layout">
-        <attr name="android:layout_gravity"/>
-        <attr name="android:layout_height"/>
-        <attr name="android:layout_weight"/>
-        <attr name="android:layout_width"/>
-    </declare-styleable>
     <declare-styleable name="MenuView">
         <attr name="android:headerBackground"/>
         <attr name="android:horizontalDivider"/>

@@ -908,11 +908,11 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
     public void setProgress(int progress) {
         progress = Math.max(-100, Math.min(100, progress));
         if (progress < 0) {
-            show(STATE_LEFT_OPENED, false, progress * mLeftViewWidth / 100);
+            show(STATE_LEFT_OPENED, false, false, progress * mLeftViewWidth / 100);
         } else if (progress > 0) {
-            show(STATE_RIGHT_OPENED, false, progress * mRightViewWidth / 100);
+            show(STATE_RIGHT_OPENED, false, false, progress * mRightViewWidth / 100);
         } else {
-            show(STATE_CONTENT_OPENED, false);
+            show(STATE_CONTENT_OPENED, false, false);
         }
     }
 
@@ -1003,25 +1003,29 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
         setRightViewShadow(viewShadow);
     }
 
-    private void show(int newState, boolean smooth) {
+    private void show(int newState, boolean smooth, boolean post) {
         switch (newState) {
             case STATE_CONTENT_OPENED:
-                show(newState, smooth, 0);
+                show(newState, smooth, post, 0);
                 break;
             case STATE_LEFT_OPENED:
-                show(newState, smooth, -mLeftViewWidth);
+                show(newState, smooth, post, -mLeftViewWidth);
                 break;
             case STATE_RIGHT_OPENED:
-                show(newState, smooth, mRightViewWidth);
+                show(newState, smooth, post, mRightViewWidth);
                 break;
         }
     }
 
-    private void show(int newState, boolean smooth, int offset) {
+    private void show(int newState, boolean smooth, boolean post, int offset) {
         if (getScrollX() != offset || mCurrentState != newState) {
             if (newState == STATE_LEFT_OPENED && mLeftView == null
                     || newState == STATE_RIGHT_OPENED && mRightView == null) {
-                show(STATE_CONTENT_OPENED, smooth, 0);
+                show(STATE_CONTENT_OPENED, smooth, post, 0);
+                return;
+            }
+            if (post) {
+                mScrollOnLayoutTarget = newState;
                 return;
             }
             scrollTo(offset, smooth);
@@ -1057,17 +1061,29 @@ public class SliderView extends ViewGroup implements ISlider, Drawer {
 
     @Override
     public void showContentView(boolean smooth) {
-        show(STATE_CONTENT_OPENED, smooth);
+        show(STATE_CONTENT_OPENED, smooth, false);
     }
 
     @Override
     public void showLeftView(boolean smooth) {
-        show(STATE_LEFT_OPENED, smooth);
+        show(STATE_LEFT_OPENED, smooth, false);
     }
 
     @Override
     public void showRightView(boolean smooth) {
-        show(STATE_RIGHT_OPENED, smooth);
+        show(STATE_RIGHT_OPENED, smooth, false);
+    }
+
+    public void postShowContentView() {
+        show(STATE_CONTENT_OPENED, false, true);
+    }
+
+    public void postShowLeftView() {
+        show(STATE_LEFT_OPENED, false, true);
+    }
+
+    public void postShowRightView() {
+        show(STATE_RIGHT_OPENED, false, true);
     }
 
     @Override

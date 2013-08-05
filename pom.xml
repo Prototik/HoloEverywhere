@@ -101,7 +101,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<java.version>1.6</java.version>
-		<abs.version>4.3.0</abs.version>
+		<abs.version>4.3.1</abs.version>
 		<noa.version>2.4.0</noa.version>
 		<junit.version>4.8.1</junit.version>
 		<android.version>4.1.1.4</android.version>

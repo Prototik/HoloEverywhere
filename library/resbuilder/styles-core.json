@@ -1,5 +1,7 @@
 {
     "blocks": {
+        "BarDark": {},
+        "BarLight": {},
         "Base": {
             "activatedBackgroundIndicator": "@drawable/activated_background_holo",
             "android:activatedBackgroundIndicator": "?activatedBackgroundIndicator",
@@ -7,8 +9,6 @@
             "android:dividerHorizontal": "?dividerHorizontal",
             "android:dividerVertical": "?dividerVertical",
             "android:itemBackground": "?selectableItemBackground",
-            "android:textAppearanceLargePopupMenu": "?textAppearanceLargePopupMenu",
-            "android:textAppearanceSmallPopupMenu": "?textAppearanceSmallPopupMenu",
             "android:windowMinWidthMajor": "?windowMinWidthMajor",
             "android:windowMinWidthMinor": "?windowMinWidthMinor",
             "buttonBarButtonStyle": "?borderlessButtonStyle",
@@ -32,15 +32,7 @@
             "textAppearanceListItemSmall": "?android:attr/textAppearanceMedium",
             "timePickerStyle": "@style/Holo.TimePicker"
         },
-        "BaseBarDark": {
-            "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.PopupMenu.Large",
-            "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.PopupMenu.Small"
-        },
-        "BaseBarLight": {
-            "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.PopupMenu.Light.Large",
-            "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.PopupMenu.Light.Small"
-        },
-        "BaseDark | Base": {
+        "Dark | Base": {
             "alertDialogStyle": "@style/Holo.AlertDialog",
             "alertDialogTheme": "@style/Holo.Theme.Dialog.Alert",
             "android:popupWindowStyle": "@style/Holo.PopupWindow",
@@ -65,7 +57,12 @@
             "switchStyleOld": "@style/Holo.Switch.Old",
             "textColorAlertDialogListItem": "@color/primary_text_holo_dark"
         },
-        "BaseLight | Base": {
+        "Fullscreen": {
+            "android:windowContentOverlay": "@null",
+            "android:windowFullscreen": true,
+            "windowContentOverlay": "@null"
+        },
+        "Light | Base": {
             "alertDialogStyle": "@style/Holo.AlertDialog.Light",
             "alertDialogTheme": "@style/Holo.Theme.Dialog.Alert.Light",
             "android:popupWindowStyle": "@style/Holo.PopupWindow.Light",
@@ -89,11 +86,6 @@
             "switchStyle": "@style/Holo.Switch.Light",
             "switchStyleOld": "@style/Holo.Switch.Light.Old",
             "textColorAlertDialogListItem": "@color/primary_text_holo_light"
-        },
-        "Fullscreen": {
-            "android:windowContentOverlay": "@null",
-            "android:windowFullscreen": true,
-            "windowContentOverlay": "@null"
         },
         "NoActionBar": {
             "android:windowActionBar": false,

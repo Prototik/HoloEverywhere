@@ -29,7 +29,6 @@ public class BuildMojo extends AbstractMojo {
      * Path to android sdk
      * 
      * @parameter property="android.sdk.path"
-     * @required
      */
     public File androidSdkPath;
 
@@ -88,6 +87,15 @@ public class BuildMojo extends AbstractMojo {
         if (skip) {
             getLog().info("Flag 'Skip' is true");
             return;
+        }
+        if (androidSdkPath == null || !androidSdkPath.exists()) {
+            final String path = System.getenv("ANDROID_HOME");
+            if (path != null) {
+                androidSdkPath = new File(path);
+            }
+        }
+        if (androidSdkPath == null || !androidSdkPath.exists()) {
+            throw new MojoExecutionException("Couldn't find Android SDK by path: " + androidSdkPath);
         }
         if (buildAll) {
             if (includeDirs == null || includeDirs.length == 0) {

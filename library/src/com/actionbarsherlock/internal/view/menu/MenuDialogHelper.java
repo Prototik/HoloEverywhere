@@ -118,8 +118,8 @@ public class MenuDialogHelper implements DialogInterface.OnKeyListener,
                     menu.getHeaderTitle());
         }
         builder.setOnKeyListener(this);
+        builder.setOnDismissListener(this);
         mDialog = builder.create();
-        mDialog.setOnDismissListener(this);
         WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
         lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
         if (windowToken != null) {

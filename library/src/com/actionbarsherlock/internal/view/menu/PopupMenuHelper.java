@@ -110,9 +110,7 @@ public class PopupMenuHelper implements AdapterView.OnItemClickListener,
     private MenuBuilder mMenu;
     private ListPopupWindow mPopup;
     private int mPopupMaxWidth;
-
     private Callback mPresenterCallback;
-
     private ViewTreeObserver mTreeObserver;
 
     public PopupMenuHelper(Context context, MenuBuilder menu, View decorView) {

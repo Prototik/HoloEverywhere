@@ -49,21 +49,11 @@ import com.actionbarsherlock.view.MenuItem;
 
 public abstract class _HoloActivity extends Watson implements IHoloActivity,
         ContextMenuListenersProvider {
-    public static class Holo implements Parcelable {
+    public static final class Holo implements Parcelable {
         public static final Parcelable.Creator<Holo> CREATOR = new Creator<Holo>() {
             @Override
             public Holo createFromParcel(Parcel source) {
-                try {
-                    @SuppressWarnings("unchecked")
-                    Class<? extends Holo> clazz = (Class<? extends Holo>) Class.forName(source
-                            .readString());
-                    Holo holo = clazz.newInstance();
-                    holo.createFromParcel(source);
-                    return holo;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
+                return new Holo(source);
             }
 
             @Override
@@ -85,19 +75,11 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         public boolean requireSlider = false;
         private SparseIntArray windowFeatures;
 
-        protected Holo copy(Holo holo) {
-            forceThemeApply = holo.forceThemeApply;
-            ignoreThemeCheck = holo.ignoreThemeCheck;
-            ignoreApplicationInstanceCheck = holo.ignoreApplicationInstanceCheck;
-            requireSherlock = holo.requireSherlock;
-            requireSlider = holo.requireSlider;
-            requireRoboguice = holo.requireRoboguice;
-            applyImmediately = holo.applyImmediately;
-            windowFeatures = holo.windowFeatures == null ? null : holo.windowFeatures.clone();
-            return this;
+        public Holo() {
+
         }
 
-        protected void createFromParcel(Parcel source) {
+        private Holo(Parcel source) {
             forceThemeApply = source.readInt() == 1;
             ignoreThemeCheck = source.readInt() == 1;
             ignoreApplicationInstanceCheck = source.readInt() == 1;
@@ -122,7 +104,6 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(getClass().getName());
             dest.writeInt(forceThemeApply ? 1 : 0);
             dest.writeInt(ignoreThemeCheck ? 1 : 0);
             dest.writeInt(ignoreApplicationInstanceCheck ? 1 : 0);
@@ -427,10 +408,15 @@ public abstract class _HoloActivity extends Watson implements IHoloActivity,
         }
         onPreInit(config, savedInstanceState);
         if (!config.ignoreApplicationInstanceCheck && !(getApplication() instanceof Application)) {
-            throw new IllegalStateException(
-                    "Application instance isn't HoloEverywhere.\n" +
-                            "Put attr 'android:name=\"org.holoeverywhere.app.Application\"'" +
-                            " in <application> tag of AndroidManifest.xml");
+            String text = "Application instance isn't HoloEverywhere.\n";
+            if (getApplication().getClass() == android.app.Application.class) {
+                text += "Put attr 'android:name=\"org.holoeverywhere.app.Application\"'" +
+                        " in <application> tag of AndroidManifest.xml";
+            } else {
+                text += "Please sure that you extend " + getApplication().getClass() +
+                        " from a org.holoeverywhere.app.Application";
+            }
+            throw new IllegalStateException(text);
         }
         getLayoutInflater().setFragmentActivity(this);
         if (this instanceof Activity) {

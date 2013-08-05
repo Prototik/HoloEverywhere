@@ -88,14 +88,6 @@ public class AddonSherlock extends IAddon {
         }
 
         @Override
-        public boolean onKeyUp(int keyCode, KeyEvent event) {
-            if (keyCode == KeyEvent.KEYCODE_MENU) {
-                openOptionsMenu();
-            }
-            return super.onKeyUp(keyCode, event);
-        }
-
-        @Override
         public boolean onMenuItemSelected(int featureId, MenuItem item) {
             if (featureId == Window.FEATURE_OPTIONS_PANEL
                     && !mIgnoreNativeSelected) {

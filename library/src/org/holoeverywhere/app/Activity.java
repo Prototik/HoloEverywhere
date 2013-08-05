@@ -7,7 +7,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.ThemeManager;
@@ -43,6 +42,35 @@ public abstract class Activity extends _HoloActivity {
         public String[] value();
     }
 
+    private final class FindViewAction extends AddonCallback<IAddonActivity> {
+        private int mId;
+        private View mView;
+
+        @Override
+        public boolean action(IAddonActivity addon) {
+            return (mView = addon.findViewById(mId)) != null;
+        }
+
+        @Override
+        public boolean post() {
+            return (mView = Activity.super.findViewById(mId)) != null;
+        }
+    }
+
+    private final class KeyEventAction extends AddonCallback<IAddonActivity> {
+        private KeyEvent mEvent;
+
+        @Override
+        public boolean action(IAddonActivity addon) {
+            return addon.dispatchKeyEvent(mEvent);
+        }
+
+        @Override
+        public boolean post() {
+            return Activity.super.dispatchKeyEvent(mEvent);
+        }
+    }
+
     public static final String ADDON_ROBOGUICE = "Roboguice";
     public static final String ADDON_SHERLOCK = "Sherlock";
     public static final String ADDON_SLIDER = "Slider";
@@ -53,8 +81,14 @@ public abstract class Activity extends _HoloActivity {
     public static final String ADDON_SLIDING_MENU = ADDON_SLIDER;
     private final IAddonAttacher<IAddonActivity> mAttacher =
             new IAddonBasicAttacher<IAddonActivity, Activity>(this);
+
     private boolean mCreatedByThemeManager = false;
+
+    private final FindViewAction mFindViewAction = new FindViewAction();
+
     private boolean mFirstRun = true;
+
+    private final KeyEventAction mKeyEventAction = new KeyEventAction();
 
     @Override
     public void addContentView(View sView, final LayoutParams params) {
@@ -107,40 +141,17 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
-    public boolean dispatchKeyEvent(final KeyEvent event) {
-        return performAddonAction(new AddonCallback<IAddonActivity>() {
-            @Override
-            public boolean action(IAddonActivity addon) {
-                return addon.dispatchKeyEvent(event);
-            }
-
-            @Override
-            public boolean post() {
-                return Activity.super.dispatchKeyEvent(event);
-            }
-        });
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        mKeyEventAction.mEvent = event;
+        return performAddonAction(mKeyEventAction);
     }
 
     @Override
-    public View findViewById(final int id) {
-        View view = super.findViewById(id);
-        if (view != null) {
-            return view;
-        }
-        final AtomicReference<View> ref = new AtomicReference<View>();
-        performAddonAction(new AddonCallback<IAddonActivity>() {
-            @Override
-            public boolean action(IAddonActivity addon) {
-                View view = addon.findViewById(id);
-                if (view != null) {
-                    ref.set(view);
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
-        return ref.get();
+    public View findViewById(int id) {
+        mFindViewAction.mView = null;
+        mFindViewAction.mId = id;
+        performAddonAction(mFindViewAction);
+        return mFindViewAction.mView;
     }
 
     @Override
@@ -222,6 +233,7 @@ public abstract class Activity extends _HoloActivity {
                 addon.onContentChanged();
             }
         });
+        FontLoader.apply(getWindow().getDecorView());
     }
 
     @Override
@@ -283,21 +295,6 @@ public abstract class Activity extends _HoloActivity {
             }
         });
         super.onDestroy();
-    }
-
-    @Override
-    public boolean onKeyUp(final int keyCode, final KeyEvent event) {
-        return performAddonAction(new AddonCallback<IAddonActivity>() {
-            @Override
-            public boolean action(IAddonActivity addon) {
-                return addon.onKeyUp(keyCode, event);
-            }
-
-            @Override
-            public boolean post() {
-                return Activity.super.onKeyUp(keyCode, event);
-            }
-        });
     }
 
     @Override
@@ -384,7 +381,6 @@ public abstract class Activity extends _HoloActivity {
             }
         });
         super.onPostCreate(savedInstanceState);
-        FontLoader.applyDefaultStyles(getWindow().getDecorView());
     }
 
     @Override
