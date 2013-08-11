@@ -256,7 +256,8 @@ public final class PreferenceScreen extends PreferenceGroup implements
         if (titleEmpty) {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         } else {
-            if (VERSION.SDK_INT >= 11) {
+            if (VERSION.SDK_INT >= 11
+					&& contextTheme != R.style.Holo_Theme_Dialog) {
                 dialog.requestWindowFeature(Window.FEATURE_ACTION_BAR);
             }
             dialog.setContentView(childPrefScreen);
