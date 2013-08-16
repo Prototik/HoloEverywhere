@@ -50,7 +50,7 @@ public class SwitchablePreferenceScreen extends PreferenceScreen {
 		mSwitchOff = a.getString(R.styleable.SwitchPreference_switchTextOff);
 		a.recycle();
 		
-		this.setWidgetLayoutResource(R.layout.preference_widget_switch);
+		this.setWidgetLayoutResource(R.layout.preference_widget_switch_screen);
 	}
 
 	// from TwoStatePreference
