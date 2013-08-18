@@ -199,7 +199,7 @@ public class AddonTabber extends IAddon {
 
         protected TabSwipeController createController() {
             return new TabSwipeController(get().getActivity(),
-                    get().getChildFragmentManager, get().getSupportActionBar()) {
+                    get().getChildFragmentManager(), get().getSupportActionBar()) {
                 @Override
                 protected void onHandleTabs() {
                     AddonTabberF.this.onHandleTabs();
