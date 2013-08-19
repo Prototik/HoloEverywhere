@@ -17,7 +17,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
 		android:textStyle="bold"
-        android:layout_toLeftOf="@+id/switchWidget"
         android:textSize="20dp"
         android:textColor="#dddddd"
         android:text=">" />
