@@ -741,6 +741,9 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
                         method = clazz.getDeclaredMethod("onFinishInflate", (Class<?>[]) null);
                     } catch (Exception e) {
                         clazz = clazz.getSuperclass();
+                    } catch (NoClassDefFoundError e) {
+                        // HE#596 - Let's end the search here for those less than API 14
+                        clazz = Object.class;
                     }
                 }
                 if (method != null) {
