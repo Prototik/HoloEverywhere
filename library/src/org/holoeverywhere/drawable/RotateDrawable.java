@@ -3,6 +3,7 @@ package org.holoeverywhere.drawable;
 
 import java.io.IOException;
 
+import android.os.Build;
 import org.holoeverywhere.R;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -222,9 +223,11 @@ public class RotateDrawable extends Drawable implements Drawable.Callback {
 
     @Override
     public void invalidateDrawable(Drawable who) {
-        final Callback callback = getCallback();
-        if (callback != null) {
-            callback.invalidateDrawable(this);
+        if (Build.VERSION.SDK_INT >= 11) {
+            final Callback callback = getCallback();
+            if (callback != null) {
+                callback.invalidateDrawable(this);
+            }
         }
     }
 
@@ -268,9 +271,11 @@ public class RotateDrawable extends Drawable implements Drawable.Callback {
 
     @Override
     public void scheduleDrawable(Drawable who, Runnable what, long when) {
-        final Callback callback = getCallback();
-        if (callback != null) {
-            callback.scheduleDrawable(this, what, when);
+        if (Build.VERSION.SDK_INT >= 11) {
+            final Callback callback = getCallback();
+            if (callback != null) {
+                callback.scheduleDrawable(this, what, when);
+            }
         }
     }
 
@@ -292,9 +297,11 @@ public class RotateDrawable extends Drawable implements Drawable.Callback {
 
     @Override
     public void unscheduleDrawable(Drawable who, Runnable what) {
-        final Callback callback = getCallback();
-        if (callback != null) {
-            callback.unscheduleDrawable(this, what);
+        if (Build.VERSION.SDK_INT >= 11) {
+            final Callback callback = getCallback();
+            if (callback != null) {
+                callback.unscheduleDrawable(this, what);
+            }
         }
     }
 }
