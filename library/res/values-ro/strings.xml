@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
+    <string name="activity_resolver_use_always">"Întotdeauna"</string>
+    <string name="activity_resolver_use_once">"Numai o dată"</string>
     <string name="candidates_style">"candidaţi"</string>
     <string name="capital_off">"DEZACTIVAT"</string>
     <string name="capital_on">"ACTIVAT"</string>
+    <string name="chooseActivity">"Alegeţi o acţiune"</string>
     <string name="date_picker_decrement_day_button">"Reduceţi valoarea pentru zi"</string>
     <string name="date_picker_decrement_month_button">"Reduceţi valoarea pentru lună"</string>
     <string name="date_picker_decrement_year_button">"Reduceţi valoarea pentru an"</string>
@@ -12,6 +15,7 @@
     <string name="date_time_done">"Terminat"</string>
     <string name="date_time_set">"Setaţi"</string>
     <string name="loading">"Se încarcă…"</string>
+    <string name="noApplications">"Această acţiune nu poate fi efectuată de nicio aplicaţie."</string>
     <string name="number_picker_decrement_button">"Reduceţi"</string>
     <string name="number_picker_increment_button">"Creşteţi"</string>
     <string name="number_picker_increment_scroll_action">"Glisaţi în sus pentru a creşte şi în jos pentru a reduce."</string>
@@ -26,4 +30,5 @@
     <string name="time_picker_increment_hour_button">"Creşteţi valoarea pentru oră"</string>
     <string name="time_picker_increment_minute_button">"Creşteţi valoarea pentru minute"</string>
     <string name="time_picker_increment_set_pm_button">"Setaţi valoarea PM"</string>
+    <string name="whichApplication">"Finalizare acţiune utilizând"</string>
 </resources>

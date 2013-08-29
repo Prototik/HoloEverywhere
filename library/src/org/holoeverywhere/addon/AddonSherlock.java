@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.addon;
 
+import org.holoeverywhere.addon.IAddon.Addon;
 import org.holoeverywhere.app.Activity;
 
 import android.content.Context;
@@ -21,18 +22,13 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.ActionMode.Callback;
 import com.actionbarsherlock.view.MenuInflater;
 
+@Addon(inhert = true, weight = 50)
 public class AddonSherlock extends IAddon {
     public static class AddonSherlockA extends IAddonActivity {
         private boolean mIgnoreNativeCreate = false;
         private boolean mIgnoreNativePrepare = false;
         private boolean mIgnoreNativeSelected = false;
         private ActionBarSherlock mSherlock;
-
-        @Override
-        public boolean addContentView(View view, LayoutParams params) {
-            getSherlock().addContentView(view, params);
-            return true;
-        }
 
         @Override
         public boolean closeOptionsMenu() {
@@ -57,6 +53,12 @@ public class AddonSherlock extends IAddon {
                 mSherlock = ActionBarSherlock.wrap(get(), ActionBarSherlock.FLAG_DELEGATE);
             }
             return mSherlock;
+        }
+
+        @Override
+        public boolean installDecorView(View view, LayoutParams params) {
+            getSherlock().setContentView(view, params);
+            return true;
         }
 
         @Override
@@ -85,14 +87,6 @@ public class AddonSherlock extends IAddon {
         @Override
         public void onDestroy() {
             getSherlock().dispatchDestroy();
-        }
-
-        @Override
-        public boolean onKeyUp(int keyCode, KeyEvent event) {
-            if (keyCode == KeyEvent.KEYCODE_MENU) {
-                openOptionsMenu();
-            }
-            return super.onKeyUp(keyCode, event);
         }
 
         @Override
@@ -164,12 +158,6 @@ public class AddonSherlock extends IAddon {
             return getSherlock().requestFeature(featureId);
         }
 
-        @Override
-        public boolean setContentView(View view, LayoutParams params) {
-            getSherlock().setContentView(view, params);
-            return true;
-        }
-
         public void setProgress(int progress) {
             getSherlock().setProgress(progress);
         }
@@ -203,6 +191,16 @@ public class AddonSherlock extends IAddon {
         }
     }
 
+    public static class AddonSherlockApplication extends IAddonApplication {
+        @Override
+        public void onCreate() {
+            ActionBarSherlock.unregisterImplementation(ActionBarSherlockNative.class);
+            ActionBarSherlock.unregisterImplementation(ActionBarSherlockCompat.class);
+            ActionBarSherlock.registerImplementation(HoloActionBarSherlockNative.class);
+            ActionBarSherlock.registerImplementation(HoloActionBarSherlockCompat.class);
+        }
+    }
+
     @ActionBarSherlock.Implementation(api = 7)
     private static class HoloActionBarSherlockCompat extends ActionBarSherlockCompat {
         public HoloActionBarSherlockCompat(android.app.Activity activity, int flags) {
@@ -233,14 +231,8 @@ public class AddonSherlock extends IAddon {
         }
     }
 
-    static {
-        ActionBarSherlock.unregisterImplementation(ActionBarSherlockNative.class);
-        ActionBarSherlock.unregisterImplementation(ActionBarSherlockCompat.class);
-        ActionBarSherlock.registerImplementation(HoloActionBarSherlockNative.class);
-        ActionBarSherlock.registerImplementation(HoloActionBarSherlockCompat.class);
-    }
-
     public AddonSherlock() {
-        register(Activity.class, AddonSherlockA.class);
+        registerApplication(AddonSherlockApplication.class);
+        registerActivity(AddonSherlockA.class);
     }
 }

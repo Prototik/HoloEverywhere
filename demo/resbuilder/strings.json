@@ -103,11 +103,7 @@
 		},
 		"mixed": {
 			"en": "Mixed",
-			"ru": "Смешанная"
-		},
-		"disable_music": {
-			"en": "Disable music",
-			"ru": "Выключить музыку"
+			"ru": "Микс"
 		},
 		"preference_title": {
 			"en": "@string/library_name"

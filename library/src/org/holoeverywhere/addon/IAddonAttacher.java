@@ -1,12 +1,10 @@
 
 package org.holoeverywhere.addon;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface IAddonAttacher<V extends IAddonBase<?>> {
     public abstract static class AddonCallback<V> {
-        public boolean mStopped = false;
-
         public boolean action(V addon) {
             justAction(addon);
             return false;
@@ -20,39 +18,33 @@ public interface IAddonAttacher<V extends IAddonBase<?>> {
 
         }
 
-        public boolean performAction(V addon) {
-            if (action(addon)) {
-                stop();
-                return true;
-            }
-            return false;
-        }
-
         public boolean post() {
             justPost();
             return false;
-        }
-
-        public void pre() {
-
-        }
-
-        public void stop() {
-            mStopped = true;
         }
     }
 
     public static class AttachException extends RuntimeException {
         private static final long serialVersionUID = 4007240742116340485L;
 
-        public AttachException(Object object, Class<? extends IAddon> clazz) {
-            super("Couldn't attach addon " + clazz.getName() + " after init of object " + object);
+        public static AttachException afterInit(Object object, Class<? extends IAddon> clazz) {
+            return new AttachException("Couldn't attach addon " + clazz.getName()
+                    + " after init of object " + object);
+        }
+
+        public static AttachException conflict(String message) {
+            return new AttachException("Couldn't attach some addons because conflicts is found: \n"
+                    + message);
+        }
+
+        private AttachException(String message) {
+            super(message);
         }
     }
 
     public <T extends V> T addon(Class<? extends IAddon> clazz);
 
-    public void addon(List<Class<? extends IAddon>> classes);
+    public void addon(Collection<Class<? extends IAddon>> classes);
 
     public <T extends V> T addon(String classname);
 
@@ -60,7 +52,7 @@ public interface IAddonAttacher<V extends IAddonBase<?>> {
 
     public void lockAttaching();
 
-    public List<Class<? extends IAddon>> obtainAddonsList();
+    public Collection<Class<? extends IAddon>> obtainAddonsList();
 
     public boolean performAddonAction(AddonCallback<V> callback);
 }

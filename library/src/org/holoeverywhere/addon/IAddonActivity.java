@@ -6,15 +6,12 @@ import org.holoeverywhere.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 public abstract class IAddonActivity extends IAddonBase<Activity> {
-    public boolean addContentView(View view, LayoutParams params) {
-        return false;
-    }
-
     public boolean closeOptionsMenu() {
         return false;
     }
@@ -25,6 +22,14 @@ public abstract class IAddonActivity extends IAddonBase<Activity> {
 
     public View findViewById(int id) {
         return null;
+    }
+
+    public Handler handler() {
+        return get().getUserHandler();
+    }
+
+    public boolean installDecorView(View view, LayoutParams params) {
+        return false;
     }
 
     public boolean invalidateOptionsMenu() {
@@ -54,7 +59,7 @@ public abstract class IAddonActivity extends IAddonBase<Activity> {
 
     }
 
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
+    public boolean onHomePressed() {
         return false;
     }
 
@@ -123,10 +128,6 @@ public abstract class IAddonActivity extends IAddonBase<Activity> {
     }
 
     public boolean requestWindowFeature(int featureId) {
-        return false;
-    }
-
-    public boolean setContentView(View view, LayoutParams params) {
         return false;
     }
 }

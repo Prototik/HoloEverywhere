@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<?xml version="1.0" encoding="UTF-8"?><resources>
 	<dimen name="preference_fragment_padding_side">24dp</dimen>
 	<dimen name="preference_screen_header_padding_side">24dip</dimen>
 </resources>

@@ -8,8 +8,10 @@ import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.widget.FrameLayout;
+import org.holoeverywhere.widget.LinearLayout;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -23,8 +25,13 @@ public class DemoThemePicker extends FrameLayout {
 
         @Override
         public void onClick(View view) {
+            if (ThemeManager.getDefaultTheme() == theme) {
+                return;
+            }
             ThemeManager.setDefaultTheme(theme);
-            ThemeManager.restart(activity, false);
+            if (mActivity != null) {
+                ThemeManager.restart(mActivity, false);
+            }
         }
     }
 
@@ -36,7 +43,7 @@ public class DemoThemePicker extends FrameLayout {
         THEME_HASHTABLE.put(ThemeManager.MIXED, R.id.mixed);
     }
 
-    private final Activity activity;
+    private Activity mActivity;
 
     public DemoThemePicker(Context context) {
         this(context, null);
@@ -47,34 +54,34 @@ public class DemoThemePicker extends FrameLayout {
     }
 
     public DemoThemePicker(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(
-                context,
-                attrs,
-                defStyleAttr,
-                context.obtainStyledAttributes(attrs, new int[] {
-                        android.R.attr.orientation
-                }, defStyleAttr, 0).getInt(0, android.widget.LinearLayout.VERTICAL) == android.widget.LinearLayout.HORIZONTAL);
-    }
-
-    public DemoThemePicker(Context context, AttributeSet attrs, int defStyleAttr,
-            boolean horizontal) {
         super(context, attrs, defStyleAttr);
-        if (!(context instanceof Activity)) {
-            throw new RuntimeException("Context is not Activity");
-        }
-        activity = (Activity) context;
         int layout;
+        TypedArray a = context.obtainStyledAttributes(attrs, new
+                int[] {
+                    android.R.attr.orientation
+                }, defStyleAttr, 0);
+        boolean horizontal = a.getInt(0, 0) == LinearLayout.HORIZONTAL;
+        a.recycle();
         if (horizontal) {
             layout = R.layout.theme_picker_horizontal;
         } else {
             layout = R.layout.theme_picker_vertical;
         }
         addView(LayoutInflater.inflate(context, layout, this, false));
-        findViewById(R.id.dark).setOnClickListener(new ThemeChangeListener(ThemeManager.DARK));
-        findViewById(R.id.light).setOnClickListener(new ThemeChangeListener(ThemeManager.LIGHT));
-        findViewById(R.id.mixed).setOnClickListener(new ThemeChangeListener(ThemeManager.MIXED));
+        findViewById(R.id.dark).setOnClickListener(new
+                ThemeChangeListener(ThemeManager.DARK));
+        findViewById(R.id.light).setOnClickListener(new
+                ThemeChangeListener(ThemeManager.LIGHT));
+        findViewById(R.id.mixed).setOnClickListener(new
+                ThemeChangeListener(ThemeManager.MIXED));
+    }
+
+    public void setActivity(Activity activity) {
+        if (mActivity != null) {
+            return;
+        }
+        mActivity = activity;
         ((DemoListRowView) findViewById(THEME_HASHTABLE.get(ThemeManager.getTheme(activity)
                 & ThemeManager.COLOR_SCHEME_MASK))).setSelectionHandlerVisiblity(true);
     }
-
 }

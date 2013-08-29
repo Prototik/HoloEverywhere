@@ -6,16 +6,13 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.Collection;
 
-import org.holoeverywhere.FontLoader;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.AddonSherlock;
 import org.holoeverywhere.addon.AddonSherlock.AddonSherlockA;
 import org.holoeverywhere.addon.IAddon;
 import org.holoeverywhere.addon.IAddonActivity;
-import org.holoeverywhere.addon.IAddonAttacher;
 import org.holoeverywhere.addon.IAddonBasicAttacher;
 
 import android.content.Intent;
@@ -26,14 +23,11 @@ import android.os.Bundle;
 import android.support.v4.app._HoloActivity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.internal.view.menu.MenuItemWrapper;
 import com.actionbarsherlock.internal.view.menu.MenuWrapper;
 import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 public abstract class Activity extends _HoloActivity {
     @Retention(RetentionPolicy.RUNTIME)
@@ -41,6 +35,35 @@ public abstract class Activity extends _HoloActivity {
     @Inherited
     public static @interface Addons {
         public String[] value();
+    }
+
+    private final class FindViewAction extends AddonCallback<IAddonActivity> {
+        private int mId;
+        private View mView;
+
+        @Override
+        public boolean action(IAddonActivity addon) {
+            return (mView = addon.findViewById(mId)) != null;
+        }
+
+        @Override
+        public boolean post() {
+            return (mView = getWindow().findViewById(mId)) != null;
+        }
+    }
+
+    private final class KeyEventAction extends AddonCallback<IAddonActivity> {
+        private KeyEvent mEvent;
+
+        @Override
+        public boolean action(IAddonActivity addon) {
+            return addon.dispatchKeyEvent(mEvent);
+        }
+
+        @Override
+        public boolean post() {
+            return Activity.super.dispatchKeyEvent(mEvent);
+        }
     }
 
     public static final String ADDON_ROBOGUICE = "Roboguice";
@@ -51,26 +74,12 @@ public abstract class Activity extends _HoloActivity {
      */
     @Deprecated
     public static final String ADDON_SLIDING_MENU = ADDON_SLIDER;
-    private final IAddonAttacher<IAddonActivity> mAttacher =
+    public static final String ADDON_TABBER = "Tabber";
+    private final IAddonBasicAttacher<IAddonActivity, Activity> mAttacher =
             new IAddonBasicAttacher<IAddonActivity, Activity>(this);
     private boolean mCreatedByThemeManager = false;
-    private boolean mFirstRun = true;
-
-    @Override
-    public void addContentView(View sView, final LayoutParams params) {
-        final View view = prepareDecorView(sView, params);
-        performAddonAction(new AddonCallback<IAddonActivity>() {
-            @Override
-            public boolean action(IAddonActivity addon) {
-                return addon.addContentView(view, params);
-            }
-
-            @Override
-            public void justPost() {
-                getWindow().addContentView(view, params);
-            }
-        });
-    }
+    private final FindViewAction mFindViewAction = new FindViewAction();
+    private final KeyEventAction mKeyEventAction = new KeyEventAction();
 
     @Override
     public <T extends IAddonActivity> T addon(Class<? extends IAddon> clazz) {
@@ -78,7 +87,7 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
-    public void addon(List<Class<? extends IAddon>> classes) {
+    public void addon(Collection<Class<? extends IAddon>> classes) {
         mAttacher.addon(classes);
     }
 
@@ -107,40 +116,17 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
-    public boolean dispatchKeyEvent(final KeyEvent event) {
-        return performAddonAction(new AddonCallback<IAddonActivity>() {
-            @Override
-            public boolean action(IAddonActivity addon) {
-                return addon.dispatchKeyEvent(event);
-            }
-
-            @Override
-            public boolean post() {
-                return Activity.super.dispatchKeyEvent(event);
-            }
-        });
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        mKeyEventAction.mEvent = event;
+        return performAddonAction(mKeyEventAction);
     }
 
     @Override
-    public View findViewById(final int id) {
-        View view = super.findViewById(id);
-        if (view != null) {
-            return view;
-        }
-        final AtomicReference<View> ref = new AtomicReference<View>();
-        performAddonAction(new AddonCallback<IAddonActivity>() {
-            @Override
-            public boolean action(IAddonActivity addon) {
-                View view = addon.findViewById(id);
-                if (view != null) {
-                    ref.set(view);
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
-        return ref.get();
+    public View findViewById(int id) {
+        mFindViewAction.mView = null;
+        mFindViewAction.mId = id;
+        performAddonAction(mFindViewAction);
+        return mFindViewAction.mView;
     }
 
     @Override
@@ -168,17 +154,13 @@ public abstract class Activity extends _HoloActivity {
         return mCreatedByThemeManager;
     }
 
-    public boolean isFirstRun() {
-        return mFirstRun;
-    }
-
     @Override
     public void lockAttaching() {
         mAttacher.lockAttaching();
     }
 
     @Override
-    public List<Class<? extends IAddon>> obtainAddonsList() {
+    public Collection<Class<? extends IAddon>> obtainAddonsList() {
         return mAttacher.obtainAddonsList();
     }
 
@@ -226,13 +208,10 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mFirstRun = savedInstanceState == null;
         final Bundle state = instanceState(savedInstanceState);
         mCreatedByThemeManager = getIntent().getBooleanExtra(
                 ThemeManager.KEY_CREATED_BY_THEME_MANAGER, false);
-        if (mCreatedByThemeManager) {
-            mFirstRun = false;
-        }
+        mAttacher.inhert(getSupportApplication());
         forceInit(state);
         performAddonAction(new AddonCallback<IAddonActivity>() {
             @Override
@@ -252,11 +231,6 @@ public abstract class Activity extends _HoloActivity {
     @Override
     public final boolean onCreateOptionsMenu(android.view.Menu menu) {
         return onCreateOptionsMenu(new MenuWrapper(menu));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
     }
 
     @Override
@@ -286,16 +260,16 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
-    public boolean onKeyUp(final int keyCode, final KeyEvent event) {
+    public boolean onHomePressed() {
         return performAddonAction(new AddonCallback<IAddonActivity>() {
             @Override
             public boolean action(IAddonActivity addon) {
-                return addon.onKeyUp(keyCode, event);
+                return addon.onHomePressed();
             }
 
             @Override
             public boolean post() {
-                return Activity.super.onKeyUp(keyCode, event);
+                return Activity.super.onHomePressed();
             }
         });
     }
@@ -348,11 +322,6 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return false;
-    }
-
-    @Override
     public void onPanelClosed(final int featureId, final android.view.Menu menu) {
         performAddonAction(new AddonCallback<IAddonActivity>() {
             @Override
@@ -384,7 +353,6 @@ public abstract class Activity extends _HoloActivity {
             }
         });
         super.onPostCreate(savedInstanceState);
-        FontLoader.applyDefaultStyles(getWindow().getDecorView());
     }
 
     @Override
@@ -413,6 +381,8 @@ public abstract class Activity extends _HoloActivity {
                     config.requireSlider = true;
                 } else if (ADDON_ROBOGUICE.equals(addon)) {
                     config.requireRoboguice = true;
+                } else if (ADDON_TABBER.equals(addon)) {
+                    config.requireTabber = true;
                 } else {
                     addon(addon);
                 }
@@ -423,11 +393,6 @@ public abstract class Activity extends _HoloActivity {
     @Override
     public final boolean onPrepareOptionsMenu(android.view.Menu menu) {
         return onPrepareOptionsMenu(new MenuWrapper(menu));
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return true;
     }
 
     @Override
@@ -534,10 +499,7 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     public void requestWindowFeature(long featureIdLong) {
-        if (!super.isInited()) {
-            super.requestWindowFeature(featureIdLong);
-            return;
-        }
+        super.requestWindowFeature(featureIdLong);
         final int featureId = (int) featureIdLong;
         performAddonAction(new AddonCallback<IAddonActivity>() {
             @Override
@@ -556,32 +518,6 @@ public abstract class Activity extends _HoloActivity {
         Bundle bundle = new Bundle(getClassLoader());
         onSaveInstanceState(bundle);
         return bundle.size() > 0 ? bundle : null;
-    }
-
-    @Override
-    public void setContentView(final int layoutResId) {
-        setContentView(getLayoutInflater().makeDecorView(layoutResId));
-    }
-
-    @Override
-    public void setContentView(View view) {
-        setContentView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-    }
-
-    @Override
-    public void setContentView(View sView, final LayoutParams params) {
-        final View view = prepareDecorView(sView, params);
-        performAddonAction(new AddonCallback<IAddonActivity>() {
-            @Override
-            public boolean action(IAddonActivity addon) {
-                return addon.setContentView(view, params);
-            }
-
-            @Override
-            public void justPost() {
-                getWindow().setContentView(view, params);
-            }
-        });
     }
 
     @Override

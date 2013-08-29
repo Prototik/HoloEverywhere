@@ -1,7 +1,7 @@
 
 package org.holoeverywhere.demo.fragments.dialogs;
 
-import org.holoeverywhere.demo.DemoDialogWhenLargeActivity;
+import org.holoeverywhere.demo.DemoDialogActivity;
 import org.holoeverywhere.demo.fragments.OtherFragment;
 
 public class DialogsFragment extends OtherFragment {
@@ -13,7 +13,8 @@ public class DialogsFragment extends OtherFragment {
     @Override
     protected void onHandleData() {
         addItem("Dialog", DialogsDialogFragment.class);
-        addItemActivity("Dialog when large", DemoDialogWhenLargeActivity.class);
+        addItem("Dialog activity", DemoDialogActivity.obtainIntent(getSupportActivity(), false));
+        addItem("Dialog when large", DemoDialogActivity.obtainIntent(getSupportActivity(), true));
         addItem("AlertDialog", DialogsAlertDialogFragment.class);
         addItem("AlertDialog (with buttons)", DialogsAlertDialogWithButtonsFragment.class);
         addItem("AlertDialog List", DialogsAlertDialogListFragment.class);

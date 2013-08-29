@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Dialog;
-import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.widget.ListView;
 
 import android.annotation.SuppressLint;
@@ -18,9 +17,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -104,16 +101,26 @@ public final class PreferenceScreen extends PreferenceGroup implements
         }
     }
 
-    private static class SavedState extends BaseSavedState {
+    public static class SavedState extends BaseSavedState {
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel source) {
+                return new SavedState(source);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+
         Bundle dialogBundle;
-        Fragment.SavedState fragmentState;
         boolean isShowing;
 
         public SavedState(Parcel source) {
             super(source);
             isShowing = source.readInt() == 1;
             dialogBundle = source.readBundle();
-            fragmentState = source.readParcelable(Fragment.SavedState.class.getClassLoader());
         }
 
         public SavedState(Parcelable superState) {
@@ -125,15 +132,12 @@ public final class PreferenceScreen extends PreferenceGroup implements
             super.writeToParcel(dest, flags);
             dest.writeInt(isShowing ? 1 : 0);
             dest.writeBundle(dialogBundle);
-            dest.writeParcelable(fragmentState, flags);
         }
     }
 
     private PreferenceDialog mDialog;
     private ListView mListView;
     private ListAdapter mRootAdapter;
-
-    private final String TAG = getClass().getSimpleName();
 
     public PreferenceScreen(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.preferenceScreenStyle);
@@ -169,7 +173,7 @@ public final class PreferenceScreen extends PreferenceGroup implements
             method.setAccessible(true);
             return (Integer) method.invoke(context);
         } catch (Exception e) {
-            Log.e(TAG, "Failed getting context theme", e);
+            e.printStackTrace();
             return R.style.Holo_Theme_NoActionBar;
         }
     }
@@ -185,54 +189,8 @@ public final class PreferenceScreen extends PreferenceGroup implements
                 || getPreferenceCount() == 0) {
             return;
         }
-        processShow(null, null);
+        showDialog(null);
     }
-
-    private void processShow(Bundle dialogState, Fragment.SavedState fragmentState) {
-        PreferenceFragment f = super.getPreferenceManager().getFragment();
-        if (f == null) {
-            showDialog(dialogState);
-        }
-        final int id = f.getContainerId();
-        if (id > 0) {
-            mInnerFragment = new InnerFragment();
-            mInnerFragment.mPreferenceScreen = this;
-            mInnerFragment.setInitialSavedState(fragmentState);
-            f.getFragmentManager().beginTransaction().replace(id, mInnerFragment)
-                    .addToBackStack("preferencescreen-" + getKey() + "-" + f).commit();
-        } else {
-            showDialog(dialogState);
-        }
-    }
-
-    public static final class InnerFragment extends Fragment {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            return LayoutInflater.inflate(mPreferenceScreen.getContext(),
-                    R.layout.preference_list_fragment, container, false);
-        }
-
-        PreferenceScreen mPreferenceScreen;
-
-        @Override
-        public void onDetach() {
-            mPreferenceScreen.mInnerFragment = null;
-            super.onDetach();
-        }
-
-        @Override
-        public void onViewCreated(View view, Bundle savedInstanceState) {
-            super.onViewCreated(view, savedInstanceState);
-            if (mPreferenceScreen.mListView != null) {
-                mPreferenceScreen.mListView.setAdapter(null);
-            }
-            mPreferenceScreen.mListView = (ListView) view.findViewById(android.R.id.list);
-            mPreferenceScreen.bind(mPreferenceScreen.mListView);
-        }
-    }
-
-    private InnerFragment mInnerFragment;
 
     protected ListAdapter onCreateRootAdapter() {
         return new PreferenceGroupAdapter(this);
@@ -264,7 +222,7 @@ public final class PreferenceScreen extends PreferenceGroup implements
         SavedState myState = (SavedState) state;
         super.onRestoreInstanceState(myState.getSuperState());
         if (myState.isShowing) {
-            processShow(myState.dialogBundle, myState.fragmentState);
+            showDialog(myState.dialogBundle);
         }
     }
 
@@ -274,10 +232,6 @@ public final class PreferenceScreen extends PreferenceGroup implements
         if (mDialog != null) {
             myState.isShowing = true;
             myState.dialogBundle = mDialog.onSaveInstanceState();
-        } else if (mInnerFragment != null) {
-            myState.isShowing = true;
-            myState.fragmentState = mInnerFragment.getFragmentManager().
-                    saveFragmentInstanceState(mInnerFragment);
         } else {
             myState.isShowing = false;
         }

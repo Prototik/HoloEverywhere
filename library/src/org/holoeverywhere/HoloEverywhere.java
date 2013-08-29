@@ -36,7 +36,6 @@ public class HoloEverywhere {
      * 
      * <pre>
      *  &lt;Preference holo:id="@+id/myCoolPreference" /&gt;
-     *  
      *  Key for SharedPreferences: myCoolPreference
      * </pre>
      */

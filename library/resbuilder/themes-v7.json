@@ -1,0 +1,125 @@
+{
+    "blocks": {
+        "Backport": {
+            "android:divider": "?android:listDivider",
+            "android:dropDownItemStyle": "@style/Holo.DropDownItem",
+            "android:gridViewStyle": "@style/Holo.GridView",
+            "android:itemBackground": "?selectableItemBackground",
+            "android:itemTextAppearance": "@style/Holo.TextAppearance.Widget.IconMenu.Item",
+            "android:progressBarStyle": "@style/Holo.ProgressBar",
+            "android:progressBarStyleLarge": "@style/Holo.ProgressBar.Large",
+            "android:progressBarStyleSmall": "@style/Holo.ProgressBar.Small",
+            "android:scrollbarDefaultDelayBeforeFade": 300,
+            "android:scrollbarFadeDuration": 250,
+            "android:scrollbarSize": "10dp",
+            "android:scrollbarTrackHorizontal": "@null",
+            "android:scrollbarTrackVertical": "@null",
+            "android:spinnerItemStyle": "@style/Holo.TextView.SpinnerItem"
+        },
+        "BackportBarDark": {
+            "android:panelBackground": "@drawable/menu_hardkey_panel_holo_dark",
+            "android:panelColorBackground": "#000000",
+            "android:panelColorForeground": "@color/primary_text_holo_dark",
+            "android:panelFullBackground": "@drawable/menu_background_fill_parent_width_holo_dark",
+            "android:panelTextAppearance": "@style/Holo.TextAppearance"
+        },
+        "BackportBarLight": {
+            "android:panelBackground": "@drawable/menu_hardkey_panel_holo_light",
+            "android:panelColorBackground": "#FFFFFF",
+            "android:panelColorForeground": "@color/primary_text_holo_light",
+            "android:panelFullBackground": "@drawable/menu_background_fill_parent_width_holo_light",
+            "android:panelTextAppearance": "@style/Holo.TextAppearance.Light"
+        },
+        "BackportDark | Backport": {
+            "android:buttonStyle": "@style/Holo.Button",
+            "android:buttonStyleToggle": "@style/Holo.Button.Toggle",
+            "android:checkboxStyle": "@style/Holo.CompoundButton.CheckBox",
+            "android:editTextStyle": "@style/Holo.EditText",
+            "android:expandableListViewStyle": "@style/Holo.ExpandableListView",
+            "android:imageButtonStyle": "@style/Holo.ImageButton",
+            "android:listChoiceBackgroundIndicator": "@drawable/list_selector_holo_dark",
+            "android:listChoiceIndicatorMultiple": "@drawable/btn_checkbox_holo_dark",
+            "android:listChoiceIndicatorSingle": "@drawable/btn_radio_holo_dark",
+            "android:listDivider": "@drawable/list_divider_holo_dark",
+            "android:listSelector": "@drawable/list_selector_holo_dark",
+            "android:listSeparatorTextViewStyle": "@style/Holo.TextView.ListSeparator",
+            "android:listViewStyle": "@style/Holo.ListView",
+            "android:progressBarStyleHorizontal": "@style/Holo.ProgressBar.Horizontal",
+            "android:radioButtonStyle": "@style/Holo.CompoundButton.RadioButton",
+            "android:ratingBarStyle": "@style/Holo.RatingBar",
+            "android:ratingBarStyleIndicator": "@style/Holo.RatingBar.Indicator",
+            "android:ratingBarStyleSmall": "@style/Holo.RatingBar.Small",
+            "android:scrollbarThumbHorizontal": "@drawable/scrollbar_handle_holo_dark",
+            "android:scrollbarThumbVertical": "@drawable/scrollbar_handle_holo_dark",
+            "android:seekBarStyle": "@style/Holo.SeekBar"
+        },
+        "BackportLight | Backport": {
+            "android:buttonStyle": "@style/Holo.Button.Light",
+            "android:buttonStyleToggle": "@style/Holo.Button.Toggle.Light",
+            "android:checkboxStyle": "@style/Holo.CompoundButton.CheckBox.Light",
+            "android:editTextStyle": "@style/Holo.EditText.Light",
+            "android:expandableListViewStyle": "@style/Holo.ExpandableListView.Light",
+            "android:imageButtonStyle": "@style/Holo.ImageButton.Light",
+            "android:listChoiceBackgroundIndicator": "@drawable/list_selector_holo_light",
+            "android:listChoiceIndicatorMultiple": "@drawable/btn_checkbox_holo_light",
+            "android:listChoiceIndicatorSingle": "@drawable/btn_radio_holo_light",
+            "android:listDivider": "@drawable/list_divider_holo_light",
+            "android:listSelector": "@drawable/list_selector_holo_light",
+            "android:listSeparatorTextViewStyle": "@style/Holo.TextView.ListSeparator.Light",
+            "android:listViewStyle": "@style/Holo.ListView.Light",
+            "android:progressBarStyleHorizontal": "@style/Holo.ProgressBar.Horizontal.Light",
+            "android:radioButtonStyle": "@style/Holo.CompoundButton.RadioButton.Light",
+            "android:ratingBarStyle": "@style/Holo.RatingBar.Light",
+            "android:ratingBarStyleIndicator": "@style/Holo.RatingBar.Indicator.Light",
+            "android:ratingBarStyleSmall": "@style/Holo.RatingBar.Small.Light",
+            "android:scrollbarThumbHorizontal": "@drawable/scrollbar_handle_holo_light",
+            "android:scrollbarThumbVertical": "@drawable/scrollbar_handle_holo_light",
+            "android:seekBarStyle": "@style/Holo.SeekBar.Light"
+        }
+    },
+    "data": {
+        "Holo.Theme | BackportDark BackportBarDark < Holo.Base.Theme": {
+            "holoTheme": "dark"
+        },
+        "Holo.Theme.DialogWhenLarge < Holo.Theme": {},
+        "Holo.Theme.DialogWhenLarge.Light < Holo.Theme.Light": {},
+        "Holo.Theme.DialogWhenLarge.Light.DarkActionBar < Holo.Theme.Light.DarkActionBar": {},
+        "Holo.Theme.DialogWhenLarge.Light.DarkActionBar.NoActionBar | NoActionBar": {},
+        "Holo.Theme.DialogWhenLarge.Light.NoActionBar | NoActionBar": {},
+        "Holo.Theme.DialogWhenLarge.NoActionBar | NoActionBar": {},
+        "Holo.Theme.Fullscreen | Fullscreen": {},
+        "Holo.Theme.Fullscreen.Wallpaper | Wallpaper": {},
+        "Holo.Theme.Light | BackportLight BackportBarLight < Holo.Base.Theme.Light": {
+            "holoTheme": "light"
+        },
+        "Holo.Theme.Light.DarkActionBar | BackportLight BackportBarDark < Holo.Base.Theme.Light.DarkActionBar": {
+            "holoTheme": "mixed"
+        },
+        "Holo.Theme.Light.DarkActionBar.Fullscreen | Fullscreen": {},
+        "Holo.Theme.Light.DarkActionBar.Fullscreen.Wallpaper | Wallpaper": {},
+        "Holo.Theme.Light.DarkActionBar.NoActionBar | NoActionBar": {},
+        "Holo.Theme.Light.DarkActionBar.NoActionBar.Fullscreen | Fullscreen": {},
+        "Holo.Theme.Light.DarkActionBar.NoActionBar.Fullscreen.Wallpaper | Wallpaper": {},
+        "Holo.Theme.Light.DarkActionBar.NoActionBar.Wallpaper | Wallpaper": {},
+        "Holo.Theme.Light.DarkActionBar.Wallpaper | Wallpaper": {},
+        "Holo.Theme.Light.Fullscreen | Fullscreen": {},
+        "Holo.Theme.Light.Fullscreen.Wallpaper | Wallpaper": {},
+        "Holo.Theme.Light.NoActionBar | NoActionBar": {},
+        "Holo.Theme.Light.NoActionBar.Fullscreen | Fullscreen": {},
+        "Holo.Theme.Light.NoActionBar.Fullscreen.Wallpaper | Wallpaper": {},
+        "Holo.Theme.Light.NoActionBar.Wallpaper | Wallpaper": {},
+        "Holo.Theme.Light.Wallpaper | Wallpaper": {},
+        "Holo.Theme.NoActionBar | NoActionBar": {},
+        "Holo.Theme.NoActionBar.Fullscreen | Fullscreen": {},
+        "Holo.Theme.NoActionBar.Fullscreen.Wallpaper | Wallpaper": {},
+        "Holo.Theme.NoActionBar.Wallpaper | Wallpaper": {},
+        "Holo.Theme.Wallpaper | Wallpaper": {}
+    },
+    "include": [
+        {
+            "name": "themes-core.json:styles",
+            "type": "only blocks"
+        }
+    ],
+    "output": "values/themes.xml"
+}

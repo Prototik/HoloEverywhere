@@ -132,7 +132,7 @@ public class NumberPickerPreference extends DialogPreference {
     }
 
     protected NumberPicker onCreateNumberPicker() {
-        return new NumberPicker(getContext());
+        return new NumberPicker(getDialogContext(true));
     }
 
     @Override

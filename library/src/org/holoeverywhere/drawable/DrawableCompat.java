@@ -7,7 +7,6 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.holoeverywhere.util.LongSparseArray;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -17,13 +16,13 @@ import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.support.v4.util.LongSparseArray;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.util.Xml;
 
 public final class DrawableCompat {
     private static final Map<String, Class<? extends Drawable>> CLASS_MAP = new HashMap<String, Class<? extends Drawable>>();
-
     private static final LongSparseArray<WeakReference<Drawable.ConstantState>> sDrawableCache = new LongSparseArray<WeakReference<Drawable.ConstantState>>();
 
     static {

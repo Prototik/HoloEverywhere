@@ -1,0 +1,37 @@
+{
+    "blocks": {
+        "Holo": {
+            "android:activatedBackgroundIndicator": "?activatedBackgroundIndicator",
+            "android:dialogTheme": "?dialogTheme",
+            "android:dividerHorizontal": "?dividerHorizontal",
+            "android:dividerVertical": "?dividerVertical",
+            "android:textAppearanceLargePopupMenu": "?textAppearanceLargePopupMenu",
+            "android:textAppearanceSmallPopupMenu": "?textAppearanceSmallPopupMenu",
+            "android:windowMinWidthMajor": "?windowMinWidthMajor",
+            "android:windowMinWidthMinor": "?windowMinWidthMinor"
+        },
+        "HoloBar": {},
+        "HoloBarDark | HoloBar": {},
+        "HoloBarLight | HoloBar": {},
+        "HoloDark | Holo": {},
+        "HoloLight | Holo": {}
+    },
+    "data": {
+        "Holo.Theme | HoloDark HoloBarDark < Holo.Base.Theme": {
+            "holoTheme": "dark"
+        },
+        "Holo.Theme.Light | HoloLight HoloBarLight < Holo.Base.Theme.Light": {
+            "holoTheme": "light"
+        },
+        "Holo.Theme.Light.DarkActionBar | HoloLight HoloBarDark < Holo.Base.Theme.Light.DarkActionBar": {
+            "holoTheme": "mixed"
+        }
+    },
+    "include": [
+        {
+            "name": "themes-core.json:styles",
+            "type": "only blocks"
+        }
+    ],
+    "output": "values-v11/themes.xml"
+}

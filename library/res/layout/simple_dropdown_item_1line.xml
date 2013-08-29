@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android" 
-    android:id="@android:id/text1"
-    style="?android:dropDownItemStyle"
-    android:textAppearance="?textAppearanceLargePopupMenu"
-    android:singleLine="true"
-    android:layout_width="match_parent"
-    android:layout_height="?listPreferredItemHeight"
-    android:ellipsize="marquee" />
+<?xml version="1.0" encoding="UTF-8"?><TextView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" style="?android:dropDownItemStyle" android:textAppearance="?android:textAppearanceMedium" android:ellipsize="marquee" android:singleLine="true" android:layout_height="?listPreferredItemHeight" android:id="@android:id/text1"></TextView>

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
+    <string name="activity_resolver_use_always">"Alltid"</string>
+    <string name="activity_resolver_use_once">"Bare én gang"</string>
     <string name="candidates_style">"TAG_FONT""kandidater""CLOSE_FONT"</string>
     <string name="capital_off">"Av"</string>
     <string name="capital_on">"På"</string>
+    <string name="chooseActivity">"Velg en handling"</string>
     <string name="date_picker_decrement_day_button">"Reduser dager"</string>
     <string name="date_picker_decrement_month_button">"Reduser måneder"</string>
     <string name="date_picker_decrement_year_button">"Reduser år"</string>
@@ -12,6 +15,7 @@
     <string name="date_time_done">"Ferdig"</string>
     <string name="date_time_set">"Lagre"</string>
     <string name="loading">"Laster inn …"</string>
+    <string name="noApplications">"Ingen apper kan gjøre dette."</string>
     <string name="number_picker_decrement_button">"Reduser"</string>
     <string name="number_picker_increment_button">"Øk"</string>
     <string name="number_picker_increment_scroll_action">"Dra opp for å øke og ned for å redusere."</string>
@@ -26,4 +30,5 @@
     <string name="time_picker_increment_hour_button">"Øk timer"</string>
     <string name="time_picker_increment_minute_button">"Øk minutter"</string>
     <string name="time_picker_increment_set_pm_button">"Angi p.m."</string>
+    <string name="whichApplication">"Fullfør med"</string>
 </resources>

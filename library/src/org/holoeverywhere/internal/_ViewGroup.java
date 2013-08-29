@@ -1,15 +1,11 @@
 
 package org.holoeverywhere.internal;
 
-import org.holoeverywhere.IHoloActivity;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
-
-import com.actionbarsherlock.view.ActionMode;
 
 public abstract class _ViewGroup extends ViewGroup {
     public static final int ACCESSIBILITY_FOCUS_BACKWARD = View.FOCUS_BACKWARD | 0x00000002;
@@ -43,10 +39,5 @@ public abstract class _ViewGroup extends ViewGroup {
 
     public boolean isAccessibilityManagerEnabled() {
         return _ViewGroup.isAccessibilityManagerEnabled(getContext());
-    }
-
-    public ActionMode startActionMode(ActionMode.Callback actionModeCallback) {
-        return ((IHoloActivity) getContext())
-                .startActionMode(actionModeCallback);
     }
 }

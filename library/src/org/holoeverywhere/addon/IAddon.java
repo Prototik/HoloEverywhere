@@ -1,13 +1,32 @@
 
 package org.holoeverywhere.addon;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.Application;
+import org.holoeverywhere.app.Fragment;
+import org.holoeverywhere.util.WeaklyMap;
 
 public abstract class IAddon {
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    public @interface Addon {
+        public Class<? extends IAddon>[] conflict() default {};
+
+        public String[] conflictStrings() default {};
+
+        public boolean inhert() default false;
+
+        public int weight() default -1;
+    }
+
     private static final Map<Class<? extends IAddon>, IAddon> sAddonsMap = new HashMap<Class<? extends IAddon>, IAddon>();
 
     @SuppressWarnings("unchecked")
@@ -50,7 +69,7 @@ public abstract class IAddon {
         return addon(classname).obtain(object);
     }
 
-    private final Map<Object, Object> mStatesMap = new WeakHashMap<Object, Object>();
+    private final Map<Object, Object> mStatesMap = new WeaklyMap<Object, Object>();
     private final Map<Class<?>, Class<? extends IAddonBase<?>>> mTypesMap = new HashMap<Class<?>, Class<? extends IAddonBase<?>>>();
 
     @SuppressWarnings("unchecked")
@@ -69,7 +88,7 @@ public abstract class IAddon {
                 clazz = clazz.getSuperclass();
             }
             addon = ((Class<V>) mTypesMap.get(clazz)).newInstance();
-            addon.attach(object);
+            addon.attach(object, this);
             mStatesMap.put(object, addon);
             return addon;
         } catch (Exception e) {
@@ -79,6 +98,18 @@ public abstract class IAddon {
 
     public <T> void register(Class<T> clazz, Class<? extends IAddonBase<T>> addonClazz) {
         mTypesMap.put(clazz, addonClazz);
+    }
+
+    public void registerActivity(Class<? extends IAddonActivity> addonClazz) {
+        register(Activity.class, addonClazz);
+    }
+
+    public void registerApplication(Class<? extends IAddonApplication> addonClazz) {
+        register(Application.class, addonClazz);
+    }
+
+    public void registerFragment(Class<? extends IAddonFragment> addonClazz) {
+        register(Fragment.class, addonClazz);
     }
 
     public void unregister(Class<?> clazz) {

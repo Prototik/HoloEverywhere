@@ -1,235 +1,271 @@
 
 package org.holoeverywhere.addon;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.slider.ISlider;
+import org.holoeverywhere.addon.IAddon.Addon;
 import org.holoeverywhere.slider.R;
-import org.holoeverywhere.slider.SliderView;
-import org.holoeverywhere.slider.SliderView.OnSlideListener;
-import org.holoeverywhere.slider.SliderView.SavedState;
-import org.holoeverywhere.slider.SliderView.SliderDrawer;
-import org.holoeverywhere.slider.SliderView.TouchMode;
+import org.holoeverywhere.slider.SliderMenu;
+import org.holoeverywhere.widget.DrawerLayout;
 
-import android.content.res.TypedArray;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout.DrawerListener;
+import android.support.v4.widget.DrawerLayout.LayoutParams;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
+import android.view.ViewParent;
 import android.view.Window;
 
+@Addon(weight = 40)
 public class AddonSlider extends IAddon {
-    public static class AddonSliderA extends IAddonActivity implements ISlider {
-        private static final String KEY_SLIDER_STATE = "holo:slider:state";
+    public static class AddonSliderA extends IAddonActivity {
         private boolean mAddonEnabled = true;
-        private boolean mDragWithActionBar = false;
-        private boolean mForceNotRestoreInstance = false;
-        private boolean mRejectContentView = true;
-        private SliderView mSliderView;
-        private View mView;
+        private DrawerLayout mDrawerLayout;
+        private Context mMenuContext;
+        private int mMenuLayout;
+        private boolean mOverlayActionBar = false;
+        private SliderMenu mSliderMenu;
 
-        @Override
-        public void disableShadow() {
-            mSliderView.disableShadow();
+        private void attach(View view, int gravity) {
+            if (view == null) {
+                return;
+            }
+            final ViewGroup.LayoutParams initialParams = view.getLayoutParams();
+            DrawerLayout.LayoutParams params;
+            if (initialParams instanceof DrawerLayout.LayoutParams) {
+                params = (LayoutParams) initialParams;
+            } else if (initialParams != null) {
+                params = new LayoutParams(initialParams);
+            } else {
+                params = new LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+                        android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+            }
+            params.gravity = gravity;
+            view.setLayoutParams(params);
+            ViewParent parent = view.getParent();
+            if (parent != null) {
+                ((ViewGroup) parent).removeView(view);
+            }
+            requestDrawerLayout();
+            mDrawerLayout.addView(view, gravity == Gravity.NO_GRAVITY ? 0 : -1, params);
+        }
+
+        public void closeDrawer(int gravity) {
+            requestDrawerLayout().closeDrawer(gravity);
+        }
+
+        public void closeDrawer(View drawerView) {
+            requestDrawerLayout().closeDrawer(drawerView);
+        }
+
+        public void closeDrawers() {
+            requestDrawerLayout().closeDrawers();
+        }
+
+        public void closeLeftView() {
+            closeView(getLeftView());
+        }
+
+        public void closeRightView() {
+            closeView(getRightView());
+        }
+
+        private void closeView(View view) {
+            if (view != null && requestDrawerLayout().isDrawerOpen(view)) {
+                closeDrawer(view);
+            }
         }
 
         @Override
         public View findViewById(int id) {
-            if (mView != null) {
-                View view = mView.findViewById(id);
-                if (view != null) {
-                    return view;
-                }
-            }
-            return mSliderView != null ? mSliderView.findViewById(id) : null;
+            return mDrawerLayout != null ? mDrawerLayout.findViewById(id) : null;
         }
 
-        public void forceNotRestoreInstance() {
-            mForceNotRestoreInstance = true;
-        }
-
-        @Override
         public View getContentView() {
-            return mSliderView.getContentView();
+            return get().findViewById(R.id.contentView);
         }
 
-        @Override
-        public SliderDrawer getDrawer() {
-            return mSliderView.getDrawer();
+        public DrawerLayout getDrawerLayout() {
+            return mDrawerLayout;
         }
 
-        @Override
-        public int getLeftDragBound() {
-            return mSliderView.getLeftDragBound();
+        public int getDrawerLockMode(int edgeGravity) {
+            return requestDrawerLayout().getDrawerLockMode(edgeGravity);
         }
 
-        @Override
-        public float getLeftTranslateFactor() {
-            return mSliderView.getLeftTranslateFactor();
+        public int getDrawerLockMode(View drawerView) {
+            return requestDrawerLayout().getDrawerLockMode(drawerView);
         }
 
-        @Override
         public View getLeftView() {
-            return mSliderView.getLeftView();
+            return get().findViewById(R.id.leftView);
         }
 
-        @Override
-        public int getLeftViewWidth() {
-            return mSliderView.getLeftViewWidth();
+        public Context getMenuContext() {
+            return mMenuContext;
         }
 
-        @Override
-        public OnSlideListener getOnSlideListener() {
-            return mSliderView.getOnSlideListener();
+        public int getMenuLayout() {
+            return mMenuLayout;
         }
 
-        @Override
-        public int getProgress() {
-            return mSliderView.getProgress();
-        }
-
-        @Override
-        public int getRightDragBound() {
-            return mSliderView.getRightDragBound();
-        }
-
-        @Override
-        public float getRightTranslateFactor() {
-            return mSliderView.getRightTranslateFactor();
-        }
-
-        @Override
         public View getRightView() {
-            return mSliderView.getRightView();
-        }
-
-        @Override
-        public int getRightViewWidth() {
-            return mSliderView.getRightViewWidth();
-        }
-
-        public SliderView getSliderView() {
-            return mSliderView;
-        }
-
-        @Override
-        public TouchMode getTouchMode() {
-            return mSliderView.getTouchMode();
-        }
-
-        @Override
-        public int getTouchModeLeftMargin() {
-            return mSliderView.getTouchModeLeftMargin();
-        }
-
-        @Override
-        public int getTouchModeRightMargin() {
-            return mSliderView.getTouchModeRightMargin();
+            return get().findViewById(R.id.rightView);
         }
 
         public boolean isAddonEnabled() {
             return mAddonEnabled;
         }
 
-        @Override
-        public boolean isBlockLongMove() {
-            return mSliderView.isBlockLongMove();
+        public boolean isDrawerOpen(int drawerGravity) {
+            return requestDrawerLayout().isDrawerOpen(drawerGravity);
         }
 
-        @Override
-        public boolean isContentShowed() {
-            return mSliderView.isContentShowed();
+        public boolean isDrawerOpen(View drawer) {
+            return requestDrawerLayout().isDrawerOpen(drawer);
         }
 
-        public boolean isDragWithActionBar() {
-            return mDragWithActionBar;
+        public boolean isDrawerVisible(int drawerGravity) {
+            return requestDrawerLayout().isDrawerVisible(drawerGravity);
         }
 
-        public boolean isForceNotRestoreInstance() {
-            return mForceNotRestoreInstance;
+        public boolean isDrawerVisible(View drawer) {
+            return requestDrawerLayout().isDrawerVisible(drawer);
         }
 
-        @Override
-        public boolean isLeftShowed() {
-            return mSliderView.isLeftShowed();
-        }
-
-        @Override
         public boolean isOverlayActionBar() {
-            return mSliderView.isOverlayActionBar();
+            return mOverlayActionBar;
+        }
+
+        public SliderMenu obtainDefaultSliderMenu() {
+            return obtainDefaultSliderMenu(0);
+        }
+
+        public SliderMenu obtainDefaultSliderMenu(int menuLayout) {
+            if (mSliderMenu != null) {
+                return mSliderMenu;
+            }
+            mMenuLayout = menuLayout;
+            mMenuContext = get().getSupportActionBarContext();
+            setDrawerLayout(R.layout.slider_default_layout);
+            setOverlayActionBar(true);
+            mSliderMenu = new SliderMenu(this);
+            mSliderMenu.setHandleHomeKey(true);
+            mSliderMenu.makeDefaultMenu(mMenuContext);
+            return mSliderMenu;
+        }
+
+        public SliderMenu obtainSliderMenu() {
+            if (mSliderMenu == null) {
+                mSliderMenu = new SliderMenu(this);
+            }
+            return mSliderMenu;
         }
 
         @Override
-        public boolean isRightShowed() {
-            return mSliderView.isRightShowed();
+        public boolean onHomePressed() {
+            if (mSliderMenu != null) {
+                return mSliderMenu.onHomePressed();
+            }
+            return super.onHomePressed();
         }
 
+        @SuppressLint("NewApi")
         @Override
         public void onPostCreate(Bundle savedInstanceState) {
-            mRejectContentView = false;
+            if (mSliderMenu != null) {
+                mSliderMenu.onPostCreate(savedInstanceState);
+            }
             if (!mAddonEnabled) {
-                get().setContentView(mView);
-                mSliderView = null;
                 return;
             }
-            if (savedInstanceState != null && savedInstanceState.containsKey(KEY_SLIDER_STATE)
-                    && !mForceNotRestoreInstance) {
-                SavedState state = savedInstanceState.getParcelable(KEY_SLIDER_STATE);
-                mSliderView.dispatchRestoreInstanceState(state);
+            requestDrawerLayout();
+            final View contentView = get().findViewById(R.id.contentView);
+            if (contentView == null) {
+                throw new IllegalStateException(
+                        "You should specify your content view by @id/contentView");
             }
-            View view = mView.findViewById(R.id.contentView);
-            if (view != null) {
-                mSliderView.setContentView(view);
-            }
-            view = mView.findViewById(R.id.leftView);
-            if (view != null) {
-                mSliderView.setLeftView(view);
-            }
-            view = mView.findViewById(R.id.rightView);
-            if (view != null) {
-                mSliderView.setRightView(view);
-            }
-            if (mSliderView.getContentView() == null && mSliderView.getLeftView() == null
-                    && mSliderView.getRightView() == null) {
-                mSliderView.setContentView(mView);
-            }
-            TypedArray a = get().obtainStyledAttributes(new int[] {
-                    android.R.attr.windowBackground
-            });
-            final int windowBackground = a.getResourceId(0, 0);
-            a.recycle();
-            if (mDragWithActionBar) {
-                get().setContentView(mSliderView.getContentView());
+            final View leftView = get().findViewById(R.id.leftView), rightView = get()
+                    .findViewById(R.id.rightView);
+            mDrawerLayout.removeAllViewsInLayout();
+            if (mOverlayActionBar) {
+                mDrawerLayout.setFitsSystemWindows(true);
+                get().setContentView(contentView);
                 ViewGroup decorView = (ViewGroup) get().getWindow().getDecorView();
-                view = decorView.getChildAt(0);
-                view.setBackgroundResource(windowBackground);
+                View view = decorView.getChildAt(0);
                 decorView.removeView(view);
-                mSliderView.setContentView(view);
-                decorView.addView(mSliderView, 0);
+                setContentView(view);
+                decorView.addView(mDrawerLayout, 0);
             } else {
-                if (windowBackground > 0 && mSliderView.getContentView() != null) {
-                    mSliderView.getContentView().setBackgroundResource(windowBackground);
-                }
-                get().setContentView(mSliderView);
+                get().setContentView(mDrawerLayout);
+                setContentView(contentView);
             }
+            setLeftView(leftView);
+            setRightView(rightView);
         }
 
         @Override
-        public void onPreCreate(Bundle savedInstanceState) {
-            mSliderView = new SliderView(get());
-            mSliderView.setId(R.id.slider);
+        public void onResume() {
+            if (mSliderMenu != null) {
+                mSliderMenu.onResume();
+            }
         }
 
         @Override
         public void onSaveInstanceState(Bundle outState) {
-            if (mSliderView != null) {
-                outState.putParcelable(KEY_SLIDER_STATE, mSliderView.dispatchSaveInstanceState());
+            super.onSaveInstanceState(outState);
+            if (mSliderMenu != null) {
+                mSliderMenu.onSaveInstanceState(outState);
             }
+        }
+
+        public void openContentView() {
+            closeDrawers();
+        }
+
+        public void openContentViewDelayed(int delay) {
+            handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    openContentView();
+                }
+            }, delay);
+        }
+
+        public void openDrawer(int gravity) {
+            requestDrawerLayout().openDrawer(gravity);
+        }
+
+        public void openDrawer(View drawerView) {
+            requestDrawerLayout().openDrawer(drawerView);
+        }
+
+        public void openLeftView() {
+            openView(getLeftView());
+        }
+
+        public void openRightView() {
+            openView(getRightView());
+        }
+
+        private void openView(View view) {
+            if (view != null && !requestDrawerLayout().isDrawerOpen(view)) {
+                openDrawer(view);
+            }
+        }
+
+        private DrawerLayout requestDrawerLayout() {
+            if (mDrawerLayout == null && mAddonEnabled) {
+                setDrawerLayout(R.layout.slider_default_layout);
+            }
+            return mDrawerLayout;
         }
 
         @Override
         public boolean requestWindowFeature(int featureId) {
-            if (featureId == Window.FEATURE_ACTION_BAR_OVERLAY) {
+            if (Window.FEATURE_ACTION_BAR_OVERLAY == featureId) {
                 setOverlayActionBar(true);
             }
             return super.requestWindowFeature(featureId);
@@ -239,164 +275,88 @@ public class AddonSlider extends IAddon {
             mAddonEnabled = addonEnabled;
         }
 
-        @Override
-        public void setBlockLongMove(boolean blockLongMove) {
-            mSliderView.setBlockLongMove(blockLongMove);
-        }
-
-        public void setContentView(int layout) {
-            setContentView(LayoutInflater.inflate(get(), layout));
-        }
-
-        @Override
+        @SuppressLint("InlinedApi")
         public void setContentView(View view) {
-            mSliderView.setContentView(view);
+            attach(view, Gravity.NO_GRAVITY);
         }
 
-        /**
-         * Doesn't call this manually!
-         */
-        @Override
-        @Deprecated
-        public boolean setContentView(View view, LayoutParams params) {
-            if (mRejectContentView) {
-                mView = view;
-                return true;
-            } else {
-                return false;
+        public void setDrawerLayout(DrawerLayout drawerLayout) {
+            mDrawerLayout = drawerLayout;
+            if (mDrawerLayout != null) {
+                mDrawerLayout.setId(R.id.slider);
             }
         }
 
-        @Override
-        public void setDragBound(int dragBound) {
-            mSliderView.setDragBound(dragBound);
+        public void setDrawerLayout(int layoutResource) {
+            final View view = get().getThemedLayoutInflater().inflate(layoutResource, null, false);
+            if (view instanceof DrawerLayout) {
+                setDrawerLayout((DrawerLayout) view);
+            } else {
+                get().setContentView(view);
+                setAddonEnabled(false);
+            }
         }
 
-        public void setDragWithActionBar(boolean dragWithActionBar) {
-            mDragWithActionBar = dragWithActionBar;
+        public void setDrawerListener(DrawerListener listener) {
+            requestDrawerLayout().setDrawerListener(listener);
         }
 
-        @Override
-        public void setDrawer(SliderDrawer drawer) {
-            mSliderView.setDrawer(drawer);
+        public void setDrawerLockMode(int lockMode) {
+            requestDrawerLayout().setDrawerLockMode(lockMode);
         }
 
-        @Override
-        public void setLeftDragBound(int leftDragBound) {
-            mSliderView.setLeftDragBound(leftDragBound);
+        public void setDrawerLockMode(int lockMode, int edgeGravity) {
+            requestDrawerLayout().setDrawerLockMode(lockMode, edgeGravity);
         }
 
-        @Override
-        public void setLeftTranslateFactor(float leftTranslateFactor) {
-            mSliderView.setLeftTranslateFactor(leftTranslateFactor);
+        public void setDrawerLockMode(int lockMode, View drawerView) {
+            requestDrawerLayout().setDrawerLockMode(lockMode, drawerView);
         }
 
-        public void setLeftView(int layout) {
-            setLeftView(LayoutInflater.inflate(get(), layout));
+        public void setDrawerShadow(Drawable shadowDrawable, int gravity) {
+            requestDrawerLayout().setDrawerShadow(shadowDrawable, gravity);
         }
 
-        @Override
+        public void setDrawerShadow(int resId, int gravity) {
+            requestDrawerLayout().setDrawerShadow(resId, gravity);
+        }
+
+        @SuppressLint("InlinedApi")
         public void setLeftView(View view) {
-            mSliderView.setLeftView(view);
+            attach(view, Gravity.START);
         }
 
-        @Override
-        public void setLeftViewWidth(int leftViewWidth) {
-            mSliderView.setLeftViewWidth(leftViewWidth);
-        }
-
-        @Override
-        public void setOnSlideListener(OnSlideListener onSlideListener) {
-            mSliderView.setOnSlideListener(onSlideListener);
-        }
-
-        @Override
         public void setOverlayActionBar(boolean overlayActionBar) {
-            mSliderView.setOverlayActionBar(overlayActionBar);
+            mOverlayActionBar = overlayActionBar;
         }
 
-        @Override
-        public void setProgress(int progress) {
-            mSliderView.setProgress(progress);
-        }
-
-        @Override
-        public void setRightDragBound(int rightDragBound) {
-            mSliderView.setRightDragBound(rightDragBound);
-        }
-
-        @Override
-        public void setRightTranslateFactor(float rightTranslateFactor) {
-            mSliderView.setRightTranslateFactor(rightTranslateFactor);
-        }
-
-        public void setRightView(int layout) {
-            setRightView(LayoutInflater.inflate(get(), layout));
-        }
-
-        @Override
+        @SuppressLint("InlinedApi")
         public void setRightView(View view) {
-            mSliderView.setRightView(view);
+            attach(view, Gravity.END);
         }
 
-        @Override
-        public void setRightViewWidth(int rightViewWidth) {
-            mSliderView.setRightViewWidth(rightViewWidth);
+        public void setScrimColor(int color) {
+            requestDrawerLayout().setScrimColor(color);
         }
 
-        @Override
-        public void setTouchMode(TouchMode touchMode) {
-            mSliderView.setTouchMode(touchMode);
-        }
-
-        @Override
-        public void setTouchModeLeftMargin(int touchModeLeftMargin) {
-            mSliderView.setTouchModeLeftMargin(touchModeLeftMargin);
-        }
-
-        @Override
-        public void setTouchModeMargin(int touchModeMargin) {
-            mSliderView.setTouchModeMargin(touchModeMargin);
-        }
-
-        @Override
-        public void setTouchModeRightMargin(int touchModeRightMargin) {
-            mSliderView.setTouchModeRightMargin(touchModeRightMargin);
-
-        }
-
-        @Override
-        public void setTranslateFactor(float translateFactor) {
-            mSliderView.setTranslateFactor(translateFactor);
-        }
-
-        @Override
-        public void showContentDelayed() {
-            mSliderView.showContentDelayed();
-        }
-
-        @Override
-        public void showContentView(boolean smooth) {
-            mSliderView.showContentView(smooth);
-        }
-
-        @Override
-        public void showLeftView(boolean smooth) {
-            mSliderView.showLeftView(smooth);
-        }
-
-        @Override
-        public void showRightView(boolean smooth) {
-            mSliderView.showRightView(smooth);
-        }
-
-        @Override
         public void toggle() {
-            mSliderView.toggle();
+            View view = getLeftView();
+            if (view == null) {
+                view = getRightView();
+            }
+            if (view == null) {
+                return;
+            }
+            if (requestDrawerLayout().isDrawerOpen(view)) {
+                openContentView();
+            } else {
+                openView(view);
+            }
         }
+
     }
 
     public AddonSlider() {
-        register(Activity.class, AddonSliderA.class);
+        registerActivity(AddonSliderA.class);
     }
 }

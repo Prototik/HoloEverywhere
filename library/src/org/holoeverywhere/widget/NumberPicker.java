@@ -133,10 +133,10 @@ public class NumberPicker extends LinearLayout {
     class PressedStateHelper implements Runnable {
         public static final int BUTTON_DECREMENT = 2;
         public static final int BUTTON_INCREMENT = 1;
+        private static final int MODE_PRESS = 1;
+        private static final int MODE_TAPPED = 2;
         private int mManagedButton;
         private int mMode;
-        private final int MODE_PRESS = 1;
-        private final int MODE_TAPPED = 2;
 
         public void buttonPressDelayed(int button) {
             cancel();

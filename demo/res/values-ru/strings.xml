@@ -11,10 +11,9 @@
     <string name="developer_christophe_description">Основатель и координатор проекта</string>
     <string name="developer_sergey">Сергей Шатунов</string>
     <string name="developer_sergey_description">Главный разработчик</string>
-    <string name="disable_music">Выключить музыку</string>
     <string name="edittext">Поле ввода</string>
     <string name="light">Светлая</string>
-    <string name="mixed">Смешанная</string>
+    <string name="mixed">Микс</string>
     <string name="other">Прочее</string>
     <string name="preference_base">База</string>
     <string name="preference_check_box_summary_off">Я не отмечен ;(</string>

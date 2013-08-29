@@ -5,7 +5,7 @@
 	<groupId>org.holoeverywhere</groupId>
 	<artifactId>parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.5.1-SNAPSHOT</version>
+	<version>1.6.9-SNAPSHOT</version>
 
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -14,29 +14,27 @@
 	</parent>
 
 	<name>HoloEverywhere Parent</name>
-	<description>Android library bringing Holo Theme to Android 1.6 and above.</description>
-	<url>https://github.com/ChristopheVersieux/HoloEverywhere</url>
+	<description>Backport Holo Theme from Android 4.* to 2.1+</description>
+	<url>https://github.com/Prototik/HoloEverywhere</url>
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
-		<module>support-library</module>
 		<module>library</module>
 		<module>addons</module>
 		<module>application</module>
 		<module>demo</module>
-		<module>resbuilder</module>
 	</modules>
 
 	<scm>
-		<url>https://github.com/ChristopheVersieux/HoloEverywhere</url>
-		<connection>scm:git:git://github.com/ChristopheVersieux/HoloEverywhere.git</connection>
-		<developerConnection>scm:git:git@github.com:ChristopheVersieux/HoloEverywhere.git</developerConnection>
-		<tag>holoeverywhere-1.5.1</tag>
+		<url>https://github.com/Prototik/HoloEverywhere</url>
+		<connection>scm:git:git://github.com/Prototik/HoloEverywhere.git</connection>
+		<developerConnection>scm:git:git@github.com:Prototik/HoloEverywhere.git</developerConnection>
+		<tag>stable</tag>
 	</scm>
 
 	<ciManagement>
-		<system>jenkins</system>
-		<url>http://ci.holoeverywhere.org/</url>
+		<system>travis</system>
+		<url>http://travis-ci.org/Prototik/HoloEverywhere</url>
 	</ciManagement>
 
 	<developers>
@@ -61,7 +59,7 @@
 
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/ChristopheVersieux/HoloEverywhere/issues</url>
+		<url>https://github.com/Prototik/HoloEverywhere/issues</url>
 	</issueManagement>
 
 	<distributionManagement>
@@ -88,10 +86,10 @@
 
 	<licenses>
 		<license>
-			<name>LGPLv3</name>
-			<url>https://raw.github.com/ChristopheVersieux/HoloEverywhere/master/LICENSE</url>
+			<name>MIT License</name>
+			<url>https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE</url>
 			<distribution>repo</distribution>
-			<comments>Copyright (c) 2012 Christophe Versieux, Sergey Shatunov</comments>
+			<comments>Copyright (c) 2013 Sergey Shatunov</comments>
 		</license>
 	</licenses>
 
@@ -100,14 +98,14 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<java.version>1.6</java.version>
-		<abs.version>4.2.0</abs.version>
+		<abs.version>4.3.1</abs.version>
 		<noa.version>2.4.0</noa.version>
 		<junit.version>4.8.1</junit.version>
 		<android.version>4.1.1.4</android.version>
-		<android-support.version>r12</android-support.version>
+		<android-support.version>r18.1</android-support.version>
 		<android.sdk.platform>16</android.sdk.platform>
 
-		<github.downloads.repositoryOwner>ChristopheVersieux</github.downloads.repositoryOwner>
+		<github.downloads.repositoryOwner>Prototik</github.downloads.repositoryOwner>
 		<github.downloads.repositoryName>HoloEverywhere</github.downloads.repositoryName>
 
 		<holo.resbuilder.buildAll>true</holo.resbuilder.buildAll>
@@ -163,7 +161,7 @@
 				<plugin>
 					<groupId>org.holoeverywhere</groupId>
 					<artifactId>resbuilder</artifactId>
-					<version>${project.version}</version>
+					<version>2.1.1</version>
 					<inherited>true</inherited>
 					<executions>
 						<execution>
@@ -173,6 +171,7 @@
 						</execution>
 					</executions>
 					<configuration>
+						<verbose>false</verbose>
 						<includeDirs>
 							<dir>${project.basedir}/resbuilder</dir>
 						</includeDirs>
@@ -182,7 +181,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.0</version>
+					<version>3.1</version>
 					<inherited>true</inherited>
 					<configuration>
 						<source>${java.version}</source>
@@ -194,40 +193,15 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
 					<version>2.9</version>
-					<inherited>true</inherited>
-					<configuration>
-						<skip>true</skip>
-					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-					<artifactId>android-maven-plugin</artifactId>
-					<version>3.5.1</version>
-					<inherited>true</inherited>
-					<extensions>true</extensions>
-					<configuration>
-						<sign>
-							<debug>false</debug>
-						</sign>
-						<zipalign>
-							<skip>true</skip>
-						</zipalign>
-						<undeployBeforeDeploy>true</undeployBeforeDeploy>
-						<proguard>
-							<skip>true</skip>
-						</proguard>
-					</configuration>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
-					<version>2.4</version>
+					<version>2.4.1</version>
 					<configuration>
 						<autoVersionSubmodules>true</autoVersionSubmodules>
-						<tagNameFormat>holoeverywhere-@{project.version}</tagNameFormat>
-						<scmCommentPrefix>Release: </scmCommentPrefix>
+						<tagNameFormat>v@{project.version}</tagNameFormat>
 					</configuration>
 				</plugin>
 
@@ -296,6 +270,26 @@
 				</plugin>
 
 				<plugin>
+					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+					<artifactId>android-maven-plugin</artifactId>
+					<version>3.6.0</version>
+					<inherited>true</inherited>
+					<extensions>true</extensions>
+					<configuration>
+						<sign>
+							<debug>false</debug>
+						</sign>
+						<zipalign>
+							<skip>true</skip>
+						</zipalign>
+						<undeployBeforeDeploy>true</undeployBeforeDeploy>
+						<proguard>
+							<skip>true</skip>
+						</proguard>
+					</configuration>
+				</plugin>
+
+				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
 					<version>1.0.0</version>
@@ -319,9 +313,16 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<version>2.10</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
+
 	<profiles>
 		<profile>
 			<id>release</id>
@@ -359,6 +360,36 @@
 						</plugin>
 					</plugins>
 				</pluginManagement>
+			</build>
+		</profile>
+
+		<profile>
+			<id>checkstyle</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-checkstyle-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>checkstyle</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>checkstyle</goal>
+								</goals>
+								<configuration>
+									<failsOnError>true</failsOnError>
+									<failOnViolation>true</failOnViolation>
+									<consoleOutput>true</consoleOutput>
+									<configLocation>checkstyle.xml</configLocation>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
 			</build>
 		</profile>
 	</profiles>

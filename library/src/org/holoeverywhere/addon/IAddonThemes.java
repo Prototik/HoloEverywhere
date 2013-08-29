@@ -2,11 +2,11 @@
 package org.holoeverywhere.addon;
 
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.ThemeManager.ThemeSetter;
 import org.holoeverywhere.app.ContextThemeWrapperPlus;
+import org.holoeverywhere.util.WeaklyMap;
 
 import android.content.Context;
 
@@ -63,7 +63,7 @@ public class IAddonThemes implements ThemeSetter {
         }
         AddonThemeWrapper wrapper = null;
         if (mContexts != null) {
-            mContexts.get(context);
+            wrapper = mContexts.get(context);
         }
         if (wrapper == null) {
             final int theme = themeResolver.resolveThemeForContext(context, invalidTheme);
@@ -72,7 +72,7 @@ public class IAddonThemes implements ThemeSetter {
             }
             wrapper = new AddonThemeWrapper(context, theme);
             if (mContexts == null) {
-                mContexts = new WeakHashMap<Context, AddonThemeWrapper>();
+                mContexts = new WeaklyMap<Context, AddonThemeWrapper>();
             }
             mContexts.put(context, wrapper);
         }

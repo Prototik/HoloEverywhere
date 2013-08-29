@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.holoeverywhere.ArrayAdapter;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.app.ListActivity;
 import org.holoeverywhere.util.XmlUtils;
+import org.holoeverywhere.widget.ArrayAdapter;
 import org.holoeverywhere.widget.Button;
 import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.TextView;
@@ -263,15 +263,10 @@ public abstract class PreferenceActivity extends ListActivity implements
     private final ArrayList<Header> mHeaders = new ArrayList<Header>();
     private FrameLayout mListFooter;
     private Button mNextButton;
-
     private PreferenceManager mPreferenceManager;
-
     private ViewGroup mPrefsContainer;
-
     private Bundle mSavedInstanceState;
-
     private boolean mSinglePane;
-
     private Context mThemedContext;
 
     @Deprecated
@@ -398,11 +393,16 @@ public abstract class PreferenceActivity extends ListActivity implements
         return null;
     }
 
-    protected Context getThemedContext() {
+    public Context getThemedContext() {
         if (mThemedContext == null) {
             mThemedContext = PreferenceInit.context(this);
         }
         return mThemedContext;
+    }
+
+    @Override
+    public LayoutInflater getThemedLayoutInflater() {
+        return LayoutInflater.from(getThemedContext());
     }
 
     public boolean hasHeaders() {
@@ -846,11 +846,6 @@ public abstract class PreferenceActivity extends ListActivity implements
             throw new RuntimeException(
                     "Modern two-pane PreferenceActivity requires use of a PreferenceFragment");
         }
-    }
-
-    @Override
-    public void setContentView(int layoutResId) {
-        setContentView(LayoutInflater.inflate(getThemedContext(), layoutResId));
     }
 
     public void setListFooter(View view) {

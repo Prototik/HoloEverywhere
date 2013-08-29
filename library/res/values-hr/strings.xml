@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
+    <string name="activity_resolver_use_always">"Uvijek"</string>
+    <string name="activity_resolver_use_once">"Samo jednom"</string>
     <string name="candidates_style">"kandidati"</string>
     <string name="capital_off">"Isklj."</string>
     <string name="capital_on">"Uklj."</string>
+    <string name="chooseActivity">"Odaberi radnju"</string>
     <string name="date_picker_decrement_day_button">"Smanjenje dana"</string>
     <string name="date_picker_decrement_month_button">"Smanjenje mjeseca"</string>
     <string name="date_picker_decrement_year_button">"Smanjenje godine"</string>
@@ -12,6 +15,7 @@
     <string name="date_time_done">"Gotovo"</string>
     <string name="date_time_set">"Postavi"</string>
     <string name="loading">"Učitavanje…"</string>
+    <string name="noApplications">"Tu radnju ne može izvesti nijedna aplikacija."</string>
     <string name="number_picker_decrement_button">"Smanjivanje"</string>
     <string name="number_picker_increment_button">"Povećavanje"</string>
     <string name="number_picker_increment_scroll_action">"Kliznite prema gore za povećavanje i prema dolje za smanjivanje."</string>
@@ -26,4 +30,5 @@
     <string name="time_picker_increment_hour_button">"Povećanje sati"</string>
     <string name="time_picker_increment_minute_button">"Povećanje minuta"</string>
     <string name="time_picker_increment_set_pm_button">"Postavi PM"</string>
+    <string name="whichApplication">"Radnju dovrši pomoću stavke"</string>
 </resources>

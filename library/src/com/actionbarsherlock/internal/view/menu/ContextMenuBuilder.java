@@ -3,15 +3,12 @@ package com.actionbarsherlock.internal.view.menu;
 
 import java.lang.reflect.Method;
 
-import org.holoeverywhere.HoloEverywhere;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.os.IBinder;
 import android.util.EventLog;
-import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 
@@ -24,7 +21,6 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
 
     private ContextMenuInfo mContextMenuInfo;
     private ContextMenuListener mListener;
-    private final String TAG = getClass().getSimpleName();
 
     public ContextMenuBuilder(Context context, ContextMenuListener listener) {
         super(context);
@@ -45,9 +41,6 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
             method.setAccessible(true);
             menuInfo = (ContextMenuInfo) method.invoke(view);
         } catch (Exception e) {
-            if (HoloEverywhere.DEBUG) {
-                Log.e(TAG, "getContextMenuInfo error", e);
-            }
         }
         return menuInfo;
     }

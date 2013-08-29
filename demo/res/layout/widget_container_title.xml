@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:holo="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="@drawable/widget_container_title_background"
@@ -13,9 +12,9 @@
 		android:maxLines="2"
 		android:minLines="1"
 		android:padding="4dp"
+		android:textAllCaps="true"
 		android:textColor="?android:textColorSecondary"
-		android:textSize="18sp"
-		holo:textAllCaps="true" />
+		android:textSize="18sp" />
 	<Divider
 		android:layout_width="match_parent"
 		android:layout_height="1dp" />

@@ -1,0 +1,8 @@
+{
+    "data": {
+        "Holo.Theme.DialogWhenLarge < Holo.Theme.Dialog.FixedSize": {},
+        "Holo.Theme.DialogWhenLarge.Light < Holo.Theme.Dialog.Light.FixedSize": {},
+        "Holo.Theme.DialogWhenLarge.Light.DarkActionBar": {}
+    },
+    "output": "values-large/themes.xml"
+}

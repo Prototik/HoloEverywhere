@@ -1,0 +1,113 @@
+{
+    "blocks": {
+        "BarDark": {
+            "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance",
+            "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.Small"
+        },
+        "BarLight": {
+            "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.Light",
+            "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.Small.Light"
+        },
+        "Base": {
+            "activatedBackgroundIndicator": "@drawable/activated_background_holo",
+            "android:dropDownListViewStyle": "?dropDownListViewStyle",
+            "buttonBarButtonStyle": "?borderlessButtonStyle",
+            "buttonBarStyle": "@style/Holo.ButtonBar",
+            "datePickerStyle": "@style/Holo.DatePicker",
+            "dialogItemTextAppearance": "?textAppearanceListItemSmall",
+            "dividerHorizontal": "?android:listDivider",
+            "dividerVertical": "?android:listDivider",
+            "dropdownListPreferredItemHeight": "?listPreferredItemHeightSmall",
+            "fastScrollOverlayPosition": "atThumb",
+            "fastScrollTextColor": "@color/primary_text_holo_dark",
+            "fastScrollThumbDrawable": "@drawable/fastscroll_thumb_holo",
+            "listPreferredItemHeight": "64dip",
+            "listPreferredItemHeightLarge": "80dp",
+            "listPreferredItemHeightSmall": "48dp",
+            "listPreferredItemPaddingLeft": "8dp",
+            "listPreferredItemPaddingRight": "8dp",
+            "numberPickerInputTextStyle": "@style/Holo.EditText.NumberPickerInputText",
+            "numberPickerStyle": "@style/Holo.NumberPicker",
+            "panelMenuListWidth": "250dp",
+            "textAppearanceListItem": "?android:textAppearanceLarge",
+            "textAppearanceListItemSmall": "?android:textAppearanceMedium",
+            "timePickerStyle": "@style/Holo.TimePicker"
+        },
+        "Dark | Base TextDark": {
+            "alertDialogTheme": "@style/Holo.Theme.Dialog.Alert",
+            "android:windowBackground": "@drawable/background_holo_dark",
+            "autoCompleteTextViewStyle": "@style/Holo.AutoCompleteTextView",
+            "borderlessButtonStyle": "@style/Holo.Button.Borderless",
+            "calendarViewStyle": "@style/Holo.CalendarView",
+            "detailsElementBackground": "@drawable/panel_bg_holo_dark",
+            "dialogTheme": "@style/Holo.Theme.Dialog",
+            "dropDownListViewStyle": "@style/Holo.ListView.DropDown",
+            "fastScrollPreviewBackgroundLeft": "@drawable/fastscroll_label_left_holo_dark",
+            "fastScrollPreviewBackgroundRight": "@drawable/fastscroll_label_right_holo_dark",
+            "fastScrollTrackDrawable": "@drawable/fastscroll_track_holo_dark",
+            "listDividerAlertDialog": "@drawable/list_divider_holo_dark",
+            "listPopupWindowStyle": "@style/Holo.ListPopupWindow",
+            "popupWindowStyle": "@style/Holo.PopupWindow",
+            "segmentedButtonStyle": "@style/Holo.SegmentedButton",
+            "selectableItemBackground": "@drawable/item_background_holo_dark",
+            "spinnerDropDownItemStyle": "@style/Holo.TextView.SpinnerItem.DropDown",
+            "spinnerItemStyle": "@style/Holo.TextView.SpinnerItem",
+            "spinnerStyle": "@style/Holo.Spinner",
+            "switchStyle": "@style/Holo.Switch",
+            "switchStyleOld": "@style/Holo.Switch.Old",
+            "textColorAlertDialogListItem": "@color/primary_text_holo_dark"
+        },
+        "Fullscreen": {
+            "android:windowContentOverlay": "@null",
+            "android:windowFullscreen": true,
+            "windowContentOverlay": "@null"
+        },
+        "Light | Base TextLight": {
+            "alertDialogTheme": "@style/Holo.Theme.Dialog.Alert.Light",
+            "android:windowBackground": "@drawable/background_holo_light",
+            "autoCompleteTextViewStyle": "@style/Holo.AutoCompleteTextView.Light",
+            "borderlessButtonStyle": "@style/Holo.Button.Borderless.Light",
+            "calendarViewStyle": "@style/Holo.CalendarView.Light",
+            "detailsElementBackground": "@drawable/panel_bg_holo_light",
+            "dialogTheme": "@style/Holo.Theme.Dialog.Light",
+            "dropDownListViewStyle": "@style/Holo.ListView.DropDown.Light",
+            "fastScrollPreviewBackgroundLeft": "@drawable/fastscroll_label_left_holo_light",
+            "fastScrollPreviewBackgroundRight": "@drawable/fastscroll_label_right_holo_light",
+            "fastScrollTrackDrawable": "@drawable/fastscroll_track_holo_light",
+            "listDividerAlertDialog": "@drawable/list_divider_holo_light",
+            "listPopupWindowStyle": "@style/Holo.ListPopupWindow.Light",
+            "popupWindowStyle": "@style/Holo.PopupWindow.Light",
+            "segmentedButtonStyle": "@style/Holo.SegmentedButton.Light",
+            "selectableItemBackground": "@drawable/item_background_holo_light",
+            "spinnerDropDownItemStyle": "@style/Holo.TextView.SpinnerItem.DropDown.Light",
+            "spinnerItemStyle": "@style/Holo.TextView.SpinnerItem.Light",
+            "spinnerStyle": "@style/Holo.Spinner.Light",
+            "switchStyle": "@style/Holo.Switch.Light",
+            "switchStyleOld": "@style/Holo.Switch.Light.Old",
+            "textColorAlertDialogListItem": "@color/primary_text_holo_light"
+        },
+        "NoActionBar": {
+            "android:windowActionBar": false,
+            "android:windowNoTitle": true,
+            "windowActionBar": false,
+            "windowNoTitle": true
+        },
+        "Wallpaper": {
+            "android:colorBackgroundCacheHint": "@null",
+            "android:windowBackground": "@android:color/transparent",
+            "android:windowShowWallpaper": true
+        }
+    },
+    "data": {
+        "Holo.Base.Theme | Dark BarDark < Theme.Sherlock": {},
+        "Holo.Base.Theme.Light | Light BarLight < Theme.Sherlock.Light": {},
+        "Holo.Base.Theme.Light.DarkActionBar | Light BarDark < Theme.Sherlock.Light.DarkActionBar": {}
+    },
+    "include": [
+        {
+            "name": "text.json:styles",
+            "type": "only blocks"
+        }
+    ],
+    "output": "values/themes-core.xml"
+}

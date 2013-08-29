@@ -1,0 +1,28 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:0.5.+'
+  }
+}
+
+allprojects {
+  group = 'org.holoeverywhere'
+  version = '1.6.2-SNAPSHOT'
+
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+      url "https://github.com/Prototik/HoloEverywhere/raw/repo"
+    }
+  }
+  
+  tasks.withType(Compile) {
+    options.encoding = "UTF-8"
+  }
+}
+
+apply plugin: 'android-reporting'

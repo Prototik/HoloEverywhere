@@ -1,12 +1,13 @@
 
 package org.holoeverywhere.preference;
 
+import java.lang.ref.WeakReference;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-import org.holoeverywhere.IHoloActivity;
+import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -133,31 +134,35 @@ public final class _SharedPreferencesImpl_XML extends _SharedPreferencesBase {
 
     private static final class ListenerWrapper implements
             android.content.SharedPreferences.OnSharedPreferenceChangeListener {
-        private static final Map<OnSharedPreferenceChangeListener, ListenerWrapper> INSTANCES = new WeakHashMap<OnSharedPreferenceChangeListener, ListenerWrapper>();
+        private static final Map<OnSharedPreferenceChangeListener, ListenerWrapper> sInstances =
+                new WeakHashMap<OnSharedPreferenceChangeListener, ListenerWrapper>();
 
-        public static synchronized ListenerWrapper obtain(
+        private static synchronized ListenerWrapper obtain(
                 SharedPreferences prefs,
                 OnSharedPreferenceChangeListener listener) {
-            ListenerWrapper t = ListenerWrapper.INSTANCES.get(listener);
-            if (t == null) {
-                INSTANCES.put(listener, t = new ListenerWrapper(prefs, listener));
+            ListenerWrapper wrapper = sInstances.get(listener);
+            if (wrapper == null) {
+                sInstances.put(listener, wrapper = new ListenerWrapper(prefs, listener));
             }
-            return t;
+            return wrapper;
         }
 
-        private OnSharedPreferenceChangeListener listener;
+        private WeakReference<OnSharedPreferenceChangeListener> listenerRef;
         private SharedPreferences prefs;
 
         private ListenerWrapper(SharedPreferences prefs,
                 OnSharedPreferenceChangeListener listener) {
             this.prefs = prefs;
-            this.listener = listener;
+            this.listenerRef = new WeakReference<OnSharedPreferenceChangeListener>(listener);
         }
 
         @Override
         public void onSharedPreferenceChanged(
                 android.content.SharedPreferences sharedPreferences, String key) {
-            listener.onSharedPreferenceChanged(prefs, key);
+            OnSharedPreferenceChangeListener listener = listenerRef.get();
+            if (listener != null) {
+                listener.onSharedPreferenceChanged(prefs, key);
+            }
         }
     }
 
@@ -184,12 +189,10 @@ public final class _SharedPreferencesImpl_XML extends _SharedPreferencesBase {
     private final android.content.SharedPreferences prefs;
 
     public _SharedPreferencesImpl_XML(Context context, String name, int mode) {
-        if (context instanceof IHoloActivity) {
-            prefs = ((IHoloActivity) context).superGetSharedPreferences(name,
-                    mode);
+        if (context instanceof Activity) {
+            prefs = ((Activity) context).superGetSharedPreferences(name, mode);
         } else if (context instanceof Application) {
-            prefs = ((Application) context).superGetSharedPreferences(name,
-                    mode);
+            prefs = ((Application) context).superGetSharedPreferences(name, mode);
         } else {
             prefs = context.getSharedPreferences(name, mode);
         }

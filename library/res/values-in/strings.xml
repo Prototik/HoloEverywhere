@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
+    <string name="activity_resolver_use_always">"Selalu"</string>
+    <string name="activity_resolver_use_once">"Hanya sekali"</string>
     <string name="candidates_style">"calon"</string>
     <string name="capital_off">"MATI"</string>
     <string name="capital_on">"HIDUP"</string>
+    <string name="chooseActivity">"Pilih tindakan"</string>
     <string name="date_picker_decrement_day_button">"Kurangi hari"</string>
     <string name="date_picker_decrement_month_button">"Kurangi bulan"</string>
     <string name="date_picker_decrement_year_button">"Kurangi tahun"</string>
@@ -12,6 +15,7 @@
     <string name="date_time_done">"Selesai"</string>
     <string name="date_time_set">"Setel"</string>
     <string name="loading">"Memuat..."</string>
+    <string name="noApplications">"Tidak ada apl yang dapat melakukan tindakan ini."</string>
     <string name="number_picker_decrement_button">"Kurangi"</string>
     <string name="number_picker_increment_button">"Tambah"</string>
     <string name="number_picker_increment_scroll_action">"Geser ke atas untuk menambah dan ke bawah untuk mengurangi."</string>
@@ -26,4 +30,5 @@
     <string name="time_picker_increment_hour_button">"Tambah jam"</string>
     <string name="time_picker_increment_minute_button">"Tambah menit"</string>
     <string name="time_picker_increment_set_pm_button">"Menyetel PM"</string>
+    <string name="whichApplication">"Tindakan lengkap menggunakan"</string>
 </resources>

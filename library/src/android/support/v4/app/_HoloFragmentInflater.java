@@ -32,27 +32,27 @@ public class _HoloFragmentInflater {
                             + ": Must specify unique android:id, android:tag, or have a parent with an id for "
                             + fname);
         }
-        final FragmentManagerImpl fm = obtainFragmentManager(activity, parentFragment);
-        Fragment fragment = id != View.NO_ID ? fm.findFragmentById(id) : null;
+        FragmentManagerImpl impl = obtainFragmentManager(activity, parentFragment);
+        Fragment fragment = id != View.NO_ID ? impl.findFragmentById(id) : null;
         if (fragment == null && tag != null) {
-            fragment = fm.findFragmentByTag(tag);
+            fragment = impl.findFragmentByTag(tag);
         }
         if (fragment == null && containerId != View.NO_ID) {
-            fragment = fm.findFragmentById(containerId);
+            fragment = impl.findFragmentById(containerId);
         }
         if (fragment == null) {
             fragment = Fragment.instantiate(activity, fname);
             fragment.mParentFragment = parentFragment;
+            fragment.mActivity = activity;
             fragment.mFromLayout = true;
             fragment.mFragmentId = id != 0 ? id : containerId;
             fragment.mContainer = (ViewGroup) parent;
             fragment.mContainerId = containerId;
             fragment.mTag = tag;
             fragment.mInLayout = true;
-            fragment.mFragmentManager = fm;
+            fragment.mFragmentManager = impl;
             fragment.onInflate(activity, attrs, fragment.mSavedFragmentState);
-            fm.addFragment(fragment, false);
-            fm.moveToState(fragment, Fragment.CREATED, 0, 0, false);
+            impl.addFragment(fragment, true);
         } else if (fragment.mInLayout) {
             throw new IllegalArgumentException(attrs.getPositionDescription()
                     + ": Duplicate id 0x" + Integer.toHexString(id)
@@ -63,7 +63,7 @@ public class _HoloFragmentInflater {
             if (!fragment.mRetaining) {
                 fragment.onInflate(activity, attrs, fragment.mSavedFragmentState);
             }
-            fm.moveToState(fragment, Fragment.CREATED, 0, 0, false);
+            impl.moveToState(fragment);
         }
         if (fragment.mView == null) {
             throw new IllegalStateException("Fragment " + fname

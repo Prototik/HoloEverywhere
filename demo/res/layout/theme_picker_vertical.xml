@@ -5,7 +5,7 @@
 	android:layout_height="wrap_content"
 	android:orientation="vertical"
 	android:divider="?dividerHorizontal"
-	holo:showDividers="middle|beginning" >
+	android:showDividers="middle|beginning" >
 	<DemoListRowView
 		android:id="@+id/dark"
 		android:layout_width="match_parent"

@@ -1,0 +1,13 @@
+{
+    "blocks": {
+        "Base": {
+            "textAppearanceSliderItem": "?android:textAppearanceMedium",
+            "textAppearanceSliderItemInverse": "?android:textAppearanceMediumInverse"
+        }
+    },
+    "data": {
+        "Holo.Internal.SliderTheme | Base < Holo.Theme": {},
+        "Holo.Internal.SliderTheme.Light | Base < Holo.Theme.Light": {}
+    },
+    "output": "values/themes.xml"
+}

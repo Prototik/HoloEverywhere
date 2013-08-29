@@ -77,6 +77,7 @@ public class DialogFragment extends Fragment implements
     boolean mShowsDialog = true;
     int mStyle = STYLE_NORMAL;
     int mTheme = 0;
+    private CharSequence mTitle;
     boolean mViewDestroyed;
     private DialogType type = DialogType.Dialog;
 
@@ -129,6 +130,10 @@ public class DialogFragment extends Fragment implements
             return super.getLayoutInflater(savedInstanceState);
         }
         mDialog = onCreateDialog(savedInstanceState);
+        if (mTitle != null) {
+            mDialog.setTitle(mTitle);
+            mTitle = null;
+        }
         switch (mStyle) {
             case STYLE_NO_INPUT:
                 mDialog.getWindow().addFlags(
@@ -316,8 +321,20 @@ public class DialogFragment extends Fragment implements
         }
     }
 
+    public void setTitle(CharSequence title) {
+        if (mDialog != null) {
+            mDialog.setTitle(title);
+        } else {
+            mTitle = title;
+        }
+    }
+
+    public void setTitle(int resId) {
+        setTitle(getText(resId));
+    }
+
     public DialogTransaction show() {
-        return show(getSupportFragmentManager());
+        return show(getFragmentManager());
     }
 
     public DialogTransaction show(Activity activity) {
@@ -351,6 +368,15 @@ public class DialogFragment extends Fragment implements
         return dialogTransaction;
     }
 
+    /**
+     * @deprecate This method was deprecated because there were problems at
+     *            2.1-2.3 on restore instance state when
+     *            <code>tag == null</code>. Use {@link #show(FragmentManager)}
+     *            instead.
+     * @see <a
+     *      href="https://github.com/Prototik/HoloEverywhere/issues/298#issuecomment-13344718">DialogFragment#show
+     *      deprecated</a>
+     */
     @Deprecated
     public int show(FragmentManager manager, String tag) {
         return show(manager.beginTransaction(), tag);
@@ -360,6 +386,15 @@ public class DialogFragment extends Fragment implements
         return show(null, ft);
     }
 
+    /**
+     * @deprecate This method was deprecated because there were problems at
+     *            2.1-2.3 on restore instance state when
+     *            <code>tag == null</code>. Use
+     *            {@link #show(FragmentTransaction)} instead.
+     * @see <a
+     *      href="https://github.com/Prototik/HoloEverywhere/issues/298#issuecomment-13344718">DialogFragment#show
+     *      deprecated</a>
+     */
     @Deprecated
     public int show(FragmentTransaction transaction, String tag) {
         mDismissed = false;

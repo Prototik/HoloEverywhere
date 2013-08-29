@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
+    <string name="activity_resolver_use_always">"Palagi"</string>
+    <string name="activity_resolver_use_once">"Isang beses lang"</string>
     <string name="candidates_style">"mga kandidato"</string>
     <string name="capital_off">"I-OFF"</string>
     <string name="capital_on">"I-ON"</string>
+    <string name="chooseActivity">"Pumili ng pagkilos"</string>
     <string name="date_picker_decrement_day_button">"Bawasan ang araw"</string>
     <string name="date_picker_decrement_month_button">"Bawasan ang buwan"</string>
     <string name="date_picker_decrement_year_button">"Bawasan ang taon"</string>
@@ -12,6 +15,7 @@
     <string name="date_time_done">"Tapos na"</string>
     <string name="date_time_set">"Itakda"</string>
     <string name="loading">"Naglo-load…"</string>
+    <string name="noApplications">"Walang apps ang makakapagsagawa ng pagkilos na ito."</string>
     <string name="number_picker_decrement_button">"Bawasan"</string>
     <string name="number_picker_increment_button">"Dagdagan"</string>
     <string name="number_picker_increment_scroll_action">"Mag-slide pataas upang magdagdag at pababa upang magbawas."</string>
@@ -26,4 +30,5 @@
     <string name="time_picker_increment_hour_button">"Dagdagan ang oras"</string>
     <string name="time_picker_increment_minute_button">"Dagdagan ang minuto"</string>
     <string name="time_picker_increment_set_pm_button">"Itakda ang PM"</string>
+    <string name="whichApplication">"Kumpletuhin ang pagkilos gamit ang"</string>
 </resources>

@@ -2,19 +2,18 @@
 package org.holoeverywhere.app;
 
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 import org.holoeverywhere.internal.WindowDecorView;
+import org.holoeverywhere.util.WeaklyMap;
 
 import android.content.Context;
 import android.util.TypedValue;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
 import com.actionbarsherlock.internal.view.menu.ContextMenuDecorView.ContextMenuListenersProvider;
@@ -39,6 +38,7 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
     }
 
     private Map<View, ContextMenuListener> mContextMenuListeners;
+    private WindowDecorView mDecorView;
 
     public Dialog(Context context) {
         this(context, 0);
@@ -52,13 +52,19 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
     }
 
     public Dialog(Context context, int theme) {
-        super(context, checkTheme(context, theme));
+        this(context, checkTheme(context, theme), -1);
         setCancelable(true);
+    }
+
+    private Dialog(Context context, int theme, int fallback) {
+        super(new ContextThemeWrapperPlus(context, theme), theme);
     }
 
     @Override
     public void addContentView(View view, LayoutParams params) {
-        getWindow().addContentView(prepareDecorView(view, params), params);
+        if (requestDecorView(view, params, -1)) {
+            mDecorView.addView(view, params);
+        }
     }
 
     @Override
@@ -120,20 +126,6 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
         }
     }
 
-    public View prepareDecorView(View v) {
-        return prepareDecorView(v, null);
-    }
-
-    public View prepareDecorView(View v, ViewGroup.LayoutParams params) {
-        if (v instanceof WindowDecorView) {
-            ((WindowDecorView) v).setProvider(this);
-            return v;
-        }
-        WindowDecorView window = new WindowDecorView(getContext(), v, params);
-        window.setProvider(this);
-        return window;
-    }
-
     @Override
     public void registerForContextMenu(View view) {
         if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
@@ -145,9 +137,26 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
 
     public void registerForContextMenu(View view, ContextMenuListener listener) {
         if (mContextMenuListeners == null) {
-            mContextMenuListeners = new WeakHashMap<View, ContextMenuListener>();
+            mContextMenuListeners = new WeaklyMap<View, ContextMenuListener>();
         }
         mContextMenuListeners.put(view, listener);
+    }
+
+    private boolean requestDecorView(View view, LayoutParams params, int layoutRes) {
+        if (mDecorView != null) {
+            return true;
+        }
+        mDecorView = new WindowDecorView(getContext());
+        mDecorView.setId(android.R.id.content);
+        mDecorView.setProvider(this);
+        if (view != null) {
+            mDecorView.addView(view, params);
+        } else if (layoutRes > 0) {
+            getLayoutInflater().inflate(layoutRes, mDecorView, true);
+        }
+        getWindow().setContentView(mDecorView, new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        return false;
     }
 
     @Override
@@ -158,7 +167,10 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
 
     @Override
     public void setContentView(int layoutResID) {
-        setContentView(getLayoutInflater().makeDecorView(layoutResID));
+        if (requestDecorView(null, null, layoutResID)) {
+            mDecorView.removeAllViewsInLayout();
+            getLayoutInflater().inflate(layoutResID, mDecorView, true);
+        }
     }
 
     @Override
@@ -168,7 +180,10 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
 
     @Override
     public void setContentView(View view, LayoutParams params) {
-        getWindow().setContentView(prepareDecorView(view, params), params);
+        if (requestDecorView(view, params, -1)) {
+            mDecorView.removeAllViewsInLayout();
+            mDecorView.addView(view, params);
+        }
     }
 
     @Override

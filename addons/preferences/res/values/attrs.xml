@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
     <!--Start attrs definition block-->
+    <attr name="action" format="string"/>
     <attr name="borderBottom" format="dimension"/>
     <attr name="borderLeft" format="dimension"/>
     <attr name="borderRight" format="dimension"/>
@@ -7,6 +8,7 @@
     <attr name="breadCrumbShortTitle" format="string"/>
     <attr name="breadCrumbTitle" format="string"/>
     <attr name="checkBoxPreferenceStyle" format="reference"/>
+    <attr name="data" format="string"/>
     <attr name="datePreferenceStyle" format="reference"/>
     <attr name="defaultValue" format="string|boolean|integer|reference|float"/>
     <attr name="dependency" format="string"/>
@@ -31,7 +33,9 @@
     <attr name="key" format="string"/>
     <attr name="layout_removeBorders" format="boolean"/>
     <attr name="max" format="integer"/>
+    <attr name="mimeType" format="string"/>
     <attr name="min" format="integer"/>
+    <attr name="name" format="string"/>
     <attr name="negativeButtonText" format="string"/>
     <attr name="numberPickerPreferenceStyle" format="reference"/>
     <attr name="order" format="integer"/>
@@ -72,7 +76,10 @@
     <attr name="switchPreferenceStyle" format="reference"/>
     <attr name="switchTextOff" format="string"/>
     <attr name="switchTextOn" format="string"/>
+    <attr name="targetClass" format="string"/>
+    <attr name="targetPackage" format="string"/>
     <attr name="timePreferenceStyle" format="reference"/>
+    <attr name="value" format="string|integer|color|float|boolean"/>
     <attr name="widgetLayout" format="reference"/>
     <attr name="wrapSelectorWheel" format="boolean"/>
     <attr name="yesNoPreferenceStyle" format="reference"/>
@@ -85,6 +92,20 @@
         <attr name="dialogTitle"/>
         <attr name="negativeButtonText"/>
         <attr name="positiveButtonText"/>
+    </declare-styleable>
+    <declare-styleable name="Extra">
+        <attr name="name"/>
+        <attr name="value"/>
+    </declare-styleable>
+    <declare-styleable name="Intent">
+        <attr name="action"/>
+        <attr name="data"/>
+        <attr name="mimeType"/>
+        <attr name="targetClass"/>
+        <attr name="targetPackage"/>
+    </declare-styleable>
+    <declare-styleable name="IntentCategory">
+        <attr name="name"/>
     </declare-styleable>
     <declare-styleable name="ListPreference">
         <attr name="entries"/>

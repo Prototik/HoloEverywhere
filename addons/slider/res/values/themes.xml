@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><resources>
+    <style name="Holo.Internal.SliderTheme" parent="Holo.Theme">
+        <!--Include block: Base-->
+        <item name="textAppearanceSliderItem">?android:textAppearanceMedium</item>
+        <item name="textAppearanceSliderItemInverse">?android:textAppearanceMediumInverse</item>
+        <!--End of block Base-->
+    </style>
+    <style name="Holo.Internal.SliderTheme.Light" parent="Holo.Theme.Light">
+        <!--Include block: Base-->
+        <item name="textAppearanceSliderItem">?android:textAppearanceMedium</item>
+        <item name="textAppearanceSliderItemInverse">?android:textAppearanceMediumInverse</item>
+        <!--End of block Base-->
+    </style>
+</resources>

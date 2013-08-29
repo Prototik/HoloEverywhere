@@ -1,9 +1,9 @@
 
 package org.holoeverywhere.demo.fragments.dialogs;
 
-import org.holoeverywhere.ArrayAdapter;
 import org.holoeverywhere.app.AlertDialog.Builder;
 import org.holoeverywhere.demo.R;
+import org.holoeverywhere.widget.ArrayAdapter;
 
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;

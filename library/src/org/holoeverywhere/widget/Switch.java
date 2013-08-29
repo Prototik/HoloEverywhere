@@ -1,4 +1,3 @@
-
 package org.holoeverywhere.widget;
 
 import org.holoeverywhere.R;
@@ -434,8 +433,8 @@ public class Switch extends CompoundButton {
 
     @Override
     public void setChecked(boolean checked) {
-        super.setChecked(checked);
         mThumbPosition = checked ? getThumbScrollRange() : 0;
+        super.setChecked(checked);
         invalidate();
     }
 

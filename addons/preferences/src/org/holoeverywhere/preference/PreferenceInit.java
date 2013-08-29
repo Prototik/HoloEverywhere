@@ -8,62 +8,22 @@ import org.holoeverywhere.addon.IAddonThemes.ThemeResolver;
 import org.holoeverywhere.app.Activity;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 
 public class PreferenceInit {
     public static final String PACKAGE;
-    public static final int THEME_FLAG;
-    private static final IAddonThemes sThemes;
-    static {
-        PACKAGE = PreferenceInit.class.getPackage().getName();
-
-        sThemes = new IAddonThemes();
-        THEME_FLAG = sThemes.getThemeFlag();
-
-        LayoutInflater.register(PreferenceFrameLayout.class);
-        LayoutInflater.register(FragmentBreadCrumbs.class);
-
-        map(R.style.Holo_Internal_Preference, R.style.Holo_Internal_Preference_Light);
-    }
-
-    /**
-     * Nop method for execute static code block
-     */
-    public static void init() {
-
-    }
-
-    /**
-     * Remap all Preference themes
-     */
-    public static void map(int theme) {
-        map(theme, theme, theme);
-    }
-
-    /**
-     * Remap PreferenceThemes, splited by dark and light color scheme. For mixed
-     * color scheme will be using light theme
-     */
-    public static void map(int darkTheme, int lightTheme) {
-        map(darkTheme, lightTheme, lightTheme);
-    }
-
-    /**
-     * Remap PreferenceThemes, splited by color scheme
-     */
-    public static void map(int darkTheme, int lightTheme, int mixedTheme) {
-        sThemes.map(darkTheme, lightTheme, mixedTheme);
-    }
-
     private static final ThemeResolver sThemeResolver = new ThemeResolver() {
         @Override
         public int resolveThemeForContext(Context context, int invalidTheme) {
             int theme, mod = 0;
             TypedValue outValue = new TypedValue();
-            context.obtainStyledAttributes(new int[] {
+            TypedArray a;
+            (a = context.obtainStyledAttributes(new int[] {
                     R.attr.preferenceTheme
-            }).getValue(0, outValue);
+            })).getValue(0, outValue);
+            a.recycle();
             switch (outValue.type) {
                 case TypedValue.TYPE_REFERENCE:
                     if (new ContextThemeWrapper(context, theme = outValue.resourceId)
@@ -105,9 +65,52 @@ public class PreferenceInit {
             return theme;
         }
     };
+    private static final IAddonThemes sThemes;
+    public static final int THEME_FLAG;
+
+    static {
+        PACKAGE = PreferenceInit.class.getPackage().getName();
+
+        sThemes = new IAddonThemes();
+        THEME_FLAG = sThemes.getThemeFlag();
+
+        LayoutInflater.register(PreferenceFrameLayout.class);
+        LayoutInflater.register(FragmentBreadCrumbs.class);
+
+        map(R.style.Holo_Internal_Preference, R.style.Holo_Internal_Preference_Light);
+    }
 
     public static Context context(Context context) {
         return sThemes.context(context, ThemeManager.DARK, sThemeResolver);
+    }
+
+    /**
+     * Nop method for execute static code block
+     */
+    public static void init() {
+
+    }
+
+    /**
+     * Remap all Preference themes
+     */
+    public static void map(int theme) {
+        map(theme, theme, theme);
+    }
+
+    /**
+     * Remap PreferenceThemes, splited by dark and light color scheme. For mixed
+     * color scheme will be using light theme
+     */
+    public static void map(int darkTheme, int lightTheme) {
+        map(darkTheme, lightTheme, lightTheme);
+    }
+
+    /**
+     * Remap PreferenceThemes, splited by color scheme
+     */
+    public static void map(int darkTheme, int lightTheme, int mixedTheme) {
+        sThemes.map(darkTheme, lightTheme, mixedTheme);
     }
 
     public static Context unwrap(Context context) {

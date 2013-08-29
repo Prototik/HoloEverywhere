@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<?xml version="1.0" encoding="UTF-8"?><resources>
 	<dimen name="alert_dialog_title_height">64dip</dimen>
 	<dimen name="alert_dialog_button_bar_height">48dip</dimen>
 	<dimen name="fastscroll_thumb_width">64dp</dimen>

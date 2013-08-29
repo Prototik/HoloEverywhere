@@ -3,7 +3,7 @@ package org.holoeverywhere.preference;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.AlertDialog;
-import org.holoeverywhere.app.Application;
+import org.holoeverywhere.app.ContextThemeWrapperPlus;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -48,11 +48,15 @@ public abstract class DialogPreference extends Preference implements
 
     private AlertDialog.Builder mBuilder;
     private Dialog mDialog;
+    private Context mDialogContext;
     private Drawable mDialogIcon;
     private int mDialogLayoutResId;
     private CharSequence mDialogMessage;
     private CharSequence mDialogTitle;
+    private InputMethodManager mInputMethodManager;
+
     private CharSequence mNegativeButtonText;
+
     private CharSequence mPositiveButtonText;
 
     private int mWhichButtonClicked;
@@ -91,6 +95,18 @@ public abstract class DialogPreference extends Preference implements
         return mDialog;
     }
 
+    protected Context getDialogContext(boolean alert) {
+        if (mDialogContext != null) {
+            return mDialogContext;
+        }
+        final TypedArray a = getContext().obtainStyledAttributes(new int[] {
+                alert ? R.attr.alertDialogTheme : R.attr.dialogTheme
+        });
+        final int theme = a.getResourceId(0, R.style.Holo_Theme_Dialog_Alert);
+        a.recycle();
+        return mDialogContext = new ContextThemeWrapperPlus(getContext(), theme);
+    }
+
     public Drawable getDialogIcon() {
         return mDialogIcon;
     }
@@ -121,11 +137,9 @@ public abstract class DialogPreference extends Preference implements
 
     @Override
     public void onActivityDestroy() {
-
         if (mDialog == null || !mDialog.isShowing()) {
             return;
         }
-
         mDialog.dismiss();
     }
 
@@ -160,7 +174,9 @@ public abstract class DialogPreference extends Preference implements
     }
 
     protected Dialog onCreateDialog(Context context) {
-        mBuilder = new AlertDialog.Builder(context);
+        context = getDialogContext(true);
+        mBuilder = new AlertDialog.Builder(context,
+                ((ContextThemeWrapperPlus) context).getThemeResource());
         mBuilder.setTitle(mDialogTitle);
         mBuilder.setIcon(mDialogIcon);
         mBuilder.setPositiveButton(mPositiveButtonText, this);
@@ -197,8 +213,6 @@ public abstract class DialogPreference extends Preference implements
 
     protected void onDialogClosed(boolean positiveResult) {
     }
-
-    private InputMethodManager mInputMethodManager;
 
     @Override
     public void onDismiss(DialogInterface dialog) {
@@ -294,10 +308,7 @@ public abstract class DialogPreference extends Preference implements
 
     protected void showDialog(Bundle state) {
         mWhichButtonClicked = DialogInterface.BUTTON_NEGATIVE;
-        /**
-         * FIXME #380, unwrap of context not needed
-         */
-        mDialog = onCreateDialog(PreferenceInit.unwrap(getContext()));
+        mDialog = onCreateDialog(getContext());
         getPreferenceManager().registerOnActivityDestroyListener(this);
         if (state != null) {
             mDialog.onRestoreInstanceState(state);

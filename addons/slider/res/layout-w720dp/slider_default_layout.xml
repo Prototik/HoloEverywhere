@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:baselineAligned="false"
+	android:orientation="horizontal" >
+	<fragment
+		android:id="@id/leftView"
+		android:name="org.holoeverywhere.slider._SliderMenuFragment"
+		android:layout_width="@dimen/menu_width"
+		android:layout_height="match_parent" />
+	<FrameLayout
+		android:id="@id/contentView"
+		android:layout_width="0dp"
+		android:layout_height="match_parent"
+		android:layout_weight="1" />
+</LinearLayout>

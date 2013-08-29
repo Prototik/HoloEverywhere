@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<?xml version="1.0" encoding="UTF-8"?><resources>
 	<item name="dialog_fixed_width_major" type="dimen">50%</item>
 	<item name="dialog_fixed_width_minor" type="dimen">70%</item>
 	<item name="dialog_fixed_height_major" type="dimen">60%</item>

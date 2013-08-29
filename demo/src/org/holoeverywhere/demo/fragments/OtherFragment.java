@@ -6,11 +6,11 @@ import org.holoeverywhere.app.DialogFragment;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.app.ListFragment;
 import org.holoeverywhere.demo.DemoActivity;
-import org.holoeverywhere.demo.DemoTabsActivity;
 import org.holoeverywhere.demo.fragments.dialogs.DialogsFragment;
 import org.holoeverywhere.demo.fragments.lists.ListsFragment;
 import org.holoeverywhere.demo.fragments.menus.MenusFragments;
 import org.holoeverywhere.demo.fragments.pickers.PickersFragment;
+import org.holoeverywhere.demo.fragments.tabber.TabsFragment;
 import org.holoeverywhere.demo.widget.DemoAdapter;
 import org.holoeverywhere.demo.widget.DemoItem;
 import org.holoeverywhere.widget.ListView;
@@ -22,15 +22,19 @@ import android.view.View;
 
 public class OtherFragment extends ListFragment {
     private final class ActivityListener implements OnOtherItemClickListener {
-        private Class<? extends Activity> mClass;
+        private Intent mIntent;
 
         public ActivityListener(Class<? extends Activity> clazz) {
-            mClass = clazz;
+            this(new Intent(getSupportActivity(), clazz));
+        }
+
+        public ActivityListener(Intent intent) {
+            mIntent = intent;
         }
 
         @Override
         public void onClick(OtherItem otherItem) {
-            startActivity(new Intent(getSupportActivity(), mClass));
+            startActivity(mIntent);
         }
     }
 
@@ -47,8 +51,8 @@ public class OtherFragment extends ListFragment {
             if (fragment instanceof DialogFragment) {
                 ((DialogFragment) fragment).show(getSupportActivity());
             } else {
-                ((DemoActivity) getSupportActivity()).replaceFragment(fragment,
-                        "fragment-" + mClass.getName());
+                ((DemoActivity) getSupportActivity()).addonSlider()
+                        .obtainSliderMenu().replaceFragment(fragment);
             }
         }
     }
@@ -92,6 +96,10 @@ public class OtherFragment extends ListFragment {
         addItem(label, new FragmentListener(clazz));
     }
 
+    public void addItem(CharSequence label, Intent activityIntent) {
+        addItem(label, new ActivityListener(activityIntent));
+    }
+
     public void addItem(CharSequence label, OnOtherItemClickListener listener) {
         addItem(label, listener, false);
     }
@@ -126,8 +134,9 @@ public class OtherFragment extends ListFragment {
         addItem("Dialogs", DialogsFragment.class);
         addItem("Pickers", PickersFragment.class);
         addItem("Menus", MenusFragments.class);
+        addItem("Font Palette", FontPalette.class);
         addItem("Calendar", CalendarFragment.class);
-        addItemActivity("Tabs + Swipe", DemoTabsActivity.class);
+        addItem("Addon: Tabber", TabsFragment.class);
     }
 
     protected void onPrepareListView(ListView list) {

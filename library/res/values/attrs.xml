@@ -3,6 +3,7 @@
     <attr name="alertDialogCenterButtons" format="boolean"/>
     <attr name="alertDialogStyle" format="reference"/>
     <attr name="alertDialogTheme" format="reference"/>
+    <attr name="alertDialogTitleDividerColor" format="reference|color"/>
     <attr name="autoCompleteTextViewStyle" format="reference"/>
     <attr name="borderlessButtonStyle" format="reference"/>
     <attr name="bottomBright" format="reference|color"/>
@@ -18,10 +19,11 @@
     <attr name="datePickerStyle" format="reference"/>
     <attr name="dateTextAppearance" format="reference"/>
     <attr name="detailsElementBackground" format="reference"/>
+    <attr name="dialogItemBackground" format="reference|color"/>
+    <attr name="dialogItemTextAppearance" format="reference"/>
     <attr name="dialogTheme" format="reference"/>
     <attr name="disableChildrenWhenDisabled" format="boolean"/>
     <attr name="dividerHorizontal" format="reference"/>
-    <attr name="dividerPadding" format="dimension"/>
     <attr name="dropDownHorizontalOffset" format="dimension"/>
     <attr name="dropDownVerticalOffset" format="dimension"/>
     <attr name="endYear" format="integer"/>
@@ -73,7 +75,6 @@
     <attr name="listPreferredItemHeightLarge" format="dimension"/>
     <attr name="maxDate" format="reference|string"/>
     <attr name="minDate" format="reference|string"/>
-    <attr name="modalBackgroundWrapper" format="reference"/>
     <attr name="multiChoiceItemLayout" format="reference"/>
     <attr name="numberPickerDownButtonStyle" format="reference"/>
     <attr name="numberPickerInputTextStyle" format="reference"/>
@@ -81,6 +82,7 @@
     <attr name="numberPickerUpButtonStyle" format="reference"/>
     <attr name="panelMenuListWidth" format="dimension"/>
     <attr name="popupPromptView" format="reference"/>
+    <attr name="popupWindowStyle" format="reference"/>
     <attr name="preferenceTheme" format="reference">
         <enum name="dark" value="1"/>
         <enum name="light" value="2"/>
@@ -93,13 +95,6 @@
     <attr name="selectionDivider" format="reference"/>
     <attr name="selectionDividerHeight" format="dimension"/>
     <attr name="selectionDividersDistance" format="dimension"/>
-    <attr name="showDividers">
-        <flag name="all" value="7"/>
-        <flag name="beginning" value="1"/>
-        <flag name="end" value="4"/>
-        <flag name="middle" value="2"/>
-        <flag name="none" value="0"/>
-    </attr>
     <attr name="showWeekNumber" format="boolean"/>
     <attr name="shownWeekCount" format="integer"/>
     <attr name="singleChoiceItemLayout" format="reference"/>
@@ -116,7 +111,6 @@
     <attr name="switchStyle" format="reference"/>
     <attr name="switchStyleOld" format="reference"/>
     <attr name="switchTextAppearance" format="reference"/>
-    <attr name="textAllCaps" format="boolean"/>
     <attr name="textAppearanceListItem" format="reference"/>
     <attr name="textColorAlertDialogListItem" format="reference"/>
     <attr name="textOff" format="reference|string"/>
@@ -140,6 +134,11 @@
     <attr name="windowMinHeightMajor" format="dimension|fraction"/>
     <attr name="windowMinHeightMinor" format="dimension|fraction"/>
     <!--Start styleable definition block-->
+    <declare-styleable name="AbsListView">
+        <attr name="android:choiceMode"/>
+        <attr name="android:fastScrollAlwaysVisible"/>
+        <attr name="android:fastScrollEnabled"/>
+    </declare-styleable>
     <declare-styleable name="AbsSpinner">
         <attr name="android:entries"/>
     </declare-styleable>
@@ -243,21 +242,25 @@
         <attr name="android:top"/>
     </declare-styleable>
     <declare-styleable name="LinearLayout">
+        <attr name="android:baselineAligned"/>
+        <attr name="android:baselineAlignedChildIndex"/>
         <attr name="android:divider"/>
         <attr name="android:dividerPadding"/>
+        <attr name="android:gravity"/>
+        <attr name="android:measureWithLargestChild"/>
+        <attr name="android:orientation"/>
         <attr name="android:showDividers"/>
-        <attr name="dividerPadding"/>
-        <attr name="showDividers"/>
+        <attr name="android:weightSum"/>
     </declare-styleable>
     <declare-styleable name="MenuView">
         <attr name="android:headerBackground"/>
         <attr name="android:horizontalDivider"/>
-        <attr name="android:itemBackground"/>
         <attr name="android:itemIconDisabledAlpha"/>
-        <attr name="android:itemTextAppearance"/>
         <attr name="android:preserveIconSpacing"/>
         <attr name="android:verticalDivider"/>
         <attr name="android:windowAnimationStyle"/>
+        <attr name="dialogItemBackground"/>
+        <attr name="dialogItemTextAppearance"/>
     </declare-styleable>
     <declare-styleable name="NumberPicker">
         <attr name="android:fadingEdgeLength"/>
@@ -339,6 +342,7 @@
         <attr name="track"/>
     </declare-styleable>
     <declare-styleable name="TextAppearance">
+        <attr name="android:fontFamily"/>
         <attr name="android:textAllCaps"/>
         <attr name="android:textColor"/>
         <attr name="android:textColorHighlight"/>
@@ -349,9 +353,7 @@
         <attr name="android:typeface"/>
     </declare-styleable>
     <declare-styleable name="TextView">
-        <attr name="android:text"/>
-        <attr name="android:textAllCaps"/>
-        <attr name="textAllCaps"/>
+        <attr name="android:textAppearance"/>
     </declare-styleable>
     <declare-styleable name="TimePicker">
         <attr name="layout"/>

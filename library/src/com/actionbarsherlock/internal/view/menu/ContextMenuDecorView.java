@@ -5,12 +5,9 @@ import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.widget.FrameLayout;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewDebug.ExportedProperty;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
 import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.MenuItem;
@@ -26,72 +23,16 @@ public class ContextMenuDecorView extends FrameLayout implements
     private MenuDialogHelper mMenuDialogHelper;
     private ContextMenuListenersProvider mProvider;
 
-    private final String TAG = getClass().getSimpleName();
-
     public ContextMenuDecorView(Context context) {
         super(context);
-    }
-
-    public ContextMenuDecorView(Context context, View view, ViewGroup.LayoutParams params) {
-        this(context);
-        if (view != null) {
-            attachView(view, params);
-        }
-    }
-
-    public synchronized void attachView(View view, ViewGroup.LayoutParams params) {
-        if (view == null) {
-            throw new NullPointerException("View cannot be null");
-        }
-        ViewParent parent = view.getParent();
-        if (parent != null && parent instanceof ViewGroup) {
-            ((ViewGroup) parent).removeView(view);
-        }
-        removeAllViews();
-        if (params == null) {
-            params = view.getLayoutParams();
-        }
-        if (params == null) {
-            params = new FrameLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                    android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-        }
-        addView(view, params);
-    }
-
-    @Override
-    @ExportedProperty(deepExport = true, prefix = "layout_")
-    public ViewGroup.LayoutParams getLayoutParams() {
-        if (getChildCount() == 0) {
-            return super.getLayoutParams();
-        }
-        final View child = unwrap();
-        ViewGroup.LayoutParams params = super.getLayoutParams();
-        if (params == null) {
-            params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-            setLayoutParams(params);
-        }
-        ViewGroup.LayoutParams childParams = child.getLayoutParams();
-        if (childParams == null) {
-            child.setLayoutParams(params);
-            return params;
-        }
-        if (params.width != childParams.width) {
-            params.width = childParams.width;
-        }
-        if (params.height != childParams.height) {
-            params.height = childParams.height;
-        }
-        return params;
+        setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     @Override
     public void onCloseMenu(MenuBuilder menu, boolean allMenusAreClosing) {
         if (mListener == null) {
             return;
-        }
-        if (HoloEverywhere.DEBUG) {
-            Log.v(TAG, "Calling onContextMenuClosed on " + mListener);
         }
         mListener.onContextMenuClosed((ContextMenu) menu);
     }
@@ -105,9 +46,6 @@ public class ContextMenuDecorView extends FrameLayout implements
     public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
         if (mListener == null) {
             return false;
-        }
-        if (HoloEverywhere.DEBUG) {
-            Log.v(TAG, "Calling onContextItemSelected on " + mListener);
         }
         if (menu instanceof ContextMenuBuilder
                 && item instanceof MenuItemImpl) {
@@ -159,9 +97,5 @@ public class ContextMenuDecorView extends FrameLayout implements
         } else {
             return false;
         }
-    }
-
-    public View unwrap() {
-        return getChildCount() > 0 ? getChildAt(0) : null;
     }
 }
