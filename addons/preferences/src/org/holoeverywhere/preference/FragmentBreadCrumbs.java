@@ -18,16 +18,13 @@ import org.holoeverywhere.widget.LinearLayout;
 
 public class FragmentBreadCrumbs extends ViewGroup implements
         FragmentManager.OnBackStackChangedListener {
-    public interface OnBreadCrumbClickListener {
-        public boolean onBreadCrumbClick(BackStackEntry backStack, int flags);
-    }
-
     FragmentActivity mActivity;
     LinearLayout mContainer;
     LayoutInflater mInflater;
     int mMaxVisible = -1;
+    BackStackEntry mParentEntry;
+    BackStackEntry mTopEntry;
     private OnBreadCrumbClickListener mOnBreadCrumbClickListener;
-
     private OnClickListener mOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -54,10 +51,7 @@ public class FragmentBreadCrumbs extends ViewGroup implements
             }
         }
     };
-
     private OnClickListener mParentClickListener;
-    BackStackEntry mParentEntry;
-    BackStackEntry mTopEntry;
 
     public FragmentBreadCrumbs(Context context) {
         this(context, null);
@@ -69,6 +63,10 @@ public class FragmentBreadCrumbs extends ViewGroup implements
 
     public FragmentBreadCrumbs(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+    }
+
+    private static int supportCombineMeasuredStates(int curState, int newState) {
+        return curState | newState;
     }
 
     private BackStackEntry createBackStackEntry(final CharSequence title,
@@ -154,10 +152,10 @@ public class FragmentBreadCrumbs extends ViewGroup implements
                 maxWidth = Math.max(maxWidth, child.getMeasuredWidth());
                 maxHeight = Math.max(maxHeight, child.getMeasuredHeight());
                 if (VERSION.SDK_INT >= 11) {
-                    measuredChildState = View.combineMeasuredStates(
+                    measuredChildState = supportCombineMeasuredStates(
                             measuredChildState, child.getMeasuredState());
                 } else {
-                    measuredChildState = View.combineMeasuredStates(
+                    measuredChildState = supportCombineMeasuredStates(
                             measuredChildState, 0);
                 }
             }
@@ -258,5 +256,9 @@ public class FragmentBreadCrumbs extends ViewGroup implements
                         : View.GONE);
             }
         }
+    }
+
+    public interface OnBreadCrumbClickListener {
+        public boolean onBreadCrumbClick(BackStackEntry backStack, int flags);
     }
 }
