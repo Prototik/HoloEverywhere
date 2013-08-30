@@ -1,9 +1,6 @@
 
 package org.holoeverywhere.preference;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.widget.LinearLayout;
-
 import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,18 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.widget.LinearLayout;
+
 public class FragmentBreadCrumbs extends ViewGroup implements
         FragmentManager.OnBackStackChangedListener {
-    public interface OnBreadCrumbClickListener {
-        public boolean onBreadCrumbClick(BackStackEntry backStack, int flags);
-    }
-
     FragmentActivity mActivity;
     LinearLayout mContainer;
     LayoutInflater mInflater;
     int mMaxVisible = -1;
+    BackStackEntry mParentEntry;
+    BackStackEntry mTopEntry;
     private OnBreadCrumbClickListener mOnBreadCrumbClickListener;
-
     private OnClickListener mOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -54,10 +51,7 @@ public class FragmentBreadCrumbs extends ViewGroup implements
             }
         }
     };
-
     private OnClickListener mParentClickListener;
-    BackStackEntry mParentEntry;
-    BackStackEntry mTopEntry;
 
     public FragmentBreadCrumbs(Context context) {
         this(context, null);
@@ -71,8 +65,12 @@ public class FragmentBreadCrumbs extends ViewGroup implements
         super(context, attrs, defStyle);
     }
 
+    private static int supportCombineMeasuredStates(int curState, int newState) {
+        return curState | newState;
+    }
+
     private BackStackEntry createBackStackEntry(final CharSequence title,
-            final CharSequence shortTitle) {
+                                                final CharSequence shortTitle) {
         if (title == null) {
             return null;
         }
@@ -154,10 +152,10 @@ public class FragmentBreadCrumbs extends ViewGroup implements
                 maxWidth = Math.max(maxWidth, child.getMeasuredWidth());
                 maxHeight = Math.max(maxHeight, child.getMeasuredHeight());
                 if (VERSION.SDK_INT >= 11) {
-                    measuredChildState = View.combineMeasuredStates(
+                    measuredChildState = supportCombineMeasuredStates(
                             measuredChildState, child.getMeasuredState());
                 } else {
-                    measuredChildState = View.combineMeasuredStates(
+                    measuredChildState = supportCombineMeasuredStates(
                             measuredChildState, 0);
                 }
             }
@@ -199,7 +197,7 @@ public class FragmentBreadCrumbs extends ViewGroup implements
     }
 
     public void setParentTitle(CharSequence title, CharSequence shortTitle,
-            OnClickListener listener) {
+                               OnClickListener listener) {
         mParentEntry = createBackStackEntry(title, shortTitle);
         mParentClickListener = listener;
         updateCrumbs();
@@ -258,5 +256,9 @@ public class FragmentBreadCrumbs extends ViewGroup implements
                         : View.GONE);
             }
         }
+    }
+
+    public interface OnBreadCrumbClickListener {
+        public boolean onBreadCrumbClick(BackStackEntry backStack, int flags);
     }
 }
