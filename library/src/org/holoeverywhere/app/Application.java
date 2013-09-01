@@ -34,6 +34,13 @@ public class Application extends android.app.Application implements
         SystemServiceManager.register(LayoutInflaterCreator.class);
     }
 
+    private final IAddonBasicAttacher<IAddonApplication, Application> mAttacher =
+            new IAddonBasicAttacher<IAddonApplication, Application>(this);
+
+    public Application() {
+        Application.sLastInstance = this;
+    }
+
     public static void addInitialAddon(Class<? extends IAddon> clazz) {
         if (sInitialAddons == null) {
             sInitialAddons = new ArrayList<Class<? extends IAddon>>();
@@ -46,13 +53,6 @@ public class Application extends android.app.Application implements
     }
 
     public static void init() {
-    }
-
-    private final IAddonBasicAttacher<IAddonApplication, Application> mAttacher =
-            new IAddonBasicAttacher<IAddonApplication, Application>(this);
-
-    public Application() {
-        Application.sLastInstance = this;
     }
 
     @Override
@@ -117,6 +117,11 @@ public class Application extends android.app.Application implements
 
     @Override
     public void onCreate() {
+        // Cruel fallback for some crazy people who using application like view context
+        // You are warned
+        // Really
+        setTheme(ThemeManager.getThemeResource(ThemeManager.getDefaultTheme()));
+
         addon(sInitialAddons);
         performAddonAction(new AddonCallback<IAddonApplication>() {
             @Override
