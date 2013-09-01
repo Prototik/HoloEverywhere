@@ -45,8 +45,8 @@ public class ListPreference extends DialogPreference {
         context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.ListPreference, 0, 0);
-        mEntries = a.getTextArray(R.styleable.ListPreference_entries);
-        mEntryValues = a.getTextArray(R.styleable.ListPreference_entryValues);
+        mEntries = a.getTextArray(R.styleable.ListPreference_android_entries);
+        mEntryValues = a.getTextArray(R.styleable.ListPreference_android_entryValues);
         a.recycle();
         mSummary = super.getSummary();
     }

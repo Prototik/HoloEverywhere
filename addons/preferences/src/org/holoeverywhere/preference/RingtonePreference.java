@@ -32,11 +32,11 @@ public class RingtonePreference extends DialogPreference implements
         context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.RingtonePreference, defStyle, 0);
-        mRingtoneType = a.getInt(R.styleable.RingtonePreference_ringtoneType,
+        mRingtoneType = a.getInt(R.styleable.RingtonePreference_android_ringtoneType,
                 RingtoneManager.TYPE_RINGTONE);
-        mShowDefault = a.getBoolean(R.styleable.RingtonePreference_showDefault,
+        mShowDefault = a.getBoolean(R.styleable.RingtonePreference_android_showDefault,
                 true);
-        mShowSilent = a.getBoolean(R.styleable.RingtonePreference_showSilent,
+        mShowSilent = a.getBoolean(R.styleable.RingtonePreference_android_showSilent,
                 true);
         a.recycle();
     }

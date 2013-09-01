@@ -1,47 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
     <!--Start attrs definition block-->
-    <attr name="action" format="string"/>
-    <attr name="borderBottom" format="dimension"/>
-    <attr name="borderLeft" format="dimension"/>
-    <attr name="borderRight" format="dimension"/>
-    <attr name="borderTop" format="dimension"/>
-    <attr name="breadCrumbShortTitle" format="string"/>
-    <attr name="breadCrumbTitle" format="string"/>
     <attr name="checkBoxPreferenceStyle" format="reference"/>
-    <attr name="data" format="string"/>
     <attr name="datePreferenceStyle" format="reference"/>
-    <attr name="defaultValue" format="string|boolean|integer|reference|float"/>
-    <attr name="dependency" format="string"/>
-    <attr name="depends" format="reference"/>
-    <attr name="dialogIcon" format="reference"/>
-    <attr name="dialogLayout" format="reference"/>
-    <attr name="dialogMessage" format="string"/>
+    <attr name="dependency" format="reference|string"/>
     <attr name="dialogPreferenceStyle" format="reference"/>
-    <attr name="dialogTitle" format="string"/>
-    <attr name="disableDependentsState" format="boolean"/>
     <attr name="editTextPreferenceStyle" format="reference"/>
-    <attr name="enabled" format="boolean"/>
-    <attr name="entries" format="reference"/>
-    <attr name="entryValues" format="reference"/>
-    <attr name="fragment" format="string"/>
-    <attr name="id" format="reference"/>
     <attr name="is24HourView" format="enum">
         <enum name="auto" value="0"/>
         <enum name="no" value="-1"/>
         <enum name="yes" value="1"/>
     </attr>
-    <attr name="key" format="string"/>
-    <attr name="layout_removeBorders" format="boolean"/>
     <attr name="max" format="integer"/>
-    <attr name="mimeType" format="string"/>
     <attr name="min" format="integer"/>
-    <attr name="name" format="string"/>
-    <attr name="negativeButtonText" format="string"/>
     <attr name="numberPickerPreferenceStyle" format="reference"/>
-    <attr name="order" format="integer"/>
-    <attr name="orderingFromXml" format="boolean"/>
-    <attr name="persistent" format="boolean"/>
-    <attr name="positiveButtonText" format="string"/>
     <attr name="preferenceCategoryStyle" format="reference"/>
     <attr name="preferenceFragmentStyle" format="reference"/>
     <attr name="preferenceFrameLayoutStyle" format="reference"/>
@@ -51,65 +22,39 @@
     <attr name="preferenceScreenStyle" format="reference"/>
     <attr name="preferenceStyle" format="reference"/>
     <attr name="ringtonePreferenceStyle" format="reference"/>
-    <attr name="ringtoneType">
-        <flag name="alarm" value="4"/>
-        <flag name="all" value="7"/>
-        <flag name="notification" value="2"/>
-        <flag name="ringtone" value="1"/>
-    </attr>
     <attr name="seekBarDialogPreferenceStyle" format="reference"/>
     <attr name="seekBarPreferenceStyle" format="reference"/>
-    <attr name="selectable" format="boolean"/>
-    <attr name="shouldDisableView" format="boolean"/>
-    <attr name="showDefault" format="boolean"/>
-    <attr name="showSilent" format="boolean"/>
-    <attr name="streamType" format="enum">
-        <enum name="alarm" value="4"/>
-        <enum name="music" value="3"/>
-        <enum name="ring" value="2"/>
-        <enum name="system" value="1"/>
-        <enum name="voice" value="0"/>
-    </attr>
-    <attr name="summary" format="string"/>
-    <attr name="summaryOff" format="string"/>
-    <attr name="summaryOn" format="string"/>
     <attr name="switchPreferenceStyle" format="reference"/>
-    <attr name="switchTextOff" format="string"/>
-    <attr name="switchTextOn" format="string"/>
-    <attr name="targetClass" format="string"/>
-    <attr name="targetPackage" format="string"/>
     <attr name="timePreferenceStyle" format="reference"/>
-    <attr name="value" format="string|integer|color|float|boolean"/>
-    <attr name="widgetLayout" format="reference"/>
     <attr name="wrapSelectorWheel" format="boolean"/>
     <attr name="yesNoPreferenceStyle" format="reference"/>
     <!--Start styleable definition block-->
     <declare-styleable name="DatePreference"/>
     <declare-styleable name="DialogPreference">
-        <attr name="dialogIcon"/>
-        <attr name="dialogLayout"/>
-        <attr name="dialogMessage"/>
-        <attr name="dialogTitle"/>
-        <attr name="negativeButtonText"/>
-        <attr name="positiveButtonText"/>
+        <attr name="android:dialogIcon"/>
+        <attr name="android:dialogLayout"/>
+        <attr name="android:dialogMessage"/>
+        <attr name="android:dialogTitle"/>
+        <attr name="android:negativeButtonText"/>
+        <attr name="android:positiveButtonText"/>
     </declare-styleable>
     <declare-styleable name="Extra">
-        <attr name="name"/>
-        <attr name="value"/>
+        <attr name="android:name"/>
+        <attr name="android:value"/>
     </declare-styleable>
     <declare-styleable name="Intent">
-        <attr name="action"/>
-        <attr name="data"/>
-        <attr name="mimeType"/>
-        <attr name="targetClass"/>
-        <attr name="targetPackage"/>
+        <attr name="android:action"/>
+        <attr name="android:data"/>
+        <attr name="android:mimeType"/>
+        <attr name="android:targetClass"/>
+        <attr name="android:targetPackage"/>
     </declare-styleable>
     <declare-styleable name="IntentCategory">
-        <attr name="name"/>
+        <attr name="android:name"/>
     </declare-styleable>
     <declare-styleable name="ListPreference">
-        <attr name="entries"/>
-        <attr name="entryValues"/>
+        <attr name="android:entries"/>
+        <attr name="android:entryValues"/>
     </declare-styleable>
     <declare-styleable name="NumberPickerPreference">
         <attr name="max"/>
@@ -117,69 +62,63 @@
         <attr name="wrapSelectorWheel"/>
     </declare-styleable>
     <declare-styleable name="Preference">
-        <attr name="defaultValue"/>
+        <attr name="android:defaultValue"/>
+        <attr name="android:dependency"/>
+        <attr name="android:enabled"/>
+        <attr name="android:fragment"/>
+        <attr name="android:icon"/>
+        <attr name="android:id"/>
+        <attr name="android:key"/>
+        <attr name="android:layout"/>
+        <attr name="android:order"/>
+        <attr name="android:persistent"/>
+        <attr name="android:selectable"/>
+        <attr name="android:shouldDisableView"/>
+        <attr name="android:summary"/>
+        <attr name="android:title"/>
+        <attr name="android:widgetLayout"/>
         <attr name="dependency"/>
-        <attr name="depends"/>
-        <attr name="enabled"/>
-        <attr name="fragment"/>
-        <attr name="icon"/>
-        <attr name="id"/>
-        <attr name="key"/>
-        <attr name="layout"/>
-        <attr name="order"/>
-        <attr name="persistent"/>
-        <attr name="selectable"/>
-        <attr name="shouldDisableView"/>
-        <attr name="summary"/>
-        <attr name="title"/>
-        <attr name="widgetLayout"/>
     </declare-styleable>
     <declare-styleable name="PreferenceFrameLayout">
-        <attr name="borderBottom"/>
-        <attr name="borderLeft"/>
-        <attr name="borderRight"/>
-        <attr name="borderTop"/>
+        <attr name="android:paddingBottom"/>
+        <attr name="android:paddingLeft"/>
+        <attr name="android:paddingRight"/>
+        <attr name="android:paddingTop"/>
     </declare-styleable>
     <declare-styleable name="PreferenceFrameLayout_Layout">
-        <attr name="layout_removeBorders"/>
+        <attr name="android:layout_removeBorders"/>
     </declare-styleable>
     <declare-styleable name="PreferenceGroup">
-        <attr name="orderingFromXml"/>
+        <attr name="android:orderingFromXml"/>
     </declare-styleable>
     <declare-styleable name="PreferenceHeader">
-        <attr name="breadCrumbShortTitle"/>
-        <attr name="breadCrumbTitle"/>
-        <attr name="fragment"/>
-        <attr name="icon"/>
-        <attr name="id"/>
-        <attr name="summary"/>
-        <attr name="title"/>
+        <attr name="android:breadCrumbShortTitle"/>
+        <attr name="android:breadCrumbTitle"/>
+        <attr name="android:fragment"/>
+        <attr name="android:icon"/>
+        <attr name="android:id"/>
+        <attr name="android:summary"/>
+        <attr name="android:title"/>
     </declare-styleable>
     <declare-styleable name="RingtonePreference">
-        <attr name="ringtoneType"/>
-        <attr name="showDefault"/>
-        <attr name="showSilent"/>
-    </declare-styleable>
-    <declare-styleable name="SeekBarDialogPreference">
-        <attr name="max"/>
+        <attr name="android:ringtoneType"/>
+        <attr name="android:showDefault"/>
+        <attr name="android:showSilent"/>
     </declare-styleable>
     <declare-styleable name="SeekBarPreference">
-        <attr name="max"/>
+        <attr name="android:max"/>
     </declare-styleable>
     <declare-styleable name="SwitchPreference">
-        <attr name="switchTextOff"/>
-        <attr name="switchTextOn"/>
+        <attr name="android:switchTextOff"/>
+        <attr name="android:switchTextOn"/>
     </declare-styleable>
     <declare-styleable name="TimePreference">
         <attr name="is24HourView"/>
     </declare-styleable>
     <declare-styleable name="TwoStatePreference">
-        <attr name="disableDependentsState"/>
-        <attr name="summaryOff"/>
-        <attr name="summaryOn"/>
-    </declare-styleable>
-    <declare-styleable name="VolumePreference">
-        <attr name="streamType"/>
+        <attr name="android:disableDependentsState"/>
+        <attr name="android:summaryOff"/>
+        <attr name="android:summaryOn"/>
     </declare-styleable>
     <!--End of any blocks-->
 </resources>

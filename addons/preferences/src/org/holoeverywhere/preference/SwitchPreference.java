@@ -40,8 +40,8 @@ public class SwitchPreference extends TwoStatePreference {
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.SwitchPreference, defStyle,
                 R.style.Holo_PreferenceSwitch);
-        mSwitchOn = a.getString(R.styleable.SwitchPreference_switchTextOn);
-        mSwitchOff = a.getString(R.styleable.SwitchPreference_switchTextOff);
+        mSwitchOn = a.getString(R.styleable.SwitchPreference_android_switchTextOn);
+        mSwitchOff = a.getString(R.styleable.SwitchPreference_android_switchTextOff);
         a.recycle();
     }
 

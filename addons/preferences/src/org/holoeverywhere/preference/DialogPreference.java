@@ -74,19 +74,19 @@ public abstract class DialogPreference extends Preference implements
         context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.DialogPreference, defStyle, R.style.Holo_PreferenceDialog);
-        mDialogTitle = a.getString(R.styleable.DialogPreference_dialogTitle);
+        mDialogTitle = a.getString(R.styleable.DialogPreference_android_dialogTitle);
         if (mDialogTitle == null) {
             mDialogTitle = getTitle();
         }
         mDialogMessage = a
-                .getString(R.styleable.DialogPreference_dialogMessage);
-        mDialogIcon = a.getDrawable(R.styleable.DialogPreference_dialogIcon);
+                .getString(R.styleable.DialogPreference_android_dialogMessage);
+        mDialogIcon = a.getDrawable(R.styleable.DialogPreference_android_dialogIcon);
         mPositiveButtonText = a
-                .getString(R.styleable.DialogPreference_positiveButtonText);
+                .getString(R.styleable.DialogPreference_android_positiveButtonText);
         mNegativeButtonText = a
-                .getString(R.styleable.DialogPreference_negativeButtonText);
+                .getString(R.styleable.DialogPreference_android_negativeButtonText);
         mDialogLayoutResId = a.getResourceId(
-                R.styleable.DialogPreference_dialogLayout, mDialogLayoutResId);
+                R.styleable.DialogPreference_android_dialogLayout, mDialogLayoutResId);
         a.recycle();
 
     }

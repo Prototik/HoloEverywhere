@@ -1,66 +1,66 @@
 {
 	"data": {
             "Holo.Preference": {
-                "layout": "@layout/preference_holo"
+                "android:layout": "@layout/preference_holo"
             }, 
             "Holo.PreferenceCategory": {
-                "layout": "@layout/preference_category_holo", 
-                "selectable": false, 
-                "shouldDisableView": false
+                "android:layout": "@layout/preference_category_holo",
+                "android:selectable": false,
+                "android:shouldDisableView": false
             }, 
             "Holo.PreferenceCheckBox < Holo.PreferenceTwoState": {
-                "widgetLayout": "@layout/preference_widget_checkbox"
+                "android:widgetLayout": "@layout/preference_widget_checkbox"
             }, 
             "Holo.PreferenceTwoState": {}, 
             "Holo.PreferenceDialog": {
-                "negativeButtonText": "@android:string/cancel", 
-                "positiveButtonText": "@android:string/ok"
+                "android:negativeButtonText": "@android:string/cancel",
+                "android:positiveButtonText": "@android:string/ok"
             }, 
             "Holo.PreferenceDialog.EditTextPreference": {
-                "dialogLayout": "@layout/preference_dialog_edittext"
+                "android:dialogLayout": "@layout/preference_dialog_edittext"
             }, 
             "Holo.PreferenceDialog.NumberPickerPreference": {
-                "dialogLayout": "@layout/preference_dialog_numberpicker", 
-                "max": "10", 
-                "min": "0", 
+                "android:dialogLayout": "@layout/preference_dialog_numberpicker",
+                "max": "10",
+                "min": "0",
                 "wrapSelectorWheel": "true"
             }, 
             "Holo.PreferenceDialog.SeekBarDialogPreference": {
-                "dialogLayout": "@layout/preference_dialog_seekbar"
+                "android:dialogLayout": "@layout/preference_dialog_seekbar"
             }, 
             "Holo.PreferenceDialog.YesNoPreference": {
-                "negativeButtonText": "@android:string/no", 
-                "positiveButtonText": "@android:string/yes"
+                "android:negativeButtonText": "@android:string/no",
+                "android:positiveButtonText": "@android:string/yes"
             }, 
             "Holo.PreferenceFragment": {
                 "android:paddingLeft": "@dimen/preference_fragment_padding_side", 
                 "android:paddingRight": "@dimen/preference_fragment_padding_side"
             }, 
             "Holo.PreferenceFrameLayout": {
-                "borderBottom": "@dimen/preference_fragment_padding_bottom", 
-                "borderLeft": "@dimen/preference_fragment_padding_side", 
-                "borderRight": "@dimen/preference_fragment_padding_side", 
-                "borderTop": "0dip"
+                "android:paddingBottom": "@dimen/preference_fragment_padding_bottom",
+                "android:paddingLeft": "@dimen/preference_fragment_padding_side",
+                "android:paddingRight": "@dimen/preference_fragment_padding_side",
+                "android:paddingTop": "0dip"
             }, 
             "Holo.PreferenceInformation": {
-                "enabled": false, 
-                "layout": "@layout/preference_information_holo", 
-                "shouldDisableView": false
+                "android:enabled": false,
+                "android:layout": "@layout/preference_information_holo",
+                "android:shouldDisableView": false
             }, 
             "Holo.PreferencePanel": {}, 
             "Holo.PreferenceRingtone": {
-                "ringtoneType": "ringtone", 
-                "showDefault": "true", 
-                "showSilent": "true"
+                "android:ringtoneType": "ringtone",
+                "android:showDefault": "true",
+                "android:showSilent": "true"
             }, 
             "Holo.PreferenceScreen": {}, 
             "Holo.PreferenceSeekBar": {
-                "layout": "@layout/preference_widget_seekbar"
+                "android:layout": "@layout/preference_widget_seekbar"
             }, 
             "Holo.PreferenceSwitch < Holo.PreferenceTwoState": {
-                "switchTextOff": "@string/capital_off", 
-                "switchTextOn": "@string/capital_on", 
-                "widgetLayout": "@layout/preference_widget_switch"
+                "android:switchTextOff": "@string/capital_off",
+                "android:switchTextOn": "@string/capital_on",
+                "android:widgetLayout": "@layout/preference_widget_switch"
             },
             "Holo.PreferenceTime": {
 				"is24HourView": "auto"

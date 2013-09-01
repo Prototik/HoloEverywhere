@@ -18,7 +18,7 @@ public class PreferenceFrameLayout extends FrameLayout {
                     R.styleable.PreferenceFrameLayout_Layout);
             removeBorders = a
                     .getBoolean(
-                            R.styleable.PreferenceFrameLayout_Layout_layout_removeBorders,
+                            R.styleable.PreferenceFrameLayout_Layout_android_layout_removeBorders,
                             false);
             a.recycle();
         }
@@ -62,15 +62,15 @@ public class PreferenceFrameLayout extends FrameLayout {
         int defaultRightPadding = (int) (density
                 * PreferenceFrameLayout.DEFAULT_BORDER_RIGHT + 0.5f);
         mBorderTop = a.getDimensionPixelSize(
-                R.styleable.PreferenceFrameLayout_borderTop, defaultBorderTop);
+                R.styleable.PreferenceFrameLayout_android_paddingTop, defaultBorderTop);
         mBorderBottom = a.getDimensionPixelSize(
-                R.styleable.PreferenceFrameLayout_borderBottom,
+                R.styleable.PreferenceFrameLayout_android_paddingBottom,
                 defaultBottomPadding);
         mBorderLeft = a.getDimensionPixelSize(
-                R.styleable.PreferenceFrameLayout_borderLeft,
+                R.styleable.PreferenceFrameLayout_android_paddingLeft,
                 defaultLeftPadding);
         mBorderRight = a.getDimensionPixelSize(
-                R.styleable.PreferenceFrameLayout_borderRight,
+                R.styleable.PreferenceFrameLayout_android_paddingRight,
                 defaultRightPadding);
         a.recycle();
     }

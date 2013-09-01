@@ -31,7 +31,7 @@ public abstract class PreferenceGroup extends Preference implements
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.PreferenceGroup, defStyle, 0);
         mOrderingAsAdded = a.getBoolean(
-                R.styleable.PreferenceGroup_orderingFromXml, mOrderingAsAdded);
+                R.styleable.PreferenceGroup_android_orderingFromXml, mOrderingAsAdded);
         a.recycle();
     }
 

@@ -56,10 +56,10 @@ public abstract class TwoStatePreference extends Preference {
         context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TwoStatePreference,
                 defStyle, R.style.Holo_PreferenceTwoState);
-        mSummaryOn = a.getText(R.styleable.TwoStatePreference_summaryOn);
-        mSummaryOff = a.getText(R.styleable.TwoStatePreference_summaryOff);
+        mSummaryOn = a.getText(R.styleable.TwoStatePreference_android_summaryOn);
+        mSummaryOff = a.getText(R.styleable.TwoStatePreference_android_summaryOff);
         mDisableDependentsState = a.getBoolean(
-                R.styleable.TwoStatePreference_disableDependentsState, false);
+                R.styleable.TwoStatePreference_android_disableDependentsState, false);
         a.recycle();
     }
 

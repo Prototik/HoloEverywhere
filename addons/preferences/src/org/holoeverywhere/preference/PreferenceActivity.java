@@ -454,10 +454,10 @@ public abstract class PreferenceActivity extends ListActivity implements
                     TypedArray sa = getResources().obtainAttributes(attrs,
                             R.styleable.PreferenceHeader);
                     header.id = sa.getResourceId(
-                            R.styleable.PreferenceHeader_id,
+                            R.styleable.PreferenceHeader_android_id,
                             (int) PreferenceActivity.HEADER_ID_UNDEFINED);
                     TypedValue tv = sa
-                            .peekValue(R.styleable.PreferenceHeader_title);
+                            .peekValue(R.styleable.PreferenceHeader_android_title);
                     if (tv != null && tv.type == TypedValue.TYPE_STRING) {
                         if (tv.resourceId != 0) {
                             header.titleRes = tv.resourceId;
@@ -465,7 +465,7 @@ public abstract class PreferenceActivity extends ListActivity implements
                             header.title = tv.string;
                         }
                     }
-                    tv = sa.peekValue(R.styleable.PreferenceHeader_summary);
+                    tv = sa.peekValue(R.styleable.PreferenceHeader_android_summary);
                     if (tv != null && tv.type == TypedValue.TYPE_STRING) {
                         if (tv.resourceId != 0) {
                             header.summaryRes = tv.resourceId;
@@ -473,7 +473,7 @@ public abstract class PreferenceActivity extends ListActivity implements
                             header.summary = tv.string;
                         }
                     }
-                    tv = sa.peekValue(R.styleable.PreferenceHeader_breadCrumbTitle);
+                    tv = sa.peekValue(R.styleable.PreferenceHeader_android_breadCrumbTitle);
                     if (tv != null && tv.type == TypedValue.TYPE_STRING) {
                         if (tv.resourceId != 0) {
                             header.breadCrumbTitleRes = tv.resourceId;
@@ -481,7 +481,7 @@ public abstract class PreferenceActivity extends ListActivity implements
                             header.breadCrumbTitle = tv.string;
                         }
                     }
-                    tv = sa.peekValue(R.styleable.PreferenceHeader_breadCrumbShortTitle);
+                    tv = sa.peekValue(R.styleable.PreferenceHeader_android_breadCrumbShortTitle);
                     if (tv != null && tv.type == TypedValue.TYPE_STRING) {
                         if (tv.resourceId != 0) {
                             header.breadCrumbShortTitleRes = tv.resourceId;
@@ -490,9 +490,9 @@ public abstract class PreferenceActivity extends ListActivity implements
                         }
                     }
                     header.iconRes = sa.getResourceId(
-                            R.styleable.PreferenceHeader_icon, 0);
+                            R.styleable.PreferenceHeader_android_icon, 0);
                     header.fragment = sa
-                            .getString(R.styleable.PreferenceHeader_fragment);
+                            .getString(R.styleable.PreferenceHeader_android_fragment);
                     sa.recycle();
                     if (curBundle == null) {
                         curBundle = new Bundle();
