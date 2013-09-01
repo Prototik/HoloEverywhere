@@ -10,7 +10,7 @@ env:
   global:
     # Android SDK
     - ANDROID_SDK_VERSION="r22.0.4"
-    - ANDROID_BUILD_TOOLS_VERSION="r17"
+    - ANDROID_BUILD_TOOLS_VERSION="r18.0.1"
     # Your Sonatype login
     - SONATYPE_USERNAME=prototik
     # Your Sonatype password, encrypted by 'travis encrypt -r GitHubLogin/Repo SONATYPE_PASSWORD=pass'
@@ -31,7 +31,7 @@ before_install:
   - wget https://dl-ssl.google.com/android/android-sdk_${ANDROID_SDK_VERSION}-linux.tgz -q
   - tar -zxf android-sdk_${ANDROID_SDK_VERSION}-linux.tgz
   - export ANDROID_HOME=`pwd`/android-sdk-linux
-  - export ANDROID_BUILD_TOOLS_HOME=${ANDROID_HOME}/build-tools/17.0.0
+  - export ANDROID_BUILD_TOOLS_HOME=${ANDROID_HOME}/build-tools/18.0.1
   - export PATH=${ANDROID_BUILD_TOOLS_HOME}:${ANDROID_HOME}/tools:${PATH}
   
   - export BASEDIR=`pwd`
@@ -57,20 +57,21 @@ before_install:
   - unzip -q ${FILE} -d ${ANDROID_HOME}/platforms
   - mv ${ANDROID_HOME}/platforms/android-4.0.2 ${ANDROID_HOME}/platforms/android-14
   - rm ${FILE}
-  # Android SDK Platform API 17
-  - export FILE=android-17_r02.zip
+  # Android SDK Platform API 18
+  - export FILE=android-18_r01.zip
   - wget https://dl-ssl.google.com/android/repository/${FILE} -q
   - unzip -q ${FILE} -d ${ANDROID_HOME}/platforms
-  - mv ${ANDROID_HOME}/platforms/android-4.2.2 ${ANDROID_HOME}/platforms/android-17
+  - mv ${ANDROID_HOME}/platforms/android-4.3 ${ANDROID_HOME}/platforms/android-18
   - rm ${FILE}
   
   - unset FILE
   
   # We are should update Gradle, because Android Build Tools works with 1.6,
   # but on travis installed 1.4
-  - wget http://downloads.gradle.org/distributions/gradle-1.6-all.zip -q
-  - unzip -q -o gradle-1.6-all.zip
-  - export PATH="${BASEDIR}/gradle-1.6/bin:${PATH}"
+  # but we'll install 1.7. I love risk!
+  - wget http://downloads.gradle.org/distributions/gradle-1.7-all.zip -q
+  - unzip -q -o gradle-1.7-all.zip
+  - export PATH="${BASEDIR}/gradle-1.7/bin:${PATH}"
 
 install: gradle build -q
 script: gradle check

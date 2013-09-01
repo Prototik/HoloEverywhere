@@ -52,6 +52,7 @@ public class SliderMenu implements OnBackStackChangedListener {
             R.color.holo_red_dark, R.color.holo_red_light
     };
     public static final int THEME_FLAG;
+    private static final IAddonThemes sThemes;
 
     static {
         sThemes = new IAddonThemes();
@@ -60,7 +61,6 @@ public class SliderMenu implements OnBackStackChangedListener {
     }
 
     private static final String KEY_CURRENT_PAGE = ":slider:currentPage";
-    private static final IAddonThemes sThemes;
     private final AddonSliderA mAddon;
     private final FragmentManager mFragmentManager;
     private final List<SliderItem> mItems;

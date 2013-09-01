@@ -211,11 +211,6 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
         return mDecorView;
     }
 
-    @Override
-    public void invalidateOptionsMenu() {
-        supportInvalidateOptionsMenu();
-    }
-
     public boolean isDecorViewInited() {
         return mDecorView != null;
     }
