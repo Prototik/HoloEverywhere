@@ -6,33 +6,15 @@ import android.os.Bundle;
 import org.holoeverywhere.app.TabSwipeInterface.ITabInfo;
 
 public interface TabSwipeInterface<T extends ITabInfo<T>> {
-    public static interface ITabInfo<T extends ITabInfo<T>> {
-        public Bundle getFragmentArguments();
-
-        public Class<? extends Fragment> getFragmentClass();
-
-        public CharSequence getTitle();
-
-        public T setFragmentArguments(Bundle fragmentArguments);
-
-        public T setFragmentClass(Class<? extends Fragment> fragmentClass);
-
-        public T setTitle(CharSequence title);
-    }
-
-    public static interface OnTabSelectedListener {
-        public void onTabSelected(int position);
-    }
-
     public T addTab(CharSequence title, Class<? extends Fragment> fragmentClass);
 
     public T addTab(CharSequence title, Class<? extends Fragment> fragmentClass,
-            Bundle fragmentArguments);
+                    Bundle fragmentArguments);
 
     public T addTab(int title, Class<? extends Fragment> fragmentClass);
 
     public T addTab(int title, Class<? extends Fragment> fragmentClass,
-            Bundle fragmentArguments);
+                    Bundle fragmentArguments);
 
     public T addTab(T tabInfo);
 
@@ -40,9 +22,21 @@ public interface TabSwipeInterface<T extends ITabInfo<T>> {
 
     public OnTabSelectedListener getOnTabSelectedListener();
 
+    public void setOnTabSelectedListener(OnTabSelectedListener onTabSelectedListener);
+
+    public int getCurrentTab();
+
+    public void setCurrentTab(int position);
+
+    public T getTabAt(int position);
+
     public boolean isSmoothScroll();
 
+    public void setSmoothScroll(boolean smoothScroll);
+
     public boolean isSwipeEnabled();
+
+    public void setSwipeEnabled(boolean swipeEnabled);
 
     public void reloadTabs();
 
@@ -52,11 +46,21 @@ public interface TabSwipeInterface<T extends ITabInfo<T>> {
 
     public T removeTab(T tabInfo);
 
-    public void setCurrentTab(int position);
+    public static interface ITabInfo<T extends ITabInfo<T>> {
+        public Bundle getFragmentArguments();
 
-    public void setOnTabSelectedListener(OnTabSelectedListener onTabSelectedListener);
+        public T setFragmentArguments(Bundle fragmentArguments);
 
-    public void setSmoothScroll(boolean smoothScroll);
+        public Class<? extends Fragment> getFragmentClass();
 
-    public void setSwipeEnabled(boolean swipeEnabled);
+        public T setFragmentClass(Class<? extends Fragment> fragmentClass);
+
+        public CharSequence getTitle();
+
+        public T setTitle(CharSequence title);
+    }
+
+    public static interface OnTabSelectedListener {
+        public void onTabSelected(int position);
+    }
 }

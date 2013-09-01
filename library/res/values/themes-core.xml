@@ -14,7 +14,7 @@
         <item name="fastScrollOverlayPosition">atThumb</item>
         <item name="fastScrollTextColor">@color/primary_text_holo_dark</item>
         <item name="fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
-        <item name="listPreferredItemHeight">64dip</item>
+        <item name="listPreferredItemHeight">64dp</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
         <item name="listPreferredItemHeightSmall">48dp</item>
         <item name="listPreferredItemPaddingLeft">8dp</item>
@@ -81,8 +81,7 @@
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
         <!--End of block Dark-->
         <!--Include block: BarDark-->
-        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance</item>
-        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.Small</item>
+        <item name="actionBarWidgetTheme">@style/Holo.Theme</item>
         <!--End of block BarDark-->
     </style>
     <style name="Holo.Base.Theme.Light" parent="Theme.AppCompat.Light">
@@ -100,7 +99,7 @@
         <item name="fastScrollOverlayPosition">atThumb</item>
         <item name="fastScrollTextColor">@color/primary_text_holo_dark</item>
         <item name="fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
-        <item name="listPreferredItemHeight">64dip</item>
+        <item name="listPreferredItemHeight">64dp</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
         <item name="listPreferredItemHeightSmall">48dp</item>
         <item name="listPreferredItemPaddingLeft">8dp</item>
@@ -167,8 +166,7 @@
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block Light-->
         <!--Include block: BarLight-->
-        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance.Light</item>
-        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.Small.Light</item>
+        <item name="actionBarWidgetTheme">@style/Holo.Theme.Light</item>
         <!--End of block BarLight-->
     </style>
     <style name="Holo.Base.Theme.Light.DarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -186,7 +184,7 @@
         <item name="fastScrollOverlayPosition">atThumb</item>
         <item name="fastScrollTextColor">@color/primary_text_holo_dark</item>
         <item name="fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
-        <item name="listPreferredItemHeight">64dip</item>
+        <item name="listPreferredItemHeight">64dp</item>
         <item name="listPreferredItemHeightLarge">80dp</item>
         <item name="listPreferredItemHeightSmall">48dp</item>
         <item name="listPreferredItemPaddingLeft">8dp</item>
@@ -253,8 +251,7 @@
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block Light-->
         <!--Include block: BarDark-->
-        <item name="textAppearanceLargePopupMenu">@style/Holo.TextAppearance</item>
-        <item name="textAppearanceSmallPopupMenu">@style/Holo.TextAppearance.Small</item>
+        <item name="actionBarWidgetTheme">@style/Holo.Theme</item>
         <!--End of block BarDark-->
     </style>
 </resources>

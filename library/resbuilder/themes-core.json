@@ -1,12 +1,10 @@
 {
     "blocks": {
         "BarDark": {
-            "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance",
-            "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.Small"
+            "actionBarWidgetTheme": "@style/Holo.Theme"
         },
         "BarLight": {
-            "textAppearanceLargePopupMenu": "@style/Holo.TextAppearance.Light",
-            "textAppearanceSmallPopupMenu": "@style/Holo.TextAppearance.Small.Light"
+            "actionBarWidgetTheme": "@style/Holo.Theme.Light"
         },
         "Base": {
             "activatedBackgroundIndicator": "@drawable/activated_background_holo",
@@ -21,7 +19,7 @@
             "fastScrollOverlayPosition": "atThumb",
             "fastScrollTextColor": "@color/primary_text_holo_dark",
             "fastScrollThumbDrawable": "@drawable/fastscroll_thumb_holo",
-            "listPreferredItemHeight": "64dip",
+            "listPreferredItemHeight":  "64dp",
             "listPreferredItemHeightLarge": "80dp",
             "listPreferredItemHeightSmall": "48dp",
             "listPreferredItemPaddingLeft": "8dp",

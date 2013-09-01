@@ -82,6 +82,16 @@ public abstract class TabSwipeFragment extends Fragment
     }
 
     @Override
+    public int getCurrentTab() {
+        return addonTabber().getCurrentTab();
+    }
+
+    @Override
+    public TabInfo getTabAt(int position) {
+        return addonTabber().getTabAt(position);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.tab_swipe, container, false);
     }

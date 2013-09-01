@@ -25,13 +25,28 @@ public abstract class TabSwipeActivity extends Activity
     }
 
     @Override
+    public int getCurrentTab() {
+        return addonTabber().getCurrentTab();
+    }
+
+    @Override
+    public void setCurrentTab(int position) {
+        addonTabber().setCurrentTab(position);
+    }
+
+    @Override
+    public TabInfo getTabAt(int position) {
+        return addonTabber().getTabAt(position);
+    }
+
+    @Override
     public TabInfo addTab(CharSequence title, Class<? extends Fragment> fragmentClass) {
         return addonTabber().addTab(title, fragmentClass);
     }
 
     @Override
     public TabInfo addTab(CharSequence title, Class<? extends Fragment> fragmentClass,
-            Bundle fragmentArguments) {
+                          Bundle fragmentArguments) {
         return addonTabber().addTab(title, fragmentClass, fragmentArguments);
     }
 
@@ -42,7 +57,7 @@ public abstract class TabSwipeActivity extends Activity
 
     @Override
     public TabInfo addTab(int title, Class<? extends Fragment> fragmentClass,
-            Bundle fragmentArguments) {
+                          Bundle fragmentArguments) {
         return addonTabber().addTab(title, fragmentClass, fragmentArguments);
     }
 
@@ -62,13 +77,28 @@ public abstract class TabSwipeActivity extends Activity
     }
 
     @Override
+    public void setOnTabSelectedListener(OnTabSelectedListener onTabSelectedListener) {
+        addonTabber().setOnTabSelectedListener(onTabSelectedListener);
+    }
+
+    @Override
     public boolean isSmoothScroll() {
         return addonTabber().isSmoothScroll();
     }
 
     @Override
+    public void setSmoothScroll(boolean smoothScroll) {
+        addonTabber().setSmoothScroll(smoothScroll);
+    }
+
+    @Override
     public boolean isSwipeEnabled() {
         return addonTabber().isSwipeEnabled();
+    }
+
+    @Override
+    public void setSwipeEnabled(boolean swipeEnabled) {
+        addonTabber().setSwipeEnabled(swipeEnabled);
     }
 
     @Override
@@ -96,25 +126,5 @@ public abstract class TabSwipeActivity extends Activity
     @Override
     public TabInfo removeTab(TabInfo tabInfo) {
         return addonTabber().removeTab(tabInfo);
-    }
-
-    @Override
-    public void setCurrentTab(int position) {
-        addonTabber().setCurrentTab(position);
-    }
-
-    @Override
-    public void setOnTabSelectedListener(OnTabSelectedListener onTabSelectedListener) {
-        addonTabber().setOnTabSelectedListener(onTabSelectedListener);
-    }
-
-    @Override
-    public void setSmoothScroll(boolean smoothScroll) {
-        addonTabber().setSmoothScroll(smoothScroll);
-    }
-
-    @Override
-    public void setSwipeEnabled(boolean swipeEnabled) {
-        addonTabber().setSwipeEnabled(swipeEnabled);
     }
 }

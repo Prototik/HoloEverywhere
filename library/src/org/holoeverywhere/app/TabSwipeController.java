@@ -18,103 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class TabSwipeController implements TabSwipeInterface<TabInfo> {
-    public static class TabInfo implements TabSwipeInterface.ITabInfo<TabInfo> {
-        private Bundle mFragmentArguments;
-        private Class<? extends Fragment> mFragmentClass;
-        private CharSequence mTitle;
-
-        @Override
-        public Bundle getFragmentArguments() {
-            return mFragmentArguments;
-        }
-
-        @Override
-        public Class<? extends Fragment> getFragmentClass() {
-            return mFragmentClass;
-        }
-
-        @Override
-        public CharSequence getTitle() {
-            return mTitle;
-        }
-
-        @Override
-        public TabInfo setFragmentArguments(Bundle fragmentArguments) {
-            mFragmentArguments = fragmentArguments;
-            return this;
-        }
-
-        @Override
-        public TabInfo setFragmentClass(Class<? extends Fragment> fragmentClass) {
-            mFragmentClass = fragmentClass;
-            return this;
-        }
-
-        @Override
-        public TabInfo setTitle(CharSequence title) {
-            mTitle = title;
-            return this;
-        }
-    }
-
-    private final class TabSwipeAdapter extends FragmentStatePagerAdapter implements
-            OnPageChangeListener, TabListener {
-        public TabSwipeAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        @Override
-        public int getCount() {
-            return mTabs.size();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            final TabInfo info = mTabs.get(position);
-            return Fragment.instantiate(info.mFragmentClass, info.mFragmentArguments);
-        }
-
-        @Override
-        public void onPageScrolled(int position, float percent, int pixels) {
-            // Do nothing
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int scrollState) {
-            // Do nothing
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            dispatchTabSelected(position);
-        }
-
-        @Override
-        public void onTabReselected(Tab tab, FragmentTransaction ft) {
-            // Do nothing
-        }
-
-        @Override
-        public void onTabSelected(Tab tab, FragmentTransaction ft) {
-            dispatchTabSelected(tab.getPosition());
-        }
-
-        @Override
-        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-            // Do nothing
-        }
-    }
-
     private final ActionBar mActionBar;
-    private TabSwipeAdapter mAdapter;
     private final Context mContext;
     private final FragmentManager mFragmentManager;
+    private TabSwipeAdapter mAdapter;
     private OnTabSelectedListener mOnTabSelectedListener;
     private int mPrevNavigationMode = ActionBar.NAVIGATION_MODE_STANDARD;
     private boolean mSmoothScroll = true;
     private boolean mSwipeEnabled = true;
     private List<TabInfo> mTabs = new ArrayList<TabInfo>();
-
     private ViewPager mViewPager;
 
     public TabSwipeController(Context context, FragmentManager fragmentManager, ActionBar actionBar) {
@@ -135,13 +47,28 @@ public abstract class TabSwipeController implements TabSwipeInterface<TabInfo> {
     }
 
     @Override
+    public int getCurrentTab() {
+        return mActionBar.getSelectedNavigationIndex();
+    }
+
+    @Override
+    public void setCurrentTab(int position) {
+        dispatchTabSelected(Math.max(0, Math.min(position, mTabs.size() - 1)));
+    }
+
+    @Override
+    public TabInfo getTabAt(int position) {
+        return mTabs.get(position);
+    }
+
+    @Override
     public TabInfo addTab(CharSequence title, Class<? extends Fragment> fragmentClass) {
         return addTab(title, fragmentClass, null);
     }
 
     @Override
     public TabInfo addTab(CharSequence title, Class<? extends Fragment> fragmentClass,
-            Bundle fragmentArguments) {
+                          Bundle fragmentArguments) {
         TabInfo info = new TabInfo();
         info.mTitle = title;
         info.mFragmentClass = fragmentClass;
@@ -156,7 +83,7 @@ public abstract class TabSwipeController implements TabSwipeInterface<TabInfo> {
 
     @Override
     public TabInfo addTab(int title, Class<? extends Fragment> fragmentClass,
-            Bundle fragmentArguments) {
+                          Bundle fragmentArguments) {
         return addTab(mContext.getText(title), fragmentClass, fragmentArguments);
     }
 
@@ -214,13 +141,37 @@ public abstract class TabSwipeController implements TabSwipeInterface<TabInfo> {
     }
 
     @Override
+    public void setOnTabSelectedListener(OnTabSelectedListener onTabSelectedListener) {
+        mOnTabSelectedListener = onTabSelectedListener;
+    }
+
+    @Override
     public boolean isSmoothScroll() {
         return mSmoothScroll;
+    }
+
+    /**
+     * Smooth scroll of ViewPager when user click on tab
+     */
+    @Override
+    public void setSmoothScroll(boolean smoothScroll) {
+        mSmoothScroll = smoothScroll;
     }
 
     @Override
     public boolean isSwipeEnabled() {
         return mSwipeEnabled;
+    }
+
+    @Override
+    public void setSwipeEnabled(boolean swipeEnabled) {
+        if (mSwipeEnabled == swipeEnabled) {
+            return;
+        }
+        mSwipeEnabled = swipeEnabled;
+        if (mViewPager != null) {
+            mViewPager.setSwipeEnabled(swipeEnabled);
+        }
     }
 
     protected Tab makeActionBarTab(TabInfo tabInfo) {
@@ -280,32 +231,90 @@ public abstract class TabSwipeController implements TabSwipeInterface<TabInfo> {
         return tabInfo;
     }
 
-    @Override
-    public void setCurrentTab(int position) {
-        dispatchTabSelected(Math.max(0, Math.min(position, mTabs.size() - 1)));
-    }
+    public static class TabInfo implements TabSwipeInterface.ITabInfo<TabInfo> {
+        private Bundle mFragmentArguments;
+        private Class<? extends Fragment> mFragmentClass;
+        private CharSequence mTitle;
 
-    @Override
-    public void setOnTabSelectedListener(OnTabSelectedListener onTabSelectedListener) {
-        mOnTabSelectedListener = onTabSelectedListener;
-    }
-
-    /**
-     * Smooth scroll of ViewPager when user click on tab
-     */
-    @Override
-    public void setSmoothScroll(boolean smoothScroll) {
-        mSmoothScroll = smoothScroll;
-    }
-
-    @Override
-    public void setSwipeEnabled(boolean swipeEnabled) {
-        if (mSwipeEnabled == swipeEnabled) {
-            return;
+        @Override
+        public Bundle getFragmentArguments() {
+            return mFragmentArguments;
         }
-        mSwipeEnabled = swipeEnabled;
-        if (mViewPager != null) {
-            mViewPager.setSwipeEnabled(swipeEnabled);
+
+        @Override
+        public TabInfo setFragmentArguments(Bundle fragmentArguments) {
+            mFragmentArguments = fragmentArguments;
+            return this;
+        }
+
+        @Override
+        public Class<? extends Fragment> getFragmentClass() {
+            return mFragmentClass;
+        }
+
+        @Override
+        public TabInfo setFragmentClass(Class<? extends Fragment> fragmentClass) {
+            mFragmentClass = fragmentClass;
+            return this;
+        }
+
+        @Override
+        public CharSequence getTitle() {
+            return mTitle;
+        }
+
+        @Override
+        public TabInfo setTitle(CharSequence title) {
+            mTitle = title;
+            return this;
+        }
+    }
+
+    private final class TabSwipeAdapter extends FragmentStatePagerAdapter implements
+            OnPageChangeListener, TabListener {
+        public TabSwipeAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        @Override
+        public int getCount() {
+            return mTabs.size();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            final TabInfo info = mTabs.get(position);
+            return Fragment.instantiate(info.mFragmentClass, info.mFragmentArguments);
+        }
+
+        @Override
+        public void onPageScrolled(int position, float percent, int pixels) {
+            // Do nothing
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int scrollState) {
+            // Do nothing
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            dispatchTabSelected(position);
+        }
+
+        @Override
+        public void onTabReselected(Tab tab, FragmentTransaction ft) {
+            // Do nothing
+        }
+
+        @Override
+        public void onTabSelected(Tab tab, FragmentTransaction ft) {
+            dispatchTabSelected(tab.getPosition());
+        }
+
+        @Override
+        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+            // Do nothing
         }
     }
 }

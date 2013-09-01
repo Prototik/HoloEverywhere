@@ -316,7 +316,7 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
             }
             ThemeManager.applyTheme(activity, mLastThemeResourceId == 0);
             if (!config.ignoreThemeCheck && ThemeManager.getThemeType(this) == ThemeManager.INVALID) {
-                throw new HoloThemeException(activity);
+                //throw new HoloThemeException(activity);
             }
             TypedArray a = obtainStyledAttributes(new int[]{
                     android.R.attr.windowActionBarOverlay, R.attr.windowActionBarOverlay
@@ -549,14 +549,6 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
     @Override
     public void onContextMenuClosed(ContextMenu menu) {
 
-    }
-
-    @SuppressLint("NewApi")
-    @Override
-    public void supportInvalidateOptionsMenu() {
-        if (VERSION.SDK_INT >= 11) {
-            super.invalidateOptionsMenu();
-        }
     }
 
     @Override
