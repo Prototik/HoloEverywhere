@@ -1,9 +1,24 @@
 
 package org.holoeverywhere.slider;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.os.BadParcelableException;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.LayoutInflater;
@@ -16,280 +31,54 @@ import org.holoeverywhere.app.ListFragment;
 import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.TextView;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.os.BadParcelableException;
-import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
-import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-
-import android.support.v7.app.ActionBar;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SliderMenu implements OnBackStackChangedListener {
-    public static enum SelectionBehavior {
-        BackgroundWhenSelected, Default, OnlyBackground, OnlyHandler;
-    }
-
-    public static class SliderItem implements Parcelable {
-        public static final Creator<SliderItem> CREATOR = new Creator<SliderMenu.SliderItem>() {
-            @Override
-            public SliderItem createFromParcel(Parcel source) {
-                try {
-                    return new SliderItem(source);
-                } catch (Exception e) {
-                    throw new BadParcelableException(e);
-                }
-            }
-
-            @Override
-            public SliderItem[] newArray(int size) {
-                return new SliderItem[size];
-            }
-        };
-        private int mBackgroundColor = 0;
-        private int mCustomLayout = 0;
-        private Bundle mFragmentArguments;
-        private Class<? extends Fragment> mFragmentClass;
-        private CharSequence mLabel;
-        private WeakReference<Fragment> mLastFragment;
-        private Fragment.SavedState mSavedState;
-        private boolean mSaveState = true;
-        private int mSelectionHandlerColor = 0;
-        private SliderMenu mSliderMenu;
-        private String mTag;
-        private int mTextAppereance = 0;
-        private int mTextAppereanceInverse = 0;
-
-        public SliderItem() {
-        }
-
-        @SuppressWarnings("unchecked")
-        protected SliderItem(Parcel source) throws Exception {
-            String classname = source.readString();
-            if (classname != null) {
-                mFragmentClass = (Class<? extends Fragment>) Class.forName(classname);
-            }
-            mSavedState = source.readParcelable(Fragment.SavedState.class.getClassLoader());
-            mSaveState = source.readInt() == 1;
-            mCustomLayout = source.readInt();
-            mBackgroundColor = source.readInt();
-            mSelectionHandlerColor = source.readInt();
-            mTextAppereance = source.readInt();
-            mTextAppereanceInverse = source.readInt();
-            mLabel = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        public int getBackgroundColor() {
-            return mBackgroundColor;
-        }
-
-        public int getCustomLayout() {
-            return mCustomLayout;
-        }
-
-        public Bundle getFragmentArguments() {
-            return mFragmentArguments;
-        }
-
-        public Class<? extends Fragment> getFragmentClass() {
-            return mFragmentClass;
-        }
-
-        public CharSequence getLabel() {
-            return mLabel;
-        }
-
-        public int getSelectionHandlerColor() {
-            return mSelectionHandlerColor;
-        }
-
-        public String getTag() {
-            return mTag;
-        }
-
-        public int getTextAppereance() {
-            return mTextAppereance;
-        }
-
-        public int getTextAppereanceInverse() {
-            return mTextAppereanceInverse;
-        }
-
-        private void invalidate() {
-            if (mSliderMenu != null) {
-                mSliderMenu.invalidate();
-            }
-        }
-
-        public boolean isSaveState() {
-            return mSaveState;
-        }
-
-        public void setBackgroundColor(int backgroundColor) {
-            mBackgroundColor = backgroundColor;
-        }
-
-        public void setCustomLayout(int customLayout) {
-            mCustomLayout = customLayout;
-        }
-
-        public void setFragmentArguments(Bundle fragmentArguments) {
-            mFragmentArguments = fragmentArguments;
-        }
-
-        public void setFragmentClass(Class<? extends Fragment> fragmentClass) {
-            if (mFragmentClass == fragmentClass) {
-                return;
-            }
-            mFragmentClass = fragmentClass;
-            mSavedState = null;
-        }
-
-        public void setLabel(CharSequence label) {
-            mLabel = label;
-            invalidate();
-        }
-
-        public void setSaveState(boolean saveState) {
-            if (mSaveState == saveState) {
-                return;
-            }
-            mSaveState = saveState;
-            if (!saveState) {
-                mSavedState = null;
-            }
-        }
-
-        public void setSelectionHandlerColor(int selectionHandlerColor) {
-            mSelectionHandlerColor = selectionHandlerColor;
-        }
-
-        public void setTag(String tag) {
-            mTag = tag;
-        }
-
-        public void setTextAppereance(int textAppereance) {
-            mTextAppereance = textAppereance;
-        }
-
-        public void setTextAppereanceInverse(int textAppereanceInverse) {
-            mTextAppereanceInverse = textAppereanceInverse;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(mFragmentClass == null ? null : mFragmentClass.getName());
-            dest.writeParcelable(mSaveState ? mSavedState : null, flags);
-            dest.writeInt(mSaveState ? 1 : 0);
-            dest.writeInt(mCustomLayout);
-            dest.writeInt(mBackgroundColor);
-            dest.writeInt(mSelectionHandlerColor);
-            dest.writeInt(mTextAppereance);
-            dest.writeInt(mTextAppereanceInverse);
-            TextUtils.writeToParcel(mLabel, dest, flags);
-        }
-    }
-
-    private final class SliderMenuAdapter extends BaseAdapter implements OnItemClickListener {
-        private final int mDefaultTextAppearance;
-        private final int mDefaultTextAppearanceInverse;
-        private final LayoutInflater mLayoutInflater;
-
-        private SliderMenuAdapter(Context context) {
-            context = sThemes.context(context);
-            mLayoutInflater = LayoutInflater.from(context);
-            TypedArray a = context.obtainStyledAttributes(R.styleable.SliderMenu);
-            mDefaultTextAppearance = a.getResourceId(
-                    R.styleable.SliderMenu_textAppearanceSliderItem,
-                    R.style.Holo_TextAppearance_Medium);
-            mDefaultTextAppearanceInverse = a.getResourceId(
-                    R.styleable.SliderMenu_textAppearanceSliderItemInverse,
-                    R.style.Holo_TextAppearance_Medium_Inverse);
-            a.recycle();
-        }
-
-        @Override
-        public int getCount() {
-            return mItems.size();
-        }
-
-        @Override
-        public SliderItem getItem(int position) {
-            return mItems.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return getItem(position).mCustomLayout != 0 ? position
-                    : Adapter.IGNORE_ITEM_VIEW_TYPE;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            final SliderItem item = getItem(position);
-            if (convertView == null) {
-                convertView = mLayoutInflater.inflate(item.mCustomLayout != 0 ? item.mCustomLayout
-                        : R.layout.slider_menu_item, parent, false);
-            }
-            return bindView(item, convertView, mCurrentPage == position,
-                    mDefaultTextAppearance, mDefaultTextAppearanceInverse);
-        }
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            setCurrentPage(position, false);
-        }
-    }
-
-    public static final int[] BLUE = new int[] {
+    public static final int[] BLUE = new int[]{
             R.color.holo_blue_dark, R.color.holo_blue_light
     };
-    public static final int[] GREEN = new int[] {
+    public static final int[] GREEN = new int[]{
             R.color.holo_green_dark, R.color.holo_green_light
     };
-
-    private static final String KEY_CURRENT_PAGE = ":slider:currentPage";
-
-    public static final int[] ORANGE = new int[] {
+    public static final int[] ORANGE = new int[]{
             R.color.holo_orange_dark, R.color.holo_orange_light
     };
-
-    public static final int[] PURPLE = new int[] {
+    public static final int[] PURPLE = new int[]{
             R.color.holo_purple_dark, R.color.holo_purple_light
     };
-
-    public static final int[] RED = new int[] {
+    public static final int[] RED = new int[]{
             R.color.holo_red_dark, R.color.holo_red_light
     };
-
-    private static final IAddonThemes sThemes;
     public static final int THEME_FLAG;
 
     static {
         sThemes = new IAddonThemes();
         THEME_FLAG = sThemes.getThemeFlag();
         map(R.style.Holo_Internal_SliderTheme, R.style.Holo_Internal_SliderTheme_Light);
+    }
+
+    private static final String KEY_CURRENT_PAGE = ":slider:currentPage";
+    private static final IAddonThemes sThemes;
+    private final AddonSliderA mAddon;
+    private final FragmentManager mFragmentManager;
+    private final List<SliderItem> mItems;
+    private ActionBar mActionBar;
+    private SliderMenuAdapter mAdapter;
+    private int mCurrentPage = -1;
+    private int mFuturePosition = -1;
+    private boolean mHandleHomeKey;
+    private boolean mIgnoreBackStack = false;
+    private int mInitialPage = 0;
+    private boolean mInverseTextColorWhenSelected = false;
+    private SelectionBehavior mSelectionBehavior = SelectionBehavior.Default;
+
+    public SliderMenu(AddonSliderA addon) {
+        mAddon = addon;
+        mActionBar = addon.get().getSupportActionBar();
+        mFragmentManager = mAddon.get().getSupportFragmentManager();
+        mItems = new ArrayList<SliderItem>();
     }
 
     /**
@@ -320,37 +109,17 @@ public class SliderMenu implements OnBackStackChangedListener {
         }
     }
 
-    private ActionBar mActionBar;
-    private SliderMenuAdapter mAdapter;
-    private final AddonSliderA mAddon;
-    private int mCurrentPage = -1;
-    private final FragmentManager mFragmentManager;
-    private int mFuturePosition = -1;
-    private boolean mHandleHomeKey;
-    private boolean mIgnoreBackStack = false;
-    private int mInitialPage = 0;
-    private boolean mInverseTextColorWhenSelected = false;
-    private final List<SliderItem> mItems;
-    private SelectionBehavior mSelectionBehavior = SelectionBehavior.Default;
-
-    public SliderMenu(AddonSliderA addon) {
-        mAddon = addon;
-        mActionBar = addon.get().getSupportActionBar();
-        mFragmentManager = mAddon.get().getSupportFragmentManager();
-        mItems = new ArrayList<SliderItem>();
-    }
-
     public SliderItem add(CharSequence label, Class<? extends Fragment> fragmentClass) {
         return add(label, fragmentClass, null, null);
     }
 
     public SliderItem add(CharSequence label, Class<? extends Fragment> fragmentClass,
-            Bundle fragmentArguments) {
+                          Bundle fragmentArguments) {
         return add(label, fragmentClass, fragmentArguments, null);
     }
 
     public SliderItem add(CharSequence label, Class<? extends Fragment> fragmentClass,
-            Bundle fragmentArguments, int[] colors) {
+                          Bundle fragmentArguments, int[] colors) {
         SliderItem item = new SliderItem();
         item.setLabel(label);
         item.setFragmentClass(fragmentClass);
@@ -364,7 +133,7 @@ public class SliderMenu implements OnBackStackChangedListener {
     }
 
     public SliderItem add(CharSequence label, Class<? extends Fragment> fragmentClass,
-            int[] colors) {
+                          int[] colors) {
         return add(label, fragmentClass, null, colors);
     }
 
@@ -373,17 +142,17 @@ public class SliderMenu implements OnBackStackChangedListener {
     }
 
     public SliderItem add(int label, Class<? extends Fragment> fragmentClass,
-            Bundle fragmentArguments) {
+                          Bundle fragmentArguments) {
         return add(label, fragmentClass, fragmentArguments, null);
     }
 
     public SliderItem add(int label, Class<? extends Fragment> fragmentClass,
-            Bundle fragmentArguments, int[] colors) {
+                          Bundle fragmentArguments, int[] colors) {
         return add(mAddon.get().getText(label), fragmentClass, fragmentArguments, colors);
     }
 
     public SliderItem add(int label, Class<? extends Fragment> fragmentClass,
-            int[] colors) {
+                          int[] colors) {
         return add(label, fragmentClass, null, colors);
     }
 
@@ -452,7 +221,7 @@ public class SliderMenu implements OnBackStackChangedListener {
 
     @SuppressWarnings("deprecation")
     public View bindView(SliderItem item, View view, boolean selected,
-            int defaultTextAppearance, int defaultTextAppearanceInverse) {
+                         int defaultTextAppearance, int defaultTextAppearanceInverse) {
         TextView labelView = (TextView) view.findViewById(android.R.id.text1);
         if (labelView != null) {
             labelView.setText(item.mLabel);
@@ -566,8 +335,24 @@ public class SliderMenu implements OnBackStackChangedListener {
         return mInitialPage;
     }
 
+    public void setInitialPage(int initialPage) {
+        mInitialPage = initialPage;
+    }
+
+    public int getCurrentPage() {
+        return mCurrentPage;
+    }
+
+    public void setCurrentPage(int position) {
+        setCurrentPage(position, true);
+    }
+
     public SelectionBehavior getSelectionBehavior() {
         return mSelectionBehavior;
+    }
+
+    public void setSelectionBehavior(SelectionBehavior selectionBehavior) {
+        mSelectionBehavior = selectionBehavior;
     }
 
     public int indexOfItem(SliderItem item) {
@@ -584,8 +369,16 @@ public class SliderMenu implements OnBackStackChangedListener {
         return mHandleHomeKey;
     }
 
+    public void setHandleHomeKey(boolean handleHomeKey) {
+        mHandleHomeKey = handleHomeKey;
+    }
+
     public boolean isInverseTextColorWhenSelected() {
         return mInverseTextColorWhenSelected;
+    }
+
+    public void setInverseTextColorWhenSelected(boolean inverseTextColorWhenSelected) {
+        mInverseTextColorWhenSelected = inverseTextColorWhenSelected;
     }
 
     public void makeDefaultMenu() {
@@ -692,7 +485,7 @@ public class SliderMenu implements OnBackStackChangedListener {
     }
 
     private void replaceFragment(FragmentManager fm, Fragment fragment, String tag,
-            boolean addToBackStack) {
+                                 boolean addToBackStack) {
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.contentView, fragment, tag);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -702,10 +495,6 @@ public class SliderMenu implements OnBackStackChangedListener {
         } else {
             ft.commit();
         }
-    }
-
-    public void setCurrentPage(int position) {
-        setCurrentPage(position, true);
     }
 
     private void setCurrentPage(int position, boolean force) {
@@ -725,22 +514,6 @@ public class SliderMenu implements OnBackStackChangedListener {
         }
     }
 
-    public void setHandleHomeKey(boolean handleHomeKey) {
-        mHandleHomeKey = handleHomeKey;
-    }
-
-    public void setInitialPage(int initialPage) {
-        mInitialPage = initialPage;
-    }
-
-    public void setInverseTextColorWhenSelected(boolean inverseTextColorWhenSelected) {
-        mInverseTextColorWhenSelected = inverseTextColorWhenSelected;
-    }
-
-    public void setSelectionBehavior(SelectionBehavior selectionBehavior) {
-        mSelectionBehavior = selectionBehavior;
-    }
-
     private void tryToBind(View view, Context context) {
         if (view instanceof ListView) {
             bind((ListView) view, context);
@@ -752,5 +525,230 @@ public class SliderMenu implements OnBackStackChangedListener {
             return;
         }
         throw new IllegalStateException("Couldn't find ListView on panel");
+    }
+
+    public static enum SelectionBehavior {
+        BackgroundWhenSelected, Default, OnlyBackground, OnlyHandler;
+    }
+
+    public static class SliderItem implements Parcelable {
+        public static final Creator<SliderItem> CREATOR = new Creator<SliderMenu.SliderItem>() {
+            @Override
+            public SliderItem createFromParcel(Parcel source) {
+                try {
+                    return new SliderItem(source);
+                } catch (Exception e) {
+                    throw new BadParcelableException(e);
+                }
+            }
+
+            @Override
+            public SliderItem[] newArray(int size) {
+                return new SliderItem[size];
+            }
+        };
+        private int mBackgroundColor = 0;
+        private int mCustomLayout = 0;
+        private Bundle mFragmentArguments;
+        private Class<? extends Fragment> mFragmentClass;
+        private CharSequence mLabel;
+        private WeakReference<Fragment> mLastFragment;
+        private Fragment.SavedState mSavedState;
+        private boolean mSaveState = true;
+        private int mSelectionHandlerColor = 0;
+        private SliderMenu mSliderMenu;
+        private String mTag;
+        private int mTextAppereance = 0;
+        private int mTextAppereanceInverse = 0;
+
+        public SliderItem() {
+        }
+
+        @SuppressWarnings("unchecked")
+        protected SliderItem(Parcel source) throws Exception {
+            String classname = source.readString();
+            if (classname != null) {
+                mFragmentClass = (Class<? extends Fragment>) Class.forName(classname);
+            }
+            mSavedState = source.readParcelable(Fragment.SavedState.class.getClassLoader());
+            mSaveState = source.readInt() == 1;
+            mCustomLayout = source.readInt();
+            mBackgroundColor = source.readInt();
+            mSelectionHandlerColor = source.readInt();
+            mTextAppereance = source.readInt();
+            mTextAppereanceInverse = source.readInt();
+            mLabel = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        public int getBackgroundColor() {
+            return mBackgroundColor;
+        }
+
+        public void setBackgroundColor(int backgroundColor) {
+            mBackgroundColor = backgroundColor;
+        }
+
+        public int getCustomLayout() {
+            return mCustomLayout;
+        }
+
+        public void setCustomLayout(int customLayout) {
+            mCustomLayout = customLayout;
+        }
+
+        public Bundle getFragmentArguments() {
+            return mFragmentArguments;
+        }
+
+        public void setFragmentArguments(Bundle fragmentArguments) {
+            mFragmentArguments = fragmentArguments;
+        }
+
+        public Class<? extends Fragment> getFragmentClass() {
+            return mFragmentClass;
+        }
+
+        public void setFragmentClass(Class<? extends Fragment> fragmentClass) {
+            if (mFragmentClass == fragmentClass) {
+                return;
+            }
+            mFragmentClass = fragmentClass;
+            mSavedState = null;
+        }
+
+        public CharSequence getLabel() {
+            return mLabel;
+        }
+
+        public void setLabel(CharSequence label) {
+            mLabel = label;
+            invalidate();
+        }
+
+        public int getSelectionHandlerColor() {
+            return mSelectionHandlerColor;
+        }
+
+        public void setSelectionHandlerColor(int selectionHandlerColor) {
+            mSelectionHandlerColor = selectionHandlerColor;
+        }
+
+        public String getTag() {
+            return mTag;
+        }
+
+        public void setTag(String tag) {
+            mTag = tag;
+        }
+
+        public int getTextAppereance() {
+            return mTextAppereance;
+        }
+
+        public void setTextAppereance(int textAppereance) {
+            mTextAppereance = textAppereance;
+        }
+
+        public int getTextAppereanceInverse() {
+            return mTextAppereanceInverse;
+        }
+
+        public void setTextAppereanceInverse(int textAppereanceInverse) {
+            mTextAppereanceInverse = textAppereanceInverse;
+        }
+
+        private void invalidate() {
+            if (mSliderMenu != null) {
+                mSliderMenu.invalidate();
+            }
+        }
+
+        public boolean isSaveState() {
+            return mSaveState;
+        }
+
+        public void setSaveState(boolean saveState) {
+            if (mSaveState == saveState) {
+                return;
+            }
+            mSaveState = saveState;
+            if (!saveState) {
+                mSavedState = null;
+            }
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(mFragmentClass == null ? null : mFragmentClass.getName());
+            dest.writeParcelable(mSaveState ? mSavedState : null, flags);
+            dest.writeInt(mSaveState ? 1 : 0);
+            dest.writeInt(mCustomLayout);
+            dest.writeInt(mBackgroundColor);
+            dest.writeInt(mSelectionHandlerColor);
+            dest.writeInt(mTextAppereance);
+            dest.writeInt(mTextAppereanceInverse);
+            TextUtils.writeToParcel(mLabel, dest, flags);
+        }
+    }
+
+    private final class SliderMenuAdapter extends BaseAdapter implements OnItemClickListener {
+        private final int mDefaultTextAppearance;
+        private final int mDefaultTextAppearanceInverse;
+        private final LayoutInflater mLayoutInflater;
+
+        private SliderMenuAdapter(Context context) {
+            context = sThemes.context(context);
+            mLayoutInflater = LayoutInflater.from(context);
+            TypedArray a = context.obtainStyledAttributes(R.styleable.SliderMenu);
+            mDefaultTextAppearance = a.getResourceId(
+                    R.styleable.SliderMenu_textAppearanceSliderItem,
+                    R.style.Holo_TextAppearance_Medium);
+            mDefaultTextAppearanceInverse = a.getResourceId(
+                    R.styleable.SliderMenu_textAppearanceSliderItemInverse,
+                    R.style.Holo_TextAppearance_Medium_Inverse);
+            a.recycle();
+        }
+
+        @Override
+        public int getCount() {
+            return mItems.size();
+        }
+
+        @Override
+        public SliderItem getItem(int position) {
+            return mItems.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return getItem(position).mCustomLayout != 0 ? position
+                    : Adapter.IGNORE_ITEM_VIEW_TYPE;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            final SliderItem item = getItem(position);
+            if (convertView == null) {
+                convertView = mLayoutInflater.inflate(item.mCustomLayout != 0 ? item.mCustomLayout
+                        : R.layout.slider_menu_item, parent, false);
+            }
+            return bindView(item, convertView, mCurrentPage == position,
+                    mDefaultTextAppearance, mDefaultTextAppearanceInverse);
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            setCurrentPage(position, false);
+        }
     }
 }
