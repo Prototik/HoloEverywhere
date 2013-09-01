@@ -1,11 +1,6 @@
 
 package org.holoeverywhere.addon;
 
-import org.holoeverywhere.addon.IAddon.Addon;
-import org.holoeverywhere.slider.R;
-import org.holoeverywhere.slider.SliderMenu;
-import org.holoeverywhere.widget.DrawerLayout;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -17,6 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
+
+import org.holoeverywhere.addon.IAddon.Addon;
+import org.holoeverywhere.slider.R;
+import org.holoeverywhere.slider.SliderMenu;
+import org.holoeverywhere.widget.DrawerLayout;
 
 @Addon(weight = 40)
 public class AddonSlider extends IAddon {

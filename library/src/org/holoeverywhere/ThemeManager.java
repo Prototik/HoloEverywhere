@@ -138,7 +138,7 @@ import static org.holoeverywhere.R.style.Holo_Theme_Wallpaper;
  * where first arg - flags, second - theme resource <br />
  * <br />
  * Part of HoloEverywhere
- * 
+ *
  * @author prok (prototypegamez@gmail.com)
  */
 public final class ThemeManager {
@@ -147,7 +147,7 @@ public final class ThemeManager {
      */
     public static interface SuperStartActivity {
         public void superStartActivity(Intent intent, int requestCode,
-                Bundle options);
+                                       Bundle options);
     }
 
     /**
@@ -156,7 +156,7 @@ public final class ThemeManager {
      * zero. <br />
      * <br />
      * Example:
-     * 
+     * <p/>
      * <pre>
      * ThemeGetter getter = new ThemeGetter() {
      *   public int getThemeResource(ThemeTag themeTag) {
@@ -292,7 +292,7 @@ public final class ThemeManager {
     /**
      * Synonym for {@link #cloneTheme(Intent, Intent, boolean)} with third arg -
      * false
-     * 
+     *
      * @see #cloneTheme(Intent, Intent, boolean)
      */
     public static void cloneTheme(Intent sourceIntent, Intent intent) {
@@ -302,14 +302,14 @@ public final class ThemeManager {
     /**
      * Clone theme from sourceIntent to intent, if it specified for sourceIntent
      * or set flag force
-     * 
+     *
      * @param sourceIntent Intent with specified {@link #_THEME_TAG}
-     * @param intent Intent into which will be put a theme
-     * @param force Clone theme even if sourceIntent not contain
-     *            {@link #_THEME_TAG}
+     * @param intent       Intent into which will be put a theme
+     * @param force        Clone theme even if sourceIntent not contain
+     *                     {@link #_THEME_TAG}
      */
     public static void cloneTheme(Intent sourceIntent, Intent intent,
-            boolean force) {
+                                  boolean force) {
         final boolean hasSourceTheme = hasSpecifiedTheme(sourceIntent);
         if (force || hasSourceTheme) {
             intent.putExtra(_THEME_TAG, hasSourceTheme ? getTheme(sourceIntent)
@@ -330,7 +330,7 @@ public final class ThemeManager {
 
     /**
      * @return Default theme, which will be using if theme not specified for
-     *         intent
+     * intent
      * @see #setDefaultTheme(int)
      * @see #modifyDefaultTheme(int)
      * @see #modifyDefaultThemeClear(int)
@@ -419,7 +419,7 @@ public final class ThemeManager {
     }
 
     public static int getThemeType(Context context) {
-        TypedArray a = context.obtainStyledAttributes(new int[] {
+        TypedArray a = context.obtainStyledAttributes(new int[]{
                 R.attr.holoTheme
         });
         final int holoTheme = a.getInt(0, 0);
@@ -570,7 +570,7 @@ public final class ThemeManager {
 
     /**
      * Remap default theme.
-     * 
+     *
      * @see #map(int, int)
      */
     public static void map(int theme) {
@@ -582,11 +582,11 @@ public final class ThemeManager {
      * <br />
      * Example, you can remap {@link #LIGHT} theme on
      * {@link R.style#Holo_Theme_Dialog_Light}:<br />
-     * 
+     * <p/>
      * <pre>
      * ThemeManager.map({@link #LIGHT}, {@link R.style#Holo_Theme_Dialog_Light});
      * </pre>
-     * 
+     * <p/>
      * If theme value negative - remove pair flags-theme
      */
     public static void map(int flags, int theme) {
@@ -604,7 +604,7 @@ public final class ThemeManager {
      * Add modifier to all themes, using in {@link ThemeManager}. If you call
      * modify({@link #NO_ACTION_BAR}), then all themes will be without action
      * bar by default, regardless of the flag is passed.
-     * 
+     *
      * @see #modifyClear(int)
      * @see #modifyClear()
      * @see #setModifier(int)
@@ -615,7 +615,7 @@ public final class ThemeManager {
 
     /**
      * Clear all modifiers
-     * 
+     *
      * @see #modify(int)
      * @see #modifyClear(int)
      * @see #setModifier(int)
@@ -626,7 +626,7 @@ public final class ThemeManager {
 
     /**
      * Clear modifier
-     * 
+     *
      * @see #modify(int)
      * @see #modifyClear()
      * @see #setModifier(int)
@@ -639,7 +639,7 @@ public final class ThemeManager {
 
     /**
      * Like {@link #modify(int)}, but applying only on default theme.
-     * 
+     *
      * @see #modifyDefaultThemeClear(int)
      * @see #setDefaultTheme(int)
      * @see #getDefaultTheme()
@@ -650,7 +650,7 @@ public final class ThemeManager {
 
     /**
      * Clear modifier from default theme
-     * 
+     *
      * @see #modifyDefaultTheme(int)
      * @see #setDefaultTheme(int)
      * @see #getDefaultTheme()
@@ -782,7 +782,7 @@ public final class ThemeManager {
 
     /**
      * Simply restart activity
-     * 
+     *
      * @param activity Activity
      */
     public static void restart(Activity activity) {
@@ -795,7 +795,7 @@ public final class ThemeManager {
 
     /**
      * Check activity on dark theme and restart it if theme incorrect.
-     * 
+     *
      * @see #restartWithTheme(Activity, int)
      */
     public static void restartWithDarkTheme(Activity activity) {
@@ -804,7 +804,7 @@ public final class ThemeManager {
 
     /**
      * Check activity on light theme and restart it if theme incorrect.
-     * 
+     *
      * @see #restartWithTheme(Activity, int)
      */
     public static void restartWithLightTheme(Activity activity) {
@@ -814,7 +814,7 @@ public final class ThemeManager {
     /**
      * Check activity on light with dark action bar theme and restart it if
      * theme incorrect.
-     * 
+     *
      * @see #restartWithTheme(Activity, int)
      */
     public static void restartWithMixedTheme(Activity activity) {
@@ -823,9 +823,9 @@ public final class ThemeManager {
 
     /**
      * Check activity on theme and restart it if theme incorrect.
-     * 
+     *
      * @param activity Activity
-     * @param theme Theme flags for check
+     * @param theme    Theme flags for check
      */
     public static void restartWithTheme(Activity activity, int theme) {
         ThemeManager.restartWithTheme(activity, theme, false);
@@ -834,10 +834,10 @@ public final class ThemeManager {
     /**
      * Like {@link #restartWithTheme(Activity, int)}, but if third arg is true -
      * restart activity regardless theme.
-     * 
+     *
      * @param activity Activity
-     * @param theme Theme flags for check
-     * @param force Force restart activity
+     * @param theme    Theme flags for check
+     * @param force    Force restart activity
      */
     @SuppressLint("InlinedApi")
     public static void restartWithTheme(Activity activity, int theme, boolean force) {
@@ -881,7 +881,7 @@ public final class ThemeManager {
     /**
      * Set default theme. May be theme resource instead flags, but it not
      * recommend.
-     * 
+     *
      * @param theme Theme
      * @see #modifyDefaultTheme(int)
      * @see #modifyDefaultThemeClear(int)
@@ -896,7 +896,7 @@ public final class ThemeManager {
 
     /**
      * Set theme modifiers. See {@link #modify(int)}
-     * 
+     *
      * @param mod Modififers
      * @see #modify(int)
      */
@@ -906,7 +906,7 @@ public final class ThemeManager {
 
     /**
      * Set {@link ThemeGetter} instance for getting theme resources.
-     * 
+     *
      * @param themeGetter ThemeGetter
      */
     public static void setThemeGetter(ThemeGetter themeGetter) {
@@ -924,7 +924,7 @@ public final class ThemeManager {
      * Only for system use
      */
     public static void startActivity(Context context, Intent intent,
-            Bundle options) {
+                                     Bundle options) {
         ThemeManager.startActivity(context, intent, -1, options);
     }
 
@@ -932,7 +932,7 @@ public final class ThemeManager {
      * Only for system use
      */
     public static void startActivity(Context context, Intent intent,
-            int requestCode) {
+                                     int requestCode) {
         ThemeManager.startActivity(context, intent, requestCode, null);
     }
 
@@ -941,7 +941,7 @@ public final class ThemeManager {
      */
     @SuppressLint("NewApi")
     public static void startActivity(Context context, Intent intent,
-            int requestCode, Bundle options) {
+                                     int requestCode, Bundle options) {
         final Activity activity = context instanceof Activity ? (Activity) context
                 : null;
         if (activity != null) {

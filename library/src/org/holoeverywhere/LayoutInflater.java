@@ -200,7 +200,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
     }
 
     public static View inflate(Context context, int resource, ViewGroup root,
-            boolean attachToRoot) {
+                               boolean attachToRoot) {
         return from(context).inflate(resource, root, attachToRoot);
     }
 
@@ -265,7 +265,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
     }
 
     /**
-     * @deprecated Use {@link #register(String,String)} instead
+     * @deprecated Use {@link #register(String, String)} instead
      */
     @Deprecated
     public static void remapHard(String from, String to) {
@@ -292,12 +292,12 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
     private LayoutInflater mParentInflater;
 
     protected LayoutInflater(android.view.LayoutInflater original,
-            Context newContext) {
+                             Context newContext) {
         this(original, newContext, null);
     }
 
     protected LayoutInflater(android.view.LayoutInflater original,
-            Context newContext, Fragment childFragment) {
+                             Context newContext, Fragment childFragment) {
         this(original.getContext(), childFragment);
         setParent(original);
     }
@@ -496,7 +496,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
 
     @Override
     public View inflate(XmlPullParser parser, ViewGroup root,
-            boolean attachToRoot) {
+                        boolean attachToRoot) {
         synchronized (mConstructorArgs) {
             final AttributeSet attrs = Xml.asAttributeSet(parser);
             mConstructorArgs[0] = mContext;
@@ -643,7 +643,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
                         }
                         rInflate(childParser, view, childAttrs, true);
                         TypedArray a = mContext.obtainStyledAttributes(attrs,
-                                new int[] {
+                                new int[]{
                                         android.R.attr.id,
                                         android.R.attr.visibility
                                 }, 0, 0);
@@ -700,7 +700,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
     }
 
     void rInflate(XmlPullParser parser, View parent, final AttributeSet attrs,
-            boolean finishInflate) throws XmlPullParserException, IOException {
+                  boolean finishInflate) throws XmlPullParserException, IOException {
         final int depth = parser.getDepth();
         int type;
         while (((type = parser.next()) != XmlPullParser.END_TAG ||

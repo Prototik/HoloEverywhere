@@ -83,7 +83,7 @@ public class TimePicker extends FrameLayout {
     };
 
     private static void setContentDescription(View parent, int childId,
-            int textId) {
+                                              int textId) {
         if (parent == null) {
             return;
         }
@@ -132,7 +132,7 @@ public class TimePicker extends FrameLayout {
                 .setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                     @Override
                     public void onValueChange(NumberPicker spinner, int oldVal,
-                            int newVal) {
+                                              int newVal) {
                         updateInputState();
                         if (!is24HourView()) {
                             if (oldVal == TimePicker.HOURS_IN_HALF_DAY - 1
@@ -161,7 +161,7 @@ public class TimePicker extends FrameLayout {
                 .setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                     @Override
                     public void onValueChange(NumberPicker spinner, int oldVal,
-                            int newVal) {
+                                              int newVal) {
                         updateInputState();
                         int minValue = mMinuteSpinner.getMinValue();
                         int maxValue = mMinuteSpinner.getMaxValue();
@@ -212,7 +212,7 @@ public class TimePicker extends FrameLayout {
                     .setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                         @Override
                         public void onValueChange(NumberPicker picker,
-                                int oldVal, int newVal) {
+                                                  int oldVal, int newVal) {
                             updateInputState();
                             picker.requestFocus();
                             mIsAm = !mIsAm;

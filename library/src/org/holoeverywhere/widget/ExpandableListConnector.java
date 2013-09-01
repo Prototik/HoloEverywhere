@@ -110,7 +110,7 @@ public class ExpandableListConnector extends BaseAdapter implements Filterable {
         }
 
         static PositionMetadata obtain(int flatListPos, int type, int groupPos,
-                int childPos, GroupMetadata groupMetadata, int groupInsertIndex) {
+                                       int childPos, GroupMetadata groupMetadata, int groupInsertIndex) {
             PositionMetadata pm = getRecycledOrCreate();
             pm.position = ExpandableListPosition.obtain(type, groupPos, childPos, flatListPos);
             pm.groupMetadata = groupMetadata;
@@ -523,7 +523,7 @@ public class ExpandableListConnector extends BaseAdapter implements Filterable {
     }
 
     private void refreshExpGroupMetadataList(boolean forceChildrenCountRefresh,
-            boolean syncGroupPositions) {
+                                             boolean syncGroupPositions) {
         final ArrayList<GroupMetadata> egml = mExpGroupMetadataList;
         int egmlSize = egml.size();
         int curFlPos = 0;

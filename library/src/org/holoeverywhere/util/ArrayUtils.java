@@ -26,7 +26,7 @@ public class ArrayUtils {
 
     public static int[] appendInt(int[] cur, int val) {
         if (cur == null) {
-            return new int[] {
+            return new int[]{
                     val
             };
         }

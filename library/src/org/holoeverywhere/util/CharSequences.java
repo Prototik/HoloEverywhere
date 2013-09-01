@@ -53,7 +53,7 @@ public class CharSequences {
     }
 
     public static CharSequence forAsciiBytes(final byte[] bytes,
-            final int start, final int end) {
+                                             final int start, final int end) {
         CharSequences.validate(start, end, bytes.length);
         return new CharSequence() {
             @Override

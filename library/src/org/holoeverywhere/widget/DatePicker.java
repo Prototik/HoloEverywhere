@@ -36,7 +36,7 @@ public class DatePicker extends FrameLayout {
             CalendarView.OnDateChangeListener {
         @Override
         public void onSelectedDayChange(CalendarView view, int year, int month,
-                int monthDay) {
+                                        int monthDay) {
             setDate(year, month, monthDay);
             updateSpinners();
             notifyDateChanged();
@@ -80,7 +80,7 @@ public class DatePicker extends FrameLayout {
 
     public interface OnDateChangedListener {
         void onDateChanged(DatePicker view, int year, int monthOfYear,
-                int dayOfMonth);
+                           int dayOfMonth);
     }
 
     private static class SavedState extends BaseSavedState {
@@ -126,7 +126,7 @@ public class DatePicker extends FrameLayout {
     private static final String LOG_TAG = DatePicker.class.getSimpleName();
 
     private static Calendar getCalendarForLocale(Calendar oldCalendar,
-            Locale locale) {
+                                                 Locale locale) {
         if (oldCalendar == null) {
             return Calendar.getInstance(locale);
         } else {
@@ -138,7 +138,7 @@ public class DatePicker extends FrameLayout {
     }
 
     private static void setContentDescription(View parent, int childId,
-            int textId) {
+                                              int textId) {
         if (parent == null) {
             return;
         }
@@ -293,7 +293,7 @@ public class DatePicker extends FrameLayout {
     }
 
     public void init(int year, int monthOfYear, int dayOfMonth,
-            OnDateChangedListener onDateChangedListener) {
+                     OnDateChangedListener onDateChangedListener) {
         setOnDateChangedListener(onDateChangedListener);
         setDate(year, monthOfYear, dayOfMonth);
         updateSpinners();
@@ -431,7 +431,7 @@ public class DatePicker extends FrameLayout {
     }
 
     private void setImeOptions(NumberPicker spinner, int spinnerCount,
-            int spinnerIndex) {
+                               int spinnerIndex) {
         final int imeOptions;
         if (spinnerIndex < spinnerCount - 1) {
             imeOptions = EditorInfo.IME_ACTION_NEXT;
@@ -462,7 +462,7 @@ public class DatePicker extends FrameLayout {
         tempDate.setTimeInMillis(maxDateL);
         if (tempDate.get(Calendar.YEAR) == maxDate.get(Calendar.YEAR)
                 && tempDate.get(Calendar.DAY_OF_YEAR) == maxDate
-                        .get(Calendar.DAY_OF_YEAR)) {
+                .get(Calendar.DAY_OF_YEAR)) {
             return;
         }
         maxDate.setTimeInMillis(maxDateL);
@@ -478,7 +478,7 @@ public class DatePicker extends FrameLayout {
         tempDate.setTimeInMillis(minDateL);
         if (tempDate.get(Calendar.YEAR) == minDate.get(Calendar.YEAR)
                 && tempDate.get(Calendar.DAY_OF_YEAR) == minDate
-                        .get(Calendar.DAY_OF_YEAR)) {
+                .get(Calendar.DAY_OF_YEAR)) {
             return;
         }
         minDate.setTimeInMillis(minDateL);

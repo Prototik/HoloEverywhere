@@ -1,14 +1,14 @@
 
 package org.holoeverywhere.demo.fragments.pickers;
 
+import android.os.Bundle;
+import android.view.View;
+
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.Dialog;
 import org.holoeverywhere.app.DialogFragment;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.widget.NumberPicker;
-
-import android.os.Bundle;
-import android.view.View;
 
 public class PickersNumberPickerFragment extends DialogFragment {
     private View makeNumberPicker() {

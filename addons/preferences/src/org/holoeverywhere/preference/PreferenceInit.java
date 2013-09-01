@@ -1,16 +1,16 @@
 
 package org.holoeverywhere.preference;
 
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
+
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.IAddonThemes;
 import org.holoeverywhere.addon.IAddonThemes.ThemeResolver;
 import org.holoeverywhere.app.Activity;
-
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.util.TypedValue;
-import android.view.ContextThemeWrapper;
 
 public class PreferenceInit {
     public static final String PACKAGE;
@@ -20,14 +20,14 @@ public class PreferenceInit {
             int theme, mod = 0;
             TypedValue outValue = new TypedValue();
             TypedArray a;
-            (a = context.obtainStyledAttributes(new int[] {
+            (a = context.obtainStyledAttributes(new int[]{
                     R.attr.preferenceTheme
             })).getValue(0, outValue);
             a.recycle();
             switch (outValue.type) {
                 case TypedValue.TYPE_REFERENCE:
                     if (new ContextThemeWrapper(context, theme = outValue.resourceId)
-                            .obtainStyledAttributes(new int[] {
+                            .obtainStyledAttributes(new int[]{
                                     R.attr.holoTheme
                             }).getInt(0, 0) == 4) {
                         return theme;

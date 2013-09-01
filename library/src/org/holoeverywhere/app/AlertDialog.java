@@ -84,7 +84,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
 
         public Builder setAdapter(final ListAdapter adapter,
-                final OnClickListener listener) {
+                                  final OnClickListener listener) {
             mParams.mAdapter = adapter;
             mParams.mOnClickListener = listener;
             return this;
@@ -115,7 +115,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
 
         public Builder setCursor(final Cursor cursor,
-                final OnClickListener listener, String labelColumn) {
+                                 final OnClickListener listener, String labelColumn) {
             mParams.mCursor = cursor;
             mParams.mLabelColumn = labelColumn;
             mParams.mOnClickListener = listener;
@@ -150,7 +150,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
 
         public Builder setItems(CharSequence[] items,
-                final OnClickListener listener) {
+                                final OnClickListener listener) {
             mParams.mItems = items;
             mParams.mOnClickListener = listener;
             return this;
@@ -173,8 +173,8 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
 
         public Builder setMultiChoiceItems(CharSequence[] items,
-                boolean[] checkedItems,
-                final OnMultiChoiceClickListener listener) {
+                                           boolean[] checkedItems,
+                                           final OnMultiChoiceClickListener listener) {
             mParams.mItems = items;
             mParams.mOnCheckboxClickListener = listener;
             mParams.mCheckedItems = checkedItems;
@@ -183,8 +183,8 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
 
         public Builder setMultiChoiceItems(Cursor cursor,
-                String isCheckedColumn, String labelColumn,
-                final OnMultiChoiceClickListener listener) {
+                                           String isCheckedColumn, String labelColumn,
+                                           final OnMultiChoiceClickListener listener) {
             mParams.mCursor = cursor;
             mParams.mOnCheckboxClickListener = listener;
             mParams.mIsCheckedColumn = isCheckedColumn;
@@ -194,7 +194,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
 
         public Builder setMultiChoiceItems(int itemsId, boolean[] checkedItems,
-                final OnMultiChoiceClickListener listener) {
+                                           final OnMultiChoiceClickListener listener) {
             mParams.mItems = mParams.mContext.getResources().getTextArray(itemsId);
             mParams.mOnCheckboxClickListener = listener;
             mParams.mCheckedItems = checkedItems;
@@ -203,28 +203,28 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
 
         public Builder setNegativeButton(CharSequence text,
-                final OnClickListener listener) {
+                                         final OnClickListener listener) {
             mParams.mNegativeButtonText = text;
             mParams.mNegativeButtonListener = listener;
             return this;
         }
 
         public Builder setNegativeButton(int textId,
-                final OnClickListener listener) {
+                                         final OnClickListener listener) {
             mParams.mNegativeButtonText = mParams.mContext.getText(textId);
             mParams.mNegativeButtonListener = listener;
             return this;
         }
 
         public Builder setNeutralButton(CharSequence text,
-                final OnClickListener listener) {
+                                        final OnClickListener listener) {
             mParams.mNeutralButtonText = text;
             mParams.mNeutralButtonListener = listener;
             return this;
         }
 
         public Builder setNeutralButton(int textId,
-                final OnClickListener listener) {
+                                        final OnClickListener listener) {
             mParams.mNeutralButtonText = mParams.mContext.getText(textId);
             mParams.mNeutralButtonListener = listener;
             return this;
@@ -258,21 +258,21 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
 
         public Builder setPositiveButton(CharSequence text,
-                final OnClickListener listener) {
+                                         final OnClickListener listener) {
             mParams.mPositiveButtonText = text;
             mParams.mPositiveButtonListener = listener;
             return this;
         }
 
         public Builder setPositiveButton(int textId,
-                final OnClickListener listener) {
+                                         final OnClickListener listener) {
             mParams.mPositiveButtonText = mParams.mContext.getText(textId);
             mParams.mPositiveButtonListener = listener;
             return this;
         }
 
         public Builder setSingleChoiceItems(CharSequence[] items,
-                int checkedItem, final OnClickListener listener) {
+                                            int checkedItem, final OnClickListener listener) {
             mParams.mItems = items;
             mParams.mOnClickListener = listener;
             mParams.mCheckedItem = checkedItem;
@@ -281,7 +281,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
 
         public Builder setSingleChoiceItems(Cursor cursor, int checkedItem,
-                String labelColumn, final OnClickListener listener) {
+                                            String labelColumn, final OnClickListener listener) {
             mParams.mCursor = cursor;
             mParams.mOnClickListener = listener;
             mParams.mCheckedItem = checkedItem;
@@ -291,7 +291,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
 
         public Builder setSingleChoiceItems(int itemsId, int checkedItem,
-                final OnClickListener listener) {
+                                            final OnClickListener listener) {
             mParams.mItems = mParams.mContext.getResources().getTextArray(itemsId);
             mParams.mOnClickListener = listener;
             mParams.mCheckedItem = checkedItem;
@@ -300,7 +300,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
 
         public Builder setSingleChoiceItems(ListAdapter adapter,
-                int checkedItem, final OnClickListener listener) {
+                                            int checkedItem, final OnClickListener listener) {
             mParams.mAdapter = adapter;
             mParams.mOnClickListener = listener;
             mParams.mCheckedItem = checkedItem;
@@ -330,7 +330,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
         }
 
         public Builder setView(View view, int viewSpacingLeft,
-                int viewSpacingTop, int viewSpacingRight, int viewSpacingBottom) {
+                               int viewSpacingTop, int viewSpacingRight, int viewSpacingBottom) {
             mParams.mView = view;
             mParams.mViewSpacingSpecified = true;
             mParams.mViewSpacingLeft = viewSpacingLeft;
@@ -376,12 +376,12 @@ public class AlertDialog extends Dialog implements DialogInterface,
     }
 
     protected AlertDialog(Context context, boolean cancelable,
-            OnCancelListener cancelListener) {
+                          OnCancelListener cancelListener) {
         this(context, cancelable, cancelListener, 0);
     }
 
     protected AlertDialog(Context context, boolean cancelable,
-            OnCancelListener cancelListener, int theme) {
+                          OnCancelListener cancelListener, int theme) {
         super(context, AlertDialog.resolveDialogTheme(context, theme));
         setCancelable(cancelable);
         setOnCancelListener(cancelListener);
@@ -442,7 +442,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
     }
 
     public void setButton(int whichButton, CharSequence text,
-            OnClickListener listener) {
+                          OnClickListener listener) {
         mAlert.setButton(whichButton, text, listener, null);
     }
 
@@ -507,7 +507,7 @@ public class AlertDialog extends Dialog implements DialogInterface,
     }
 
     public void setView(View view, int viewSpacingLeft, int viewSpacingTop,
-            int viewSpacingRight, int viewSpacingBottom) {
+                        int viewSpacingRight, int viewSpacingBottom) {
         mAlert.setView(view, viewSpacingLeft, viewSpacingTop, viewSpacingRight,
                 viewSpacingBottom);
     }

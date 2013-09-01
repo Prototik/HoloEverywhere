@@ -254,7 +254,7 @@ public class RotateDrawable extends Drawable implements Drawable.Callback {
         onBoundsChange(getBounds());
         mState.mCurrentDegrees = mState.mFromDegrees +
                 (mState.mToDegrees - mState.mFromDegrees) *
-                (level / MAX_LEVEL);
+                        (level / MAX_LEVEL);
         invalidateSelf();
         return true;
     }

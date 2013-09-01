@@ -1,15 +1,15 @@
 
 package org.holoeverywhere.preference;
 
-import java.util.Calendar;
-
-import org.holoeverywhere.app.DatePickerDialog;
-import org.holoeverywhere.widget.DatePicker;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+
+import org.holoeverywhere.app.DatePickerDialog;
+import org.holoeverywhere.widget.DatePicker;
+
+import java.util.Calendar;
 
 public class DatePreference extends DialogPreference {
     public static interface OnDateSetListener {

@@ -8,7 +8,6 @@ import android.os.Build.VERSION;
 import android.os.IBinder;
 import android.support.v4.internal.view.SupportContextMenu;
 import android.util.EventLog;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 
 import java.lang.reflect.Method;

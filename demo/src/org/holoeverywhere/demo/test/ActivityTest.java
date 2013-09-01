@@ -1,17 +1,17 @@
 
 package org.holoeverywhere.demo.test;
 
-import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.demo.test.app.TestActivity;
-import org.holoeverywhere.preference.SharedPreferences;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
+
+import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.demo.test.app.TestActivity;
+import org.holoeverywhere.preference.SharedPreferences;
+import org.json.JSONObject;
 
 public class ActivityTest extends ActivityInstrumentationTestCase2<TestActivity> {
     public ActivityTest() {

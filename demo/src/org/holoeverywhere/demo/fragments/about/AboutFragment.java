@@ -1,17 +1,17 @@
 
 package org.holoeverywhere.demo.fragments.about;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.content.IntentCompat;
-import org.holoeverywhere.demo.R;
-import org.holoeverywhere.demo.fragments.OtherFragment;
-import org.holoeverywhere.widget.ListView;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.content.IntentCompat;
+import org.holoeverywhere.demo.R;
+import org.holoeverywhere.demo.fragments.OtherFragment;
+import org.holoeverywhere.widget.ListView;
 
 public class AboutFragment extends OtherFragment {
     private final class UrlListener implements OnOtherItemClickListener {

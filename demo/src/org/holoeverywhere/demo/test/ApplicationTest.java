@@ -1,16 +1,16 @@
 
 package org.holoeverywhere.demo.test;
 
+import android.content.Context;
+import android.test.ApplicationTestCase;
+import android.test.suitebuilder.annotation.MediumTest;
+import android.test.suitebuilder.annotation.SmallTest;
+
 import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.demo.test.app.TestApplication;
 import org.holoeverywhere.preference.SharedPreferences;
 import org.json.JSONObject;
-
-import android.content.Context;
-import android.test.ApplicationTestCase;
-import android.test.suitebuilder.annotation.MediumTest;
-import android.test.suitebuilder.annotation.SmallTest;
 
 public class ApplicationTest extends ApplicationTestCase<TestApplication> {
     public ApplicationTest() {

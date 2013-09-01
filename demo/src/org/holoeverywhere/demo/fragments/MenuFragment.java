@@ -1,15 +1,15 @@
 
 package org.holoeverywhere.demo.fragments;
 
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.ListFragment;
 import org.holoeverywhere.demo.DemoActivity;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.demo.widget.DemoThemePicker;
-
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
 
 public class MenuFragment extends ListFragment {
     @Override

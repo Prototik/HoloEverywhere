@@ -1,19 +1,19 @@
 
 package org.holoeverywhere.demo.fragments.about;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 
 import org.holoeverywhere.app.ListFragment;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.widget.ArrayAdapter;
 import org.holoeverywhere.widget.TextView;
 
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 public class LicensesFragment extends ListFragment {
     private static final class License {

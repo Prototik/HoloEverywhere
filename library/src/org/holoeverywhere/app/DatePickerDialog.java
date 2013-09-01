@@ -19,7 +19,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         OnDateChangedListener {
     public interface OnDateSetListener {
         void onDateSet(DatePicker view, int year, int monthOfYear,
-                int dayOfMonth);
+                       int dayOfMonth);
     }
 
     private static final String DAY = "day";
@@ -32,8 +32,8 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     private boolean mTitleNeedsUpdate = true;
 
     public DatePickerDialog(Context context, int theme,
-            OnDateSetListener callBack, int year, int monthOfYear,
-            int dayOfMonth) {
+                            OnDateSetListener callBack, int year, int monthOfYear,
+                            int dayOfMonth) {
         super(context, theme);
         mCallBack = callBack;
         mCalendar = Calendar.getInstance();
@@ -51,7 +51,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     }
 
     public DatePickerDialog(Context context, OnDateSetListener callBack,
-            int year, int monthOfYear, int dayOfMonth) {
+                            int year, int monthOfYear, int dayOfMonth) {
         this(context, 0, callBack, year, monthOfYear, dayOfMonth);
     }
 
@@ -109,10 +109,10 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
             mCalendar.set(Calendar.DAY_OF_MONTH, day);
             String title = DateUtils.formatDateTime(getContext(),
                     mCalendar.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE
-                            | DateUtils.FORMAT_SHOW_WEEKDAY
-                            | DateUtils.FORMAT_SHOW_YEAR
-                            | DateUtils.FORMAT_ABBREV_MONTH
-                            | DateUtils.FORMAT_ABBREV_WEEKDAY);
+                    | DateUtils.FORMAT_SHOW_WEEKDAY
+                    | DateUtils.FORMAT_SHOW_YEAR
+                    | DateUtils.FORMAT_ABBREV_MONTH
+                    | DateUtils.FORMAT_ABBREV_WEEKDAY);
             setTitle(title);
             mTitleNeedsUpdate = true;
         } else {

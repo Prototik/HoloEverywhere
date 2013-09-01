@@ -1,12 +1,12 @@
 
 package org.holoeverywhere.demo.fragments.dialogs;
 
+import android.os.Bundle;
+
 import org.holoeverywhere.app.Dialog;
 import org.holoeverywhere.app.DialogFragment;
 import org.holoeverywhere.app.ProgressDialog;
 import org.holoeverywhere.demo.R;
-
-import android.os.Bundle;
 
 public class DialogsProgressDialogIndeterminateFragment extends DialogFragment {
     @Override

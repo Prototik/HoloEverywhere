@@ -10,8 +10,8 @@ public interface TransformationMethod extends android.text.method.Transformation
 
     @Override
     public void onFocusChanged(View view, CharSequence sourceText,
-            boolean focused, int direction,
-            Rect previouslyFocusedRect);
+                               boolean focused, int direction,
+                               Rect previouslyFocusedRect);
 
     public void setLengthChangesAllowed(boolean allowLengthChanges);
 }

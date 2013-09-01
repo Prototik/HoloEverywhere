@@ -359,6 +359,7 @@ public class FontLoader {
     public static final int TEXT_STYLE_MEDIUM;
     public static final int TEXT_STYLE_NORMAL;
     public static final int TEXT_STYLE_THIN;
+
     static {
         TEXT_STYLE_NORMAL = 0;
         TEXT_STYLE_BOLD = registerTextStyle("bold");
@@ -484,7 +485,7 @@ public class FontLoader {
                 textStyle |= sFontStyleMapping.get(key);
             }
         }
-        return new Object[] {
+        return new Object[]{
                 textStyle,
                 fontFamily == null && textStyle == TEXT_STYLE_NORMAL ? string : fontFamily
         };

@@ -1,15 +1,6 @@
 
 package org.holoeverywhere.preference;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
-import org.holoeverywhere.HoloEverywhere;
-import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
-import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.Application;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,6 +13,15 @@ import android.content.res.XmlResourceParser;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.util.Log;
+
+import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
+import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.Application;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class PreferenceManager {
     public interface OnActivityDestroyListener {
@@ -38,7 +38,7 @@ public class PreferenceManager {
 
     interface OnPreferenceTreeClickListener {
         boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
-                Preference preference);
+                                      Preference preference);
     }
 
     public static final String KEY_HAS_SET_DEFAULT_VALUES = "_has_set_default_values";
@@ -50,7 +50,7 @@ public class PreferenceManager {
     }
 
     public static SharedPreferences getDefaultSharedPreferences(Context context,
-            PreferenceImpl impl) {
+                                                                PreferenceImpl impl) {
         return wrap(context, impl, getDefaultSharedPreferencesName(context),
                 getDefaultSharedPreferencesMode());
     }
@@ -76,7 +76,7 @@ public class PreferenceManager {
     }
 
     public static void setDefaultValues(Context context, int resId,
-            boolean readAgain) {
+                                        boolean readAgain) {
         PreferenceManager.setDefaultValues(context,
                 PreferenceManager.getDefaultSharedPreferencesName(context),
                 PreferenceManager.getDefaultSharedPreferencesMode(), resId,
@@ -85,14 +85,14 @@ public class PreferenceManager {
 
     @SuppressLint("NewApi")
     public static void setDefaultValues(Context context,
-            String sharedPreferencesName, int sharedPreferencesMode, int resId,
-            boolean readAgain) {
+                                        String sharedPreferencesName, int sharedPreferencesMode, int resId,
+                                        boolean readAgain) {
         final SharedPreferences defaultValueSp = PreferenceManager.wrap(
                 context, PreferenceManager.KEY_HAS_SET_DEFAULT_VALUES,
                 Context.MODE_PRIVATE);
         if (readAgain
                 || !defaultValueSp.getBoolean(
-                        PreferenceManager.KEY_HAS_SET_DEFAULT_VALUES, false)) {
+                PreferenceManager.KEY_HAS_SET_DEFAULT_VALUES, false)) {
             final PreferenceManager pm = new PreferenceManager(context);
             pm.setSharedPreferencesName(sharedPreferencesName);
             pm.setSharedPreferencesMode(sharedPreferencesMode);
@@ -104,7 +104,7 @@ public class PreferenceManager {
     }
 
     public static SharedPreferences wrap(Context context, PreferenceImpl impl,
-            String name, int mode) {
+                                         String name, int mode) {
         switch (impl) {
             case XML:
                 return new _SharedPreferencesImpl_XML(context, name, mode);
@@ -334,7 +334,7 @@ public class PreferenceManager {
     }
 
     PreferenceScreen inflateFromIntent(Intent queryIntent,
-            PreferenceScreen rootPreferences) {
+                                       PreferenceScreen rootPreferences) {
         final List<ResolveInfo> activities = queryIntentActivities(queryIntent);
         final HashSet<String> inflatedRes = new HashSet<String>();
         for (int i = activities.size() - 1; i >= 0; i--) {
@@ -342,13 +342,13 @@ public class PreferenceManager {
             final Bundle metaData = activityInfo.metaData;
             if (metaData == null
                     || !metaData
-                            .containsKey(PreferenceManager.METADATA_KEY_PREFERENCES)) {
+                    .containsKey(PreferenceManager.METADATA_KEY_PREFERENCES)) {
                 continue;
             }
             final String uniqueResId = activityInfo.packageName
                     + ":"
                     + activityInfo.metaData
-                            .getInt(PreferenceManager.METADATA_KEY_PREFERENCES);
+                    .getInt(PreferenceManager.METADATA_KEY_PREFERENCES);
             if (!inflatedRes.contains(uniqueResId)) {
                 inflatedRes.add(uniqueResId);
 
@@ -375,7 +375,7 @@ public class PreferenceManager {
     }
 
     public PreferenceScreen inflateFromResource(Context context, int resId,
-            PreferenceScreen rootPreferences) {
+                                                PreferenceScreen rootPreferences) {
         setNoCommit(true);
         rootPreferences = (PreferenceScreen) getPreferenceInflater(context).inflate(
                 resId, rootPreferences);

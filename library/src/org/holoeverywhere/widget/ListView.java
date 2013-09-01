@@ -20,6 +20,8 @@ import android.util.SparseBooleanArray;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewDebug.ExportedProperty;
@@ -29,8 +31,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Checkable;
 import android.widget.ListAdapter;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.R;
@@ -48,7 +48,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         ContextMenuInfoGetter, FastScrollerCallback {
     public interface MultiChoiceModeListener extends ActionMode.Callback {
         public void onItemCheckedStateChanged(ActionMode mode, int position,
-                long id, boolean checked);
+                                              long id, boolean checked);
     }
 
     private final class MultiChoiceModeWrapper implements MultiChoiceModeListener {
@@ -80,7 +80,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         @SuppressLint("NewApi")
         @Override
         public void onItemCheckedStateChanged(ActionMode mode,
-                int position, long id, boolean checked) {
+                                              int position, long id, boolean checked) {
             mWrapped.onItemCheckedStateChanged(mode, position, id, checked);
             if (getCheckedItemCount() == 0) {
                 mode.finish();
@@ -304,7 +304,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     }
 
     protected ContextMenuInfo createContextMenuInfo(View view, int position,
-            long id) {
+                                                    long id) {
         return new AdapterContextMenuInfo(view, position, id);
     }
 
@@ -679,7 +679,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     }
 
     public boolean performItemLongClick(final View child,
-            final int longPressPosition, final long longPressId) {
+                                        final int longPressPosition, final long longPressId) {
         if (mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
             if (mChoiceActionMode == null &&
                     (mChoiceActionMode = startSupportActionMode(mMultiChoiceModeCallback)) != null) {

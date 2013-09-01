@@ -28,7 +28,7 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
     private static final HashMap<Class<?>, Constructor<?>> sConstructorMap = new HashMap<Class<?>, Constructor<?>>();
     private ClassLoader mClassLoader;
     protected final Object[] mConstructorArgs = new Object[2];
-    protected final Class<?>[] mConstructorSignature = new Class<?>[] {
+    protected final Class<?>[] mConstructorSignature = new Class<?>[]{
             Context.class, AttributeSet.class
     };
     private final Context mContext;
@@ -87,7 +87,7 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
     }
 
     private final T createItemFromTag(XmlPullParser parser, String name,
-            AttributeSet attrs) {
+                                      AttributeSet attrs) {
         try {
             T item = null;
             for (Factory<T> factory : mFactoryList) {
@@ -208,7 +208,7 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
     }
 
     protected Object[] obtainConstructorArgs(String name, AttributeSet attrs,
-            Constructor<?> constructor) {
+                                             Constructor<?> constructor) {
         final Object[] args = mConstructorArgs;
         args[0] = mContext;
         args[1] = attrs;
@@ -216,7 +216,7 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
     }
 
     protected boolean onCreateCustomFromTag(XmlPullParser parser, T parent,
-            final AttributeSet attrs) throws XmlPullParserException {
+                                            final AttributeSet attrs) throws XmlPullParserException {
         return false;
     }
 
@@ -245,7 +245,7 @@ public abstract class GenericInflater<T, P extends GenericInflater.Parent<T>> {
 
     @SuppressWarnings("unchecked")
     private void rInflate(XmlPullParser parser, T parent,
-            final AttributeSet attrs) throws XmlPullParserException,
+                          final AttributeSet attrs) throws XmlPullParserException,
             IOException {
         final int depth = parser.getDepth();
         int type;

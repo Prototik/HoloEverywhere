@@ -1,12 +1,12 @@
 
 package org.holoeverywhere.demo;
 
-import org.holoeverywhere.ThemeManager;
-import org.holoeverywhere.app.Activity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import org.holoeverywhere.ThemeManager;
+import org.holoeverywhere.app.Activity;
 
 public class DemoDialogActivity extends Activity {
     public static Intent obtainIntent(Context context, boolean onlyWhenLarge) {

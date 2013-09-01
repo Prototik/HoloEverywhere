@@ -1,11 +1,10 @@
 
 package org.holoeverywhere.preference;
 
-import java.lang.ref.WeakReference;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.WeakHashMap;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Build.VERSION;
+import android.util.Log;
 
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Application;
@@ -13,10 +12,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.Build.VERSION;
-import android.util.Log;
+import java.lang.ref.WeakReference;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.WeakHashMap;
 
 public final class _SharedPreferencesImpl_XML extends _SharedPreferencesBase {
     private final class EditorImpl extends _BaseEditor {
@@ -153,7 +153,7 @@ public final class _SharedPreferencesImpl_XML extends _SharedPreferencesBase {
         private SharedPreferences prefs;
 
         private ListenerWrapper(SharedPreferences prefs,
-                OnSharedPreferenceChangeListener listener) {
+                                OnSharedPreferenceChangeListener listener) {
             this.prefs = prefs;
             this.listener = listener;
         }

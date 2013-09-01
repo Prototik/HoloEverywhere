@@ -37,12 +37,12 @@ public final class DrawableCompat {
     }
 
     public static Drawable createFromResourceStream(Resources res, TypedValue value,
-            InputStream is, String srcName) {
+                                                    InputStream is, String srcName) {
         return createFromResourceStream(res, value, is, srcName, null);
     }
 
     public static Drawable createFromResourceStream(Resources res, TypedValue value,
-            InputStream is, String srcName, BitmapFactory.Options opts) {
+                                                    InputStream is, String srcName, BitmapFactory.Options opts) {
         return Drawable.createFromResourceStream(res, value, is, srcName, opts);
     }
 

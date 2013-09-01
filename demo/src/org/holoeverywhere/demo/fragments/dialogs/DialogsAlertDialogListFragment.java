@@ -1,12 +1,12 @@
 
 package org.holoeverywhere.demo.fragments.dialogs;
 
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+
 import org.holoeverywhere.app.AlertDialog.Builder;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.widget.ArrayAdapter;
-
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 
 public class DialogsAlertDialogListFragment extends DialogsAlertDialogFragment {
     private static final OnClickListener LIST_CLICK_LISTENER = new OnClickListener() {

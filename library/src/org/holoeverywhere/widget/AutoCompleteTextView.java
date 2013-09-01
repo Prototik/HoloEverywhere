@@ -35,7 +35,7 @@ public class AutoCompleteTextView extends EditText implements
             AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View v, int position,
-                long id) {
+                                long id) {
             performCompletion(v, position, id);
         }
     }
@@ -48,13 +48,13 @@ public class AutoCompleteTextView extends EditText implements
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count,
-                int after) {
+                                      int after) {
             doBeforeTextChanged();
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before,
-                int count) {
+                                  int count) {
         }
     }
 
@@ -129,7 +129,7 @@ public class AutoCompleteTextView extends EditText implements
     }
 
     public AutoCompleteTextView(Context context, AttributeSet attrs,
-            int defStyle) {
+                                int defStyle) {
         super(context, attrs, defStyle);
         mPopup = new ListPopupWindow(context, attrs,
                 R.attr.autoCompleteTextViewStyle);
@@ -390,7 +390,7 @@ public class AutoCompleteTextView extends EditText implements
 
     @Override
     protected void onFocusChanged(boolean focused, int direction,
-            Rect previouslyFocusedRect) {
+                                  Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
         if (!focused) {
             performValidation();

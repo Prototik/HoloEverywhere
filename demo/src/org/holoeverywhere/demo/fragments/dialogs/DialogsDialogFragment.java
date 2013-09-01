@@ -1,13 +1,13 @@
 
 package org.holoeverywhere.demo.fragments.dialogs;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.app.DialogFragment;
-import org.holoeverywhere.demo.R;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.app.DialogFragment;
+import org.holoeverywhere.demo.R;
 
 public class DialogsDialogFragment extends DialogFragment {
     @Override

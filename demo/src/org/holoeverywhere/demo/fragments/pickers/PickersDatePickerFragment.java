@@ -1,9 +1,7 @@
 
 package org.holoeverywhere.demo.fragments.pickers;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import android.os.Bundle;
 
 import org.holoeverywhere.app.DatePickerDialog;
 import org.holoeverywhere.app.DatePickerDialog.OnDateSetListener;
@@ -12,7 +10,9 @@ import org.holoeverywhere.app.DialogFragment;
 import org.holoeverywhere.widget.DatePicker;
 import org.holoeverywhere.widget.Toast;
 
-import android.os.Bundle;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class PickersDatePickerFragment extends DialogFragment implements OnDateSetListener {
     private static final Calendar CALENDAR = Calendar.getInstance();

@@ -29,6 +29,7 @@ public class Application extends android.app.Application implements
         SuperStartActivity, SuperSystemService, IAddonAttacher<IAddonApplication> {
     private static List<Class<? extends IAddon>> sInitialAddons;
     private static Application sLastInstance;
+
     static {
         SystemServiceManager.register(LayoutInflaterCreator.class);
     }
@@ -180,7 +181,7 @@ public class Application extends android.app.Application implements
     @Override
     @SuppressLint("NewApi")
     public void superStartActivity(Intent intent, int requestCode,
-            Bundle options) {
+                                   Bundle options) {
         if (VERSION.SDK_INT >= 16) {
             super.startActivity(intent, options);
         } else {

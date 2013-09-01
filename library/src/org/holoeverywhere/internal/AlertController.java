@@ -156,7 +156,7 @@ public class AlertController {
                             dialog.mMultiChoiceItemLayout, android.R.id.text1, mItems) {
                         @Override
                         public View getView(int position, View convertView,
-                                ViewGroup parent) {
+                                            ViewGroup parent) {
                             View view = super.getView(position, convertView,
                                     parent);
                             if (mCheckedItems != null) {
@@ -183,7 +183,7 @@ public class AlertController {
 
                         @Override
                         public void bindView(View view, Context context,
-                                Cursor cursor) {
+                                             Cursor cursor) {
                             CheckedTextView text = (CheckedTextView) view
                                     .findViewById(android.R.id.text1);
                             text.setText(cursor.getString(mLabelIndex));
@@ -193,7 +193,7 @@ public class AlertController {
 
                         @Override
                         public View newView(Context context, Cursor cursor,
-                                ViewGroup parent) {
+                                            ViewGroup parent) {
                             return mInflater.inflate(
                                     dialog.mMultiChoiceItemLayout, parent,
                                     false);
@@ -207,13 +207,13 @@ public class AlertController {
                 if (mCursor == null) {
                     adapter = mAdapter != null ? mAdapter
                             : new ArrayAdapter<CharSequence>(mContext, layout,
-                                    android.R.id.text1, mItems);
+                            android.R.id.text1, mItems);
                 } else {
                     adapter = new SimpleCursorAdapter(mContext, layout,
-                            mCursor, new String[] {
-                                    mLabelColumn
-                            },
-                            new int[] {
+                            mCursor, new String[]{
+                            mLabelColumn
+                    },
+                            new int[]{
                                     android.R.id.text1
                             },
                             CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
@@ -228,7 +228,7 @@ public class AlertController {
                 listView.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View v,
-                            int position, long id) {
+                                            int position, long id) {
                         mOnClickListener.onClick(dialog.mDialogInterface,
                                 position);
                         if (!mIsSingleChoice) {
@@ -240,7 +240,7 @@ public class AlertController {
                 listView.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View v,
-                            int position, long id) {
+                                            int position, long id) {
                         if (mCheckedItems != null) {
                             mCheckedItems[position] = listView
                                     .isItemChecked(position);
@@ -403,7 +403,7 @@ public class AlertController {
     }
 
     public AlertController(Context context, DialogInterface di, Window window,
-            AlertDecorViewInstaller decorViewInstaller) {
+                           AlertDecorViewInstaller decorViewInstaller) {
         mDecorViewInstaller = decorViewInstaller;
         mContext = context;
         mDialogInterface = di;
@@ -485,8 +485,8 @@ public class AlertController {
     }
 
     private void setBackground(LinearLayout topPanel,
-            LinearLayout contentPanel, View customPanel, boolean hasButtons,
-            TypedArray a, boolean hasTitle, View buttonPanel) {
+                               LinearLayout contentPanel, View customPanel, boolean hasButtons,
+                               TypedArray a, boolean hasTitle, View buttonPanel) {
         int fullDark = a.getResourceId(R.styleable.AlertDialog_fullDark,
                 R.drawable.dialog_full_holo_dark);
         int topDark = a.getResourceId(R.styleable.AlertDialog_topDark,
@@ -571,7 +571,7 @@ public class AlertController {
     }
 
     public void setButton(int whichButton, CharSequence text,
-            DialogInterface.OnClickListener listener, Message msg) {
+                          DialogInterface.OnClickListener listener, Message msg) {
         if (msg == null && listener != null) {
             msg = mHandler.obtainMessage(whichButton, listener);
         }
@@ -800,7 +800,7 @@ public class AlertController {
     }
 
     public void setView(View view, int viewSpacingLeft, int viewSpacingTop,
-            int viewSpacingRight, int viewSpacingBottom) {
+                        int viewSpacingRight, int viewSpacingBottom) {
         mView = view;
         mViewSpacingSpecified = true;
         mViewSpacingLeft = viewSpacingLeft;

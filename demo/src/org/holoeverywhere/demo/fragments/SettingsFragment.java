@@ -1,10 +1,10 @@
 
 package org.holoeverywhere.demo.fragments;
 
+import android.os.Bundle;
+
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.preference.PreferenceFragment;
-
-import android.os.Bundle;
 
 public class SettingsFragment extends PreferenceFragment {
     @Override

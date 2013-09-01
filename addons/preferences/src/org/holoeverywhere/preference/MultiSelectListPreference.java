@@ -1,18 +1,18 @@
 
 package org.holoeverywhere.preference;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.holoeverywhere.app.AlertDialog.Builder;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+
+import org.holoeverywhere.app.AlertDialog.Builder;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MultiSelectListPreference extends DialogPreference {
     private static class SavedState extends BaseSavedState {
@@ -132,7 +132,7 @@ public class MultiSelectListPreference extends DialogPreference {
                 new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which,
-                            boolean isChecked) {
+                                        boolean isChecked) {
                         if (isChecked) {
                             mPreferenceChanged |= mNewValues
                                     .add(mEntryValues[which].toString());

@@ -161,7 +161,7 @@ public abstract class AbsSeekBar extends ProgressBar {
 
     @Override
     protected synchronized void onMeasure(int widthMeasureSpec,
-            int heightMeasureSpec) {
+                                          int heightMeasureSpec) {
         Drawable d = getCurrentDrawable();
         int thumbHeight = mThumb == null ? 0 : mThumb.getIntrinsicHeight();
         int dw = 0;
@@ -318,8 +318,8 @@ public abstract class AbsSeekBar extends ProgressBar {
             mThumbOffset = thumb.getIntrinsicWidth() / 2;
             if (needUpdate
                     && (thumb.getIntrinsicWidth() != mThumb.getIntrinsicWidth() || thumb
-                            .getIntrinsicHeight() != mThumb
-                            .getIntrinsicHeight())) {
+                    .getIntrinsicHeight() != mThumb
+                    .getIntrinsicHeight())) {
                 requestLayout();
             }
         }

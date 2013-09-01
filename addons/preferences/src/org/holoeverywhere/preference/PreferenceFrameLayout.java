@@ -1,12 +1,12 @@
 
 package org.holoeverywhere.preference;
 
-import org.holoeverywhere.widget.FrameLayout;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
+
+import org.holoeverywhere.widget.FrameLayout;
 
 public class PreferenceFrameLayout extends FrameLayout {
     public static class LayoutParams extends FrameLayout.LayoutParams {
@@ -48,7 +48,7 @@ public class PreferenceFrameLayout extends FrameLayout {
     }
 
     public PreferenceFrameLayout(Context context, AttributeSet attrs,
-            int defStyle) {
+                                 int defStyle) {
         super(context, attrs, defStyle);
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.PreferenceFrameLayout, defStyle, 0);

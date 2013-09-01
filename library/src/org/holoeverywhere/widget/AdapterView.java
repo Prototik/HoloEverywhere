@@ -68,12 +68,12 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
 
     public interface OnItemLongClickListener {
         boolean onItemLongClick(AdapterView<?> parent, View view, int position,
-                long id);
+                                long id);
     }
 
     public interface OnItemSelectedListener {
         void onItemSelected(AdapterView<?> parent, View view, int position,
-                long id);
+                            long id);
 
         void onNothingSelected(AdapterView<?> parent);
     }
@@ -471,14 +471,14 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right,
-            int bottom) {
+                            int bottom) {
         mLayoutHeight = getHeight();
     }
 
     @SuppressLint("NewApi")
     @Override
     public boolean onRequestSendAccessibilityEvent(View child,
-            AccessibilityEvent event) {
+                                                   AccessibilityEvent event) {
         if (super.onRequestSendAccessibilityEvent(child, event)) {
             AccessibilityEvent record = AccessibilityEvent.obtain();
             onInitializeAccessibilityEvent(record);

@@ -1,9 +1,9 @@
 
 package org.holoeverywhere.demo.fragments.lists;
 
-import org.holoeverywhere.widget.ListView;
-
 import android.view.View;
+
+import org.holoeverywhere.widget.ListView;
 
 public class ListsFastScrollLeftSideFragment extends ListsFastScrollFragment {
     @Override

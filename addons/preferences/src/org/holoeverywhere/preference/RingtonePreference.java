@@ -1,8 +1,6 @@
 
 package org.holoeverywhere.preference;
 
-import org.holoeverywhere.preference._RingtonePickerDialog.RingtonePickerListener;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +9,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+
+import org.holoeverywhere.preference._RingtonePickerDialog.RingtonePickerListener;
 
 public class RingtonePreference extends DialogPreference implements
         RingtonePickerListener {
@@ -110,7 +110,7 @@ public class RingtonePreference extends DialogPreference implements
 
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue,
-            Object defaultValueObj) {
+                                     Object defaultValueObj) {
         String defaultValue = (String) defaultValueObj;
         if (restorePersistedValue) {
             defaultValue = getPersistedString(defaultValue);

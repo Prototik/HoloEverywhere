@@ -63,7 +63,7 @@ public class _View extends android.view.View implements Drawable.Callback,
             android.R.attr.state_drag_can_accept,
             android.R.attr.state_drag_hovered
     };
-    static final int[] Z_VIEW_STATE_IDS = new int[] {
+    static final int[] Z_VIEW_STATE_IDS = new int[]{
             android.R.attr.state_window_focused,
             _View.VIEW_STATE_WINDOW_FOCUSED, android.R.attr.state_selected,
             _View.VIEW_STATE_SELECTED, android.R.attr.state_focused,
@@ -185,7 +185,7 @@ public class _View extends android.view.View implements Drawable.Callback,
     }
 
     public static int supportResolveSizeAndState(int size, int measureSpec,
-            int childMeasuredState) {
+                                                 int childMeasuredState) {
         int result = size;
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);

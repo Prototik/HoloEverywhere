@@ -1,18 +1,18 @@
 
 package org.holoeverywhere.preference;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import org.holoeverywhere.preference.Preference.OnPreferenceChangeInternalListener;
-
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+
+import org.holoeverywhere.preference.Preference.OnPreferenceChangeInternalListener;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 class PreferenceGroupAdapter extends BaseAdapter implements
         OnPreferenceChangeInternalListener {
@@ -80,7 +80,7 @@ class PreferenceGroupAdapter extends BaseAdapter implements
     }
 
     private PreferenceLayout createPreferenceLayout(Preference preference,
-            PreferenceLayout in) {
+                                                    PreferenceLayout in) {
         PreferenceLayout pl = in != null ? in : new PreferenceLayout();
         pl.name = preference.getClass().getName();
         pl.resId = preference.getLayoutResource();
@@ -89,7 +89,7 @@ class PreferenceGroupAdapter extends BaseAdapter implements
     }
 
     private void flattenPreferenceGroup(List<Preference> preferences,
-            PreferenceGroup group) {
+                                        PreferenceGroup group) {
         group.sortPreferences();
         final int groupSize = group.getPreferenceCount();
         for (int i = 0; i < groupSize; i++) {

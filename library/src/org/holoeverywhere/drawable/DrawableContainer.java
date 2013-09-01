@@ -36,7 +36,7 @@ public class DrawableContainer extends Drawable implements Drawable.Callback {
         boolean mVariablePadding = false;
 
         DrawableContainerState(DrawableContainerState orig, DrawableContainer owner,
-                Resources res) {
+                               Resources res) {
             mOwner = owner;
             if (orig != null) {
                 mChangingConfigurations = orig.mChangingConfigurations;
@@ -570,9 +570,9 @@ public class DrawableContainer extends Drawable implements Drawable.Callback {
 
     /**
      * TODO
-     * 
+     *
      * @Override public Insets getLayoutInsets() { return (mCurrDrawable ==
-     *           null) ? Insets.NONE : mCurrDrawable.getLayoutInsets(); }
+     * null) ? Insets.NONE : mCurrDrawable.getLayoutInsets(); }
      */
 
     @Override
@@ -599,8 +599,7 @@ public class DrawableContainer extends Drawable implements Drawable.Callback {
         }
     }
 
-    protected void setConstantState(DrawableContainerState state)
-    {
+    protected void setConstantState(DrawableContainerState state) {
         mDrawableContainerState = state;
     }
 

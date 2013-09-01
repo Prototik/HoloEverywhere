@@ -1,10 +1,6 @@
 
 package org.holoeverywhere.preference;
 
-import org.holoeverywhere.widget.NumberPicker;
-import org.holoeverywhere.widget.NumberPicker.OnScrollListener;
-import org.holoeverywhere.widget.NumberPicker.OnValueChangeListener;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Parcel;
@@ -13,6 +9,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+
+import org.holoeverywhere.widget.NumberPicker;
+import org.holoeverywhere.widget.NumberPicker.OnScrollListener;
+import org.holoeverywhere.widget.NumberPicker.OnValueChangeListener;
 
 public class NumberPickerPreference extends DialogPreference {
     private static class SavedState extends BaseSavedState {
@@ -70,7 +70,7 @@ public class NumberPickerPreference extends DialogPreference {
     }
 
     public NumberPickerPreference(Context context, AttributeSet attrs,
-            int defStyle) {
+                                  int defStyle) {
         super(context, attrs, defStyle);
         context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs,
@@ -186,7 +186,7 @@ public class NumberPickerPreference extends DialogPreference {
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
         int def = defaultValue instanceof Integer ? (Integer) defaultValue
                 : defaultValue == null ? 0 : Integer.valueOf(defaultValue
-                        .toString());
+                .toString());
         setValue(restoreValue ? getPersistedInt(def) : def);
     }
 

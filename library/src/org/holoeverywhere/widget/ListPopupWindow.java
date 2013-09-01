@@ -89,7 +89,7 @@ public class ListPopupWindow {
     private class PopupScrollListener implements ListView.OnScrollListener {
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem,
-                int visibleItemCount, int totalItemCount) {
+                             int visibleItemCount, int totalItemCount) {
         }
 
         @Override
@@ -214,7 +214,7 @@ public class ListPopupWindow {
                     .setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent,
-                                View view, int position, long id) {
+                                                   View view, int position, long id) {
 
                             if (position != -1) {
                                 DropDownListView dropDownList = mDropDownList;
@@ -365,7 +365,7 @@ public class ListPopupWindow {
     }
 
     private int getMaxAvailableHeight(View anchor, int yOffset,
-            boolean ignoreBottomDecorations) {
+                                      boolean ignoreBottomDecorations) {
         final Rect displayFrame = new Rect();
         anchor.getWindowVisibleDisplayFrame(displayFrame);
         final int[] anchorPos = new int[2];
@@ -450,8 +450,8 @@ public class ListPopupWindow {
     }
 
     private int measureHeightOfChildren(int widthMeasureSpec,
-            int startPosition, int endPosition, final int maxHeight,
-            int disallowPartialChildPosition) {
+                                        int startPosition, int endPosition, final int maxHeight,
+                                        int disallowPartialChildPosition) {
         final ListAdapter adapter = mAdapter;
         if (adapter == null) {
             return mDropDownList.getListPaddingTop()
@@ -493,7 +493,7 @@ public class ListPopupWindow {
     }
 
     private void measureScrapChild(View child, int position,
-            int widthMeasureSpec) {
+                                   int widthMeasureSpec) {
         ListView.LayoutParams p = (ListView.LayoutParams) child
                 .getLayoutParams();
         if (p == null) {
@@ -523,7 +523,7 @@ public class ListPopupWindow {
         if (isShowing()) {
             if (keyCode != KeyEvent.KEYCODE_SPACE
                     && (mDropDownList.getSelectedItemPosition() >= 0 || keyCode != KeyEvent.KEYCODE_ENTER
-                            && keyCode != KeyEvent.KEYCODE_DPAD_CENTER)) {
+                    && keyCode != KeyEvent.KEYCODE_DPAD_CENTER)) {
                 int curIndex = mDropDownList.getSelectedItemPosition();
                 boolean consumed;
                 final boolean below = !mPopup.isAboveAnchor();

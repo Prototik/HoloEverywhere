@@ -24,11 +24,11 @@ public class SimpleExpandableListAdapter extends BaseExpandableListAdapter {
     private int mLastChildLayout;
 
     public SimpleExpandableListAdapter(Context context,
-            List<? extends Map<String, ?>> groupData, int expandedGroupLayout,
-            int collapsedGroupLayout, String[] groupFrom, int[] groupTo,
-            List<? extends List<? extends Map<String, ?>>> childData,
-            int childLayout, int lastChildLayout, String[] childFrom,
-            int[] childTo) {
+                                       List<? extends Map<String, ?>> groupData, int expandedGroupLayout,
+                                       int collapsedGroupLayout, String[] groupFrom, int[] groupTo,
+                                       List<? extends List<? extends Map<String, ?>>> childData,
+                                       int childLayout, int lastChildLayout, String[] childFrom,
+                                       int[] childTo) {
         mGroupData = groupData;
         mExpandedGroupLayout = expandedGroupLayout;
         mCollapsedGroupLayout = collapsedGroupLayout;
@@ -43,20 +43,20 @@ public class SimpleExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     public SimpleExpandableListAdapter(Context context,
-            List<? extends Map<String, ?>> groupData, int expandedGroupLayout,
-            int collapsedGroupLayout, String[] groupFrom, int[] groupTo,
-            List<? extends List<? extends Map<String, ?>>> childData,
-            int childLayout, String[] childFrom, int[] childTo) {
+                                       List<? extends Map<String, ?>> groupData, int expandedGroupLayout,
+                                       int collapsedGroupLayout, String[] groupFrom, int[] groupTo,
+                                       List<? extends List<? extends Map<String, ?>>> childData,
+                                       int childLayout, String[] childFrom, int[] childTo) {
         this(context, groupData, expandedGroupLayout, collapsedGroupLayout,
                 groupFrom, groupTo, childData, childLayout, childLayout,
                 childFrom, childTo);
     }
 
     public SimpleExpandableListAdapter(Context context,
-            List<? extends Map<String, ?>> groupData, int groupLayout,
-            String[] groupFrom, int[] groupTo,
-            List<? extends List<? extends Map<String, ?>>> childData,
-            int childLayout, String[] childFrom, int[] childTo) {
+                                       List<? extends Map<String, ?>> groupData, int groupLayout,
+                                       String[] groupFrom, int[] groupTo,
+                                       List<? extends List<? extends Map<String, ?>>> childData,
+                                       int childLayout, String[] childFrom, int[] childTo) {
         this(context, groupData, groupLayout, groupLayout, groupFrom, groupTo, childData,
                 childLayout, childLayout, childFrom, childTo);
     }
@@ -89,7 +89,7 @@ public class SimpleExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
-            View convertView, ViewGroup parent) {
+                             View convertView, ViewGroup parent) {
         View v;
         if (convertView == null) {
             v = newChildView(isLastChild, parent);
@@ -117,7 +117,7 @@ public class SimpleExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
-            ViewGroup parent) {
+                             ViewGroup parent) {
         View v;
         if (convertView == null) {
             v = newGroupView(isExpanded, parent);

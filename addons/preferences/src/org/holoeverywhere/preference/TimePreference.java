@@ -1,16 +1,16 @@
 
 package org.holoeverywhere.preference;
 
-import java.util.Calendar;
-
-import org.holoeverywhere.app.TimePickerDialog;
-import org.holoeverywhere.widget.TimePicker;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
+
+import org.holoeverywhere.app.TimePickerDialog;
+import org.holoeverywhere.widget.TimePicker;
+
+import java.util.Calendar;
 
 public class TimePreference extends DialogPreference {
     public static interface OnTimeSetListener {

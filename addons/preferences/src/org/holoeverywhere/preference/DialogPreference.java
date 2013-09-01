@@ -1,10 +1,6 @@
 
 package org.holoeverywhere.preference;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.app.AlertDialog;
-import org.holoeverywhere.app.ContextThemeWrapperPlus;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +16,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.app.AlertDialog;
+import org.holoeverywhere.app.ContextThemeWrapperPlus;
 
 public abstract class DialogPreference extends Preference implements
         DialogInterface.OnClickListener, DialogInterface.OnDismissListener,
@@ -99,7 +99,7 @@ public abstract class DialogPreference extends Preference implements
         if (mDialogContext != null) {
             return mDialogContext;
         }
-        final TypedArray a = getContext().obtainStyledAttributes(new int[] {
+        final TypedArray a = getContext().obtainStyledAttributes(new int[]{
                 alert ? R.attr.alertDialogTheme : R.attr.dialogTheme
         });
         final int theme = a.getResourceId(0, R.style.Holo_Theme_Dialog_Alert);

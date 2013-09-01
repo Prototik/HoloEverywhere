@@ -1,8 +1,6 @@
 
 package org.holoeverywhere.preference;
 
-import org.holoeverywhere.widget.Switch;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -10,11 +8,13 @@ import android.view.View;
 import android.widget.Checkable;
 import android.widget.CompoundButton;
 
+import org.holoeverywhere.widget.Switch;
+
 public class SwitchPreference extends TwoStatePreference {
     private class Listener implements CompoundButton.OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(CompoundButton buttonView,
-                boolean isChecked) {
+                                     boolean isChecked) {
             if (!callChangeListener(isChecked)) {
                 buttonView.setChecked(!isChecked);
                 return;

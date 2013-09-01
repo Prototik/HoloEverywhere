@@ -204,7 +204,7 @@ public class ProgressBar extends android.widget.ProgressBar {
     }
 
     public ProgressBar(Context context, AttributeSet attrs, int defStyle,
-            int styleRes) {
+                       int styleRes) {
         super(context, attrs, defStyle);
         mUiThreadId = Thread.currentThread().getId();
         initProgressBar();
@@ -255,12 +255,12 @@ public class ProgressBar extends android.widget.ProgressBar {
         mNoInvalidate = false;
         setIndeterminate(mOnlyIndeterminate
                 || a.getBoolean(R.styleable.ProgressBar_android_indeterminate,
-                        mIndeterminate));
+                mIndeterminate));
         a.recycle();
     }
 
     private synchronized void doRefreshProgress(int id, int progress,
-            boolean fromUser, boolean callBackToApp) {
+                                                boolean fromUser, boolean callBackToApp) {
         float scale = mMax > 0 ? (float) progress / (float) mMax : 0;
         final Drawable d = mCurrentDrawable;
         if (d != null) {
@@ -290,7 +290,7 @@ public class ProgressBar extends android.widget.ProgressBar {
     }
 
     private Shape getDrawableShape() {
-        final float[] roundedCorners = new float[] {
+        final float[] roundedCorners = new float[]{
                 5, 5, 5, 5, 5, 5, 5, 5
         };
         return new RoundRectShape(roundedCorners, null, null);
@@ -478,7 +478,7 @@ public class ProgressBar extends android.widget.ProgressBar {
 
     @Override
     protected synchronized void onMeasure(int widthMeasureSpec,
-            int heightMeasureSpec) {
+                                          int heightMeasureSpec) {
         Drawable d = mCurrentDrawable;
         int dw = 0;
         int dh = 0;
@@ -551,7 +551,7 @@ public class ProgressBar extends android.widget.ProgressBar {
     }
 
     private synchronized void refreshProgress(int id, int progress,
-            boolean fromUser) {
+                                              boolean fromUser) {
         if (mUiThreadId == Thread.currentThread().getId()) {
             doRefreshProgress(id, progress, fromUser, true);
         } else if (mRefreshData != null) {

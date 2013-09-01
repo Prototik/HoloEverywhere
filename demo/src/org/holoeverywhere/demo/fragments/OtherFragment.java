@@ -1,6 +1,11 @@
 
 package org.holoeverywhere.demo.fragments;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.DialogFragment;
 import org.holoeverywhere.app.Fragment;
@@ -14,11 +19,6 @@ import org.holoeverywhere.demo.fragments.tabber.TabsFragment;
 import org.holoeverywhere.demo.widget.DemoAdapter;
 import org.holoeverywhere.demo.widget.DemoItem;
 import org.holoeverywhere.widget.ListView;
-
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
 
 public class OtherFragment extends ListFragment {
     private final class ActivityListener implements OnOtherItemClickListener {
@@ -105,7 +105,7 @@ public class OtherFragment extends ListFragment {
     }
 
     private void addItem(CharSequence label, OnOtherItemClickListener listener,
-            boolean longClickable) {
+                         boolean longClickable) {
         OtherItem item = new OtherItem();
         item.label = label;
         item.listener = listener;

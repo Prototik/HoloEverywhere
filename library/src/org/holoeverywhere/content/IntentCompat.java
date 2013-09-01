@@ -12,7 +12,7 @@ import org.holoeverywhere.app.Application;
 public final class IntentCompat {
     /**
      * Declare chooser activity in manifest:
-     * 
+     * <p/>
      * <pre>
      *  &lt;activity android:name="org.holoeverywhere.content.ChooserActivity"
      *      android:theme="@style/Holo.Theme.Dialog.Alert.Light"
@@ -38,11 +38,11 @@ public final class IntentCompat {
                 ClipData.Item item = new ClipData.Item(target.getData());
                 String[] mimeTypes;
                 if (target.getType() != null) {
-                    mimeTypes = new String[] {
+                    mimeTypes = new String[]{
                             target.getType()
                     };
                 } else {
-                    mimeTypes = new String[] {};
+                    mimeTypes = new String[]{};
                 }
                 targetClipData = new ClipData(null, mimeTypes, item);
             }

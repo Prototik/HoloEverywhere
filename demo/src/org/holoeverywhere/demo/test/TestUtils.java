@@ -1,13 +1,13 @@
 
 package org.holoeverywhere.demo.test;
 
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Random;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Random;
 
 public class TestUtils {
     private static final Comparator<JSONArray> JSON_ARRAY_COMPARATOR = new Comparator<JSONArray>() {

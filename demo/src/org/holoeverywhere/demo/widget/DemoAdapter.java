@@ -1,15 +1,15 @@
 
 package org.holoeverywhere.demo.widget;
 
-import org.holoeverywhere.widget.ArrayAdapter;
-import org.holoeverywhere.widget.ListView;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+
+import org.holoeverywhere.widget.ArrayAdapter;
+import org.holoeverywhere.widget.ListView;
 
 public class DemoAdapter extends ArrayAdapter<DemoItem> implements OnItemClickListener,
         OnItemLongClickListener {

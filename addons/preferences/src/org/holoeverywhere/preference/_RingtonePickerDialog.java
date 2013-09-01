@@ -1,13 +1,6 @@
 
 package org.holoeverywhere.preference;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.app.AlertDialog;
-import org.holoeverywhere.app.AlertDialog.Builder;
-import org.holoeverywhere.app.Dialog;
-import org.holoeverywhere.internal.AlertController.AlertParams.OnPrepareListViewListener;
-import org.holoeverywhere.widget.ListView;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,6 +19,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.app.AlertDialog;
+import org.holoeverywhere.app.AlertDialog.Builder;
+import org.holoeverywhere.app.Dialog;
+import org.holoeverywhere.internal.AlertController.AlertParams.OnPrepareListViewListener;
+import org.holoeverywhere.widget.ListView;
 
 public class _RingtonePickerDialog implements OnItemSelectedListener, Runnable,
         OnClickListener, OnPrepareListViewListener, OnCancelListener,
@@ -53,7 +53,7 @@ public class _RingtonePickerDialog implements OnItemSelectedListener, Runnable,
     private Uri uriForDefaultItem;
 
     public _RingtonePickerDialog(Context context, Intent intent,
-            RingtonePickerListener listener) {
+                                 RingtonePickerListener listener) {
         this.context = context;
         this.intent = intent;
         this.listener = listener;
@@ -204,7 +204,7 @@ public class _RingtonePickerDialog implements OnItemSelectedListener, Runnable,
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position,
-            long id) {
+                               long id) {
         playRingtone(position, _RingtonePickerDialog.DELAY_MS_SELECTION_PLAYED);
     }
 

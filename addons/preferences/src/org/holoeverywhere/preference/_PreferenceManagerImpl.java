@@ -1,10 +1,10 @@
 
 package org.holoeverywhere.preference;
 
+import android.content.Context;
+
 import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 import org.holoeverywhere.preference.PreferenceManagerHelper.PreferenceManagerImpl;
-
-import android.content.Context;
 
 public class _PreferenceManagerImpl implements PreferenceManagerImpl {
     static {

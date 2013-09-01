@@ -43,7 +43,7 @@ public abstract class ExpandableListActivity extends Activity implements
 
     @Override
     public boolean onChildClick(ExpandableListView parent, View v,
-            int groupPosition, int childPosition, long id) {
+                                int groupPosition, int childPosition, long id) {
         return false;
     }
 
@@ -93,7 +93,7 @@ public abstract class ExpandableListActivity extends Activity implements
     }
 
     public boolean setSelectedChild(int groupPosition, int childPosition,
-            boolean shouldExpandGroup) {
+                                    boolean shouldExpandGroup) {
         return mList.setSelectedChild(groupPosition, childPosition,
                 shouldExpandGroup);
     }

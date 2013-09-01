@@ -56,7 +56,7 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
         }
         fontStyle |= a.getInt(R.styleable.TextAppearance_android_textStyle,
                 FontLoader.TEXT_STYLE_NORMAL);
-        return new Object[] {
+        return new Object[]{
                 force, fontStyle, fontFamily
         };
     }

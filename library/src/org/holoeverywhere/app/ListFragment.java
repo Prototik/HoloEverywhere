@@ -25,7 +25,7 @@ public class ListFragment extends Fragment {
     final private AdapterView.OnItemClickListener mOnClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View v, int position,
-                long id) {
+                                long id) {
             onListItemClick((ListView) parent, v, position, id);
         }
     };
@@ -116,7 +116,7 @@ public class ListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.list_content, container, false);
     }
 

@@ -1,15 +1,15 @@
 
 package org.holoeverywhere.demo.fragments.dialogs;
 
-import java.util.concurrent.TimeUnit;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
+import android.os.Bundle;
 
 import org.holoeverywhere.app.Dialog;
 import org.holoeverywhere.app.DialogFragment;
 import org.holoeverywhere.app.ProgressDialog;
 
-import android.content.DialogInterface;
-import android.os.AsyncTask;
-import android.os.Bundle;
+import java.util.concurrent.TimeUnit;
 
 public class DialogsProgressDialogFragment extends DialogFragment {
     private final class CustomTask extends AsyncTask<Void, Integer, Void> {

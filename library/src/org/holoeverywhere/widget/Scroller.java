@@ -22,6 +22,7 @@ public class Scroller {
     private static float START_TENSION = 0.4f;
     private static float sViscousFluidNormalize;
     private static float sViscousFluidScale;
+
     static {
         float x_min = 0.0f;
         for (int i = 0; i <= Scroller.NB_SAMPLES; i++) {
@@ -33,7 +34,7 @@ public class Scroller {
                 coef = 3.0f * x * (1.0f - x);
                 tx = coef
                         * ((1.0f - x) * Scroller.START_TENSION + x
-                                * Scroller.END_TENSION) + x * x * x;
+                        * Scroller.END_TENSION) + x * x * x;
                 if (Math.abs(tx - t) < 1E-5) {
                     break;
                 }
@@ -176,7 +177,7 @@ public class Scroller {
     }
 
     public void fling(int startX, int startY, int velocityX, int velocityY,
-            int minX, int maxX, int minY, int maxY) {
+                      int minX, int maxX, int minY, int maxY) {
         if (mFlywheel && !mFinished) {
             float oldVel = getCurrVelocity();
             float dx = mFinalX - mStartX;

@@ -1,9 +1,10 @@
 
 package org.holoeverywhere.demo.test;
 
-import junit.framework.TestSuite;
 import android.test.InstrumentationTestRunner;
 import android.test.InstrumentationTestSuite;
+
+import junit.framework.TestSuite;
 
 public class TestRunner extends InstrumentationTestRunner {
     @Override

@@ -88,7 +88,7 @@ public class StateListDrawable extends DrawableContainer {
 
     /**
      * Gets the number of states contained in this drawable.
-     * 
+     *
      * @return The number of states contained in this drawable.
      * @hide pending API council
      * @see #getStateSet(int)
@@ -100,7 +100,7 @@ public class StateListDrawable extends DrawableContainer {
 
     /**
      * Gets the drawable at an index.
-     * 
+     *
      * @param index The index of the drawable.
      * @return The drawable at the index.
      * @hide pending API council
@@ -113,7 +113,7 @@ public class StateListDrawable extends DrawableContainer {
 
     /**
      * Gets the index of the drawable with the provided state set.
-     * 
+     *
      * @param stateSet the state set to look up
      * @return the index of the provided state set, or -1 if not found
      * @hide pending API council
@@ -130,7 +130,7 @@ public class StateListDrawable extends DrawableContainer {
 
     /**
      * Gets the state set at an index.
-     * 
+     *
      * @param index The index of the state set.
      * @return The state set at the index.
      * @hide pending API council
@@ -143,7 +143,7 @@ public class StateListDrawable extends DrawableContainer {
 
     @Override
     public void inflate(Resources r, XmlPullParser parser,
-            AttributeSet attrs)
+                        AttributeSet attrs)
             throws XmlPullParserException, IOException {
         TypedArray a = r.obtainAttributes(attrs,
                 R.styleable.StateListDrawable);

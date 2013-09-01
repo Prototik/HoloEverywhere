@@ -23,25 +23,25 @@ public class ProgressDialog extends AlertDialog {
     public static final int STYLE_SPINNER = 0;
 
     public static ProgressDialog show(Context context, CharSequence title,
-            CharSequence message) {
+                                      CharSequence message) {
         return ProgressDialog.show(context, title, message, false);
     }
 
     public static ProgressDialog show(Context context, CharSequence title,
-            CharSequence message, boolean indeterminate) {
+                                      CharSequence message, boolean indeterminate) {
         return ProgressDialog.show(context, title, message, indeterminate,
                 false, null);
     }
 
     public static ProgressDialog show(Context context, CharSequence title,
-            CharSequence message, boolean indeterminate, boolean cancelable) {
+                                      CharSequence message, boolean indeterminate, boolean cancelable) {
         return ProgressDialog.show(context, title, message, indeterminate,
                 cancelable, null);
     }
 
     public static ProgressDialog show(Context context, CharSequence title,
-            CharSequence message, boolean indeterminate, boolean cancelable,
-            OnCancelListener cancelListener) {
+                                      CharSequence message, boolean indeterminate, boolean cancelable,
+                                      OnCancelListener cancelListener) {
         ProgressDialog dialog = new ProgressDialog(context);
         dialog.setTitle(title);
         dialog.setMessage(message);

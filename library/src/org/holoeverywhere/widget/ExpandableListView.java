@@ -40,12 +40,12 @@ public class ExpandableListView extends ListView {
 
     public interface OnChildClickListener {
         boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
-                int childPosition, long id);
+                             int childPosition, long id);
     }
 
     public interface OnGroupClickListener {
         boolean onGroupClick(ExpandableListView parent, View v, int groupPosition,
-                long id);
+                             long id);
     }
 
     public interface OnGroupCollapseListener {
@@ -92,23 +92,23 @@ public class ExpandableListView extends ListView {
 
     public static final int CHILD_INDICATOR_INHERIT = -1;
     private static final int[] CHILD_LAST_STATE_SET =
-    {
-            android.R.attr.state_last
-    };
+            {
+                    android.R.attr.state_last
+            };
 
     private static final int[] EMPTY_STATE_SET = {};
     private static final int[] GROUP_EMPTY_STATE_SET =
-    {
-            android.R.attr.state_empty
-    };
+            {
+                    android.R.attr.state_empty
+            };
     private static final int[] GROUP_EXPANDED_EMPTY_STATE_SET =
-    {
-            android.R.attr.state_expanded, android.R.attr.state_empty
-    };
+            {
+                    android.R.attr.state_expanded, android.R.attr.state_empty
+            };
     private static final int[] GROUP_EXPANDED_STATE_SET =
-    {
-            android.R.attr.state_expanded
-    };
+            {
+                    android.R.attr.state_expanded
+            };
     private static final int[][] GROUP_STATE_SETS = {
             EMPTY_STATE_SET,
             GROUP_EXPANDED_STATE_SET,
@@ -147,7 +147,7 @@ public class ExpandableListView extends ListView {
 
     public static long getPackedPositionForGroup(int groupPosition) {
         return (groupPosition & PACKED_POSITION_INT_MASK_GROUP)
-        << PACKED_POSITION_SHIFT_GROUP;
+                << PACKED_POSITION_SHIFT_GROUP;
     }
 
     public static int getPackedPositionGroup(long packedPosition) {

@@ -13,7 +13,7 @@ import org.holoeverywhere.LayoutInflater;
 
 public class _HoloFragmentInflater {
     private static View inflate(AttributeSet attrs, View parent, FragmentActivity activity,
-            Fragment parentFragment) {
+                                Fragment parentFragment) {
         String fname = attrs.getAttributeValue(null, "class");
         TypedArray a = activity.obtainStyledAttributes(attrs, FragmentTag.Fragment);
         if (fname == null) {
@@ -79,7 +79,7 @@ public class _HoloFragmentInflater {
     }
 
     public static View inflate(LayoutInflater layoutInflater, AttributeSet attrs, View parent,
-            Fragment fragment) {
+                               Fragment fragment) {
         FragmentActivity activity = layoutInflater.getFragmentActivity();
         if (activity != null) {
             return inflate(attrs, parent, activity, fragment);
@@ -99,7 +99,7 @@ public class _HoloFragmentInflater {
     }
 
     private static FragmentManagerImpl obtainFragmentManager(FragmentActivity activity,
-            Fragment fragment) {
+                                                             Fragment fragment) {
         FragmentManagerImpl fm = null;
         if (fragment != null) {
             fm = fragment.mChildFragmentManager;

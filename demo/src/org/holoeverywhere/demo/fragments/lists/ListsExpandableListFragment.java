@@ -1,16 +1,16 @@
 
 package org.holoeverywhere.demo.fragments.lists;
 
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.widget.BaseExpandableListAdapter;
 import org.holoeverywhere.widget.ExpandableListView;
 import org.holoeverywhere.widget.TextView;
-
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
 
 public class ListsExpandableListFragment extends Fragment {
     public class Adapter extends BaseExpandableListAdapter {
@@ -31,7 +31,7 @@ public class ListsExpandableListFragment extends Fragment {
 
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
-                View convertView, ViewGroup parent) {
+                                 View convertView, ViewGroup parent) {
             View view = LayoutInflater.inflate(getSupportActivity(),
                     R.layout.expandable_list_row_child);
             TextView textView = (TextView) view.findViewById(android.R.id.text1);
@@ -56,7 +56,7 @@ public class ListsExpandableListFragment extends Fragment {
 
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
-                ViewGroup parent) {
+                                 ViewGroup parent) {
             View view = LayoutInflater.inflate(getSupportActivity(),
                     R.layout.expandable_list_row_group);
             TextView textView = (TextView) view.findViewById(android.R.id.text1);

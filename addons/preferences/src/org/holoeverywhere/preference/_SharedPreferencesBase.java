@@ -1,12 +1,12 @@
 
 package org.holoeverywhere.preference;
 
-import java.util.Set;
+import android.os.Bundle;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.os.Bundle;
+import java.util.Set;
 
 public abstract class _SharedPreferencesBase implements SharedPreferences {
     public abstract class _BaseEditor implements Editor {

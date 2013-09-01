@@ -18,7 +18,7 @@ import java.nio.charset.UnsupportedCharsetException;
 public class FastXmlSerializer implements XmlSerializer {
     private static final int BUFFER_LEN = 8192;
 
-    private static final String ESCAPE_TABLE[] = new String[] {
+    private static final String ESCAPE_TABLE[] = new String[]{
             null, null,
             null, null, null, null, null, null, // 0-7
             null, null, null, null, null, null, null, null, // 8-15

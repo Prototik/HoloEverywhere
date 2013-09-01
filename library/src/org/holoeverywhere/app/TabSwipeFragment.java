@@ -35,7 +35,7 @@ public abstract class TabSwipeFragment extends Fragment
 
     @Override
     public TabInfo addTab(CharSequence title, Class<? extends Fragment> fragmentClass,
-            Bundle fragmentArguments) {
+                          Bundle fragmentArguments) {
         return addonTabber().addTab(title, fragmentClass, fragmentArguments);
     }
 
@@ -46,7 +46,7 @@ public abstract class TabSwipeFragment extends Fragment
 
     @Override
     public TabInfo addTab(int title, Class<? extends Fragment> fragmentClass,
-            Bundle fragmentArguments) {
+                          Bundle fragmentArguments) {
         return addonTabber().addTab(title, fragmentClass, fragmentArguments);
     }
 

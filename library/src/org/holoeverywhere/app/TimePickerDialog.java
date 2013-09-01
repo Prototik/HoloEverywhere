@@ -28,8 +28,8 @@ public class TimePickerDialog extends AlertDialog implements OnClickListener,
     private final TimePicker mTimePicker;
 
     public TimePickerDialog(Context context, int theme,
-            OnTimeSetListener callBack, int hourOfDay, int minute,
-            boolean is24HourView) {
+                            OnTimeSetListener callBack, int hourOfDay, int minute,
+                            boolean is24HourView) {
         super(context, theme);
         mCallback = callBack;
         mInitialHourOfDay = hourOfDay;
@@ -54,7 +54,7 @@ public class TimePickerDialog extends AlertDialog implements OnClickListener,
     }
 
     public TimePickerDialog(Context context, OnTimeSetListener callBack,
-            int hourOfDay, int minute, boolean is24HourView) {
+                            int hourOfDay, int minute, boolean is24HourView) {
         this(context, 0, callBack, hourOfDay, minute, is24HourView);
     }
 

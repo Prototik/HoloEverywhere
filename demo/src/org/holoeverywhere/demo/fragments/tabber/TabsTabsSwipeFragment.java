@@ -1,22 +1,22 @@
 
 package org.holoeverywhere.demo.fragments.tabber;
 
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.app.TabSwipeFragment;
 import org.holoeverywhere.demo.R;
 import org.holoeverywhere.widget.TextView;
 
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-
 public class TabsTabsSwipeFragment extends TabSwipeFragment {
     public static class TabFragment extends Fragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             TextView textView = new TextView(getSupportActivity());
             textView.setTextAppearance(getSupportActivity(), R.style.Holo_TextAppearance_Medium);
             textView.setGravity(Gravity.CENTER);

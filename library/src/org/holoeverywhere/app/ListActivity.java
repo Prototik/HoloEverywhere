@@ -20,7 +20,7 @@ public abstract class ListActivity extends Activity {
     private AdapterView.OnItemClickListener mOnClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View v, int position,
-                long id) {
+                                long id) {
             onListItemClick((ListView) parent, v, position, id);
         }
     };

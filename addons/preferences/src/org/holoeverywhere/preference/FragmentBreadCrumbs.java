@@ -1,9 +1,6 @@
 
 package org.holoeverywhere.preference;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.widget.LinearLayout;
-
 import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,6 +12,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.widget.LinearLayout;
 
 public class FragmentBreadCrumbs extends ViewGroup implements
         FragmentManager.OnBackStackChangedListener {
@@ -72,7 +72,7 @@ public class FragmentBreadCrumbs extends ViewGroup implements
     }
 
     private BackStackEntry createBackStackEntry(final CharSequence title,
-            final CharSequence shortTitle) {
+                                                final CharSequence shortTitle) {
         if (title == null) {
             return null;
         }
@@ -199,7 +199,7 @@ public class FragmentBreadCrumbs extends ViewGroup implements
     }
 
     public void setParentTitle(CharSequence title, CharSequence shortTitle,
-            OnClickListener listener) {
+                               OnClickListener listener) {
         mParentEntry = createBackStackEntry(title, shortTitle);
         mParentClickListener = listener;
         updateCrumbs();

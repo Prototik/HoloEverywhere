@@ -81,7 +81,7 @@ public class MultiAutoCompleteTextView extends AutoCompleteTextView {
     }
 
     public MultiAutoCompleteTextView(Context context, AttributeSet attrs,
-            int defStyle) {
+                                     int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -137,7 +137,7 @@ public class MultiAutoCompleteTextView extends AutoCompleteTextView {
     }
 
     protected void performFiltering(CharSequence text, int start, int end,
-            int keyCode) {
+                                    int keyCode) {
         getFilter().filter(text.subSequence(start, end), this);
     }
 

@@ -1,17 +1,17 @@
 
 package org.holoeverywhere.preference;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import org.holoeverywhere.internal.GenericInflater;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+
+import org.holoeverywhere.internal.GenericInflater;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class PreferenceGroup extends Preference implements
         GenericInflater.Parent<Preference> {

@@ -1,7 +1,10 @@
 
 package org.holoeverywhere.demo.widget;
 
-import java.util.Hashtable;
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.util.AttributeSet;
+import android.view.View;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
@@ -10,10 +13,7 @@ import org.holoeverywhere.demo.R;
 import org.holoeverywhere.widget.FrameLayout;
 import org.holoeverywhere.widget.LinearLayout;
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.util.AttributeSet;
-import android.view.View;
+import java.util.Hashtable;
 
 public class DemoThemePicker extends FrameLayout {
     private final class ThemeChangeListener implements OnClickListener {
@@ -57,9 +57,9 @@ public class DemoThemePicker extends FrameLayout {
         super(context, attrs, defStyleAttr);
         int layout;
         TypedArray a = context.obtainStyledAttributes(attrs, new
-                int[] {
-                    android.R.attr.orientation
-                }, defStyleAttr, 0);
+                int[]{
+                android.R.attr.orientation
+        }, defStyleAttr, 0);
         boolean horizontal = a.getInt(0, 0) == LinearLayout.HORIZONTAL;
         a.recycle();
         if (horizontal) {

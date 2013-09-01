@@ -1,10 +1,6 @@
 
 package org.holoeverywhere.preference;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.app.Fragment;
-import org.holoeverywhere.widget.ListView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,20 +10,26 @@ import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.app.Fragment;
+import org.holoeverywhere.widget.ListView;
+
 public abstract class PreferenceFragment extends Fragment implements
         PreferenceManager.OnPreferenceTreeClickListener {
     public interface OnPreferenceStartFragmentCallback {
         boolean onPreferenceStartFragment(PreferenceFragment caller,
-                Preference pref);
+                                          Preference pref);
     }
 
     private static final int FIRST_REQUEST_CODE = 100;
 
     private static final int MSG_BIND_PREFERENCES = 1;
     private static final String PREFERENCES_TAG = "android:preferences";
+
     static {
         PreferenceInit.init();
     }
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -174,7 +176,7 @@ public abstract class PreferenceFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.preference_list_fragment, container,
                 false);
     }
@@ -195,7 +197,7 @@ public abstract class PreferenceFragment extends Fragment implements
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
-            Preference preference) {
+                                         Preference preference) {
         if (preference.getFragment() != null
                 && getActivity() instanceof OnPreferenceStartFragmentCallback) {
             return ((OnPreferenceStartFragmentCallback) getActivity())

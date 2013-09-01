@@ -1,22 +1,21 @@
 
 package org.holoeverywhere.demo.fragments.menus;
 
-import org.holoeverywhere.demo.R;
-import org.holoeverywhere.demo.fragments.OtherFragment;
-import org.holoeverywhere.widget.PopupMenu;
-
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.SparseBooleanArray;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View;
-
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.View;
+
+import org.holoeverywhere.demo.R;
+import org.holoeverywhere.demo.fragments.OtherFragment;
+import org.holoeverywhere.widget.PopupMenu;
 
 public class MenusFragments extends OtherFragment {
     public static class MenuHelper implements Parcelable {

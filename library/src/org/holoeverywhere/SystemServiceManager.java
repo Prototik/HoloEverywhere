@@ -15,7 +15,7 @@ import java.util.Map.Entry;
 
 /**
  * Manager of system services
- * 
+ *
  * @author prok (prototypegamez@gmail.com)
  */
 public final class SystemServiceManager {

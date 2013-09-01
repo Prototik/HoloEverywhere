@@ -1,13 +1,13 @@
 
 package org.holoeverywhere.demo.fragments.lists;
 
-import org.holoeverywhere.demo.R;
-import org.holoeverywhere.widget.ArrayAdapter;
-import org.holoeverywhere.widget.ListView;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
+
+import org.holoeverywhere.demo.R;
+import org.holoeverywhere.widget.ArrayAdapter;
+import org.holoeverywhere.widget.ListView;
 
 public class ListsChoiceModeSingleFragment extends ListsBaseFragment {
     private ListView mList;

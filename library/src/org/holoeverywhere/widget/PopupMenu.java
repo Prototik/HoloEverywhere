@@ -2,12 +2,11 @@
 package org.holoeverywhere.widget;
 
 import android.content.Context;
+import android.support.v7.internal.view.SupportMenuInflater;
 import android.support.v7.internal.view.menu.MenuBuilder;
 import android.support.v7.internal.view.menu.MenuPopupHelper;
 import android.support.v7.internal.view.menu.MenuPresenter;
-import android.support.v7.internal.view.menu.MenuPopupHelper;
 import android.support.v7.internal.view.menu.SubMenuBuilder;
-import android.support.v7.internal.view.SupportMenuInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;

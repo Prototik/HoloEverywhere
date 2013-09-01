@@ -68,7 +68,7 @@ public class NumberPicker extends LinearLayout {
     class InputTextFilter extends NumberKeyListener {
         @Override
         public CharSequence filter(CharSequence source, int start, int end,
-                Spanned dest, int dstart, int dend) {
+                                   Spanned dest, int dstart, int dend) {
             if (mDisplayedValues == null) {
                 CharSequence filtered = super.filter(source, start, end, dest,
                         dstart, dend);
@@ -177,14 +177,14 @@ public class NumberPicker extends LinearLayout {
                             invalidate(0, mBottomSelectionDividerBottom, getRight(),
                                     getBottom());
                         }
-                            break;
+                        break;
                         case BUTTON_DECREMENT: {
                             mDecrementVirtualButtonPressed = true;
                             invalidate(0, 0, getRight(), mTopSelectionDividerTop);
                         }
                     }
                 }
-                    break;
+                break;
                 case MODE_TAPPED: {
                     switch (mManagedButton) {
                         case BUTTON_INCREMENT: {
@@ -196,7 +196,7 @@ public class NumberPicker extends LinearLayout {
                             invalidate(0, mBottomSelectionDividerBottom, getRight(),
                                     getBottom());
                         }
-                            break;
+                        break;
                         case BUTTON_DECREMENT: {
                             if (!mDecrementVirtualButtonPressed) {
                                 postDelayed(this,
@@ -207,7 +207,7 @@ public class NumberPicker extends LinearLayout {
                         }
                     }
                 }
-                    break;
+                break;
             }
         }
     }
@@ -225,7 +225,7 @@ public class NumberPicker extends LinearLayout {
 
     private static final int DEFAULT_LAYOUT_RESOURCE_ID = R.layout.number_picker_with_selector_wheel;
     private static final long DEFAULT_LONG_PRESS_UPDATE_INTERVAL = 300;
-    private static final char[] DIGIT_CHARACTERS = new char[] {
+    private static final char[] DIGIT_CHARACTERS = new char[]{
             '0', '1', '2',
             '3', '4', '5', '6', '7', '8', '9'
     };
@@ -428,7 +428,7 @@ public class NumberPicker extends LinearLayout {
                 }
             }
         });
-        mInputText.setFilters(new InputFilter[] {
+        mInputText.setFilters(new InputFilter[]{
                 new InputTextFilter()
         });
         mInputText.setRawInputType(InputType.TYPE_CLASS_NUMBER);
@@ -461,7 +461,7 @@ public class NumberPicker extends LinearLayout {
 
     @Override
     public void addFocusables(ArrayList<View> views, int direction,
-            int focusableMode) {
+                              int focusableMode) {
         if ((focusableMode & NumberPicker.FOCUSABLES_ACCESSIBILITY) == NumberPicker.FOCUSABLES_ACCESSIBILITY) {
             views.add(this);
             return;
@@ -545,7 +545,7 @@ public class NumberPicker extends LinearLayout {
                                 null);
                     }
                 }
-                    break;
+                break;
                 case MotionEvent.ACTION_HOVER_MOVE: {
                     sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT);
                     sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER);
@@ -555,11 +555,11 @@ public class NumberPicker extends LinearLayout {
                                 null);
                     }
                 }
-                    break;
+                break;
                 case MotionEvent.ACTION_HOVER_EXIT: {
                     sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT);
                 }
-                    break;
+                break;
             }
         }
         return false;
@@ -942,7 +942,7 @@ public class NumberPicker extends LinearLayout {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right,
-            int bottom) {
+                            int bottom) {
         if (!mHasSelectorWheel) {
             super.onLayout(changed, left, top, right, bottom);
             return;
@@ -1035,7 +1035,7 @@ public class NumberPicker extends LinearLayout {
                 }
                 mLastDownOrMoveEventY = currentMoveY;
             }
-                break;
+            break;
             case MotionEvent.ACTION_UP: {
                 removeBeginSoftInputCommand();
                 removeChangeCurrentByOneFromLongPress();
@@ -1077,7 +1077,7 @@ public class NumberPicker extends LinearLayout {
                 mVelocityTracker.recycle();
                 mVelocityTracker = null;
             }
-                break;
+            break;
         }
         return true;
     }
@@ -1093,7 +1093,7 @@ public class NumberPicker extends LinearLayout {
     }
 
     private void postChangeCurrentByOneFromLongPress(boolean increment,
-            long delayMillis) {
+                                                     long delayMillis) {
         if (mChangeCurrentByOneFromLongPressCommand == null) {
             mChangeCurrentByOneFromLongPressCommand = new ChangeCurrentByOneFromLongPressCommand();
         } else {
@@ -1140,7 +1140,7 @@ public class NumberPicker extends LinearLayout {
     }
 
     private int resolveSizeAndStateRespectingMinSize(int minSize,
-            int measuredSize, int measureSpec) {
+                                                     int measuredSize, int measureSpec) {
         if (minSize != NumberPicker.SIZE_UNSPECIFIED) {
             final int desiredWidth = Math.max(minSize, measuredSize);
             return org.holoeverywhere.internal._View

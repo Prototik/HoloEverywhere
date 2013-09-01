@@ -1,6 +1,16 @@
 
 package org.holoeverywhere.preference;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Build.VERSION;
+import android.util.Log;
+
+import org.holoeverywhere.HoloEverywhere;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,16 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.holoeverywhere.HoloEverywhere;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.Build.VERSION;
-import android.util.Log;
 
 public class _SharedPreferencesImpl_JSON extends _SharedPreferencesBase {
     private class ClearJSONManipulate implements FutureJSONManipulate {

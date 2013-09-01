@@ -38,7 +38,7 @@ import java.util.Locale;
 public class CalendarView extends FrameLayout {
     public interface OnDateChangeListener {
         public void onSelectedDayChange(CalendarView view, int year, int month,
-                int dayOfMonth);
+                                        int dayOfMonth);
     }
 
     private class ScrollStateRunnable implements Runnable {
@@ -183,7 +183,7 @@ public class CalendarView extends FrameLayout {
             if (selectedDay.get(Calendar.DAY_OF_YEAR) == mSelectedDate
                     .get(Calendar.DAY_OF_YEAR)
                     && selectedDay.get(Calendar.YEAR) == mSelectedDate
-                            .get(Calendar.YEAR)) {
+                    .get(Calendar.YEAR)) {
                 return;
             }
             mSelectedDate.setTimeInMillis(selectedDay.getTimeInMillis());
@@ -241,12 +241,12 @@ public class CalendarView extends FrameLayout {
             mSelectedDateVerticalBar.setBounds(mSelectedLeft
                     - mSelectedDateVerticalBarWidth / 2,
                     mWeekSeperatorLineWidth, mSelectedLeft
-                            + mSelectedDateVerticalBarWidth / 2, mHeight);
+                    + mSelectedDateVerticalBarWidth / 2, mHeight);
             mSelectedDateVerticalBar.draw(canvas);
             mSelectedDateVerticalBar.setBounds(mSelectedRight
                     - mSelectedDateVerticalBarWidth / 2,
                     mWeekSeperatorLineWidth, mSelectedRight
-                            + mSelectedDateVerticalBarWidth / 2, mHeight);
+                    + mSelectedDateVerticalBarWidth / 2, mHeight);
             mSelectedDateVerticalBar.draw(canvas);
         }
 
@@ -596,7 +596,7 @@ public class CalendarView extends FrameLayout {
 
     @SuppressLint("NewApi")
     private void goTo(Calendar date, boolean animate, boolean setSelected,
-            boolean forceScroll) {
+                      boolean forceScroll) {
         if (date.before(mMinDate) || date.after(mMaxDate)) {
             throw new IllegalArgumentException("Time not between "
                     + mMinDate.getTime() + " and " + mMaxDate.getTime());
@@ -650,7 +650,7 @@ public class CalendarView extends FrameLayout {
         return firstDate.get(Calendar.DAY_OF_YEAR) == secondDate
                 .get(Calendar.DAY_OF_YEAR)
                 && firstDate.get(Calendar.YEAR) == secondDate
-                        .get(Calendar.YEAR);
+                .get(Calendar.YEAR);
     }
 
     @SuppressLint("NewApi")
@@ -661,7 +661,7 @@ public class CalendarView extends FrameLayout {
     }
 
     private void onScroll(AbsListView view, int firstVisibleItem,
-            int visibleItemCount, int totalItemCount) {
+                          int visibleItemCount, int totalItemCount) {
         WeekView child = (WeekView) view.getChildAt(0);
         if (child == null) {
             return;
@@ -886,7 +886,7 @@ public class CalendarView extends FrameLayout {
         mListView.setOnScrollListener(new OnScrollListener() {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem,
-                    int visibleItemCount, int totalItemCount) {
+                                 int visibleItemCount, int totalItemCount) {
                 CalendarView.this.onScroll(view, firstVisibleItem,
                         visibleItemCount, totalItemCount);
             }

@@ -589,8 +589,8 @@ public class LinearLayout extends android.widget.LinearLayout {
     }
 
     void measureChildBeforeLayout(View child, int childIndex,
-            int widthMeasureSpec, int totalWidth, int heightMeasureSpec,
-            int totalHeight) {
+                                  int widthMeasureSpec, int totalWidth, int heightMeasureSpec,
+                                  int totalHeight) {
         measureChildWithMargins(child, widthMeasureSpec, totalWidth,
                 heightMeasureSpec, totalHeight);
     }
@@ -772,7 +772,7 @@ public class LinearLayout extends android.widget.LinearLayout {
                     delta -= share;
                     final int childHeightMeasureSpec = getChildMeasureSpec(
                             heightMeasureSpec, getPaddingTop() + getPaddingBottom() + lp.topMargin
-                                    + lp.bottomMargin,
+                            + lp.bottomMargin,
                             lp.height);
                     if (lp.width != 0 || widthMode != MeasureSpec.EXACTLY) {
                         int childWidth = child.getMeasuredWidth() + share;

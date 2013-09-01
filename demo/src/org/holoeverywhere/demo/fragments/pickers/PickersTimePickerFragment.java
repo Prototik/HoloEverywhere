@@ -1,14 +1,14 @@
 
 package org.holoeverywhere.demo.fragments.pickers;
 
+import android.os.Bundle;
+
 import org.holoeverywhere.app.Dialog;
 import org.holoeverywhere.app.DialogFragment;
 import org.holoeverywhere.app.TimePickerDialog;
 import org.holoeverywhere.app.TimePickerDialog.OnTimeSetListener;
 import org.holoeverywhere.widget.TimePicker;
 import org.holoeverywhere.widget.Toast;
-
-import android.os.Bundle;
 
 public class PickersTimePickerFragment extends DialogFragment implements OnTimeSetListener {
     @Override

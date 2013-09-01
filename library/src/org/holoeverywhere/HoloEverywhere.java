@@ -27,13 +27,13 @@ public class HoloEverywhere {
     /**
      * Since 1.5 to preferences can be assigned id instead of key. But for
      * saving values in SharedPreferences using key, and it has next format:
-     * 
+     * <p/>
      * <pre>
      * preference_0x7fABCDEF
      * </pre>
-     * 
+     * <p/>
      * If it options true - key for the preference will be name of id row:
-     * 
+     * <p/>
      * <pre>
      *  &lt;Preference holo:id="@+id/myCoolPreference" /&gt;
      *  Key for SharedPreferences: myCoolPreference

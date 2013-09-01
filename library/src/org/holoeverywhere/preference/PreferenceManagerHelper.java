@@ -17,6 +17,7 @@ public class PreferenceManagerHelper {
     }
 
     private static PreferenceManagerImpl IMPL;
+
     static {
         try {
             Class<?> clazz = Class
@@ -43,7 +44,7 @@ public class PreferenceManagerHelper {
     }
 
     public static SharedPreferences getDefaultSharedPreferences(Context context,
-            PreferenceImpl impl) {
+                                                                PreferenceImpl impl) {
         checkImpl();
         return IMPL.getDefaultSharedPreferences(context, impl);
     }
@@ -54,13 +55,13 @@ public class PreferenceManagerHelper {
     }
 
     public static SharedPreferences wrap(Context context, PreferenceImpl impl, String name,
-            int mode) {
+                                         int mode) {
         checkImpl();
         return IMPL.wrap(context, impl, name, mode);
     }
 
     public static SharedPreferences wrap(Context context, String name,
-            int mode) {
+                                         int mode) {
         return wrap(context, HoloEverywhere.PREFERENCE_IMPL, name, mode);
     }
 
