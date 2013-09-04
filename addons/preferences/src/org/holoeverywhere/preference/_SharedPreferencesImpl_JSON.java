@@ -39,7 +39,7 @@ public class _SharedPreferencesImpl_JSON extends _SharedPreferencesBase {
             Iterator<String> iterator = object.keys();
             while (iterator.hasNext()) {
                 final String key = iterator.next();
-                object.remove(key);
+                iterator.remove();
                 notifyOnChange(key);
             }
             return true;
