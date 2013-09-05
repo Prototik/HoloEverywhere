@@ -28,7 +28,7 @@ import com.actionbarsherlock.internal.widget.ActionBarView;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window.Callback;
 
-public final class PreferenceScreen extends PreferenceGroup implements
+public class PreferenceScreen extends PreferenceGroup implements
         AdapterView.OnItemClickListener, DialogInterface.OnDismissListener {
     private final class PreferenceDialog extends Dialog implements Callback {
         public PreferenceDialog(Context context, int theme) {
