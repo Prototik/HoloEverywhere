@@ -14,6 +14,22 @@ import org.holoeverywhere.R;
 import org.holoeverywhere.text.AllCapsTransformationMethod;
 
 public class TextView extends android.widget.TextView implements FontStyleProvider {
+    private String mFontFamily;
+    private int mFontStyle;
+
+    public TextView(Context context) {
+        this(context, null);
+    }
+
+    public TextView(Context context, AttributeSet attrs) {
+        this(context, attrs, android.R.attr.textViewStyle);
+    }
+
+    public TextView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        TextView.construct(this, context, attrs, defStyle);
+    }
+
     public static <T extends android.widget.TextView & FontStyleProvider> void construct(
             T textView, Context context, AttributeSet attrs, int defStyle) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TextView, defStyle, 0);
@@ -54,8 +70,9 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
             fontStyle = (Integer) z[0];
             fontFamily = (String) z[1];
         }
-        fontStyle |= a.getInt(R.styleable.TextAppearance_android_textStyle,
-                FontLoader.TEXT_STYLE_NORMAL);
+        final int defaultStyle = fontStyle & (FontLoader.TEXT_STYLE_BOLD | FontLoader.TEXT_STYLE_ITALIC);
+        fontStyle &= ~defaultStyle;
+        fontStyle |= a.getInt(R.styleable.TextAppearance_android_textStyle, defaultStyle);
         return new Object[]{
                 force, fontStyle, fontFamily
         };
@@ -115,23 +132,6 @@ public class TextView extends android.widget.TextView implements FontStyleProvid
         Object[] font = parseFontStyle(appearance);
         textView.setFontStyle((String) font[2], (Integer) font[1]
                 | ((Boolean) font[0] ? 0 : textView.getFontStyle()));
-    }
-
-    private String mFontFamily;
-
-    private int mFontStyle;
-
-    public TextView(Context context) {
-        this(context, null);
-    }
-
-    public TextView(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.textViewStyle);
-    }
-
-    public TextView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        TextView.construct(this, context, attrs, defStyle);
     }
 
     @Override
