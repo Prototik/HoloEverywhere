@@ -83,7 +83,6 @@
         },
         "Holo.Theme.Light.DarkActionBar | BackportLight BackportBarDark < Holo.Base.Theme.Light.DarkActionBar": {
             "holoTheme": "mixed",
-            "android:panelBackground": "@drawable/abc_menu_hardkey_panel_holo_light"
         },
         "Holo.Theme.Light.DarkActionBar.Fullscreen | Fullscreen": {},
         "Holo.Theme.Light.DarkActionBar.Fullscreen.Wallpaper | Wallpaper": {},

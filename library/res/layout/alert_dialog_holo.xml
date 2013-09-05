@@ -10,7 +10,7 @@
 		<View android:layout_width="match_parent" android:layout_height="2dip" android:id="@+id/titleDividerTop" android:background="@color/holo_blue_light" android:visibility="gone"></View>
 		<LinearLayout android:layout_width="match_parent" android:layout_marginRight="16dip" android:layout_marginLeft="16dip" android:gravity="center_vertical|left" android:minHeight="@dimen/alert_dialog_title_height" android:layout_height="wrap_content" android:id="@+id/title_template" android:orientation="horizontal">
 			<ImageView android:layout_width="wrap_content" android:paddingRight="8dip" android:layout_height="wrap_content" android:id="@+id/icon" android:contentDescription="@string/loading"></ImageView>
-			<Internal.DialogTitle android:layout_width="match_parent" style="?android:attr/windowTitleStyle" android:ellipsize="end" android:singleLine="true" android:layout_height="wrap_content" android:id="@+id/alertTitle"></Internal.DialogTitle>
+			<Internal.DialogTitle android:layout_width="match_parent" style="?android:windowTitleStyle" android:ellipsize="end" android:singleLine="true" android:layout_height="wrap_content" android:id="@+id/alertTitle"></Internal.DialogTitle>
 		</LinearLayout>
 		<View android:layout_width="match_parent" android:layout_height="2dip" android:id="@+id/titleDivider" android:background="?alertDialogTitleDividerColor" android:visibility="gone"></View>
 	</LinearLayout>

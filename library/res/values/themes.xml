@@ -167,7 +167,6 @@
         <!--End of block BackportLight-->
         <!--Include block: BackportBarDark-->
         <!--End of block BackportBarDark-->
-        <item name="android:panelBackground">@drawable/abc_menu_hardkey_panel_holo_light</item>
         <item name="holoTheme">mixed</item>
     </style>
     <style name="Holo.Theme.Light.DarkActionBar.Fullscreen">
