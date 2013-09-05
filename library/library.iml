@@ -47,6 +47,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/res" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/res-abc" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/aidl" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/assets" isTestSource="true" />
@@ -71,7 +72,7 @@
     <orderEntry type="jdk" jdkName="Android 4.3 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="support-v4-18.0.1" level="project" />
-    <orderEntry type="library" exported="" name="ComAndroidSupportAppcompatV71800.aar" level="project" />
+    <orderEntry type="module" module-name="appcompat" exported="" />
   </component>
 </module>
 

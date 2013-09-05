@@ -7,7 +7,6 @@
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
-        <item name="dialogItemTextAppearance">?textAppearanceListItemSmall</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="dividerVertical">?android:listDivider</item>
         <item name="dropdownListPreferredItemHeight">?listPreferredItemHeightSmall</item>
@@ -92,7 +91,6 @@
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
-        <item name="dialogItemTextAppearance">?textAppearanceListItemSmall</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="dividerVertical">?android:listDivider</item>
         <item name="dropdownListPreferredItemHeight">?listPreferredItemHeightSmall</item>
@@ -177,7 +175,6 @@
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="datePickerStyle">@style/Holo.DatePicker</item>
-        <item name="dialogItemTextAppearance">?textAppearanceListItemSmall</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="dividerVertical">?android:listDivider</item>
         <item name="dropdownListPreferredItemHeight">?listPreferredItemHeightSmall</item>

@@ -1,6 +1,7 @@
 {
     "attrs": [
         "listPreferredItemHeight$dimension",
+        "listPreferredItemHeightSmall$dimension",
         "alertDialogCenterButtons$boolean",
         "alertDialogTitleDividerColor$reference|color",
         "buttonBarStyle$reference",
@@ -9,12 +10,15 @@
         "segmentedButtonStyle$reference",
         "listPreferredItemHeightLarge$dimension",
         "dividerHorizontal$reference",
+        "dividerVertical$reference",
         "listDividerAlertDialog$reference",
         "alertDialogStyle$reference",
         "alertDialogTheme$reference",
         "dialogTheme$reference",
         "textColorAlertDialogListItem$reference",
         "spinnerStyle$reference",
+        "spinnerItemStyle$reference",
+        "spinnerDropDownItemStyle$reference",
         "numberPickerStyle$reference",
         "numberPickerUpButtonStyle$reference",
         "numberPickerDownButtonStyle$reference",
@@ -23,6 +27,7 @@
         "timePickerStyle$reference",
         "autoCompleteTextViewStyle$reference",
         "textAppearanceListItem$reference",
+        "textAppearanceListItemSmall$reference",
         "detailsElementBackground$reference",
         "holoTheme/invalid 0/dark 1/light 2/mixed 3/preference 4",
         "preferenceTheme$reference/dark 1/light 2/mixed 3",
@@ -31,7 +36,6 @@
         "calendarViewStyle$reference",
         "popupWindowStyle$reference",
         "activatedBackgroundIndicator$reference",
-        "spinnerItemStyle$reference",
         "windowActionModeOverlay$boolean",
         "windowAnimationStyle$reference",
         "windowContentOverlay$boolean",
@@ -166,11 +170,11 @@
             "android:dividerPadding"
         ],
         "MenuView": [
-            "dialogItemTextAppearance$reference",
+            "android:itemTextAppearance",
             "android:horizontalDivider",
             "android:verticalDivider",
             "android:headerBackground",
-            "dialogItemBackground$reference|color",
+            "android:itemBackground",
             "android:windowAnimationStyle",
             "android:itemIconDisabledAlpha",
             "android:preserveIconSpacing"

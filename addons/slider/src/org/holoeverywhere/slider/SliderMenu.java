@@ -560,11 +560,11 @@ public class SliderMenu implements OnBackStackChangedListener {
         private String mTag;
         private int mTextAppereance = 0;
         private int mTextAppereanceInverse = 0;
+        private List<SliderSubItem> mSubItems;
 
         public SliderItem() {
         }
 
-        @SuppressWarnings("unchecked")
         protected SliderItem(Parcel source) throws Exception {
             String classname = source.readString();
             if (classname != null) {
@@ -578,6 +578,7 @@ public class SliderMenu implements OnBackStackChangedListener {
             mTextAppereance = source.readInt();
             mTextAppereanceInverse = source.readInt();
             mLabel = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
+            mSubItems = source.createTypedArrayList(SliderSubItem.CREATOR);
         }
 
         @Override
@@ -692,7 +693,40 @@ public class SliderMenu implements OnBackStackChangedListener {
             dest.writeInt(mSelectionHandlerColor);
             dest.writeInt(mTextAppereance);
             dest.writeInt(mTextAppereanceInverse);
+            dest.writeTypedList(mSubItems);
             TextUtils.writeToParcel(mLabel, dest, flags);
+        }
+
+    }
+
+    public static class SliderSubItem implements Parcelable {
+        public static final Parcelable.Creator<SliderSubItem> CREATOR = new Parcelable.Creator<SliderSubItem>() {
+            @Override
+            public SliderSubItem[] newArray(int size) {
+                return new SliderSubItem[size];
+            }
+
+            @Override
+            public SliderSubItem createFromParcel(Parcel source) {
+                return new SliderSubItem(source);
+            }
+        };
+
+        protected SliderSubItem(Parcel source) {
+
+        }
+
+        public SliderSubItem() {
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+
         }
     }
 

@@ -20,11 +20,10 @@
     <attr name="datePickerStyle" format="reference"/>
     <attr name="dateTextAppearance" format="reference"/>
     <attr name="detailsElementBackground" format="reference"/>
-    <attr name="dialogItemBackground" format="reference|color"/>
-    <attr name="dialogItemTextAppearance" format="reference"/>
     <attr name="dialogTheme" format="reference"/>
     <attr name="disableChildrenWhenDisabled" format="boolean"/>
     <attr name="dividerHorizontal" format="reference"/>
+    <attr name="dividerVertical" format="reference"/>
     <attr name="dropDownHorizontalOffset" format="dimension"/>
     <attr name="dropDownVerticalOffset" format="dimension"/>
     <attr name="endYear" format="integer"/>
@@ -74,6 +73,7 @@
     <attr name="listLayout" format="reference"/>
     <attr name="listPreferredItemHeight" format="dimension"/>
     <attr name="listPreferredItemHeightLarge" format="dimension"/>
+    <attr name="listPreferredItemHeightSmall" format="dimension"/>
     <attr name="maxDate" format="reference|string"/>
     <attr name="minDate" format="reference|string"/>
     <attr name="multiChoiceItemLayout" format="reference"/>
@@ -99,6 +99,7 @@
     <attr name="shownWeekCount" format="integer"/>
     <attr name="singleChoiceItemLayout" format="reference"/>
     <attr name="solidColor" format="color|reference"/>
+    <attr name="spinnerDropDownItemStyle" format="reference"/>
     <attr name="spinnerItemStyle" format="reference"/>
     <attr name="spinnerMode" format="enum">
         <enum name="dialog" value="0"/>
@@ -113,6 +114,7 @@
     <attr name="switchStyleOld" format="reference"/>
     <attr name="switchTextAppearance" format="reference"/>
     <attr name="textAppearanceListItem" format="reference"/>
+    <attr name="textAppearanceListItemSmall" format="reference"/>
     <attr name="textColorAlertDialogListItem" format="reference"/>
     <attr name="textOff" format="reference|string"/>
     <attr name="textOn" format="reference|string"/>
@@ -262,12 +264,12 @@
     <declare-styleable name="MenuView">
         <attr name="android:headerBackground"/>
         <attr name="android:horizontalDivider"/>
+        <attr name="android:itemBackground"/>
         <attr name="android:itemIconDisabledAlpha"/>
+        <attr name="android:itemTextAppearance"/>
         <attr name="android:preserveIconSpacing"/>
         <attr name="android:verticalDivider"/>
         <attr name="android:windowAnimationStyle"/>
-        <attr name="dialogItemBackground"/>
-        <attr name="dialogItemTextAppearance"/>
     </declare-styleable>
     <declare-styleable name="NumberPicker">
         <attr name="android:fadingEdgeLength"/>
