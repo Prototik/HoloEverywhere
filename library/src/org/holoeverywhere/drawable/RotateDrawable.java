@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -18,77 +19,8 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 
 public class RotateDrawable extends Drawable implements Drawable.Callback {
-    /**
-     * <p>
-     * Represents the state of a rotation for a given drawable. The same rotate
-     * drawable can be invoked with different states to drive several rotations
-     * at the same time.
-     * </p>
-     */
-    final static class RotateState extends Drawable.ConstantState {
-        private boolean mCanConstantState;
-
-        int mChangingConfigurations;
-
-        private boolean mCheckedConstantState;
-        float mCurrentDegrees;
-        Drawable mDrawable;
-        float mFromDegrees;
-
-        float mPivotX;
-        boolean mPivotXRel;
-
-        float mPivotY;
-
-        boolean mPivotYRel;
-        float mToDegrees;
-
-        public RotateState(RotateState source, RotateDrawable owner, Resources res) {
-            if (source != null) {
-                if (res != null) {
-                    mDrawable = source.mDrawable.getConstantState().newDrawable(res);
-                } else {
-                    mDrawable = source.mDrawable.getConstantState().newDrawable();
-                }
-                mDrawable.setCallback(owner);
-                mPivotXRel = source.mPivotXRel;
-                mPivotX = source.mPivotX;
-                mPivotYRel = source.mPivotYRel;
-                mPivotY = source.mPivotY;
-                mFromDegrees = mCurrentDegrees = source.mFromDegrees;
-                mToDegrees = source.mToDegrees;
-                mCanConstantState = mCheckedConstantState = true;
-            }
-        }
-
-        public boolean canConstantState() {
-            if (!mCheckedConstantState) {
-                mCanConstantState = mDrawable.getConstantState() != null;
-                mCheckedConstantState = true;
-            }
-
-            return mCanConstantState;
-        }
-
-        @Override
-        public int getChangingConfigurations() {
-            return mChangingConfigurations;
-        }
-
-        @Override
-        public Drawable newDrawable() {
-            return new RotateDrawable(this, null);
-        }
-
-        @Override
-        public Drawable newDrawable(Resources res) {
-            return new RotateDrawable(this, res);
-        }
-    }
-
     private static final float MAX_LEVEL = 10000.0f;
     private boolean mMutated;
-
     private RotateState mState;
 
     public RotateDrawable() {
@@ -222,9 +154,11 @@ public class RotateDrawable extends Drawable implements Drawable.Callback {
 
     @Override
     public void invalidateDrawable(Drawable who) {
-        final Callback callback = getCallback();
-        if (callback != null) {
-            callback.invalidateDrawable(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            final Callback callback = getCallback();
+            if (callback != null) {
+                callback.invalidateDrawable(this);
+            }
         }
     }
 
@@ -268,9 +202,11 @@ public class RotateDrawable extends Drawable implements Drawable.Callback {
 
     @Override
     public void scheduleDrawable(Drawable who, Runnable what, long when) {
-        final Callback callback = getCallback();
-        if (callback != null) {
-            callback.scheduleDrawable(this, what, when);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            final Callback callback = getCallback();
+            if (callback != null) {
+                callback.scheduleDrawable(this, what, when);
+            }
         }
     }
 
@@ -292,9 +228,74 @@ public class RotateDrawable extends Drawable implements Drawable.Callback {
 
     @Override
     public void unscheduleDrawable(Drawable who, Runnable what) {
-        final Callback callback = getCallback();
-        if (callback != null) {
-            callback.unscheduleDrawable(this, what);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            final Callback callback = getCallback();
+            if (callback != null) {
+                callback.unscheduleDrawable(this, what);
+            }
+        }
+    }
+
+    /**
+     * <p>
+     * Represents the state of a rotation for a given drawable. The same rotate
+     * drawable can be invoked with different states to drive several rotations
+     * at the same time.
+     * </p>
+     */
+    final static class RotateState extends Drawable.ConstantState {
+        int mChangingConfigurations;
+        float mCurrentDegrees;
+        Drawable mDrawable;
+        float mFromDegrees;
+        float mPivotX;
+        boolean mPivotXRel;
+        float mPivotY;
+        boolean mPivotYRel;
+        float mToDegrees;
+        private boolean mCanConstantState;
+        private boolean mCheckedConstantState;
+
+        public RotateState(RotateState source, RotateDrawable owner, Resources res) {
+            if (source != null) {
+                if (res != null) {
+                    mDrawable = source.mDrawable.getConstantState().newDrawable(res);
+                } else {
+                    mDrawable = source.mDrawable.getConstantState().newDrawable();
+                }
+                mDrawable.setCallback(owner);
+                mPivotXRel = source.mPivotXRel;
+                mPivotX = source.mPivotX;
+                mPivotYRel = source.mPivotYRel;
+                mPivotY = source.mPivotY;
+                mFromDegrees = mCurrentDegrees = source.mFromDegrees;
+                mToDegrees = source.mToDegrees;
+                mCanConstantState = mCheckedConstantState = true;
+            }
+        }
+
+        public boolean canConstantState() {
+            if (!mCheckedConstantState) {
+                mCanConstantState = mDrawable.getConstantState() != null;
+                mCheckedConstantState = true;
+            }
+
+            return mCanConstantState;
+        }
+
+        @Override
+        public int getChangingConfigurations() {
+            return mChangingConfigurations;
+        }
+
+        @Override
+        public Drawable newDrawable() {
+            return new RotateDrawable(this, null);
+        }
+
+        @Override
+        public Drawable newDrawable(Resources res) {
+            return new RotateDrawable(this, res);
         }
     }
 }
