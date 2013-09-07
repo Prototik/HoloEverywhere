@@ -62,6 +62,9 @@
                 "android:switchTextOn": "@string/capital_on",
                 "android:widgetLayout": "@layout/preference_widget_switch"
             },
+            "Holo.PreferenceSwitchScreen < Holo.PreferenceSwitch": {
+                "android:widgetLayout": "@layout/preference_widget_switch_screen"
+            },
             "Holo.PreferenceTime": {
 				"is24HourView": "auto"
             },

@@ -25,6 +25,7 @@
     <attr name="seekBarDialogPreferenceStyle" format="reference"/>
     <attr name="seekBarPreferenceStyle" format="reference"/>
     <attr name="switchPreferenceStyle" format="reference"/>
+    <attr name="switchScreenPreferenceStyle" format="reference"/>
     <attr name="timePreferenceStyle" format="reference"/>
     <attr name="wrapSelectorWheel" format="boolean"/>
     <attr name="yesNoPreferenceStyle" format="reference"/>

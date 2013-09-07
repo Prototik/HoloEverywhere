@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:holo="http://schemas.android.com/apk/res-auto" >
-	<Preference
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:holo="http://schemas.android.com/apk/res-auto">
+    <Preference
         android:icon="@drawable/prefs_icon"
         android:selectable="false"
         android:summary="@string/preference_summary"
         android:title="@string/preference_title" />
-	<PreferenceCategory android:title="@string/preference_base" >
-		<EditTextPreference
+    <PreferenceCategory android:title="@string/preference_base">
+        <EditTextPreference
             android:id="@+id/edit_text"
             android:dialogIcon="@drawable/icon"
             android:dialogTitle="@string/preference_edit_text_dialog_title"
             android:summary="@string/preference_edit_text_summary"
             android:title="@string/preference_edit_text_title" />
-		<CheckBoxPreference
+        <CheckBoxPreference
             android:id="@+id/check_box"
             android:defaultValue="false"
             android:summaryOff="@string/preference_check_box_summary_off"
             android:summaryOn="@string/preference_check_box_summary_on"
             android:title="@string/preference_check_box_title" />
-		<RingtonePreference
+        <RingtonePreference
             android:id="@+id/ringtone"
             android:ringtoneType="all"
             android:summary="@string/preference_ringtone_summary"
             android:title="@string/preference_ringtone_title" />
-		<SwitchPreference
+        <SwitchPreference
             android:id="@+id/switch2"
             android:summaryOff="@string/preference_switch_summary_off"
             android:summaryOn="@string/preference_switch_summary_on"
             android:title="@string/preference_switch_title" />
-	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/preference_lists" >
-		<ListPreference
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/preference_lists">
+        <ListPreference
             android:id="@+id/list"
             android:dialogIcon="@drawable/icon"
             android:dialogTitle="@string/preference_list_dialog_title"
@@ -38,7 +39,7 @@
             android:entryValues="@array/skillet"
             android:summary="@string/preference_list_summary"
             android:title="@string/preference_list_title" />
-		<MultiSelectListPreference
+        <MultiSelectListPreference
             android:id="@+id/multi_select_list"
             android:dialogIcon="@drawable/icon"
             android:dialogTitle="@string/preference_multi_list_dialog_title"
@@ -46,34 +47,46 @@
             android:entryValues="@array/nirvana"
             android:summary="@string/preference_multi_list_summary"
             android:title="@string/preference_multi_list_title" />
-	</PreferenceCategory>
-	<PreferenceCategory android:title="ExtPreferences" >
-		<TimePreference
+    </PreferenceCategory>
+    <PreferenceCategory android:title="ExtPreferences">
+        <TimePreference
             android:id="@+id/time_preference"
             android:summary="When next party?"
             android:title="Time" />
-		<DatePreference
+        <DatePreference
             android:id="@+id/date_preference"
             android:summary="When next the end?"
             android:title="Date" />
-		<NumberPickerPreference
+        <NumberPickerPreference
             android:id="@+id/number_picker"
             android:defaultValue="10"
             android:dialogMessage="@string/preference_number_picker_dialog_title"
-			holo:max="25"
-			holo:min="5"
             android:summary="@string/preference_number_picker_summary"
-            android:title="@string/preference_number_picker_title" />
-	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/preference_other" >
-		<PreferenceScreen
+            android:title="@string/preference_number_picker_title"
+            holo:max="25"
+            holo:min="5" />
+        <SwitchScreenPreference
+            android:id="@+id/switch_screen"
+            android:summaryOff="Inactive"
+            android:summaryOn="Shutup and click"
+            android:title="Switch Screen">
+            <Preference
+                android:title="Some preferences here..."
+                holo:dependency="@id/switch_screen" />
+            <Preference
+                android:title="KTHULHU VHTANG"
+                holo:dependency="@id/switch_screen" />
+        </SwitchScreenPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/preference_other">
+        <PreferenceScreen
             android:id="@+id/otherPrefs"
-            android:title="@string/preference_unsupported" >
-			<SeekBarPreference
+            android:title="@string/preference_unsupported">
+            <SeekBarPreference
                 android:id="@+id/seek_bar"
                 android:defaultValue="25"
                 android:max="100"
                 android:title="@string/preference_seek_bar" />
-		</PreferenceScreen>
-	</PreferenceCategory>
+        </PreferenceScreen>
+    </PreferenceCategory>
 </PreferenceScreen>

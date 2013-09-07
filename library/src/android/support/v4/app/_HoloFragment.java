@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.addon.IAddonAttacher;
@@ -174,11 +173,7 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
 
     @Override
     public void registerForContextMenu(View view) {
-        if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
-            super.registerForContextMenu(view);
-        } else {
-            mActivity.registerForContextMenu(view, this);
-        }
+        mActivity.registerForContextMenu(view, this);
     }
 
     public ActionMode startSupportActionMode(ActionMode.Callback callback) {
@@ -187,10 +182,6 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
 
     @Override
     public void unregisterForContextMenu(View view) {
-        if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
-            super.unregisterForContextMenu(view);
-        } else {
-            mActivity.unregisterForContextMenu(view);
-        }
+        mActivity.unregisterForContextMenu(view);
     }
 }

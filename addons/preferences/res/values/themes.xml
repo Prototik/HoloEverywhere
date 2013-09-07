@@ -18,6 +18,7 @@
         <item name="seekBarDialogPreferenceStyle">@style/Holo.PreferenceDialog.SeekBarDialogPreference</item>
         <item name="seekBarPreferenceStyle">@style/Holo.PreferenceSeekBar</item>
         <item name="switchPreferenceStyle">@style/Holo.PreferenceSwitch</item>
+        <item name="switchScreenPreferenceStyle">@style/Holo.PreferenceSwitchScreen</item>
         <item name="yesNoPreferenceStyle">@style/Holo.PreferenceDialog.YesNoPreference</item>
         <!--End of block PreferenceBase-->
     </style>
@@ -40,6 +41,7 @@
         <item name="seekBarDialogPreferenceStyle">@style/Holo.PreferenceDialog.SeekBarDialogPreference</item>
         <item name="seekBarPreferenceStyle">@style/Holo.PreferenceSeekBar</item>
         <item name="switchPreferenceStyle">@style/Holo.PreferenceSwitch</item>
+        <item name="switchScreenPreferenceStyle">@style/Holo.PreferenceSwitchScreen</item>
         <item name="yesNoPreferenceStyle">@style/Holo.PreferenceDialog.YesNoPreference</item>
         <!--End of block PreferenceBase-->
     </style>

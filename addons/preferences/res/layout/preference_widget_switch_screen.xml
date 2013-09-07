@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <Switch
+        android:id="@+id/switchWidget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/switchWidget"
+        android:layout_alignRight="@id/switchWidget"
+        android:layout_alignTop="@id/switchWidget"
+        android:gravity="center"
+        android:text=">"
+        android:textColor="?android:textColorPrimaryDisableOnly"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

@@ -16,31 +16,6 @@ import java.util.List;
 
 class PreferenceGroupAdapter extends BaseAdapter implements
         OnPreferenceChangeInternalListener {
-    private static class PreferenceLayout implements
-            Comparable<PreferenceLayout> {
-        private String name;
-        private int resId;
-        private int widgetResId;
-
-        @Override
-        public int compareTo(PreferenceLayout other) {
-            int compareNames = name.compareTo(other.name);
-            if (compareNames == 0) {
-                if (resId == other.resId) {
-                    if (widgetResId == other.widgetResId) {
-                        return 0;
-                    } else {
-                        return widgetResId - other.widgetResId;
-                    }
-                } else {
-                    return resId - other.resId;
-                }
-            } else {
-                return compareNames;
-            }
-        }
-    }
-
     private Handler mHandler = new Handler();
     private boolean mHasReturnedViewTypeCount = false;
     private volatile boolean mIsSyncing = false;
@@ -53,12 +28,11 @@ class PreferenceGroupAdapter extends BaseAdapter implements
             syncMyPreferences();
         }
     };
-
     private PreferenceLayout mTempPreferenceLayout = new PreferenceLayout();
 
     public PreferenceGroupAdapter(PreferenceGroup preferenceGroup) {
         mPreferenceGroup = preferenceGroup;
-        mPreferenceGroup.setOnPreferenceChangeInternalListener(this);
+        mPreferenceGroup.addOnPreferenceChangeInternalListener(this);
         int c = preferenceGroup.getPreferenceCount();
         mPreferenceList = new ArrayList<Preference>(c);
         mPreferenceLayouts = new ArrayList<PreferenceLayout>(c);
@@ -104,7 +78,7 @@ class PreferenceGroupAdapter extends BaseAdapter implements
                     flattenPreferenceGroup(preferences, preferenceAsGroup);
                 }
             }
-            preference.setOnPreferenceChangeInternalListener(this);
+            preference.addOnPreferenceChangeInternalListener(this);
         }
     }
 
@@ -207,6 +181,31 @@ class PreferenceGroupAdapter extends BaseAdapter implements
         synchronized (this) {
             mIsSyncing = false;
             notifyAll();
+        }
+    }
+
+    private static class PreferenceLayout implements
+            Comparable<PreferenceLayout> {
+        private String name;
+        private int resId;
+        private int widgetResId;
+
+        @Override
+        public int compareTo(PreferenceLayout other) {
+            int compareNames = name.compareTo(other.name);
+            if (compareNames == 0) {
+                if (resId == other.resId) {
+                    if (widgetResId == other.widgetResId) {
+                        return 0;
+                    } else {
+                        return widgetResId - other.widgetResId;
+                    }
+                } else {
+                    return resId - other.resId;
+                }
+            } else {
+                return compareNames;
+            }
         }
     }
 }

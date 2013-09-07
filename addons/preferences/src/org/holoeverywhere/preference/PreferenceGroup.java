@@ -167,6 +167,10 @@ public abstract class PreferenceGroup extends Preference implements
         return mOrderingAsAdded;
     }
 
+    public void setOrderingAsAdded(boolean orderingAsAdded) {
+        mOrderingAsAdded = orderingAsAdded;
+    }
+
     @Override
     protected void onAttachedToActivity() {
         super.onAttachedToActivity();
@@ -221,10 +225,6 @@ public abstract class PreferenceGroup extends Preference implements
         for (int i = 0; i < preferenceCount; i++) {
             getPreference(i).setEnabled(enabled);
         }
-    }
-
-    public void setOrderingAsAdded(boolean orderingAsAdded) {
-        mOrderingAsAdded = orderingAsAdded;
     }
 
     void sortPreferences() {

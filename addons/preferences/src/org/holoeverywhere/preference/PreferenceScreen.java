@@ -11,6 +11,8 @@ import android.os.Parcelable;
 import android.support.v7.internal.widget.ActionBarView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -24,14 +26,22 @@ import org.holoeverywhere.widget.ListView;
 
 import java.lang.reflect.Method;
 
-public final class PreferenceScreen extends PreferenceGroup implements
+public class PreferenceScreen extends PreferenceGroup implements
         AdapterView.OnItemClickListener, DialogInterface.OnDismissListener {
     private PreferenceDialog mDialog;
     private ListView mListView;
     private ListAdapter mRootAdapter;
 
+    public PreferenceScreen(Context context) {
+        this(context, null);
+    }
+
     public PreferenceScreen(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.preferenceScreenStyle);
+        this(context, attrs, R.attr.preferenceScreenStyle);
+    }
+
+    public PreferenceScreen(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
     }
 
     public void bind(ListView listView) {
@@ -154,11 +164,23 @@ public final class PreferenceScreen extends PreferenceGroup implements
             dialog.setTitle(title);
         }
         dialog.setOnDismissListener(this);
+        onPrepareDialog(dialog);
         if (state != null) {
             dialog.onRestoreInstanceState(state);
         }
         getPreferenceManager().addPreferencesScreen(dialog);
         dialog.show();
+    }
+
+    void onPrepareDialog(Dialog dialog) {
+    }
+
+    boolean onOptionsItemSelected(MenuItem item) {
+        return false;
+    }
+
+    boolean onCreateOptionsMenu(Menu menu) {
+        return false;
     }
 
     public static class SavedState extends BaseSavedState {
@@ -212,13 +234,26 @@ public final class PreferenceScreen extends PreferenceGroup implements
         }
 
         @Override
-        public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
-            if (featureId == Window.FEATURE_OPTIONS_PANEL && item.getItemId() == android.R.id.home
-                    && mDialog != null) {
-                mDialog.dismiss();
-                return true;
+        public boolean onCreatePanelMenu(int featureId, Menu menu) {
+            if (featureId == Window.FEATURE_OPTIONS_PANEL) {
+                return PreferenceScreen.this.onCreateOptionsMenu(menu);
             }
-            return false;
+            return super.onCreatePanelMenu(featureId, menu);
+        }
+
+        @Override
+        public boolean onMenuItemSelected(int featureId, android.view.MenuItem item) {
+            if (featureId == Window.FEATURE_OPTIONS_PANEL) {
+                if (item.getItemId() == android.R.id.home) {
+                    if (mDialog != null) {
+                        mDialog.dismiss();
+                    }
+                    return true;
+                } else {
+                    return PreferenceScreen.this.onOptionsItemSelected(item);
+                }
+            }
+            return super.onMenuItemSelected(featureId, item);
         }
 
         private void prepareActionBar() {

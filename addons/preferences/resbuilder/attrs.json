@@ -15,6 +15,7 @@
     	"preferenceLayoutChild$reference",
 	   	"preferencePanelStyle$reference",
 	   	"switchPreferenceStyle$reference",
+	   	"switchScreenPreferenceStyle$reference",
 	   	"seekBarPreferenceStyle$reference",
 	   	"seekBarDialogPreferenceStyle$reference",
 	   	"datePreferenceStyle$reference",

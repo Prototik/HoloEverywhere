@@ -4,45 +4,15 @@ package org.holoeverywhere.widget;
 import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.WrapperListAdapter;
 
 public class ListAdapterWrapper implements WrapperListAdapter {
-    public static interface ListAdapterCallback {
-        public void onChanged();
-
-        public void onInvalidated();
-
-        public View onPrepareView(View view, int position);
-    }
-
-    private final class WrapperDataSetObserver extends DataSetObserver {
-        private DataSetObserver mDataSetObserver;
-
-        public WrapperDataSetObserver(DataSetObserver dataSetObserver) {
-            mDataSetObserver = dataSetObserver;
-        }
-
-        @Override
-        public void onChanged() {
-            mDataSetObserver.onChanged();
-            if (mCallback != null) {
-                mCallback.onChanged();
-            }
-        }
-
-        @Override
-        public void onInvalidated() {
-            mDataSetObserver.onInvalidated();
-            if (mCallback != null) {
-                mCallback.onInvalidated();
-            }
-        }
-    }
-
     private final ListAdapterCallback mCallback;
-    private DataSetObserver mLastDataSetObserver;
     private final ListAdapter mWrapped;
+    private DataSetObserver mLastDataSetObserver;
+    private android.widget.AdapterView<ListAdapter> mAdapterView;
 
     public ListAdapterWrapper(ListAdapter wrapped) {
         this(wrapped, null);
@@ -51,6 +21,14 @@ public class ListAdapterWrapper implements WrapperListAdapter {
     public ListAdapterWrapper(ListAdapter wrapped, ListAdapterCallback callback) {
         mWrapped = wrapped;
         mCallback = callback;
+    }
+
+    public AdapterView<ListAdapter> getAdapterView() {
+        return mAdapterView;
+    }
+
+    public void setAdapterView(android.widget.AdapterView<ListAdapter> adapterView) {
+        mAdapterView = adapterView;
     }
 
     @Override
@@ -131,5 +109,37 @@ public class ListAdapterWrapper implements WrapperListAdapter {
     public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
         mWrapped.unregisterDataSetObserver(mLastDataSetObserver);
         mLastDataSetObserver = null;
+    }
+
+    public static interface ListAdapterCallback {
+        public void onChanged();
+
+        public void onInvalidated();
+
+        public View onPrepareView(View view, int position);
+    }
+
+    private final class WrapperDataSetObserver extends DataSetObserver {
+        private DataSetObserver mDataSetObserver;
+
+        public WrapperDataSetObserver(DataSetObserver dataSetObserver) {
+            mDataSetObserver = dataSetObserver;
+        }
+
+        @Override
+        public void onChanged() {
+            mDataSetObserver.onChanged();
+            if (mCallback != null) {
+                mCallback.onChanged();
+            }
+        }
+
+        @Override
+        public void onInvalidated() {
+            mDataSetObserver.onInvalidated();
+            if (mCallback != null) {
+                mCallback.onInvalidated();
+            }
+        }
     }
 }

@@ -61,6 +61,9 @@
         <item name="android:switchTextOn">@string/capital_on</item>
         <item name="android:widgetLayout">@layout/preference_widget_switch</item>
     </style>
+    <style name="Holo.PreferenceSwitchScreen" parent="Holo.PreferenceSwitch">
+        <item name="android:widgetLayout">@layout/preference_widget_switch_screen</item>
+    </style>
     <style name="Holo.PreferenceTime">
         <item name="is24HourView">auto</item>
     </style>

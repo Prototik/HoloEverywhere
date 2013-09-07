@@ -9,7 +9,6 @@ import android.view.ContextMenu;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
-import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
 import org.holoeverywhere.internal.WindowDecorView;
@@ -81,11 +80,7 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
 
     @Override
     public void registerForContextMenu(View view) {
-        if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
-            super.registerForContextMenu(view);
-        } else {
-            registerForContextMenu(view, this);
-        }
+        registerForContextMenu(view, this);
     }
 
     public void registerForContextMenu(View view, ContextMenuListener listener) {
@@ -93,6 +88,7 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
             mContextMenuListeners = new WeaklyMap<View, ContextMenuListener>();
         }
         mContextMenuListeners.put(view, listener);
+        view.setLongClickable(true);
     }
 
     private boolean requestDecorView(View view, LayoutParams params, int layoutRes) {
@@ -141,12 +137,9 @@ public class Dialog extends android.app.Dialog implements ContextMenuListener,
 
     @Override
     public void unregisterForContextMenu(View view) {
-        if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
-            super.unregisterForContextMenu(view);
-        } else {
-            if (mContextMenuListeners != null) {
-                mContextMenuListeners.remove(view);
-            }
+        if (mContextMenuListeners != null) {
+            mContextMenuListeners.remove(view);
         }
+        view.setLongClickable(false);
     }
 }

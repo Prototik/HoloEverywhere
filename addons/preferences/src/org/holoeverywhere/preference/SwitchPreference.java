@@ -11,18 +11,6 @@ import android.widget.CompoundButton;
 import org.holoeverywhere.widget.Switch;
 
 public class SwitchPreference extends TwoStatePreference {
-    private class Listener implements CompoundButton.OnCheckedChangeListener {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView,
-                                     boolean isChecked) {
-            if (!callChangeListener(isChecked)) {
-                buttonView.setChecked(!isChecked);
-                return;
-            }
-            setChecked(isChecked);
-        }
-    }
-
     private final Listener mListener = new Listener();
     private CharSequence mSwitchOff, mSwitchOn;
 
@@ -49,8 +37,26 @@ public class SwitchPreference extends TwoStatePreference {
         return mSwitchOff;
     }
 
+    public void setSwitchTextOff(CharSequence offText) {
+        mSwitchOff = offText;
+        notifyChanged();
+    }
+
+    public void setSwitchTextOff(int resId) {
+        setSwitchTextOff(getContext().getText(resId));
+    }
+
     public CharSequence getSwitchTextOn() {
         return mSwitchOn;
+    }
+
+    public void setSwitchTextOn(CharSequence onText) {
+        mSwitchOn = onText;
+        notifyChanged();
+    }
+
+    public void setSwitchTextOn(int resId) {
+        setSwitchTextOn(getContext().getText(resId));
     }
 
     @Override
@@ -70,21 +76,14 @@ public class SwitchPreference extends TwoStatePreference {
         syncSummaryView(view);
     }
 
-    public void setSwitchTextOff(CharSequence offText) {
-        mSwitchOff = offText;
-        notifyChanged();
-    }
-
-    public void setSwitchTextOff(int resId) {
-        setSwitchTextOff(getContext().getText(resId));
-    }
-
-    public void setSwitchTextOn(CharSequence onText) {
-        mSwitchOn = onText;
-        notifyChanged();
-    }
-
-    public void setSwitchTextOn(int resId) {
-        setSwitchTextOn(getContext().getText(resId));
+    private class Listener implements CompoundButton.OnCheckedChangeListener {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (!callChangeListener(isChecked)) {
+                buttonView.setChecked(!isChecked);
+                return;
+            }
+            setChecked(isChecked);
+        }
     }
 }

@@ -207,9 +207,6 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
 
     public final void setActivity(Activity activity) {
         mActivity = activity;
-        if (mActivity != null) {
-            mActivity.addOnWindowFocusChangeListener(this);
-        }
     }
 
     public ListAdapter getAdapterSource() {
@@ -714,6 +711,9 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
 
     @Override
     public void setAdapter(ListAdapter adapter) {
+        if (mAdapter != null) {
+            mAdapter.setAdapterView(null);
+        }
         if (adapter == null) {
             mAdapter = null;
         } else if (mForceHeaderListAdapter || mHeaderViewInfos.size() > 0
@@ -724,6 +724,7 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
             mAdapter = new ListAdapterWrapper(adapter, mListAdapterCallback);
         }
         if (mAdapter != null) {
+            mAdapter.setAdapterView(this);
             mAdapterHasStableIds = mAdapter.hasStableIds();
             if (mChoiceMode != CHOICE_MODE_NONE && mAdapterHasStableIds &&
                     mCheckedIdStates == null) {

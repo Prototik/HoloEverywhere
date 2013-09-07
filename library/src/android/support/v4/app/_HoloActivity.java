@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 
@@ -44,17 +45,12 @@ import org.holoeverywhere.preference.SharedPreferences;
 import org.holoeverywhere.util.SparseIntArray;
 import org.holoeverywhere.util.WeaklyMap;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 public abstract class _HoloActivity extends ActionBarActivity implements SuperStartActivity,
         SuperSystemService, ContextMenuListener,
         ContextMenuListenersProvider, IAddonAttacher<IAddonActivity> {
     private static final String CONFIG_KEY = "holo:config:activity";
-    private final List<WeakReference<OnWindowFocusChangeListener>> mOnWindowFocusChangeListeners = new ArrayList<WeakReference<OnWindowFocusChangeListener>>();
     private Context mActionBarContext;
     private Holo mConfig;
     private Map<View, ContextMenuListener> mContextMenuListeners;
@@ -68,30 +64,6 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
         if (requestDecorView(view, params, -1)) {
             mDecorView.addView(view, params);
             onContentChanged();
-        }
-    }
-
-    public void addOnWindowFocusChangeListener(OnWindowFocusChangeListener listener) {
-        synchronized (mOnWindowFocusChangeListeners) {
-            Iterator<WeakReference<OnWindowFocusChangeListener>> i = mOnWindowFocusChangeListeners
-                    .iterator();
-            while (i.hasNext()) {
-                WeakReference<OnWindowFocusChangeListener> reference = i.next();
-                if (reference == null) {
-                    i.remove();
-                    continue;
-                }
-                OnWindowFocusChangeListener iListener = reference.get();
-                if (iListener == null) {
-                    i.remove();
-                    continue;
-                }
-                if (iListener == listener) {
-                    return;
-                }
-            }
-            mOnWindowFocusChangeListeners
-                    .add(new WeakReference<OnWindowFocusChangeListener>(listener));
         }
     }
 
@@ -363,32 +335,27 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        synchronized (mOnWindowFocusChangeListeners) {
-            Iterator<WeakReference<OnWindowFocusChangeListener>> i = mOnWindowFocusChangeListeners
-                    .iterator();
-            while (i.hasNext()) {
-                WeakReference<OnWindowFocusChangeListener> reference = i.next();
-                if (reference == null) {
-                    i.remove();
-                    continue;
-                }
-                OnWindowFocusChangeListener iListener = reference.get();
-                if (iListener == null) {
-                    i.remove();
-                    continue;
-                }
-                iListener.onWindowFocusChanged(hasFocus);
+        if (mDecorView != null) {
+            rOnWindowFocusChanged(mDecorView, hasFocus);
+        }
+    }
+
+    private void rOnWindowFocusChanged(View view, boolean hasFocus) {
+        if (view instanceof OnWindowFocusChangeListener) {
+            ((OnWindowFocusChangeListener) view).onWindowFocusChanged(hasFocus);
+        }
+        if (view instanceof ViewGroup) {
+            final ViewGroup vg = (ViewGroup) view;
+            final int childCount = vg.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                rOnWindowFocusChanged(vg.getChildAt(i), hasFocus);
             }
         }
     }
 
     @Override
     public void registerForContextMenu(View view) {
-        if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
-            super.registerForContextMenu(view);
-        } else {
-            registerForContextMenu(view, this);
-        }
+        registerForContextMenu(view, this);
     }
 
     public void registerForContextMenu(View view, ContextMenuListener listener) {
@@ -548,17 +515,15 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
 
     @Override
     public void unregisterForContextMenu(View view) {
-        if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
-            super.unregisterForContextMenu(view);
-        } else {
-            if (mContextMenuListeners != null) {
-                mContextMenuListeners.remove(view);
-            }
+        if (mContextMenuListeners != null) {
+            mContextMenuListeners.remove(view);
         }
+        view.setLongClickable(false);
     }
 
     public static interface OnWindowFocusChangeListener {
         public void onWindowFocusChanged(boolean hasFocus);
+
     }
 
     public static final class Holo implements Parcelable {

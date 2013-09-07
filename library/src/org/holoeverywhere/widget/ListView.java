@@ -46,148 +46,14 @@ import java.util.List;
 
 public class ListView extends android.widget.ListView implements OnWindowFocusChangeListener,
         ContextMenuInfoGetter, FastScrollerCallback {
-    public interface MultiChoiceModeListener extends ActionMode.Callback {
-        public void onItemCheckedStateChanged(ActionMode mode, int position,
-                                              long id, boolean checked);
-    }
-
-    private final class MultiChoiceModeWrapper implements MultiChoiceModeListener {
-        private MultiChoiceModeListener mWrapped;
-
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            return mWrapped.onActionItemClicked(mode, item);
-        }
-
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            if (mWrapped.onCreateActionMode(mode, menu)) {
-                setLongClickable(false);
-                return true;
-            }
-            return false;
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            mWrapped.onDestroyActionMode(mode);
-            mChoiceActionMode = null;
-            clearChoices();
-            updateOnScreenCheckedViews();
-            setLongClickable(true);
-        }
-
-        @SuppressLint("NewApi")
-        @Override
-        public void onItemCheckedStateChanged(ActionMode mode,
-                                              int position, long id, boolean checked) {
-            mWrapped.onItemCheckedStateChanged(mode, position, id, checked);
-            if (getCheckedItemCount() == 0) {
-                mode.finish();
-            }
-        }
-
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return mWrapped.onPrepareActionMode(mode, menu);
-        }
-
-        public void setWrapped(MultiChoiceModeListener wrapped) {
-            mWrapped = wrapped;
-        }
-    }
-
-    private final class OnItemLongClickListenerWrapper implements OnItemLongClickListener {
-        private OnItemLongClickListener wrapped;
-
-        @Override
-        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-            return performItemLongClick(view, position, id);
-        }
-
-        public void setWrapped(OnItemLongClickListener wrapped) {
-            this.wrapped = wrapped;
-            if (wrapped != null) {
-                setLongClickable(true);
-            }
-        }
-    }
-
-    static final class SavedState extends BaseSavedState {
-        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
-            @Override
-            public SavedState createFromParcel(Parcel parcel) {
-                return new SavedState(parcel);
-            }
-
-            @Override
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
-        int checkedItemCount;
-        LongSparseArray<Integer> checkIdState;
-        SparseBooleanArray checkState;
-        boolean inActionMode;
-
-        public SavedState(Parcel in) {
-            super(in);
-            inActionMode = in.readByte() != 0;
-            checkedItemCount = in.readInt();
-            checkState = in.readSparseBooleanArray();
-            final int N = in.readInt();
-            if (N > 0) {
-                checkIdState = new LongSparseArray<Integer>();
-                for (int i = 0; i < N; i++) {
-                    final long key = in.readLong();
-                    final int value = in.readInt();
-                    checkIdState.put(key, value);
-                }
-            }
-        }
-
-        public SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        @Override
-        public void writeToParcel(Parcel out, int flags) {
-            super.writeToParcel(out, flags);
-            out.writeByte((byte) (inActionMode ? 1 : 0));
-            out.writeInt(checkedItemCount);
-            out.writeSparseBooleanArray(checkState);
-            final int N = checkIdState != null ? checkIdState.size() : 0;
-            out.writeInt(N);
-            for (int i = 0; i < N; i++) {
-                out.writeLong(checkIdState.keyAt(i));
-                out.writeInt(checkIdState.valueAt(i));
-            }
-        }
-    }
-
     public static final int CHOICE_MODE_MULTIPLE = AbsListView.CHOICE_MODE_MULTIPLE;
     @SuppressLint("InlinedApi")
     public static final int CHOICE_MODE_MULTIPLE_MODAL = AbsListView.CHOICE_MODE_MULTIPLE_MODAL;
     public static final int CHOICE_MODE_NONE = AbsListView.CHOICE_MODE_NONE;
     public static final int CHOICE_MODE_SINGLE = AbsListView.CHOICE_MODE_SINGLE;
     private static final boolean USE_ACTIVATED = VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB;
-    private Activity mActivity;
-    private ListAdapterWrapper mAdapter;
-    private boolean mAdapterHasStableIds;
-    private LongSparseArray<Integer> mCheckedIdStates;
-    private int mCheckedItemCount;
-    private SparseBooleanArray mCheckStates;
-    private ActionMode mChoiceActionMode;
-    private int mChoiceMode;
-    private ContextMenuInfo mContextMenuInfo;
-    private boolean mFastScrollEnabled;
-    private FastScroller<ListView> mFastScroller;
     private final List<ViewInfo> mFooterViewInfos = new ArrayList<ViewInfo>(),
             mHeaderViewInfos = new ArrayList<ViewInfo>();
-    private boolean mForceFastScrollAlwaysVisibleDisable = false;
-    private boolean mForceHeaderListAdapter = false;
-    private boolean mIsAttached;
-    private int mLastScrollState = OnScrollListener.SCROLL_STATE_IDLE;
     private final ListAdapterCallback mListAdapterCallback = new ListAdapterCallback() {
         @Override
         public void onChanged() {
@@ -208,8 +74,23 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             return ListView.this.onPrepareView(view, position);
         }
     };
-    private MultiChoiceModeWrapper mMultiChoiceModeCallback;
     private final OnItemLongClickListenerWrapper mOnItemLongClickListenerWrapper;
+    private Activity mActivity;
+    private ListAdapterWrapper mAdapter;
+    private boolean mAdapterHasStableIds;
+    private LongSparseArray<Integer> mCheckedIdStates;
+    private int mCheckedItemCount;
+    private SparseBooleanArray mCheckStates;
+    private ActionMode mChoiceActionMode;
+    private int mChoiceMode;
+    private ContextMenuInfo mContextMenuInfo;
+    private boolean mFastScrollEnabled;
+    private FastScroller<ListView> mFastScroller;
+    private boolean mForceFastScrollAlwaysVisibleDisable = false;
+    private boolean mForceHeaderListAdapter = false;
+    private boolean mIsAttached;
+    private int mLastScrollState = OnScrollListener.SCROLL_STATE_IDLE;
+    private MultiChoiceModeWrapper mMultiChoiceModeCallback;
     private OnScrollListener mOnScrollListener;
     private boolean mPaddingFromScroller = false;
     private int mVerticalScrollbarPosition = SCROLLBAR_POSITION_DEFAULT;
@@ -340,6 +221,10 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         return mActivity;
     }
 
+    public final void setActivity(Activity activity) {
+        mActivity = activity;
+    }
+
     public ListAdapter getAdapterSource() {
         return mAdapter == null ? null : mAdapter.getWrappedAdapter();
     }
@@ -392,6 +277,27 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     }
 
     @Override
+    public void setChoiceMode(int choiceMode) {
+        mChoiceMode = choiceMode;
+        if (mChoiceActionMode != null) {
+            mChoiceActionMode.finish();
+            mChoiceActionMode = null;
+        }
+        if (mChoiceMode != CHOICE_MODE_NONE) {
+            if (mCheckStates == null) {
+                mCheckStates = new SparseBooleanArray();
+            }
+            if (mCheckedIdStates == null && mAdapter != null && mAdapter.hasStableIds()) {
+                mCheckedIdStates = new LongSparseArray<Integer>();
+            }
+            if (mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
+                clearChoices();
+                setLongClickable(true);
+            }
+        }
+    }
+
+    @Override
     public ContextMenuInfo getContextMenuInfo() {
         return mContextMenuInfo;
     }
@@ -409,6 +315,15 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     @Override
     public int getVerticalScrollbarPosition() {
         return mVerticalScrollbarPosition;
+    }
+
+    @Override
+    public void setVerticalScrollbarPosition(int position) {
+        mVerticalScrollbarPosition = position;
+        if (mFastScroller != null) {
+            mFastScroller.setScrollbarPosition(position);
+        }
+        recomputePaddingFromScroller();
     }
 
     @Override
@@ -448,13 +363,54 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
     }
 
     @Override
+    public void setFastScrollAlwaysVisible(boolean alwaysShow) {
+        if (alwaysShow && !mFastScrollEnabled) {
+            setFastScrollEnabled(true);
+        }
+        if (mFastScroller != null) {
+            mFastScroller.setAlwaysShow(alwaysShow);
+        }
+        try {
+            Method method = View.class.getDeclaredMethod("computeOpaqueFlags");
+            method.setAccessible(true);
+            method.invoke(this);
+            method = View.class.getDeclaredMethod("recomputePadding");
+            method.setAccessible(true);
+            method.invoke(this);
+        } catch (Exception e) {
+        }
+        if (alwaysShow) {
+            setPaddingFromScroller(true);
+        }
+    }
+
+    @Override
     @ExportedProperty
     public boolean isFastScrollEnabled() {
         return mFastScrollEnabled;
     }
 
+    @Override
+    public void setFastScrollEnabled(boolean enabled) {
+        mFastScrollEnabled = enabled;
+        if (enabled) {
+            if (mFastScroller == null) {
+                mFastScroller = new FastScroller<ListView>(getContext(), this);
+            }
+        } else {
+            if (mFastScroller != null) {
+                mFastScroller.stop();
+                mFastScroller = null;
+            }
+        }
+    }
+
     public boolean isForceHeaderListAdapter() {
         return mForceHeaderListAdapter;
+    }
+
+    public void setForceHeaderListAdapter(boolean forceHeaderListAdapter) {
+        mForceHeaderListAdapter = forceHeaderListAdapter;
     }
 
     @Override
@@ -481,6 +437,11 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
 
     public boolean isPaddingFromScroller() {
         return mPaddingFromScroller;
+    }
+
+    public void setPaddingFromScroller(boolean paddingFromScroller) {
+        mPaddingFromScroller = paddingFromScroller;
+        recomputePaddingFromScroller();
     }
 
     protected boolean isVerticalScrollBarHidden() {
@@ -774,15 +735,11 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         }
     }
 
-    public final void setActivity(Activity activity) {
-        mActivity = activity;
-        if (mActivity != null) {
-            mActivity.addOnWindowFocusChangeListener(this);
-        }
-    }
-
     @Override
     public void setAdapter(ListAdapter adapter) {
+        if (mAdapter != null) {
+            mAdapter.setAdapterView(null);
+        }
         if (adapter == null) {
             mAdapter = null;
         } else if (mForceHeaderListAdapter || mHeaderViewInfos.size() > 0
@@ -793,6 +750,7 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             mAdapter = new ListAdapterWrapper(adapter, mListAdapterCallback);
         }
         if (mAdapter != null) {
+            mAdapter.setAdapterView(this);
             mAdapterHasStableIds = mAdapter.hasStableIds();
             if (mChoiceMode != CHOICE_MODE_NONE && mAdapterHasStableIds &&
                     mCheckedIdStates == null) {
@@ -806,68 +764,6 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             mCheckedIdStates.clear();
         }
         super.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void setChoiceMode(int choiceMode) {
-        mChoiceMode = choiceMode;
-        if (mChoiceActionMode != null) {
-            mChoiceActionMode.finish();
-            mChoiceActionMode = null;
-        }
-        if (mChoiceMode != CHOICE_MODE_NONE) {
-            if (mCheckStates == null) {
-                mCheckStates = new SparseBooleanArray();
-            }
-            if (mCheckedIdStates == null && mAdapter != null && mAdapter.hasStableIds()) {
-                mCheckedIdStates = new LongSparseArray<Integer>();
-            }
-            if (mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL) {
-                clearChoices();
-                setLongClickable(true);
-            }
-        }
-    }
-
-    @Override
-    public void setFastScrollAlwaysVisible(boolean alwaysShow) {
-        if (alwaysShow && !mFastScrollEnabled) {
-            setFastScrollEnabled(true);
-        }
-        if (mFastScroller != null) {
-            mFastScroller.setAlwaysShow(alwaysShow);
-        }
-        try {
-            Method method = View.class.getDeclaredMethod("computeOpaqueFlags");
-            method.setAccessible(true);
-            method.invoke(this);
-            method = View.class.getDeclaredMethod("recomputePadding");
-            method.setAccessible(true);
-            method.invoke(this);
-        } catch (Exception e) {
-        }
-        if (alwaysShow) {
-            setPaddingFromScroller(true);
-        }
-    }
-
-    @Override
-    public void setFastScrollEnabled(boolean enabled) {
-        mFastScrollEnabled = enabled;
-        if (enabled) {
-            if (mFastScroller == null) {
-                mFastScroller = new FastScroller<ListView>(getContext(), this);
-            }
-        } else {
-            if (mFastScroller != null) {
-                mFastScroller.stop();
-                mFastScroller = null;
-            }
-        }
-    }
-
-    public void setForceHeaderListAdapter(boolean forceHeaderListAdapter) {
-        mForceHeaderListAdapter = forceHeaderListAdapter;
     }
 
     @Override
@@ -938,11 +834,6 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         super.setOnScrollListener(mOnScrollListener = l);
     }
 
-    public void setPaddingFromScroller(boolean paddingFromScroller) {
-        mPaddingFromScroller = paddingFromScroller;
-        recomputePaddingFromScroller();
-    }
-
     @Override
     public void setSelectionAfterHeaderView() {
         setSelection(mHeaderViewInfos.size());
@@ -960,15 +851,6 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         } else if (USE_ACTIVATED) {
             child.setActivated(value);
         }
-    }
-
-    @Override
-    public void setVerticalScrollbarPosition(int position) {
-        mVerticalScrollbarPosition = position;
-        if (mFastScroller != null) {
-            mFastScroller.setScrollbarPosition(position);
-        }
-        recomputePaddingFromScroller();
     }
 
     @Override
@@ -1010,6 +892,125 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
             final int position = firstPos + i;
             final boolean value = mCheckStates.get(position);
             setStateOnView(child, value);
+        }
+    }
+
+    public interface MultiChoiceModeListener extends ActionMode.Callback {
+        public void onItemCheckedStateChanged(ActionMode mode, int position,
+                                              long id, boolean checked);
+    }
+
+    static final class SavedState extends BaseSavedState {
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel parcel) {
+                return new SavedState(parcel);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+        int checkedItemCount;
+        LongSparseArray<Integer> checkIdState;
+        SparseBooleanArray checkState;
+        boolean inActionMode;
+
+        public SavedState(Parcel in) {
+            super(in);
+            inActionMode = in.readByte() != 0;
+            checkedItemCount = in.readInt();
+            checkState = in.readSparseBooleanArray();
+            final int N = in.readInt();
+            if (N > 0) {
+                checkIdState = new LongSparseArray<Integer>();
+                for (int i = 0; i < N; i++) {
+                    final long key = in.readLong();
+                    final int value = in.readInt();
+                    checkIdState.put(key, value);
+                }
+            }
+        }
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeByte((byte) (inActionMode ? 1 : 0));
+            out.writeInt(checkedItemCount);
+            out.writeSparseBooleanArray(checkState);
+            final int N = checkIdState != null ? checkIdState.size() : 0;
+            out.writeInt(N);
+            for (int i = 0; i < N; i++) {
+                out.writeLong(checkIdState.keyAt(i));
+                out.writeInt(checkIdState.valueAt(i));
+            }
+        }
+    }
+
+    private final class MultiChoiceModeWrapper implements MultiChoiceModeListener {
+        private MultiChoiceModeListener mWrapped;
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            return mWrapped.onActionItemClicked(mode, item);
+        }
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            if (mWrapped.onCreateActionMode(mode, menu)) {
+                setLongClickable(false);
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mWrapped.onDestroyActionMode(mode);
+            mChoiceActionMode = null;
+            clearChoices();
+            updateOnScreenCheckedViews();
+            setLongClickable(true);
+        }
+
+        @SuppressLint("NewApi")
+        @Override
+        public void onItemCheckedStateChanged(ActionMode mode,
+                                              int position, long id, boolean checked) {
+            mWrapped.onItemCheckedStateChanged(mode, position, id, checked);
+            if (getCheckedItemCount() == 0) {
+                mode.finish();
+            }
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return mWrapped.onPrepareActionMode(mode, menu);
+        }
+
+        public void setWrapped(MultiChoiceModeListener wrapped) {
+            mWrapped = wrapped;
+        }
+    }
+
+    private final class OnItemLongClickListenerWrapper implements OnItemLongClickListener {
+        private OnItemLongClickListener wrapped;
+
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+            return performItemLongClick(view, position, id);
+        }
+
+        public void setWrapped(OnItemLongClickListener wrapped) {
+            this.wrapped = wrapped;
+            if (wrapped != null) {
+                setLongClickable(true);
+            }
         }
     }
 }

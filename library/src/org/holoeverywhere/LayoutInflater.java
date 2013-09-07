@@ -26,6 +26,7 @@ import android.view.ViewStub;
 
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator;
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
+import org.holoeverywhere.app.ContextThemeWrapperPlus;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.internal.DialogTitle;
 import org.holoeverywhere.internal.NumberPickerEditText;
@@ -43,105 +44,6 @@ import java.util.List;
 import java.util.Map;
 
 public class LayoutInflater extends android.view.LayoutInflater implements Cloneable {
-    private static class BlinkLayout extends FrameLayout {
-        private static final int BLINK_DELAY = 500;
-        private static final int MESSAGE_BLINK = 0x42;
-
-        private boolean mBlink;
-        private boolean mBlinkState;
-        private final Handler mHandler;
-
-        public BlinkLayout(Context context, AttributeSet attrs) {
-            super(context, attrs);
-            mHandler = new Handler(new Handler.Callback() {
-                @Override
-                public boolean handleMessage(Message msg) {
-                    if (msg.what == MESSAGE_BLINK) {
-                        if (mBlink) {
-                            mBlinkState = !mBlinkState;
-                            makeBlink();
-                        }
-                        invalidate();
-                        return true;
-                    }
-                    return false;
-                }
-            });
-        }
-
-        @Override
-        protected void dispatchDraw(Canvas canvas) {
-            if (mBlinkState) {
-                super.dispatchDraw(canvas);
-            }
-        }
-
-        private void makeBlink() {
-            Message message = mHandler.obtainMessage(MESSAGE_BLINK);
-            mHandler.sendMessageDelayed(message, BLINK_DELAY);
-        }
-
-        @Override
-        protected void onAttachedToWindow() {
-            super.onAttachedToWindow();
-            mBlink = true;
-            mBlinkState = true;
-            makeBlink();
-        }
-
-        @Override
-        protected void onDetachedFromWindow() {
-            super.onDetachedFromWindow();
-            mBlink = false;
-            mBlinkState = true;
-            mHandler.removeMessages(MESSAGE_BLINK);
-        }
-    }
-
-    public interface Factory {
-        public View onCreateView(View parent, String name, Context context, AttributeSet attrs);
-    }
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private static final class Factory2Wrapper implements Factory {
-        private Factory2 mFactory;
-
-        public Factory2Wrapper(Factory2 factory) {
-            mFactory = factory;
-        }
-
-        @Override
-        public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-            return mFactory.onCreateView(parent, name, context, attrs);
-        }
-    }
-
-    private static final class FactoryWrapper implements Factory {
-        private android.view.LayoutInflater.Factory mFactory;
-
-        public FactoryWrapper(android.view.LayoutInflater.Factory factory) {
-            mFactory = factory;
-        }
-
-        @Override
-        public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-            return mFactory.onCreateView(name, context, attrs);
-        }
-    }
-
-    @SystemService(Context.LAYOUT_INFLATER_SERVICE)
-    public static class LayoutInflaterCreator implements
-            SystemServiceCreator<LayoutInflater> {
-        @Override
-        public LayoutInflater createService(Context context) {
-            return LayoutInflater.from(context);
-        }
-    }
-
-    public static interface OnInitInflaterListener {
-        public void onInitInflater(LayoutInflater inflater);
-    }
-
     private static final HashMap<String, Constructor<? extends View>> sConstructorMap =
             new HashMap<String, Constructor<? extends View>>();
     private static final Class<?>[] sConstructorSignature = {
@@ -150,7 +52,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
     private static final Map<Class<?>, Method> sFinishInflateMethods =
             new HashMap<Class<?>, Method>(100);
     private static final Map<Context, LayoutInflater> sInstances = new WeaklyMap<Context, LayoutInflater>();
-    private static OnInitInflaterListener sListener;
     private static final List<String> sPackages = new ArrayList<String>();
     private static final Map<String, String> sRemaps = new HashMap<String, String>();
     private static final String TAG_1995 = "blink";
@@ -172,6 +73,45 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
         asInternal(NumberPickerEditText.class);
     }
 
+    private static OnInitInflaterListener sListener;
+    private final Fragment mChildFragment;
+    private final Object[] mConstructorArgs = new Object[2];
+    private final Context mContext;
+    private Map<Context, LayoutInflater> mClonedInstances;
+    private List<Factory> mFactories;
+    private Filter mFilter;
+    private HashMap<String, Boolean> mFilterMap;
+    private FragmentActivity mFragmentActivity;
+    private Map<Fragment, LayoutInflater> mFragmentChildInstances;
+    private LayoutInflater mParentInflater;
+
+    protected LayoutInflater(android.view.LayoutInflater original,
+                             Context newContext) {
+        this(original, newContext, null);
+    }
+
+    protected LayoutInflater(android.view.LayoutInflater original,
+                             Context newContext, Fragment childFragment) {
+        this(original.getContext(), childFragment);
+        setParent(original);
+    }
+
+    protected LayoutInflater(Context context) {
+        this(context, null);
+    }
+
+    protected LayoutInflater(Context context, Fragment childFragment) {
+        super(context);
+        if (context == null) {
+            throw new IllegalArgumentException("Context cannot be null");
+        }
+        mChildFragment = childFragment;
+        mContext = context;
+        if (LayoutInflater.sListener != null) {
+            LayoutInflater.sListener.onInitInflater(this);
+        }
+    }
+
     private static void asInternal(Class<?> clazz) {
         register("Internal." + clazz.getSimpleName(), clazz.getName());
     }
@@ -189,6 +129,10 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
             sInstances.put(context, inflater = new LayoutInflater(context));
         }
         return inflater;
+    }
+
+    public static LayoutInflater from(Context context, int theme) {
+        return from(new ContextThemeWrapperPlus(context, ThemeManager.getThemeResource(theme, false)));
     }
 
     public static View inflate(Context context, int resource) {
@@ -278,44 +222,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
 
     public static void setOnInitInflaterListener(OnInitInflaterListener listener) {
         sListener = listener;
-    }
-
-    private final Fragment mChildFragment;
-    private Map<Context, LayoutInflater> mClonedInstances;
-    private final Object[] mConstructorArgs = new Object[2];
-    private final Context mContext;
-    private List<Factory> mFactories;
-    private Filter mFilter;
-    private HashMap<String, Boolean> mFilterMap;
-    private FragmentActivity mFragmentActivity;
-    private Map<Fragment, LayoutInflater> mFragmentChildInstances;
-    private LayoutInflater mParentInflater;
-
-    protected LayoutInflater(android.view.LayoutInflater original,
-                             Context newContext) {
-        this(original, newContext, null);
-    }
-
-    protected LayoutInflater(android.view.LayoutInflater original,
-                             Context newContext, Fragment childFragment) {
-        this(original.getContext(), childFragment);
-        setParent(original);
-    }
-
-    protected LayoutInflater(Context context) {
-        this(context, null);
-    }
-
-    protected LayoutInflater(Context context, Fragment childFragment) {
-        super(context);
-        if (context == null) {
-            throw new IllegalArgumentException("Context cannot be null");
-        }
-        mChildFragment = childFragment;
-        mContext = context;
-        if (LayoutInflater.sListener != null) {
-            LayoutInflater.sListener.onInitInflater(this);
-        }
     }
 
     public View _createView(String name, String prefix, AttributeSet attrs)
@@ -467,8 +373,20 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
         return mFilter;
     }
 
+    @Override
+    public void setFilter(Filter filter) {
+        mFilter = filter;
+        if (filter != null) {
+            mFilterMap = new HashMap<String, Boolean>();
+        }
+    }
+
     public FragmentActivity getFragmentActivity() {
         return mFragmentActivity;
+    }
+
+    public void setFragmentActivity(FragmentActivity fragmentActivity) {
+        mFragmentActivity = fragmentActivity;
     }
 
     public View inflate(int resource) {
@@ -774,18 +692,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
         setFactory(new Factory2Wrapper(factory));
     }
 
-    @Override
-    public void setFilter(Filter filter) {
-        mFilter = filter;
-        if (filter != null) {
-            mFilterMap = new HashMap<String, Boolean>();
-        }
-    }
-
-    public void setFragmentActivity(FragmentActivity fragmentActivity) {
-        mFragmentActivity = fragmentActivity;
-    }
-
     protected LayoutInflater setParent(android.view.LayoutInflater original) {
         if (original == this) {
             return this;
@@ -813,5 +719,103 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
             }
         }
         return this;
+    }
+
+    public interface Factory {
+        public View onCreateView(View parent, String name, Context context, AttributeSet attrs);
+    }
+
+    public static interface OnInitInflaterListener {
+        public void onInitInflater(LayoutInflater inflater);
+    }
+
+    private static class BlinkLayout extends FrameLayout {
+        private static final int BLINK_DELAY = 500;
+        private static final int MESSAGE_BLINK = 0x42;
+        private final Handler mHandler;
+        private boolean mBlink;
+        private boolean mBlinkState;
+
+        public BlinkLayout(Context context, AttributeSet attrs) {
+            super(context, attrs);
+            mHandler = new Handler(new Handler.Callback() {
+                @Override
+                public boolean handleMessage(Message msg) {
+                    if (msg.what == MESSAGE_BLINK) {
+                        if (mBlink) {
+                            mBlinkState = !mBlinkState;
+                            makeBlink();
+                        }
+                        invalidate();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
+
+        @Override
+        protected void dispatchDraw(Canvas canvas) {
+            if (mBlinkState) {
+                super.dispatchDraw(canvas);
+            }
+        }
+
+        private void makeBlink() {
+            Message message = mHandler.obtainMessage(MESSAGE_BLINK);
+            mHandler.sendMessageDelayed(message, BLINK_DELAY);
+        }
+
+        @Override
+        protected void onAttachedToWindow() {
+            super.onAttachedToWindow();
+            mBlink = true;
+            mBlinkState = true;
+            makeBlink();
+        }
+
+        @Override
+        protected void onDetachedFromWindow() {
+            super.onDetachedFromWindow();
+            mBlink = false;
+            mBlinkState = true;
+            mHandler.removeMessages(MESSAGE_BLINK);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private static final class Factory2Wrapper implements Factory {
+        private Factory2 mFactory;
+
+        public Factory2Wrapper(Factory2 factory) {
+            mFactory = factory;
+        }
+
+        @Override
+        public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+            return mFactory.onCreateView(parent, name, context, attrs);
+        }
+    }
+
+    private static final class FactoryWrapper implements Factory {
+        private android.view.LayoutInflater.Factory mFactory;
+
+        public FactoryWrapper(android.view.LayoutInflater.Factory factory) {
+            mFactory = factory;
+        }
+
+        @Override
+        public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+            return mFactory.onCreateView(name, context, attrs);
+        }
+    }
+
+    @SystemService(Context.LAYOUT_INFLATER_SERVICE)
+    public static class LayoutInflaterCreator implements
+            SystemServiceCreator<LayoutInflater> {
+        @Override
+        public LayoutInflater createService(Context context) {
+            return LayoutInflater.from(context);
+        }
     }
 }

@@ -8,7 +8,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.widget.FrameLayout;
 
 public class ContextMenuDecorView extends FrameLayout implements
@@ -71,12 +70,9 @@ public class ContextMenuDecorView extends FrameLayout implements
 
     @Override
     public boolean showContextMenuForChild(View originalView) {
-        if (HoloEverywhere.WRAP_TO_NATIVE_CONTEXT_MENU) {
-            return super.showContextMenuForChild(originalView);
-        }
         mListener = mProvider.getContextMenuListener(originalView);
         if (mListener == null) {
-            return false;
+            return super.showContextMenuForChild(originalView);
         }
         if (mContextMenu == null) {
             mContextMenu = new ContextMenuBuilder(getContext(), mListener);

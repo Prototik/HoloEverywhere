@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.util.CharSequences;
+import org.holoeverywhere.util.SparseArray;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -52,7 +53,6 @@ public class Preference implements Comparable<Preference>,
     private Intent mIntent;
     private String mKey;
     private int mLayoutResId = R.layout.preference_holo;
-    private OnPreferenceChangeInternalListener mListener;
     private OnPreferenceChangeListener mOnChangeListener;
     private OnPreferenceClickListener mOnClickListener;
     private int mOrder = Preference.DEFAULT_ORDER;
@@ -66,6 +66,7 @@ public class Preference implements Comparable<Preference>,
     private CharSequence mTitle;
     private int mTitleRes;
     private int mWidgetLayoutResId;
+    private SparseArray<OnPreferenceChangeInternalListener> mListeners;
 
     public Preference(Context context) {
         this(context, null);
@@ -566,8 +567,10 @@ public class Preference implements Comparable<Preference>,
     }
 
     protected void notifyChanged() {
-        if (mListener != null) {
-            mListener.onPreferenceChange(this);
+        if (mListeners != null) {
+            for (int i = 0; i < mListeners.size(); i++) {
+                mListeners.valueAt(i).onPreferenceChange(this);
+            }
         }
     }
 
@@ -585,8 +588,10 @@ public class Preference implements Comparable<Preference>,
     }
 
     protected void notifyHierarchyChanged() {
-        if (mListener != null) {
-            mListener.onPreferenceHierarchyChange(this);
+        if (mListeners != null) {
+            for (int i = 0; i < mListeners.size(); i++) {
+                mListeners.valueAt(i).onPreferenceHierarchyChange(this);
+            }
         }
     }
 
@@ -949,9 +954,17 @@ public class Preference implements Comparable<Preference>,
         }
     }
 
-    final void setOnPreferenceChangeInternalListener(
+    final void addOnPreferenceChangeInternalListener(
             OnPreferenceChangeInternalListener listener) {
-        mListener = listener;
+        if (mListeners == null) {
+            mListeners = new SparseArray<OnPreferenceChangeInternalListener>(1);
+        }
+        for (int i = 0; i < mListeners.size(); i++) {
+            if (mListeners.valueAt(i) == listener) {
+                return;
+            }
+        }
+        mListeners.put(mListeners.size(), listener);
     }
 
     public boolean shouldCommit() {
