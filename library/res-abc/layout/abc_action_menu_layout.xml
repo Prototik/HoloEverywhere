@@ -16,9 +16,8 @@
 
 <android.support.v7.internal.view.menu.ActionMenuView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:divider="?attr/actionBarDivider"
-        app:dividerPadding="12dip"
+        android:divider="?attr/actionBarDivider"
+        android:dividerPadding="12dip"
         android:gravity="center_vertical"/>

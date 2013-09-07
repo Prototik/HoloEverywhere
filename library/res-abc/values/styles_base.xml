@@ -23,7 +23,7 @@
 
     <style name="Widget.AppCompat.Base.ActionBar" parent="">
         <item name="displayOptions">useLogo|showHome|showTitle</item>
-        <item name="divider">?attr/dividerVertical</item>
+        <item name="android:divider">?attr/dividerVertical</item>
         <item name="height">?attr/actionBarSize</item>
         <item name="homeLayout">@layout/abc_action_bar_home</item>
 
@@ -89,7 +89,7 @@
         <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="android:gravity">center</item>
         <item name="android:maxLines">2</item>
-        <item name="textAllCaps">@bool/abc_config_actionMenuItemAllCaps</item>
+        <item name="android:textAllCaps">@bool/abc_config_actionMenuItemAllCaps</item>
     </style>
 
     <style name="Widget.AppCompat.Light.Base.ActionButton"
@@ -115,9 +115,9 @@
     </style>
 
     <style name="Widget.AppCompat.Base.ActionBar.TabBar" parent="">
-        <item name="divider">?attr/actionBarDivider</item>
-        <item name="showDividers">middle</item>
-        <item name="dividerPadding">12dip</item>
+        <item name="android:divider">?attr/actionBarDivider</item>
+        <item name="android:showDividers">middle</item>
+        <item name="android:dividerPadding">12dip</item>
     </style>
 
     <style name="Widget.AppCompat.Light.Base.ActionBar.TabBar"
@@ -150,7 +150,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:maxLines">2</item>
-        <item name="textAllCaps">true</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="Widget.AppCompat.Light.Base.ActionBar.TabText"
@@ -374,9 +374,9 @@
     <style name="Widget.AppCompat.Base.ActivityChooserView" parent="">
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/abc_ab_share_pack_holo_dark</item>
-        <item name="divider">?attr/dividerVertical</item>
-        <item name="showDividers">middle</item>
-        <item name="dividerPadding">6dip</item>
+        <item name="android:divider">?attr/dividerVertical</item>
+        <item name="android:showDividers">middle</item>
+        <item name="android:dividerPadding">6dip</item>
     </style>
 
     <style name="Widget.AppCompat.Light.Base.ActivityChooserView"
