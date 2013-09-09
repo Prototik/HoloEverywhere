@@ -179,10 +179,21 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
     }
 
     public static void registerPackage(String packageName) {
-        packageName = Package.getPackage(packageName).getName();
-        if (!sPackages.contains(packageName)) {
+        packageName = resolveFullPackageName(packageName);
+
+        if (packageName != null && !sPackages.contains(packageName)) {
             sPackages.add(packageName);
         }
+    }
+
+    private static String resolveFullPackageName(String packageName) {
+        Package resolvedPackage = Package.getPackage(packageName);
+
+        if (resolvedPackage == null) {
+            return null;
+        }
+
+        return resolvedPackage.getName();
     }
 
     /**
