@@ -46,7 +46,7 @@ public class EditTextPreference extends DialogPreference {
 
     public EditTextPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mEditText = new EditText(getDialogContext(true));
+        mEditText = new EditText(getDialogContext(true), attrs);
         mEditText.setId(R.id.edit);
         mEditText.setEnabled(true);
     }
