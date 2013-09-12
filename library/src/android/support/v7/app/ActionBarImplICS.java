@@ -459,6 +459,7 @@ class ActionBarImplICS extends ActionBar {
         public void onTabUnselected(android.app.ActionBar.Tab tab,
                 android.app.FragmentTransaction ft) {
             mTabListener.onTabUnselected(this, ft != null ? getActiveTransaction() : null);
+            commitActiveTransaction();
         }
 
         @Override
