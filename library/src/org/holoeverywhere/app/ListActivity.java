@@ -12,11 +12,9 @@ import org.holoeverywhere.widget.ListView;
 
 public abstract class ListActivity extends Activity {
     protected ListAdapter mAdapter;
-    private boolean mFinishedStart = false;
-
-    private Handler mHandler = new Handler();
     protected ListView mList;
-
+    private boolean mFinishedStart = false;
+    private Handler mHandler = new Handler();
     private AdapterView.OnItemClickListener mOnClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View v, int position,
@@ -24,7 +22,6 @@ public abstract class ListActivity extends Activity {
             onListItemClick((ListView) parent, v, position, id);
         }
     };
-
     private Runnable mRequestFocus = new Runnable() {
         @Override
         public void run() {
@@ -43,6 +40,14 @@ public abstract class ListActivity extends Activity {
         return mAdapter;
     }
 
+    public void setListAdapter(ListAdapter adapter) {
+        synchronized (this) {
+            ensureList();
+            mAdapter = adapter;
+            mList.setAdapter(adapter);
+        }
+    }
+
     public ListView getListView() {
         ensureList();
         return mList;
@@ -57,8 +62,8 @@ public abstract class ListActivity extends Activity {
     }
 
     @Override
-    public void onContentChanged() {
-        super.onContentChanged();
+    public void onSupportContentChanged() {
+        super.onSupportContentChanged();
         View emptyView = findViewById(android.R.id.empty);
         mList = (ListView) findViewById(android.R.id.list);
         if (mList == null) {
@@ -90,14 +95,6 @@ public abstract class ListActivity extends Activity {
     protected void onRestoreInstanceState(Bundle state) {
         ensureList();
         super.onRestoreInstanceState(state);
-    }
-
-    public void setListAdapter(ListAdapter adapter) {
-        synchronized (this) {
-            ensureList();
-            mAdapter = adapter;
-            mList.setAdapter(adapter);
-        }
     }
 
     public void setSelection(int position) {

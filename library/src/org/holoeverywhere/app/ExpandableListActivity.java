@@ -48,8 +48,8 @@ public abstract class ExpandableListActivity extends Activity implements
     }
 
     @Override
-    public void onContentChanged() {
-        super.onContentChanged();
+    public void onSupportContentChanged() {
+        super.onSupportContentChanged();
         View emptyView = findViewById(R.id.empty);
         mList = (ExpandableListView) findViewById(android.R.id.list);
         if (mList == null) {

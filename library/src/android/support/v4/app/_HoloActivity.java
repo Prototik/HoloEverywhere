@@ -63,8 +63,8 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
     public void addContentView(View view, LayoutParams params) {
         if (requestDecorView(view, params, -1)) {
             mDecorView.addView(view, params);
-            onContentChanged();
         }
+        onSupportContentChanged();
     }
 
     protected Holo createConfig(Bundle savedInstanceState) {
@@ -403,8 +403,11 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
         if (requestDecorView(null, null, layoutResID)) {
             mDecorView.removeAllViewsInLayout();
             getThemedLayoutInflater().inflate(layoutResID, mDecorView, true);
-            onContentChanged();
         }
+        onSupportContentChanged();
+    }
+
+    public void onSupportContentChanged() {
     }
 
     @Override
@@ -417,8 +420,8 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
         if (requestDecorView(view, params, -1)) {
             mDecorView.removeAllViewsInLayout();
             mDecorView.addView(view, params);
-            onContentChanged();
         }
+        onSupportContentChanged();
     }
 
     public synchronized void setTheme(int resid, boolean modifyGlobal) {

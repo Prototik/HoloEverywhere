@@ -128,8 +128,8 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
-    public void onContentChanged() {
-        super.onContentChanged();
+    public void onSupportContentChanged() {
+        super.onSupportContentChanged();
         performAddonAction(new AddonCallback<IAddonActivity>() {
             @Override
             public void justAction(IAddonActivity addon) {

@@ -565,8 +565,8 @@ public abstract class PreferenceActivity extends ListActivity implements
     }
 
     @Override
-    public void onContentChanged() {
-        super.onContentChanged();
+    public void onSupportContentChanged() {
+        super.onSupportContentChanged();
         if (mPreferenceManager != null) {
             postBindPreferences();
         }

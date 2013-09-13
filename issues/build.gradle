@@ -4,6 +4,7 @@ dependencies {
     compile project(':library')
     compile project(':addons:preferences')
     compile project(':addons:slider')
+    compile 'com.google.android.gms:play-services:3.2.+@aar'
 }
 
 android {
@@ -21,7 +22,7 @@ android {
             res.srcDirs = ['res']
         }
     }
-    
+
     if (project.hasProperty('holoeverywhere.sign.storeFile')) {
         signingConfigs {
             release {
