@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.internal._View;
 import org.holoeverywhere.widget.LinearLayout;
 
 public class FragmentBreadCrumbs extends ViewGroup implements
@@ -164,10 +165,8 @@ public class FragmentBreadCrumbs extends ViewGroup implements
         maxHeight += getPaddingTop() + getPaddingBottom();
         maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight());
         maxWidth = Math.max(maxWidth, getSuggestedMinimumWidth());
-        setMeasuredDimension(View.resolveSizeAndState(maxWidth,
-                widthMeasureSpec, measuredChildState),
-                View.resolveSizeAndState(maxHeight, heightMeasureSpec,
-                        measuredChildState << View.MEASURED_HEIGHT_STATE_SHIFT));
+        setMeasuredDimension(_View.supportResolveSizeAndState(maxWidth, widthMeasureSpec, measuredChildState),
+                _View.supportResolveSizeAndState(maxHeight, heightMeasureSpec, measuredChildState << View.MEASURED_HEIGHT_STATE_SHIFT));
     }
 
     @SuppressLint("NewApi")
