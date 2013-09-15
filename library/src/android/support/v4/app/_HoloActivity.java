@@ -366,6 +366,12 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
         view.setLongClickable(true);
     }
 
+    protected final void requestDecorView() {
+        if (mDecorView == null) {
+            requestDecorView(null, null, -1);
+        }
+    }
+
     private boolean requestDecorView(View view, LayoutParams params, int layoutRes) {
         if (mDecorView != null) {
             return true;

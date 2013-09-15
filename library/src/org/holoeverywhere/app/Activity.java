@@ -68,6 +68,7 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     public View findViewById(int id) {
+        requestDecorView();
         mFindViewAction.mView = null;
         mFindViewAction.mId = id;
         performAddonAction(mFindViewAction);
