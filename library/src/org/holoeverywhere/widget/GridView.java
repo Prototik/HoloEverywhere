@@ -112,15 +112,17 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
             setOverScrollMode(OVER_SCROLL_NEVER);
         }
 
+        final boolean longClickable = isLongClickable();
         mOnItemLongClickListenerWrapper = new OnItemLongClickListenerWrapper();
         super.setOnItemLongClickListener(mOnItemLongClickListenerWrapper);
-        setLongClickable(false);
+        setLongClickable(longClickable);
 
         if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
-            super.setFastScrollAlwaysVisible(false);
             super.setChoiceMode(CHOICE_MODE_NONE);
+            super.setFastScrollAlwaysVisible(false);
         }
         super.setFastScrollEnabled(false);
+
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsListView,
                 defStyle, R.style.Holo_ListView);
         setFastScrollEnabled(a.getBoolean(R.styleable.AbsListView_android_fastScrollEnabled, false));
@@ -821,6 +823,8 @@ public class GridView extends android.widget.GridView implements OnWindowFocusCh
     protected final void setStateOnView(View child, boolean value) {
         if (child instanceof Checkable) {
             ((Checkable) child).setChecked(value);
+        } else if (child instanceof DrawableCompat.StateStub) {
+            ((DrawableCompat.StateStub) child).setActivated(value);
         } else if (USE_ACTIVATED) {
             child.setActivated(value);
         }

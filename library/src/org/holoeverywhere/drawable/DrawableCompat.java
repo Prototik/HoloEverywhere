@@ -11,7 +11,9 @@ import android.support.v4.util.LongSparseArray;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.util.Xml;
+import android.view.View;
 
+import org.holoeverywhere.internal._View;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -26,10 +28,34 @@ public final class DrawableCompat {
     private static final LongSparseArray<WeakReference<Drawable.ConstantState>> sDrawableCache = new LongSparseArray<WeakReference<Drawable.ConstantState>>();
 
     static {
-        CLASS_MAP.put("rotate", RotateDrawable.class);
-        CLASS_MAP.put("layer-list", LayerDrawable.class);
-        CLASS_MAP.put("selector", StateListDrawable.class);
-        CLASS_MAP.put("color", ColorDrawable.class);
+        registerDrawable(RotateDrawable.class, "rotate");
+        registerDrawable(LayerDrawable.class, "layer-list");
+        registerDrawable(StateListDrawable.class, "selector");
+        registerDrawable(ColorDrawable.class, "color");
+    }
+
+    private DrawableCompat() {
+    }
+
+    public static int[] onCreateDrawableState(View view, int[] state) {
+        if (view instanceof StateStub) {
+            StateStub stub = (StateStub) view;
+            state = _View.supportMergeDrawableStates(state, new int[]{
+                    stub.isActivated() ? android.R.attr.state_activated : -android.R.attr.state_activated
+            });
+        }
+        return state;
+    }
+
+    public static void registerDrawable(Class<? extends Drawable> clazz, String name) {
+        if (name == null || clazz == null) {
+            throw new NullPointerException("Class: " + clazz + ". Name: " + name);
+        }
+        CLASS_MAP.put(name, clazz);
+    }
+
+    public static void unregisterDrawable(String name) {
+        CLASS_MAP.remove(name);
     }
 
     public static Drawable createFromPath(String pathName) {
@@ -166,7 +192,14 @@ public final class DrawableCompat {
         return dr;
     }
 
-    private DrawableCompat() {
+    public static int obtainExtraSpace(int extraSpace) {
+        return extraSpace + 1;
+    }
+
+    public static interface StateStub {
+        public boolean isActivated();
+
+        public void setActivated(boolean activated);
     }
 
 }

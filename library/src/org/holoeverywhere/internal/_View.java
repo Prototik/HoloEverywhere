@@ -41,7 +41,6 @@ public class _View extends android.view.View implements Drawable.Callback,
             SUPPORT_PRESSED_ENABLED_FOCUSED_WINDOW_FOCUSED_STATE_SET,
             SUPPORT_PRESSED_ENABLED_FOCUSED_SELECTED_STATE_SET,
             SUPPORT_PRESSED_ENABLED_FOCUSED_SELECTED_WINDOW_FOCUSED_STATE_SET;
-
     static final int VIEW_STATE_ACCELERATED = 1 << 6;
     static final int VIEW_STATE_ACTIVATED = 1 << 5;
     static final int VIEW_STATE_DRAG_CAN_ACCEPT = 1 << 8;
@@ -51,18 +50,7 @@ public class _View extends android.view.View implements Drawable.Callback,
     static final int VIEW_STATE_HOVERED = 1 << 7;
     static final int VIEW_STATE_PRESSED = 1 << 4;
     static final int VIEW_STATE_SELECTED = 1 << 1;
-    private static final int[][] VIEW_STATE_SETS;
-
     static final int VIEW_STATE_WINDOW_FOCUSED = 1;
-
-    private static final int[] ViewDrawableStates = {
-            android.R.attr.state_pressed, android.R.attr.state_focused,
-            android.R.attr.state_selected, android.R.attr.state_window_focused,
-            android.R.attr.state_enabled, android.R.attr.state_activated,
-            android.R.attr.state_accelerated, android.R.attr.state_hovered,
-            android.R.attr.state_drag_can_accept,
-            android.R.attr.state_drag_hovered
-    };
     static final int[] Z_VIEW_STATE_IDS = new int[]{
             android.R.attr.state_window_focused,
             _View.VIEW_STATE_WINDOW_FOCUSED, android.R.attr.state_selected,
@@ -78,6 +66,14 @@ public class _View extends android.view.View implements Drawable.Callback,
     };
 
     static {
+        ViewDrawableStates = new int[]{
+                android.R.attr.state_pressed, android.R.attr.state_focused,
+                android.R.attr.state_selected, android.R.attr.state_window_focused,
+                android.R.attr.state_enabled, android.R.attr.state_activated,
+                android.R.attr.state_accelerated, android.R.attr.state_hovered,
+                android.R.attr.state_drag_can_accept,
+                android.R.attr.state_drag_hovered
+        };
         if (_View.Z_VIEW_STATE_IDS.length / 2 != _View.ViewDrawableStates.length) {
             throw new IllegalStateException(
                     "VIEW_STATE_IDs array length does not match ViewDrawableStates style array");
@@ -179,6 +175,31 @@ public class _View extends android.view.View implements Drawable.Callback,
                 | _View.VIEW_STATE_ENABLED | _View.VIEW_STATE_PRESSED];
     }
 
+    private static final int[][] VIEW_STATE_SETS;
+    private static final int[] ViewDrawableStates;
+
+    public _View(Context context) {
+        super(context);
+    }
+
+    public _View(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public _View(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
+
+    public static int[] supportMergeDrawableStates(int[] baseState, int[] additionalState) {
+        final int N = baseState.length;
+        int i = N - 1;
+        while (i >= 0 && baseState[i] == 0) {
+            i--;
+        }
+        System.arraycopy(additionalState, 0, baseState, i + 1, additionalState.length);
+        return baseState;
+    }
+
     public static int supportResolveSize(int size, int measureSpec) {
         return _View.supportResolveSizeAndState(size, measureSpec, 0)
                 & android.view.View.MEASURED_SIZE_MASK;
@@ -206,18 +227,6 @@ public class _View extends android.view.View implements Drawable.Callback,
         }
         return result | childMeasuredState
                 & android.view.View.MEASURED_STATE_MASK;
-    }
-
-    public _View(Context context) {
-        super(context);
-    }
-
-    public _View(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public _View(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
     }
 
     public int getMeasuredStateInt() {

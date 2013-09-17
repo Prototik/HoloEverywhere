@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.holoeverywhere.issues.i625.FrameLayoutStub xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/i625"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/simple_list_item_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</org.holoeverywhere.issues.i625.FrameLayoutStub>
