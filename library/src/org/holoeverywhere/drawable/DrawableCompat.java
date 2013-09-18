@@ -1,6 +1,7 @@
 
 package org.holoeverywhere.drawable;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 import android.content.res.TypedArray;
@@ -11,7 +12,6 @@ import android.support.v4.util.LongSparseArray;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.util.Xml;
-import android.view.View;
 
 import org.holoeverywhere.internal._View;
 import org.xmlpull.v1.XmlPullParser;
@@ -35,16 +35,6 @@ public final class DrawableCompat {
     }
 
     private DrawableCompat() {
-    }
-
-    public static int[] onCreateDrawableState(View view, int[] state) {
-        if (view instanceof StateStub) {
-            StateStub stub = (StateStub) view;
-            state = _View.supportMergeDrawableStates(state, new int[]{
-                    stub.isActivated() ? android.R.attr.state_activated : -android.R.attr.state_activated
-            });
-        }
-        return state;
     }
 
     public static void registerDrawable(Class<? extends Drawable> clazz, String name) {
@@ -192,14 +182,71 @@ public final class DrawableCompat {
         return dr;
     }
 
-    public static int obtainExtraSpace(int extraSpace) {
-        return extraSpace + 1;
-    }
-
     public static interface StateStub {
         public boolean isActivated();
 
         public void setActivated(boolean activated);
     }
 
+    public static interface IStateOverlay extends StateStub {
+        public void refreshDrawableState();
+
+        public void invalidate();
+
+        public int[] superOnCreateDrawableState(int extraSpace);
+    }
+
+    public static class StateOverlay implements StateStub {
+        private static final int FLAG_ACTIVATED = 1 << 0;
+        private final IStateOverlay mOverlayInterface;
+        private int mFlags;
+
+        public StateOverlay(IStateOverlay overlayInterface) {
+            mOverlayInterface = overlayInterface;
+        }
+
+        public StateOverlay(IStateOverlay overlayInterface, Context context, AttributeSet attrs, int defStyle) {
+            this(overlayInterface);
+            init(context, attrs, defStyle);
+        }
+
+        private void setFlag(int flag, boolean value) {
+            mFlags = (mFlags & ~flag) | (value ? flag : 0);
+        }
+
+        private boolean getFlag(int flag) {
+            return (mFlags & flag) == flag;
+        }
+
+        @Override
+        public boolean isActivated() {
+            return getFlag(FLAG_ACTIVATED);
+        }
+
+        @Override
+        public void setActivated(boolean activated) {
+            if (isActivated() != activated) {
+                setFlag(FLAG_ACTIVATED, activated);
+                mOverlayInterface.invalidate();
+                mOverlayInterface.refreshDrawableState();
+            }
+        }
+
+        public void init(Context context, AttributeSet attrs, int defStyle) {
+            TypedArray a = context.obtainStyledAttributes(attrs, new int[]{
+                    android.R.attr.state_activated
+            }, defStyle, 0);
+            setActivated(a.getBoolean(0, false));
+            a.recycle();
+        }
+
+        public int[] onCreateDrawableState(int extraSpace) {
+            extraSpace += 1;
+            int[] state = mOverlayInterface.superOnCreateDrawableState(extraSpace);
+            state = _View.supportMergeDrawableStates(state, new int[]{
+                    mOverlayInterface.isActivated() ? android.R.attr.state_activated : -android.R.attr.state_activated
+            });
+            return state;
+        }
+    }
 }

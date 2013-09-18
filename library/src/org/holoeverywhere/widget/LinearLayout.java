@@ -16,13 +16,10 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import org.holoeverywhere.R;
+import org.holoeverywhere.drawable.DrawableCompat;
 
-public class LinearLayout extends android.widget.LinearLayout {
+public class LinearLayout extends android.widget.LinearLayout implements DrawableCompat.IStateOverlay {
     public static final int HORIZONTAL = 0;
-    private static final int INDEX_BOTTOM = 2;
-    private static final int INDEX_CENTER_VERTICAL = 0;
-    private static final int INDEX_FILL = 3;
-    private static final int INDEX_TOP = 1;
     public static final int LAYOUT_DIRECTION_LTR = 0;
     public static final int LAYOUT_DIRECTION_RTL = 1;
     public static final int SHOW_DIVIDER_ALL = 7;
@@ -31,53 +28,12 @@ public class LinearLayout extends android.widget.LinearLayout {
     public static final int SHOW_DIVIDER_MIDDLE = 2;
     public static final int SHOW_DIVIDER_NONE = 0;
     public static final int VERTICAL = 1;
+    private static final int INDEX_BOTTOM = 2;
+    private static final int INDEX_CENTER_VERTICAL = 0;
+    private static final int INDEX_FILL = 3;
+    private static final int INDEX_TOP = 1;
     private static final int VERTICAL_GRAVITY_COUNT = 4;
-
-    public static int getAbsoluteGravity(int gravity, int layoutDirection) {
-        int result = gravity;
-        if ((result & Gravity.RELATIVE_LAYOUT_DIRECTION) > 0) {
-            if ((result & Gravity.START) == Gravity.START) {
-                result &= ~Gravity.START;
-                if (layoutDirection == LAYOUT_DIRECTION_RTL) {
-                    result |= Gravity.RIGHT;
-                } else {
-                    result |= Gravity.LEFT;
-                }
-            } else if ((result & Gravity.END) == Gravity.END) {
-                result &= ~Gravity.END;
-                if (layoutDirection == LAYOUT_DIRECTION_RTL) {
-                    result |= Gravity.LEFT;
-                } else {
-                    result |= Gravity.RIGHT;
-                }
-            }
-            result &= ~Gravity.RELATIVE_LAYOUT_DIRECTION;
-        }
-        return result;
-    }
-
-    public static int resolveSizeAndState(int size, int measureSpec, int childMeasuredState) {
-        int result = size;
-        int specMode = MeasureSpec.getMode(measureSpec);
-        int specSize = MeasureSpec.getSize(measureSpec);
-        switch (specMode) {
-            case MeasureSpec.UNSPECIFIED:
-                result = size;
-                break;
-            case MeasureSpec.AT_MOST:
-                if (specSize < size) {
-                    result = specSize | MEASURED_STATE_TOO_SMALL;
-                } else {
-                    result = size;
-                }
-                break;
-            case MeasureSpec.EXACTLY:
-                result = specSize;
-                break;
-        }
-        return result | childMeasuredState & MEASURED_STATE_MASK;
-    }
-
+    private final DrawableCompat.StateOverlay mStateOverlay;
     @ViewDebug.ExportedProperty(category = "layout")
     private boolean mBaselineAligned = true;
     @ViewDebug.ExportedProperty(category = "layout")
@@ -130,7 +86,6 @@ public class LinearLayout extends android.widget.LinearLayout {
     private int mTotalLength;
     @ViewDebug.ExportedProperty(category = "layout")
     private boolean mUseLargestChild;
-
     @ViewDebug.ExportedProperty(category = "layout")
     private float mWeightSum;
 
@@ -171,8 +126,74 @@ public class LinearLayout extends android.widget.LinearLayout {
         a.getValue(R.styleable.LinearLayout_android_dividerPadding, value);
         mDividerPadding = TypedValue.complexToDimensionPixelSize(value.data, context.getResources()
                 .getDisplayMetrics());
-
         a.recycle();
+
+        mStateOverlay = new DrawableCompat.StateOverlay(this, context, attrs, defStyle);
+    }
+
+    public static int getAbsoluteGravity(int gravity, int layoutDirection) {
+        int result = gravity;
+        if ((result & Gravity.RELATIVE_LAYOUT_DIRECTION) > 0) {
+            if ((result & Gravity.START) == Gravity.START) {
+                result &= ~Gravity.START;
+                if (layoutDirection == LAYOUT_DIRECTION_RTL) {
+                    result |= Gravity.RIGHT;
+                } else {
+                    result |= Gravity.LEFT;
+                }
+            } else if ((result & Gravity.END) == Gravity.END) {
+                result &= ~Gravity.END;
+                if (layoutDirection == LAYOUT_DIRECTION_RTL) {
+                    result |= Gravity.LEFT;
+                } else {
+                    result |= Gravity.RIGHT;
+                }
+            }
+            result &= ~Gravity.RELATIVE_LAYOUT_DIRECTION;
+        }
+        return result;
+    }
+
+    public static int resolveSizeAndState(int size, int measureSpec, int childMeasuredState) {
+        int result = size;
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+        switch (specMode) {
+            case MeasureSpec.UNSPECIFIED:
+                result = size;
+                break;
+            case MeasureSpec.AT_MOST:
+                if (specSize < size) {
+                    result = specSize | MEASURED_STATE_TOO_SMALL;
+                } else {
+                    result = size;
+                }
+                break;
+            case MeasureSpec.EXACTLY:
+                result = specSize;
+                break;
+        }
+        return result | childMeasuredState & MEASURED_STATE_MASK;
+    }
+
+    @Override
+    public boolean isActivated() {
+        return mStateOverlay.isActivated();
+    }
+
+    @Override
+    public void setActivated(boolean activated) {
+        mStateOverlay.setActivated(activated);
+    }
+
+    @Override
+    protected int[] onCreateDrawableState(int extraSpace) {
+        return mStateOverlay.onCreateDrawableState(extraSpace);
+    }
+
+    @Override
+    public int[] superOnCreateDrawableState(int extraSpace) {
+        return super.onCreateDrawableState(extraSpace);
     }
 
     @Override
@@ -354,6 +375,15 @@ public class LinearLayout extends android.widget.LinearLayout {
         return mBaselineAlignedChildIndex;
     }
 
+    @Override
+    public void setBaselineAlignedChildIndex(int i) {
+        if (i < 0 || i >= getChildCount()) {
+            throw new IllegalArgumentException("base aligned child index out "
+                    + "of range (0, " + getChildCount() + ")");
+        }
+        mBaselineAlignedChildIndex = i;
+    }
+
     int getChildrenSkipCount(View child, int index) {
         return 0;
     }
@@ -364,8 +394,30 @@ public class LinearLayout extends android.widget.LinearLayout {
     }
 
     @Override
+    public void setDividerDrawable(Drawable divider) {
+        if (divider == mDivider) {
+            return;
+        }
+        mDivider = divider;
+        if (divider != null) {
+            mDividerWidth = divider.getIntrinsicWidth();
+            mDividerHeight = divider.getIntrinsicHeight();
+        } else {
+            mDividerWidth = 0;
+            mDividerHeight = 0;
+        }
+        setWillNotDraw(divider == null);
+        requestLayout();
+    }
+
+    @Override
     public int getDividerPadding() {
         return mDividerPadding;
+    }
+
+    @Override
+    public void setDividerPadding(int padding) {
+        mDividerPadding = padding;
     }
 
     public int getDividerWidth() {
@@ -390,8 +442,24 @@ public class LinearLayout extends android.widget.LinearLayout {
     }
 
     @Override
+    public void setOrientation(int orientation) {
+        if (mOrientation != orientation) {
+            mOrientation = orientation;
+            requestLayout();
+        }
+    }
+
+    @Override
     public int getShowDividers() {
         return mShowDividers;
+    }
+
+    @Override
+    public void setShowDividers(int showDividers) {
+        if (showDividers != mShowDividers) {
+            requestLayout();
+        }
+        mShowDividers = showDividers;
     }
 
     View getVirtualChildAt(int index) {
@@ -405,6 +473,11 @@ public class LinearLayout extends android.widget.LinearLayout {
     @Override
     public float getWeightSum() {
         return mWeightSum;
+    }
+
+    @Override
+    public void setWeightSum(float weightSum) {
+        mWeightSum = Math.max(0.0f, weightSum);
     }
 
     protected boolean hasDividerBeforeChildAt(int childIndex) {
@@ -430,6 +503,11 @@ public class LinearLayout extends android.widget.LinearLayout {
         return mBaselineAligned;
     }
 
+    @Override
+    public void setBaselineAligned(boolean baselineAligned) {
+        mBaselineAligned = baselineAligned;
+    }
+
     protected boolean isLayoutRtl() {
         return getLayoutDirection() == LAYOUT_DIRECTION_RTL;
     }
@@ -437,6 +515,11 @@ public class LinearLayout extends android.widget.LinearLayout {
     @Override
     public boolean isMeasureWithLargestChildEnabled() {
         return mUseLargestChild;
+    }
+
+    @Override
+    public void setMeasureWithLargestChildEnabled(boolean enabled) {
+        mUseLargestChild = enabled;
     }
 
     void layoutHorizontal() {
@@ -1108,44 +1191,8 @@ public class LinearLayout extends android.widget.LinearLayout {
         }
     }
 
-    @Override
-    public void setBaselineAligned(boolean baselineAligned) {
-        mBaselineAligned = baselineAligned;
-    }
-
-    @Override
-    public void setBaselineAlignedChildIndex(int i) {
-        if (i < 0 || i >= getChildCount()) {
-            throw new IllegalArgumentException("base aligned child index out "
-                    + "of range (0, " + getChildCount() + ")");
-        }
-        mBaselineAlignedChildIndex = i;
-    }
-
     private void setChildFrame(View child, int left, int top, int width, int height) {
         child.layout(left, top, left + width, top + height);
-    }
-
-    @Override
-    public void setDividerDrawable(Drawable divider) {
-        if (divider == mDivider) {
-            return;
-        }
-        mDivider = divider;
-        if (divider != null) {
-            mDividerWidth = divider.getIntrinsicWidth();
-            mDividerHeight = divider.getIntrinsicHeight();
-        } else {
-            mDividerWidth = 0;
-            mDividerHeight = 0;
-        }
-        setWillNotDraw(divider == null);
-        requestLayout();
-    }
-
-    @Override
-    public void setDividerPadding(int padding) {
-        mDividerPadding = padding;
     }
 
     @Override
@@ -1172,38 +1219,12 @@ public class LinearLayout extends android.widget.LinearLayout {
     }
 
     @Override
-    public void setMeasureWithLargestChildEnabled(boolean enabled) {
-        mUseLargestChild = enabled;
-    }
-
-    @Override
-    public void setOrientation(int orientation) {
-        if (mOrientation != orientation) {
-            mOrientation = orientation;
-            requestLayout();
-        }
-    }
-
-    @Override
-    public void setShowDividers(int showDividers) {
-        if (showDividers != mShowDividers) {
-            requestLayout();
-        }
-        mShowDividers = showDividers;
-    }
-
-    @Override
     public void setVerticalGravity(int verticalGravity) {
         final int gravity = verticalGravity & Gravity.VERTICAL_GRAVITY_MASK;
         if ((mGravity & Gravity.VERTICAL_GRAVITY_MASK) != gravity) {
             mGravity = mGravity & ~Gravity.VERTICAL_GRAVITY_MASK | gravity;
             requestLayout();
         }
-    }
-
-    @Override
-    public void setWeightSum(float weightSum) {
-        mWeightSum = Math.max(0.0f, weightSum);
     }
 
     @Override

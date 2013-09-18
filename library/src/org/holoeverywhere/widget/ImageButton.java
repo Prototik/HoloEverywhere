@@ -1,23 +1,23 @@
-
 package org.holoeverywhere.widget;
+
 
 import android.content.Context;
 import android.util.AttributeSet;
 
 import org.holoeverywhere.drawable.DrawableCompat;
 
-public class FrameLayout extends android.widget.FrameLayout implements DrawableCompat.IStateOverlay {
+public class ImageButton extends android.widget.ImageButton implements DrawableCompat.IStateOverlay {
     private final DrawableCompat.StateOverlay mStateOverlay;
 
-    public FrameLayout(Context context) {
+    public ImageButton(Context context) {
         this(context, null);
     }
 
-    public FrameLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    public ImageButton(Context context, AttributeSet attrs) {
+        this(context, attrs, android.R.attr.imageButtonStyle);
     }
 
-    public FrameLayout(Context context, AttributeSet attrs, int defStyle) {
+    public ImageButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mStateOverlay = new DrawableCompat.StateOverlay(this, context, attrs, defStyle);
     }
@@ -33,7 +33,7 @@ public class FrameLayout extends android.widget.FrameLayout implements DrawableC
     }
 
     @Override
-    protected int[] onCreateDrawableState(int extraSpace) {
+    public int[] onCreateDrawableState(int extraSpace) {
         return mStateOverlay.onCreateDrawableState(extraSpace);
     }
 
