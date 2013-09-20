@@ -34,6 +34,9 @@ public class FrameLayout extends android.widget.FrameLayout implements DrawableC
 
     @Override
     protected int[] onCreateDrawableState(int extraSpace) {
+        if (mStateOverlay == null) {
+            return super.onCreateDrawableState(extraSpace);
+        }
         return mStateOverlay.onCreateDrawableState(extraSpace);
     }
 

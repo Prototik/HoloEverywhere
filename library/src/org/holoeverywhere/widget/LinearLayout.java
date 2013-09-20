@@ -188,6 +188,9 @@ public class LinearLayout extends android.widget.LinearLayout implements Drawabl
 
     @Override
     protected int[] onCreateDrawableState(int extraSpace) {
+        if (mStateOverlay == null) {
+            return super.onCreateDrawableState(extraSpace);
+        }
         return mStateOverlay.onCreateDrawableState(extraSpace);
     }
 

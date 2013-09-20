@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionCode="2000000" android:versionName="2.0.0" package="org.holoeverywhere.demo">
 	<uses-sdk android:minSdkVersion="7" android:targetSdkVersion="16"/>
-	<instrumentation android:label="HoloEverywhere Test" android:name=".test.TestRunner" android:targetPackage="org.holoeverywhere.demo"/>
 	<application android:allowBackup="true" android:hardwareAccelerated="true" android:icon="@drawable/icon" android:label="@string/app_name" android:name=".DemoApplication">
 		<activity android:launchMode="singleInstance" android:name=".DemoActivity" android:windowSoftInputMode="stateHidden">
 			<intent-filter>
@@ -11,7 +10,5 @@
 		</activity>
 		<activity android:name=".DemoDialogActivity"/>
 		<activity android:excludeFromRecents="true" android:finishOnCloseSystemDialogs="true" android:multiprocess="true" android:name="org.holoeverywhere.content.ChooserActivity" android:theme="@style/Holo.Theme.Dialog.Alert.Light"/>
-		<uses-library android:name="android.test.runner" android:required="false"/>
-		<activity android:name=".test.app.TestActivity" android:theme="@style/Holo.Theme"/>
 	</application>
 </manifest>

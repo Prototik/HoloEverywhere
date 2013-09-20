@@ -39,6 +39,9 @@ public class Button extends android.widget.Button implements FontStyleProvider, 
 
     @Override
     protected int[] onCreateDrawableState(int extraSpace) {
+        if (mStateOverlay == null) {
+            return super.onCreateDrawableState(extraSpace);
+        }
         return mStateOverlay.onCreateDrawableState(extraSpace);
     }
 

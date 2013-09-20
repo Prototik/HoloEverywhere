@@ -120,7 +120,9 @@ public class Application extends android.app.Application implements
         // Cruel fallback for some crazy people who using application like view context
         // You are warned
         // Really
-        setTheme(ThemeManager.getThemeResource(ThemeManager.getDefaultTheme()));
+        if (ThemeManager.getThemeType(this) == ThemeManager.INVALID) {
+            setTheme(ThemeManager.getThemeResource(ThemeManager.getDefaultTheme()));
+        }
 
         addon(sInitialAddons);
         performAddonAction(new AddonCallback<IAddonApplication>() {
