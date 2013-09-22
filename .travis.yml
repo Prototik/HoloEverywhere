@@ -10,7 +10,7 @@ env:
   global:
     # Android SDK
     - ANDROID_SDK_VERSION="r22.0.4"
-    - ANDROID_BUILD_TOOLS_VERSION="r18.0.1"
+    - ANDROID_BUILD_TOOLS_VERSION="r18.1"
     # Your Sonatype login
     - SONATYPE_USERNAME=prototik
     # Your Sonatype password, encrypted by 'travis encrypt -r GitHubLogin/Repo SONATYPE_PASSWORD=pass'
@@ -31,7 +31,7 @@ before_install:
   - wget https://dl-ssl.google.com/android/android-sdk_${ANDROID_SDK_VERSION}-linux.tgz -q
   - tar -zxf android-sdk_${ANDROID_SDK_VERSION}-linux.tgz
   - export ANDROID_HOME=`pwd`/android-sdk-linux
-  - export ANDROID_BUILD_TOOLS_HOME=${ANDROID_HOME}/build-tools/18.0.1
+  - export ANDROID_BUILD_TOOLS_HOME=${ANDROID_HOME}/build-tools/18.1
   - export PATH=${ANDROID_BUILD_TOOLS_HOME}:${ANDROID_HOME}/tools:${PATH}
   
   - export BASEDIR=`pwd`
