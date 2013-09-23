@@ -38,6 +38,7 @@ import org.holoeverywhere.R;
 import org.holoeverywhere.widget.FrameLayout;
 import org.holoeverywhere.widget.LinearLayout;
 import org.holoeverywhere.widget.ListPopupWindow;
+import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.PopupWindow;
 import org.holoeverywhere.widget.TextView;
 
@@ -535,7 +536,7 @@ public class ActivityChooserView extends ViewGroup implements
 
         // AdapterView#OnItemClickListener
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            ActivityChooserViewAdapter adapter = (ActivityChooserViewAdapter) parent.getAdapter();
+            ActivityChooserViewAdapter adapter = (ActivityChooserViewAdapter) ((ListView) parent).getAdapterSource();
             final int itemViewType = adapter.getItemViewType(position);
             switch (itemViewType) {
                 case ActivityChooserViewAdapter.ITEM_VIEW_TYPE_FOOTER: {
