@@ -126,6 +126,7 @@ public class FontLoader {
         }
         font.mContext = view.getContext();
         applyInternal(view, font);
+        font.mContext = null;
         return view;
     }
 
@@ -350,7 +351,9 @@ public class FontLoader {
 
         private Typeface getTypeface(Font font, String fontFamily, int fontStyle) {
             font.mContext = getContext();
-            return font.getTypeface(fontFamily, fontStyle);
+            final Typeface typeface = font.getTypeface(fontFamily, fontStyle);
+            font.mContext = null;
+            return typeface;
         }
 
         @Override
