@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.holoeverywhere</groupId>
+	<artifactId>parent</artifactId>
+	<packaging>pom</packaging>
+	<version>2.0.0-SNAPSHOT</version>
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
+	<name>HoloEverywhere Parent</name>
+	<description>Backport Holo Theme from Android 4.* to 2.1+</description>
+	<url>https://github.com/Prototik/HoloEverywhere</url>
+	<inceptionYear>2012</inceptionYear>
+
+	<modules>
+		<module>library</module>
+	</modules>
+
+	<scm>
+		<url>https://github.com/Prototik/HoloEverywhere</url>
+		<connection>scm:git:git://github.com/Prototik/HoloEverywhere.git</connection>
+		<developerConnection>scm:git:git@github.com:Prototik/HoloEverywhere.git</developerConnection>
+		<tag>v1.6.8</tag>
+	</scm>
+
+	<ciManagement>
+		<system>travis</system>
+		<url>http://travis-ci.org/Prototik/HoloEverywhere</url>
+	</ciManagement>
+
+	<developers>
+		<developer>
+			<name>Christophe Versieux</name>
+			<id>ChristopheVersieux</id>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+
+		<developer>
+			<name>Sergey Shatunov</name>
+			<id>Prototik</id>
+			<email>prototypegamez@gmail.com</email>
+			<timezone>+8</timezone>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/Prototik/HoloEverywhere/issues</url>
+	</issueManagement>
+	
+	<repositories>
+		<repository>
+			<id>holoeverywhereRepo</id>
+			<name>HoloEverywhere Repo</name>
+			<url>https://raw.github.com/Prototik/HoloEverywhere/repo</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>holoeverywhere-repo</id>
+			<name>HoloEverywhere Repo</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+			<uniqueVersion>true</uniqueVersion>
+		</repository>
+
+		<snapshotRepository>
+			<id>holoeverywhere-repo-snapshots</id>
+			<name>HoloEverywhere Repo Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+
+		<site>
+			<id>holoeverywhere-website</id>
+			<name>HoloEverywhere Website</name>
+			<url>http://holoeverywhere.org/</url>
+		</site>
+	</distributionManagement>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE</url>
+			<distribution>repo</distribution>
+			<comments>Copyright (c) 2013 Sergey Shatunov</comments>
+		</license>
+	</licenses>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<java.version>1.6</java.version>
+		<junit.version>4.8.1</junit.version>
+
+		<github.downloads.repositoryOwner>Prototik</github.downloads.repositoryOwner>
+		<github.downloads.repositoryName>HoloEverywhere</github.downloads.repositoryName>
+
+		<holo.resbuilder.buildAll>true</holo.resbuilder.buildAll>
+		<holo.resbuilder.outputDir>${project.basedir}/res</holo.resbuilder.outputDir>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>android</groupId>
+				<artifactId>android</artifactId>
+				<version>4.3_r2</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.android.support</groupId>
+				<artifactId>support-v4</artifactId>
+				<version>18.0.1</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.holoeverywhere</groupId>
+					<artifactId>resbuilder</artifactId>
+					<version>2.1.1</version>
+					<inherited>true</inherited>
+					<executions>
+						<execution>
+							<goals>
+								<goal>build</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<verbose>false</verbose>
+						<includeDirs>
+							<dir>${project.basedir}/resbuilder</dir>
+						</includeDirs>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<inherited>true</inherited>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.9</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.4.1</version>
+					<configuration>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<tagNameFormat>v@{project.version}</tagNameFormat>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.4</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.13</version>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.2</version>
+					<configuration>
+						<skip>true</skip>
+						<skipDeploy>true</skipDeploy>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+					<artifactId>android-maven-plugin</artifactId>
+					<version>3.6.1</version>
+					<inherited>true</inherited>
+					<extensions>true</extensions>
+					<configuration>
+						<sign>
+							<debug>false</debug>
+						</sign>
+						<zipalign>
+							<skip>true</skip>
+						</zipalign>
+						<undeployBeforeDeploy>true</undeployBeforeDeploy>
+						<proguard>
+							<skip>true</skip>
+						</proguard>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.holoeverywhere</groupId>
+										<artifactId>resbuilder</artifactId>
+										<versionRange>${project.version}</versionRange>
+										<goals>
+											<goal>build</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<version>2.10</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

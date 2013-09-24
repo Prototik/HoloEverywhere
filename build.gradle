@@ -16,7 +16,7 @@ allprojects {
     mavenLocal()
     mavenCentral()
     maven {
-      url "https://github.com/Prototik/HoloEverywhere/raw/repo"
+      url "https://raw.github.com/Prototik/HoloEverywhere/repo"
     }
   }
   
