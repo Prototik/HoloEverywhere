@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0">
+	<info organisation="org.holoeverywhere" module="library"/>
+	<dependencies>
+		<dependency org="com.android.support" name="support-v4" rev="18.0.1"/>
+	</dependencies>
+</ivy-module>

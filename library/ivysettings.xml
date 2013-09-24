@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivysettings>
+    <settings defaultResolver="holoEverywhere"/>
+    <resolvers>
+        <chain name="holoEverywhere">
+            <ibiblio name="central" m2compatible="true"/>
+            <ibiblio name="holoEverywhere" m2compatible="true" root="https://raw.github.com/Prototik/HoloEverywhere/repo/"/>
+        </chain>
+    </resolvers>
+</ivysettings>
