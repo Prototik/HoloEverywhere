@@ -20,6 +20,8 @@
 
 	<modules>
 		<module>library</module>
+		<module>addons</module>
+		<module>demo</module>
 	</modules>
 
 	<scm>

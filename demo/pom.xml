@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>demo</artifactId>
+	<name>HoloEverywhere Demo</name>
+	<packaging>apk</packaging>
+
+	<parent>
+		<groupId>org.holoeverywhere</groupId>
+		<artifactId>parent</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.holoeverywhere</groupId>
+			<artifactId>library</artifactId>
+			<version>${project.version}</version>
+			<type>apklib</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.holoeverywhere</groupId>
+			<artifactId>addon-slider</artifactId>
+			<version>${project.version}</version>
+			<type>apklib</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.holoeverywhere</groupId>
+			<artifactId>addon-preferences</artifactId>
+			<version>${project.version}</version>
+			<type>apklib</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+
+		<plugins>
+			<plugin>
+				<groupId>org.holoeverywhere</groupId>
+				<artifactId>resbuilder</artifactId>
+				<configuration>
+					<buildAll>false</buildAll>
+					<includeDirs>
+						<dir>${project.basedir}/resbuilder</dir>
+						<dir>${project.basedir}/../library/resbuilder</dir>
+					</includeDirs>
+					<inputFiles>
+						<file>strings.json:strings</file>
+						<file>themes.json:styles</file>
+						<file>attrs.json:attrs</file>
+					</inputFiles>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
