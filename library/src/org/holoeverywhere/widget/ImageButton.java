@@ -34,6 +34,9 @@ public class ImageButton extends android.widget.ImageButton implements DrawableC
 
     @Override
     public int[] onCreateDrawableState(int extraSpace) {
+        if(mStateOverlay == null) {
+            return super.onCreateDrawableState(extraSpace);
+        }
         return mStateOverlay.onCreateDrawableState(extraSpace);
     }
 
