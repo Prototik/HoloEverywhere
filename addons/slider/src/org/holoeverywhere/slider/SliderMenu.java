@@ -104,7 +104,7 @@ public class SliderMenu implements OnBackStackChangedListener {
     }
 
     private static void setTextAppearance(TextView textView, int resid) {
-        if (resid != 0) {
+        if (resid != 0 && textView != null) {
             textView.setTextAppearance(textView.getContext(), resid);
         }
     }
@@ -178,12 +178,12 @@ public class SliderMenu implements OnBackStackChangedListener {
         return item;
     }
 
-    public void bind(ListFragment listFragment) {
+    public void bind(Fragment listFragment) {
         bind(listFragment, null);
     }
 
-    public void bind(ListFragment listFragment, Context context) {
-        bind(listFragment.getListView(), context);
+    public void bind(Fragment listFragment, Context context) {
+        bind((ListView) listFragment.getView().findViewById(android.R.id.list), context);
     }
 
     public void bind(ListView listView) {
@@ -528,7 +528,7 @@ public class SliderMenu implements OnBackStackChangedListener {
     }
 
     public static enum SelectionBehavior {
-        BackgroundWhenSelected, Default, OnlyBackground, OnlyHandler;
+        BackgroundWhenSelected, Default, OnlyBackground, OnlyHandler, Disabled;
     }
 
     public static class SliderItem implements Parcelable {
