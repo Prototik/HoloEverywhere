@@ -27,7 +27,6 @@ import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
 import org.holoeverywhere.addon.IAddonThemes;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Fragment;
-import org.holoeverywhere.app.ListFragment;
 import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.TextView;
 
@@ -392,12 +391,12 @@ public class SliderMenu implements OnBackStackChangedListener {
 
     public void makeDefaultMenu(Context context) {
         setInverseTextColorWhenSelected(ThemeManager.getThemeType(mAddon.get()) != ThemeManager.LIGHT);
-        ListFragment menuFragment = (ListFragment) mFragmentManager.findFragmentById(R.id.leftView);
+        Fragment menuFragment = (Fragment) mFragmentManager.findFragmentById(R.id.leftView);
         if (menuFragment == null) {
-            menuFragment = (ListFragment) mFragmentManager.findFragmentById(R.id.rightView);
+            menuFragment = (Fragment) mFragmentManager.findFragmentById(R.id.rightView);
         }
         if (menuFragment == null) {
-            throw new IllegalStateException("Couldn't find ListFragment for menu");
+            throw new IllegalStateException("Couldn't find Fragment for menu");
         }
         bind(menuFragment, context);
     }
