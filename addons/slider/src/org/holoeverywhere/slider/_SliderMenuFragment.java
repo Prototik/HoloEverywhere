@@ -1,4 +1,3 @@
-
 package org.holoeverywhere.slider;
 
 import android.os.Bundle;
@@ -8,9 +7,9 @@ import android.view.ViewGroup;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.addon.AddonSlider;
 import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
-import org.holoeverywhere.app.Fragment;
+import org.holoeverywhere.app.ListFragment;
 
-public class _SliderMenuFragment extends Fragment {
+public class _SliderMenuFragment extends ListFragment {
     private AddonSliderA addonSlider() {
         return getSupportActivity().addon(AddonSlider.class);
     }
