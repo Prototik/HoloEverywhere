@@ -392,9 +392,9 @@ public class SliderMenu implements OnBackStackChangedListener {
 
     public void makeDefaultMenu(Context context) {
         setInverseTextColorWhenSelected(ThemeManager.getThemeType(mAddon.get()) != ThemeManager.LIGHT);
-        ListFragment menuFragment = (ListFragment) mFragmentManager.findFragmentById(R.id.leftView);
+        Fragment menuFragment = (Fragment) mFragmentManager.findFragmentById(R.id.leftView);
         if (menuFragment == null) {
-            menuFragment = (ListFragment) mFragmentManager.findFragmentById(R.id.rightView);
+            menuFragment = (Fragment) mFragmentManager.findFragmentById(R.id.rightView);
         }
         if (menuFragment == null) {
             throw new IllegalStateException("Couldn't find ListFragment for menu");
