@@ -381,6 +381,11 @@ public class DialogFragment extends Fragment implements
     public int show(FragmentManager manager, String tag) {
         return show(manager.beginTransaction(), tag);
     }
+    
+    @Deprecated
+    public int showAllowingStateLoss(FragmentManager manager, String tag) {
+        return showAllowingStateLoss(manager.beginTransaction(), tag);
+    }       
 
     public DialogTransaction show(FragmentTransaction ft) {
         return show(null, ft);
@@ -403,4 +408,15 @@ public class DialogFragment extends Fragment implements
         mViewDestroyed = false;
         return mBackStackId = transaction.commit();
     }
+    
+    @Deprecated
+    public int showAllowingStateLoss(FragmentTransaction transaction, String tag) {
+        mDismissed = false;
+        mShownByMe = true;
+        transaction.add(this, tag);
+        mViewDestroyed = false;
+        return mBackStackId = transaction.commitAllowingStateLoss();
+    }
+    
+    
 }
