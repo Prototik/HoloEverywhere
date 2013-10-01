@@ -706,6 +706,7 @@ public abstract class PreferenceActivity extends ListActivity implements
         super.onDestroy();
         if (mPreferenceManager != null) {
             mPreferenceManager.dispatchActivityDestroy();
+            mPreferenceManager.setOnPreferenceTreeClickListener(null);
         }
     }
 
