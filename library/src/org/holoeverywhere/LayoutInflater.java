@@ -622,7 +622,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
 
     @SuppressLint("NewApi")
     private View prepareView(View view) {
-        if (HoloEverywhere.DISABLE_OVERSCROLL_EFFECT && VERSION.SDK_INT >= 9) {
+        if (HoloEverywhere.DISABLE_OVERSCROLL_EFFECT && VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
             view.setOverScrollMode(View.OVER_SCROLL_NEVER);
         }
         return view;
