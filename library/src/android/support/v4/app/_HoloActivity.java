@@ -216,7 +216,7 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
     }
 
     @Override
-    public final void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
         if (view instanceof ContextMenuCallbackGetter) {
             final OnCreateContextMenuListener l = ((ContextMenuCallbackGetter) view)
