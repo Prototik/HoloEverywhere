@@ -49,6 +49,10 @@ public class PreferenceManager {
         return getDefaultSharedPreferences(context, HoloEverywhere.PREFERENCE_IMPL);
     }
 
+    public static SharedPreferences getDefaultSharedPreferences(Context context, int mode) {
+        return wrap(context, getDefaultSharedPreferencesName(context), mode);
+    }
+
     public static SharedPreferences getDefaultSharedPreferences(Context context,
                                                                 PreferenceImpl impl) {
         return wrap(context, impl, getDefaultSharedPreferencesName(context),
