@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.support.v4.util.LongSparseArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.util.Xml;
 
@@ -151,11 +152,8 @@ public final class DrawableCompat {
                 dr = DrawableCompat.createFromXml(res, rp);
                 rp.close();
             } catch (Exception e) {
-                NotFoundException rnf = new NotFoundException(
-                        "File " + file + " from drawable resource ID #0x"
-                                + Integer.toHexString(value.resourceId));
-                rnf.initCause(e);
-                throw rnf;
+                Log.w(DrawableCompat.class.getSimpleName(), "Failed to load drawable resource, using a fallback...", e);
+                return res.getDrawable(value.resourceId);
             }
 
         } else {
@@ -165,11 +163,8 @@ public final class DrawableCompat {
                 dr = DrawableCompat.createFromResourceStream(res, value, is, file, null);
                 is.close();
             } catch (Exception e) {
-                NotFoundException rnf = new NotFoundException("File " + file
-                        + " from drawable resource ID #0x"
-                        + Integer.toHexString(value.resourceId));
-                rnf.initCause(e);
-                throw rnf;
+                Log.w(DrawableCompat.class.getSimpleName(), "Failed to load drawable resource, using a fallback...", e);
+                return res.getDrawable(value.resourceId);
             }
         }
         if (dr != null) {
