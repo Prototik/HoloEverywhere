@@ -205,7 +205,7 @@
             "android:dropDownSelector": "@drawable/list_selector_holo_light",
             "android:popupBackground": "@drawable/menu_dropdown_panel_holo_light"
         },
-        "Holo.ListView < @android:Widget.ListView": {
+        "Holo.ListView < Holo.ListView.Base": {
             "android:cacheColorHint": "@drawable/background_cache_hint_selector_holo_dark",
             "android:divider": "@drawable/list_divider_holo_dark",
             "android:fadingEdge": "vertical",

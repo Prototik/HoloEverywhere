@@ -204,7 +204,7 @@
         <item name="android:dropDownSelector">@drawable/list_selector_holo_light</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_holo_light</item>
     </style>
-    <style name="Holo.ListView" parent="@android:Widget.ListView">
+    <style name="Holo.ListView" parent="Holo.ListView.Base">
         <item name="android:cacheColorHint">@drawable/background_cache_hint_selector_holo_dark</item>
         <item name="android:divider">@drawable/list_divider_holo_dark</item>
         <item name="android:fadingEdge">vertical</item>

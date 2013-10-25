@@ -25,7 +25,9 @@
         },
         "Holo.Theme.Light.DarkActionBar | HoloLight HoloBarDark < Holo.Base.Theme.Light.DarkActionBar": {
             "holoTheme": "mixed"
-        }
+        },
+
+        "Holo.ListView.Base < @android:Widget.Holo.ListView": {}
     },
     "include": [
         {

@@ -102,7 +102,12 @@
         "Holo.Theme.NoActionBar.Fullscreen | Fullscreen": {},
         "Holo.Theme.NoActionBar.Fullscreen.Wallpaper | Wallpaper": {},
         "Holo.Theme.NoActionBar.Wallpaper | Wallpaper": {},
-        "Holo.Theme.Wallpaper | Wallpaper": {}
+        "Holo.Theme.Wallpaper | Wallpaper": {},
+
+        "Holo.ListView.Base < @android:Widget.ListView": {
+            "android:overScrollFooter": "@null",
+            "android:overScrollHeader": "@null"
+        }
     },
     "include": [
         {

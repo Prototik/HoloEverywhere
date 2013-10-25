@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
+    <style name="Holo.ListView.Base" parent="@android:Widget.Holo.ListView"/>
     <style name="Holo.Theme" parent="Holo.Base.Theme">
         <!--Include block: HoloDark-->
         <!--Include block: Holo-->

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
+    <style name="Holo.ListView.Base" parent="@android:Widget.ListView">
+        <item name="android:overScrollFooter">@null</item>
+        <item name="android:overScrollHeader">@null</item>
+    </style>
     <style name="Holo.Theme" parent="Holo.Base.Theme">
         <!--Include block: BackportDark-->
         <!--Include block: Backport-->
