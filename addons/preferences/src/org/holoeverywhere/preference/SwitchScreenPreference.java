@@ -155,7 +155,7 @@ public class SwitchScreenPreference extends PreferenceScreen implements MenuPres
         if (theme != ThemeManager.LIGHT) {
             theme = ThemeManager.DARK;
         }
-        LayoutInflater inflater = LayoutInflater.from(getDialog().getContext(), theme);
+        LayoutInflater inflater = LayoutInflater.from(getDialog().getContext(), theme | PreferenceInit.THEME_FLAG);
         View actionView = inflater.inflate(R.layout.preference_widget_switch_screen_bar);
         Switch switchView = (Switch) actionView.findViewById(R.id.switchWidget);
         switchView.setChecked(mChecked);
