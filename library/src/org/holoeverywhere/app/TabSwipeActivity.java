@@ -24,6 +24,11 @@ public abstract class TabSwipeActivity extends Activity
         return mTabber;
     }
 
+    public TabSwipeActivity() {
+        super();
+        addonTabber();
+    }
+
     @Override
     public int getCurrentTab() {
         return addonTabber().getCurrentTab();
