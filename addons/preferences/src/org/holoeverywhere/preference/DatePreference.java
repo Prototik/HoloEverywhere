@@ -1,24 +1,24 @@
 
 package org.holoeverywhere.preference;
 
-import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.AttributeSet;
 
-import org.holoeverywhere.app.DatePickerDialog;
-import org.holoeverywhere.widget.DatePicker;
+import com.android.datetimepicker.date.DatePickerDialog;
+
+import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.Dialog;
 
 import java.util.Calendar;
 
 public class DatePreference extends DialogPreference {
-    public static interface OnDateSetListener {
-        public boolean onDateSet(DatePreference preference, long date, int year, int month, int day);
-    }
-
     private final DatePickerDialog.OnDateSetListener mCallback = new DatePickerDialog.OnDateSetListener() {
         @Override
-        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+        public void onDateSet(DatePickerDialog datePicker, int year, int month, int day) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(0);
             calendar.set(Calendar.YEAR, mYear = year);
@@ -28,11 +28,11 @@ public class DatePreference extends DialogPreference {
             updateDialogState();
         }
     };
-
     private long mDefaultDate;
     private boolean mDefaultDateSetted = false;
     private OnDateSetListener mOnDateSetListener;
     private int mYear, mMonth, mDay;
+    private DatePickerDialog mDatePickerDialog;
 
     public DatePreference(Context context) {
         this(context, null);
@@ -44,6 +44,7 @@ public class DatePreference extends DialogPreference {
 
     public DatePreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        setForceNotSaveState(true);
         context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DatePreference,
                 defStyle, R.style.Holo_PreferenceDate);
@@ -54,6 +55,11 @@ public class DatePreference extends DialogPreference {
         return mDay;
     }
 
+    public void setDay(int day) {
+        mDay = day;
+        updateDialogState();
+    }
+
     public long getDefaultDate() {
         if (!mDefaultDateSetted) {
             return System.currentTimeMillis();
@@ -61,24 +67,62 @@ public class DatePreference extends DialogPreference {
         return mDefaultDate;
     }
 
+    public void setDefaultDate(long defaultDate) {
+        mDefaultDate = defaultDate;
+        mDefaultDateSetted = true;
+    }
+
     public int getMonth() {
         return mMonth;
+    }
+
+    public void setMonth(int month) {
+        mMonth = month;
+        updateDialogState();
     }
 
     public OnDateSetListener getOnDateSetListener() {
         return mOnDateSetListener;
     }
 
+    public void setOnDateSetListener(OnDateSetListener onTimeSetListener) {
+        mOnDateSetListener = onTimeSetListener;
+    }
+
     public int getYear() {
         return mYear;
     }
 
-    @Override
-    protected Dialog onCreateDialog(Context context) {
-        return new DatePickerDialog(context, mCallback, mYear, mMonth, mDay);
+    public void setYear(int year) {
+        mYear = year;
+        updateDialogState();
     }
 
-    public void onDateSet(DatePicker datePicker, long date, int year, int month, int day) {
+    @Override
+    protected Dialog onCreateDialog(Context context) {
+        return getDatePickerDialog(true).getDialog();
+    }
+
+    private DatePickerDialog getDatePickerDialog(boolean create) {
+        if (mDatePickerDialog == null && create) {
+            mDatePickerDialog = DatePickerDialog.newInstance(mCallback, mYear, mMonth, mDay);
+            mDatePickerDialog.setForceNotShow(true);
+            final FragmentManager fm = Activity.extract(getContext(), true).getSupportFragmentManager();
+            final FragmentTransaction ft = fm.beginTransaction();
+            ft.add(mDatePickerDialog, getClass().getName() + "@" + getKey());
+            ft.commitAllowingStateLoss();
+            fm.executePendingTransactions();
+        }
+        return mDatePickerDialog;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        mDatePickerDialog = null;
+        super.onDismiss(dialog);
+    }
+
+    public void onDateSet(DatePickerDialog datePicker, long date, int year, int month, int day) {
         if (mOnDateSetListener == null
                 || mOnDateSetListener.onDateSet(this, date, year, month, day)) {
             persistLong(date);
@@ -117,25 +161,6 @@ public class DatePreference extends DialogPreference {
         mDefaultDateSetted = false;
     }
 
-    public void setDay(int day) {
-        mDay = day;
-        updateDialogState();
-    }
-
-    public void setDefaultDate(long defaultDate) {
-        mDefaultDate = defaultDate;
-        mDefaultDateSetted = true;
-    }
-
-    public void setMonth(int month) {
-        mMonth = month;
-        updateDialogState();
-    }
-
-    public void setOnDateSetListener(OnDateSetListener onTimeSetListener) {
-        mOnDateSetListener = onTimeSetListener;
-    }
-
     private void setTime(long time) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(time);
@@ -145,15 +170,14 @@ public class DatePreference extends DialogPreference {
         updateDialogState();
     }
 
-    public void setYear(int year) {
-        mYear = year;
-        updateDialogState();
+    protected void updateDialogState() {
+        final DatePickerDialog dialog = getDatePickerDialog(false);
+        if (dialog != null) {
+            dialog.setDate(mYear, mMonth, mDay);
+        }
     }
 
-    protected void updateDialogState() {
-        DatePickerDialog dialog = (DatePickerDialog) getDialog();
-        if (dialog != null) {
-            dialog.updateDate(mYear, mMonth, mDay);
-        }
+    public static interface OnDateSetListener {
+        public boolean onDateSet(DatePreference preference, long date, int year, int month, int day);
     }
 }

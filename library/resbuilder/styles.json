@@ -134,14 +134,6 @@
             "android:button": "?android:attr/listChoiceIndicatorSingle"
         },
         "Holo.CompoundButton.RadioButton.Light": {},
-        "Holo.DatePicker": {
-            "calendarViewShown": false,
-            "endYear": "2100",
-            "forceShownState": false,
-            "layout": "@layout/date_picker_holo",
-            "spinnersShown": true,
-            "startYear": "1900"
-        },
         "Holo.DropDownItem": {
             "android:gravity": "center_vertical",
             "android:paddingLeft": "8dp",
@@ -393,9 +385,6 @@
         },
         "Holo.TextView.SpinnerItem.Light": {
             "android:textAppearance": "@style/Holo.TextAppearance.TextView.SpinnerItem.Light"
-        },
-        "Holo.TimePicker": {
-            "layout": "@layout/time_picker_holo"
         }
     },
     "output": "values/styles.xml"

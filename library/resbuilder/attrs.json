@@ -23,8 +23,6 @@
         "numberPickerUpButtonStyle$reference",
         "numberPickerDownButtonStyle$reference",
         "numberPickerInputTextStyle$reference",
-        "datePickerStyle$reference",
-        "timePickerStyle$reference",
         "autoCompleteTextViewStyle$reference",
         "textAppearanceListItem$reference",
         "textAppearanceListItemSmall$reference",
@@ -121,16 +119,6 @@
             "dateTextAppearance$reference"
         ],
         "ColorDrawable": "android:color",
-        "DatePicker": [
-            "startYear$integer",
-            "endYear$integer",
-            "spinnersShown$boolean",
-            "calendarViewShown$boolean",
-            "minDate",
-            "maxDate",
-            "forceShownState$boolean",
-            "layout"
-        ],
         "Divider": "android:orientation",
         "ExpandableListView": [
             "android:groupIndicator",
@@ -256,7 +244,6 @@
             "android:fontFamily"
         ],
         "TextView": "android:textAppearance",
-        "TimePicker": "layout",
         "WindowSizes": [
             "windowMinWidthMajor",
             "windowMinWidthMinor",

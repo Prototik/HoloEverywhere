@@ -133,14 +133,6 @@
         <item name="android:button">?android:attr/listChoiceIndicatorSingle</item>
     </style>
     <style name="Holo.CompoundButton.RadioButton.Light"/>
-    <style name="Holo.DatePicker">
-        <item name="calendarViewShown">false</item>
-        <item name="endYear">2100</item>
-        <item name="forceShownState">false</item>
-        <item name="layout">@layout/date_picker_holo</item>
-        <item name="spinnersShown">true</item>
-        <item name="startYear">1900</item>
-    </style>
     <style name="Holo.DropDownItem">
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">8dp</item>
@@ -392,8 +384,5 @@
     </style>
     <style name="Holo.TextView.SpinnerItem.Light">
         <item name="android:textAppearance">@style/Holo.TextAppearance.TextView.SpinnerItem.Light</item>
-    </style>
-    <style name="Holo.TimePicker">
-        <item name="layout">@layout/time_picker_holo</item>
     </style>
 </resources>

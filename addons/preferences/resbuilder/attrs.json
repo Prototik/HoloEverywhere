@@ -34,6 +34,7 @@
 		"ListPreference": "android:entries/android:entryValues",
 		"RingtonePreference": "android:ringtoneType/android:showDefault/android:showSilent",
 		"SeekBarPreference": "android:max",
+
 	    "Intent": "android:action/android:data/android:mimeType/android:targetPackage/android:targetClass",
 	    "IntentCategory": "android:name",
 	    "Extra": "android:name/android:value",

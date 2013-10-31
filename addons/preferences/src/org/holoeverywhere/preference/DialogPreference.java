@@ -24,28 +24,6 @@ import org.holoeverywhere.app.ContextThemeWrapperPlus;
 public abstract class DialogPreference extends Preference implements
         DialogInterface.OnClickListener, DialogInterface.OnDismissListener,
         PreferenceManager.OnActivityDestroyListener {
-    private static class SavedState extends BaseSavedState {
-        Bundle dialogBundle;
-        boolean isDialogShowing;
-
-        public SavedState(Parcel source) {
-            super(source);
-            isDialogShowing = source.readInt() == 1;
-            dialogBundle = source.readBundle();
-        }
-
-        public SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
-            dest.writeInt(isDialogShowing ? 1 : 0);
-            dest.writeBundle(dialogBundle);
-        }
-    }
-
     private AlertDialog.Builder mBuilder;
     private Dialog mDialog;
     private Context mDialogContext;
@@ -54,12 +32,10 @@ public abstract class DialogPreference extends Preference implements
     private CharSequence mDialogMessage;
     private CharSequence mDialogTitle;
     private InputMethodManager mInputMethodManager;
-
     private CharSequence mNegativeButtonText;
-
     private CharSequence mPositiveButtonText;
-
     private int mWhichButtonClicked;
+    private boolean mForceNotSaveState = false;
 
     public DialogPreference(Context context) {
         this(context, null);
@@ -111,24 +87,68 @@ public abstract class DialogPreference extends Preference implements
         return mDialogIcon;
     }
 
+    public void setDialogIcon(Drawable dialogIcon) {
+        mDialogIcon = dialogIcon;
+    }
+
+    public void setDialogIcon(int dialogIconRes) {
+        mDialogIcon = getContext().getResources().getDrawable(dialogIconRes);
+    }
+
     public int getDialogLayoutResource() {
         return mDialogLayoutResId;
+    }
+
+    public void setDialogLayoutResource(int dialogLayoutResId) {
+        mDialogLayoutResId = dialogLayoutResId;
     }
 
     public CharSequence getDialogMessage() {
         return mDialogMessage;
     }
 
+    public void setDialogMessage(CharSequence dialogMessage) {
+        mDialogMessage = dialogMessage;
+    }
+
+    public void setDialogMessage(int dialogMessageResId) {
+        setDialogMessage(getContext().getString(dialogMessageResId));
+    }
+
     public CharSequence getDialogTitle() {
         return mDialogTitle;
+    }
+
+    public void setDialogTitle(CharSequence dialogTitle) {
+        mDialogTitle = dialogTitle;
+    }
+
+    public void setDialogTitle(int dialogTitleResId) {
+        setDialogTitle(getContext().getString(dialogTitleResId));
     }
 
     public CharSequence getNegativeButtonText() {
         return mNegativeButtonText;
     }
 
+    public void setNegativeButtonText(CharSequence negativeButtonText) {
+        mNegativeButtonText = negativeButtonText;
+    }
+
+    public void setNegativeButtonText(int negativeButtonTextResId) {
+        setNegativeButtonText(getContext().getString(negativeButtonTextResId));
+    }
+
     public CharSequence getPositiveButtonText() {
         return mPositiveButtonText;
+    }
+
+    public void setPositiveButtonText(CharSequence positiveButtonText) {
+        mPositiveButtonText = positiveButtonText;
+    }
+
+    public void setPositiveButtonText(int positiveButtonTextResId) {
+        setPositiveButtonText(getContext().getString(positiveButtonTextResId));
     }
 
     protected boolean needInputMethod() {
@@ -248,7 +268,7 @@ public abstract class DialogPreference extends Preference implements
     @Override
     protected Parcelable onSaveInstanceState() {
         final Parcelable superState = super.onSaveInstanceState();
-        if (mDialog == null || !mDialog.isShowing()) {
+        if (mDialog == null || !mDialog.isShowing() || mForceNotSaveState) {
             return superState;
         }
         final SavedState myState = new SavedState(superState);
@@ -257,53 +277,17 @@ public abstract class DialogPreference extends Preference implements
         return myState;
     }
 
+    public boolean isForceNotSaveState() {
+        return mForceNotSaveState;
+    }
+
+    public void setForceNotSaveState(boolean forceNotSaveState) {
+        mForceNotSaveState = forceNotSaveState;
+    }
+
     private void requestInputMethod(Dialog dialog) {
         Window window = dialog.getWindow();
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-    }
-
-    public void setDialogIcon(Drawable dialogIcon) {
-        mDialogIcon = dialogIcon;
-    }
-
-    public void setDialogIcon(int dialogIconRes) {
-        mDialogIcon = getContext().getResources().getDrawable(dialogIconRes);
-    }
-
-    public void setDialogLayoutResource(int dialogLayoutResId) {
-        mDialogLayoutResId = dialogLayoutResId;
-    }
-
-    public void setDialogMessage(CharSequence dialogMessage) {
-        mDialogMessage = dialogMessage;
-    }
-
-    public void setDialogMessage(int dialogMessageResId) {
-        setDialogMessage(getContext().getString(dialogMessageResId));
-    }
-
-    public void setDialogTitle(CharSequence dialogTitle) {
-        mDialogTitle = dialogTitle;
-    }
-
-    public void setDialogTitle(int dialogTitleResId) {
-        setDialogTitle(getContext().getString(dialogTitleResId));
-    }
-
-    public void setNegativeButtonText(CharSequence negativeButtonText) {
-        mNegativeButtonText = negativeButtonText;
-    }
-
-    public void setNegativeButtonText(int negativeButtonTextResId) {
-        setNegativeButtonText(getContext().getString(negativeButtonTextResId));
-    }
-
-    public void setPositiveButtonText(CharSequence positiveButtonText) {
-        mPositiveButtonText = positiveButtonText;
-    }
-
-    public void setPositiveButtonText(int positiveButtonTextResId) {
-        setPositiveButtonText(getContext().getString(positiveButtonTextResId));
     }
 
     protected void showDialog(Bundle state) {
@@ -318,5 +302,27 @@ public abstract class DialogPreference extends Preference implements
         }
         mDialog.setOnDismissListener(this);
         mDialog.show();
+    }
+
+    private static class SavedState extends BaseSavedState {
+        Bundle dialogBundle;
+        boolean isDialogShowing;
+
+        public SavedState(Parcel source) {
+            super(source);
+            isDialogShowing = source.readInt() == 1;
+            dialogBundle = source.readBundle();
+        }
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeInt(isDialogShowing ? 1 : 0);
+            dest.writeBundle(dialogBundle);
+        }
     }
 }

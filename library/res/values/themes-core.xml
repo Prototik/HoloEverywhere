@@ -6,7 +6,6 @@
         <item name="android:dropDownListViewStyle">?dropDownListViewStyle</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
-        <item name="datePickerStyle">@style/Holo.DatePicker</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="dividerVertical">?android:listDivider</item>
         <item name="dropdownListPreferredItemHeight">?listPreferredItemHeightSmall</item>
@@ -23,7 +22,6 @@
         <item name="panelMenuListWidth">250dp</item>
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:textAppearanceMedium</item>
-        <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <!--End of block Base-->
         <!--Include block: TextDark-->
         <!--Include block: Text-->
@@ -90,7 +88,6 @@
         <item name="android:dropDownListViewStyle">?dropDownListViewStyle</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
-        <item name="datePickerStyle">@style/Holo.DatePicker</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="dividerVertical">?android:listDivider</item>
         <item name="dropdownListPreferredItemHeight">?listPreferredItemHeightSmall</item>
@@ -107,7 +104,6 @@
         <item name="panelMenuListWidth">250dp</item>
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:textAppearanceMedium</item>
-        <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <!--End of block Base-->
         <!--Include block: TextLight-->
         <!--Include block: Text-->
@@ -174,7 +170,6 @@
         <item name="android:dropDownListViewStyle">?dropDownListViewStyle</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
-        <item name="datePickerStyle">@style/Holo.DatePicker</item>
         <item name="dividerHorizontal">?android:listDivider</item>
         <item name="dividerVertical">?android:listDivider</item>
         <item name="dropdownListPreferredItemHeight">?listPreferredItemHeightSmall</item>
@@ -191,7 +186,6 @@
         <item name="panelMenuListWidth">250dp</item>
         <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
         <item name="textAppearanceListItemSmall">?android:textAppearanceMedium</item>
-        <item name="timePickerStyle">@style/Holo.TimePicker</item>
         <!--End of block Base-->
         <!--Include block: TextLight-->
         <!--Include block: Text-->

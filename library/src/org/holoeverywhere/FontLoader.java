@@ -460,7 +460,6 @@ public class FontLoader {
                     return tryToLoadRawTypeface(file);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ;
                     return loadTypeface(file, false);
                 }
             } else {

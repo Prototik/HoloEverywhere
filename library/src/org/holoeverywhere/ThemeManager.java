@@ -142,69 +142,7 @@ import static org.holoeverywhere.R.style.Holo_Theme_Wallpaper;
  * @author prok (prototypegamez@gmail.com)
  */
 public final class ThemeManager {
-    /**
-     * System interface for calling super.startActivity in the activities.
-     */
-    public static interface SuperStartActivity {
-        public void superStartActivity(Intent intent, int requestCode,
-                                       Bundle options);
-    }
-
-    /**
-     * Theme getter. This class should return theme resource for set of flags.
-     * If under the right ThemeTag no have theme, return a negative number or
-     * zero. <br />
-     * <br />
-     * Example:
-     * <p/>
-     * <pre>
-     * ThemeGetter getter = new ThemeGetter() {
-     *   public int getThemeResource(ThemeTag themeTag) {
-     *     if(themeTag.fullscreen) { // theme has {@link ThemeManager#FULLSCREEN} flag
-     *       return R.style.CustomThemeWithFullscreenFlag;
-     *     }
-     *     return 0; // default behavior
-     *   }
-     * }
-     * </pre>
-     */
-    public static interface ThemeGetter {
-        /**
-         * Class-container for theme flags.
-         */
-        public static final class ThemeTag {
-            public final boolean dark, fullscreen, light, mixed, noActionBar, wallpaper, dialog,
-                    dialogWhenLarge;
-            public final int flags;
-
-            private ThemeTag(int flags) {
-                this.flags = flags;
-                dark = isDark(flags);
-                light = isLight(flags);
-                mixed = isMixed(flags);
-                noActionBar = isNoActionBar(flags);
-                fullscreen = isFullScreen(flags);
-                wallpaper = isWallpaper(flags);
-                dialog = isDialog(flags);
-                dialogWhenLarge = isDialogWhenLarge(flags);
-            }
-        }
-
-        public int getThemeResource(ThemeTag themeTag);
-    }
-
-    public static interface ThemeSetter {
-        public void setupThemes();
-    }
-
-    private static int _DEFAULT_THEME;
     public static final int _START_RESOURCES_ID = 0x01000000;
-    private static ThemeGetter _THEME_GETTER;
-    private static int _THEME_MASK = 0;
-    private static int _THEME_MODIFIER = 0;
-    private static final String _THEME_TAG = ":holoeverywhere:theme";
-    private static final SparseIntArray _THEMES_MAP = new SparseIntArray();
-
     public static final int COLOR_SCHEME_MASK;
     /**
      * Flag indicates on the dark theme
@@ -243,20 +181,22 @@ public final class ThemeManager {
      * Flag indicates on the light theme with dark action bar
      */
     public static final int MIXED;
-
-    private static int NEXT_OFFSET = 0;
-
     /**
      * Flag indicates on the theme without action bar
      */
     public static final int NO_ACTION_BAR;
-
-    private static List<ThemeSetter> sThemeSetters;
-
     /**
      * Flag indicates on the theme with wallpaper background
      */
     public static final int WALLPAPER;
+    private static final String _THEME_TAG = ":holoeverywhere:theme";
+    private static final SparseIntArray _THEMES_MAP = new SparseIntArray();
+    private static int _DEFAULT_THEME;
+    private static ThemeGetter _THEME_GETTER;
+    private static int _THEME_MASK = 0;
+    private static int _THEME_MODIFIER = 0;
+    private static int NEXT_OFFSET = 0;
+    private static List<ThemeSetter> sThemeSetters;
 
     static {
         DARK = makeNewFlag();
@@ -271,6 +211,9 @@ public final class ThemeManager {
         COLOR_SCHEME_MASK = DARK | LIGHT | MIXED;
 
         reset();
+    }
+
+    private ThemeManager() {
     }
 
     /**
@@ -340,12 +283,38 @@ public final class ThemeManager {
     }
 
     /**
+     * Set default theme. May be theme resource instead flags, but it not
+     * recommend.
+     *
+     * @param theme Theme
+     * @see #modifyDefaultTheme(int)
+     * @see #modifyDefaultThemeClear(int)
+     * @see #getDefaultTheme()
+     */
+    public static void setDefaultTheme(int theme) {
+        ThemeManager._DEFAULT_THEME = theme;
+        if (theme < _START_RESOURCES_ID) {
+            ThemeManager._DEFAULT_THEME &= ThemeManager._THEME_MASK;
+        }
+    }
+
+    /**
      * @return Modifier, which applying on all themes.
      * @see #modify(int)
      * @see #setModifier(int)
      */
     public static int getModifier() {
         return _THEME_MODIFIER;
+    }
+
+    /**
+     * Set theme modifiers. See {@link #modify(int)}
+     *
+     * @param mod Modififers
+     * @see #modify(int)
+     */
+    public static void setModifier(int mod) {
+        ThemeManager._THEME_MODIFIER = mod & ThemeManager._THEME_MASK;
     }
 
     /**
@@ -399,7 +368,7 @@ public final class ThemeManager {
         if (ThemeManager._THEME_GETTER != null) {
             final int getterResource = ThemeManager._THEME_GETTER
                     .getThemeResource(new ThemeTag(themeTag));
-            if (getterResource > 0) {
+            if (getterResource != 0) {
                 return getterResource;
             }
         }
@@ -443,8 +412,7 @@ public final class ThemeManager {
      * @return true if activity has specified theme in intent
      */
     public static boolean hasSpecifiedTheme(Activity activity) {
-        return activity == null ? false : ThemeManager
-                .hasSpecifiedTheme(activity.getIntent());
+        return activity != null && ThemeManager.hasSpecifiedTheme(activity.getIntent());
     }
 
     /**
@@ -665,9 +633,7 @@ public final class ThemeManager {
         if (i >= _START_RESOURCES_ID) {
             return i;
         }
-        if (applyModifier && ThemeManager._THEME_MODIFIER > 0) {
-            i |= ThemeManager._THEME_MODIFIER;
-        }
+        i |= applyModifier ? 0 : ThemeManager._THEME_MODIFIER;
         return i & ThemeManager._THEME_MASK;
     }
 
@@ -879,32 +845,6 @@ public final class ThemeManager {
     }
 
     /**
-     * Set default theme. May be theme resource instead flags, but it not
-     * recommend.
-     *
-     * @param theme Theme
-     * @see #modifyDefaultTheme(int)
-     * @see #modifyDefaultThemeClear(int)
-     * @see #getDefaultTheme()
-     */
-    public static void setDefaultTheme(int theme) {
-        ThemeManager._DEFAULT_THEME = theme;
-        if (theme < _START_RESOURCES_ID) {
-            ThemeManager._DEFAULT_THEME &= ThemeManager._THEME_MASK;
-        }
-    }
-
-    /**
-     * Set theme modifiers. See {@link #modify(int)}
-     *
-     * @param mod Modififers
-     * @see #modify(int)
-     */
-    public static void setModifier(int mod) {
-        ThemeManager._THEME_MODIFIER = mod & ThemeManager._THEME_MASK;
-    }
-
-    /**
      * Set {@link ThemeGetter} instance for getting theme resources.
      *
      * @param themeGetter ThemeGetter
@@ -975,6 +915,57 @@ public final class ThemeManager {
         sThemeSetters.remove(themeSetter);
     }
 
-    private ThemeManager() {
+    /**
+     * System interface for calling super.startActivity in the activities.
+     */
+    public static interface SuperStartActivity {
+        public void superStartActivity(Intent intent, int requestCode,
+                                       Bundle options);
+    }
+
+    /**
+     * Theme getter. This class should return theme resource for set of flags.
+     * If under the right ThemeTag no have theme, return zero. <br />
+     * <br />
+     * Example:
+     * <p/>
+     * <pre>
+     * ThemeGetter getter = new ThemeGetter() {
+     *   public int getThemeResource(ThemeTag themeTag) {
+     *     if(themeTag.fullscreen) { // theme has {@link ThemeManager#FULLSCREEN} flag
+     *       return R.style.CustomThemeWithFullscreenFlag;
+     *     }
+     *     return 0; // default behavior
+     *   }
+     * }
+     * </pre>
+     */
+    public static interface ThemeGetter {
+        public int getThemeResource(ThemeTag themeTag);
+
+        /**
+         * Class-container for theme flags.
+         */
+        public static final class ThemeTag {
+            public final boolean dark, fullscreen, light, mixed, noActionBar, wallpaper, dialog,
+                    dialogWhenLarge;
+            public final int flags;
+
+            private ThemeTag(int flags) {
+                this.flags = flags;
+                dark = isDark(flags);
+                light = isLight(flags);
+                mixed = isMixed(flags);
+                noActionBar = isNoActionBar(flags);
+                fullscreen = isFullScreen(flags);
+                wallpaper = isWallpaper(flags);
+                dialog = isDialog(flags);
+                dialogWhenLarge = isDialogWhenLarge(flags);
+            }
+        }
+    }
+
+    public static interface ThemeSetter {
+        public void setupThemes();
     }
 }

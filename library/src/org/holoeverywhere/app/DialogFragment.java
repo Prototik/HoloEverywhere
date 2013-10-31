@@ -13,26 +13,28 @@ import org.holoeverywhere.LayoutInflater;
 
 public class DialogFragment extends Fragment implements
         DialogInterface.OnCancelListener, DialogInterface.OnDismissListener {
-    public static final class DialogTransaction {
-        public String dialogTag;
-        public FragmentManager fragmentManager;
-        public int transactionId;
-    }
-
-    public static enum DialogType {
-        AlertDialog, Dialog
-    }
-
+    public static final int STYLE_NO_FRAME = 2;
+    public static final int STYLE_NO_INPUT = 3;
+    public static final int STYLE_NO_TITLE = 1;
+    public static final int STYLE_NORMAL = 0;
     private static final String SAVED_BACK_STACK_ID = "android:backStackId";
     private static final String SAVED_CANCELABLE = "android:cancelable";
     private static final String SAVED_DIALOG_STATE_TAG = "android:savedDialogState";
     private static final String SAVED_SHOWS_DIALOG = "android:showsDialog";
     private static final String SAVED_STYLE = "android:style";
     private static final String SAVED_THEME = "android:theme";
-    public static final int STYLE_NO_FRAME = 2;
-    public static final int STYLE_NO_INPUT = 3;
-    public static final int STYLE_NO_TITLE = 1;
-    public static final int STYLE_NORMAL = 0;
+    int mBackStackId = -1;
+    boolean mCancelable = true;
+    Dialog mDialog;
+    boolean mDismissed = true;
+    boolean mShownByMe;
+    boolean mShowsDialog = true;
+    int mStyle = STYLE_NORMAL;
+    int mTheme = 0;
+    boolean mViewDestroyed;
+    private CharSequence mTitle;
+    private DialogType type = DialogType.Dialog;
+    private boolean mForceNotShow = false;
 
     public static final <T extends DialogFragment> T findInstance(Activity activity, Class<T> clazz) {
         return findInstance(activity, clazz, false);
@@ -68,18 +70,6 @@ public class DialogFragment extends Fragment implements
     private static final String makeTag(Class<? extends DialogFragment> clazz) {
         return clazz.getName() + "@" + clazz.hashCode();
     }
-
-    int mBackStackId = -1;
-    boolean mCancelable = true;
-    Dialog mDialog;
-    boolean mDismissed = true;
-    boolean mShownByMe;
-    boolean mShowsDialog = true;
-    int mStyle = STYLE_NORMAL;
-    int mTheme = 0;
-    private CharSequence mTitle;
-    boolean mViewDestroyed;
-    private DialogType type = DialogType.Dialog;
 
     public void dismiss() {
         dismissInternal(false);
@@ -123,6 +113,10 @@ public class DialogFragment extends Fragment implements
         return type;
     }
 
+    public void setDialogType(DialogType type) {
+        this.type = type;
+    }
+
     @Override
     @Deprecated
     public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {
@@ -153,12 +147,23 @@ public class DialogFragment extends Fragment implements
         return mShowsDialog;
     }
 
+    public void setShowsDialog(boolean showsDialog) {
+        mShowsDialog = showsDialog;
+    }
+
     public int getTheme() {
         return mTheme;
     }
 
     public boolean isCancelable() {
         return mCancelable;
+    }
+
+    public void setCancelable(boolean cancelable) {
+        mCancelable = cancelable;
+        if (mDialog != null) {
+            mDialog.setCancelable(cancelable);
+        }
     }
 
     @Override
@@ -282,10 +287,18 @@ public class DialogFragment extends Fragment implements
     @Override
     public void onStart() {
         super.onStart();
-        if (mDialog != null) {
+        if (mDialog != null && !mForceNotShow) {
             mViewDestroyed = false;
             mDialog.show();
         }
+    }
+
+    public boolean isForceNotShow() {
+        return mForceNotShow;
+    }
+
+    public void setForceNotShow(boolean forceNotShow) {
+        mForceNotShow = forceNotShow;
     }
 
     @Override
@@ -294,21 +307,6 @@ public class DialogFragment extends Fragment implements
         if (mDialog != null) {
             mDialog.hide();
         }
-    }
-
-    public void setCancelable(boolean cancelable) {
-        mCancelable = cancelable;
-        if (mDialog != null) {
-            mDialog.setCancelable(cancelable);
-        }
-    }
-
-    public void setDialogType(DialogType type) {
-        this.type = type;
-    }
-
-    public void setShowsDialog(boolean showsDialog) {
-        mShowsDialog = showsDialog;
     }
 
     public void setStyle(int style, int theme) {
@@ -381,11 +379,11 @@ public class DialogFragment extends Fragment implements
     public int show(FragmentManager manager, String tag) {
         return show(manager.beginTransaction(), tag);
     }
-    
+
     @Deprecated
     public int showAllowingStateLoss(FragmentManager manager, String tag) {
         return showAllowingStateLoss(manager.beginTransaction(), tag);
-    }       
+    }
 
     public DialogTransaction show(FragmentTransaction ft) {
         return show(null, ft);
@@ -408,7 +406,7 @@ public class DialogFragment extends Fragment implements
         mViewDestroyed = false;
         return mBackStackId = transaction.commit();
     }
-    
+
     @Deprecated
     public int showAllowingStateLoss(FragmentTransaction transaction, String tag) {
         mDismissed = false;
@@ -417,6 +415,16 @@ public class DialogFragment extends Fragment implements
         mViewDestroyed = false;
         return mBackStackId = transaction.commitAllowingStateLoss();
     }
-    
-    
+
+    public static enum DialogType {
+        AlertDialog, Dialog
+    }
+
+    public static final class DialogTransaction {
+        public String dialogTag;
+        public FragmentManager fragmentManager;
+        public int transactionId;
+    }
+
+
 }

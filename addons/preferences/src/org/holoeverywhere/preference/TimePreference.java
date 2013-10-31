@@ -3,25 +3,24 @@ package org.holoeverywhere.preference;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
 
-import org.holoeverywhere.app.TimePickerDialog;
-import org.holoeverywhere.widget.TimePicker;
+import com.android.datetimepicker.time.RadialPickerLayout;
+import com.android.datetimepicker.time.TimePickerDialog;
+
+import org.holoeverywhere.app.Activity;
 
 import java.util.Calendar;
 
 public class TimePreference extends DialogPreference {
-    public static interface OnTimeSetListener {
-        public boolean onTimeSet(TimePreference preference, long date, int hour, int minute);
-    }
-
-    private boolean m24HourView;
-
     private final TimePickerDialog.OnTimeSetListener mCallback = new TimePickerDialog.OnTimeSetListener() {
         @Override
-        public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+        public void onTimeSet(RadialPickerLayout timePicker, int hour, int minute) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(0);
             calendar.set(Calendar.HOUR_OF_DAY, mHour = hour);
@@ -30,11 +29,12 @@ public class TimePreference extends DialogPreference {
             updateDialogState();
         }
     };
-
+    private boolean m24HourView;
     private long mDefaultTime;
     private boolean mDefaultTimeSetted = false;
     private int mHour, mMinute;
     private OnTimeSetListener mOnTimeSetListener;
+    private TimePickerDialog mTimePickerDialog;
 
     public TimePreference(Context context) {
         this(context, null);
@@ -46,6 +46,7 @@ public class TimePreference extends DialogPreference {
 
     public TimePreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        setForceNotSaveState(true);
         context = getContext();
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TimePreference, defStyle,
                 R.style.Holo_PreferenceTime);
@@ -74,16 +75,35 @@ public class TimePreference extends DialogPreference {
         return mDefaultTime;
     }
 
+    public void setDefaultTime(long defaultTime) {
+        mDefaultTime = defaultTime;
+        mDefaultTimeSetted = true;
+    }
+
     public int getHour() {
         return mHour;
+    }
+
+    public void setHour(int hour) {
+        mHour = hour;
+        updateDialogState();
     }
 
     public int getMinute() {
         return mMinute;
     }
 
+    public void setMinute(int minute) {
+        mMinute = minute;
+        updateDialogState();
+    }
+
     public OnTimeSetListener getOnTimeSetListener() {
         return mOnTimeSetListener;
+    }
+
+    public void setOnTimeSetListener(OnTimeSetListener onTimeSetListener) {
+        mOnTimeSetListener = onTimeSetListener;
     }
 
     protected boolean is24HourView() {
@@ -92,7 +112,26 @@ public class TimePreference extends DialogPreference {
 
     @Override
     protected Dialog onCreateDialog(Context context) {
-        return new TimePickerDialog(context, mCallback, mHour, mMinute, m24HourView);
+        return getTimePickerDialog(true).getDialog();
+    }
+
+    private TimePickerDialog getTimePickerDialog(boolean create) {
+        if (mTimePickerDialog == null && create) {
+            mTimePickerDialog = TimePickerDialog.newInstance(mCallback, mHour, mMinute, m24HourView);
+            mTimePickerDialog.setForceNotShow(true);
+            final FragmentManager fm = Activity.extract(getContext(), true).getSupportFragmentManager();
+            final FragmentTransaction ft = fm.beginTransaction();
+            ft.add(mTimePickerDialog, getClass().getName() + "@" + getKey());
+            ft.commitAllowingStateLoss();
+            fm.executePendingTransactions();
+        }
+        return mTimePickerDialog;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        mTimePickerDialog = null;
+        super.onDismiss(dialog);
     }
 
     @Override
@@ -122,7 +161,7 @@ public class TimePreference extends DialogPreference {
         setTime(time);
     }
 
-    public void onTimeSet(TimePicker timePicker, long time, int hour, int minute) {
+    public void onTimeSet(RadialPickerLayout timePicker, long time, int hour, int minute) {
         if (mOnTimeSetListener == null || mOnTimeSetListener.onTimeSet(this, time, hour, minute)) {
             persistLong(time);
         }
@@ -132,27 +171,8 @@ public class TimePreference extends DialogPreference {
         mDefaultTimeSetted = false;
     }
 
-    public void setDefaultTime(long defaultTime) {
-        mDefaultTime = defaultTime;
-        mDefaultTimeSetted = true;
-    }
-
-    public void setHour(int hour) {
-        mHour = hour;
-        updateDialogState();
-    }
-
     public void setIs24HourView(boolean is24HourView) {
         m24HourView = is24HourView;
-    }
-
-    public void setMinute(int minute) {
-        mMinute = minute;
-        updateDialogState();
-    }
-
-    public void setOnTimeSetListener(OnTimeSetListener onTimeSetListener) {
-        mOnTimeSetListener = onTimeSetListener;
     }
 
     private void setTime(long time) {
@@ -163,9 +183,13 @@ public class TimePreference extends DialogPreference {
     }
 
     protected void updateDialogState() {
-        TimePickerDialog dialog = (TimePickerDialog) getDialog();
+        final TimePickerDialog dialog = getTimePickerDialog(false);
         if (dialog != null) {
-            dialog.updateTime(mHour, mMinute);
+            dialog.setTime(mHour, mMinute);
         }
+    }
+
+    public static interface OnTimeSetListener {
+        public boolean onTimeSet(TimePreference preference, long date, int hour, int minute);
     }
 }

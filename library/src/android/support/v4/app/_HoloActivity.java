@@ -2,7 +2,9 @@
 package android.support.v4.app;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
@@ -58,6 +60,21 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
     private boolean mInited = false;
     private int mLastThemeResourceId = 0;
     private Handler mUserHandler;
+
+    public static FragmentActivity extract(Context context, boolean exceptionWhenNotFound) {
+        FragmentActivity fa = null;
+        while (fa == null && context instanceof ContextWrapper) {
+            if (context instanceof FragmentActivity) {
+                fa = (FragmentActivity) context;
+                break;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        if (fa == null && exceptionWhenNotFound) {
+            throw new ActivityNotFoundException();
+        }
+        return fa;
+    }
 
     @Override
     public void addContentView(View view, LayoutParams params) {

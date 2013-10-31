@@ -24,6 +24,11 @@
 			<groupId>com.android.support</groupId>
 			<artifactId>support-v4</artifactId>
 		</dependency>
+
+        <dependency>
+            <groupId>com.nineoldandroids</groupId>
+            <artifactId>library</artifactId>
+        </dependency>
 	</dependencies>
 
 	<build>

@@ -2,24 +2,26 @@
 package org.holoeverywhere.demo.fragments.pickers;
 
 import android.os.Bundle;
+import android.text.format.DateFormat;
 
-import org.holoeverywhere.app.Dialog;
-import org.holoeverywhere.app.DialogFragment;
-import org.holoeverywhere.app.TimePickerDialog;
-import org.holoeverywhere.app.TimePickerDialog.OnTimeSetListener;
-import org.holoeverywhere.widget.TimePicker;
+import com.android.datetimepicker.time.RadialPickerLayout;
+import com.android.datetimepicker.time.TimePickerDialog;
+
 import org.holoeverywhere.widget.Toast;
 
-public class PickersTimePickerFragment extends DialogFragment implements OnTimeSetListener {
+import java.util.Calendar;
+
+public class PickersTimePickerFragment extends TimePickerDialog implements TimePickerDialog.OnTimeSetListener {
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return new TimePickerDialog(getSupportActivity(), getTheme(), this, 12, 34, true);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        initialize(this, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(getActivity()));
     }
 
     @Override
-    public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
-        Toast.makeText(getSupportActivity(),
-                String.format("Set time: %1$d:%2$d", hours, minutes), Toast.LENGTH_SHORT)
-                .show();
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+        Toast.makeText(getSupportActivity(), String.format("Set time: %1$d:%2$d", hourOfDay, minute), Toast.LENGTH_SHORT).show();
     }
 }
