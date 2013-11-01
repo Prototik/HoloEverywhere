@@ -180,7 +180,7 @@ class ActionBarActivityDelegateICS extends ActionBarActivityDelegate {
 
         if (frameworkMode != null) {
             wrappedMode = new ActionModeWrapper(context,
-                    mActivity.startActionMode(wrappedCallback));
+                    frameworkMode);
             wrappedCallback.setLastStartedActionMode(wrappedMode);
         }
 
