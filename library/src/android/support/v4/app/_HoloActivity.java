@@ -290,6 +290,9 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
             if (config.requireSlider) {
                 activity.addon(Activity.ADDON_SLIDER);
             }
+            if (config.requireTabber) {
+                activity.addon(Activity.ADDON_TABBER);
+            }
             final SparseIntArray windowFeatures = config.windowFeatures;
             if (windowFeatures != null) {
                 for (int i = 0; i < windowFeatures.size(); i++) {

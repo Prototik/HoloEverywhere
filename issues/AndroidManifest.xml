@@ -39,6 +39,15 @@
         </activity>
 
         <activity
+            android:name=".i569.MainActivity"
+            android:label="Issue #569">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="org.holoeverywhere.category.ISSUE_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".i605.MainActivity"
             android:label="Issue #605">
             <intent-filter>
@@ -77,6 +86,15 @@
         <activity
             android:name=".i641.MainActivity"
             android:label="Issue #641">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="org.holoeverywhere.category.ISSUE_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".i653.MainActivity"
+            android:label="Issue #653">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="org.holoeverywhere.category.ISSUE_LAUNCHER" />
