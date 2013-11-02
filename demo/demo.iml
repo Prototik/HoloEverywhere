@@ -54,7 +54,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/res" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/resources" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.settings" />
       <excludeFolder url="file://$MODULE_DIR$/build/apk" />
       <excludeFolder url="file://$MODULE_DIR$/build/assets" />
@@ -72,8 +71,8 @@
     <orderEntry type="module" module-name="slider" exported="" />
     <orderEntry type="library" exported="" name="support-v4-18.0.1" level="project" />
     <orderEntry type="module" module-name="library" exported="" />
-    <orderEntry type="module" module-name="preferences" exported="" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
+    <orderEntry type="module" module-name="preferences" exported="" />
   </component>
 </module>
 
