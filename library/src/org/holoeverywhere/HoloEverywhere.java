@@ -41,6 +41,10 @@ public class HoloEverywhere {
      * Preference implementation using by default
      */
     public static PreferenceImpl PREFERENCE_IMPL;
+    /**
+     * Save menu instance over calling Activity#supportInvalidateOptionsMenu()
+     */
+    public static boolean SAVE_MENU_INSTANCE_OVER_INVALIDATE;
 
     static {
         PACKAGE = HoloEverywhere.class.getPackage().getName();
@@ -50,6 +54,7 @@ public class HoloEverywhere {
         NAMED_PREFERENCES = true;
         DISABLE_OVERSCROLL_EFFECT = VERSION.SDK_INT < VERSION_CODES.HONEYCOMB;
         PREFERENCE_IMPL = PreferenceImpl.XML;
+        SAVE_MENU_INSTANCE_OVER_INVALIDATE = false;
     }
 
     private HoloEverywhere() {

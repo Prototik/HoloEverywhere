@@ -22,12 +22,6 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.WindowCompat;
-
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.R;
-import org.holoeverywhere.widget.FrameLayout;
-import org.holoeverywhere.widget.ProgressBar;
-
 import android.support.v7.internal.view.menu.ListMenuPresenter;
 import android.support.v7.internal.view.menu.MenuBuilder;
 import android.support.v7.internal.view.menu.MenuPresenter;
@@ -43,31 +37,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import org.holoeverywhere.HoloEverywhere;
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.R;
+import org.holoeverywhere.widget.FrameLayout;
+import org.holoeverywhere.widget.ProgressBar;
+
 class ActionBarActivityDelegateBase extends ActionBarActivityDelegate implements
         MenuPresenter.Callback, MenuBuilder.Callback {
     private static final String TAG = "ActionBarActivityDelegateBase";
-
-    private static final int[] ACTION_BAR_DRAWABLE_TOGGLE_ATTRS = new int[] {
+    private static final int[] ACTION_BAR_DRAWABLE_TOGGLE_ATTRS = new int[]{
             R.attr.homeAsUpIndicator
     };
-
-    private ActionBarView mActionBarView;
-    private ListMenuPresenter mListMenuPresenter;
-    private MenuBuilder mMenu;
-
-    private ActionMode mActionMode;
-
-    // true if we have installed a window sub-decor layout.
-    private boolean mSubDecorInstalled;
-
-    // Used to keep track of Progress Bar Window features
-    private boolean mFeatureProgress, mFeatureIndeterminateProgress;
-
-    private boolean mInvalidateMenuPosted;
     private final Runnable mInvalidateMenuRunnable = new Runnable() {
         @Override
         public void run() {
-            final MenuBuilder menu = createMenu();
+            final MenuBuilder menu;
+            if (HoloEverywhere.SAVE_MENU_INSTANCE_OVER_INVALIDATE && mMenu != null) {
+                mMenu.clearAll();
+                menu = mMenu;
+            } else {
+                menu = createMenu();
+            }
             if (mActivity.superOnCreatePanelMenu(Window.FEATURE_OPTIONS_PANEL, menu) &&
                     mActivity.superOnPreparePanel(Window.FEATURE_OPTIONS_PANEL, null, menu)) {
                 setMenu(menu);
@@ -78,6 +69,15 @@ class ActionBarActivityDelegateBase extends ActionBarActivityDelegate implements
             mInvalidateMenuPosted = false;
         }
     };
+    private ActionBarView mActionBarView;
+    private ListMenuPresenter mListMenuPresenter;
+    private MenuBuilder mMenu;
+    private ActionMode mActionMode;
+    // true if we have installed a window sub-decor layout.
+    private boolean mSubDecorInstalled;
+    // Used to keep track of Progress Bar Window features
+    private boolean mFeatureProgress, mFeatureIndeterminateProgress;
+    private boolean mInvalidateMenuPosted;
 
     ActionBarActivityDelegateBase(ActionBarActivity activity) {
         super(activity);
@@ -525,7 +525,7 @@ class ActionBarActivityDelegateBase extends ActionBarActivityDelegate implements
     }
 
     private void showProgressBars(ProgressBar horizontalProgressBar,
-            ProgressBar spinnyProgressBar) {
+                                  ProgressBar spinnyProgressBar) {
         if (mFeatureIndeterminateProgress && spinnyProgressBar.getVisibility() == View.INVISIBLE) {
             spinnyProgressBar.setVisibility(View.VISIBLE);
         }
@@ -536,7 +536,7 @@ class ActionBarActivityDelegateBase extends ActionBarActivityDelegate implements
     }
 
     private void hideProgressBars(ProgressBar horizontalProgressBar,
-            ProgressBar spinnyProgressBar) {
+                                  ProgressBar spinnyProgressBar) {
         if (mFeatureIndeterminateProgress && spinnyProgressBar.getVisibility() == View.VISIBLE) {
             spinnyProgressBar.setVisibility(View.INVISIBLE);
         }
