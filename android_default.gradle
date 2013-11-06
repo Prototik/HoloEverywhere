@@ -39,6 +39,9 @@ if (android.class.name.startsWith('com.android.build.gradle.AppExtension') && pr
             }
         }
     }
+    artifacts {
+        archives file: file("${buildDir}/apk/${project.name}-release.apk"), type: 'apk'
+    }
 }
 
 configurations {
