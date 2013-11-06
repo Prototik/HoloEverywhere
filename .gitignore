@@ -1,0 +1,26 @@
+# IntelliJ IDEA
+.idea
+*.iml
+*.ipr
+*.iws
+classes
+gen-external-apklibs
+
+# Gradle
+.gradle
+build
+
+# Maven
+target
+release.properties
+pom.xml.*
+
+# Ant
+bin
+gen
+ant.properties
+local.properties
+
+# Other
+.DS_Store
+tmp

@@ -1,0 +1,107 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+version = '18.0.2'
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+  maven { url "https://raw.github.com/Prototik/HoloEverywhere/repo" }
+}
+
+dependencies {
+	compile 'android:android:4.3_r2@jar'
+}
+  
+tasks.withType(Compile) {
+  options.encoding = "UTF-8"
+}
+
+tasks.compileJava.sourceCompatibility = '1.6'
+tasks.compileJava.targetCompatibility = '1.6'
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+    }
+}
+
+jar {
+  manifest.attributes('SupportLibraryVersion': "${project.version}-prok")
+}
+
+task generateJavadoc(type: Javadoc) {
+    source = sourceSets.main.allJava
+    classpath = project.files(configurations.compile)
+}
+
+task javadoc(type: Jar, dependsOn: generateJavadoc, overwrite: true) {
+    from generateJavadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+task sources(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives tasks.sources
+    archives tasks.javadoc
+}
+
+signing {
+    required { gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+			pom.groupId = 'com.android.support'
+            pom.artifactId = 'support-v4'
+
+            repository(url: project.getProperty('holoeverywhere.repo'))
+
+            pom.project {
+                name 'Android Support Library v4'
+                packaging 'jar'
+                description 'Android Support library v4 with patches by ProK'
+                url 'https://github.com/Prototik/HoloEverywhere'
+
+                scm {
+                    url 'https://github.com/Prototik/HoloEverywhere'
+                    connection 'scm:git@github.com:Prototik/HoloEverywhere.git'
+                    developerConnection 'scm:git@github.com:Prototik/HoloEverywhere.git'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT License'
+                        url 'https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE'
+                        distribution 'repo'
+                        comments 'Copyright (c) 2013 Sergey Shatunov'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'Prototik'
+                        name 'Sergey Shatunov'
+                        email 'prototypegamez@gmail.com'
+                        timezone '+8'
+                        roles {
+                            role "developer"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
