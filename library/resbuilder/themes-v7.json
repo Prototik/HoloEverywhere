@@ -16,8 +16,10 @@
             "android:spinnerItemStyle": "@style/Holo.TextView.SpinnerItem"
         },
         "BackportBarDark": {
+            "actionBarWidgetTheme": "@style/Holo.Theme"
         },
         "BackportBarLight": {
+            "actionBarWidgetTheme": "@style/Holo.Theme.Light"
         },
         "BackportDark | Backport": {
             "android:buttonStyle": "@style/Holo.Button",
@@ -67,6 +69,10 @@
         }
     },
     "data": {
+        "Holo.ListView.Base < @android:Widget.ListView": {
+            "android:overScrollFooter": "@null",
+            "android:overScrollHeader": "@null"
+        },
         "Holo.Theme | BackportDark BackportBarDark < Holo.Base.Theme": {
             "holoTheme": "dark"
         },
@@ -82,7 +88,7 @@
             "holoTheme": "light"
         },
         "Holo.Theme.Light.DarkActionBar | BackportLight BackportBarDark < Holo.Base.Theme.Light.DarkActionBar": {
-            "holoTheme": "mixed",
+            "holoTheme": "mixed"
         },
         "Holo.Theme.Light.DarkActionBar.Fullscreen | Fullscreen": {},
         "Holo.Theme.Light.DarkActionBar.Fullscreen.Wallpaper | Wallpaper": {},
@@ -102,12 +108,7 @@
         "Holo.Theme.NoActionBar.Fullscreen | Fullscreen": {},
         "Holo.Theme.NoActionBar.Fullscreen.Wallpaper | Wallpaper": {},
         "Holo.Theme.NoActionBar.Wallpaper | Wallpaper": {},
-        "Holo.Theme.Wallpaper | Wallpaper": {},
-
-        "Holo.ListView.Base < @android:Widget.ListView": {
-            "android:overScrollFooter": "@null",
-            "android:overScrollHeader": "@null"
-        }
+        "Holo.Theme.Wallpaper | Wallpaper": {}
     },
     "include": [
         {

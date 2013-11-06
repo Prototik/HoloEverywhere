@@ -9,21 +9,15 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import org.holoeverywhere.ThemeManager;
+import org.holoeverywhere.addon.Addons;
 import org.holoeverywhere.addon.IAddon;
 import org.holoeverywhere.addon.IAddonActivity;
 import org.holoeverywhere.addon.IAddonBasicAttacher;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.Arrays;
 import java.util.Collection;
 
 public abstract class Activity extends _HoloActivity {
-    public static final String ADDON_ROBOGUICE = "Roboguice";
-    public static final String ADDON_SLIDER = "Slider";
-    public static final String ADDON_TABBER = "Tabber";
     private final IAddonBasicAttacher<IAddonActivity, Activity> mAttacher =
             new IAddonBasicAttacher<IAddonActivity, Activity>(this);
     private final FindViewAction mFindViewAction = new FindViewAction();
@@ -173,16 +167,16 @@ public abstract class Activity extends _HoloActivity {
     }
 
     @Override
-    public boolean onHomePressed() {
+    public boolean onSupportNavigateUp() {
         return performAddonAction(new AddonCallback<IAddonActivity>() {
             @Override
             public boolean action(IAddonActivity addon) {
-                return addon.onHomePressed();
+                return addon.onNavigateUp();
             }
 
             @Override
             public boolean post() {
-                return Activity.super.onHomePressed();
+                return Activity.super.onSupportNavigateUp();
             }
         });
     }
@@ -250,19 +244,7 @@ public abstract class Activity extends _HoloActivity {
 
     @Override
     protected void onPreInit(Holo config, Bundle savedInstanceState) {
-        if (getClass().isAnnotationPresent(Addons.class)) {
-            for (String addon : getClass().getAnnotation(Addons.class).value()) {
-                if (ADDON_SLIDER.equals(addon)) {
-                    config.requireSlider = true;
-                } else if (ADDON_ROBOGUICE.equals(addon)) {
-                    config.requireRoboguice = true;
-                } else if (ADDON_TABBER.equals(addon)) {
-                    config.requireTabber = true;
-                } else {
-                    addon(addon);
-                }
-            }
-        }
+        IAddonBasicAttacher.attachAnnotations(this);
     }
 
     @Override
@@ -403,13 +385,6 @@ public abstract class Activity extends _HoloActivity {
                 Activity.super.supportInvalidateOptionsMenu();
             }
         });
-    }
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.TYPE)
-    @Inherited
-    public static @interface Addons {
-        public String[] value();
     }
 
     private final class FindViewAction extends AddonCallback<IAddonActivity> {

@@ -47,7 +47,7 @@ public class ListsChoiceModeMultiplueFragment extends ListsBaseFragment {
         setHasOptionsMenu(true);
         mList = getListView();
         mList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-        setListAdapter(ArrayAdapter.createFromResource(getActivity(), R.array.adjectives,
+        setListAdapter(ArrayAdapter.createFromResource(getActivity(), R.array.some_words,
                 R.layout.simple_list_item_multiple_choice));
     }
 }

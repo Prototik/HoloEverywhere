@@ -5,15 +5,6 @@
     <string name="capital_off">"关闭"</string>
     <string name="capital_on">"打开"</string>
     <string name="chooseActivity">"选择操作"</string>
-    <string name="date_picker_decrement_day_button">"减小日期值"</string>
-    <string name="date_picker_decrement_month_button">"减小月份值"</string>
-    <string name="date_picker_decrement_year_button">"减小年份值"</string>
-    <string name="date_picker_dialog_title">"设置日期"</string>
-    <string name="date_picker_increment_day_button">"增大日期值"</string>
-    <string name="date_picker_increment_month_button">"增大月份值"</string>
-    <string name="date_picker_increment_year_button">"增大年份值"</string>
-    <string name="date_time_done">"完成"</string>
-    <string name="date_time_set">"设置"</string>
     <string name="loading">"正在加载..."</string>
     <string name="noApplications">"没有应用可执行此操作。"</string>
     <string name="number_picker_decrement_button">"减小"</string>
@@ -23,12 +14,5 @@
     <string name="ringtone_default">"默认铃声"</string>
     <string name="ringtone_picker_title">"铃声"</string>
     <string name="ringtone_silent">"静音"</string>
-    <string name="time_picker_decrement_hour_button">"减小小时值"</string>
-    <string name="time_picker_decrement_minute_button">"减小分钟值"</string>
-    <string name="time_picker_decrement_set_am_button">"设置上午时间"</string>
-    <string name="time_picker_dialog_title">"设置时间"</string>
-    <string name="time_picker_increment_hour_button">"增大小时值"</string>
-    <string name="time_picker_increment_minute_button">"增大分钟值"</string>
-    <string name="time_picker_increment_set_pm_button">"设置下午时间"</string>
     <string name="whichApplication">"选择要使用的应用："</string>
 </resources>

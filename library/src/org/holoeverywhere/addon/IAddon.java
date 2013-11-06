@@ -14,6 +14,10 @@ import java.lang.annotation.Target;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Basic class-holder of addons<br/>
+ * This class implement a storage for all type-specified addons, like {@link IAddonActivity} and {@link IAddonFragment}
+ */
 public abstract class IAddon {
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)

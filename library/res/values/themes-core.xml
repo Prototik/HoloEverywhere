@@ -3,7 +3,6 @@
         <!--Include block: Dark-->
         <!--Include block: Base-->
         <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
-        <item name="android:dropDownListViewStyle">?dropDownListViewStyle</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="dividerHorizontal">?android:listDivider</item>
@@ -58,7 +57,10 @@
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
-        <item name="calendarViewStyle">@style/Holo.CalendarView</item>
+        <item name="datePickerSelectedDateBackground">#90404040</item>
+        <item name="dateTimePickerActiveTextColor">@color/date_picker_active_text_holo_dark</item>
+        <item name="dateTimePickerStyle">@style/Holo.DateTimePicker</item>
+        <item name="dateTimePickerTextColor">@color/dim_foreground_holo_dark</item>
         <item name="detailsElementBackground">@drawable/panel_bg_holo_dark</item>
         <item name="dialogTheme">@style/Holo.Theme.Dialog</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown</item>
@@ -78,14 +80,12 @@
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
         <!--End of block Dark-->
         <!--Include block: BarDark-->
-        <item name="actionBarWidgetTheme">@style/Holo.Theme</item>
         <!--End of block BarDark-->
     </style>
     <style name="Holo.Base.Theme.Light" parent="Theme.AppCompat.Light">
         <!--Include block: Light-->
         <!--Include block: Base-->
         <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
-        <item name="android:dropDownListViewStyle">?dropDownListViewStyle</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="dividerHorizontal">?android:listDivider</item>
@@ -140,7 +140,10 @@
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
-        <item name="calendarViewStyle">@style/Holo.CalendarView.Light</item>
+        <item name="datePickerSelectedDateBackground">#BBDEDEDE</item>
+        <item name="dateTimePickerActiveTextColor">@color/date_picker_active_text_holo_light</item>
+        <item name="dateTimePickerStyle">@style/Holo.DateTimePicker.Light</item>
+        <item name="dateTimePickerTextColor">@color/dim_foreground_holo_light</item>
         <item name="detailsElementBackground">@drawable/panel_bg_holo_light</item>
         <item name="dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
@@ -160,14 +163,12 @@
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block Light-->
         <!--Include block: BarLight-->
-        <item name="actionBarWidgetTheme">@style/Holo.Theme.Light</item>
         <!--End of block BarLight-->
     </style>
     <style name="Holo.Base.Theme.Light.DarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <!--Include block: Light-->
         <!--Include block: Base-->
         <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
-        <item name="android:dropDownListViewStyle">?dropDownListViewStyle</item>
         <item name="buttonBarButtonStyle">?borderlessButtonStyle</item>
         <item name="buttonBarStyle">@style/Holo.ButtonBar</item>
         <item name="dividerHorizontal">?android:listDivider</item>
@@ -222,7 +223,10 @@
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
-        <item name="calendarViewStyle">@style/Holo.CalendarView.Light</item>
+        <item name="datePickerSelectedDateBackground">#BBDEDEDE</item>
+        <item name="dateTimePickerActiveTextColor">@color/date_picker_active_text_holo_light</item>
+        <item name="dateTimePickerStyle">@style/Holo.DateTimePicker.Light</item>
+        <item name="dateTimePickerTextColor">@color/dim_foreground_holo_light</item>
         <item name="detailsElementBackground">@drawable/panel_bg_holo_light</item>
         <item name="dialogTheme">@style/Holo.Theme.Dialog.Light</item>
         <item name="dropDownListViewStyle">@style/Holo.ListView.DropDown.Light</item>
@@ -242,7 +246,6 @@
         <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
         <!--End of block Light-->
         <!--Include block: BarDark-->
-        <item name="actionBarWidgetTheme">@style/Holo.Theme</item>
         <!--End of block BarDark-->
     </style>
 </resources>

@@ -90,32 +90,10 @@
             "android:paddingLeft": "0dip",
             "android:paddingRight": "0dip",
             "android:paddingTop": "0dip",
-            "android:showDividers": "middle",
+            "android:showDividers": "middle"
         },
         "Holo.ButtonBar.AlertDialog": {
             "android:dividerPadding": "0dp"
-        },
-        "Holo.CalendarView": {
-            "dateTextAppearance": "?android:textAppearanceSmall",
-            "firstDayOfWeek": 1,
-            "focusedMonthDateColor": "#FFFFFFFF",
-            "maxDate": "12/31/2100",
-            "minDate": "01/01/1900",
-            "selectedDateVerticalBar": "@drawable/day_picker_week_view_dayline_holo",
-            "selectedWeekBackgroundColor": "#330099FF",
-            "showWeekNumber": true,
-            "shownWeekCount": 6,
-            "unfocusedMonthDateColor": "#66FFFFFF",
-            "weekDayTextAppearance": "@style/Holo.TextAppearance.CalendarView.WeekDayView",
-            "weekNumberColor": "#33FFFFFF",
-            "weekSeparatorLineColor": "#19FFFFFF"
-        },
-        "Holo.CalendarView.Light": {
-            "focusedMonthDateColor": "#FF000000",
-            "selectedWeekBackgroundColor": "#330066ff",
-            "unfocusedMonthDateColor": "#7F08002B",
-            "weekNumberColor": "#7F080021",
-            "weekSeparatorLineColor": "#7F08002A"
         },
         "Holo.CompoundButton": {
             "android:clickable": true,
@@ -134,6 +112,31 @@
             "android:button": "?android:attr/listChoiceIndicatorSingle"
         },
         "Holo.CompoundButton.RadioButton.Light": {},
+        "Holo.DateTimePicker": {
+            "dateCircleColor": "@color/holo_blue_light",
+            "dateDayTextColor": "?dateTimePickerTextColor",
+            "dateMonthTitleColor": "?dateTimePickerTextColor",
+            "dateTodayColor": "@color/holo_blue_dark",
+            "dateYearSelectorColor": "@color/holo_blue_dark",
+            "timeAmPmPicker": "@color/am_pm_picker_holo_dark",
+            "timeAmPmPickerBackground": "#90404040",
+            "timeAmPmPickerTextColor": "?dateTimePickerTextColor",
+            "timeCenterPointerColor": "#90DEDEDE",
+            "timeCenterPointerRadius": "3",
+            "timeCircleColor": "#90404040",
+            "timePickerSelectorColor": "@color/holo_blue_light",
+            "timeRadialTextColor": "?dateTimePickerTextColor"
+        },
+        "Holo.DateTimePicker.Light": {
+            "dateCircleColor": "@color/holo_blue_dark",
+            "dateTodayColor": "@color/holo_blue_light",
+            "dateYearSelectorColor": "@color/holo_blue_light",
+            "timeAmPmPicker": "@color/am_pm_picker_holo_light",
+            "timeAmPmPickerBackground": "#BBDEDEDE",
+            "timeCenterPointerColor": "#BB303030",
+            "timeCircleColor": "#BBDEDEDE",
+            "timePickerSelectorColor": "@color/holo_blue_dark"
+        },
         "Holo.DropDownItem": {
             "android:gravity": "center_vertical",
             "android:paddingLeft": "8dp",

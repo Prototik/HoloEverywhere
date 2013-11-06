@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 
-import org.holoeverywhere.internal.GenericInflater;
+import org.holoeverywhere.app.GenericInflater;
 import org.holoeverywhere.util.XmlUtils;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

@@ -9,12 +9,12 @@ import android.content.res.XmlResourceParser;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.support.v4.util.LongSparseArray;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.util.Xml;
 
-import org.holoeverywhere.internal._View;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -238,7 +238,7 @@ public final class DrawableCompat {
         public int[] onCreateDrawableState(int extraSpace) {
             extraSpace += 1;
             int[] state = mOverlayInterface.superOnCreateDrawableState(extraSpace);
-            state = _View.supportMergeDrawableStates(state, new int[]{
+            state = ViewCompat.mergeDrawableStates(state, new int[]{
                     mOverlayInterface.isActivated() ? android.R.attr.state_activated : -android.R.attr.state_activated
             });
             return state;

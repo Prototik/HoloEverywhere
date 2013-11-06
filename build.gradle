@@ -4,7 +4,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:0.6.+'
+    classpath 'com.android.tools.build:gradle:0.6.3'
   }
 }
 
@@ -15,9 +15,7 @@ allprojects {
   repositories {
     mavenLocal()
     mavenCentral()
-    maven {
-      url "https://raw.github.com/Prototik/HoloEverywhere/repo"
-    }
+    maven { url "https://raw.github.com/Prototik/HoloEverywhere/repo" }
   }
   
   tasks.withType(Compile) {

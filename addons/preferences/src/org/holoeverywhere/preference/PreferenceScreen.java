@@ -4,6 +4,7 @@ package org.holoeverywhere.preference;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -257,7 +258,7 @@ public class PreferenceScreen extends PreferenceGroup implements
         }
 
         private void prepareActionBar() {
-            if (VERSION.SDK_INT < 11) {
+            if (VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 ActionBarView actionBarView = (ActionBarView) findViewById(R.id.action_bar);
                 if (actionBarView != null) {
                     actionBarView.setWindowCallback(mDialog);
@@ -267,7 +268,7 @@ public class PreferenceScreen extends PreferenceGroup implements
 
         @Override
         public void setContentView(View view) {
-            if (VERSION.SDK_INT >= 11) {
+            if (VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 super.setContentView(view);
             } else {
                 FrameLayout content = (FrameLayout) findViewById(R.id.action_bar_activity_content);
@@ -284,7 +285,7 @@ public class PreferenceScreen extends PreferenceGroup implements
         @Override
         public void setTitle(CharSequence title) {
             super.setTitle(title);
-            if (VERSION.SDK_INT < 11) {
+            if (VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 ((ActionBarView) findViewById(R.id.action_bar)).setTitle(title);
             }
         }

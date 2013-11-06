@@ -11,10 +11,6 @@ env:
     # Android SDK
     - ANDROID_SDK_VERSION="r22.0.4"
     - ANDROID_BUILD_TOOLS_VERSION="r18.1"
-    # Your Sonatype login
-    - SONATYPE_USERNAME=prototik
-    # Your Sonatype password, encrypted by 'travis encrypt -r GitHubLogin/Repo SONATYPE_PASSWORD=pass'
-    - secure: "jSxn2aM6h3pLVR+NurKRiTDwtbfkzTcaHVQ3VD9Yw8f1X73v5NiocuoMdYUg\nMfU4YiEeYmyDlRjzsn0D0s6uBLB7COgBH8G8P0RXeRG4DUDWJQr/mn6mBwvi\n1hghJQBXMuV3g2e41/AYnBA909xVTe1UJ1OWKPvpQk5Q4vBUxHI="
 
 notifications:
   email:
@@ -51,12 +47,6 @@ before_install:
   - cd ${BASEDIR}
   
   - mkdir -p ${ANDROID_HOME}/platforms
-  # Android SDK Platform API 14
-  - export FILE=android-14_r03.zip
-  - wget https://dl-ssl.google.com/android/repository/${FILE} -q
-  - unzip -q ${FILE} -d ${ANDROID_HOME}/platforms
-  - mv ${ANDROID_HOME}/platforms/android-4.0.2 ${ANDROID_HOME}/platforms/android-14
-  - rm ${FILE}
   # Android SDK Platform API 18
   - export FILE=android-18_r01.zip
   - wget https://dl-ssl.google.com/android/repository/${FILE} -q

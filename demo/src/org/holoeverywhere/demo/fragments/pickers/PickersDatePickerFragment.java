@@ -3,9 +3,8 @@ package org.holoeverywhere.demo.fragments.pickers;
 
 import android.os.Bundle;
 
-import com.android.datetimepicker.date.DatePickerDialog;
-
 import org.holoeverywhere.widget.Toast;
+import org.holoeverywhere.widget.datetimepicker.date.DatePickerDialog;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,7 +16,7 @@ public class PickersDatePickerFragment extends DatePickerDialog implements DateP
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initialize(this, 2012, Calendar.DECEMBER, 21);
+        initialize(this, 1996, Calendar.APRIL, 14);
     }
 
     @Override

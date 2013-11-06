@@ -27,11 +27,10 @@ import android.view.ViewStub;
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator;
 import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemService;
 import org.holoeverywhere.app.ContextThemeWrapperPlus;
+import org.holoeverywhere.app.Dialog;
 import org.holoeverywhere.app.Fragment;
-import org.holoeverywhere.internal.DialogTitle;
-import org.holoeverywhere.internal.NumberPickerEditText;
-import org.holoeverywhere.util.WeaklyMap;
 import org.holoeverywhere.widget.FrameLayout;
+import org.holoeverywhere.widget.NumberPicker;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -42,6 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 public class LayoutInflater extends android.view.LayoutInflater implements Cloneable {
     private static final HashMap<String, Constructor<? extends View>> sConstructorMap =
@@ -51,7 +51,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
     };
     private static final Map<Class<?>, Method> sFinishInflateMethods =
             new HashMap<Class<?>, Method>(100);
-    private static final Map<Context, LayoutInflater> sInstances = new WeaklyMap<Context, LayoutInflater>();
+    private static final Map<Context, LayoutInflater> sInstances = new WeakHashMap<Context, LayoutInflater>();
     private static final List<String> sPackages = new ArrayList<String>();
     private static final Map<String, String> sRemaps = new HashMap<String, String>();
     private static final String TAG_1995 = "blink";
@@ -69,20 +69,18 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
         asInternal(ActionBarView.class);
         asInternal(ExpandedMenuView.class);
         asInternal(ActionBarContainer.class);
-        asInternal(DialogTitle.class);
-        asInternal(NumberPickerEditText.class);
+        asInternal(Dialog.DialogTitle.class);
+        asInternal(NumberPicker.NumberPickerEditText.class);
     }
 
     private static OnInitInflaterListener sListener;
     private final Fragment mChildFragment;
     private final Object[] mConstructorArgs = new Object[2];
     private final Context mContext;
-    private Map<Context, LayoutInflater> mClonedInstances;
     private List<Factory> mFactories;
     private Filter mFilter;
     private HashMap<String, Boolean> mFilterMap;
     private FragmentActivity mFragmentActivity;
-    private Map<Fragment, LayoutInflater> mFragmentChildInstances;
     private LayoutInflater mParentInflater;
 
     protected LayoutInflater(android.view.LayoutInflater original,
@@ -90,9 +88,8 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
         this(original, newContext, null);
     }
 
-    protected LayoutInflater(android.view.LayoutInflater original,
-                             Context newContext, Fragment childFragment) {
-        this(original.getContext(), childFragment);
+    protected LayoutInflater(android.view.LayoutInflater original, Context newContext, Fragment childFragment) {
+        this(newContext, childFragment);
         setParent(original);
     }
 
@@ -196,37 +193,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
         return resolvedPackage.getName();
     }
 
-    /**
-     * @deprecated Use {@link #register(Class<? extends View>...)} instead
-     */
-    @Deprecated
-    public static void remap(Class<? extends View>... classes) {
-        register(classes);
-    }
-
-    /**
-     * @deprecated Use {@link #register(Class<? extends View>)} instead
-     */
-    @Deprecated
-    public static void remap(Class<? extends View> clazz) {
-        register(clazz);
-    }
-
-    @Deprecated
-    public static void remap(String prefix, String... classess) {
-        for (String clazz : classess) {
-            LayoutInflater.sRemaps.put(clazz, prefix + "." + clazz);
-        }
-    }
-
-    /**
-     * @deprecated Use {@link #register(String, String)} instead
-     */
-    @Deprecated
-    public static void remapHard(String from, String to) {
-        register(from, to);
-    }
-
     public static void removeInstance(Context context) {
         sInstances.remove(context);
     }
@@ -325,15 +291,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
 
     @Override
     public LayoutInflater cloneInContext(Context newContext) {
-        if (mClonedInstances == null) {
-            mClonedInstances = new HashMap<Context, LayoutInflater>();
-        }
-        LayoutInflater inflater = mClonedInstances.get(newContext);
-        if (inflater == null) {
-            inflater = new LayoutInflater(this, newContext);
-            mClonedInstances.put(newContext, inflater);
-        }
-        return inflater;
+        return new LayoutInflater(this, newContext);
     }
 
     View createViewFromTag(View parent, String name, AttributeSet attrs) {
@@ -490,15 +448,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
         if (mParentInflater != null) {
             return mParentInflater.obtainFragmentChildInflater(fragment);
         }
-        if (mFragmentChildInstances == null) {
-            mFragmentChildInstances = new WeaklyMap<Fragment, LayoutInflater>();
-        }
-        LayoutInflater inflater = mFragmentChildInstances.get(fragment);
-        if (inflater == null) {
-            mFragmentChildInstances.put(fragment,
-                    inflater = new LayoutInflater(this, mContext, fragment));
-        }
-        return inflater;
+        return new LayoutInflater(this, mContext, fragment);
     }
 
     @Override
@@ -622,9 +572,6 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
 
     @SuppressLint("NewApi")
     private View prepareView(View view) {
-        if (HoloEverywhere.DISABLE_OVERSCROLL_EFFECT && VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
-            view.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        }
         return view;
     }
 

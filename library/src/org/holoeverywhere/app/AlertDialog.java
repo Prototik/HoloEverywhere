@@ -14,10 +14,10 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 
 import org.holoeverywhere.R;
-import org.holoeverywhere.internal.AlertController;
-import org.holoeverywhere.internal.AlertController.AlertDecorViewInstaller;
-import org.holoeverywhere.internal.AlertController.AlertParams;
-import org.holoeverywhere.internal.AlertController.AlertParams.OnPrepareListViewListener;
+import org.holoeverywhere.widget.AlertController;
+import org.holoeverywhere.widget.AlertController.AlertDecorViewInstaller;
+import org.holoeverywhere.widget.AlertController.AlertParams;
+import org.holoeverywhere.widget.AlertController.AlertParams.OnPrepareListViewListener;
 import org.holoeverywhere.widget.Button;
 import org.holoeverywhere.widget.ListView;
 

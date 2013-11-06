@@ -21,6 +21,7 @@ import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -37,7 +38,6 @@ import android.view.animation.Transformation;
 
 import org.holoeverywhere.R;
 import org.holoeverywhere.drawable.DrawableCompat;
-import org.holoeverywhere.internal._View;
 import org.holoeverywhere.util.Pool;
 import org.holoeverywhere.util.Poolable;
 import org.holoeverywhere.util.PoolableManager;
@@ -492,8 +492,8 @@ public class ProgressBar extends android.widget.ProgressBar {
         dw += getPaddingLeft() + getPaddingRight();
         dh += getPaddingTop() + getPaddingBottom();
         setMeasuredDimension(
-                _View.supportResolveSizeAndState(dw, widthMeasureSpec, 0),
-                _View.supportResolveSizeAndState(dh, heightMeasureSpec, 0));
+                ViewCompat.resolveSizeAndState(dw, widthMeasureSpec, 0),
+                ViewCompat.resolveSizeAndState(dh, heightMeasureSpec, 0));
     }
 
     protected void onProgressRefresh(float scale, boolean fromUser) {

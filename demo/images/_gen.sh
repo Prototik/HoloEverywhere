@@ -23,4 +23,6 @@ for z in *.svg; do
 	gen $z hdpi 120
 	echo "  # XHDPI"
 	gen $z xhdpi 180
+	echo "  # XXHDPI"
+	gen $z xxhdpi 270
 done

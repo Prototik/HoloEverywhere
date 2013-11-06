@@ -11,13 +11,11 @@ import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Application;
 
 public class DemoApplication extends Application {
-    private static final String PACKAGE = DemoApplication.class.getPackage().getName();
-
     static {
         HoloEverywhere.DEBUG = true;
         HoloEverywhere.PREFERENCE_IMPL = PreferenceImpl.JSON;
 
-        LayoutInflater.registerPackage(PACKAGE + ".widget");
+        LayoutInflater.registerPackage(DemoApplication.class.getPackage().getName() + ".widget");
 
         ThemeManager.setDefaultTheme(ThemeManager.MIXED);
 

@@ -25,7 +25,7 @@ public class _HoloFragmentInflater {
         int id = a.getResourceId(FragmentTag.Fragment_id, View.NO_ID);
         String tag = a.getString(FragmentTag.Fragment_tag);
         a.recycle();
-        int containerId = parent != null ? parent.getId() : 0;
+        int containerId = parent != null ? parent.getId() : View.NO_ID;
         if (containerId == View.NO_ID && id == View.NO_ID && tag == null) {
             throw new IllegalArgumentException(
                     attrs.getPositionDescription()
@@ -104,11 +104,7 @@ public class _HoloFragmentInflater {
         if (fragment != null) {
             fm = fragment.mChildFragmentManager;
             if (fm == null) {
-                try {
-                    fm = (FragmentManagerImpl) fragment.getChildFragmentManager();
-                } catch (ClassCastException e) {
-                    fm = fragment.mChildFragmentManager;
-                }
+                fm = (FragmentManagerImpl) fragment.getChildFragmentManager();
             }
         }
         if (fm == null && activity != null) {

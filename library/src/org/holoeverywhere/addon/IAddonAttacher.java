@@ -3,7 +3,26 @@ package org.holoeverywhere.addon;
 
 import java.util.Collection;
 
+/**
+ * Interface for interaction with objects which can handle addons
+ *
+ * @param <V> addon class
+ */
 public interface IAddonAttacher<V extends IAddonBase<?>> {
+    public <T extends V> T addon(Class<? extends IAddon> clazz);
+
+    public void addon(Collection<Class<? extends IAddon>> classes);
+
+    public <T extends V> T addon(String classname);
+
+    public boolean isAddonAttached(Class<? extends IAddon> clazz);
+
+    public void lockAttaching();
+
+    public Collection<Class<? extends IAddon>> obtainAddonsList();
+
+    public boolean performAddonAction(AddonCallback<V> callback);
+
     public abstract static class AddonCallback<V> {
         public boolean action(V addon) {
             justAction(addon);
@@ -27,6 +46,10 @@ public interface IAddonAttacher<V extends IAddonBase<?>> {
     public static class AttachException extends RuntimeException {
         private static final long serialVersionUID = 4007240742116340485L;
 
+        private AttachException(String message) {
+            super(message);
+        }
+
         public static AttachException afterInit(Object object, Class<? extends IAddon> clazz) {
             return new AttachException("Couldn't attach addon " + clazz.getName()
                     + " after init of object " + object);
@@ -36,23 +59,5 @@ public interface IAddonAttacher<V extends IAddonBase<?>> {
             return new AttachException("Couldn't attach some addons because conflicts is found: \n"
                     + message);
         }
-
-        private AttachException(String message) {
-            super(message);
-        }
     }
-
-    public <T extends V> T addon(Class<? extends IAddon> clazz);
-
-    public void addon(Collection<Class<? extends IAddon>> classes);
-
-    public <T extends V> T addon(String classname);
-
-    public boolean isAddonAttached(Class<? extends IAddon> clazz);
-
-    public void lockAttaching();
-
-    public Collection<Class<? extends IAddon>> obtainAddonsList();
-
-    public boolean performAddonAction(AddonCallback<V> callback);
 }

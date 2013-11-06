@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.holoeverywhere.issues"
-    android:versionCode="2000000"
-    android:versionName="2.0.0">
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.holoeverywhere.issues">
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:minSdkVersion="8" />
 
     <permission
         android:name="org.holoeverywhere.issues.permission.MAPS_RECEIVE"

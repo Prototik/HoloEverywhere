@@ -11,6 +11,9 @@ import android.view.ViewGroup.LayoutParams;
 
 import org.holoeverywhere.app.Activity;
 
+/**
+ * Basic addon class which can handle some activity events, like changing content or dispatching keyevents
+ */
 public abstract class IAddonActivity extends IAddonBase<Activity> {
     public boolean closeOptionsMenu() {
         return false;
@@ -59,7 +62,7 @@ public abstract class IAddonActivity extends IAddonBase<Activity> {
 
     }
 
-    public boolean onHomePressed() {
+    public boolean onNavigateUp() {
         return false;
     }
 

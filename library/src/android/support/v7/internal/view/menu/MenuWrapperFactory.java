@@ -70,4 +70,11 @@ public final class MenuWrapperFactory {
         }
         throw new UnsupportedOperationException();
     }
+
+    public static MenuItem unwrap(MenuItem item) {
+        while(item instanceof  MenuItemWrapperICS) {
+            item = ((MenuItemWrapperICS) item).getWrappedObject();
+        }
+        return item;
+    }
 }

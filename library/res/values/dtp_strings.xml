@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
      Copyright (C) 2013 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -52,20 +51,7 @@
     <!-- Accessibility announcement for the year picker [CHAR LIMIT=NONE] -->
     <string name="select_year">Select year</string>
     <!-- Accessibility description for the item that is currently selected. -->
-    <string name="item_is_selected"><xliff:g id="item" example="2013">%1$s</xliff:g> selected</string>
+    <string name="item_is_selected"><xliff:g example="2013" id="item">%1$s</xliff:g> selected</string>
     <!-- Accessibility announcement when a number that had been typed in is deleted [CHAR_LIMIT=NONE] -->
-    <string name="deleted_key"><xliff:g id="key" example="4">%1$s</xliff:g> deleted</string>
-
-    <!-- DO NOT TRANSLATE -->
-    <string name="time_placeholder">--</string>
-    <!-- DO NOT TRANSLATE -->
-    <string name="time_separator">:</string>
-
-    <!-- DO NOT TRANSLATE -->
-    <string name="radial_numbers_typeface">sans-serif</string>
-    <!-- DO NOT TRANSLATE -->
-    <string name="sans_serif">sans-serif</string>
-
-    <!-- DO NOT TRANSLATE -->
-    <string name="day_of_week_label_typeface">sans-serif</string>
+    <string name="deleted_key"><xliff:g example="4" id="key">%1$s</xliff:g> deleted</string>
 </resources>

@@ -10,8 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
 
-import com.android.datetimepicker.time.RadialPickerLayout;
-import com.android.datetimepicker.time.TimePickerDialog;
+import org.holoeverywhere.widget.datetimepicker.time.RadialPickerLayout;
+import org.holoeverywhere.widget.datetimepicker.time.TimePickerDialog;
 
 import org.holoeverywhere.app.Activity;
 

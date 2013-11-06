@@ -121,7 +121,7 @@ public class FontLoader {
     }
 
     public static <T extends View> T apply(T view, Font font) {
-        if (view == null || font == null) {
+        if (view == null || font == null || view.isInEditMode()) {
             return view;
         }
         font.mContext = view.getContext();
@@ -246,6 +246,10 @@ public class FontLoader {
             }
         }
 
+        public boolean available(Context context, String fontFamily, int fontStyle) {
+            return mFontFamily == null ? fontFamily == null : mFontFamily.equals(fontFamily) && mFontStyle == fontStyle;
+        }
+
         @Override
         public Font clone() {
             return new Font(this);
@@ -274,9 +278,19 @@ public class FontLoader {
             return this;
         }
 
-        public Typeface getTypeface(String fontFamily, int fontStyle) {
+        protected Typeface getTypeface(String fontFamily, int fontStyle) {
             if (!mTypefaceLoaded) {
                 mTypeface = loadTypeface();
+                mTypefaceLoaded = true;
+            }
+            return mTypeface;
+        }
+
+        public Typeface getTypeface(Context context) {
+            if (!mTypefaceLoaded) {
+                mContext = context;
+                mTypeface = loadTypeface();
+                mContext = null;
                 mTypefaceLoaded = true;
             }
             return mTypeface;
@@ -357,7 +371,12 @@ public class FontLoader {
         }
 
         @Override
-        public Typeface getTypeface(String fontFamily, int fontStyle) {
+        public boolean available(Context context, String fontFamily, int fontStyle) {
+            final Font font = findFont(fontFamily, fontStyle);
+            return font != null && font.available(context, fontFamily, fontStyle);
+        }
+
+        private Font findFont(String fontFamily, int fontStyle) {
             if (fontFamily == null) {
                 fontFamily = DEFAULT_FONT_FAMILY;
             }
@@ -365,14 +384,20 @@ public class FontLoader {
                 Font font = mFonts.get(i);
                 if ((mAllowAnyFontFamily || fontFamily.equals(font.mFontFamily))
                         && font.mFontStyle == fontStyle) {
-                    return getTypeface(font, fontFamily, fontStyle);
+                    return font;
                 }
             }
             if (mDefaultFont != null) {
                 mDefaultFont.mContext = getContext();
-                return getTypeface(mDefaultFont, fontFamily, fontStyle);
+                return mDefaultFont;
             }
             return null;
+        }
+
+        @Override
+        protected Typeface getTypeface(String fontFamily, int fontStyle) {
+            final Font font = findFont(fontFamily, fontStyle);
+            return font != null ? getTypeface(font, fontFamily, fontStyle) : null;
         }
 
         public FontCollector register(Font font) {
@@ -418,6 +443,18 @@ public class FontLoader {
         }
 
         @Override
+        public boolean available(Context context, String fontFamily, int fontStyle) {
+            boolean result = false;
+            try {
+                final InputStream is = context.getResources().openRawResource(mRawResourceId);
+                is.close();
+                result = true;
+            } catch (Exception e) {
+            }
+            return result && super.available(context, fontFamily, fontStyle);
+        }
+
+        @Override
         public RawFont clone() {
             return new RawFont(this);
         }
@@ -460,24 +497,23 @@ public class FontLoader {
                     return tryToLoadRawTypeface(file);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    return loadTypeface(file, false);
                 }
-            } else {
-                try {
-                    InputStream is = getContext().getResources().openRawResource(mRawResourceId);
-                    OutputStream os = new FileOutputStream(file);
-                    byte[] buffer = new byte[1024];
-                    int c;
-                    while ((c = is.read(buffer)) > 0) {
-                        os.write(buffer, 0, c);
-                    }
-                    os.flush();
-                    os.close();
-                    is.close();
-                    return tryToLoadRawTypeface(file);
-                } catch (Exception e) {
-                    return null;
+            }
+            try {
+                InputStream is = getContext().getResources().openRawResource(mRawResourceId);
+                OutputStream os = new FileOutputStream(file);
+                byte[] buffer = new byte[1024];
+                int c;
+                while ((c = is.read(buffer)) > 0) {
+                    os.write(buffer, 0, c);
                 }
+                os.flush();
+                os.close();
+                is.close();
+                return tryToLoadRawTypeface(file);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
             }
         }
 
@@ -511,6 +547,17 @@ public class FontLoader {
         }
 
         @Override
+        public boolean available(Context context, String fontFamily, int fontStyle) {
+            boolean result = false;
+            try {
+                setRawResourceId(context);
+                result = true;
+            } catch (Exception e) {
+            }
+            return result && super.available(context, fontFamily, fontStyle);
+        }
+
+        @Override
         public RawLazyFont clone() {
             return new RawLazyFont(this);
         }
@@ -518,14 +565,16 @@ public class FontLoader {
         @Override
         public Typeface loadTypeface() {
             assertContext();
-            final int id = getContext().getResources().getIdentifier(mRawResourceName,
-                    "raw", getContext().getPackageName());
+            setRawResourceId(getContext());
+            return loadRawTypeface();
+        }
+
+        private void setRawResourceId(Context context) {
+            final int id = context.getResources().getIdentifier(mRawResourceName, "raw", context.getPackageName());
             if (id == 0) {
-                throw new IllegalStateException("Could not find font in raw resources: "
-                        + mRawResourceName);
+                throw new IllegalStateException("Could not find font in raw resources: " + mRawResourceName);
             }
             setRawResourceId(id);
-            return loadRawTypeface();
         }
     }
 

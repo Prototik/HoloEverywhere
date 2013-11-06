@@ -993,14 +993,14 @@ class ActionBarImplBase extends ActionBar {
         final boolean animate = isShowHideAnimationEnabled() || fromSystem;
 
         if (animate) {
-            Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.abc_slide_in_top);
+            Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_top);
             mTopVisibilityView.startAnimation(anim);
         }
         mTopVisibilityView.setVisibility(View.VISIBLE);
 
         if (mSplitView != null && mSplitView.getVisibility() != View.VISIBLE) {
             if (animate) {
-                Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.abc_slide_in_bottom);
+                Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_bottom);
                 mSplitView.startAnimation(anim);
             }
             mSplitView.setVisibility(View.VISIBLE);
@@ -1016,7 +1016,7 @@ class ActionBarImplBase extends ActionBar {
         final boolean animate = isShowHideAnimationEnabled() || fromSystem;
 
         if (animate) {
-            Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.abc_slide_out_top);
+            Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.slide_out_top);
             mTopVisibilityView.startAnimation(anim);
         }
         mTopVisibilityView.setVisibility(View.GONE);
@@ -1024,7 +1024,7 @@ class ActionBarImplBase extends ActionBar {
         if (mSplitView != null && mSplitView.getVisibility() != View.GONE) {
             if (animate) {
                 Animation anim = AnimationUtils
-                        .loadAnimation(mContext, R.anim.abc_slide_out_bottom);
+                        .loadAnimation(mContext, R.anim.slide_out_bottom);
                 mSplitView.startAnimation(anim);
             }
             mSplitView.setVisibility(View.GONE);

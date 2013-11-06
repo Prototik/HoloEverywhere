@@ -19,7 +19,7 @@
 	<inceptionYear>2012</inceptionYear>
 
 	<modules>
-		<module>library</module>
+		<module>holoeverywhere</module>
 		<module>addons</module>
 		<module>demo</module>
 	</modules>
@@ -72,24 +72,11 @@
 
 	<distributionManagement>
 		<repository>
-			<id>holoeverywhere-repo</id>
+			<id>holoeverywhereRepo</id>
 			<name>HoloEverywhere Repo</name>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+			<url>https://raw.github.com/Prototik/HoloEverywhere/repo</url>
 			<uniqueVersion>true</uniqueVersion>
 		</repository>
-
-		<snapshotRepository>
-			<id>holoeverywhere-repo-snapshots</id>
-			<name>HoloEverywhere Repo Snapshots</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-
-		<site>
-			<id>holoeverywhere-website</id>
-			<name>HoloEverywhere Website</name>
-			<url>http://holoeverywhere.org/</url>
-		</site>
 	</distributionManagement>
 
 	<licenses>
@@ -127,7 +114,7 @@
             <dependency>
                 <groupId>com.android.support</groupId>
                 <artifactId>support-v4</artifactId>
-                <version>18.0.1</version>
+                <version>18.0.2</version>
             </dependency>
 
             <dependency>
@@ -180,16 +167,6 @@
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-release-plugin</artifactId>
-					<version>2.4.1</version>
-					<configuration>
-						<autoVersionSubmodules>true</autoVersionSubmodules>
-						<tagNameFormat>v@{project.version}</tagNameFormat>
-					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-gpg-plugin</artifactId>
 					<version>1.4</version>
 					<executions>
@@ -228,7 +205,7 @@
 							<debug>false</debug>
 						</sign>
 						<zipalign>
-							<skip>true</skip>
+							<skip>false</skip>
 						</zipalign>
 						<undeployBeforeDeploy>true</undeployBeforeDeploy>
 						<proguard>

@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:holo="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_collapsed"
-        android:title="collapsed"
-        holo:showAsAction="always|collapseActionView">
+        android:showAsAction="always|collapseActionView"
+        android:title="collapsed">
         <menu>
             <item
                 android:id="@+id/menu1"
                 android:showAsAction="always"
-                android:title="menu1"
-                holo:showAsAction="always" />
+                android:title="menu1" />
             <item
                 android:id="@+id/menu2"
                 android:showAsAction="always"
-                android:title="menu2"
-                holo:showAsAction="always" />
+                android:title="menu2" />
             <item
                 android:id="@+id/menu3"
                 android:showAsAction="always"
-                android:title="menu3"
-                holo:showAsAction="always" />
+                android:title="menu3" />
         </menu>
     </item>
 </menu>

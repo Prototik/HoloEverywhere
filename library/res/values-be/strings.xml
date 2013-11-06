@@ -5,15 +5,6 @@
     <string name="capital_off">"Адключана"</string>
     <string name="capital_on">"Уключыць"</string>
     <string name="chooseActivity">"Выберыце дзеянне"</string>
-    <string name="date_picker_decrement_day_button">"Паменшыць лічбу дня"</string>
-    <string name="date_picker_decrement_month_button">"Паменшыць лічбу месяца"</string>
-    <string name="date_picker_decrement_year_button">"Паменшыць лічбу года"</string>
-    <string name="date_picker_dialog_title">"Усталяваць дату"</string>
-    <string name="date_picker_increment_day_button">"Павялічыць лічбу дня"</string>
-    <string name="date_picker_increment_month_button">"Павялічыць лічбу месяца"</string>
-    <string name="date_picker_increment_year_button">"Павялічыць лічбу года"</string>
-    <string name="date_time_done">"Гатова"</string>
-    <string name="date_time_set">"Задаць"</string>
     <string name="loading">"Загрузка..."</string>
     <string name="noApplications">"Няма прыкладанняў, якія могуць выконваць гэты працэс."</string>
     <string name="number_picker_decrement_button">"Паменшыць"</string>
@@ -23,12 +14,5 @@
     <string name="ringtone_default">"Рынгтон па змаўчаннi"</string>
     <string name="ringtone_picker_title">"Рынгтоны"</string>
     <string name="ringtone_silent">"Ціхі рэжым"</string>
-    <string name="time_picker_decrement_hour_button">"Паменшыць лічбу гадзін."</string>
-    <string name="time_picker_decrement_minute_button">"Паменшыць лічбу хвілін."</string>
-    <string name="time_picker_decrement_set_am_button">"Усталяваць час да паўдня"</string>
-    <string name="time_picker_dialog_title">"Усталяваць час"</string>
-    <string name="time_picker_increment_hour_button">"Павялічыць лічбу гадзін."</string>
-    <string name="time_picker_increment_minute_button">"Павялічыць лічбу хвілін."</string>
-    <string name="time_picker_increment_set_pm_button">"Усталяваць час пасля паўдня"</string>
     <string name="whichApplication">"Завяршыць дзеянне з дапамогай"</string>
 </resources>

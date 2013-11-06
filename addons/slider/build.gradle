@@ -4,19 +4,4 @@ dependencies {
   compile project(':library')
 }
 
-android {
-  compileSdkVersion 18
-  buildToolsVersion '18.1'
-
-  defaultConfig {
-    targetSdkVersion 18
-  }
-
-  sourceSets {
-    main {
-      manifest.srcFile 'AndroidManifest.xml'
-      java.srcDirs = ['src']
-      res.srcDirs = ['res']
-    }
-  }
-}
+apply from: '../../android_default.gradle'

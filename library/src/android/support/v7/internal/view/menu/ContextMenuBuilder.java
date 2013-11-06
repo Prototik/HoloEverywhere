@@ -18,7 +18,7 @@ public class ContextMenuBuilder extends MenuBuilder implements SupportContextMen
 
     public ContextMenuBuilder(Context context, ContextMenuListener listener) {
         super(context);
-        setContextMenuListener(listener);
+        mListener = listener;
     }
 
     public ContextMenuInfo getContextMenuInfo() {

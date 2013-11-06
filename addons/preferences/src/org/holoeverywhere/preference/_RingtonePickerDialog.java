@@ -24,7 +24,7 @@ import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.AlertDialog.Builder;
 import org.holoeverywhere.app.Dialog;
-import org.holoeverywhere.internal.AlertController.AlertParams.OnPrepareListViewListener;
+import org.holoeverywhere.widget.AlertController.AlertParams.OnPrepareListViewListener;
 import org.holoeverywhere.widget.ListView;
 
 public class _RingtonePickerDialog implements OnItemSelectedListener, Runnable,

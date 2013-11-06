@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import org.holoeverywhere.internal.GenericInflater;
+import org.holoeverywhere.app.GenericInflater;
 
 import java.util.ArrayList;
 import java.util.Collections;

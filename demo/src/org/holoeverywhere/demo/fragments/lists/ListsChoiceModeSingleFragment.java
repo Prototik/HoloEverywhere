@@ -22,7 +22,7 @@ public class ListsChoiceModeSingleFragment extends ListsBaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mList = getListView();
         mList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-        setListAdapter(ArrayAdapter.createFromResource(getActivity(), R.array.adjectives,
+        setListAdapter(ArrayAdapter.createFromResource(getActivity(), R.array.some_words,
                 R.layout.simple_list_item_single_choice));
     }
 }

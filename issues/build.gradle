@@ -4,39 +4,13 @@ dependencies {
     compile project(':library')
     compile project(':addons:preferences')
     compile project(':addons:slider')
-    compile 'com.google.android.gms:play-services:3.2.+@aar'
+    compile 'com.google.android.gms:play-services:3.2.25@aar'
 }
 
+apply from: '../android_default.gradle'
+
 android {
-    compileSdkVersion 18
-    buildToolsVersion '18.1'
-
-    defaultConfig {
-        targetSdkVersion 18
-    }
-
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            res.srcDirs = ['res']
-        }
-    }
-
-    if (project.hasProperty('holoeverywhere.sign.storeFile')) {
-        signingConfigs {
-            release {
-                storeFile = file(project.getProperty('holoeverywhere.sign.storeFile'))
-                keyAlias = project.getProperty('holoeverywhere.sign.keyAlias')
-                storePassword = project.getProperty('holoeverywhere.sign.storePassword')
-                keyPassword = project.getProperty('holoeverywhere.sign.keyPassword')
-            }
-        }
-
-        buildTypes {
-            release {
-                signingConfig signingConfigs.release
-            }
-        }
-    }
+  defaultConfig {
+    minSdkVersion 8
+  }
 }

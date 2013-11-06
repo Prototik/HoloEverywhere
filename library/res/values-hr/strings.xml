@@ -5,15 +5,6 @@
     <string name="capital_off">"Isklj."</string>
     <string name="capital_on">"Uklj."</string>
     <string name="chooseActivity">"Odaberi radnju"</string>
-    <string name="date_picker_decrement_day_button">"Smanjenje dana"</string>
-    <string name="date_picker_decrement_month_button">"Smanjenje mjeseca"</string>
-    <string name="date_picker_decrement_year_button">"Smanjenje godine"</string>
-    <string name="date_picker_dialog_title">"Postavi datum"</string>
-    <string name="date_picker_increment_day_button">"Povećanje dana"</string>
-    <string name="date_picker_increment_month_button">"Povećanje mjeseca"</string>
-    <string name="date_picker_increment_year_button">"Povećanje godine"</string>
-    <string name="date_time_done">"Gotovo"</string>
-    <string name="date_time_set">"Postavi"</string>
     <string name="loading">"Učitavanje…"</string>
     <string name="noApplications">"Tu radnju ne može izvesti nijedna aplikacija."</string>
     <string name="number_picker_decrement_button">"Smanjivanje"</string>
@@ -23,12 +14,5 @@
     <string name="ringtone_default">"Zadana melodija zvona"</string>
     <string name="ringtone_picker_title">"Melodije zvona"</string>
     <string name="ringtone_silent">"Bešumno"</string>
-    <string name="time_picker_decrement_hour_button">"Smanjenje sati"</string>
-    <string name="time_picker_decrement_minute_button">"Smanjenje minuta"</string>
-    <string name="time_picker_decrement_set_am_button">"Postavi AM"</string>
-    <string name="time_picker_dialog_title">"Postavljanje vremena"</string>
-    <string name="time_picker_increment_hour_button">"Povećanje sati"</string>
-    <string name="time_picker_increment_minute_button">"Povećanje minuta"</string>
-    <string name="time_picker_increment_set_pm_button">"Postavi PM"</string>
     <string name="whichApplication">"Radnju dovrši pomoću stavke"</string>
 </resources>

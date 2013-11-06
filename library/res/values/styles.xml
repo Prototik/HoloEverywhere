@@ -94,28 +94,6 @@
     <style name="Holo.ButtonBar.AlertDialog">
         <item name="android:dividerPadding">0dp</item>
     </style>
-    <style name="Holo.CalendarView">
-        <item name="dateTextAppearance">?android:textAppearanceSmall</item>
-        <item name="firstDayOfWeek">1</item>
-        <item name="focusedMonthDateColor">#FFFFFFFF</item>
-        <item name="maxDate">12/31/2100</item>
-        <item name="minDate">01/01/1900</item>
-        <item name="selectedDateVerticalBar">@drawable/day_picker_week_view_dayline_holo</item>
-        <item name="selectedWeekBackgroundColor">#330099FF</item>
-        <item name="showWeekNumber">true</item>
-        <item name="shownWeekCount">6</item>
-        <item name="unfocusedMonthDateColor">#66FFFFFF</item>
-        <item name="weekDayTextAppearance">@style/Holo.TextAppearance.CalendarView.WeekDayView</item>
-        <item name="weekNumberColor">#33FFFFFF</item>
-        <item name="weekSeparatorLineColor">#19FFFFFF</item>
-    </style>
-    <style name="Holo.CalendarView.Light">
-        <item name="focusedMonthDateColor">#FF000000</item>
-        <item name="selectedWeekBackgroundColor">#330066ff</item>
-        <item name="unfocusedMonthDateColor">#7F08002B</item>
-        <item name="weekNumberColor">#7F080021</item>
-        <item name="weekSeparatorLineColor">#7F08002A</item>
-    </style>
     <style name="Holo.CompoundButton">
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
@@ -133,6 +111,31 @@
         <item name="android:button">?android:attr/listChoiceIndicatorSingle</item>
     </style>
     <style name="Holo.CompoundButton.RadioButton.Light"/>
+    <style name="Holo.DateTimePicker">
+        <item name="dateCircleColor">@color/holo_blue_light</item>
+        <item name="dateDayTextColor">?dateTimePickerTextColor</item>
+        <item name="dateMonthTitleColor">?dateTimePickerTextColor</item>
+        <item name="dateTodayColor">@color/holo_blue_dark</item>
+        <item name="dateYearSelectorColor">@color/holo_blue_dark</item>
+        <item name="timeAmPmPicker">@color/am_pm_picker_holo_dark</item>
+        <item name="timeAmPmPickerBackground">#90404040</item>
+        <item name="timeAmPmPickerTextColor">?dateTimePickerTextColor</item>
+        <item name="timeCenterPointerColor">#90DEDEDE</item>
+        <item name="timeCenterPointerRadius">3</item>
+        <item name="timeCircleColor">#90404040</item>
+        <item name="timePickerSelectorColor">@color/holo_blue_light</item>
+        <item name="timeRadialTextColor">?dateTimePickerTextColor</item>
+    </style>
+    <style name="Holo.DateTimePicker.Light">
+        <item name="dateCircleColor">@color/holo_blue_dark</item>
+        <item name="dateTodayColor">@color/holo_blue_light</item>
+        <item name="dateYearSelectorColor">@color/holo_blue_light</item>
+        <item name="timeAmPmPicker">@color/am_pm_picker_holo_light</item>
+        <item name="timeAmPmPickerBackground">#BBDEDEDE</item>
+        <item name="timeCenterPointerColor">#BB303030</item>
+        <item name="timeCircleColor">#BBDEDEDE</item>
+        <item name="timePickerSelectorColor">@color/holo_blue_dark</item>
+    </style>
     <style name="Holo.DropDownItem">
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">8dp</item>

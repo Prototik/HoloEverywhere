@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -16,7 +17,6 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import org.holoeverywhere.R;
-import org.holoeverywhere.internal._View;
 
 public abstract class AbsSeekBar extends ProgressBar {
     private static final int NO_ALPHA = 0xFF;
@@ -176,8 +176,8 @@ public abstract class AbsSeekBar extends ProgressBar {
         dw += getPaddingLeft() + getPaddingRight();
         dh += getPaddingTop() + getPaddingBottom();
         setMeasuredDimension(
-                _View.supportResolveSizeAndState(dw, widthMeasureSpec, 0),
-                _View.supportResolveSizeAndState(dh, heightMeasureSpec, 0));
+                ViewCompat.resolveSizeAndState(dw, widthMeasureSpec, 0),
+                ViewCompat.resolveSizeAndState(dh, heightMeasureSpec, 0));
     }
 
     @Override

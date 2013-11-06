@@ -1,23 +1,11 @@
 apply plugin: 'android-library'
 
 dependencies {
-  compile 'com.android.support:support-v4:18.0.1@jar'
+  compile 'com.android.support:support-v4:18.0.2@jar'
   compile 'com.nineoldandroids:library:2.4.0@jar'
 }
 
-android {
-  compileSdkVersion 18
-  buildToolsVersion '18.1'
+apply from: '../android_default.gradle'
 
-  defaultConfig {
-    targetSdkVersion 18
-  }
-
-  sourceSets {
-    main {
-      manifest.srcFile 'AndroidManifest.xml'
-      java.srcDirs = ['src']
-      res.srcDirs = ['res']
-    }
-  }
-}
+generateJavadoc.include "**/org/holoeverywhere/**"
+generateJavadoc.title "HoloEverywhere ${project.version} JavaDoc"

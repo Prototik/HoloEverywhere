@@ -1,0 +1,127 @@
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion '18.1'
+
+    defaultConfig {
+        minSdkVersion 7
+        targetSdkVersion 18
+
+        versionName '2.0.0'
+        versionCode 2000000
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            res.srcDirs = ['res']
+        }
+    }
+}
+
+if (android.class.name.startsWith('com.android.build.gradle.AppExtension') && project.hasProperty('holoeverywhere.sign.storeFile')) {
+    android {
+        signingConfigs {
+            release {
+                storeFile = file(project.getProperty('holoeverywhere.sign.storeFile'))
+                keyAlias = project.getProperty('holoeverywhere.sign.keyAlias')
+                storePassword = project.getProperty('holoeverywhere.sign.storePassword')
+                keyPassword = project.getProperty('holoeverywhere.sign.keyPassword')
+            }
+        }
+
+        buildTypes {
+            release {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+}
+
+configurations {
+    runtime {
+        extendsFrom compile
+    }
+}
+
+dependencies {
+    runtime 'android:android:4.3_r2@jar'
+}
+
+task generateJavadoc(type: Javadoc) {
+    source = android.sourceSets.main.allJava
+    classpath = project.files(
+            configurations.runtime,
+            "${buildDir}/classes/release",
+            project.fileTree("${buildDir}/exploded-bundles") { include '*/classes.jar' }
+    )
+}
+
+task javadoc(type: Jar, dependsOn: generateJavadoc) {
+    from generateJavadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+task sources(type: Jar) {
+    from android.sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives tasks.sources
+    archives tasks.javadoc
+}
+
+signing {
+    required { !version.contains("SNAPSHOT") && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            pom.artifactId = ARTIFACT_ID
+
+            repository(url: project.getProperty('holoeverywhere.repo'))
+
+            pom.project {
+                name NAME
+                packaging PACKAGING
+                description DESCRIPTION
+                url 'https://github.com/Prototik/HoloEverywhere'
+
+                scm {
+                    url 'https://github.com/Prototik/HoloEverywhere'
+                    connection 'scm:git@github.com:Prototik/HoloEverywhere.git'
+                    developerConnection 'scm:git@github.com:Prototik/HoloEverywhere.git'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT License'
+                        url 'https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE'
+                        distribution 'repo'
+                        comments 'Copyright (c) 2013 Sergey Shatunov'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'Prototik'
+                        name 'Sergey Shatunov'
+                        email 'prototypegamez@gmail.com'
+                        timezone '+8'
+                        roles {
+                            role "developer"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

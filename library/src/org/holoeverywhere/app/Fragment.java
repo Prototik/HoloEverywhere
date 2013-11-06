@@ -104,14 +104,9 @@ public class Fragment extends _HoloFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mAttacher.reset();
-        mAttacher.inhert(activity);
-    }
-
-    @Override
     public void onCreate(final Bundle savedInstanceState) {
+        IAddonBasicAttacher.attachAnnotations(this);
+        mAttacher.inhert(getSupportActivity());
         lockAttaching();
         performAddonAction(new AddonCallback<IAddonFragment>() {
             @Override

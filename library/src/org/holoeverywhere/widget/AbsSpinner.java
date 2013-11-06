@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.os.Build.VERSION;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.View;
@@ -20,89 +21,17 @@ import android.widget.SpinnerAdapter;
 import org.holoeverywhere.R;
 
 public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
-    class RecycleBin {
-        private final SparseArray<View> mScrapHeap = new SparseArray<View>();
-
-        void clear() {
-            final SparseArray<View> scrapHeap = mScrapHeap;
-            final int count = scrapHeap.size();
-            for (int i = 0; i < count; i++) {
-                final View view = scrapHeap.valueAt(i);
-                if (view != null) {
-                    removeDetachedView(view, true);
-                }
-            }
-            scrapHeap.clear();
-        }
-
-        View get(int position) {
-            View result = mScrapHeap.get(position);
-            if (result != null) {
-                mScrapHeap.delete(position);
-            }
-            return result;
-        }
-
-        public void put(int position, View v) {
-            mScrapHeap.put(position, v);
-        }
-    }
-
-    static class SavedState extends BaseSavedState {
-        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
-            @Override
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
-            }
-
-            @Override
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
-        int position;
-
-        long selectedId;
-
-        private SavedState(Parcel in) {
-            super(in);
-            selectedId = in.readLong();
-            position = in.readInt();
-        }
-
-        SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        @Override
-        public String toString() {
-            return "AbsSpinner.SavedState{"
-                    + Integer.toHexString(System.identityHashCode(this))
-                    + " selectedId=" + selectedId + " position=" + position
-                    + "}";
-        }
-
-        @Override
-        public void writeToParcel(Parcel out, int flags) {
-            super.writeToParcel(out, flags);
-            out.writeLong(selectedId);
-            out.writeInt(position);
-        }
-    }
-
-    SpinnerAdapter mAdapter;
-    private DataSetObserver mDataSetObserver;
-    int mHeightMeasureSpec;
     final RecycleBin mRecycler = new RecycleBin();
+    final Rect mSpinnerPadding = new Rect();
+    SpinnerAdapter mAdapter;
+    int mHeightMeasureSpec;
     int mSelectionBottomPadding = 0;
     int mSelectionLeftPadding = 0;
     int mSelectionRightPadding = 0;
     int mSelectionTopPadding = 0;
-    final Rect mSpinnerPadding = new Rect();
-
-    private Rect mTouchFrame;
-
     int mWidthMeasureSpec;
+    private DataSetObserver mDataSetObserver;
+    private Rect mTouchFrame;
 
     public AbsSpinner(Context context) {
         super(context);
@@ -138,6 +67,35 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
     @Override
     public SpinnerAdapter getAdapter() {
         return mAdapter;
+    }
+
+    @Override
+    public void setAdapter(SpinnerAdapter adapter) {
+        if (null != mAdapter) {
+            mAdapter.unregisterDataSetObserver(mDataSetObserver);
+            resetList();
+        }
+        mAdapter = adapter;
+        mOldSelectedPosition = AdapterView.INVALID_POSITION;
+        mOldSelectedRowId = AdapterView.INVALID_ROW_ID;
+        if (mAdapter != null) {
+            mOldItemCount = mItemCount;
+            mItemCount = mAdapter.getCount();
+            checkFocus();
+            mDataSetObserver = new AdapterDataSetObserver();
+            mAdapter.registerDataSetObserver(mDataSetObserver);
+            int position = mItemCount > 0 ? 0 : AdapterView.INVALID_POSITION;
+            setSelectedPositionInt(position);
+            setNextSelectedPositionInt(position);
+            if (mItemCount == 0) {
+                checkSelectionChanged();
+            }
+        } else {
+            checkFocus();
+            resetList();
+            checkSelectionChanged();
+        }
+        requestLayout();
     }
 
     int getChildHeight(View child) {
@@ -240,11 +198,8 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
         preferredHeight = Math
                 .max(preferredHeight, getSuggestedMinimumHeight());
         preferredWidth = Math.max(preferredWidth, getSuggestedMinimumWidth());
-        heightSize = org.holoeverywhere.internal._View
-                .supportResolveSizeAndState(preferredHeight, heightMeasureSpec,
-                        0);
-        widthSize = org.holoeverywhere.internal._View
-                .supportResolveSizeAndState(preferredWidth, widthMeasureSpec, 0);
+        heightSize = ViewCompat.resolveSizeAndState(preferredHeight, heightMeasureSpec, 0);
+        widthSize = ViewCompat.resolveSizeAndState(preferredWidth, widthMeasureSpec, 0);
         setMeasuredDimension(widthSize, heightSize);
         mHeightMeasureSpec = heightMeasureSpec;
         mWidthMeasureSpec = widthMeasureSpec;
@@ -328,35 +283,6 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
     }
 
     @Override
-    public void setAdapter(SpinnerAdapter adapter) {
-        if (null != mAdapter) {
-            mAdapter.unregisterDataSetObserver(mDataSetObserver);
-            resetList();
-        }
-        mAdapter = adapter;
-        mOldSelectedPosition = AdapterView.INVALID_POSITION;
-        mOldSelectedRowId = AdapterView.INVALID_ROW_ID;
-        if (mAdapter != null) {
-            mOldItemCount = mItemCount;
-            mItemCount = mAdapter.getCount();
-            checkFocus();
-            mDataSetObserver = new AdapterDataSetObserver();
-            mAdapter.registerDataSetObserver(mDataSetObserver);
-            int position = mItemCount > 0 ? 0 : AdapterView.INVALID_POSITION;
-            setSelectedPositionInt(position);
-            setNextSelectedPositionInt(position);
-            if (mItemCount == 0) {
-                checkSelectionChanged();
-            }
-        } else {
-            checkFocus();
-            resetList();
-            checkSelectionChanged();
-        }
-        requestLayout();
-    }
-
-    @Override
     public void setSelection(int position) {
         setNextSelectedPositionInt(position);
         requestLayout();
@@ -376,6 +302,75 @@ public abstract class AbsSpinner extends AdapterView<SpinnerAdapter> {
             setNextSelectedPositionInt(position);
             layout(delta, animate);
             mBlockLayoutRequests = false;
+        }
+    }
+
+    static class SavedState extends BaseSavedState {
+        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+        int position;
+        long selectedId;
+
+        private SavedState(Parcel in) {
+            super(in);
+            selectedId = in.readLong();
+            position = in.readInt();
+        }
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        @Override
+        public String toString() {
+            return "AbsSpinner.SavedState{"
+                    + Integer.toHexString(System.identityHashCode(this))
+                    + " selectedId=" + selectedId + " position=" + position
+                    + "}";
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeLong(selectedId);
+            out.writeInt(position);
+        }
+    }
+
+    class RecycleBin {
+        private final SparseArray<View> mScrapHeap = new SparseArray<View>();
+
+        void clear() {
+            final SparseArray<View> scrapHeap = mScrapHeap;
+            final int count = scrapHeap.size();
+            for (int i = 0; i < count; i++) {
+                final View view = scrapHeap.valueAt(i);
+                if (view != null) {
+                    removeDetachedView(view, true);
+                }
+            }
+            scrapHeap.clear();
+        }
+
+        View get(int position) {
+            View result = mScrapHeap.get(position);
+            if (result != null) {
+                mScrapHeap.delete(position);
+            }
+            return result;
+        }
+
+        public void put(int position, View v) {
+            mScrapHeap.put(position, v);
         }
     }
 }

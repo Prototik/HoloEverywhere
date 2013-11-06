@@ -31,7 +31,6 @@
         "preferenceTheme$reference/dark 1/light 2/mixed 3",
         "switchStyle$reference",
         "switchStyleOld$reference",
-        "calendarViewStyle$reference",
         "popupWindowStyle$reference",
         "activatedBackgroundIndicator$reference",
         "windowActionModeOverlay$boolean",
@@ -40,6 +39,10 @@
         "windowMinWidthMajor$reference",
         "windowMinWidthMinor$reference",
         "windowNoTitle$boolean",
+        "datePickerSelectedDateBackground$reference|color",
+        "dateTimePickerTextColor$reference|color",
+        "dateTimePickerActiveTextColor$reference|color",
+        "dateTimePickerStyle$reference",
         {
             "enum": [
                 "top 0x30",
@@ -64,11 +67,11 @@
     ],
     "output": "values/attrs.xml",
     "styleable": {
-    	"AbsListView": [
-    	    "android:choiceMode",
-    	    "android:fastScrollEnabled",
-    	    "android:fastScrollAlwaysVisible"
-    	],
+        "AbsListView": [
+            "android:choiceMode",
+            "android:fastScrollEnabled",
+            "android:fastScrollAlwaysVisible"
+        ],
         "AbsSpinner": "android:entries",
         "AlertDialog": [
             "fullDark$reference|color",
@@ -103,22 +106,22 @@
             "android:inputType",
             "android:entries"
         ],
-        "CalendarView": [
-            "firstDayOfWeek$integer",
-            "showWeekNumber$boolean",
-            "minDate$reference|string",
-            "maxDate$reference|string",
-            "shownWeekCount$integer",
-            "selectedWeekBackgroundColor$color|reference",
-            "focusedMonthDateColor$color|reference",
-            "unfocusedMonthDateColor$color|reference",
-            "weekNumberColor$color|reference",
-            "weekSeparatorLineColor$color|reference",
-            "selectedDateVerticalBar$reference",
-            "weekDayTextAppearance$reference",
-            "dateTextAppearance$reference"
-        ],
         "ColorDrawable": "android:color",
+        "DateTimePicker": [
+            "dateDayTextColor$reference|color",
+            "dateTodayColor$reference|color",
+            "dateMonthTitleColor$reference|color",
+            "dateCircleColor$reference|color",
+            "dateYearSelectorColor$reference|color",
+            "timeCircleColor$reference|color",
+            "timeCenterPointerColor$reference|color",
+            "timeCenterPointerRadius$reference|integer",
+            "timeRadialTextColor$reference|color",
+            "timeAmPmPicker$reference|color",
+            "timeAmPmPickerBackground$reference|color",
+            "timeAmPmPickerTextColor$reference|color",
+            "timePickerSelectorColor$reference|color"
+        ],
         "Divider": "android:orientation",
         "ExpandableListView": [
             "android:groupIndicator",

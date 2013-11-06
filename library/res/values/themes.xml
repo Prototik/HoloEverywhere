@@ -43,6 +43,7 @@
         <item name="android:seekBarStyle">@style/Holo.SeekBar</item>
         <!--End of block BackportDark-->
         <!--Include block: BackportBarDark-->
+        <item name="actionBarWidgetTheme">@style/Holo.Theme</item>
         <!--End of block BackportBarDark-->
         <item name="holoTheme">dark</item>
     </style>
@@ -127,6 +128,7 @@
         <item name="android:seekBarStyle">@style/Holo.SeekBar.Light</item>
         <!--End of block BackportLight-->
         <!--Include block: BackportBarLight-->
+        <item name="actionBarWidgetTheme">@style/Holo.Theme.Light</item>
         <!--End of block BackportBarLight-->
         <item name="holoTheme">light</item>
     </style>
@@ -170,6 +172,7 @@
         <item name="android:seekBarStyle">@style/Holo.SeekBar.Light</item>
         <!--End of block BackportLight-->
         <!--Include block: BackportBarDark-->
+        <item name="actionBarWidgetTheme">@style/Holo.Theme</item>
         <!--End of block BackportBarDark-->
         <item name="holoTheme">mixed</item>
     </style>

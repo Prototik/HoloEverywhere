@@ -4,10 +4,9 @@ package org.holoeverywhere.demo.fragments.pickers;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 
-import com.android.datetimepicker.time.RadialPickerLayout;
-import com.android.datetimepicker.time.TimePickerDialog;
-
 import org.holoeverywhere.widget.Toast;
+import org.holoeverywhere.widget.datetimepicker.time.RadialPickerLayout;
+import org.holoeverywhere.widget.datetimepicker.time.TimePickerDialog;
 
 import java.util.Calendar;
 
@@ -17,7 +16,7 @@ public class PickersTimePickerFragment extends TimePickerDialog implements TimeP
         super.onCreate(savedInstanceState);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        initialize(this, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(getActivity()));
+        initialize(this, 23, 45, DateFormat.is24HourFormat(getActivity()));
     }
 
     @Override

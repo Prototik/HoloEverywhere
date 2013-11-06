@@ -6,8 +6,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
-import org.holoeverywhere.internal.AlertController;
-import org.holoeverywhere.internal.AlertController.AlertDecorViewInstaller;
+import org.holoeverywhere.widget.AlertController;
+import org.holoeverywhere.widget.AlertController.AlertDecorViewInstaller;
 
 public abstract class AlertActivity extends Activity implements DialogInterface,
         AlertDecorViewInstaller {

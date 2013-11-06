@@ -3,12 +3,13 @@ package org.holoeverywhere.issues.i632;
 import android.os.Bundle;
 
 import org.holoeverywhere.addon.AddonSlider;
+import org.holoeverywhere.addon.Addons;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.issues.R;
 import org.holoeverywhere.issues.i641.DummyFragment;
 import org.holoeverywhere.slider.SliderMenu;
 
-@Activity.Addons(Activity.ADDON_SLIDER)
+@Addons(AddonSlider.class)
 public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

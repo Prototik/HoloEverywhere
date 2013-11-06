@@ -12,86 +12,15 @@ import android.util.SparseArray;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewDebug;
+import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Adapter;
 
-import org.holoeverywhere.internal._ViewGroup;
 import org.holoeverywhere.util.ReflectHelper;
 
-public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
-    class AdapterDataSetObserver extends DataSetObserver {
-        private Parcelable mInstanceState = null;
-
-        public void clearSavedState() {
-            mInstanceState = null;
-        }
-
-        @Override
-        public void onChanged() {
-            mDataChanged = true;
-            mOldItemCount = mItemCount;
-            mItemCount = getAdapter().getCount();
-            if (AdapterView.this.getAdapter().hasStableIds()
-                    && mInstanceState != null && mOldItemCount == 0
-                    && mItemCount > 0) {
-                onRestoreInstanceState(mInstanceState);
-                mInstanceState = null;
-            } else {
-                rememberSyncState();
-            }
-            checkFocus();
-            requestLayout();
-        }
-
-        @Override
-        public void onInvalidated() {
-            mDataChanged = true;
-            if (AdapterView.this.getAdapter().hasStableIds()) {
-                mInstanceState = onSaveInstanceState();
-            }
-            mOldItemCount = mItemCount;
-            mItemCount = 0;
-            mSelectedPosition = AdapterView.INVALID_POSITION;
-            mSelectedRowId = AdapterView.INVALID_ROW_ID;
-            mNextSelectedPosition = AdapterView.INVALID_POSITION;
-            mNextSelectedRowId = AdapterView.INVALID_ROW_ID;
-            mNeedSync = false;
-            checkFocus();
-            requestLayout();
-        }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(AdapterView<?> parent, View view, int position, long id);
-    }
-
-    public interface OnItemLongClickListener {
-        boolean onItemLongClick(AdapterView<?> parent, View view, int position,
-                                long id);
-    }
-
-    public interface OnItemSelectedListener {
-        void onItemSelected(AdapterView<?> parent, View view, int position,
-                            long id);
-
-        void onNothingSelected(AdapterView<?> parent);
-    }
-
-    private class SelectionNotifier implements Runnable {
-        @Override
-        public void run() {
-            if (mDataChanged) {
-                if (getAdapter() != null) {
-                    post(this);
-                }
-            } else {
-                fireOnSelected();
-                performAccessibilityActionsOnSelected();
-            }
-        }
-    }
-
+public abstract class AdapterView<T extends Adapter> extends ViewGroup {
     public static final int INVALID_POSITION = -1;
     public static final long INVALID_ROW_ID = Long.MIN_VALUE;
     public static final int ITEM_VIEW_TYPE_HEADER_OR_FOOTER = -2;
@@ -101,15 +30,11 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
     static final int SYNC_SELECTED_POSITION = 0;
     boolean mBlockLayoutRequests = false;
     boolean mDataChanged;
-    private boolean mDesiredFocusableInTouchModeState;
-    private boolean mDesiredFocusableState;
-    private View mEmptyView;
     @ViewDebug.ExportedProperty(category = "scrolling")
     int mFirstPosition = 0;
     boolean mInLayout = false;
     @ViewDebug.ExportedProperty(category = "list")
     int mItemCount;
-    private int mLayoutHeight;
     boolean mNeedSync = false;
     @ViewDebug.ExportedProperty(category = "list")
     int mNextSelectedPosition = AdapterView.INVALID_POSITION;
@@ -123,18 +48,16 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
     @ViewDebug.ExportedProperty(category = "list")
     int mSelectedPosition = AdapterView.INVALID_POSITION;
     long mSelectedRowId = AdapterView.INVALID_ROW_ID;
-
-    private SelectionNotifier mSelectionNotifier;
-
     int mSpecificTop;
-
     long mSyncHeight;
-
     int mSyncMode;
-
     int mSyncPosition;
-
     long mSyncRowId = AdapterView.INVALID_ROW_ID;
+    private boolean mDesiredFocusableInTouchModeState;
+    private boolean mDesiredFocusableState;
+    private View mEmptyView;
+    private int mLayoutHeight;
+    private SelectionNotifier mSelectionNotifier;
 
     public AdapterView(Context context) {
         super(context);
@@ -289,6 +212,8 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
 
     public abstract T getAdapter();
 
+    public abstract void setAdapter(T adapter);
+
     @ViewDebug.CapturedViewProperty
     public int getCount() {
         return mItemCount;
@@ -296,6 +221,20 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
 
     public View getEmptyView() {
         return mEmptyView;
+    }
+
+    @SuppressLint("NewApi")
+    public void setEmptyView(View emptyView) {
+        mEmptyView = emptyView;
+        if (VERSION.SDK_INT >= 16
+                && emptyView != null
+                && emptyView.getImportantForAccessibility() == View.IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
+            emptyView
+                    .setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
+        final T adapter = getAdapter();
+        final boolean empty = adapter == null || adapter.isEmpty();
+        updateEmptyStatus(empty);
     }
 
     public int getFirstVisiblePosition() {
@@ -322,12 +261,27 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
         return mOnItemClickListener;
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mOnItemClickListener = listener;
+    }
+
     public final OnItemLongClickListener getOnItemLongClickListener() {
         return mOnItemLongClickListener;
     }
 
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        if (!isLongClickable()) {
+            setLongClickable(true);
+        }
+        mOnItemLongClickListener = listener;
+    }
+
     public final OnItemSelectedListener getOnItemSelectedListener() {
         return mOnItemSelectedListener;
+    }
+
+    public void setOnItemSelectedListener(OnItemSelectedListener listener) {
+        mOnItemSelectedListener = listener;
     }
 
     public int getPositionForView(View view) {
@@ -490,7 +444,7 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
     }
 
     private void performAccessibilityActionsOnSelected() {
-        if (!isAccessibilityManagerEnabled()) {
+        if (!((AccessibilityManager) getContext().getSystemService(Context.ACCESSIBILITY_SERVICE)).isEnabled()) {
             return;
         }
         final int position = getSelectedItemPosition();
@@ -560,7 +514,7 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
     }
 
     void selectionChanged() {
-        if (mOnItemSelectedListener != null || isAccessibilityManagerEnabled()) {
+        if (mOnItemSelectedListener != null || ((AccessibilityManager) getContext().getSystemService(Context.ACCESSIBILITY_SERVICE)).isEnabled()) {
             if (mInLayout || mBlockLayoutRequests) {
                 if (mSelectionNotifier == null) {
                     mSelectionNotifier = new SelectionNotifier();
@@ -571,22 +525,6 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
                 performAccessibilityActionsOnSelected();
             }
         }
-    }
-
-    public abstract void setAdapter(T adapter);
-
-    @SuppressLint("NewApi")
-    public void setEmptyView(View emptyView) {
-        mEmptyView = emptyView;
-        if (VERSION.SDK_INT >= 16
-                && emptyView != null
-                && emptyView.getImportantForAccessibility() == View.IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
-            emptyView
-                    .setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
-        }
-        final T adapter = getAdapter();
-        final boolean empty = adapter == null || adapter.isEmpty();
-        updateEmptyStatus(empty);
     }
 
     @Override
@@ -630,21 +568,6 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
                         + "You probably want setOnItemClickListener instead");
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mOnItemClickListener = listener;
-    }
-
-    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-        if (!isLongClickable()) {
-            setLongClickable(true);
-        }
-        mOnItemLongClickListener = listener;
-    }
-
-    public void setOnItemSelectedListener(OnItemSelectedListener listener) {
-        mOnItemSelectedListener = listener;
-    }
-
     void setSelectedPositionInt(int position) {
         mSelectedPosition = position;
         mSelectedRowId = getItemIdAtPosition(position);
@@ -672,6 +595,78 @@ public abstract class AdapterView<T extends Adapter> extends _ViewGroup {
                 mEmptyView.setVisibility(View.GONE);
             }
             setVisibility(View.VISIBLE);
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(AdapterView<?> parent, View view, int position, long id);
+    }
+
+    public interface OnItemLongClickListener {
+        boolean onItemLongClick(AdapterView<?> parent, View view, int position,
+                                long id);
+    }
+
+    public interface OnItemSelectedListener {
+        void onItemSelected(AdapterView<?> parent, View view, int position,
+                            long id);
+
+        void onNothingSelected(AdapterView<?> parent);
+    }
+
+    class AdapterDataSetObserver extends DataSetObserver {
+        private Parcelable mInstanceState = null;
+
+        public void clearSavedState() {
+            mInstanceState = null;
+        }
+
+        @Override
+        public void onChanged() {
+            mDataChanged = true;
+            mOldItemCount = mItemCount;
+            mItemCount = getAdapter().getCount();
+            if (AdapterView.this.getAdapter().hasStableIds()
+                    && mInstanceState != null && mOldItemCount == 0
+                    && mItemCount > 0) {
+                onRestoreInstanceState(mInstanceState);
+                mInstanceState = null;
+            } else {
+                rememberSyncState();
+            }
+            checkFocus();
+            requestLayout();
+        }
+
+        @Override
+        public void onInvalidated() {
+            mDataChanged = true;
+            if (AdapterView.this.getAdapter().hasStableIds()) {
+                mInstanceState = onSaveInstanceState();
+            }
+            mOldItemCount = mItemCount;
+            mItemCount = 0;
+            mSelectedPosition = AdapterView.INVALID_POSITION;
+            mSelectedRowId = AdapterView.INVALID_ROW_ID;
+            mNextSelectedPosition = AdapterView.INVALID_POSITION;
+            mNextSelectedRowId = AdapterView.INVALID_ROW_ID;
+            mNeedSync = false;
+            checkFocus();
+            requestLayout();
+        }
+    }
+
+    private class SelectionNotifier implements Runnable {
+        @Override
+        public void run() {
+            if (mDataChanged) {
+                if (getAdapter() != null) {
+                    post(this);
+                }
+            } else {
+                fireOnSelected();
+                performAccessibilityActionsOnSelected();
+            }
         }
     }
 }

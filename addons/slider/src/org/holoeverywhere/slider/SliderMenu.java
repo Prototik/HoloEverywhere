@@ -427,7 +427,7 @@ public class SliderMenu implements OnBackStackChangedListener {
         }
     }
 
-    public boolean onHomePressed() {
+    public boolean onNavigateUp() {
         if (mHandleHomeKey) {
             if (mAddon.isAddonEnabled()
                     && mFragmentManager.getBackStackEntryCount() == 0) {

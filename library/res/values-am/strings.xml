@@ -5,15 +5,6 @@
     <string name="capital_off">"ውጪ"</string>
     <string name="capital_on">"በ"</string>
     <string name="chooseActivity">"ድርጊት ምረጥ"</string>
-    <string name="date_picker_decrement_day_button">"ቀን ቀንስ"</string>
-    <string name="date_picker_decrement_month_button">"ወር ቀንስ"</string>
-    <string name="date_picker_decrement_year_button">"ዓመት ቀንስ"</string>
-    <string name="date_picker_dialog_title">"ውሂብ አዘጋጅ"</string>
-    <string name="date_picker_increment_day_button">"ቀን ጨምር"</string>
-    <string name="date_picker_increment_month_button">"ወር ጨምር"</string>
-    <string name="date_picker_increment_year_button">"ዓመት ጨምር"</string>
-    <string name="date_time_done">"ተጠናቋል"</string>
-    <string name="date_time_set">"አዘጋጅ"</string>
     <string name="loading">"በመጫን ላይ…"</string>
     <string name="noApplications">"ምንም ትግበራዎች ይህን ድርጊት ማከናወን አይችሉም።"</string>
     <string name="number_picker_decrement_button">"ቀንስ"</string>
@@ -23,12 +14,5 @@
     <string name="ringtone_default">"ነባሪ የስልክ ላይ ጥሪ"</string>
     <string name="ringtone_picker_title">"ጥሪ ድምፆች"</string>
     <string name="ringtone_silent">"ፀጥታ"</string>
-    <string name="time_picker_decrement_hour_button">"ሰዓት ቀንስ"</string>
-    <string name="time_picker_decrement_minute_button">"ደቂቃ ቀንስ"</string>
-    <string name="time_picker_decrement_set_am_button">"AM አዘጋጅ"</string>
-    <string name="time_picker_dialog_title">"ጊዜ አዘጋጅ"</string>
-    <string name="time_picker_increment_hour_button">"ሰዓት ጨምር"</string>
-    <string name="time_picker_increment_minute_button">"ደቂቃ ጨምር"</string>
-    <string name="time_picker_increment_set_pm_button">"PM አዘጋጅ"</string>
     <string name="whichApplication">"... በመጠቀም ድርጊቱን አጠናቅ"</string>
 </resources>

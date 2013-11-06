@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>library</artifactId>
+	<artifactId>holoeverywhere</artifactId>
 	<name>HoloEverywhere Library</name>
 	<packaging>apklib</packaging>
 
@@ -46,7 +46,9 @@
 						<file>themes-v7.json:styles</file>
 						<file>themes-v11.json:styles</file>
 						<file>themes-large.json:styles</file>
-						<file>dialogs.json:styles</file>
+						<file>dialogs-core.json:styles</file>
+						<file>dialogs-v7.json:styles</file>
+						<file>dialogs-v11.json:styles</file>
 						<file>text.json:styles</file>
 						<file>attrs.json:attrs</file>
 					</inputFiles>

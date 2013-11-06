@@ -14,30 +14,22 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IAddonAttacher<V> {
-    private final class AddonComparator implements Comparator<V> {
-        @Override
-        public int compare(V lhs, V rhs) {
-            final int i1 = getWeight(lhs.getParent());
-            final int i2 = getWeight(rhs.getParent());
-            return i1 > i2 ? 1 : i1 < i2 ? -1 : 0;
-        }
-
-        private int getWeight(IAddon addon) {
-            if (addon.getClass().isAnnotationPresent(Addon.class)) {
-                return addon.getClass().getAnnotation(Addon.class).weight();
-            }
-            return -1;
-        }
-    }
-
     private final Map<Class<? extends IAddon>, V> mAddons = new HashMap<Class<? extends IAddon>, V>();
-    private List<V> mAddonsList;
     private final Set<V> mAddonsSet = new TreeSet<V>(new AddonComparator());
+    private List<V> mAddonsList;
     private boolean mLockAttaching = false;
     private Z mObject;
 
     public IAddonBasicAttacher(Z object) {
         mObject = object;
+    }
+
+    public static void attachAnnotations(IAddonAttacher<?> attacher) {
+        if (attacher.getClass().isAnnotationPresent(Addons.class)) {
+            for (Class<? extends IAddon> clazz : attacher.getClass().getAnnotation(Addons.class).value()) {
+                attacher.addon(clazz);
+            }
+        }
     }
 
     @Override
@@ -176,5 +168,21 @@ public final class IAddonBasicAttacher<V extends IAddonBase<Z>, Z> implements IA
         mAddonsSet.clear();
         mAddonsList = null;
         mLockAttaching = false;
+    }
+
+    private final class AddonComparator implements Comparator<V> {
+        @Override
+        public int compare(V lhs, V rhs) {
+            final int i1 = getWeight(lhs.getParent());
+            final int i2 = getWeight(rhs.getParent());
+            return i1 > i2 ? 1 : i1 < i2 ? -1 : 0;
+        }
+
+        private int getWeight(IAddon addon) {
+            if (addon.getClass().isAnnotationPresent(Addon.class)) {
+                return addon.getClass().getAnnotation(Addon.class).weight();
+            }
+            return -1;
+        }
     }
 }

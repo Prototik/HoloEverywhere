@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ivy-module version="2.0">
-	<info organisation="org.holoeverywhere" module="library"/>
-	<dependencies>
-		<dependency org="com.android.support" name="support-v4" rev="18.0.1"/>
-		
-		<exclude type="source" ext="*" conf="*" />
-		<exclude type="javadoc" ext="*" conf="*" />
-		<exclude type="license" ext="*" conf="*" />
-	</dependencies>
+    <info module="holoeverywhere" organisation="org.holoeverywhere" />
+    <dependencies>
+        <dependency name="support-v4" org="com.android.support" rev="18.0.2" />
+        <dependency name="library" org="com.nineoldandroids" rev="2.4.0" />
+
+        <exclude conf="*" ext="*" type="source" />
+        <exclude conf="*" ext="*" type="javadoc" />
+        <exclude conf="*" ext="*" type="license" />
+    </dependencies>
 </ivy-module>

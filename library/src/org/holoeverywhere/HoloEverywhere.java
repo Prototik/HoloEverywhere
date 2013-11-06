@@ -18,10 +18,6 @@ public class HoloEverywhere {
      */
     public static boolean DEBUG;
     /**
-     * Disable any overscroll effects for views
-     */
-    public static boolean DISABLE_OVERSCROLL_EFFECT;
-    /**
      * Since 1.5 to preferences can be assigned id instead of key. But for
      * saving values in SharedPreferences using key, and it has next format:
      * <p/>
@@ -52,7 +48,6 @@ public class HoloEverywhere {
         DEBUG = false;
         ALWAYS_USE_PARENT_THEME = false;
         NAMED_PREFERENCES = true;
-        DISABLE_OVERSCROLL_EFFECT = VERSION.SDK_INT < VERSION_CODES.HONEYCOMB;
         PREFERENCE_IMPL = PreferenceImpl.XML;
         SAVE_MENU_INSTANCE_OVER_INVALIDATE = false;
     }

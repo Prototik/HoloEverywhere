@@ -15,36 +15,98 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/date_picker_view_animator_height"
+    android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="horizontal">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <include layout="@layout/date_picker_view_animator" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="?dividerVertical" />
+
+    <LinearLayout
+        android:layout_width="@dimen/date_selected_width"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:background="?datePickerSelectedDateBackground"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/date_selected_top_margin">
 
-            <include layout="@layout/date_picker_header_view" />
+            <org.holoeverywhere.widget.datetimepicker.AccessibleLinearLayout
+                android:id="@+id/date_picker_month_and_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:orientation="vertical">
 
-            <include layout="@layout/date_picker_selected_date" />
+                <TextView
+                    android:id="@+id/date_picker_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:gravity="center_horizontal|bottom"
+                    android:includeFontPadding="false"
+                    android:textColor="?dateTimePickerActiveTextColor"
+                    android:textSize="@dimen/date_month_size" />
+
+                <TextView
+                    android:id="@+id/date_picker_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="-10dip"
+                    android:layout_marginTop="-10dip"
+                    android:duplicateParentState="true"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:textColor="?dateTimePickerActiveTextColor"
+                    android:textSize="@dimen/date_day_size" />
+
+            </org.holoeverywhere.widget.datetimepicker.AccessibleLinearLayout>
+
+            <TextView
+                android:id="@+id/date_picker_week"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:importantForAccessibility="no"
+                android:includeFontPadding="false"
+                android:textColor="?android:textColorSecondary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <org.holoeverywhere.widget.datetimepicker.AccessibleTextView
+                android:id="@+id/date_picker_year"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:textColor="?dateTimePickerActiveTextColor"
+                android:textSize="@dimen/date_year_size" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dip"
-            android:background="@color/line_background" />
+            android:background="?dividerHorizontal" />
 
         <include layout="@layout/date_picker_done_button" />
     </LinearLayout>
-
-    <include layout="@layout/date_picker_view_animator" />
-
 </LinearLayout>

@@ -120,7 +120,7 @@ abstract class AbsActionBarView extends ViewGroup {
 
         if (visibility != getVisibility()) {
             Animation anim = AnimationUtils.loadAnimation(getContext(),
-                    visibility == View.VISIBLE ? R.anim.abc_fade_in : R.anim.abc_fade_out);
+                    visibility == View.VISIBLE ? R.anim.fade_in : R.anim.fade_out);
 
             startAnimation(anim);
             setVisibility(visibility);

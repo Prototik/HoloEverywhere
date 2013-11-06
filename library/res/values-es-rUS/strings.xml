@@ -5,15 +5,6 @@
     <string name="capital_off">"No"</string>
     <string name="capital_on">"Sí"</string>
     <string name="chooseActivity">"Seleccionar una acción"</string>
-    <string name="date_picker_decrement_day_button">"Reducir día"</string>
-    <string name="date_picker_decrement_month_button">"Reducir mes"</string>
-    <string name="date_picker_decrement_year_button">"Reducir año"</string>
-    <string name="date_picker_dialog_title">"Configurar fecha"</string>
-    <string name="date_picker_increment_day_button">"Aumentar día"</string>
-    <string name="date_picker_increment_month_button">"Aumentar mes"</string>
-    <string name="date_picker_increment_year_button">"Aumentar año"</string>
-    <string name="date_time_done">"Listo"</string>
-    <string name="date_time_set">"Establecer"</string>
     <string name="loading">"Cargando…"</string>
     <string name="noApplications">"Ninguna aplicación puede realizar esta acción."</string>
     <string name="number_picker_decrement_button">"Reducir"</string>
@@ -23,12 +14,5 @@
     <string name="ringtone_default">"Tono de llamada predeterminado"</string>
     <string name="ringtone_picker_title">"Tonos de llamada"</string>
     <string name="ringtone_silent">"Silencioso"</string>
-    <string name="time_picker_decrement_hour_button">"Reducir hora"</string>
-    <string name="time_picker_decrement_minute_button">"Reducir minutos"</string>
-    <string name="time_picker_decrement_set_am_button">"Establecer a.m."</string>
-    <string name="time_picker_dialog_title">"Configurar hora"</string>
-    <string name="time_picker_increment_hour_button">"Aumentar hora"</string>
-    <string name="time_picker_increment_minute_button">"Aumentar minutos"</string>
-    <string name="time_picker_increment_set_pm_button">"Establecer p.m."</string>
     <string name="whichApplication">"Completar la acción mediante"</string>
 </resources>

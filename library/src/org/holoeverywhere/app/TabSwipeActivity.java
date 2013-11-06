@@ -6,6 +6,7 @@ import android.os.Bundle;
 import org.holoeverywhere.addon.AddonTabber;
 import org.holoeverywhere.addon.AddonTabber.AddonTabberA;
 import org.holoeverywhere.addon.AddonTabber.AddonTabberCallback;
+import org.holoeverywhere.addon.Addons;
 import org.holoeverywhere.app.TabSwipeController.TabInfo;
 
 /**
@@ -13,6 +14,7 @@ import org.holoeverywhere.app.TabSwipeController.TabInfo;
  * <br />
  * Part of HoloEverywhere
  */
+@Addons(AddonTabber.class)
 public abstract class TabSwipeActivity extends Activity
         implements TabSwipeInterface<TabInfo>, AddonTabberCallback {
     private AddonTabberA mTabber;
@@ -99,13 +101,6 @@ public abstract class TabSwipeActivity extends Activity
     @Override
     public void setSwipeEnabled(boolean swipeEnabled) {
         addonTabber().setSwipeEnabled(swipeEnabled);
-    }
-
-    @Override
-    protected Holo onCreateConfig(Bundle savedInstanceState) {
-        final Holo config = super.onCreateConfig(savedInstanceState);
-        config.requireTabber = true;
-        return config;
     }
 
     @Override

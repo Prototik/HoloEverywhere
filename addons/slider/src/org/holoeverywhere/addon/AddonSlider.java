@@ -165,11 +165,11 @@ public class AddonSlider extends IAddon {
         }
 
         @Override
-        public boolean onHomePressed() {
+        public boolean onNavigateUp() {
             if (mSliderMenu != null) {
-                return mSliderMenu.onHomePressed();
+                return mSliderMenu.onNavigateUp();
             }
-            return super.onHomePressed();
+            return super.onNavigateUp();
         }
 
         @SuppressLint("NewApi")

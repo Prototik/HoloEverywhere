@@ -109,9 +109,6 @@ public class ListView extends android.widget.ListView implements OnWindowFocusCh
         if (context instanceof Activity) {
             setActivity((Activity) context);
         }
-        if (HoloEverywhere.DISABLE_OVERSCROLL_EFFECT && VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
-            setOverScrollMode(OVER_SCROLL_NEVER);
-        }
 
         final boolean longClickable = isLongClickable();
         mOnItemLongClickListenerWrapper = new OnItemLongClickListenerWrapper();

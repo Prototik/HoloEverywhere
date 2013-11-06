@@ -79,7 +79,7 @@ public class ListsChoiceModeModalFragment extends ListsBaseFragment implements
         mList = getListView();
         mList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         mList.setMultiChoiceModeListener(this);
-        setListAdapter(ArrayAdapter.createFromResource(getActivity(), R.array.adjectives,
+        setListAdapter(ArrayAdapter.createFromResource(getActivity(), R.array.some_words,
                 R.layout.simple_list_item_multiple_choice));
     }
 

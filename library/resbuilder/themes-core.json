@@ -1,14 +1,9 @@
 {
     "blocks": {
-        "BarDark": {
-            "actionBarWidgetTheme": "@style/Holo.Theme"
-        },
-        "BarLight": {
-            "actionBarWidgetTheme": "@style/Holo.Theme.Light"
-        },
+        "BarDark": {},
+        "BarLight": {},
         "Base": {
             "activatedBackgroundIndicator": "@drawable/activated_background_holo",
-            "android:dropDownListViewStyle": "?dropDownListViewStyle",
             "buttonBarButtonStyle": "?borderlessButtonStyle",
             "buttonBarStyle": "@style/Holo.ButtonBar",
             "dividerHorizontal": "?android:listDivider",
@@ -17,7 +12,7 @@
             "fastScrollOverlayPosition": "atThumb",
             "fastScrollTextColor": "@color/primary_text_holo_dark",
             "fastScrollThumbDrawable": "@drawable/fastscroll_thumb_holo",
-            "listPreferredItemHeight":  "64dp",
+            "listPreferredItemHeight": "64dp",
             "listPreferredItemHeightLarge": "80dp",
             "listPreferredItemHeightSmall": "48dp",
             "listPreferredItemPaddingLeft": "8dp",
@@ -33,7 +28,10 @@
             "android:windowBackground": "@drawable/background_holo_dark",
             "autoCompleteTextViewStyle": "@style/Holo.AutoCompleteTextView",
             "borderlessButtonStyle": "@style/Holo.Button.Borderless",
-            "calendarViewStyle": "@style/Holo.CalendarView",
+            "datePickerSelectedDateBackground": "#90404040",
+            "dateTimePickerActiveTextColor": "@color/date_picker_active_text_holo_dark",
+            "dateTimePickerStyle": "@style/Holo.DateTimePicker",
+            "dateTimePickerTextColor": "@color/dim_foreground_holo_dark",
             "detailsElementBackground": "@drawable/panel_bg_holo_dark",
             "dialogTheme": "@style/Holo.Theme.Dialog",
             "dropDownListViewStyle": "@style/Holo.ListView.DropDown",
@@ -62,7 +60,10 @@
             "android:windowBackground": "@drawable/background_holo_light",
             "autoCompleteTextViewStyle": "@style/Holo.AutoCompleteTextView.Light",
             "borderlessButtonStyle": "@style/Holo.Button.Borderless.Light",
-            "calendarViewStyle": "@style/Holo.CalendarView.Light",
+            "datePickerSelectedDateBackground": "#BBDEDEDE",
+            "dateTimePickerActiveTextColor": "@color/date_picker_active_text_holo_light",
+            "dateTimePickerStyle": "@style/Holo.DateTimePicker.Light",
+            "dateTimePickerTextColor": "@color/dim_foreground_holo_light",
             "detailsElementBackground": "@drawable/panel_bg_holo_light",
             "dialogTheme": "@style/Holo.Theme.Dialog.Light",
             "dropDownListViewStyle": "@style/Holo.ListView.DropDown.Light",

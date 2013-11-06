@@ -29,7 +29,7 @@ import android.widget.ImageView;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
-import org.holoeverywhere.internal.AlertController;
+import org.holoeverywhere.widget.AlertController;
 import org.holoeverywhere.widget.Button;
 import org.holoeverywhere.widget.GridView;
 import org.holoeverywhere.widget.ListView;

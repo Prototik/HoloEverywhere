@@ -361,10 +361,10 @@ public final class ThemeManager {
      * Resolve theme resource id by flags
      */
     public static int getThemeResource(int themeTag, boolean applyModifier) {
-        themeTag = prepareFlags(themeTag, applyModifier);
         if (themeTag >= _START_RESOURCES_ID) {
             return themeTag;
         }
+        themeTag = prepareFlags(themeTag, applyModifier);
         if (ThemeManager._THEME_GETTER != null) {
             final int getterResource = ThemeManager._THEME_GETTER
                     .getThemeResource(new ThemeTag(themeTag));
@@ -527,7 +527,7 @@ public final class ThemeManager {
      * Generate flag for using it in ThemeManager. Not more than 24 flags can be
      * created.
      */
-    public static int makeNewFlag() {
+    public synchronized static int makeNewFlag() {
         if (NEXT_OFFSET >= 24) {
             throw new IllegalStateException();
         }
@@ -633,8 +633,7 @@ public final class ThemeManager {
         if (i >= _START_RESOURCES_ID) {
             return i;
         }
-        i |= applyModifier ? 0 : ThemeManager._THEME_MODIFIER;
-        return i & ThemeManager._THEME_MASK;
+        return (i | (applyModifier ? ThemeManager._THEME_MODIFIER : 0)) & ThemeManager._THEME_MASK;
     }
 
     public static void registerThemeSetter(ThemeSetter themeSetter) {
