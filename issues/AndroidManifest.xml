@@ -114,6 +114,15 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".i682.MainActivity"
+            android:label="Issue #682">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="org.holoeverywhere.category.ISSUE_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCE7ryckjuvXRIW5H0mZr2S7b1x9OReInM" />

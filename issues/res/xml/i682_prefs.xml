@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:checked="true"
+        android:key="checkbox_1"
+        android:title="CheckBox #1" />
+    <CheckBoxPreference
+        android:checked="true"
+        android:dependency="checkbox_1"
+        android:key="checkbox_2"
+        android:title="CheckBox #2" />
+</PreferenceScreen>

@@ -96,7 +96,7 @@ public class Preference implements Comparable<Preference>,
         mSelectable = a.getBoolean(R.styleable.Preference_android_selectable, true);
         mPersistent = a.getBoolean(R.styleable.Preference_android_persistent,
                 mPersistent);
-        mDependencyKey = a.getString(R.styleable.Preference_dependency);
+        mDependencyKey = a.getString(R.styleable.Preference_android_dependency);
 
         if (a.hasValue(R.styleable.Preference_dependency)) {
             TypedValue outValue = new TypedValue();
