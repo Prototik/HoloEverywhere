@@ -87,7 +87,7 @@ uploadArchives {
 
             pom.artifactId = ARTIFACT_ID
 
-            repository(url: project.getProperty('holoeverywhere.repo'))
+            repository(url: project.hasProperty('holoeverywhere.repo') ? project.getProperty('holoeverywhere.repo') : 'file:///invalid_path')
 
             pom.project {
                 name NAME

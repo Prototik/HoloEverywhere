@@ -18,14 +18,14 @@ package android.support.v7.internal.view.menu;
 
 import android.content.DialogInterface;
 import android.os.IBinder;
-import org.holoeverywhere.R;
-import org.holoeverywhere.app.AlertDialog;
-import org.holoeverywhere.app.Dialog;
-
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import org.holoeverywhere.R;
+import org.holoeverywhere.app.AlertDialog;
+import org.holoeverywhere.app.Dialog;
 
 /**
  * Helper for menus that appear as Dialogs (context and submenus).
@@ -36,9 +36,9 @@ public class MenuDialogHelper implements DialogInterface.OnKeyListener,
         DialogInterface.OnClickListener,
         DialogInterface.OnDismissListener,
         MenuPresenter.Callback {
+    ListMenuPresenter mPresenter;
     private MenuBuilder mMenu;
     private AlertDialog mDialog;
-    ListMenuPresenter mPresenter;
     private MenuPresenter.Callback mPresenterCallback;
 
     public MenuDialogHelper(MenuBuilder menu) {
@@ -57,10 +57,7 @@ public class MenuDialogHelper implements DialogInterface.OnKeyListener,
         // Get the builder for the dialog
         final AlertDialog.Builder builder = new AlertDialog.Builder(menu.getContext());
 
-        // Need to force Light Menu theme as list_menu_item_layout is usually against a dark bg and
-        // AlertDialog's bg is white
-        mPresenter = new ListMenuPresenter(R.layout.abc_list_menu_item_layout,
-                R.style.Theme_AppCompat_CompactMenu_Dialog);
+        mPresenter = new ListMenuPresenter(builder.getContext(), R.layout.abc_list_menu_item_layout);
 
         mPresenter.setCallback(this);
         mMenu.addMenuPresenter(mPresenter);
