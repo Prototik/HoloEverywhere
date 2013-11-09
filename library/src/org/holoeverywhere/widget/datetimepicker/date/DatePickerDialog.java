@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.Vibrator;
@@ -287,13 +288,33 @@ public class DatePickerDialog extends DialogFragment implements
         }
     }
 
+    public static String getDisplayName(Calendar calendar, int field, int style, Locale locale) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            return calendar.getDisplayName(field, style, locale);
+        }
+        final String pattern;
+        final boolean longStyle = style == Calendar.LONG;
+        switch (field) {
+            case Calendar.DAY_OF_WEEK:
+                pattern = longStyle ? "EEEE" : "EEE";
+                break;
+            case Calendar.MONTH:
+                pattern = longStyle ? "MMMM" : "MMM";
+                break;
+            default:
+                throw new RuntimeException("Field " + field + " isn't supported");
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat(pattern, locale);
+        return formatter.format(calendar.getTime());
+    }
+
     private void updateDisplay(boolean announce) {
         if (mDayOfWeekView != null) {
-            mDayOfWeekView.setText(mCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG,
+            mDayOfWeekView.setText(getDisplayName(mCalendar, Calendar.DAY_OF_WEEK, Calendar.LONG,
                     Locale.getDefault()).toUpperCase(Locale.getDefault()));
         }
 
-        mSelectedMonthTextView.setText(mCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT,
+        mSelectedMonthTextView.setText(getDisplayName(mCalendar, Calendar.MONTH, Calendar.SHORT,
                 Locale.getDefault()).toUpperCase(Locale.getDefault()));
         mSelectedDayTextView.setText(DAY_FORMAT.format(mCalendar.getTime()));
         mYearView.setText(YEAR_FORMAT.format(mCalendar.getTime()));

@@ -46,11 +46,13 @@ import org.holoeverywhere.widget.datetimepicker.TouchExplorationHelper;
 import org.holoeverywhere.widget.datetimepicker.date.SimpleMonthAdapter.CalendarDay;
 
 import java.security.InvalidParameterException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * A calendar-like view displaying a specified month and the appropriate selectable day numbers
@@ -140,6 +142,7 @@ public class SimpleMonthView extends View {
     // Whether to prevent setting the accessibility delegate
     private boolean mLockAccessibilityDelegate;
     private int mDayOfWeekStart = 0;
+    private SimpleDateFormat mMonthAndYearFormatter;
 
     public SimpleMonthView(Context context) {
         this(context, null);
@@ -368,9 +371,17 @@ public class SimpleMonthView extends View {
         int flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
                 | DateUtils.FORMAT_NO_MONTH_DAY;
         mStringBuilder.setLength(0);
-        long millis = mCalendar.getTimeInMillis();
-        return DateUtils.formatDateRange(getContext(), mFormatter, millis, millis, flags,
-                Time.getCurrentTimezone()).toString();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            long millis = mCalendar.getTimeInMillis();
+            return DateUtils.formatDateRange(getContext(), mFormatter, millis, millis, flags,
+                    Time.getCurrentTimezone()).toString();
+        } else {
+            if (mMonthAndYearFormatter == null) {
+                mMonthAndYearFormatter = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+                mMonthAndYearFormatter.setTimeZone(TimeZone.getDefault());
+            }
+            return mMonthAndYearFormatter.format(mCalendar.getTime());
+        }
     }
 
     private void drawMonthTitle(Canvas canvas) {
@@ -387,7 +398,7 @@ public class SimpleMonthView extends View {
             int calendarDay = (i + mWeekStart) % mNumDays;
             int x = (2 * i + 1) * dayWidthHalf + mPadding;
             mDayLabelCalendar.set(Calendar.DAY_OF_WEEK, calendarDay);
-            canvas.drawText(mDayLabelCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT,
+            canvas.drawText(DatePickerDialog.getDisplayName(mDayLabelCalendar, Calendar.DAY_OF_WEEK, Calendar.SHORT,
                     Locale.getDefault()).toUpperCase(Locale.getDefault()), x, y,
                     mMonthDayLabelPaint);
         }
