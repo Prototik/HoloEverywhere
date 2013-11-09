@@ -1,3 +1,5 @@
+import org.gradle.api.internal.artifacts.publish.DefaultPublishArtifact;
+
 apply plugin: 'maven'
 apply plugin: 'signing'
 
@@ -22,6 +24,9 @@ android {
     }
 }
 
+boolean officialBuild = (!version.contains("SNAPSHOT") && gradle.taskGraph.hasTask("uploadArchives")) || rootProject.hasProperty('officialBuild')
+
+// Sign apks
 if (android.class.name.startsWith('com.android.build.gradle.AppExtension') && project.hasProperty('holoeverywhere.sign.storeFile')) {
     android {
         signingConfigs {
@@ -44,7 +49,14 @@ if (android.class.name.startsWith('com.android.build.gradle.AppExtension') && pr
     }
 }
 
-afterEvaluate { project ->
+// Attach apklib (builded by maven), generate javadoc and sources (only for libraries)
+if (android.class.name.startsWith('com.android.build.gradle.LibraryExtension')) {
+    task apklib(type: Copy, dependsOn: rootProject.tasks.buildMaven) {
+        from fileTree("${project.projectDir}/target") { include "*.apklib" }
+        into file("${project.buildDir}/libs")
+        rename '(.*)', "${project.name}-${project.version}.apklib"
+    }
+
     task generateJavadoc(type: Javadoc) {
         source = android.sourceSets.main.allJava
         classpath = project.files(
@@ -65,13 +77,19 @@ afterEvaluate { project ->
         classifier = 'sources'
     }
 
-    artifacts {
-        archives tasks.sources
-        archives tasks.javadoc
+    if (officialBuild) {
+        artifacts {
+            archives tasks.sources
+            archives tasks.javadoc
+            archives new DefaultPublishArtifact(project.name, 'apklib', 'apklib', '', new Date(), file("${project.buildDir}/libs/${project.name}-${project.version}.apklib"), tasks.apklib)
+        }
     }
+}
 
+// Deploy to maven repo (local)
+afterEvaluate { project ->
     signing {
-        required { !version.contains("SNAPSHOT") && gradle.taskGraph.hasTask("uploadArchives") }
+        required officialBuild
         sign configurations.archives
     }
 

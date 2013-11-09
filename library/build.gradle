@@ -7,7 +7,5 @@ dependencies {
 
 apply from: '../android_default.gradle'
 
-afterEvaluate { project ->
-    generateJavadoc.include "**/org/holoeverywhere/**"
-    generateJavadoc.title "HoloEverywhere ${project.version} JavaDoc"
-}
+generateJavadoc.include "**/org/holoeverywhere/**"
+generateJavadoc.title "HoloEverywhere ${project.version} JavaDoc"

@@ -23,4 +23,10 @@ allprojects {
   }
 }
 
+task buildMaven(type: Exec) {
+    executable = 'mvn'
+    args = ['--batch-mode', '--quiet', 'clean', 'package']
+    workingDir = projectDir
+}
+
 apply plugin: 'android-reporting'

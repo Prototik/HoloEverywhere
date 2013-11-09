@@ -6,6 +6,4 @@ dependencies {
 
 apply from: '../../android_default.gradle'
 
-afterEvaluate { project ->
-    generateJavadoc.exclude "**/_*.java"
-}
+generateJavadoc.exclude "**/_*.java"
