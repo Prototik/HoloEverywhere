@@ -44,83 +44,76 @@ if (android.class.name.startsWith('com.android.build.gradle.AppExtension') && pr
     }
 }
 
-configurations {
-    runtime {
-        extendsFrom compile
+afterEvaluate { project ->
+    task generateJavadoc(type: Javadoc) {
+        source = android.sourceSets.main.allJava
+        classpath = project.files(
+                configurations.compile,
+                "${buildDir}/classes/release",
+                project.fileTree("${buildDir}/exploded-bundles") { include '*/classes.jar' },
+                new File(android.plugin.sdkDirectory, 'platforms/android-18/android.jar')
+        )
     }
-}
 
-dependencies {
-    runtime 'android:android:4.3_r2@jar'
-}
+    task javadoc(type: Jar, dependsOn: generateJavadoc) {
+        from generateJavadoc.destinationDir
+        classifier = 'javadoc'
+    }
 
-task generateJavadoc(type: Javadoc) {
-    source = android.sourceSets.main.allJava
-    classpath = project.files(
-            configurations.runtime,
-            "${buildDir}/classes/release",
-            project.fileTree("${buildDir}/exploded-bundles") { include '*/classes.jar' }
-    )
-}
+    task sources(type: Jar) {
+        from android.sourceSets.main.allSource
+        classifier = 'sources'
+    }
 
-task javadoc(type: Jar, dependsOn: generateJavadoc) {
-    from generateJavadoc.destinationDir
-    classifier = 'javadoc'
-}
+    artifacts {
+        archives tasks.sources
+        archives tasks.javadoc
+    }
 
-task sources(type: Jar) {
-    from android.sourceSets.main.allSource
-    classifier = 'sources'
-}
+    signing {
+        required { !version.contains("SNAPSHOT") && gradle.taskGraph.hasTask("uploadArchives") }
+        sign configurations.archives
+    }
 
-artifacts {
-    archives tasks.sources
-    archives tasks.javadoc
-}
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-signing {
-    required { !version.contains("SNAPSHOT") && gradle.taskGraph.hasTask("uploadArchives") }
-    sign configurations.archives
-}
+                pom.artifactId = ARTIFACT_ID
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+                repository(url: project.hasProperty('holoeverywhere.repo') ? project.getProperty('holoeverywhere.repo') : 'file:///invalid_path')
 
-            pom.artifactId = ARTIFACT_ID
-
-            repository(url: project.hasProperty('holoeverywhere.repo') ? project.getProperty('holoeverywhere.repo') : 'file:///invalid_path')
-
-            pom.project {
-                name NAME
-                packaging PACKAGING
-                description DESCRIPTION
-                url 'https://github.com/Prototik/HoloEverywhere'
-
-                scm {
+                pom.project {
+                    name NAME
+                    packaging PACKAGING
+                    description DESCRIPTION
                     url 'https://github.com/Prototik/HoloEverywhere'
-                    connection 'scm:git@github.com:Prototik/HoloEverywhere.git'
-                    developerConnection 'scm:git@github.com:Prototik/HoloEverywhere.git'
-                }
 
-                licenses {
-                    license {
-                        name 'MIT License'
-                        url 'https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE'
-                        distribution 'repo'
-                        comments 'Copyright (c) 2013 Sergey Shatunov'
+                    scm {
+                        url 'https://github.com/Prototik/HoloEverywhere'
+                        connection 'scm:git@github.com:Prototik/HoloEverywhere.git'
+                        developerConnection 'scm:git@github.com:Prototik/HoloEverywhere.git'
                     }
-                }
 
-                developers {
-                    developer {
-                        id 'Prototik'
-                        name 'Sergey Shatunov'
-                        email 'prototypegamez@gmail.com'
-                        timezone '+8'
-                        roles {
-                            role "developer"
+                    licenses {
+                        license {
+                            name 'MIT License'
+                            url 'https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE'
+                            distribution 'repo'
+                            comments 'Copyright (c) 2013 Sergey Shatunov'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'Prototik'
+                            name 'Sergey Shatunov'
+                            email 'prototypegamez@gmail.com'
+                            timezone '+8'
+                            roles {
+                                role "developer"
+                            }
                         }
                     }
                 }
