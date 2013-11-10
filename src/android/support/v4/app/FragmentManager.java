@@ -902,7 +902,7 @@ final class FragmentManagerImpl extends FragmentManager {
                                 f.mSavedFragmentState), null, f.mSavedFragmentState);
                         if (f.mView != null) {
                             f.mInnerView = f.mView;
-                            f.mView = NoSaveStateFrameLayout.wrap(f.mView);
+                            f.mView = NoSaveStateFrameLayout.wrap(f, f.mView);
                             if (f.mHidden) f.mView.setVisibility(View.GONE);
                             f.onViewCreated(f.mView, f.mSavedFragmentState);
                         } else {
@@ -929,7 +929,7 @@ final class FragmentManagerImpl extends FragmentManager {
                                     f.mSavedFragmentState), container, f.mSavedFragmentState);
                             if (f.mView != null) {
                                 f.mInnerView = f.mView;
-                                f.mView = NoSaveStateFrameLayout.wrap(f.mView);
+                                f.mView = NoSaveStateFrameLayout.wrap(f, f.mView);
                                 if (container != null) {
                                     Animation anim = loadAnimation(f, transit, true,
                                             transitionStyle);
