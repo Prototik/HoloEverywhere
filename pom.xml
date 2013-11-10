@@ -114,7 +114,7 @@
             <dependency>
                 <groupId>com.android.support</groupId>
                 <artifactId>support-v4</artifactId>
-                <version>18.0.2</version>
+                <version>18.0.3</version>
             </dependency>
 
             <dependency>

@@ -120,20 +120,11 @@ public abstract class _HoloFragment extends android.support.v4.app.Fragment impl
     }
 
     @Override
-    public final View onCreateView(android.view.LayoutInflater inflater,
-                                   ViewGroup container, Bundle savedInstanceState) {
-        ContextMenuDecorView decorView = new ContextMenuDecorView(mActivity);
-        decorView.setProvider(this);
-        final View view = onCreateView(getLayoutInflater(), decorView, savedInstanceState);
-        if (view == null) {
-            return null;
-        }
-        decorView.addView(view);
-        return decorView;
+    public final View onCreateView(android.view.LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return onCreateView(getLayoutInflater(), container, savedInstanceState);
     }
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

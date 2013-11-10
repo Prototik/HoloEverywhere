@@ -5,13 +5,44 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.TypedArray;
 import android.support.v4.app.FragmentActivity.FragmentTag;
+import android.support.v7.internal.view.menu.ContextMenuDecorView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.widget.FrameLayout;
 
 public class _HoloFragmentInflater {
+    static {
+        NoSaveStateFrameLayout.sNoSaveStateFrameLayoutCreator = new NoSaveStateFrameLayout.NoSaveStateFrameLayoutCreator() {
+            @Override
+            public ViewGroup create(Fragment fragment, View view) {
+                final FrameLayout wrapper;
+                if (fragment instanceof _HoloFragment) {
+					wrapper = new ContextMenuDecorView(view.getContext());
+					((ContextMenuDecorView) wrapper).setProvider((_HoloFragment) fragment);
+				} else {
+					wrapper = new FrameLayout(view.getContext());
+				}
+                wrapper.setSaveChildrenState(false);
+                ViewGroup.LayoutParams childParams = view.getLayoutParams();
+                if (childParams != null) {
+                    wrapper.setLayoutParams(childParams);
+                }
+                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+                view.setLayoutParams(lp);
+                wrapper.addView(view);
+                return wrapper;
+            }
+        };
+    }
+    
+    public static void init() {
+		
+	}
+
     private static View inflate(AttributeSet attrs, View parent, FragmentActivity activity,
                                 Fragment parentFragment) {
         String fname = attrs.getAttributeValue(null, "class");

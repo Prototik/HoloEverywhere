@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build.VERSION;
 import android.os.Bundle;
+import android.support.v4.app._HoloFragmentInflater;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
@@ -29,6 +30,8 @@ public class Application extends android.app.Application implements
 
     static {
         SystemServiceManager.register(LayoutInflaterCreator.class);
+        
+        _HoloFragmentInflater.init();
     }
 
     private final IAddonBasicAttacher<IAddonApplication, Application> mAttacher =
