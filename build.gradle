@@ -17,7 +17,7 @@ allprojects {
     mavenCentral()
     maven { url "https://raw.github.com/Prototik/HoloEverywhere/repo" }
   }
-  
+
   tasks.withType(Compile) {
     options.encoding = "UTF-8"
   }

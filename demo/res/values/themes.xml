@@ -20,7 +20,6 @@
         <!--Include block: DemoThemeBarDark-->
         <!--Include block: DemoThemeBar-->
         <!--End of block DemoThemeBar-->
-        <item name="menuBackground">#dd222222</item>
         <!--End of block DemoThemeBarDark-->
     </style>
     <style name="Holo.Demo.Theme.Fullscreen">
@@ -41,7 +40,6 @@
         <!--Include block: DemoThemeBarLight-->
         <!--Include block: DemoThemeBar-->
         <!--End of block DemoThemeBar-->
-        <item name="menuBackground">#dddddddd</item>
         <!--End of block DemoThemeBarLight-->
     </style>
     <style name="Holo.Demo.Theme.Light.DarkActionBar" parent="Holo.Theme.Light.DarkActionBar">
@@ -55,7 +53,6 @@
         <!--Include block: DemoThemeBarDark-->
         <!--Include block: DemoThemeBar-->
         <!--End of block DemoThemeBar-->
-        <item name="menuBackground">#dd222222</item>
         <!--End of block DemoThemeBarDark-->
     </style>
     <style name="Holo.Demo.Theme.Light.DarkActionBar.Fullscreen">

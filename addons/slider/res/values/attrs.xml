@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><resources>
     <!--Start attrs definition block-->
+    <attr name="sliderMenuPanelBackground" format="reference|color"/>
     <attr name="textAppearanceSliderItem" format="reference"/>
     <attr name="textAppearanceSliderItemInverse" format="reference"/>
     <!--Start styleable definition block-->

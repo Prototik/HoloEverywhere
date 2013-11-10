@@ -1,4 +1,7 @@
 {
+    "attrs": [
+        "sliderMenuPanelBackground$reference|color"
+    ],
     "output": "values/attrs.xml",
     "styleable": {
         "SliderMenu": [

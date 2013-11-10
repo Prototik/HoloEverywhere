@@ -10,7 +10,7 @@ dependencies {
 apply from: '../android_default.gradle'
 
 android {
-  defaultConfig {
-    minSdkVersion 8
-  }
+    defaultConfig {
+        minSdkVersion 8
+    }
 }

@@ -26,7 +26,7 @@ android {
 
 boolean officialBuild = (!version.contains("SNAPSHOT") && gradle.taskGraph.hasTask("uploadArchives")) || rootProject.hasProperty('officialBuild')
 
-// Sign apks
+// Sign and attach apks
 if (android.class.name.startsWith('com.android.build.gradle.AppExtension') && project.hasProperty('holoeverywhere.sign.storeFile')) {
     android {
         signingConfigs {

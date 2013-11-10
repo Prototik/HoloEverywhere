@@ -13,13 +13,20 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
 
+import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.IAddon.Addon;
+import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.ContextThemeWrapperPlus;
 import org.holoeverywhere.slider.R;
 import org.holoeverywhere.slider.SliderMenu;
 import org.holoeverywhere.widget.DrawerLayout;
 
 @Addon(weight = 40)
 public class AddonSlider extends IAddon {
+    public AddonSlider() {
+        registerActivity(AddonSliderA.class);
+    }
+
     public static class AddonSliderA extends IAddonActivity {
         private boolean mAddonEnabled = true;
         private DrawerLayout mDrawerLayout;
@@ -87,8 +94,30 @@ public class AddonSlider extends IAddon {
             return get().findViewById(R.id.contentView);
         }
 
+        @SuppressLint("InlinedApi")
+        public void setContentView(View view) {
+            attach(view, Gravity.NO_GRAVITY);
+        }
+
         public DrawerLayout getDrawerLayout() {
             return mDrawerLayout;
+        }
+
+        public void setDrawerLayout(DrawerLayout drawerLayout) {
+            mDrawerLayout = drawerLayout;
+            if (mDrawerLayout != null) {
+                mDrawerLayout.setId(R.id.slider);
+            }
+        }
+
+        public void setDrawerLayout(int layoutResource) {
+            final View view = get().getThemedLayoutInflater().inflate(layoutResource, null, false);
+            if (view instanceof DrawerLayout) {
+                setDrawerLayout((DrawerLayout) view);
+            } else {
+                get().setContentView(view);
+                setAddonEnabled(false);
+            }
         }
 
         public int getDrawerLockMode(int edgeGravity) {
@@ -103,8 +132,17 @@ public class AddonSlider extends IAddon {
             return get().findViewById(R.id.leftView);
         }
 
+        @SuppressLint("InlinedApi")
+        public void setLeftView(View view) {
+            attach(view, Gravity.START);
+        }
+
         public Context getMenuContext() {
             return mMenuContext;
+        }
+
+        public void setMenuContext(Context context) {
+            mMenuContext = context;
         }
 
         public int getMenuLayout() {
@@ -115,8 +153,17 @@ public class AddonSlider extends IAddon {
             return get().findViewById(R.id.rightView);
         }
 
+        @SuppressLint("InlinedApi")
+        public void setRightView(View view) {
+            attach(view, Gravity.END);
+        }
+
         public boolean isAddonEnabled() {
             return mAddonEnabled;
+        }
+
+        public void setAddonEnabled(boolean addonEnabled) {
+            mAddonEnabled = addonEnabled;
         }
 
         public boolean isDrawerOpen(int drawerGravity) {
@@ -139,6 +186,10 @@ public class AddonSlider extends IAddon {
             return mOverlayActionBar;
         }
 
+        public void setOverlayActionBar(boolean overlayActionBar) {
+            mOverlayActionBar = overlayActionBar;
+        }
+
         public SliderMenu obtainDefaultSliderMenu() {
             return obtainDefaultSliderMenu(0);
         }
@@ -148,13 +199,22 @@ public class AddonSlider extends IAddon {
                 return mSliderMenu;
             }
             mMenuLayout = menuLayout;
-            mMenuContext = get().getSupportActionBarContext();
+            mMenuContext = obtainMenuContext(true);
             setDrawerLayout(R.layout.slider_default_layout);
             setOverlayActionBar(true);
             mSliderMenu = new SliderMenu(this);
             mSliderMenu.setHandleHomeKey(true);
             mSliderMenu.makeDefaultMenu(mMenuContext);
             return mSliderMenu;
+        }
+
+        public Context obtainMenuContext(boolean useActionBarStyle) {
+            final Activity activity = get();
+            int themeType = ThemeManager.getThemeType(activity);
+            if (themeType == ThemeManager.MIXED && useActionBarStyle) {
+                themeType = ThemeManager.DARK;
+            }
+            return new ContextThemeWrapperPlus(activity, SliderMenu.getThemeForType(themeType));
         }
 
         public SliderMenu obtainSliderMenu() {
@@ -271,32 +331,6 @@ public class AddonSlider extends IAddon {
             return super.requestWindowFeature(featureId);
         }
 
-        public void setAddonEnabled(boolean addonEnabled) {
-            mAddonEnabled = addonEnabled;
-        }
-
-        @SuppressLint("InlinedApi")
-        public void setContentView(View view) {
-            attach(view, Gravity.NO_GRAVITY);
-        }
-
-        public void setDrawerLayout(DrawerLayout drawerLayout) {
-            mDrawerLayout = drawerLayout;
-            if (mDrawerLayout != null) {
-                mDrawerLayout.setId(R.id.slider);
-            }
-        }
-
-        public void setDrawerLayout(int layoutResource) {
-            final View view = get().getThemedLayoutInflater().inflate(layoutResource, null, false);
-            if (view instanceof DrawerLayout) {
-                setDrawerLayout((DrawerLayout) view);
-            } else {
-                get().setContentView(view);
-                setAddonEnabled(false);
-            }
-        }
-
         public void setDrawerListener(DrawerListener listener) {
             requestDrawerLayout().setDrawerListener(listener);
         }
@@ -321,20 +355,6 @@ public class AddonSlider extends IAddon {
             requestDrawerLayout().setDrawerShadow(resId, gravity);
         }
 
-        @SuppressLint("InlinedApi")
-        public void setLeftView(View view) {
-            attach(view, Gravity.START);
-        }
-
-        public void setOverlayActionBar(boolean overlayActionBar) {
-            mOverlayActionBar = overlayActionBar;
-        }
-
-        @SuppressLint("InlinedApi")
-        public void setRightView(View view) {
-            attach(view, Gravity.END);
-        }
-
         public void setScrimColor(int color) {
             requestDrawerLayout().setScrimColor(color);
         }
@@ -354,9 +374,5 @@ public class AddonSlider extends IAddon {
             }
         }
 
-    }
-
-    public AddonSlider() {
-        registerActivity(AddonSliderA.class);
     }
 }

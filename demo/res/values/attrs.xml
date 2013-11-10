@@ -2,7 +2,6 @@
     <!--Start attrs definition block-->
     <attr name="demoListRowViewStyle" format="reference"/>
     <attr name="disableMusicIcon" format="reference"/>
-    <attr name="menuBackground" format="reference|color"/>
     <attr name="selectionHandler" format="color|reference"/>
     <attr name="selectionHandlerVisiblity" format="enum">
         <enum name="invisible" value="1"/>

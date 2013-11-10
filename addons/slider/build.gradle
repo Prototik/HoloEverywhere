@@ -1,7 +1,7 @@
 apply plugin: 'android-library'
 
 dependencies {
-  compile project(':library')
+    compile project(':library')
 }
 
 apply from: '../../android_default.gradle'

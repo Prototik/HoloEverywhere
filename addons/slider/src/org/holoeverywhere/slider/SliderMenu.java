@@ -23,9 +23,9 @@ import android.widget.BaseAdapter;
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
+import org.holoeverywhere.addon.AddonSlider;
 import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
 import org.holoeverywhere.addon.IAddonThemes;
-import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.TextView;
@@ -78,6 +78,10 @@ public class SliderMenu implements OnBackStackChangedListener {
         mActionBar = addon.get().getSupportActionBar();
         mFragmentManager = mAddon.get().getSupportFragmentManager();
         mItems = new ArrayList<SliderItem>();
+    }
+
+    public static int getThemeForType(int type) {
+        return sThemes.getTheme(type);
     }
 
     /**
@@ -385,8 +389,7 @@ public class SliderMenu implements OnBackStackChangedListener {
     }
 
     public void makeDefaultMenu(boolean useActionBarStyle) {
-        final Activity activity = mAddon.get();
-        makeDefaultMenu(useActionBarStyle ? activity.getSupportActionBarContext() : activity);
+        makeDefaultMenu(mAddon.obtainMenuContext(useActionBarStyle));
     }
 
     public void makeDefaultMenu(Context context) {
@@ -528,6 +531,31 @@ public class SliderMenu implements OnBackStackChangedListener {
 
     public static enum SelectionBehavior {
         BackgroundWhenSelected, Default, OnlyBackground, OnlyHandler, Disabled;
+    }
+
+    public static class SliderMenuFragment extends Fragment {
+        protected Context mMenuContext;
+
+        private AddonSliderA addonSlider() {
+            return getSupportActivity().addon(AddonSlider.class);
+        }
+
+        @Override
+        public LayoutInflater getLayoutInflater() {
+            if (mMenuContext == null) {
+                mMenuContext = addonSlider().getMenuContext();
+            }
+            if (mMenuContext == null) {
+                mMenuContext = addonSlider().get();
+            }
+            return LayoutInflater.from(mMenuContext);
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            final int menuLayout = addonSlider().getMenuLayout();
+            return inflater.inflate(menuLayout != 0 ? menuLayout : R.layout.slider_default_list_layout, container, false);
+        }
     }
 
     public static class SliderItem implements Parcelable {
