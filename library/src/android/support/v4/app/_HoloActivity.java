@@ -18,6 +18,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.internal.view.menu.ContextMenuCallbackGetter;
 import android.support.v7.internal.view.menu.ContextMenuDecorView.ContextMenuListenersProvider;
 import android.support.v7.internal.view.menu.ContextMenuListener;
+import android.test.mock.MockApplication;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
@@ -259,15 +261,19 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
         }
         onPreInit(config, savedInstanceState);
         if (!config.ignoreApplicationInstanceCheck && !(getApplication() instanceof Application)) {
-            String text = "Application instance isn't HoloEverywhere.\n";
-            if (getApplication().getClass() == android.app.Application.class) {
-                text += "Put attr 'android:name=\"org.holoeverywhere.app.Application\"'" +
-                        " in <application> tag of AndroidManifest.xml";
+            if (config.allowMockApplicationInstance && getApplication() instanceof MockApplication) {
+                Log.w("HoloEverywhere", "Application instance is MockApplication. Wow. Let's begin tests...");
             } else {
-                text += "Please sure that you extend " + getApplication().getClass() +
-                        " from a org.holoeverywhere.app.Application";
+                String text = "Application instance isn't HoloEverywhere.\n";
+                if (getApplication().getClass() == android.app.Application.class) {
+                    text += "Put attr 'android:name=\"org.holoeverywhere.app.Application\"'" +
+                            " in <application> tag of AndroidManifest.xml";
+                } else {
+                    text += "Please sure that you extend " + getApplication().getClass() +
+                            " from a org.holoeverywhere.app.Application";
+                }
+                throw new IllegalStateException(text);
             }
-            throw new IllegalStateException(text);
         }
         getLayoutInflater().setFragmentActivity(this);
         if (this instanceof Activity) {
@@ -535,6 +541,7 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
         };
         public boolean ignoreApplicationInstanceCheck = false;
         public boolean ignoreThemeCheck = false;
+        public boolean allowMockApplicationInstance = false;
         private SparseIntArray windowFeatures;
 
         public Holo() {
@@ -544,6 +551,7 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
         private Holo(Parcel source) {
             ignoreThemeCheck = source.readInt() == 1;
             ignoreApplicationInstanceCheck = source.readInt() == 1;
+            allowMockApplicationInstance = source.readInt() == 1;
             windowFeatures = source.readParcelable(SparseIntArray.class.getClassLoader());
         }
 
@@ -567,6 +575,7 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeInt(ignoreThemeCheck ? 1 : 0);
             dest.writeInt(ignoreApplicationInstanceCheck ? 1 : 0);
+            dest.writeInt(allowMockApplicationInstance ? 1 : 0);
             dest.writeParcelable(windowFeatures, flags);
         }
     }
