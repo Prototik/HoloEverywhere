@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="date_year_view_num_columns">2</integer>
-    <dimen name="time_label_size">52sp</dimen>
+    <dimen name="time_label_size">46sp</dimen>
+    <dimen name="time_ampm_label_size">26sp</dimen>
 </resources>

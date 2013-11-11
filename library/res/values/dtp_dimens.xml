@@ -13,7 +13,7 @@
 
     <dimen name="time_label_size">60sp</dimen>
     <dimen name="time_ampm_label_size">16sp</dimen>
-    <dimen name="date_time_picker_size">270dip</dimen>
+    <dimen name="date_time_picker_size">220dip</dimen>
     <dimen name="date_month_list_item_header_height">50dp</dimen>
     <dimen name="date_month_day_label_text_size">10sp</dimen>
     <dimen name="date_day_number_select_circle_radius">16dp</dimen>
@@ -25,7 +25,8 @@
     <dimen name="date_week_size">14sp</dimen>
     <dimen name="date_picker_component_width">220dp</dimen>
     <dimen name="date_selected_width">160dp</dimen>
-    <dimen name="date_selected_top_margin">0dp</dimen>
+    <dimen name="date_selected_top_margin">8dp</dimen>
+    <dimen name="date_selected_bottom_margin">8dp</dimen>
     <dimen name="date_selected_left_margin">52sp</dimen>
 
     <integer name="date_year_view_num_columns">3</integer>

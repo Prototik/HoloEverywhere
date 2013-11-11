@@ -39,7 +39,7 @@
         "windowMinWidthMajor$reference",
         "windowMinWidthMinor$reference",
         "windowNoTitle$boolean",
-        "datePickerSelectedDateBackground$reference|color",
+        "dateTimePickerSelectedDateBackground$reference|color",
         "dateTimePickerTextColor$reference|color",
         "dateTimePickerActiveTextColor$reference|color",
         "dateTimePickerStyle$reference",

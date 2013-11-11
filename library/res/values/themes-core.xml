@@ -57,8 +57,8 @@
         <item name="android:windowBackground">@drawable/background_holo_dark</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless</item>
-        <item name="datePickerSelectedDateBackground">#90404040</item>
         <item name="dateTimePickerActiveTextColor">@color/date_picker_active_text_holo_dark</item>
+        <item name="dateTimePickerSelectedDateBackground">#90404040</item>
         <item name="dateTimePickerStyle">@style/Holo.DateTimePicker</item>
         <item name="dateTimePickerTextColor">@color/dim_foreground_holo_dark</item>
         <item name="detailsElementBackground">@drawable/panel_bg_holo_dark</item>
@@ -140,8 +140,8 @@
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
-        <item name="datePickerSelectedDateBackground">#BBDEDEDE</item>
         <item name="dateTimePickerActiveTextColor">@color/date_picker_active_text_holo_light</item>
+        <item name="dateTimePickerSelectedDateBackground">#BBDEDEDE</item>
         <item name="dateTimePickerStyle">@style/Holo.DateTimePicker.Light</item>
         <item name="dateTimePickerTextColor">@color/dim_foreground_holo_light</item>
         <item name="detailsElementBackground">@drawable/panel_bg_holo_light</item>
@@ -223,8 +223,8 @@
         <item name="android:windowBackground">@drawable/background_holo_light</item>
         <item name="autoCompleteTextViewStyle">@style/Holo.AutoCompleteTextView.Light</item>
         <item name="borderlessButtonStyle">@style/Holo.Button.Borderless.Light</item>
-        <item name="datePickerSelectedDateBackground">#BBDEDEDE</item>
         <item name="dateTimePickerActiveTextColor">@color/date_picker_active_text_holo_light</item>
+        <item name="dateTimePickerSelectedDateBackground">#BBDEDEDE</item>
         <item name="dateTimePickerStyle">@style/Holo.DateTimePicker.Light</item>
         <item name="dateTimePickerTextColor">@color/dim_foreground_holo_light</item>
         <item name="detailsElementBackground">@drawable/panel_bg_holo_light</item>

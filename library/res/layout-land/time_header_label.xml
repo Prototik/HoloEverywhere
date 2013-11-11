@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/hour_space"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/separator"
+        android:importantForAccessibility="no"
+        android:padding="2dp"
+        android:text="--"
+        android:textSize="@dimen/time_label_size"
+        android:visibility="invisible" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_alignLeft="@+id/hour_space"
+        android:layout_alignRight="@+id/hour_space"
+        android:layout_centerVertical="true">
+
+        <org.holoeverywhere.widget.datetimepicker.AccessibleTextView
+            android:id="@+id/hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:text="--"
+            android:textColor="?dateTimePickerActiveTextColor"
+            android:textSize="@dimen/time_label_size" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:importantForAccessibility="no"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:text=":"
+        android:textColor="?dateTimePickerActiveTextColor"
+        android:textSize="@dimen/time_label_size" />
+
+    <TextView
+        android:id="@+id/minutes_space"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/separator"
+        android:importantForAccessibility="no"
+        android:padding="2dp"
+        android:text="--"
+        android:textSize="@dimen/time_label_size"
+        android:visibility="invisible" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_alignLeft="@+id/minutes_space"
+        android:layout_alignRight="@+id/minutes_space"
+        android:layout_centerVertical="true">
+
+        <org.holoeverywhere.widget.datetimepicker.AccessibleTextView
+            android:id="@+id/minutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:text="--"
+            android:textColor="?dateTimePickerActiveTextColor"
+            android:textSize="@dimen/time_label_size" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/ampm_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/separator"
+        android:layout_centerHorizontal="true"
+        android:importantForAccessibility="no"
+        android:padding="8dp"
+        android:text="AM"
+        android:textAllCaps="true"
+        android:textColor="?dateTimePickerTextColor"
+        android:textSize="@dimen/time_ampm_label_size"
+        android:textStyle="bold" />
+</RelativeLayout>

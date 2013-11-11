@@ -18,8 +18,8 @@
     <attr name="dateCircleColor" format="reference|color"/>
     <attr name="dateDayTextColor" format="reference|color"/>
     <attr name="dateMonthTitleColor" format="reference|color"/>
-    <attr name="datePickerSelectedDateBackground" format="reference|color"/>
     <attr name="dateTimePickerActiveTextColor" format="reference|color"/>
+    <attr name="dateTimePickerSelectedDateBackground" format="reference|color"/>
     <attr name="dateTimePickerStyle" format="reference"/>
     <attr name="dateTimePickerTextColor" format="reference|color"/>
     <attr name="dateTodayColor" format="reference|color"/>
