@@ -1,0 +1,12 @@
+org.holoeverywhere
+org.holoeverywhere.addon
+org.holoeverywhere.app
+org.holoeverywhere.content
+org.holoeverywhere.drawable
+org.holoeverywhere.preference
+org.holoeverywhere.text
+org.holoeverywhere.util
+org.holoeverywhere.widget
+org.holoeverywhere.widget.datetimepicker
+org.holoeverywhere.widget.datetimepicker.date
+org.holoeverywhere.widget.datetimepicker.time

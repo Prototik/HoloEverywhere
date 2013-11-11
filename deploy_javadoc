@@ -1,0 +1,20 @@
+#!/bin/bash
+version=$1
+
+die() {
+	echo $@
+	exit 0
+}
+
+if [ "x$version" = "x" ]; then
+	die "Usage: ./deploy_javadoc <version>"
+fi
+
+folder_name=docs
+output_jar=docs.jar
+rm -rf $folder_name $output_jar
+wget https://raw.github.com/Prototik/HoloEverywhere/repo/org/holoeverywhere/library/${version}/library-${version}-javadoc.jar -O $output_jar || die "Couldn't download javadoc"
+unzip $output_jar -d $folder_name || die "Couldn't unzip javadoc"
+rm -rf $output_jar
+
+echo "Done! HoloEverywhere's javadoc version ${version} deployed to `realpath ${folder_name}`"
