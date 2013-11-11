@@ -10,7 +10,7 @@ buildscript {
 
 allprojects {
   group = 'org.holoeverywhere'
-  version = '2.1.0'
+  version = '2.1.1-SNAPSHOT'
 
   repositories {
     mavenLocal()
