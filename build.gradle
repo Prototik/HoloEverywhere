@@ -2,20 +2,20 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-version = '18.0.3'
+version = '18.0.4'
 
 repositories {
-  mavenLocal()
-  mavenCentral()
-  maven { url "https://raw.github.com/Prototik/HoloEverywhere/repo" }
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://raw.github.com/Prototik/HoloEverywhere/repo" }
 }
 
 dependencies {
-	compile 'android:android:4.3_r2@jar'
+    compile 'android:android:4.3_r2@jar'
 }
-  
+
 tasks.withType(Compile) {
-  options.encoding = "UTF-8"
+    options.encoding = "UTF-8"
 }
 
 tasks.compileJava.sourceCompatibility = '1.6'
@@ -30,7 +30,7 @@ sourceSets {
 }
 
 jar {
-  manifest.attributes('SupportLibraryVersion': "${project.version}-prok")
+    manifest.attributes('SupportLibraryVersion': "${project.version}-prok")
 }
 
 task generateJavadoc(type: Javadoc) {
@@ -63,10 +63,14 @@ uploadArchives {
         mavenDeployer {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-			pom.groupId = 'com.android.support'
+            pom.groupId = 'com.android.support'
             pom.artifactId = 'support-v4'
 
             repository(url: project.getProperty('holoeverywhere.repo'))
+
+            pom.whenConfigured { pom ->
+                pom.dependencies = pom.dependencies.findAll { dep -> dep.groupId != 'android' && dep.artifactId != 'android' }
+            }
 
             pom.project {
                 name 'Android Support Library v4'
