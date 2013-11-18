@@ -1,0 +1,99 @@
+import org.gradle.api.artifacts.maven.MavenDeployment
+
+apply plugin: 'groovy'
+
+dependencies {
+    compile 'com.android.tools.build:gradle:0.6.+'
+    compile gradleApi()
+    compile localGroovy()
+}
+
+repositories {
+    mavenCentral()
+}
+
+version = '0.1.0'
+
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+task generateJavadoc(type: Javadoc) {
+    source = sourceSets.main.allJava
+    classpath = configurations.compile
+}
+
+task javadoc(type: Jar, dependsOn: generateJavadoc, overwrite: true) {
+    from generateJavadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+task sources(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+boolean officialBuild = rootProject.hasProperty('officialBuild')
+
+if (officialBuild) {
+    artifacts {
+        archives tasks.sources
+        archives tasks.javadoc
+    }
+}
+
+afterEvaluate { project ->
+    signing {
+        required officialBuild
+        sign configurations.archives
+    }
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
+                    if (project.hasProperty('sonatypeUsername') && project.hasProperty('sonatypePassword')) {
+                        authentication(userName: sonatypeUsername, password: sonatypePassword)
+                    }
+                }
+
+                pom.project {
+                    groupId = 'org.holoeverywhere'
+                    artifactId = 'plugin'
+                    name 'HoloEverywhere Plugin'
+                    packaging 'jar'
+                    description 'HoloEverywhere Plugin for Gradle which allow easy usage of library'
+                    url 'https://github.com/Prototik/HoloEverywhere'
+
+                    scm {
+                        url 'https://github.com/Prototik/HoloEverywhere'
+                        connection 'scm:git@github.com:Prototik/HoloEverywhere.git'
+                        developerConnection 'scm:git@github.com:Prototik/HoloEverywhere.git'
+                    }
+
+                    licenses {
+                        license {
+                            name 'MIT License'
+                            url 'https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE'
+                            distribution 'repo'
+                            comments 'Copyright (c) 2013 Sergey Shatunov'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'Prototik'
+                            name 'Sergey Shatunov'
+                            email 'prototypegamez@gmail.com'
+                            timezone '+8'
+                            roles {
+                                role "developer"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
