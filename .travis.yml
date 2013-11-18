@@ -1,0 +1,24 @@
+language: java
+jdk: openjdk7
+
+branches:
+  includes:
+    - plugin
+
+notifications:
+  email:
+    - prototypegamez@gmail.com
+
+before_install:
+  # Update a system for ia32 libraries
+  # Just full upgrade of system and installing a ia32-libs not works
+  # It's debian based system, /very/ stable version only
+  - sudo apt-get update -qq
+  - if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch > /dev/null; fi
+
+  - wget http://downloads.gradle.org/distributions/gradle-1.8-all.zip -q
+  - unzip -q -o gradle-1.8-all.zip
+  - export PATH="`pwd`/gradle-1.8/bin:${PATH}"
+
+install: gradle build -q
+script: gradle check
