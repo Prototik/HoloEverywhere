@@ -25,6 +25,7 @@ android {
 }
 
 boolean officialBuild = rootProject.hasProperty('officialBuild')
+boolean snapshotBuild = rootProject.hasProperty('snapshotBuild')
 
 // Sign and attach apks
 if (android.class.name.startsWith('com.android.build.gradle.AppExtension') && project.hasProperty('holoeverywhere.sign.storeFile')) {
@@ -77,7 +78,7 @@ if (android.class.name.startsWith('com.android.build.gradle.LibraryExtension')) 
         classifier = 'sources'
     }
 
-    if (officialBuild) {
+    if (officialBuild || snapshotBuild) {
         artifacts {
             archives tasks.sources
             archives tasks.javadoc

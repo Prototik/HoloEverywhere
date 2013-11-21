@@ -6,17 +6,21 @@ branches:
     - gh-pages
     - bugs
 
-env:
-  global:
-    # Android SDK
-    - ANDROID_SDK_VERSION="r22.0.4"
-    - ANDROID_BUILD_TOOLS_VERSION="r18.1"
-
 notifications:
   email:
     - prototypegamez@gmail.com
 
 before_install:
+  - export BASEDIR=`pwd`
+
+  # Restore SSH key
+  - if [ "x$TRAVIS_SECURE_ENV_VARS" == "xtrue" ]; then
+  - echo -n $repo_{00..30} >> ~/.ssh/repo_base64
+  - touch ~/.ssh/repo
+  - chmod 600 ~/.ssh/repo
+  - base64 --decode --ignore-garbage ~/.ssh/repo_base64 > ~/.ssh/repo
+  - fi
+
   # Update a system for ia32 libraries
   # Just full upgrade of system and installing a ia32-libs not works
   # It's debian based system, /very/ stable version only
@@ -29,9 +33,7 @@ before_install:
   - export ANDROID_HOME=`pwd`/android-sdk-linux
   - export ANDROID_BUILD_TOOLS_HOME=${ANDROID_HOME}/build-tools/18.1
   - export PATH=${ANDROID_BUILD_TOOLS_HOME}:${ANDROID_HOME}/tools:${PATH}
-  
-  - export BASEDIR=`pwd`
-  
+
   # Build tools
   # Zip from repository contains android-*.*.* folder inside,
   # we are need only a content from it
@@ -54,11 +56,64 @@ before_install:
   - mv ${ANDROID_HOME}/platforms/android-4.3 ${ANDROID_HOME}/platforms/android-18
   - rm ${FILE}
   
-  - unset FILE
+  # Maven 3.1.1
+  - wget http://apache-mirror.rbc.ru/pub/apache/maven/maven-3/3.1.1/binaries/apache-maven-3.1.1-bin.tar.gz
+  - tar zxf apache-maven-3.1.1-bin.tar.gz
+  - export PATH="${BASEDIR}/apache-maven-3.1.1/bin:${PATH}"
   
+  # Gradle 1.8
   - wget http://downloads.gradle.org/distributions/gradle-1.8-all.zip -q
   - unzip -q -o gradle-1.8-all.zip
   - export PATH="${BASEDIR}/gradle-1.8/bin:${PATH}"
+  - export GRADLE_HOME="${BASEDIR}/.gradle"
+  - mkdir -p "${GRADLE_HOME}"
+  
+  # Generate one-time keystore for signing apks
+  - export KS="${GRADLE_HOME}/holoeverywhere.jks"
+  - export KS_ALIAS="holoeverywhere"
+  - export KS_PASS="holoeverywhere"
+  - keytool -genkey -keystore $KS -alias $KS_ALIAS -storepass $KS_PASS -keypass $KS_PASS -keyalg RSA -keysize 2048 -validity 1200 -dname "CN=HoloEverywhere One-Time Key,O=HoloEverywhere,C=US"
+  
+  # Generate gradle properties file
+  - export FILE="${GRADLE_HOME}/gradle.properties"
+  - echo holoeverywhere.sign.storeFile=$KS > $FILE
+  - echo holoeverywhere.sign.keyAlias=$KS_ALIAS >> $FILE
+  - echo holoeverywhere.sign.storePassword=$KS_PASS >> $FILE
+  - echo holoeverywhere.sign.keyPassword=$KS_PASS >> $FILE
+  - echo holoeverywhere.repo=ssh://travis@192.241.191.41/var/travis >> $FILE
+  - unset FILE
+  
 
-install: gradle build -q
-script: gradle check
+install: gradle -g "${GRADLE_HOME}" -PsnapshotBuild -q build upload
+script: gradle -g "${GRADLE_HOME}" -PsnapshotBuild check
+
+env:
+  global:
+    # Android SDK
+    - ANDROID_SDK_VERSION="r22.0.4"
+    - ANDROID_BUILD_TOOLS_VERSION="r18.1"
+    # Private SSH key for snapshot server
+    - secure: "phrrKSpqAeq47QW8xdwip8uLvF0AWrGeitZq0NylbL2PQqxGgXUGRFQh4Xz4zTPsm25hyRnU9EfgSpuFqMg8goOO399yXdfI+pH+6R11ajdgZ4bTyO1qR6GlvYtNHdbrYqrKfhvyYiHRfgWqNiB7gDWYWXhlh4r80VkYvuMeJcM="
+    - secure: "aDYR+BBcUIkfBQz7h3DnOsUm0upyGuKjXyXhQp+Hz3ZThtu5M4fR1YrWSaeS8mfzEWr44YIHSkZh4pjvB5NGf65BYpY+ViFmLmn+5Jg5qtIPnMLMkigVzZkaslCWsmw4bAPW1RFKg8kBUPCF0FCc1u4zOMT4c46EMpZU4VkehIQ="
+    - secure: "tWNOL1XQK07wN9S9KlZ7zHVNuHh4klRm7aziBryKFSCUCjI+tfRRQEI/t/hHyQNRIhnuoZVD1YaM2VTDjKsOC8l8Me9GxmwA5pltOe2CIM8XSvDMklDwL6Tqxl1OTzkg0XURMzJgzrhDgmMq9kyFsHv2Ceyfw2PBBukUcE577g4="
+    - secure: "Ked4W+8zhwmgJ+aZ0huS44w2OKCGLjjQYuAvUap2VV4tB9mH2QKoFbgJodhsEGf/CeJlww4+rEXr6wgbx67mnuv2saOv67TDDFxklz9oVc6Gz1Z76lHoYmLIzbdewai+QORyZ2ePpmEHavAz/mRXovm+9cDqXZvBzrmPXfVgWqM="
+    - secure: "hG9VMf5Q0JkJ1bdra3f6uA/wsW4Krsl1T6JY97xWMN0Gn7y7/Jv2dRYynsQLfLKDd5FqBMltxyPvUVgFpzjJJMNgCPtquRyQYts2lVAlt65AXmF/PnFu6jD9yxy3i+vNO3k570yJRdJuQKzBVoSyRTpklEkKdKOudNg0iUfuubs="
+    - secure: "ZT/QN+iC7O9plh/bgYePdK0B0Ph+zdwXjwmIu5ihkyYU/V5ZAseuNQ1a34W5v197Zevlqs7RTCFKGl5s2kETwg8Sb6V31AwDnWlfoVEFAlyptL2iLWIghxxgBLsHKQzpm+wVYvfA6yuU5OrENUjL+owl57fJ4Ne2p1h4zrWH8pA="
+    - secure: "PVszw4DvCSBqljBq5lCpBNNGJ4i5oQ0wxS4rKZBwBJrOxa2ikvMP4eSmKqHlpDSkdvMUL3klLmnSqLz7Eu0ymuCerkpCWHp5qy9bg8arp+WxxxYo41zL1ABRcidTqCIydvi0lzMyH9StlYSnSTxf5epTRVj0ZGn+7EvxHIrWsUY="
+    - secure: "lJAnKE3cxmjqwCTrpPQ48nLWchxqqwrJj+l1eqMg34GP+neuyH8NFJ5jCEpdjttjnvqBC3CUpS5lS9DgG5aiLFtZM2489EX5FjvTiVLISpJge9LDl8h8tjB+WrDu5nNgvtCPFHxNrsywIHKDH8SwT+tLhOpRW7e5wXBsd3sjpRI="
+    - secure: "s9pCWqTP4JdiM0JyfUYck94kEeVBuyofaz6OUAgEkJZVgDfTNwEPGdZTAxRcpY0Cmzw1MVEY8FtrrbbUiFGhhzWuMlGOSEsxre2Lcxu6ePk0uMDx1zsuhLtnloaoXcXH/21dipnMxy6PCAS7ofuguqhKi32/kUjCOn5jnT34DDs="
+    - secure: "jRDvdOvCQXJFCNh4vtpyWFUQsOYGZNlvdGLsp9RtmEcXlLexqeZ6SaMu+LTUyZsfWJ6kFPM1lWLFyFEwEYJDjaQhvXYCFnweBq3kDIgfTtJkiFhBQy0xSKRZxBA50kXCBpbUnspR+Op5cXejIP4ZrUn/QBy2YstLKKHF37scna8="
+    - secure: "ciduupR3h/p7UdSbGn52EypNqyWh6KNR5JLHjk7vjNUGn+/bFFnennMNgZ+/44nBsyVq7r7zca7hBq3eOEqwBH8oeYEwe+rXseTDoUagVCKEQJWqaoAJDM3gdEK0EVQSqnQqEc5gWM/S93M66Sjkf2a3hvg2IOylne7jQMAnaKA="
+    - secure: "delVDTZddiuu/5FJuP3phNmVk4syY9UGXNPM5m1/n2+EDIAwOyA6QUyY5TZ9JJ1uNPtXNJ2EY5LJ02wBTh4JeWs/FPvM1WByYADSER+Fl2XsaefuX6FAlp6VAwsLHkhLus+vHDF/hg212tAQtNODKh0IUvtRQJpPEzUAwQnlSks="
+    - secure: "nj1+EPNgTJ+4vmwwTsbFsVXm+CEaDHvP2SgrjUxXYXEtCdqacwuel37yENXTKJIeKPm1RHyulLHoCtJy+WjpVOsMGozcxm/7q9e6iQYPoZLLU0Hr6gUw8DX9aeBoOSBOUv4c+ArlkyIUrk8ig+Qe04bo3cnYOcLMWD7JZMNNyE0="
+    - secure: "gYgdimtzglXgWGo2wl+IJS3Su6P3nIXcCFvUPjuiFpIcdp/SgJZJ6/zP1CN1kkG3AIT7Inkunv2GtGQmiRwHS54X3QgSzpXtNuLnB2G+2sFIBOaWfKRUGKT1SBoXzpsxku5TtJYarTxXwnGpQUdftato9A8BGSL3SwcXgkXhSyg="
+    - secure: "qAw7du7e7V1mHmsUblgSOLFTiem7VvIjGi0XpO9LsmeLA8kyDIpUBiDHJiAKuJqAyRaO++JFBHMv4Rt9xrhLqHLuHPxhD6EHMPTYy8kPgZtBJbMNVTys8UBvPyPlbC4wKLbP5SSMpO8W1x0w8xDWVUvzqJi1jzvAOysNSf9akec="
+    - secure: "dzK1183uXEC09Zq9YNoM1eeKt79+7YZ816ftf64SkzWsoNkHvzWitkAYtADBrwQZOJ3oSNH2+v0WWPDZkaZkd5VwT3sw6yhi/Tn64UCwcvfmF2SYFx8RjTGOx7Wtka8oZF9e2OqoKZENkvX2uHepwhWPgZ/vxT+IHHSCC+JS6FM="
+    - secure: "nahUrlPGxyJvNjq/8DcS/Ucqebf16RTWSNGoxC2p9um3zXKoD4vSRPCS2Oftc2MXrTZNYzHjximQTz1EvKMDUl3sipGEoWHEuTH54degyzZ+KsoXTATugJ+DHw3bEsBY2msxskp0fuCw7snx0RQsshnXBwpP/RrErpvt5PwRMBY="
+    - secure: "kgLdOg55omR961S/F7Vr7ahCrx2LjbFQoQsBHuX0F902x0orKqjQzBszk0BXbjgo9mthGXy/c1DSf2HpOfdwH4e4lnyxDW97PqupwqcavjThdWT+rc5766hmvublTl0NXIJ/YrQXkVoAYiE3oD90baY3ZLiTIJpYP3w5YvhwWCk="
+    - secure: "KTkbDfumsaVfHRw+wCo+q8vYZqrshNRXyUcKI3hw8P8Wp4K/NJREL8XlAibS4ckGud85qzTxWq/m9ycQFYo9WCHV6voWJTSxsCKSuGT4LOfDu/ynamOhEG76jVEIdkq1YZLLTyNxJ9VGAL5PXy+7/zg5/meWojQ9h/IdTZM8epM="
+    - secure: "hqLJLbrBZnKfB8WMga60x0B9Urmt+rrQaRJX5LZ3cuUUsB0krFh8PZi9aE+lfY9hTC638BaiWMusHirElhICgnFmuniYnLqxiHKBDBNUMrTvINkj5rpgpdfh4t4w406ZU8RxbqW/TRrSmIhNLfJPJMpsQGVK78vQclQE05k+TqM="
+    - secure: "Nx/44b8t9j9VUiF1mM5ZeTxZ/bWd829/2Y2dSHEwhUhwbb4i2Bs3tWweHzwOt1Sy/mcuRo91s2QVTFk0L+bZhhWEshGzEAhwf/Gcc1S+TrsCDM7c2byEpv4weV4OSiYymro3eb3RVNM2yTbFkWOUslQwrdfxoAtWTt6AMsqzlU0="
+    - secure: "IDpbC6V/n3FxoQuU9LhoMu+PQkQVvWAx1ROJtDAs7CuWmpWp8LgAUMmLLmN5uyfVmpQ99dUXcjtObnH4I21YwssgRkWUzJidWOp8GhuwA8KI/Ub6+Bq1ZAGo08LRttF0vApHtyrXVnJS3yVvnG54NNlbZwAzKAIXhRkoxq9ZQ5w="
+    - secure: "RSflZB3FuKDndSLvCgUYzHbLRWOs+khAdZVslp7fqdPrJ3uEGrfJ0qVD/Q1PW7f4dLOL+BWVBTPCXoPqVG6+cLA8D+cOc/MJo2wq9TVZRIc9e/tETOJltmF5r5AivIe7ymnstVr8vOnMa88BfWrVgT5ql5f92CgCua2otBMU9c0="
+
