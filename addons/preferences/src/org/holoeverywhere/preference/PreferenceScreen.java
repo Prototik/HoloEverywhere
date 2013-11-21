@@ -141,7 +141,7 @@ public class PreferenceScreen extends PreferenceGroup implements
     }
 
     @SuppressLint("NewApi")
-    private void showDialog(Bundle state) {
+    protected void showDialog(Bundle state) {
         Context preferenceContext = getContext();
         Context context = PreferenceInit.unwrap(getContext());
         final int contextTheme = getThemeResId(context);
