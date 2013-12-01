@@ -129,26 +129,6 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<groupId>org.holoeverywhere</groupId>
-					<artifactId>resbuilder</artifactId>
-					<version>2.1.1</version>
-					<inherited>true</inherited>
-					<executions>
-						<execution>
-							<goals>
-								<goal>build</goal>
-							</goals>
-						</execution>
-					</executions>
-					<configuration>
-						<verbose>false</verbose>
-						<includeDirs>
-							<dir>${project.basedir}/resbuilder</dir>
-						</includeDirs>
-					</configuration>
-				</plugin>
-
-				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.1</version>
@@ -215,37 +195,6 @@
 							<skip>true</skip>
 						</proguard>
 					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.holoeverywhere</groupId>
-										<artifactId>resbuilder</artifactId>
-										<versionRange>${project.version}</versionRange>
-										<goals>
-											<goal>build</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<execute />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-checkstyle-plugin</artifactId>
-					<version>2.10</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

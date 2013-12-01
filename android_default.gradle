@@ -3,6 +3,18 @@ import org.gradle.api.internal.artifacts.publish.DefaultPublishArtifact;
 apply plugin: 'maven'
 apply plugin: 'signing'
 
+configurations {
+    deployerJars
+}
+
+dependencies {
+    deployerJars "org.apache.maven.wagon:wagon-ssh-external:2.2"
+}
+
+repositories {
+    mavenCentral()
+}
+
 android {
     compileSdkVersion 18
     buildToolsVersion '18.1'
@@ -96,12 +108,20 @@ afterEvaluate { project ->
 
     uploadArchives {
         repositories {
-            mavenDeployer {
+            mavenDeployer {                
+                configuration = configurations.deployerJars
                 beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
                 pom.artifactId = ARTIFACT_ID
 
-                repository(url: project.hasProperty('holoeverywhere.repo') ? project.getProperty('holoeverywhere.repo') : 'file:///invalid_path')
+                def String repoUrl = project.properties.get('holoeverywhere.repo', 'file:///invalid_path')
+                if (repoUrl.startsWith('scpexe://')) {
+                    repository(url: repoUrl) {
+                        authentication(userName: project.properties.get('holoeverywhere.repo.username'), privateKey: project.properties.get('holoeverywhere.repo.key'))
+                    }
+                } else {
+                    repository(url: repoUrl)
+                }
 
                 pom.project {
                     name NAME

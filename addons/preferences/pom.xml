@@ -33,29 +33,6 @@
 
 		<plugins>
 			<plugin>
-				<groupId>org.holoeverywhere</groupId>
-				<artifactId>resbuilder</artifactId>
-				<configuration>
-					<buildAll>false</buildAll>
-					<inputFiles>
-						<file>attrs.json:attrs</file>
-						<file>styles.json:styles</file>
-						<file>styles-sw720dp.json:styles</file>
-						<file>themes.json:styles</file>
-						<file>strings.json:strings</file>
-					</inputFiles>
-					<optimizeXmlIncludeDirs>
-						<dir>${project.basedir}/res</dir>
-					</optimizeXmlIncludeDirs>
-					<optimizeImageIncludeDirs>
-						<dir>${project.basedir}/res/drawable-mdpi</dir>
-						<dir>${project.basedir}/res/drawable-hdpi</dir>
-						<dir>${project.basedir}/res/drawable-xhdpi</dir>
-					</optimizeImageIncludeDirs>
-				</configuration>
-			</plugin>
-
-			<plugin>
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 				<artifactId>android-maven-plugin</artifactId>
 			</plugin>

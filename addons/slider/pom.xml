@@ -32,18 +32,6 @@
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
-				<groupId>org.holoeverywhere</groupId>
-				<artifactId>resbuilder</artifactId>
-				<configuration>
-					<buildAll>false</buildAll>
-					<inputFiles>
-						<file>attrs.json:attrs</file>
-						<file>themes.json:styles</file>
-					</inputFiles>
-				</configuration>
-			</plugin>
-
-			<plugin>
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 				<artifactId>android-maven-plugin</artifactId>
 			</plugin>

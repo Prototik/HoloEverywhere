@@ -14,14 +14,20 @@
 	</parent>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.holoeverywhere</groupId>
-			<artifactId>library</artifactId>
-			<version>${project.version}</version>
-			<type>apklib</type>
-		</dependency>
+        <dependency>
+            <groupId>android</groupId>
+            <artifactId>android</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
-		<dependency>
+        <dependency>
+            <groupId>org.holoeverywhere</groupId>
+            <artifactId>library</artifactId>
+            <version>${project.version}</version>
+            <type>apklib</type>
+        </dependency>
+
+        <dependency>
 			<groupId>org.holoeverywhere</groupId>
 			<artifactId>addon-slider</artifactId>
 			<version>${project.version}</version>
@@ -40,22 +46,6 @@
 		<sourceDirectory>src</sourceDirectory>
 
 		<plugins>
-			<plugin>
-				<groupId>org.holoeverywhere</groupId>
-				<artifactId>resbuilder</artifactId>
-				<configuration>
-					<buildAll>false</buildAll>
-					<includeDirs>
-						<dir>${project.basedir}/resbuilder</dir>
-						<dir>${project.basedir}/../library/resbuilder</dir>
-					</includeDirs>
-					<inputFiles>
-						<file>strings.json:strings</file>
-						<file>themes.json:styles</file>
-						<file>attrs.json:attrs</file>
-					</inputFiles>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 				<artifactId>android-maven-plugin</artifactId>

@@ -27,33 +27,33 @@
       <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/source/rs/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/debug" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/build/source/r/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/debug/jni" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/debug/rs" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/debug/res" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/aidl" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/assets" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/jni" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/rs" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/res" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/aidl" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/assets" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/res" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/resources" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/.settings" />
       <excludeFolder url="file://$MODULE_DIR$/build/apk" />
       <excludeFolder url="file://$MODULE_DIR$/build/assets" />
@@ -63,16 +63,17 @@
       <excludeFolder url="file://$MODULE_DIR$/build/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/libs" />
       <excludeFolder url="file://$MODULE_DIR$/build/manifests" />
+      <excludeFolder url="file://$MODULE_DIR$/build/res" />
       <excludeFolder url="file://$MODULE_DIR$/build/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 18 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="slider" exported="" />
-    <orderEntry type="library" exported="" name="support-v4-18.0.3" level="project" />
     <orderEntry type="module" module-name="library" exported="" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
     <orderEntry type="module" module-name="preferences" exported="" />
+    <orderEntry type="library" exported="" name="support-v4-18.0.4" level="project" />
   </component>
 </module>
 
