@@ -3,9 +3,11 @@ import org.gradle.api.artifacts.maven.MavenDeployment
 apply plugin: 'groovy'
 
 dependencies {
-    compile 'com.android.tools.build:gradle:0.6.+'
     compile gradleApi()
     compile localGroovy()
+
+    compile 'org.yaml:snakeyaml:1.13@jar'
+    compile 'com.android.tools.build:gradle:0.6.+'
 }
 
 repositories {
