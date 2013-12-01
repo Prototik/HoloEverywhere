@@ -1,4 +1,3 @@
-
 package org.holoeverywhere.widget;
 
 import android.annotation.SuppressLint;
@@ -368,7 +367,8 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
             mNeedSync = false;
             checkSelectionChanged();
         }
-        ReflectHelper.invoke(this, "notifyAccessibilityStateChanged", null);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+            ReflectHelper.invoke(this, "notifyAccessibilityStateChanged", null);
     }
 
     boolean isInFilterMode() {
