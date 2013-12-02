@@ -1,6 +1,7 @@
 package org.holoeverywhere.plugin
 
 import org.gradle.api.NamedDomainObjectContainer
+import org.gradle.api.NamedDomainObjectFactory
 import org.gradle.api.Project
 import org.gradle.internal.reflect.Instantiator
 import org.holoeverywhere.resbuilder.dsl.ResbuilderSourceSet
@@ -10,15 +11,44 @@ class HoloEverywhereExtension {
     private static final String HOLO_EVERYWHERE_GROUP = 'org.holoeverywhere'
     private static final String HOLO_EVERYWHERE_NAME = 'library'
     private static final String HOLO_EVERYWHERE_VERSION = '2.1.0'
-    private static final String HOLO_EVERYWHERE_ADDON_PREFERENCES = 'addon-preferences'
-    private static final String HOLO_EVERYWHERE_ADDON_SLIDER = 'addon-slider'
     private static final String HOLO_EVERYWHERE_REPO = 'http://192.241.191.41/repo'
 
     private static final String SUPPORT_V4_GROUP = 'com.android.support'
     private static final String SUPPORT_V4_NAME = 'support-v4'
     private static final String SUPPORT_V4_VERSION = '18.0.4'
 
-    class Addon {
+    public static enum Include {
+        Inhert('inhert'), Yes('yes'), No('no');
+
+        String localName;
+
+        Include(String localName) {
+            this.localName = localName
+        }
+
+        public static Include find(String localName, Include defaultValue) {
+            values().find { it.localName == localName } ?: defaultValue
+        }
+    }
+
+    private abstract class IncludeContainer {
+        IncludeContainer(HoloEverywhereExtension extension) {
+            this.extension = extension
+        }
+
+        private final HoloEverywhereExtension extension
+        def Include include = Include.Inhert
+
+        def void include(String name) {
+            this.include = Include.find(name, Include.Inhert)
+        }
+
+        def boolean realInclude() {
+            return include == Include.Yes || extension.include == Include.Yes
+        }
+    }
+
+    public static class Addon {
         def String group, name, version
 
         public Addon(String name) {
@@ -44,34 +74,31 @@ class HoloEverywhereExtension {
         }
     }
 
-    class AddonContainer extends HashSet<Addon> {
-        def preferences() {
-            add(new Addon(HOLO_EVERYWHERE_ADDON_PREFERENCES))
+    class LibraryContainer extends IncludeContainer {
+        LibraryContainer(HoloEverywhereExtension extension) {
+            super(extension)
         }
-
-        def slider() {
-            add(new Addon(HOLO_EVERYWHERE_ADDON_SLIDER))
-        }
-    }
-
-    class LibraryContainer {
-        def boolean include = true
 
         def String group = HOLO_EVERYWHERE_GROUP
         def String name = HOLO_EVERYWHERE_NAME
         def String version = HOLO_EVERYWHERE_VERSION
     }
 
-    class SupportV4Container {
-        def boolean include = true
+    class SupportV4Container extends IncludeContainer {
+        SupportV4Container(HoloEverywhereExtension extension) {
+            super(extension)
+        }
 
         def String group = SUPPORT_V4_GROUP
         def String name = SUPPORT_V4_NAME
         def String version = SUPPORT_V4_VERSION
     }
 
-    class RepositoryContainer {
-        def boolean include = true
+    class RepositoryContainer extends IncludeContainer {
+        RepositoryContainer(HoloEverywhereExtension extension) {
+            super(extension)
+        }
+
         def String url = HOLO_EVERYWHERE_REPO
     }
 
@@ -83,30 +110,43 @@ class HoloEverywhereExtension {
 
         final NamedDomainObjectContainer<ResbuilderSourceSet> sourceSets
         def boolean enable = true
+        def boolean formatTask = true
 
         def sourceSets(Closure<?> closure) {
             sourceSets.configure closure
         }
     }
 
-    private final Project project
-    private final Instantiator instantiator
-
     HoloEverywhereExtension(Project project, Instantiator instantiator) {
         this.project = project
         this.instantiator = instantiator
+
+        this.library = new LibraryContainer(this)
+        this.supportV4 = new SupportV4Container(this)
+        this.repository = new RepositoryContainer(this)
+        this.resbuilder = new ResbuilderContainer(project, instantiator)
+
+        this.addons = project.container(Addon, new NamedDomainObjectFactory<Addon>() {
+            @Override
+            Addon create(String name) {
+                String[] parts = name.split(':')
+                return parts.length > 1 ? new Addon(parts[0], parts[1], parts.length == 3 ? parts[2] : null) : new Addon("addon-${name}")
+            }
+        })
     }
 
-
-    def AddonContainer addons = new AddonContainer()
-    def LibraryContainer library = new LibraryContainer()
-    def SupportV4Container supportV4 = new SupportV4Container()
-    def RepositoryContainer repository = new RepositoryContainer()
-    def ResbuilderContainer resbuilder = new ResbuilderContainer(project, instantiator)
+    private final Project project
+    private final Instantiator instantiator
+    def final NamedDomainObjectContainer<Addon> addons
+    def final LibraryContainer library
+    def final SupportV4Container supportV4
+    def final RepositoryContainer repository
+    def final ResbuilderContainer resbuilder
+    def Include include = Include.Yes
     def String configuration = 'compile'
 
-    def AddonContainer addons(Closure<?> closure) {
-        return call(closure, addons);
+    def void addons(Closure<?> closure) {
+        addons.configure(closure)
     }
 
     def LibraryContainer library(Closure<?> closure) {

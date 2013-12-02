@@ -31,7 +31,7 @@ class TypeAttrs extends AndroidXmlType {
         def String[] types
         def Map<Integer, String> enums
 
-        // Format: type1:type2:type3:enumName1 1:enumName2 2:enumName3 3
+        // Format: type1:type2:type3|enumName1 1:enumName2 2:enumName3 3
         static AttrNode parse(String s) {
             AttrNode node = new AttrNode()
             int enumPoint = s.lastIndexOf('|')

@@ -68,6 +68,10 @@ class TypeStrings extends AndroidXmlType {
             }
             state.grab.addAll(grab)
         }
+
+        data.get('strings')?.each { String key, String value ->
+            state.strings.put(key, value)
+        }
     }
 
     def void parse() {

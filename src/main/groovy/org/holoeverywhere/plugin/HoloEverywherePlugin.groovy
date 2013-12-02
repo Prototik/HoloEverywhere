@@ -1,10 +1,8 @@
 package org.holoeverywhere.plugin
 
 import com.android.build.gradle.BasePlugin
-import com.android.build.gradle.tasks.MergeResources
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.Task
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
 import org.gradle.internal.reflect.Instantiator
@@ -36,7 +34,7 @@ class HoloEverywherePlugin implements Plugin<Project> {
 
     void afterEvaluate(Project project) {
         // HoloEverywhere repository
-        if (holoeverywhere.repository.include) {
+        if (holoeverywhere.repository.realInclude()) {
             project.repositories.maven {
                 name 'holoeverywhere'
                 url holoeverywhere.repository.url
@@ -54,13 +52,13 @@ class HoloEverywherePlugin implements Plugin<Project> {
         }
 
         // Support library v4
-        if (holoeverywhere.supportV4.include && !configuration.dependencies.any { Dependency i -> i.group == holoeverywhere.supportV4.group && i.name == holoeverywhere.supportV4.name }) {
+        if (holoeverywhere.supportV4.realInclude() && !configuration.dependencies.any { Dependency i -> i.group == holoeverywhere.supportV4.group && i.name == holoeverywhere.supportV4.name }) {
             project.dependencies.add(holoeverywhere.configuration, "${holoeverywhere.supportV4.group}:${holoeverywhere.supportV4.name}:${holoeverywhere.supportV4.version}@jar")
         }
 
         // HoloEverywhere's AAR
         Dependency holoeverywhereDependency = configuration.dependencies.find { Dependency i -> i.group == holoeverywhere.library.group && i.name == holoeverywhere.library.name }
-        if (holoeverywhere.library.include && holoeverywhereDependency == null) {
+        if (holoeverywhere.library.realInclude() && holoeverywhereDependency == null) {
             holoeverywhereDependency = project.dependencies.add(holoeverywhere.configuration, "${holoeverywhere.library.group}:${holoeverywhere.library.name}:${holoeverywhere.library.version}@aar")
         }
 
@@ -76,18 +74,24 @@ class HoloEverywherePlugin implements Plugin<Project> {
 
 
         if (holoeverywhere.resbuilder.enable) {
+            // Resbuilder format tasks
+            if (holoeverywhere.resbuilder.formatTask) {
+                ResbuilderFormatTask task = project.tasks.create("resbuilderFormat", ResbuilderFormatTask)
+                task.source = holoeverywhere.resbuilder.sourceSets as Set
+
+                task = project.tasks.create("resbuilderFormatCheck", ResbuilderFormatTask)
+                task.check = true
+                task.source = holoeverywhere.resbuilder.sourceSets as Set
+            }
+
             // Resbuilder processer tasks
             holoeverywhere.resbuilder.sourceSets.asMap.each { String name, ResbuilderSourceSet sourceSet ->
                 char[] chars = name.chars
                 chars[0] = chars[0].toUpperCase()
                 ResbuilderProcesserTask task = project.tasks.create("resbuilder${new String(chars)}", ResbuilderProcesserTask)
                 task.source = [sourceSet] as Set
-                project.tasks.withType(MergeResources).each { Task mergeTask -> mergeTask.dependsOn(task) }
+                project.tasks.getByName('preBuild').dependsOn task
             }
-
-            // Resbuilder format tasks
-            ResbuilderFormatTask task = project.tasks.create("resbuilderFormat", ResbuilderFormatTask)
-            task.source = holoeverywhere.resbuilder.sourceSets as Set
         }
     }
 }

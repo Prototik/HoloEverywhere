@@ -50,6 +50,10 @@ class ResbuilderProcesserTask extends ResbuilderDefaultTask {
             }*.delete()
             set.resources.files.each { File source ->
                 final String processerName = source.parentFile.name
+                int i = processerName.lastIndexOf('$')
+                if (i > 0) {
+                    processerName = processerName.substring(i + 1)
+                }
                 final TypeContainer type = types.find { TypeContainer type -> type.type.name == processerName }
                 if (type == null) {
                     project.logger.warn("Type processer not found: ${processerName}. File: ${source.absolutePath}")

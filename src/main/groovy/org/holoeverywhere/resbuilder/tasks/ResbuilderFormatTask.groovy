@@ -6,7 +6,7 @@ import org.yaml.snakeyaml.DumperOptions
 import org.yaml.snakeyaml.Yaml
 
 class ResbuilderFormatTask extends ResbuilderDefaultTask {
-    def boolean readonly = false
+    def boolean check = false
 
     @TaskAction
     def format() {
@@ -17,16 +17,16 @@ class ResbuilderFormatTask extends ResbuilderDefaultTask {
 
         source.each { ResbuilderSourceSet set ->
             set.resources.files.each { File source ->
-                Object data = yaml.load(new InputStreamReader(new FileInputStream(source), 'utf-8'))
+                String sourceData = new String(source.readBytes(), 'utf-8')
+                Object data = yaml.load(sourceData)
                 data = sort(data)
-                if (readonly) {
-                    project.logger.info("File \"%s\", data:\n%s", source.absolutePath, yaml.dump(data))
+                String sortedData = yaml.dump(data)
+                if (check) {
+                    if(!sortedData.equals(sourceData)) {
+                        project.logger.error("File \"${source.absolutePath}\" has an incorrect format")
+                    }
                 } else {
-                    byte[] dataRaw = yaml.dump(data).getBytes('utf-8')
-
-                    OutputStream os = new FileOutputStream(source)
-                    os.write(dataRaw)
-                    os.close()
+                    source.write(sortedData, 'utf-8')
                 }
             }
         }
