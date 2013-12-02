@@ -261,9 +261,17 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
         }
         onPreInit(config, savedInstanceState);
         if (!config.ignoreApplicationInstanceCheck && !(getApplication() instanceof Application)) {
-            if (config.allowMockApplicationInstance && getApplication() instanceof MockApplication) {
-                Log.w("HoloEverywhere", "Application instance is MockApplication. Wow. Let's begin tests...");
-            } else {
+            boolean throwError = true;
+            if (config.allowMockApplicationInstance) {
+                try {
+                    throwError = !(getApplication() instanceof MockApplication)
+                    if (!throwError) {
+                        Log.w("HoloEverywhere", "Application instance is MockApplication. Wow. Let's begin tests...");
+                    }
+                } catch (Exception e) {
+                }
+            }
+            if (throwError) {
                 String text = "Application instance isn't HoloEverywhere.\n";
                 if (getApplication().getClass() == android.app.Application.class) {
                     text += "Put attr 'android:name=\"org.holoeverywhere.app.Application\"'" +
