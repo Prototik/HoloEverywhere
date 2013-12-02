@@ -264,7 +264,7 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
             boolean throwError = true;
             if (config.allowMockApplicationInstance) {
                 try {
-                    throwError = !(getApplication() instanceof MockApplication)
+                    throwError = !(getApplication() instanceof MockApplication);
                     if (!throwError) {
                         Log.w("HoloEverywhere", "Application instance is MockApplication. Wow. Let's begin tests...");
                     }
