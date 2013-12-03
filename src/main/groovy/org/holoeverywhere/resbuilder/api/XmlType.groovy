@@ -24,6 +24,8 @@ abstract class XmlType extends PathType<XmlState> {
             if (!parentFile.exists()) parentFile.mkdirs()
             writer = new OutputStreamWriter(new FileOutputStream(path), encoding)
             markup = new MarkupBuilder(writer)
+            markup.setDoubleQuotes(true)
+            markup.setOmitNullAttributes(true)
             markup.mkp.xmlDeclaration(version: '1.0', encoding: encoding)
         }
 

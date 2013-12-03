@@ -11,6 +11,7 @@ class TypeAttrs extends AndroidXmlType {
         }
 
         def Map<String, AttrNode> attrs = new HashMap<>()
+        def Map<String, List<String>> styleable = new HashMap<>()
 
         @Override
         void prepare() {
@@ -20,6 +21,13 @@ class TypeAttrs extends AndroidXmlType {
                         def String nodeType = node.types.contains('flag') ? 'flag' : 'enum'
                         node.enums?.sort()?.each { int value, String enumName ->
                             markup."$nodeType"(name: enumName, value: value)
+                        }
+                    }
+                }
+                styleable.sort().each { String name, List<String> nodes ->
+                    markup.'declare-styleable'(name: name) {
+                        nodes.sort().each { String attrName ->
+                            markup.attr(name: attrName)
                         }
                     }
                 }
@@ -70,6 +78,21 @@ class TypeAttrs extends AndroidXmlType {
         final AttrsState state = stateRaw as AttrsState
         data.get('attrs')?.each { String name, String value ->
             state.attrs.put(name, AttrNode.parse(value))
+        }
+        data.get('styleable')?.each { String name, List<String> value ->
+            List<String> styleableBlockData = new ArrayList<>()
+            value.each { String row ->
+                String rowName
+                int i = row.indexOf('|')
+                if (i > 0) {
+                    rowName = row.substring(0, i)
+                    state.attrs.put(rowName, AttrNode.parse(row.substring(i + 1)))
+                } else {
+                    rowName = row
+                }
+                styleableBlockData.add(rowName)
+            }
+            state.styleable.put(name, styleableBlockData)
         }
     }
 }

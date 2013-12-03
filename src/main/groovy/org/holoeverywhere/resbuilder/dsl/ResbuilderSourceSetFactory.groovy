@@ -12,9 +12,8 @@ import org.gradle.api.tasks.SourceSetOutput
 import org.gradle.internal.reflect.Instantiator
 
 class ResbuilderSourceSetFactory implements NamedDomainObjectFactory<ResbuilderSourceSet> {
-    static ResbuilderSourceSetFactory fromProject(Project project, Instantiator instantiator) {
-        ProjectInternal projectInternal = (ProjectInternal) project
-        return new ResbuilderSourceSetFactory(instantiator, projectInternal.fileResolver, projectInternal.tasks)
+    static ResbuilderSourceSetFactory fromProject(Project project, Instantiator instantiator, String resourcesDir) {
+        return new ResbuilderSourceSetFactory(instantiator, (ProjectInternal) project, resourcesDir ?: 'res')
     }
 
     class DefaultResbuilderSourceSet implements ResbuilderSourceSet {
@@ -22,14 +21,14 @@ class ResbuilderSourceSetFactory implements NamedDomainObjectFactory<ResbuilderS
         private final SourceDirectorySet resources
         private final SourceSetOutput output
 
-        public DefaultResbuilderSourceSet(String name, FileResolver fileResolver, TaskResolver taskResolver) {
+        public DefaultResbuilderSourceSet(String name) {
             this.name = name
 
             this.resources = new DefaultSourceDirectorySet(name, fileResolver)
             this.resources.srcDir('resbuilder').filter.include('**/*.yml')
 
             this.output = new DefaultSourceSetOutput(name, fileResolver, taskResolver)
-            this.output.resourcesDir = fileResolver.resolve("res")
+            this.output.resourcesDir = fileResolver.resolve(resourcesDir)
         }
 
 
@@ -45,7 +44,7 @@ class ResbuilderSourceSetFactory implements NamedDomainObjectFactory<ResbuilderS
 
         @Override
         ResbuilderSourceSet resources(Closure<?> closure) {
-            closure = closure.clone();
+            closure = closure.clone() as Closure<?>;
             closure.delegate = resources
             closure.call(resources)
             return this
@@ -71,15 +70,19 @@ class ResbuilderSourceSetFactory implements NamedDomainObjectFactory<ResbuilderS
     private final Instantiator instantiator
     private final FileResolver fileResolver
     private final TaskResolver taskResolver
+    private final Project project
+    private final String resourcesDir
 
-    public ResbuilderSourceSetFactory(Instantiator instantiator, FileResolver fileResolver, TaskResolver taskResolver) {
+    public ResbuilderSourceSetFactory(Instantiator instantiator, ProjectInternal project, String resourcesDir) {
         this.instantiator = instantiator
-        this.fileResolver = fileResolver
-        this.taskResolver = taskResolver
+        this.fileResolver = project.fileResolver
+        this.taskResolver = project.tasks
+        this.project = project
+        this.resourcesDir = resourcesDir
     }
 
     @Override
     ResbuilderSourceSet create(String name) {
-        return new DefaultResbuilderSourceSet(name, fileResolver, taskResolver)
+        return new DefaultResbuilderSourceSet(name)
     }
 }

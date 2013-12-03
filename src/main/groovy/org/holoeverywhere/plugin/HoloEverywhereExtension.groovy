@@ -1,8 +1,10 @@
 package org.holoeverywhere.plugin
 
+import com.android.build.gradle.BaseExtension
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectFactory
 import org.gradle.api.Project
+import org.gradle.api.internal.project.ProjectInternal
 import org.gradle.internal.reflect.Instantiator
 import org.holoeverywhere.resbuilder.dsl.ResbuilderSourceSet
 import org.holoeverywhere.resbuilder.dsl.ResbuilderSourceSetFactory
@@ -44,7 +46,7 @@ class HoloEverywhereExtension {
         }
 
         def boolean realInclude() {
-            return include == Include.Yes || extension.include == Include.Yes
+            return include == Include.Yes || (include == Include.Inhert && extension.include == Include.Yes)
         }
     }
 
@@ -103,9 +105,15 @@ class HoloEverywhereExtension {
     }
 
     class ResbuilderContainer {
+        private static final DEFAULT_SOURCE_SET_NAME = 'main'
+
         ResbuilderContainer(Project project, Instantiator instantiator) {
-            sourceSets = project.container(ResbuilderSourceSet, ResbuilderSourceSetFactory.fromProject(project, instantiator))
-            sourceSets.create('main')
+            BaseExtension androidExtension = project.extensions.getByName('android') as BaseExtension
+            Iterator<File> iterator = androidExtension.sourceSets.getByName(DEFAULT_SOURCE_SET_NAME).res.srcDirs.iterator()
+            String resourcesDir = iterator.hasNext() ? (project as ProjectInternal).fileResolver.resolveAsRelativePath(iterator.next()) : null
+
+            sourceSets = project.container(ResbuilderSourceSet, ResbuilderSourceSetFactory.fromProject(project, instantiator, resourcesDir))
+            sourceSets.create(DEFAULT_SOURCE_SET_NAME)
         }
 
         final NamedDomainObjectContainer<ResbuilderSourceSet> sourceSets
@@ -163,6 +171,10 @@ class HoloEverywhereExtension {
 
     def ResbuilderContainer resbuilder(Closure<?> closure) {
         return call(closure, resbuilder);
+    }
+
+    def void include(String name) {
+        this.include = Include.find(name, Include.Inhert)
     }
 
     private static <T> T call(Closure<?> closure, T t) {
