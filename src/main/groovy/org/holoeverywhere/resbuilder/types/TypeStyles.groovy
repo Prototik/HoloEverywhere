@@ -33,7 +33,7 @@ class TypeStyles extends AndroidXmlType {
                 s = s.substring(1)
                 try {
                     if (s.length() > 1 && s.length() <= 8) {
-                        Integer.parseInt(s)
+                        Integer.parseInt(s, 16)
                         return "#$s"
                     }
                 } catch (NumberFormatException e) {

@@ -35,7 +35,7 @@ class HoloEverywherePlugin implements Plugin<Project> {
     void afterEvaluate(Project project) {
         // HoloEverywhere repository
         if (holoeverywhere.repository.realInclude()) {
-            project.repositories.maven {
+            project.allprojects*.repositories.maven {
                 name 'holoeverywhere'
                 url holoeverywhere.repository.url
             }
