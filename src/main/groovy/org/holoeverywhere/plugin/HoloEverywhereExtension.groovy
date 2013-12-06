@@ -45,7 +45,7 @@ class HoloEverywhereExtension {
             this.include = Include.find(name, Include.Inhert)
         }
 
-        def boolean realInclude() {
+        def boolean include() {
             return include == Include.Yes || (include == Include.Inhert && extension.include == Include.Yes)
         }
     }
@@ -108,9 +108,13 @@ class HoloEverywhereExtension {
         private static final DEFAULT_SOURCE_SET_NAME = 'main'
 
         ResbuilderContainer(Project project, Instantiator instantiator) {
-            BaseExtension androidExtension = project.extensions.getByName('android') as BaseExtension
-            Iterator<File> iterator = androidExtension.sourceSets.getByName(DEFAULT_SOURCE_SET_NAME).res.srcDirs.iterator()
-            String resourcesDir = iterator.hasNext() ? (project as ProjectInternal).fileResolver.resolveAsRelativePath(iterator.next()) : null
+            String resourcesDir = null;
+            try {
+                BaseExtension androidExtension = project.extensions.getByName('android') as BaseExtension
+                Iterator<File> iterator = androidExtension.sourceSets.getByName(DEFAULT_SOURCE_SET_NAME).res.srcDirs.iterator()
+                resourcesDir = iterator.hasNext() ? (project as ProjectInternal).fileResolver.resolveAsRelativePath(iterator.next()) : null
+            } catch (Exception e) {
+            }
 
             sourceSets = project.container(ResbuilderSourceSet, ResbuilderSourceSetFactory.fromProject(project, instantiator, resourcesDir))
             sourceSets.create(DEFAULT_SOURCE_SET_NAME)
@@ -181,5 +185,11 @@ class HoloEverywhereExtension {
         closure.delegate = t
         closure.call(t)
         return t
+    }
+
+    private static final String EXTENSION_NAME = 'holoeverywhere'
+
+    public static HoloEverywhereExtension getOrCreateExtension(Project project, Instantiator instantiator) {
+        project.extensions.findByName(EXTENSION_NAME) as HoloEverywhereExtension ?: project.extensions.create(EXTENSION_NAME, HoloEverywhereExtension, project, instantiator)
     }
 }
