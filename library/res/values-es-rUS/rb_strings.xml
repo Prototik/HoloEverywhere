@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"Siempre"</string>
+  <string name="activity_resolver_use_once">"Solo una vez"</string>
+  <string name="candidates_style">"candidatos"</string>
+  <string name="capital_off">"No"</string>
+  <string name="capital_on">"Sí"</string>
+  <string name="chooseActivity">"Seleccionar una acción"</string>
+  <string name="loading">"Cargando…"</string>
+  <string name="noApplications">"Ninguna aplicación puede realizar esta acción."</string>
+  <string name="number_picker_decrement_button">"Reducir"</string>
+  <string name="number_picker_increment_button">"Aumentar"</string>
+  <string name="number_picker_increment_scroll_action">"Desliza el dedo hacia arriba para aumentar los valores y hacia abajo para reducirlos."</string>
+  <string name="number_picker_increment_scroll_mode">"Mantén presionado</string>
+  <string name="ringtone_default">"Tono de llamada predeterminado"</string>
+  <string name="ringtone_picker_title">"Tonos de llamada"</string>
+  <string name="ringtone_silent">"Ninguno"</string>
+  <string name="whichApplication">"Completar la acción mediante"</string>
+</resources>

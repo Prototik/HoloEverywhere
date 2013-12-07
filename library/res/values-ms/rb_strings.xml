@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"Sentiasa"</string>
+  <string name="activity_resolver_use_once">"Hanya sekali"</string>
+  <string name="candidates_style">"calon"</string>
+  <string name="capital_off">"MATIKAN"</string>
+  <string name="capital_on">"HIDUP"</string>
+  <string name="chooseActivity">"Pilih tindakan"</string>
+  <string name="loading">"Memuatkan…"</string>
+  <string name="noApplications">"Tiada apl yang boleh menjalankan tindakan ini."</string>
+  <string name="number_picker_decrement_button">"Kurangkan"</string>
+  <string name="number_picker_increment_button">"Tingkatkan"</string>
+  <string name="number_picker_increment_scroll_action">"Luncurkan ke atas untuk meningkatkan dan ke bawah untuk mengurangkan."</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"Nada dering lalai"</string>
+  <string name="ringtone_picker_title">"Nada dering"</string>
+  <string name="ringtone_silent">"Tiada"</string>
+  <string name="whichApplication">"Selesaikan tindakan menggunakan"</string>
+</resources>

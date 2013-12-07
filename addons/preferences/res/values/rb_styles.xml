@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="Holo.Internal.Preference" parent="Holo.Theme">
+    <item name="checkBoxPreferenceStyle">@style/Holo.PreferenceCheckBox</item>
+    <item name="dialogPreferenceStyle">@style/Holo.PreferenceDialog</item>
+    <item name="editTextPreferenceStyle">@style/Holo.PreferenceDialog.EditTextPreference</item>
+    <item name="holoTheme">preference</item>
+    <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
+    <item name="preferenceCategoryStyle">@style/Holo.PreferenceCategory</item>
+    <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
+    <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
+    <item name="preferenceInformationStyle">@style/Holo.PreferenceInformation</item>
+    <item name="preferenceLayoutChild">@layout/preference_child_holo</item>
+    <item name="preferencePanelStyle">@style/Holo.PreferencePanel</item>
+    <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
+    <item name="preferenceStyle">@style/Holo.Preference</item>
+    <item name="ringtonePreferenceStyle">@style/Holo.PreferenceRingtone</item>
+    <item name="seekBarDialogPreferenceStyle">@style/Holo.PreferenceDialog.SeekBarDialogPreference</item>
+    <item name="seekBarPreferenceStyle">@style/Holo.PreferenceSeekBar</item>
+    <item name="switchPreferenceStyle">@style/Holo.PreferenceSwitch</item>
+    <item name="switchScreenPreferenceStyle">@style/Holo.PreferenceSwitchScreen</item>
+    <item name="yesNoPreferenceStyle">@style/Holo.PreferenceDialog.YesNoPreference</item>
+  </style>
+  <style name="Holo.Internal.Preference.Light" parent="Holo.Theme.Light">
+    <item name="checkBoxPreferenceStyle">@style/Holo.PreferenceCheckBox</item>
+    <item name="dialogPreferenceStyle">@style/Holo.PreferenceDialog</item>
+    <item name="editTextPreferenceStyle">@style/Holo.PreferenceDialog.EditTextPreference</item>
+    <item name="holoTheme">preference</item>
+    <item name="numberPickerPreferenceStyle">@style/Holo.PreferenceDialog.NumberPickerPreference</item>
+    <item name="preferenceCategoryStyle">@style/Holo.PreferenceCategory</item>
+    <item name="preferenceFragmentStyle">@style/Holo.PreferenceFragment</item>
+    <item name="preferenceFrameLayoutStyle">@style/Holo.PreferenceFrameLayout</item>
+    <item name="preferenceInformationStyle">@style/Holo.PreferenceInformation</item>
+    <item name="preferenceLayoutChild">@layout/preference_child_holo</item>
+    <item name="preferencePanelStyle">@style/Holo.PreferencePanel</item>
+    <item name="preferenceScreenStyle">@style/Holo.PreferenceScreen</item>
+    <item name="preferenceStyle">@style/Holo.Preference</item>
+    <item name="ringtonePreferenceStyle">@style/Holo.PreferenceRingtone</item>
+    <item name="seekBarDialogPreferenceStyle">@style/Holo.PreferenceDialog.SeekBarDialogPreference</item>
+    <item name="seekBarPreferenceStyle">@style/Holo.PreferenceSeekBar</item>
+    <item name="switchPreferenceStyle">@style/Holo.PreferenceSwitch</item>
+    <item name="switchScreenPreferenceStyle">@style/Holo.PreferenceSwitchScreen</item>
+    <item name="yesNoPreferenceStyle">@style/Holo.PreferenceDialog.YesNoPreference</item>
+  </style>
+  <style name="Holo.Preference" parent="Holo">
+    <item name="android:layout">@layout/preference_holo</item>
+  </style>
+  <style name="Holo.PreferenceCategory" parent="Holo">
+    <item name="android:layout">@layout/preference_category_holo</item>
+    <item name="android:selectable">false</item>
+    <item name="android:shouldDisableView">false</item>
+  </style>
+  <style name="Holo.PreferenceCheckBox" parent="Holo.PreferenceTwoState">
+    <item name="android:widgetLayout">@layout/preference_widget_checkbox</item>
+  </style>
+  <style name="Holo.PreferenceDate" parent="Holo" />
+  <style name="Holo.PreferenceDialog" parent="Holo">
+    <item name="android:negativeButtonText">@android:string/cancel</item>
+    <item name="android:positiveButtonText">@android:string/ok</item>
+  </style>
+  <style name="Holo.PreferenceDialog.EditTextPreference" parent="Holo.PreferenceDialog">
+    <item name="android:dialogLayout">@layout/preference_dialog_edittext</item>
+  </style>
+  <style name="Holo.PreferenceDialog.NumberPickerPreference" parent="Holo.PreferenceDialog">
+    <item name="android:dialogLayout">@layout/preference_dialog_numberpicker</item>
+    <item name="max">10</item>
+    <item name="min">0</item>
+    <item name="wrapSelectorWheel">true</item>
+  </style>
+  <style name="Holo.PreferenceDialog.SeekBarDialogPreference" parent="Holo.PreferenceDialog">
+    <item name="android:dialogLayout">@layout/preference_dialog_seekbar</item>
+  </style>
+  <style name="Holo.PreferenceDialog.YesNoPreference" parent="Holo.PreferenceDialog">
+    <item name="android:negativeButtonText">@android:string/no</item>
+    <item name="android:positiveButtonText">@android:string/yes</item>
+  </style>
+  <style name="Holo.PreferenceFragment" parent="Holo">
+    <item name="android:paddingLeft">@dimen/preference_fragment_padding_side</item>
+    <item name="android:paddingRight">@dimen/preference_fragment_padding_side</item>
+  </style>
+  <style name="Holo.PreferenceFrameLayout" parent="Holo">
+    <item name="android:paddingBottom">@dimen/preference_fragment_padding_bottom</item>
+    <item name="android:paddingLeft">@dimen/preference_fragment_padding_side</item>
+    <item name="android:paddingRight">@dimen/preference_fragment_padding_side</item>
+    <item name="android:paddingTop">0dip</item>
+  </style>
+  <style name="Holo.PreferenceInformation" parent="Holo">
+    <item name="android:enabled">false</item>
+    <item name="android:layout">@layout/preference_information_holo</item>
+    <item name="android:shouldDisableView">false</item>
+  </style>
+  <style name="Holo.PreferencePanel" parent="Holo" />
+  <style name="Holo.PreferenceRingtone" parent="Holo">
+    <item name="android:ringtoneType">ringtone</item>
+    <item name="android:showDefault">true</item>
+    <item name="android:showSilent">true</item>
+  </style>
+  <style name="Holo.PreferenceScreen" parent="Holo" />
+  <style name="Holo.PreferenceSeekBar" parent="Holo">
+    <item name="android:layout">@layout/preference_widget_seekbar</item>
+  </style>
+  <style name="Holo.PreferenceSwitch" parent="Holo.PreferenceTwoState">
+    <item name="android:switchTextOff">@string/capital_off</item>
+    <item name="android:switchTextOn">@string/capital_on</item>
+    <item name="android:widgetLayout">@layout/preference_widget_switch</item>
+  </style>
+  <style name="Holo.PreferenceSwitchScreen" parent="Holo.PreferenceSwitch">
+    <item name="android:widgetLayout">@layout/preference_widget_switch_screen</item>
+  </style>
+  <style name="Holo.PreferenceTime" parent="Holo">
+    <item name="is24HourView">auto</item>
+  </style>
+  <style name="Holo.PreferenceTwoState" parent="Holo" />
+</resources>

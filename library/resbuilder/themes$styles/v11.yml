@@ -1,0 +1,15 @@
+blocks:
+  Holo: null
+  HoloBar: null
+  HoloBarDark < HoloBar:
+    android:actionBarWidgetTheme: :style/Holo.Theme
+  HoloBarLight < HoloBar:
+    android:actionBarWidgetTheme: :style/Holo.Theme.Light
+  HoloDark < Holo: null
+  HoloLight < Holo: null
+modifiers: v11
+styles:
+  Holo.ListView.Base < @android:Widget.Holo.ListView: null
+  Holo.Theme | HoloDark HoloBarDark < Holo.Base.Theme: null
+  Holo.Theme.Light | HoloLight HoloBarLight < Holo.Base.Theme.Light: null
+  Holo.Theme.Light.DarkActionBar | HoloLight HoloBarDark < Holo.Base.Theme.Light.DarkActionBar: null

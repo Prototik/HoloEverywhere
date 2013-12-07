@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"Luôn chọn"</string>
+  <string name="activity_resolver_use_once">"Chỉ một lần"</string>
+  <string name="candidates_style">"ứng viên"</string>
+  <string name="capital_off">"TẮT"</string>
+  <string name="capital_on">"BẬT"</string>
+  <string name="chooseActivity">"Chọn một tác vụ"</string>
+  <string name="loading">"Đang tải…"</string>
+  <string name="noApplications">"Không ứng dụng nào có thể thực hiện tác vụ này."</string>
+  <string name="number_picker_decrement_button">"Giảm"</string>
+  <string name="number_picker_increment_button">"Tăng"</string>
+  <string name="number_picker_increment_scroll_action">"Trượt lên để tăng và trượt xuống để giảm."</string>
+  <string name="number_picker_increment_scroll_mode">"Chạm và giữ</string>
+  <string name="ringtone_default">"Nhạc chuông mặc định"</string>
+  <string name="ringtone_picker_title">"Nhạc chuông"</string>
+  <string name="ringtone_silent">"Không"</string>
+  <string name="whichApplication">"Hoàn tất tác vụ đang sử dụng"</string>
+</resources>

@@ -1,0 +1,12 @@
+blocks:
+  Dialog:
+    android:windowActionBar: false
+    android:windowActionModeOverlay: true
+  NoFrame:
+    android:windowCloseOnTouchOutside: false
+modifiers: v11
+styles:
+  Holo.Theme.Dialog | Dialog < Holo.Base.Theme.Dialog: null
+  Holo.Theme.Dialog.Light | Dialog < Holo.Base.Theme.Dialog.Light: null
+  Holo.Theme.Dialog.Light.NoFrame | NoFrame < Holo.Base.Theme.Dialog.Light.NoFrame: null
+  Holo.Theme.Dialog.NoFrame | NoFrame < Holo.Base.Theme.Dialog.NoFrame: null

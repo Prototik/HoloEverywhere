@@ -99,6 +99,9 @@ if (android.class.name.startsWith('com.android.build.gradle.LibraryExtension')) 
     }
 }
 
+apply plugin: 'holoeverywhere-main'
+holoeverywhere.include 'no'
+
 // Deploy to maven repo (local)
 afterEvaluate { project ->
     signing {

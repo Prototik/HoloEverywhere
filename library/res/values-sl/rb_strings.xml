@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"Vedno"</string>
+  <string name="activity_resolver_use_once">"Samo tokrat"</string>
+  <string name="candidates_style">"kandidati"</string>
+  <string name="capital_off">"IZKLOPLJENO"</string>
+  <string name="capital_on">"VKLOPLJENO"</string>
+  <string name="chooseActivity">"Izberite dejanje"</string>
+  <string name="loading">"Nalaganje …"</string>
+  <string name="noApplications">"Tega dejanja ne more izvesti noben program."</string>
+  <string name="number_picker_decrement_button">"Manj"</string>
+  <string name="number_picker_increment_button">"Več"</string>
+  <string name="number_picker_increment_scroll_action">"Povlecite navzgor za povečanje in navzdol za zmanjšanje."</string>
+  <string name="number_picker_increment_scroll_mode">"Dotaknite se vrednosti</string>
+  <string name="ringtone_default">"Privzeta melodija zvonjenja"</string>
+  <string name="ringtone_picker_title">"Melodije zvonjenja"</string>
+  <string name="ringtone_silent">"Brez"</string>
+  <string name="whichApplication">"Dokončanje dejanja z"</string>
+</resources>

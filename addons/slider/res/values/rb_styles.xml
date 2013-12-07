@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="Holo.Internal.SliderTheme" parent="Holo.Theme">
+    <item name="sliderMenuPanelBackground">@color/slider_menu_panel_background_holo_dark</item>
+    <item name="textAppearanceSliderItem">?android:textAppearanceMedium</item>
+    <item name="textAppearanceSliderItemInverse">?android:textAppearanceMediumInverse</item>
+  </style>
+  <style name="Holo.Internal.SliderTheme.Light" parent="Holo.Theme.Light">
+    <item name="sliderMenuPanelBackground">@color/slider_menu_panel_background_holo_light</item>
+    <item name="textAppearanceSliderItem">?android:textAppearanceMedium</item>
+    <item name="textAppearanceSliderItemInverse">?android:textAppearanceMediumInverse</item>
+  </style>
+</resources>

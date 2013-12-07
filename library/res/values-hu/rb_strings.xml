@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"Mindig"</string>
+  <string name="activity_resolver_use_once">"Csak egyszer"</string>
+  <string name="candidates_style">"jelöltek"</string>
+  <string name="capital_off">"Ki"</string>
+  <string name="capital_on">"Be"</string>
+  <string name="chooseActivity">"Válasszon egy műveletet"</string>
+  <string name="loading">"Betöltés..."</string>
+  <string name="noApplications">"Egy alkalmazás sem tudja végrehajtani ezt a műveletet."</string>
+  <string name="number_picker_decrement_button">"Csökkentés"</string>
+  <string name="number_picker_increment_button">"Növelés"</string>
+  <string name="number_picker_increment_scroll_action">"A növeléshez csúsztassa felfelé, a csökkentéshez pedig lefelé."</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"Alapértelmezett csengőhang"</string>
+  <string name="ringtone_picker_title">"Csengőhangok"</string>
+  <string name="ringtone_silent">"Egyik sem"</string>
+  <string name="whichApplication">"Művelet végrehajtása a következővel:"</string>
+</resources>

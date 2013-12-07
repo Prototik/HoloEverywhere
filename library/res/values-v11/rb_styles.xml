@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="Holo.ListView.Base" parent="@android:Widget.Holo.ListView" />
+  <style name="Holo.Theme" parent="Holo.Base.Theme">
+    <item name="android:actionBarWidgetTheme">@style/Holo.Theme</item>
+  </style>
+  <style name="Holo.Theme.Dialog" parent="Holo.Base.Theme.Dialog">
+    <item name="android:windowActionBar">false</item>
+    <item name="android:windowActionModeOverlay">true</item>
+  </style>
+  <style name="Holo.Theme.Dialog.Light" parent="Holo.Base.Theme.Dialog.Light">
+    <item name="android:windowActionBar">false</item>
+    <item name="android:windowActionModeOverlay">true</item>
+  </style>
+  <style name="Holo.Theme.Dialog.Light.NoFrame" parent="Holo.Base.Theme.Dialog.Light.NoFrame">
+    <item name="android:windowCloseOnTouchOutside">false</item>
+  </style>
+  <style name="Holo.Theme.Dialog.NoFrame" parent="Holo.Base.Theme.Dialog.NoFrame">
+    <item name="android:windowCloseOnTouchOutside">false</item>
+  </style>
+  <style name="Holo.Theme.Light" parent="Holo.Base.Theme.Light">
+    <item name="android:actionBarWidgetTheme">@style/Holo.Theme.Light</item>
+  </style>
+  <style name="Holo.Theme.Light.DarkActionBar" parent="Holo.Base.Theme.Light.DarkActionBar">
+    <item name="android:actionBarWidgetTheme">@style/Holo.Theme</item>
+  </style>
+</resources>

@@ -1,0 +1,82 @@
+blocks:
+  Base:
+    activatedBackgroundIndicator: :drawable/activated_background_holo
+    buttonBarButtonStyle: ?borderlessButtonStyle
+    buttonBarStyle: :style/Holo.ButtonBar
+    dividerHorizontal: ?android:listDivider
+    dividerVertical: ?android:listDivider
+    dropdownListPreferredItemHeight: ?listPreferredItemHeightSmall
+    fastScrollOverlayPosition: atThumb
+    fastScrollTextColor: :color/primary_text_holo_dark
+    fastScrollThumbDrawable: :drawable/fastscroll_thumb_holo
+    listPreferredItemHeight: 64dp
+    listPreferredItemHeightLarge: 80dp
+    listPreferredItemHeightSmall: 48dp
+    listPreferredItemPaddingLeft: 8dp
+    listPreferredItemPaddingRight: 8dp
+    numberPickerInputTextStyle: :style/Holo.EditText.NumberPickerInputText
+    numberPickerStyle: :style/Holo.NumberPicker
+    panelMenuListWidth: 250dp
+    textAppearanceListItem: ?android:textAppearanceLarge
+    textAppearanceListItemSmall: ?android:textAppearanceMedium
+  BaseDark < Base:
+    alertDialogTheme: :style/Holo.Theme.Dialog.Alert
+    android:windowBackground: :drawable/background_holo_dark
+    autoCompleteTextViewStyle: :style/Holo.AutoCompleteTextView
+    borderlessButtonStyle: :style/Holo.Button.Borderless
+    dateTimePickerActiveTextColor: :color/date_picker_active_text_holo_dark
+    dateTimePickerSelectedDateBackground: :color/date_time_picker_selected_background_holo_dark
+    dateTimePickerStyle: :style/Holo.DateTimePicker
+    dateTimePickerTextColor: :color/dim_foreground_holo_dark
+    detailsElementBackground: :drawable/panel_bg_holo_dark
+    dialogTheme: :style/Holo.Theme.Dialog
+    dropDownListViewStyle: :style/Holo.ListView.DropDown
+    fastScrollPreviewBackgroundLeft: :drawable/fastscroll_label_left_holo_dark
+    fastScrollPreviewBackgroundRight: :drawable/fastscroll_label_right_holo_dark
+    fastScrollTrackDrawable: :drawable/fastscroll_track_holo_dark
+    listDividerAlertDialog: :drawable/list_divider_holo_dark
+    listPopupWindowStyle: :style/Holo.ListPopupWindow
+    popupWindowStyle: :style/Holo.PopupWindow
+    segmentedButtonStyle: :style/Holo.SegmentedButton
+    selectableItemBackground: :drawable/item_background_holo_dark
+    spinnerDropDownItemStyle: :style/Holo.TextView.SpinnerItem.DropDown
+    spinnerItemStyle: :style/Holo.TextView.SpinnerItem
+    spinnerStyle: :style/Holo.Spinner
+    switchStyle: :style/Holo.Switch
+    switchStyleOld: :style/Holo.Switch.Old
+    textColorAlertDialogListItem: :color/primary_text_holo_dark
+  BaseDarkBar: null
+  BaseLight < Base:
+    alertDialogTheme: :style/Holo.Theme.Dialog.Alert.Light
+    android:windowBackground: :drawable/background_holo_light
+    autoCompleteTextViewStyle: :style/Holo.AutoCompleteTextView.Light
+    borderlessButtonStyle: :style/Holo.Button.Borderless.Light
+    dateTimePickerActiveTextColor: :color/date_picker_active_text_holo_light
+    dateTimePickerSelectedDateBackground: :color/date_time_picker_selected_background_holo_light
+    dateTimePickerStyle: :style/Holo.DateTimePicker.Light
+    dateTimePickerTextColor: :color/dim_foreground_holo_light
+    detailsElementBackground: :drawable/panel_bg_holo_light
+    dialogTheme: :style/Holo.Theme.Dialog.Light
+    dropDownListViewStyle: :style/Holo.ListView.DropDown.Light
+    fastScrollPreviewBackgroundLeft: :drawable/fastscroll_label_left_holo_light
+    fastScrollPreviewBackgroundRight: :drawable/fastscroll_label_right_holo_light
+    fastScrollTrackDrawable: :drawable/fastscroll_track_holo_light
+    listDividerAlertDialog: :drawable/list_divider_holo_light
+    listPopupWindowStyle: :style/Holo.ListPopupWindow.Light
+    popupWindowStyle: :style/Holo.PopupWindow.Light
+    segmentedButtonStyle: :style/Holo.SegmentedButton.Light
+    selectableItemBackground: :drawable/item_background_holo_light
+    spinnerDropDownItemStyle: :style/Holo.TextView.SpinnerItem.DropDown.Light
+    spinnerItemStyle: :style/Holo.TextView.SpinnerItem.Light
+    spinnerStyle: :style/Holo.Spinner.Light
+    switchStyle: :style/Holo.Switch.Light
+    switchStyleOld: :style/Holo.Switch.Light.Old
+    textColorAlertDialogListItem: :color/primary_text_holo_light
+  BaseLightBar: null
+styles:
+  Holo.Base.Theme | BaseDark BaseBarDark < Theme.AppCompat:
+    holoTheme: dark
+  Holo.Base.Theme.Light | BaseLight BaseBarLight < Theme.AppCompat.Light:
+    holoTheme: light
+  Holo.Base.Theme.Light.DarkActionBar | BaseLight BaseBarDark < Theme.AppCompat.Light.DarkActionBar:
+    holoTheme: mixed

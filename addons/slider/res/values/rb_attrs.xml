@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <attr name="sliderMenuPanelBackground" format="reference|color" />
+  <attr name="textAppearanceSliderItem" format="reference" />
+  <attr name="textAppearanceSliderItemInverse" format="reference" />
+  <declare-styleable name="SliderMenu">
+    <attr name="textAppearanceSliderItem" />
+    <attr name="textAppearanceSliderItemInverse" />
+  </declare-styleable>
+</resources>

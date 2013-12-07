@@ -1,0 +1,54 @@
+styles:
+  Holo.Preference:
+    android:layout: :layout/preference_holo
+  Holo.PreferenceCategory:
+    android:layout: :layout/preference_category_holo
+    android:selectable: false
+    android:shouldDisableView: false
+  Holo.PreferenceCheckBox < Holo.PreferenceTwoState:
+    android:widgetLayout: :layout/preference_widget_checkbox
+  Holo.PreferenceDate: null
+  Holo.PreferenceDialog:
+    android:negativeButtonText: :android:string/cancel
+    android:positiveButtonText: :android:string/ok
+  Holo.PreferenceDialog.EditTextPreference:
+    android:dialogLayout: :layout/preference_dialog_edittext
+  Holo.PreferenceDialog.NumberPickerPreference:
+    android:dialogLayout: :layout/preference_dialog_numberpicker
+    max: 10
+    min: 0
+    wrapSelectorWheel: true
+  Holo.PreferenceDialog.SeekBarDialogPreference:
+    android:dialogLayout: :layout/preference_dialog_seekbar
+  Holo.PreferenceDialog.YesNoPreference:
+    android:negativeButtonText: :android:string/no
+    android:positiveButtonText: :android:string/yes
+  Holo.PreferenceFragment:
+    android:paddingLeft: :dimen/preference_fragment_padding_side
+    android:paddingRight: :dimen/preference_fragment_padding_side
+  Holo.PreferenceFrameLayout:
+    android:paddingBottom: :dimen/preference_fragment_padding_bottom
+    android:paddingLeft: :dimen/preference_fragment_padding_side
+    android:paddingRight: :dimen/preference_fragment_padding_side
+    android:paddingTop: 0dip
+  Holo.PreferenceInformation:
+    android:enabled: false
+    android:layout: :layout/preference_information_holo
+    android:shouldDisableView: false
+  Holo.PreferencePanel: null
+  Holo.PreferenceRingtone:
+    android:ringtoneType: ringtone
+    android:showDefault: true
+    android:showSilent: true
+  Holo.PreferenceScreen: null
+  Holo.PreferenceSeekBar:
+    android:layout: :layout/preference_widget_seekbar
+  Holo.PreferenceSwitch < Holo.PreferenceTwoState:
+    android:switchTextOff: :string/capital_off
+    android:switchTextOn: :string/capital_on
+    android:widgetLayout: :layout/preference_widget_switch
+  Holo.PreferenceSwitchScreen < Holo.PreferenceSwitch:
+    android:widgetLayout: :layout/preference_widget_switch_screen
+  Holo.PreferenceTime:
+    is24HourView: auto
+  Holo.PreferenceTwoState: null

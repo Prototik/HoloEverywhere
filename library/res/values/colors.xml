@@ -44,4 +44,11 @@
 	<color name="highlighted_text_holo_light">#6633b5e5</color>
 	<color name="link_text_holo_dark">#5c5cff</color>
 	<color name="link_text_holo_light">#0000ee</color>
+	
+	<color name="date_time_picker_selected_background_holo_dark">#90404040</color>
+	<color name="date_time_picker_center_pointer_color_holo_dark">#90DEDEDE</color>
+	<color name="date_time_picker_circle_color_holo_dark">#90404040</color>
+	<color name="date_time_picker_selected_background_holo_light">#BBDEDEDE</color>
+	<color name="date_time_picker_center_pointer_color_holo_light">#BB303030</color>
+	<color name="date_time_picker_circle_color_holo_light">#BBDEDEDE</color>
 </resources>

@@ -1,0 +1,14 @@
+attrs:
+  demoListRowViewStyle: reference
+  disableMusicIcon: reference
+styleable:
+  DemoListRowView:
+  - android:background
+  - android:gravity
+  - android:text
+  - selectionHandlerVisiblity|enum|visible 0:invisible 1
+  - selectionHandler|color:reference
+  WidgetContainer:
+  - android:layout
+  - android:text
+  - titleLayout|reference

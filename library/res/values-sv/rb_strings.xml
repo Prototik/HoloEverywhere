@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"Alltid"</string>
+  <string name="activity_resolver_use_once">"Bara en gång"</string>
+  <string name="candidates_style">"kandidater"</string>
+  <string name="capital_off">"AV"</string>
+  <string name="capital_on">"PÅ"</string>
+  <string name="chooseActivity">"Välj en åtgärd"</string>
+  <string name="loading">"Läser in …"</string>
+  <string name="noApplications">"Inga appar kan utföra den här åtgärden."</string>
+  <string name="number_picker_decrement_button">"Minska"</string>
+  <string name="number_picker_increment_button">"Öka"</string>
+  <string name="number_picker_increment_scroll_action">"Dra uppåt för att öka och nedåt för att minska."</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"Standardringsignal"</string>
+  <string name="ringtone_picker_title">"Ringsignaler"</string>
+  <string name="ringtone_silent">"Ingen"</string>
+  <string name="whichApplication">"Slutför åtgärd genom att använda"</string>
+</resources>

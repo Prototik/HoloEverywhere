@@ -1,0 +1,241 @@
+attrs:
+  activatedBackgroundIndicator: reference
+  alertDialogCenterButtons: boolean
+  alertDialogStyle: reference
+  alertDialogTheme: reference
+  alertDialogTitleDividerColor: reference:color
+  autoCompleteTextViewStyle: reference
+  borderlessButtonStyle: reference
+  buttonBarButtonStyle: reference
+  buttonBarStyle: reference
+  dateTimePickerActiveTextColor: reference:color
+  dateTimePickerSelectedDateBackground: reference:color
+  dateTimePickerStyle: reference
+  dateTimePickerTextColor: reference:color
+  detailsElementBackground: reference
+  dialogTheme: reference
+  dividerHorizontal: reference
+  dividerVertical: reference
+  holoTheme: enum|invalid 0:dark 1:light 2:mixed 3:preference 4
+  listDividerAlertDialog: reference
+  listPreferredItemHeight: dimension
+  listPreferredItemHeightLarge: dimension
+  listPreferredItemHeightSmall: dimension
+  numberPickerDownButtonStyle: reference
+  numberPickerInputTextStyle: reference
+  numberPickerStyle: reference
+  numberPickerUpButtonStyle: reference
+  popupWindowStyle: reference
+  preferenceTheme: reference:enum|dark 1:light 2:mixed 3
+  segmentedButtonStyle: reference
+  spinnerDropDownItemStyle: reference
+  spinnerItemStyle: reference
+  spinnerStyle: reference
+  switchStyle: reference
+  switchStyleOld: reference
+  textAppearanceListItem: reference
+  textAppearanceListItemSmall: reference
+  textColorAlertDialogListItem: reference
+  windowActionModeOverlay: boolean
+  windowAnimationStyle: reference
+  windowContentOverlay: boolean
+  windowMinWidthMajor: reference
+  windowMinWidthMinor: reference
+  windowNoTitle: boolean
+styleable:
+  AbsListView:
+  - android:choiceMode
+  - android:fastScrollAlwaysVisible
+  - android:fastScrollEnabled
+  AbsSpinner:
+  - android:entries
+  AlertDialog:
+  - android:gravity
+  - bottomBright|reference:color
+  - bottomDark|reference:color
+  - bottomMedium|reference:color
+  - centerBright|reference:color
+  - centerDark|reference:color
+  - centerMedium|reference:color
+  - fullBright|reference:color
+  - fullDark|reference:color
+  - horizontalProgressLayout|reference
+  - layout|reference
+  - listItemLayout|reference
+  - listLayout|reference
+  - multiChoiceItemLayout|reference
+  - progressLayout|reference
+  - singleChoiceItemLayout|reference
+  - topBright|reference:color
+  - topDark|reference:color
+  AutoCompleteTextView:
+  - android:completionHint
+  - android:completionHintView
+  - android:completionThreshold
+  - android:dropDownAnchor
+  - android:dropDownHeight
+  - android:dropDownSelector
+  - android:dropDownWidth
+  - android:entries
+  - android:inputType
+  - dropDownHorizontalOffset
+  - dropDownVerticalOffset
+  ColorDrawable:
+  - android:color
+  DateTimePicker:
+  - dateCircleColor|reference:color
+  - dateDayTextColor|reference:color
+  - dateMonthTitleColor|reference:color
+  - dateTodayColor|reference:color
+  - dateYearSelectorColor|reference:color
+  - timeAmPmPickerBackground|reference:color
+  - timeAmPmPickerTextColor|reference:color
+  - timeAmPmPicker|reference:color
+  - timeCenterPointerColor|reference:color
+  - timeCenterPointerRadius|reference:integer
+  - timeCircleColor|reference:color
+  - timePickerSelectorColor|reference:color
+  - timeRadialTextColor|reference:color
+  Divider:
+  - android:orientation
+  ExpandableListView:
+  - android:childDivider
+  - android:childIndicator
+  - android:childIndicatorLeft
+  - android:childIndicatorRight
+  - android:groupIndicator
+  - android:indicatorLeft
+  - android:indicatorRight
+  FastScroll:
+  - fastScrollOverlayPosition|enum|floating 0:atThumb 1
+  - fastScrollPreviewBackgroundLeft|reference
+  - fastScrollPreviewBackgroundRight|reference
+  - fastScrollTextColor|color
+  - fastScrollThumbDrawable|reference
+  - fastScrollTrackDrawable|reference
+  IconMenuView:
+  - android:maxItems
+  - android:maxItemsPerRow
+  - android:maxRows
+  - android:moreIcon
+  - android:rowHeight
+  LayerDrawable:
+  - android:opacity
+  LayerDrawableItem:
+  - android:bottom
+  - android:drawable
+  - android:id
+  - android:left
+  - android:right
+  - android:top
+  LinearLayout:
+  - android:baselineAligned
+  - android:baselineAlignedChildIndex
+  - android:divider
+  - android:dividerPadding
+  - android:gravity
+  - android:measureWithLargestChild
+  - android:orientation
+  - android:showDividers
+  - android:weightSum
+  MenuView:
+  - android:headerBackground
+  - android:horizontalDivider
+  - android:itemBackground
+  - android:itemIconDisabledAlpha
+  - android:itemTextAppearance
+  - android:preserveIconSpacing
+  - android:verticalDivider
+  - android:windowAnimationStyle
+  NumberPicker:
+  - android:fadingEdgeLength
+  - android:layout
+  - android:maxHeight
+  - android:maxWidth
+  - android:minHeight
+  - android:minWidth
+  - android:orientation
+  - flingable|boolean
+  - selectionDividerHeight|dimension
+  - selectionDividersDistance|dimension
+  - selectionDivider|reference
+  - solidColor|color:reference
+  - virtualButtonPressedDrawable|reference
+  PopupWindow:
+  - android:popupAnimationStyle
+  - android:popupBackground
+  ProgressBar:
+  - android:indeterminate
+  - android:indeterminateBehavior
+  - android:indeterminateDrawable
+  - android:indeterminateDuration
+  - android:indeterminateOnly
+  - android:interpolator
+  - android:max
+  - android:maxHeight
+  - android:maxWidth
+  - android:minHeight
+  - android:minWidth
+  - android:progress
+  - android:progressDrawable
+  - android:secondaryProgress
+  RotateDrawable:
+  - android:drawable
+  - android:fromDegrees
+  - android:pivotX
+  - android:pivotY
+  - android:toDegrees
+  - android:visible
+  SeekBar:
+  - android:disabledAlpha
+  - android:thumb
+  - android:thumbOffset
+  Spinner:
+  - android:dropDownSelector
+  - android:dropDownWidth
+  - android:gravity
+  - android:popupBackground
+  - android:prompt
+  - disableChildrenWhenDisabled|boolean
+  - dropDownHorizontalOffset|dimension
+  - dropDownVerticalOffset|dimension
+  - popupPromptView|reference
+  - spinnerMode|enum|dialog 0:dropdown 1
+  StateListDrawable:
+  - android:constantSize
+  - android:dither
+  - android:enterFadeDuration
+  - android:exitFadeDuration
+  - android:variablePadding
+  - android:visible
+  Switch:
+  - switchMinWidth|dimension
+  - switchPadding|dimension
+  - switchTextAppearance|reference
+  - textOff|reference:string
+  - textOn|reference:string
+  - thumbTextPadding|dimension
+  - thumb|reference
+  - toggleWhenClick|boolean
+  - track|reference
+  TextAppearance:
+  - android:fontFamily
+  - android:textAllCaps
+  - android:textColor
+  - android:textColorHighlight
+  - android:textColorHint
+  - android:textColorLink
+  - android:textSize
+  - android:textStyle
+  - android:typeface
+  TextView:
+  - android:textAppearance
+  WindowSizes:
+  - windowFixedHeightMajor|dimension:fraction
+  - windowFixedHeightMinor|dimension:fraction
+  - windowFixedWidthMajor|dimension:fraction
+  - windowFixedWidthMinor|dimension:fraction
+  - windowMinHeightMajor|dimension:fraction
+  - windowMinHeightMinor|dimension:fraction
+  - windowMinWidthMajor
+  - windowMinWidthMinor

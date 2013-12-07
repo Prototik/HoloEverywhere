@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?><resources>
-    <style name="Holo.Theme.Dialog" parent="Holo.Base.Theme.Dialog"/>
-    <style name="Holo.Theme.Dialog.Light" parent="Holo.Base.Theme.Dialog.Light"/>
-    <style name="Holo.Theme.Dialog.Light.NoFrame" parent="Holo.Base.Theme.Dialog.Light.NoFrame"/>
-    <style name="Holo.Theme.Dialog.NoFrame" parent="Holo.Base.Theme.Dialog.NoFrame"/>
-</resources>

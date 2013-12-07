@@ -1,0 +1,5 @@
+styles:
+  Holo.Theme.Dialog < Holo.Base.Theme.Dialog: null
+  Holo.Theme.Dialog.Light < Holo.Base.Theme.Dialog.Light: null
+  Holo.Theme.Dialog.Light.NoFrame < Holo.Base.Theme.Dialog.Light.NoFrame: null
+  Holo.Theme.Dialog.NoFrame < Holo.Base.Theme.Dialog.NoFrame: null

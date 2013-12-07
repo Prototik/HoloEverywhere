@@ -46,9 +46,9 @@ public class DatePreference extends DialogPreference {
         super(context, attrs, defStyle);
         setForceNotSaveState(true);
         context = getContext();
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DatePreference,
-                defStyle, R.style.Holo_PreferenceDate);
-        a.recycle();
+        //TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DatePreference,
+        //        defStyle, R.style.Holo_PreferenceDate);
+        //a.recycle();
     }
 
     public int getDay() {

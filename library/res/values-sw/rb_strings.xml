@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"Kila mara"</string>
+  <string name="activity_resolver_use_once">"Mara moja tu"</string>
+  <string name="candidates_style">"wagombeaji"</string>
+  <string name="capital_off">"ZIMA"</string>
+  <string name="capital_on">"Washa"</string>
+  <string name="chooseActivity">"Chagua kitendo"</string>
+  <string name="loading">"Inapakia…"</string>
+  <string name="noApplications">"Hakuna programu zinazoweza kufanya tendo hili."</string>
+  <string name="number_picker_decrement_button">"Punguza"</string>
+  <string name="number_picker_increment_button">"Ongeza"</string>
+  <string name="number_picker_increment_scroll_action">"Sogeza juu ili uongeze na chini ili upunguze."</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"Mlio chaguo-msingi"</string>
+  <string name="ringtone_picker_title">"Toni za mlio"</string>
+  <string name="ringtone_silent">"Hamna"</string>
+  <string name="whichApplication">"Kamilisha kitendo ukitumia"</string>
+</resources>

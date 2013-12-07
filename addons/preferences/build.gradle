@@ -1,9 +1,8 @@
 apply plugin: 'android-library'
+apply from: '../../android_default.gradle'
 
 dependencies {
     compile project(':library')
 }
-
-apply from: '../../android_default.gradle'
 
 generateJavadoc.exclude "**/_*.java"

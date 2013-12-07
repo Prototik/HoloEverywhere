@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"Visada"</string>
+  <string name="activity_resolver_use_once">"Tik kartą"</string>
+  <string name="candidates_style">"kandidatai"</string>
+  <string name="capital_off">"IŠJ."</string>
+  <string name="capital_on">"ĮJ."</string>
+  <string name="chooseActivity">"Pasirinkti veiksmą"</string>
+  <string name="loading">"Įkeliama..."</string>
+  <string name="noApplications">"Jokios programos negali atlikti šio veiksmo."</string>
+  <string name="number_picker_decrement_button">"Sumažinti"</string>
+  <string name="number_picker_increment_button">"Padidinti"</string>
+  <string name="number_picker_increment_scroll_action">"Slinkite aukštyn, kad padidintumėte, ir žemyn, kad sumažintumėte."</string>
+  <string name="number_picker_increment_scroll_mode">"Palieskite</string>
+  <string name="ringtone_default">"Numatytasis skambėjimo tonas"</string>
+  <string name="ringtone_picker_title">"Skambėjimo tonai"</string>
+  <string name="ringtone_silent">"Nėra"</string>
+  <string name="whichApplication">"Užbaigti veiksmą naudojant"</string>
+</resources>

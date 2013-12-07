@@ -1,0 +1,24 @@
+blocks:
+  PreferenceBase:
+    checkBoxPreferenceStyle: :style/Holo.PreferenceCheckBox
+    dialogPreferenceStyle: :style/Holo.PreferenceDialog
+    editTextPreferenceStyle: :style/Holo.PreferenceDialog.EditTextPreference
+    holoTheme: preference
+    numberPickerPreferenceStyle: :style/Holo.PreferenceDialog.NumberPickerPreference
+    preferenceCategoryStyle: :style/Holo.PreferenceCategory
+    preferenceFragmentStyle: :style/Holo.PreferenceFragment
+    preferenceFrameLayoutStyle: :style/Holo.PreferenceFrameLayout
+    preferenceInformationStyle: :style/Holo.PreferenceInformation
+    preferenceLayoutChild: :layout/preference_child_holo
+    preferencePanelStyle: :style/Holo.PreferencePanel
+    preferenceScreenStyle: :style/Holo.PreferenceScreen
+    preferenceStyle: :style/Holo.Preference
+    ringtonePreferenceStyle: :style/Holo.PreferenceRingtone
+    seekBarDialogPreferenceStyle: :style/Holo.PreferenceDialog.SeekBarDialogPreference
+    seekBarPreferenceStyle: :style/Holo.PreferenceSeekBar
+    switchPreferenceStyle: :style/Holo.PreferenceSwitch
+    switchScreenPreferenceStyle: :style/Holo.PreferenceSwitchScreen
+    yesNoPreferenceStyle: :style/Holo.PreferenceDialog.YesNoPreference
+styles:
+  Holo.Internal.Preference | PreferenceBase < Holo.Theme: null
+  Holo.Internal.Preference.Light | PreferenceBase < Holo.Theme.Light: null

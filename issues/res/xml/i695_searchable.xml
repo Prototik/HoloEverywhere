@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+    android:hint="HoloEverywhere Library"
+    android:label="HoloEverywhere"
+    android:searchSuggestAuthority="org.holoeverywhere.issues.i695.SuggestionProvider"
+    android:searchSuggestIntentAction="android.intent.action.VIEW"
+    android:searchSuggestIntentData="content://org.holoeverywhere.issues"
+    android:searchSuggestSelection=" ?" />

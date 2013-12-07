@@ -1,11 +1,10 @@
 apply plugin: 'android-library'
+apply from: '../android_default.gradle'
 
 dependencies {
     compile 'com.android.support:support-v4:18.0.4@jar'
     compile 'com.nineoldandroids:library:2.4.0@jar'
 }
-
-apply from: '../android_default.gradle'
 
 generateJavadoc.include "**/org/holoeverywhere/**"
 generateJavadoc.title "HoloEverywhere ${project.version} JavaDoc"

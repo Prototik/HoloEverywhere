@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"دومًا"</string>
+  <string name="activity_resolver_use_once">"مرة واحدة فقط"</string>
+  <string name="candidates_style">"العناصر المرشحة"</string>
+  <string name="capital_off">"إيقاف"</string>
+  <string name="capital_on">"تشغيل"</string>
+  <string name="chooseActivity">"اختيار إجراء"</string>
+  <string name="loading">"جارٍ التحميل…"</string>
+  <string name="noApplications">"ليست هناك تطبيقات يمكنها تنفيذ هذا الإجراء."</string>
+  <string name="number_picker_decrement_button">"تقليل"</string>
+  <string name="number_picker_increment_button">"زيادة"</string>
+  <string name="number_picker_increment_scroll_action">"مرر لأعلى للزيادة ولأسفل للتقليل."</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"نغمة الرنين الافتراضية"</string>
+  <string name="ringtone_picker_title">"نغمات الرنين"</string>
+  <string name="ringtone_silent">"لا شيء"</string>
+  <string name="whichApplication">"إكمال الإجراء باستخدام"</string>
+</resources>

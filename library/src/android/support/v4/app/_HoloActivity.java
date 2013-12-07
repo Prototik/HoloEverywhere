@@ -61,11 +61,10 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
     private boolean mInited = false;
     private int mLastThemeResourceId = 0;
     private Handler mUserHandler;
-    private MenuInflater mMenuInflater;
 
     public static FragmentActivity extract(Context context, boolean exceptionWhenNotFound) {
         FragmentActivity fa = null;
-        while (fa == null && context instanceof ContextWrapper) {
+        while (context instanceof ContextWrapper) {
             if (context instanceof FragmentActivity) {
                 fa = (FragmentActivity) context;
                 break;

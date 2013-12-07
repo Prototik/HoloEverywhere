@@ -1,9 +1,0 @@
-{
-    "data": {
-        "Holo.Theme.Dialog < Holo.Base.Theme.Dialog": {},
-        "Holo.Theme.Dialog.Light < Holo.Base.Theme.Dialog.Light": {},
-        "Holo.Theme.Dialog.NoFrame < Holo.Base.Theme.Dialog.NoFrame": {},
-        "Holo.Theme.Dialog.Light.NoFrame < Holo.Base.Theme.Dialog.Light.NoFrame": {}
-    },
-    "output": "values/dialogs.xml"
-}

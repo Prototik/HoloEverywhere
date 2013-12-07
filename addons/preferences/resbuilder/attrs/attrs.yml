@@ -1,0 +1,96 @@
+attrs:
+  checkBoxPreferenceStyle: reference
+  datePreferenceStyle: reference
+  dialogPreferenceStyle: reference
+  editTextPreferenceStyle: reference
+  numberPickerPreferenceStyle: reference
+  preferenceCategoryStyle: reference
+  preferenceFragmentStyle: reference
+  preferenceFrameLayoutStyle: reference
+  preferenceInformationStyle: reference
+  preferenceLayoutChild: reference
+  preferencePanelStyle: reference
+  preferenceScreenStyle: reference
+  preferenceStyle: reference
+  ringtonePreferenceStyle: reference
+  seekBarDialogPreferenceStyle: reference
+  seekBarPreferenceStyle: reference
+  switchPreferenceStyle: reference
+  switchScreenPreferenceStyle: reference
+  timePreferenceStyle: reference
+  yesNoPreferenceStyle: reference
+styleable:
+  DialogPreference:
+  - android:dialogIcon
+  - android:dialogLayout
+  - android:dialogMessage
+  - android:dialogTitle
+  - android:negativeButtonText
+  - android:positiveButtonText
+  Extra:
+  - android:name
+  - android:value
+  Intent:
+  - android:action
+  - android:data
+  - android:mimeType
+  - android:targetClass
+  - android:targetPackage
+  IntentCategory:
+  - android:name
+  ListPreference:
+  - android:entries
+  - android:entryValues
+  NumberPickerPreference:
+  - max|integer
+  - min|integer
+  - wrapSelectorWheel|boolean
+  Preference:
+  - android:defaultValue
+  - android:dependency
+  - android:enabled
+  - android:fragment
+  - android:icon
+  - android:id
+  - android:key
+  - android:layout
+  - android:order
+  - android:persistent
+  - android:selectable
+  - android:shouldDisableView
+  - android:summary
+  - android:title
+  - android:widgetLayout
+  - dependency|reference:string
+  PreferenceFrameLayout:
+  - android:paddingBottom
+  - android:paddingLeft
+  - android:paddingRight
+  - android:paddingTop
+  PreferenceFrameLayout_Layout:
+  - android:layout_removeBorders
+  PreferenceGroup:
+  - android:orderingFromXml
+  PreferenceHeader:
+  - android:breadCrumbShortTitle
+  - android:breadCrumbTitle
+  - android:fragment
+  - android:icon
+  - android:id
+  - android:summary
+  - android:title
+  RingtonePreference:
+  - android:ringtoneType
+  - android:showDefault
+  - android:showSilent
+  SeekBarPreference:
+  - android:max
+  SwitchPreference:
+  - android:switchTextOff
+  - android:switchTextOn
+  TimePreference:
+  - is24HourView|enum|auto 0:no -1:yes 1
+  TwoStatePreference:
+  - android:disableDependentsState
+  - android:summaryOff
+  - android:summaryOn

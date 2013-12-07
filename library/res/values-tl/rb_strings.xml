@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"Palagi"</string>
+  <string name="activity_resolver_use_once">"Isang beses lang"</string>
+  <string name="candidates_style">"mga kandidato"</string>
+  <string name="capital_off">"I-OFF"</string>
+  <string name="capital_on">"I-ON"</string>
+  <string name="chooseActivity">"Pumili ng pagkilos"</string>
+  <string name="loading">"Naglo-load…"</string>
+  <string name="noApplications">"Walang apps ang makakapagsagawa ng pagkilos na ito."</string>
+  <string name="number_picker_decrement_button">"Bawasan"</string>
+  <string name="number_picker_increment_button">"Dagdagan"</string>
+  <string name="number_picker_increment_scroll_action">"Mag-slide pataas upang magdagdag at pababa upang magbawas."</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"Default na ringtone"</string>
+  <string name="ringtone_picker_title">"Mga Ringtone"</string>
+  <string name="ringtone_silent">"Wala"</string>
+  <string name="whichApplication">"Kumpletuhin ang pagkilos gamit ang"</string>
+</resources>

@@ -1,9 +1,8 @@
 apply plugin: 'android'
+apply from: '../android_default.gradle'
 
 dependencies {
     compile project(':library')
     compile project(':addons:preferences')
     compile project(':addons:slider')
 }
-
-apply from: '../android_default.gradle'

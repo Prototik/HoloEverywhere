@@ -1,0 +1,6 @@
+attrs:
+  sliderMenuPanelBackground: reference:color
+styleable:
+  SliderMenu:
+  - textAppearanceSliderItemInverse|reference
+  - textAppearanceSliderItem|reference

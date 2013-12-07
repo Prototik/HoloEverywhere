@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"Πάντα"</string>
+  <string name="activity_resolver_use_once">"Μόνο μία φορά"</string>
+  <string name="candidates_style">"υποψήφιοι"</string>
+  <string name="capital_off">"Ανενεργό"</string>
+  <string name="capital_on">"Ενεργό"</string>
+  <string name="chooseActivity">"Επιλέξτε μια ενέργεια"</string>
+  <string name="loading">"Φόρτωση…"</string>
+  <string name="noApplications">"Δεν υπάρχουν εφαρμογές, οι οποίες μπορούν να εκτελέσουν αυτήν την ενέργεια."</string>
+  <string name="number_picker_decrement_button">"Μείωση"</string>
+  <string name="number_picker_increment_button">"Αύξηση"</string>
+  <string name="number_picker_increment_scroll_action">"Πραγματοποιήστε κύλιση προς τα πάνω για αύξηση και προς τα κάτω για μείωση."</string>
+  <string name="number_picker_increment_scroll_mode">"Πατήστε παρατεταμένα το</string>
+  <string name="ringtone_default">"Προεπιλεγμένος ήχος κλήσης"</string>
+  <string name="ringtone_picker_title">"Ήχοι κλήσης"</string>
+  <string name="ringtone_silent">"Κανένας"</string>
+  <string name="whichApplication">"Ολοκλήρωση ενέργειας με τη χρήση"</string>
+</resources>

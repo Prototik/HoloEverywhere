@@ -1,0 +1,17 @@
+grab:
+- activity_resolver_use_always
+- activity_resolver_use_once
+- candidates_style
+- capital_off
+- capital_on
+- chooseActivity
+- loading
+- noApplications
+- number_picker_decrement_button
+- number_picker_increment_button
+- number_picker_increment_scroll_action
+- number_picker_increment_scroll_mode
+- ringtone_default
+- ringtone_picker_title
+- ringtone_silent
+- whichApplication

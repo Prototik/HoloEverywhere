@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <attr name="demoListRowViewStyle" format="reference" />
+  <attr name="disableMusicIcon" format="reference" />
+  <attr name="selectionHandler" format="color|reference" />
+  <attr name="selectionHandlerVisiblity" format="enum">
+    <enum name="visible" value="0" />
+    <enum name="invisible" value="1" />
+  </attr>
+  <attr name="titleLayout" format="reference" />
+  <declare-styleable name="DemoListRowView">
+    <attr name="android:background" />
+    <attr name="android:gravity" />
+    <attr name="android:text" />
+    <attr name="selectionHandler" />
+    <attr name="selectionHandlerVisiblity" />
+  </declare-styleable>
+  <declare-styleable name="WidgetContainer">
+    <attr name="android:layout" />
+    <attr name="android:text" />
+    <attr name="titleLayout" />
+  </declare-styleable>
+</resources>

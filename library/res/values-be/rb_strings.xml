@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"Заўсёды"</string>
+  <string name="activity_resolver_use_once">"Толькі адзін раз"</string>
+  <string name="candidates_style">"кандыдат."</string>
+  <string name="capital_off">"Адключана"</string>
+  <string name="capital_on">"Уключыць"</string>
+  <string name="chooseActivity">"Выберыце дзеянне"</string>
+  <string name="loading">"Загрузка..."</string>
+  <string name="noApplications">"Няма прыкладанняў, якія могуць выконваць гэты працэс."</string>
+  <string name="number_picker_decrement_button">"Паменшыць"</string>
+  <string name="number_picker_increment_button">"Павялічыць"</string>
+  <string name="number_picker_increment_scroll_action">"Правядзіце пальцам уверх, каб павялічыць, або ўніз, каб паменшыць."</string>
+  <string name="number_picker_increment_scroll_mode">"Націсніце і ўтрымлівайце</string>
+  <string name="ringtone_default">"Рынгтон па змаўчаннi"</string>
+  <string name="ringtone_picker_title">"Рынгтоны"</string>
+  <string name="ringtone_silent">"Няма"</string>
+  <string name="whichApplication">"Завяршыць дзеянне з дапамогай"</string>
+</resources>

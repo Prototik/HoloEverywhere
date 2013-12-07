@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"همیشه"</string>
+  <string name="activity_resolver_use_once">"فقط این بار"</string>
+  <string name="candidates_style">"داوطلبین"</string>
+  <string name="capital_off">"خاموش"</string>
+  <string name="capital_on">"روشن"</string>
+  <string name="chooseActivity">"انتخاب عملکرد"</string>
+  <string name="loading">"در حال بارگیری..."</string>
+  <string name="noApplications">"هیچ برنامه‌ای نمی‎تواند این کار را انجام دهد."</string>
+  <string name="number_picker_decrement_button">"کاهش"</string>
+  <string name="number_picker_increment_button">"افزایش"</string>
+  <string name="number_picker_increment_scroll_action">"برای افزایش به بالا بلغزانید و برای کاهش به پایین بلغزانید."</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"آهنگ زنگ پیش‌فرض"</string>
+  <string name="ringtone_picker_title">"آهنگ‌های زنگ"</string>
+  <string name="ringtone_silent">"هیچکدام"</string>
+  <string name="whichApplication">"تکمیل عملکرد با استفاده از"</string>
+</resources>
