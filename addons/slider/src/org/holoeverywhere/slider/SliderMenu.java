@@ -56,7 +56,8 @@ public class SliderMenu implements OnBackStackChangedListener {
     static {
         sThemes = new IAddonThemes();
         THEME_FLAG = sThemes.getThemeFlag();
-        map(R.style.Holo_Internal_SliderTheme, R.style.Holo_Internal_SliderTheme_Light);
+        map(R.style.Holo_Theme_Slider, R.style.Holo_Theme_Slider_Light,
+                R.style.Holo_Theme_Slider_Light_DarkActionBar);
     }
 
     private static final String KEY_CURRENT_PAGE = ":slider:currentPage";
@@ -72,6 +73,7 @@ public class SliderMenu implements OnBackStackChangedListener {
     private int mInitialPage = 0;
     private boolean mInverseTextColorWhenSelected = false;
     private SelectionBehavior mSelectionBehavior = SelectionBehavior.Default;
+    private NavigateUpBehavior mNavigateUpBehavior = NavigateUpBehavior.ShowMenu;
 
     public SliderMenu(AddonSliderA addon) {
         mAddon = addon;
@@ -404,6 +406,14 @@ public class SliderMenu implements OnBackStackChangedListener {
         bind(menuFragment, context);
     }
 
+    public NavigateUpBehavior getNavigateUpBehavior() {
+        return mNavigateUpBehavior;
+    }
+
+    public void setNavigateUpBehavior(NavigateUpBehavior behavior) {
+        mNavigateUpBehavior = behavior;
+    }
+
     private void notifyChanged() {
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
@@ -432,11 +442,14 @@ public class SliderMenu implements OnBackStackChangedListener {
 
     public boolean onNavigateUp() {
         if (mHandleHomeKey) {
-            if (mAddon.isAddonEnabled()
-                    && mFragmentManager.getBackStackEntryCount() == 0) {
+            if (mNavigateUpBehavior == NavigateUpBehavior.ShowMenu) {
                 mAddon.toggle();
-            } else {
-                mAddon.get().onBackPressed();
+            } else if (mNavigateUpBehavior == NavigateUpBehavior.PopUpFragment) {
+                if (mAddon.isAddonEnabled() && mFragmentManager.getBackStackEntryCount() == 0) {
+                    mAddon.toggle();
+                } else {
+                    mAddon.get().onBackPressed();
+                }
             }
             return true;
         }
@@ -531,6 +544,10 @@ public class SliderMenu implements OnBackStackChangedListener {
 
     public static enum SelectionBehavior {
         BackgroundWhenSelected, Default, OnlyBackground, OnlyHandler, Disabled;
+    }
+
+    public static enum NavigateUpBehavior {
+        PopUpFragment, ShowMenu
     }
 
     public static class SliderMenuFragment extends Fragment {

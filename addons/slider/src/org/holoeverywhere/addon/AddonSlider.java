@@ -209,12 +209,15 @@ public class AddonSlider extends IAddon {
         }
 
         public Context obtainMenuContext(boolean useActionBarStyle) {
+            if (mMenuContext != null) {
+                return mMenuContext;
+            }
             final Activity activity = get();
             int themeType = ThemeManager.getThemeType(activity);
             if (themeType == ThemeManager.MIXED && useActionBarStyle) {
                 themeType = ThemeManager.DARK;
             }
-            return new ContextThemeWrapperPlus(activity, SliderMenu.getThemeForType(themeType));
+            return mMenuContext = new ContextThemeWrapperPlus(activity, SliderMenu.getThemeForType(themeType));
         }
 
         public SliderMenu obtainSliderMenu() {

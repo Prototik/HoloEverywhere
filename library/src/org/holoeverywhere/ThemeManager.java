@@ -192,7 +192,7 @@ public final class ThemeManager {
     private static final String _THEME_TAG = ":holoeverywhere:theme";
     private static final SparseIntArray _THEMES_MAP = new SparseIntArray();
     private static int _DEFAULT_THEME;
-    private static ThemeGetter _THEME_GETTER;
+    private static List<ThemeGetter> sThemeGetters;
     private static int _THEME_MASK = 0;
     private static int _THEME_MODIFIER = 0;
     private static int NEXT_OFFSET = 0;
@@ -365,11 +365,14 @@ public final class ThemeManager {
             return themeTag;
         }
         themeTag = prepareFlags(themeTag, applyModifier);
-        if (ThemeManager._THEME_GETTER != null) {
-            final int getterResource = ThemeManager._THEME_GETTER
-                    .getThemeResource(new ThemeTag(themeTag));
-            if (getterResource != 0) {
-                return getterResource;
+        if (ThemeManager.sThemeGetters != null) {
+            int getterResource;
+            final ThemeTag tag = new ThemeTag(themeTag);
+            for (int i = ThemeManager.sThemeGetters.size() - 1; i >= 0; i--) {
+                getterResource = ThemeManager.sThemeGetters.get(i).getThemeResource(tag);
+                if (getterResource != 0) {
+                    return getterResource;
+                }
             }
         }
         final int i = _THEMES_MAP.get(themeTag, -1);
@@ -643,8 +646,7 @@ public final class ThemeManager {
         if (sThemeSetters == null) {
             sThemeSetters = new ArrayList<ThemeManager.ThemeSetter>();
         }
-        if (!sThemeSetters.contains(themeSetter)) {
-            sThemeSetters.add(themeSetter);
+        if (sThemeSetters.add(themeSetter)) {
             themeSetter.setupThemes();
         }
     }
@@ -847,9 +849,30 @@ public final class ThemeManager {
      * Set {@link ThemeGetter} instance for getting theme resources.
      *
      * @param themeGetter ThemeGetter
+     * @deprecated Use {@link #registerThemeGetter(ThemeManager.ThemeGetter)} instead
      */
     public static void setThemeGetter(ThemeGetter themeGetter) {
-        ThemeManager._THEME_GETTER = themeGetter;
+        registerThemeGetter(themeGetter);
+    }
+
+    public static synchronized void registerThemeGetter(ThemeGetter themeGetter) {
+        if (themeGetter == null) {
+            return;
+        }
+        if (sThemeGetters == null) {
+            sThemeGetters = new ArrayList<ThemeGetter>();
+        }
+        sThemeGetters.add(themeGetter);
+    }
+
+    public static synchronized void unregisterThemeGetter(ThemeGetter themeGetter) {
+        if (sThemeGetters == null || themeGetter == null) {
+            return;
+        }
+        sThemeGetters.remove(themeGetter);
+        if (sThemeGetters.size() == 0) {
+            sThemeGetters = null;
+        }
     }
 
     /**
@@ -912,6 +935,9 @@ public final class ThemeManager {
             return;
         }
         sThemeSetters.remove(themeSetter);
+        if (sThemeSetters.size() == 0) {
+            sThemeSetters = null;
+        }
     }
 
     /**

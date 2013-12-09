@@ -35,7 +35,11 @@ public class IAddonThemes implements ThemeSetter {
     private int mMixedTheme = -1;
 
     public IAddonThemes() {
-        mThemeFlag = ThemeManager.makeNewFlag();
+        this(true);
+    }
+
+    public IAddonThemes(boolean createFlag) {
+        mThemeFlag = createFlag ? ThemeManager.makeNewFlag() : -1;
         ThemeManager.registerThemeSetter(this);
     }
 

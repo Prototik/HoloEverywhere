@@ -1,5 +1,10 @@
 blocks:
+  BarDark:
+    homeAsUpIndicator: :drawable/ic_drawer_dark
+  BarLight:
+    homeAsUpIndicator: :drawable/ic_drawer_light
   Base:
+    android:homeAsUpIndicator: ?homeAsUpIndicator
     textAppearanceSliderItem: ?android:textAppearanceMedium
     textAppearanceSliderItemInverse: ?android:textAppearanceMediumInverse
   Dark < Base:
@@ -7,5 +12,8 @@ blocks:
   Light < Base:
     sliderMenuPanelBackground: :color/slider_menu_panel_background_holo_light
 styles:
-  Holo.Internal.SliderTheme | Dark < Holo.Theme: null
-  Holo.Internal.SliderTheme.Light | Light < Holo.Theme.Light: null
+  Holo.Internal.SliderTheme < Holo.Theme.Slider: null
+  Holo.Internal.SliderTheme.Light < Holo.Theme.Slider.Light: null
+  Holo.Theme.Slider | Dark BarDark < Holo.Theme: null
+  Holo.Theme.Slider.Light | Light BarLight < Holo.Theme.Light: null
+  Holo.Theme.Slider.Light.DarkActionBar | Light BarDark < Holo.Theme.Light.DarkActionBar: null
