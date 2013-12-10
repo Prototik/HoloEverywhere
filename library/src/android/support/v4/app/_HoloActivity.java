@@ -1,4 +1,3 @@
-
 package android.support.v4.app;
 
 import android.annotation.SuppressLint;
@@ -430,7 +429,9 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
     public void setContentView(View view, LayoutParams params) {
         if (requestDecorView(view, params, -1)) {
             mDecorView.removeAllViewsInLayout();
-            mDecorView.addView(view, params);
+            if(view != null){
+                mDecorView.addView(view, params);
+            }
         }
         onSupportContentChanged();
     }
