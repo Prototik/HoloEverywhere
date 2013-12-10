@@ -22,7 +22,6 @@ import android.test.mock.MockApplication;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
 import android.view.ViewGroup;
@@ -213,6 +212,9 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
     protected void onCreate(Bundle savedInstanceState) {
         forceInit(savedInstanceState);
         super.onCreate(savedInstanceState);
+        if (this instanceof Activity && mConfig != null) {
+            mConfig.requestWindowFeature((Activity) this);
+        }
     }
 
     protected Holo onCreateConfig(Bundle savedInstanceState) {
@@ -284,24 +286,19 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
         }
         getLayoutInflater().setFragmentActivity(this);
         if (this instanceof Activity) {
-            Activity activity = (Activity) this;
-            final SparseIntArray windowFeatures = config.windowFeatures;
-            if (windowFeatures != null) {
-                for (int i = 0; i < windowFeatures.size(); i++) {
-                    if (windowFeatures.valueAt(i) > 0) {
-                        requestWindowFeature((long) windowFeatures.keyAt(i));
-                    }
-                }
-            }
+            final Activity activity = (Activity) this;
             ThemeManager.applyTheme(activity, mLastThemeResourceId == 0);
             if (!config.ignoreThemeCheck && ThemeManager.getThemeType(this) == ThemeManager.INVALID) {
                 throw new HoloThemeException(activity);
             }
-            TypedArray a = obtainStyledAttributes(new int[]{
-                    android.R.attr.windowActionBarOverlay, R.attr.windowActionBarOverlay
-            });
+            TypedArray a = obtainStyledAttributes(new int[]{android.R.attr.windowActionBarOverlay, R.attr.windowActionBarOverlay});
             if (a.getBoolean(0, false) || a.getBoolean(1, false)) {
-                requestWindowFeature((long) Window.FEATURE_ACTION_BAR_OVERLAY);
+                supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+            }
+            a.recycle();
+            a = obtainStyledAttributes(new int[]{android.R.attr.windowActionModeOverlay, R.attr.windowActionBarOverlay});
+            if (a.getBoolean(0, false) || a.getBoolean(1, false)) {
+                supportRequestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
             }
             a.recycle();
         }
@@ -399,8 +396,17 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
         return false;
     }
 
+    /**
+     * @deprecated Use @{link supportRequestWindowFeature(int)} instead
+     */
     public void requestWindowFeature(long featureId) {
-        createConfig(null).requestWindowFeature((int) featureId);
+        supportRequestWindowFeature((int) featureId);
+    }
+
+    @Override
+    public boolean supportRequestWindowFeature(int featureId) {
+        createConfig(null).requestWindowFeature(featureId);
+        return !isSupportImplReady() || super.supportRequestWindowFeature(featureId);
     }
 
     @Override
@@ -550,6 +556,7 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
         public boolean ignoreThemeCheck = false;
         public boolean allowMockApplicationInstance = false;
         private SparseIntArray windowFeatures;
+        private boolean mForbidRequestWindowFeature = false;
 
         public Holo() {
 
@@ -575,6 +582,9 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
             if (windowFeatures == null) {
                 windowFeatures = new SparseIntArray();
             }
+            if (mForbidRequestWindowFeature && windowFeatures.get(feature, -1) == -1) {
+                throw new RuntimeException("Request of window features forbid now. Something is broken.");
+            }
             windowFeatures.put(feature, feature);
         }
 
@@ -584,6 +594,18 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
             dest.writeInt(ignoreApplicationInstanceCheck ? 1 : 0);
             dest.writeInt(allowMockApplicationInstance ? 1 : 0);
             dest.writeParcelable(windowFeatures, flags);
+        }
+
+        private void requestWindowFeature(Activity holoActivity) {
+            mForbidRequestWindowFeature = true;
+            if (windowFeatures != null) {
+                for (int i = 0; i < windowFeatures.size(); i++) {
+                    if (windowFeatures.valueAt(i) > 0) {
+                        holoActivity.supportRequestWindowFeature(windowFeatures.keyAt(i));
+                    }
+                }
+            }
+            mForbidRequestWindowFeature = false;
         }
     }
 

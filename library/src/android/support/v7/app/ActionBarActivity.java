@@ -430,4 +430,8 @@ public class ActionBarActivity extends FragmentActivity implements ActionBar.Cal
     public final ActionBarDrawerToggle.Delegate getDrawerToggleDelegate() {
         return mImpl.getDrawerToggleDelegate();
     }
+
+    public boolean isSupportImplReady() {
+        return mImpl != null;
+    }
 }
