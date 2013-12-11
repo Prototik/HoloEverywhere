@@ -229,6 +229,7 @@ public class ViewCompat {
         public int getMeasuredState(View view);
         public int getAccessibilityLiveRegion(View view);
         public void setAccessibilityLiveRegion(View view, int mode);
+        public int[] mergeDrawableStates(int[] baseState, int[] additionalState);
     }
 
     static class BaseViewCompatImpl implements ViewCompatImpl {
@@ -334,7 +335,25 @@ public class ViewCompat {
         }
 
         public int resolveSizeAndState(int size, int measureSpec, int childMeasuredState) {
-            return View.resolveSize(size, measureSpec);
+            int result = size;
+            int specMode = View.MeasureSpec.getMode(measureSpec);
+            int specSize = View.MeasureSpec.getSize(measureSpec);
+            switch (specMode) {
+                case View.MeasureSpec.UNSPECIFIED:
+                    result = size;
+                    break;
+                case View.MeasureSpec.AT_MOST:
+                    if (specSize < size) {
+                        result = specSize | MEASURED_STATE_TOO_SMALL;
+                    } else {
+                        result = size;
+                    }
+                    break;
+                case View.MeasureSpec.EXACTLY:
+                    result = specSize;
+                    break;
+            }
+            return result | childMeasuredState & MEASURED_STATE_MASK;
         }
 
         @Override
@@ -360,6 +379,17 @@ public class ViewCompat {
         @Override
         public void setAccessibilityLiveRegion(View view, int mode) {
             // No-op
+        }
+
+        @Override
+        public int[] mergeDrawableStates(int[] baseState, int[] additionalState) {
+            final int N = baseState.length;
+            int i = N - 1;
+            while (i >= 0 && baseState[i] == 0) {
+                i--;
+            }
+            System.arraycopy(additionalState, 0, baseState, i + 1, additionalState.length);
+            return baseState;
         }
     }
 
@@ -1186,5 +1216,9 @@ public class ViewCompat {
      */
     public void setAccessibilityLiveRegion(View view, int mode) {
         IMPL.setAccessibilityLiveRegion(view, mode);
+    }
+
+    public static int[] mergeDrawableStates(int[] baseState, int[] additionalState) {
+        return IMPL.mergeDrawableStates(baseState, additionalState);
     }
 }

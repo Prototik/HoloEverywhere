@@ -1,0 +1,200 @@
+diff --git java/android/support/v4/app/FragmentManager.java java/android/support/v4/app/FragmentManager.java
+index bc24703..339318d 100644
+--- java/android/support/v4/app/FragmentManager.java
++++ java/android/support/v4/app/FragmentManager.java
+@@ -858,6 +858,7 @@ final class FragmentManagerImpl extends FragmentManager {
+                 case Fragment.INITIALIZING:
+                     if (DEBUG) Log.v(TAG, "moveto CREATED: " + f);
+                     if (f.mSavedFragmentState != null) {
++                        f.mSavedFragmentState.setClassLoader(mActivity.getClassLoader());
+                         f.mSavedViewState = f.mSavedFragmentState.getSparseParcelableArray(
+                                 FragmentManagerImpl.VIEW_STATE_TAG);
+                         f.mTarget = getFragment(f.mSavedFragmentState,
+@@ -901,7 +902,7 @@ final class FragmentManagerImpl extends FragmentManager {
+                                 f.mSavedFragmentState), null, f.mSavedFragmentState);
+                         if (f.mView != null) {
+                             f.mInnerView = f.mView;
+-                            f.mView = NoSaveStateFrameLayout.wrap(f.mView);
++                            f.mView = NoSaveStateFrameLayout.wrap(f, f.mView);
+                             if (f.mHidden) f.mView.setVisibility(View.GONE);
+                             f.onViewCreated(f.mView, f.mSavedFragmentState);
+                         } else {
+@@ -928,7 +929,7 @@ final class FragmentManagerImpl extends FragmentManager {
+                                     f.mSavedFragmentState), container, f.mSavedFragmentState);
+                             if (f.mView != null) {
+                                 f.mInnerView = f.mView;
+-                                f.mView = NoSaveStateFrameLayout.wrap(f.mView);
++                                f.mView = NoSaveStateFrameLayout.wrap(f, f.mView);
+                                 if (container != null) {
+                                     Animation anim = loadAnimation(f, transit, true,
+                                             transitionStyle);
+diff --git java/android/support/v4/app/NoSaveStateFrameLayout.java java/android/support/v4/app/NoSaveStateFrameLayout.java
+index d0ebb96..c9f9480 100644
+--- java/android/support/v4/app/NoSaveStateFrameLayout.java
++++ java/android/support/v4/app/NoSaveStateFrameLayout.java
+@@ -28,7 +28,20 @@ import android.widget.FrameLayout;
+  * so instead we insert this between the view and its parent.
+  */
+ class NoSaveStateFrameLayout extends FrameLayout {
++    static interface NoSaveStateFrameLayoutCreator {
++        public ViewGroup create(Fragment fragment, View child);
++    }
++	
++    static NoSaveStateFrameLayoutCreator sNoSaveStateFrameLayoutCreator;
++
+     static ViewGroup wrap(View child) {
++        return wrap(null, child);
++    }
++
++    static ViewGroup wrap(Fragment fragment, View child) {
++        if (sNoSaveStateFrameLayoutCreator != null) {
++            return sNoSaveStateFrameLayoutCreator.create(fragment, child);
++        }
+         NoSaveStateFrameLayout wrapper = new NoSaveStateFrameLayout(child.getContext());
+         ViewGroup.LayoutParams childParams = child.getLayoutParams();
+         if (childParams != null) {
+diff --git java/android/support/v4/internal/view/SupportContextMenu.java java/android/support/v4/internal/view/SupportContextMenu.java
+new file mode 100644
+index 0000000..86bd22b
+--- /dev/null
++++ java/android/support/v4/internal/view/SupportContextMenu.java
+@@ -0,0 +1,73 @@
++package android.support.v4.internal.view;
++
++import android.graphics.drawable.Drawable;
++import android.view.ContextMenu;
++import android.view.View;
++
++/**
++ * Extension of {@link android.view.Menu} for context menus providing functionality to modify
++ * the header of the context menu.
++ * <p>
++ * Context menus do not support item shortcuts and item icons.
++ * <p>
++ * To show a context menu on long click, most clients will want to call
++ * {@link android.app.Activity#registerForContextMenu} and override
++ * {@link android.app.Activity#onCreateContextMenu}.
++ *
++ * <div class="special reference">
++ * <h3>Developer Guides</h3>
++ * <p>For information about creating menus, read the
++ * <a href="{@docRoot}guide/topics/ui/menus.html">Menus</a> developer guide.</p>
++ * </div>
++ */
++public interface SupportContextMenu extends SupportMenu, ContextMenu {
++    /**
++     * Sets the context menu header's title to the title given in <var>titleRes</var>
++     * resource identifier.
++     *
++     * @param titleRes The string resource identifier used for the title.
++     * @return This ContextMenu so additional setters can be called.
++     */
++    public SupportContextMenu setHeaderTitle(int titleRes);
++
++    /**
++     * Sets the context menu header's title to the title given in <var>title</var>.
++     *
++     * @param title The character sequence used for the title.
++     * @return This ContextMenu so additional setters can be called.
++     */
++    public SupportContextMenu setHeaderTitle(CharSequence title);
++
++    /**
++     * Sets the context menu header's icon to the icon given in <var>iconRes</var>
++     * resource id.
++     *
++     * @param iconRes The resource identifier used for the icon.
++     * @return This ContextMenu so additional setters can be called.
++     */
++    public SupportContextMenu setHeaderIcon(int iconRes);
++
++    /**
++     * Sets the context menu header's icon to the icon given in <var>icon</var>
++     * {@link Drawable}.
++     *
++     * @param icon The {@link Drawable} used for the icon.
++     * @return This ContextMenu so additional setters can be called.
++     */
++    public SupportContextMenu setHeaderIcon(Drawable icon);
++
++    /**
++     * Sets the header of the context menu to the {@link View} given in
++     * <var>view</var>. This replaces the header title and icon (and those
++     * replace this).
++     *
++     * @param view The {@link View} used for the header.
++     * @return This ContextMenu so additional setters can be called.
++     */
++    public SupportContextMenu setHeaderView(View view);
++
++    /**
++     * Clears the header of the context menu.
++     */
++    public void clearHeader();
++}
+diff --git java/android/support/v4/view/ViewCompat.java java/android/support/v4/view/ViewCompat.java
+index bb64afc..c62ef55 100644
+--- java/android/support/v4/view/ViewCompat.java
++++ java/android/support/v4/view/ViewCompat.java
+@@ -229,6 +229,7 @@ public class ViewCompat {
+         public int getMeasuredState(View view);
+         public int getAccessibilityLiveRegion(View view);
+         public void setAccessibilityLiveRegion(View view, int mode);
++        public int[] mergeDrawableStates(int[] baseState, int[] additionalState);
+     }
+ 
+     static class BaseViewCompatImpl implements ViewCompatImpl {
+@@ -334,7 +335,25 @@ public class ViewCompat {
+         }
+ 
+         public int resolveSizeAndState(int size, int measureSpec, int childMeasuredState) {
+-            return View.resolveSize(size, measureSpec);
++            int result = size;
++            int specMode = View.MeasureSpec.getMode(measureSpec);
++            int specSize = View.MeasureSpec.getSize(measureSpec);
++            switch (specMode) {
++                case View.MeasureSpec.UNSPECIFIED:
++                    result = size;
++                    break;
++                case View.MeasureSpec.AT_MOST:
++                    if (specSize < size) {
++                        result = specSize | MEASURED_STATE_TOO_SMALL;
++                    } else {
++                        result = size;
++                    }
++                    break;
++                case View.MeasureSpec.EXACTLY:
++                    result = specSize;
++                    break;
++            }
++            return result | childMeasuredState & MEASURED_STATE_MASK;
+         }
+ 
+         @Override
+@@ -361,6 +380,17 @@ public class ViewCompat {
+         public void setAccessibilityLiveRegion(View view, int mode) {
+             // No-op
+         }
++
++        @Override
++        public int[] mergeDrawableStates(int[] baseState, int[] additionalState) {
++            final int N = baseState.length;
++            int i = N - 1;
++            while (i >= 0 && baseState[i] == 0) {
++                i--;
++            }
++            System.arraycopy(additionalState, 0, baseState, i + 1, additionalState.length);
++            return baseState;
++        }
+     }
+ 
+     static class EclairMr1ViewCompatImpl extends BaseViewCompatImpl {
+@@ -1187,4 +1217,8 @@ public class ViewCompat {
+     public void setAccessibilityLiveRegion(View view, int mode) {
+         IMPL.setAccessibilityLiveRegion(view, mode);
+     }
++
++    public static int[] mergeDrawableStates(int[] baseState, int[] additionalState) {
++        return IMPL.mergeDrawableStates(baseState, additionalState);
++    }
+ }

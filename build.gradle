@@ -13,7 +13,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'holoeverywhere-repo'
 
-version = '19.0.0'
+version = '19.0.1'
 
 repositories {
     mavenLocal()
@@ -25,6 +25,8 @@ def FileCollection getAndroidPrebuilt(String apiLevel) {
 }
 
 configurations {
+    deployerJars
+
     eclairCompile
     froyoCompile
     gingerbreadCompile
@@ -55,6 +57,8 @@ sourceSets {
 }
 
 dependencies {
+    deployerJars "org.apache.maven.wagon:wagon-ssh-external:2.2"
+
     eclairCompile getAndroidPrebuilt('7')
     eclairmr1Compile getAndroidPrebuilt('7')
     froyoCompile getAndroidPrebuilt('8')
@@ -158,12 +162,20 @@ signing {
 uploadArchives {
     repositories {
         mavenDeployer {
+            configuration = configurations.deployerJars
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
             pom.groupId = 'com.android.support'
             pom.artifactId = 'support-v4'
 
-            repository(url: project.getProperty('holoeverywhere.repo'))
+            def String repoUrl = project.properties.get('holoeverywhere.repo', 'file:///invalid_path')
+            if (repoUrl.startsWith('scpexe://')) {
+                repository(url: repoUrl) {
+                    authentication(userName: project.properties.get('holoeverywhere.repo.username'), privateKey: project.properties.get('holoeverywhere.repo.key'))
+                }
+            } else {
+                repository(url: repoUrl)
+            }
 
             pom.whenConfigured { pom ->
                 pom.dependencies = pom.dependencies.findAll { dep -> dep.groupId != 'android' && dep.artifactId != 'android' }
