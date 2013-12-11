@@ -7,7 +7,7 @@
   <string name="capital_on">"מופעל"</string>
   <string name="chooseActivity">"בחירת פעולה"</string>
   <string name="loading">"טוען..."</string>
-  <string name="noApplications">"אין יישומים שיכולים לבצע פעולה זו."</string>
+  <string name="noApplications">"אין אפליקציות שיכולות לבצע פעולה זו."</string>
   <string name="number_picker_decrement_button">"הפחת"</string>
   <string name="number_picker_increment_button">"הוסף"</string>
   <string name="number_picker_increment_scroll_action">"הסט למעלה כדי להוסיף ולמטה כדי להפחית."</string>

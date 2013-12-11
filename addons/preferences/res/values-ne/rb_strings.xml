@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="back_button_label">"पछाडि"</string>
+  <string name="next_button_label">"अर्को"</string>
+  <string name="skip_button_label">"छोड्नुहोस्"</string>
+</resources>

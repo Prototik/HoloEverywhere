@@ -19,6 +19,7 @@ blocks:
     panelMenuListWidth: 250dp
     textAppearanceListItem: ?android:textAppearanceLarge
     textAppearanceListItemSmall: ?android:textAppearanceMedium
+    toastFrameBackground: :drawable/toast_frame
   BaseDark < Base:
     alertDialogTheme: :style/Holo.Theme.Dialog.Alert
     android:windowBackground: :drawable/background_holo_dark

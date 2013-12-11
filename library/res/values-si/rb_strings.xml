@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"සැම විටම"</string>
+  <string name="activity_resolver_use_once">"එක් වාරයයි"</string>
+  <string name="candidates_style">"අපේක්ෂකයන්"</string>
+  <string name="capital_off">"අක්‍රිය කරන්න"</string>
+  <string name="capital_on">"සක්‍රීයයි"</string>
+  <string name="chooseActivity">"ක්‍රියාවක් තෝරන්න"</string>
+  <string name="loading">"පූරණය වෙමින්..."</string>
+  <string name="noApplications">"මෙම ක්‍රියාව සිදු කිරීමට කිසිදු යෙදුමකට නොහැකිය."</string>
+  <string name="number_picker_decrement_button">"අඩු කරන්න"</string>
+  <string name="number_picker_increment_button">"වැඩි කරන්න"</string>
+  <string name="number_picker_increment_scroll_action">"වැඩි කිරීමට ඉහලට සර්පණය කරන්න සහ අඩු කිරීමට පහලට සර්පණය කරන්න."</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"සුපුරුදු රින්ටෝනය සකසන්න"</string>
+  <string name="ringtone_picker_title">"රිගින්ටෝන"</string>
+  <string name="ringtone_silent">"කිසිවක් නැත"</string>
+  <string name="whichApplication">"පහත භාවිතයෙන් ක්‍රියාව සම්පූර්ණ කරන්න"</string>
+</resources>

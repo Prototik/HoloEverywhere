@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"Həmişə"</string>
+  <string name="activity_resolver_use_once">"Sadəcə bir dəfə"</string>
+  <string name="candidates_style">"namizədlər"</string>
+  <string name="capital_off">"QAPALI"</string>
+  <string name="capital_on">"AÇIQ"</string>
+  <string name="chooseActivity">"Fəaliyyət seçin"</string>
+  <string name="loading">"Yüklənir…"</string>
+  <string name="noApplications">"Heç bir tətbiq bu əməliyyatı apara bilmir."</string>
+  <string name="number_picker_decrement_button">"Azaldın"</string>
+  <string name="number_picker_increment_button">"Artır"</string>
+  <string name="number_picker_increment_scroll_action">"Artırmaq üçün yuxarı, azaltmaq üçün aşağı sürüşdürün."</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"Defolt rinqton"</string>
+  <string name="ringtone_picker_title">"Zəng səsləri"</string>
+  <string name="ringtone_silent">"Heç biri"</string>
+  <string name="whichApplication">"Əməliyyatı tamamlayın:"</string>
+</resources>

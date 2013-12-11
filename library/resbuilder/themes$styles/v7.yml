@@ -107,4 +107,9 @@ styles:
   Holo.Theme.NoActionBar.Fullscreen | Fullscreen: null
   Holo.Theme.NoActionBar.Fullscreen.Wallpaper | Wallpaper: null
   Holo.Theme.NoActionBar.Wallpaper | Wallpaper: null
+  Holo.Theme.Toast < Holo.Theme.Dialog:
+    android:backgroundDimEnabled: false
+    android:windowAnimationStyle: :style/Holo.Animation.Toast
+    android:windowBackground: :drawable/toast_frame
+    android:windowCloseOnTouchOutside: false
   Holo.Theme.Wallpaper | Wallpaper: null

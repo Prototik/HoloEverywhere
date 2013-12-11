@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"Միշտ"</string>
+  <string name="activity_resolver_use_once">"Միայն մեկ անգամ"</string>
+  <string name="candidates_style">"թեկնածուները"</string>
+  <string name="capital_off">"Անջատել"</string>
+  <string name="capital_on">"Միացնել"</string>
+  <string name="chooseActivity">"Ընտրել գործողություն"</string>
+  <string name="loading">"Բեռնում..."</string>
+  <string name="noApplications">"Ոչ մի հավելված չի կարող կատարել այս գործողությունը:"</string>
+  <string name="number_picker_decrement_button">"Նվազեցնել"</string>
+  <string name="number_picker_increment_button">"Ավելացնել"</string>
+  <string name="number_picker_increment_scroll_action">"Սահեցրեք վերև` ավելացնելու համար, և ներքև` նվազեցնելու համար:"</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"Լռելյայն զանգերանգ"</string>
+  <string name="ringtone_picker_title">"Զանգերանգներ"</string>
+  <string name="ringtone_silent">"Ոչ մեկը"</string>
+  <string name="whichApplication">"ավարտել գործողությունը` օգտագործելով"</string>
+</resources>

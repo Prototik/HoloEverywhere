@@ -8,6 +8,9 @@ styles:
     android:windowEnterAnimation: :anim/grow_fade_in_from_bottom
     android:windowExitAnimation: :anim/shrink_fade_out_from_bottom
   Holo.Animation.PopupWindow: null
+  Holo.Animation.Toast:
+    android:windowEnterAnimation: :anim/toast_enter
+    android:windowExitAnimation: :anim/toast_exit
   Holo.AutoCompleteTextView < Holo.EditText:
     android:completionHintView: :layout/simple_dropdown_hint
     android:completionThreshold: 2

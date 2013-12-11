@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"ជា​និច្ច"</string>
+  <string name="activity_resolver_use_once">"តែ​ម្ដង"</string>
+  <string name="candidates_style">"បេក្ខជន"</string>
+  <string name="capital_off">"បិទ"</string>
+  <string name="capital_on">"បើក"</string>
+  <string name="chooseActivity">"ជ្រើស​សកម្មភាព"</string>
+  <string name="loading">"កំពុង​ផ្ទុក..."</string>
+  <string name="noApplications">"គ្មាន​កម្មវិធី​អាច​អនុវត្ត​សកម្មភាព​នេះ។"</string>
+  <string name="number_picker_decrement_button">"បន្ថយ"</string>
+  <string name="number_picker_increment_button">"បង្កើន"</string>
+  <string name="number_picker_increment_scroll_action">"រុញ​ឡើងលើ ដើម្បី​បង្កើន និង​ចុះក្រោម​ដើម្បី​បន្ថយ។"</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"សំឡេង​រោទ៍​លំនាំដើម"</string>
+  <string name="ringtone_picker_title">"សំឡេង​រោទ៍"</string>
+  <string name="ringtone_silent">"គ្មាន"</string>
+  <string name="whichApplication">"បញ្ចប់​សកម្មភាព​ដោយ​ប្រើ"</string>
+</resources>

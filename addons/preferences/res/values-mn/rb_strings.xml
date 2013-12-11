@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="back_button_label">"Буцах"</string>
+  <string name="next_button_label">"Дараах"</string>
+  <string name="skip_button_label">"Алгасах"</string>
+</resources>

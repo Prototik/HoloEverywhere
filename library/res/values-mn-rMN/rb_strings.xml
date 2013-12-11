@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"Байнга"</string>
+  <string name="activity_resolver_use_once">"Нэг удаа"</string>
+  <string name="candidates_style">"нэр дэвшигч"</string>
+  <string name="capital_off">"Идэвхгүй"</string>
+  <string name="capital_on">"Идэвхтэй"</string>
+  <string name="chooseActivity">"Үйлдэл сонгох"</string>
+  <string name="loading">"Ачааллаж байна..."</string>
+  <string name="noApplications">"Энэ ажиллагааг гүйцэтгэх апп байхгүй."</string>
+  <string name="number_picker_decrement_button">"Бууруулах"</string>
+  <string name="number_picker_increment_button">"Өсөх"</string>
+  <string name="number_picker_increment_scroll_action">"Өсгөх бол дээшээ бууруулах бол доошоо гулсуулна уу."</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"Үндсэн хонхны ая"</string>
+  <string name="ringtone_picker_title">"Хонхны ая"</string>
+  <string name="ringtone_silent">"Алийг нь ч биш"</string>
+  <string name="whichApplication">"Үйлдлийг дуусгах"</string>
+</resources>

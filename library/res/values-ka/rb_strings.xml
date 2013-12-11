@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"ყოველთვის"</string>
+  <string name="activity_resolver_use_once">"მხოლოდ ერთხელ"</string>
+  <string name="candidates_style">"კანდიდატები"</string>
+  <string name="capital_off">"გამორთულია"</string>
+  <string name="capital_on">"ჩართ."</string>
+  <string name="chooseActivity">"აირჩიეთ მოქმედება"</string>
+  <string name="loading">"ჩატვირთვა…"</string>
+  <string name="noApplications">"ვერც ერთი აპი ვერ შეასრულებს ამ ქმედებას."</string>
+  <string name="number_picker_decrement_button">"შემცირება"</string>
+  <string name="number_picker_increment_button">"გაზრდა"</string>
+  <string name="number_picker_increment_scroll_action">"აასრიალეთ ზემოთ გასაზრდელად და ჩაასრიალეთ ქვემოთ შესამცირებლად."</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"ნაგულისხმევი ზარი"</string>
+  <string name="ringtone_picker_title">"ზარები"</string>
+  <string name="ringtone_silent">"არც ერთი"</string>
+  <string name="whichApplication">"მოქმედების დასრულება შემდეგი საშუალებით:"</string>
+</resources>

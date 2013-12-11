@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="back_button_label">"ກັບຄືນ"</string>
+  <string name="next_button_label">"ຕໍ່ໄປ"</string>
+  <string name="skip_button_label">"ຂ້າມ"</string>
+</resources>

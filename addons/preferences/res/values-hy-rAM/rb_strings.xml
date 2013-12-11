@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="back_button_label">"Հետ"</string>
+  <string name="next_button_label">"Հաջորդը"</string>
+  <string name="skip_button_label">"Բաց թողնել"</string>
+</resources>

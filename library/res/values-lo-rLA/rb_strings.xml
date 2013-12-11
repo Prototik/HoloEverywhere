@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"ທຸກຄັ້ງ"</string>
+  <string name="activity_resolver_use_once">"ຄັ້ງດຽວ"</string>
+  <string name="candidates_style">"ຕົວເລືອກ"</string>
+  <string name="capital_off">"ປິດ"</string>
+  <string name="capital_on">"ເປີດ"</string>
+  <string name="chooseActivity">"ເລືອກການເຮັດວຽກ"</string>
+  <string name="loading">"ກຳລັງໂຫລດ..."</string>
+  <string name="noApplications">"ບໍ່ມີແອັບຯໃດສາມາດເຮັດວຽກນີ້ໄດ້."</string>
+  <string name="number_picker_decrement_button">"ປັບລົງ"</string>
+  <string name="number_picker_increment_button">"ເພີ່ມ"</string>
+  <string name="number_picker_increment_scroll_action">"ເລື່ອນຂຶ້ນເພື່ອເພີ່ມ ແລະເລື່ອນລົງເພື່ອຫຼຸດ."</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"ຣິງໂທນເລີ່ມຕົ້ນ"</string>
+  <string name="ringtone_picker_title">"ຣິງໂທນ"</string>
+  <string name="ringtone_silent">"ບໍ່ມີ"</string>
+  <string name="whichApplication">"ເຮັດວຽກໃຫ້ສຳເລັດໂດຍໃຊ້"</string>
+</resources>

@@ -36,6 +36,7 @@ attrs:
   textAppearanceListItem: reference
   textAppearanceListItemSmall: reference
   textColorAlertDialogListItem: reference
+  toastFrameBackground: reference
   windowActionModeOverlay: boolean
   windowAnimationStyle: reference
   windowContentOverlay: boolean

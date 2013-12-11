@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"一律採用"</string>
+  <string name="activity_resolver_use_once">"只此一次"</string>
+  <string name="candidates_style">"待選項目"</string>
+  <string name="capital_off">"關"</string>
+  <string name="capital_on">"開啟"</string>
+  <string name="chooseActivity">"選擇操作"</string>
+  <string name="loading">"正在載入..."</string>
+  <string name="noApplications">"沒有應用程式可執行這項操作。"</string>
+  <string name="number_picker_decrement_button">"減少"</string>
+  <string name="number_picker_increment_button">"增加"</string>
+  <string name="number_picker_increment_scroll_action">"向上滑動即可增加，向下滑動即可減少。"</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"預設鈴聲"</string>
+  <string name="ringtone_picker_title">"鈴聲"</string>
+  <string name="ringtone_silent">"無"</string>
+  <string name="whichApplication">"完成操作需使用"</string>
+</resources>

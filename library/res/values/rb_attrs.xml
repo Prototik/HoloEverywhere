@@ -104,6 +104,7 @@
   <attr name="timeCircleColor" format="reference|color" />
   <attr name="timePickerSelectorColor" format="reference|color" />
   <attr name="timeRadialTextColor" format="reference|color" />
+  <attr name="toastFrameBackground" format="reference" />
   <attr name="toggleWhenClick" format="boolean" />
   <attr name="topBright" format="reference|color" />
   <attr name="topDark" format="reference|color" />

@@ -107,14 +107,14 @@
 			<dependency>
 				<groupId>android</groupId>
 				<artifactId>android</artifactId>
-				<version>4.3_r2</version>
+				<version>4.4_r1</version>
 				<scope>provided</scope>
 			</dependency>
 
             <dependency>
                 <groupId>com.android.support</groupId>
                 <artifactId>support-v4</artifactId>
-                <version>18.0.4</version>
+                <version>19.0.1</version>
             </dependency>
 
             <dependency>

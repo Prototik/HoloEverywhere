@@ -110,3 +110,5 @@ styles:
   Holo.TextAppearance.TextView: null
   Holo.TextAppearance.TextView.SpinnerItem | ColorsDark: null
   Holo.TextAppearance.TextView.SpinnerItem.Light | ColorsLight: null
+  Holo.TextAppearance.Toast:
+    android:fontFamily: roboto-condensed

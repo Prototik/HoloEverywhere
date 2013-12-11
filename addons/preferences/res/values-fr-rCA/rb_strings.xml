@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="back_button_label">"Précédent"</string>
+  <string name="next_button_label">"Suivante"</string>
+  <string name="skip_button_label">"Passer"</string>
+</resources>

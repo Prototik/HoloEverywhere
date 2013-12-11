@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="back_button_label">"ថយក្រោយ"</string>
+  <string name="next_button_label">"បន្ទាប់"</string>
+  <string name="skip_button_label">"រំលង"</string>
+</resources>

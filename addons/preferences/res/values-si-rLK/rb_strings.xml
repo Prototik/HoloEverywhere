@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="back_button_label">"ආපසු"</string>
+  <string name="next_button_label">"මීලඟ"</string>
+  <string name="skip_button_label">"මඟ හරින්න"</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="activity_resolver_use_always">"सधैँ"</string>
+  <string name="activity_resolver_use_once">"एउटा मात्र"</string>
+  <string name="candidates_style">"उम्मेदवार"</string>
+  <string name="capital_off">"बन्द"</string>
+  <string name="capital_on">"चालु"</string>
+  <string name="chooseActivity">"एउटा कार्यको चयन गर्नुहोस्"</string>
+  <string name="loading">"लोड हुँदै..."</string>
+  <string name="noApplications">"कुनै पनि अनुप्रयोगहरूले यो कार्य गर्न सक्दैनन्।"</string>
+  <string name="number_picker_decrement_button">"घटाउनुहोस्"</string>
+  <string name="number_picker_increment_button">"बढाउनुहोस्"</string>
+  <string name="number_picker_increment_scroll_action">"बढाउन माथि र घटाउन तल सार्नुहोस्।"</string>
+  <string name="number_picker_increment_scroll_mode">"</string>
+  <string name="ringtone_default">"पूर्वनिर्धारित रिङटोन"</string>
+  <string name="ringtone_picker_title">"घन्टीका स्वरहरू"</string>
+  <string name="ringtone_silent">"कुनै पनि होइन"</string>
+  <string name="whichApplication">"प्रयोग गरेर कारबाही पुरा गर्नुहोस्"</string>
+</resources>

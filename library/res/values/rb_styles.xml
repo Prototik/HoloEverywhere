@@ -46,6 +46,10 @@
     <item name="android:windowExitAnimation">@anim/shrink_fade_out_from_bottom</item>
   </style>
   <style name="Holo.Animation.PopupWindow" parent="Holo.Animation" />
+  <style name="Holo.Animation.Toast" parent="Holo.Animation">
+    <item name="android:windowEnterAnimation">@anim/toast_enter</item>
+    <item name="android:windowExitAnimation">@anim/toast_exit</item>
+  </style>
   <style name="Holo.AutoCompleteTextView" parent="Holo.EditText">
     <item name="android:completionHintView">@layout/simple_dropdown_hint</item>
     <item name="android:completionThreshold">2</item>
@@ -110,6 +114,7 @@
     <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
     <item name="textAppearanceListItemSmall">?android:textAppearanceMedium</item>
     <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
+    <item name="toastFrameBackground">@drawable/toast_frame</item>
   </style>
   <style name="Holo.Base.Theme.Dialog" parent="Holo.Theme">
     <item name="android:colorBackgroundCacheHint">@null</item>
@@ -217,6 +222,7 @@
     <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
     <item name="textAppearanceListItemSmall">?android:textAppearanceMedium</item>
     <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
+    <item name="toastFrameBackground">@drawable/toast_frame</item>
   </style>
   <style name="Holo.Base.Theme.Light.DarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
     <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
@@ -264,6 +270,7 @@
     <item name="textAppearanceListItem">?android:textAppearanceLarge</item>
     <item name="textAppearanceListItemSmall">?android:textAppearanceMedium</item>
     <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
+    <item name="toastFrameBackground">@drawable/toast_frame</item>
   </style>
   <style name="Holo.Button" parent="Holo">
     <item name="android:background">@drawable/btn_default_holo_dark</item>
@@ -725,6 +732,9 @@
     <item name="android:textColorHighlight">@color/highlighted_text_holo_light</item>
     <item name="android:textColorHint">@color/hint_foreground_holo_light</item>
   </style>
+  <style name="Holo.TextAppearance.Toast" parent="Holo.TextAppearance">
+    <item name="android:fontFamily">roboto-condensed</item>
+  </style>
   <style name="Holo.TextView" parent="Holo">
     <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
   </style>
@@ -1019,6 +1029,12 @@
     <item name="android:colorBackgroundCacheHint">@null</item>
     <item name="android:windowBackground">@android:color/transparent</item>
     <item name="android:windowShowWallpaper">true</item>
+  </style>
+  <style name="Holo.Theme.Toast" parent="Holo.Theme.Dialog">
+    <item name="android:backgroundDimEnabled">false</item>
+    <item name="android:windowAnimationStyle">@style/Holo.Animation.Toast</item>
+    <item name="android:windowBackground">@drawable/toast_frame</item>
+    <item name="android:windowCloseOnTouchOutside">false</item>
   </style>
   <style name="Holo.Theme.Wallpaper" parent="Holo.Theme">
     <item name="android:colorBackgroundCacheHint">@null</item>

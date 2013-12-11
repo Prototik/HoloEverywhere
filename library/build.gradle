@@ -2,7 +2,7 @@ apply plugin: 'android-library'
 apply from: '../android_default.gradle'
 
 dependencies {
-    compile 'com.android.support:support-v4:18.0.4@jar'
+    compile 'com.android.support:support-v4:19.0.1@jar'
     compile 'com.nineoldandroids:library:2.4.0@jar'
 }
 

@@ -7,7 +7,7 @@
   <string name="capital_on">"चालू"</string>
   <string name="chooseActivity">"कोई क्रिया चुनें"</string>
   <string name="loading">"लोड हो रहे हैं..."</string>
-  <string name="noApplications">"कोई भी एप्‍लिकेशन यह कार्यवाही नहीं कर सकता."</string>
+  <string name="noApplications">"कोई भी ऐप्स यह कार्यवाही नहीं कर सकता."</string>
   <string name="number_picker_decrement_button">"कम करें"</string>
   <string name="number_picker_increment_button">"बढ़ाएं"</string>
   <string name="number_picker_increment_scroll_action">"बढ़ाने के लिए ऊपर और कम करने के लिए नीचे स्‍लाइड करें."</string>

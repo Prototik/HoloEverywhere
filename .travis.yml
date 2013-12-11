@@ -49,11 +49,11 @@ before_install:
   - cd ${BASEDIR}
   
   - mkdir -p ${ANDROID_HOME}/platforms
-  # Android SDK Platform API 18
-  - export FILE=android-18_r01.zip
+  # Android SDK Platform API 19
+  - export FILE=android-19_r01.zip
   - wget https://dl-ssl.google.com/android/repository/${FILE} -q
   - unzip -q ${FILE} -d ${ANDROID_HOME}/platforms
-  - mv ${ANDROID_HOME}/platforms/android-4.3 ${ANDROID_HOME}/platforms/android-18
+  - mv ${ANDROID_HOME}/platforms/android-4.4 ${ANDROID_HOME}/platforms/android-19
   - rm ${FILE}
   
   # Maven 3.1.1
@@ -99,7 +99,7 @@ script: ./gradlew -g "${GRADLE_HOME}" -PsnapshotBuild check
 env:
   global:
     # Android SDK
-    - ANDROID_SDK_VERSION="r22.0.4"
-    - ANDROID_BUILD_TOOLS_VERSION="r18.1"
+    - ANDROID_SDK_VERSION="r22.3"
+    - ANDROID_BUILD_TOOLS_VERSION="r19"
     # Private decode key for snapshot server
     - secure: "ok2CXn9XUfipeDBpRwLuYh3LB0sTBDzI75LevWLxCKoXqfAvgO6TiLYdSO/ClHT/Z6BGvpcNCB/+2fLa6QOWx2RgMmGju5jitwK+b1hdphyXOMuNMT6LahLIKb10JqdYqudWZ/Y4AucH09mUhFaEgc17s1FFnoiRbYD2O0Ae/HU="

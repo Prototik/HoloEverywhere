@@ -19,77 +19,9 @@ import org.holoeverywhere.demo.fragments.tabber.TabsFragment;
 import org.holoeverywhere.demo.widget.DemoAdapter;
 import org.holoeverywhere.demo.widget.DemoItem;
 import org.holoeverywhere.widget.ListView;
+import org.holoeverywhere.widget.Toast;
 
 public class OtherFragment extends ListFragment {
-    private final class ActivityListener implements OnOtherItemClickListener {
-        private Intent mIntent;
-
-        public ActivityListener(Class<? extends Activity> clazz) {
-            this(new Intent(getSupportActivity(), clazz));
-        }
-
-        public ActivityListener(Intent intent) {
-            mIntent = intent;
-        }
-
-        @Override
-        public void onClick(OtherItem otherItem) {
-            startActivity(mIntent);
-        }
-    }
-
-    private final class FragmentListener implements OnOtherItemClickListener {
-        private Class<? extends Fragment> mClass;
-
-        public FragmentListener(Class<? extends Fragment> clazz) {
-            mClass = clazz;
-        }
-
-        @Override
-        public void onClick(OtherItem otherItem) {
-            Fragment fragment = Fragment.instantiate(mClass);
-            if (fragment instanceof DialogFragment) {
-                ((DialogFragment) fragment).show(getSupportActivity());
-            } else {
-                ((DemoActivity) getSupportActivity()).addonSlider()
-                        .obtainSliderMenu().replaceFragment(fragment);
-            }
-        }
-    }
-
-    public static interface OnOtherItemClickListener {
-        public void onClick(OtherItem otherItem);
-    }
-
-    private static final class OtherAdapter extends DemoAdapter {
-        public OtherAdapter(Context context) {
-            super(context);
-        }
-    }
-
-    public static final class OtherItem extends DemoItem {
-        public OnOtherItemClickListener listener;
-        private boolean processLongClick = false;
-
-        @Override
-        public void onClick() {
-            if (listener != null && !longClickable) {
-                listener.onClick(this);
-            }
-        }
-
-        @Override
-        public boolean onLongClick() {
-            if (listener != null && longClickable && !processLongClick) {
-                processLongClick = true;
-                listener.onClick(this);
-                processLongClick = false;
-                return true;
-            }
-            return super.onLongClick();
-        }
-    }
-
     private OtherAdapter mAdapter;
 
     public void addItem(CharSequence label, Class<? extends Fragment> clazz) {
@@ -135,6 +67,12 @@ public class OtherFragment extends ListFragment {
         addItem("Pickers", PickersFragment.class);
         addItem("Menus", MenusFragments.class);
         addItem("Font Palette", FontPalette.class);
+        addItem("Toast", new OnOtherItemClickListener() {
+            @Override
+            public void onClick(OtherItem otherItem) {
+                Toast.makeText(getSupportActivity(), "Toast example", Toast.LENGTH_SHORT).show();
+            }
+        });
         addItem("Addon: Tabber", TabsFragment.class);
     }
 
@@ -169,6 +107,75 @@ public class OtherFragment extends ListFragment {
         list.setOnItemClickListener(mAdapter);
         if (handleLongClick) {
             list.setOnItemLongClickListener(mAdapter);
+        }
+    }
+
+    public static interface OnOtherItemClickListener {
+        public void onClick(OtherItem otherItem);
+    }
+
+    private static final class OtherAdapter extends DemoAdapter {
+        public OtherAdapter(Context context) {
+            super(context);
+        }
+    }
+
+    public static final class OtherItem extends DemoItem {
+        public OnOtherItemClickListener listener;
+        private boolean processLongClick = false;
+
+        @Override
+        public void onClick() {
+            if (listener != null && !longClickable) {
+                listener.onClick(this);
+            }
+        }
+
+        @Override
+        public boolean onLongClick() {
+            if (listener != null && longClickable && !processLongClick) {
+                processLongClick = true;
+                listener.onClick(this);
+                processLongClick = false;
+                return true;
+            }
+            return super.onLongClick();
+        }
+    }
+
+    private final class ActivityListener implements OnOtherItemClickListener {
+        private Intent mIntent;
+
+        public ActivityListener(Class<? extends Activity> clazz) {
+            this(new Intent(getSupportActivity(), clazz));
+        }
+
+        public ActivityListener(Intent intent) {
+            mIntent = intent;
+        }
+
+        @Override
+        public void onClick(OtherItem otherItem) {
+            startActivity(mIntent);
+        }
+    }
+
+    private final class FragmentListener implements OnOtherItemClickListener {
+        private Class<? extends Fragment> mClass;
+
+        public FragmentListener(Class<? extends Fragment> clazz) {
+            mClass = clazz;
+        }
+
+        @Override
+        public void onClick(OtherItem otherItem) {
+            Fragment fragment = Fragment.instantiate(mClass);
+            if (fragment instanceof DialogFragment) {
+                ((DialogFragment) fragment).show(getSupportActivity());
+            } else {
+                ((DemoActivity) getSupportActivity()).addonSlider()
+                        .obtainSliderMenu().replaceFragment(fragment);
+            }
         }
     }
 }

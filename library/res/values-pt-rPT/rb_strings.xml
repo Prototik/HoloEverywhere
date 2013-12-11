@@ -3,7 +3,7 @@
   <string name="activity_resolver_use_always">"Sempre"</string>
   <string name="activity_resolver_use_once">"Apenas uma vez"</string>
   <string name="candidates_style">"candidatos"</string>
-  <string name="capital_off">"Desactivar"</string>
+  <string name="capital_off">"Desativado"</string>
   <string name="capital_on">"Ativado"</string>
   <string name="chooseActivity">"Escolha uma ação"</string>
   <string name="loading">"A carregar…"</string>
