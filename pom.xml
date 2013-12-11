@@ -65,7 +65,7 @@
 		<repository>
 			<id>holoeverywhereRepo</id>
 			<name>HoloEverywhere Repo</name>
-			<url>https://raw.github.com/Prototik/HoloEverywhere/repo</url>
+			<url>http://192.241.191.41/repo</url>
 			<layout>default</layout>
 		</repository>
 	</repositories>
@@ -74,7 +74,7 @@
 		<repository>
 			<id>holoeverywhereRepo</id>
 			<name>HoloEverywhere Repo</name>
-			<url>https://raw.github.com/Prototik/HoloEverywhere/repo</url>
+			<url>http://192.241.191.41/repo</url>
 			<uniqueVersion>true</uniqueVersion>
 		</repository>
 	</distributionManagement>
@@ -182,7 +182,7 @@
 					<extensions>true</extensions>
 					<configuration>
 						<sdk>
-							<platform>18</platform>
+							<platform>19</platform>
 						</sdk>
 						<sign>
 							<debug>false</debug>

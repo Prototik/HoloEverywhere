@@ -76,7 +76,7 @@ if (android.class.name.startsWith('com.android.build.gradle.LibraryExtension')) 
                 configurations.compile,
                 "${buildDir}/classes/release",
                 project.fileTree("${buildDir}/exploded-bundles") { include '*/classes.jar' },
-                new File(android.plugin.sdkDirectory, 'platforms/android-18/android.jar')
+                new File(android.plugin.sdkDirectory, 'platforms/android-19/android.jar')
         )
     }
 

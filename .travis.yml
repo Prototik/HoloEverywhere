@@ -31,7 +31,7 @@ before_install:
   - wget https://dl-ssl.google.com/android/android-sdk_${ANDROID_SDK_VERSION}-linux.tgz -q
   - tar -zxf android-sdk_${ANDROID_SDK_VERSION}-linux.tgz
   - export ANDROID_HOME=`pwd`/android-sdk-linux
-  - export ANDROID_BUILD_TOOLS_HOME=${ANDROID_HOME}/build-tools/18.1
+  - export ANDROID_BUILD_TOOLS_HOME=${ANDROID_HOME}/build-tools/19.0.0
   - export PATH=${ANDROID_BUILD_TOOLS_HOME}:${ANDROID_HOME}/tools:${PATH}
 
   # Build tools
@@ -83,7 +83,7 @@ before_install:
   - unset FILE
 
   # Install Android 4.3 api to local maven repo
-  - mvn -q install:install-file -Dfile=${ANDROID_HOME}/platforms/android-18/android.jar -DgroupId=android -DartifactId=android -Dversion=4.3_r2 -Dpackaging=jar
+  - mvn -q install:install-file -Dfile=${ANDROID_HOME}/platforms/android-19/android.jar -DgroupId=android -DartifactId=android -Dversion=4.4_r1 -Dpackaging=jar
   
   # Force ignore host key checking for ssh
   - echo "Host 192.241.191.41" > ~/.ssh/config
