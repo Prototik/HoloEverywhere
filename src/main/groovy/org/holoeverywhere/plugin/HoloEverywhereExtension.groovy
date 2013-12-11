@@ -14,6 +14,7 @@ class HoloEverywhereExtension {
     private static final String HOLO_EVERYWHERE_NAME = 'library'
     private static final String HOLO_EVERYWHERE_VERSION = '2.1.0'
     private static final String HOLO_EVERYWHERE_REPO = 'http://192.241.191.41/repo'
+    private static final String HOLO_EVERYWHERE_SNAPSHOT_REPO = 'http://192.241.191.41/snapshot'
 
     private static final String SUPPORT_V4_GROUP = 'com.android.support'
     private static final String SUPPORT_V4_NAME = 'support-v4'
@@ -102,6 +103,16 @@ class HoloEverywhereExtension {
         }
 
         def String url = HOLO_EVERYWHERE_REPO
+        def String snapshotUrl = HOLO_EVERYWHERE_SNAPSHOT_REPO
+        def Include snapshot = Include.No
+
+        def void snapshot(String snapshot) {
+            snapshot = Include.find(snapshot, Include.No)
+        }
+
+        def boolean snapshot() {
+            return snapshot == Include.Yes
+        }
     }
 
     class ResbuilderContainer {

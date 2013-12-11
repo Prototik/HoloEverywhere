@@ -9,6 +9,7 @@ import javax.inject.Inject
 
 class HoloEverywhereRepoPlugin implements Plugin<Project> {
     private static final String REPO_NAME = 'holoeverywhere'
+    private static final String SNAPSHOT_REPO_NAME = 'holoeverywhere-snapshot'
     private final Instantiator instantiator
 
     @Inject
@@ -26,6 +27,16 @@ class HoloEverywhereRepoPlugin implements Plugin<Project> {
                     p.repositories.maven {
                         name REPO_NAME
                         url holoeverywhere.repository.url
+                    }
+                }
+            }
+        }
+        if (holoeverywhere.repository.snapshot()) {
+            project.allprojects.each { Project p ->
+                if (!p.repositories.any { it.name == SNAPSHOT_REPO_NAME }) {
+                    p.repositories.maven {
+                        name SNAPSHOT_REPO_NAME
+                        url holoeverywhere.repository.snapshotUrl
                     }
                 }
             }
