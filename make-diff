@@ -1,0 +1,10 @@
+#!/bin/bash
+git_path=$1
+if [ "x$git_path" = "x" ]; then
+  echo "Usage:"
+  echo "make-diff (base commit id)"
+  exit 1
+fi
+
+git diff --no-prefix --ignore-space-change $git_path froyo honeycomb_mr2 jellybean gingerbread ics jellybean-mr1 eclair ics-mr1 jellybean-mr2 eclair-mr1 honeycomb java kitkat > holoeverywhere.patch
+
