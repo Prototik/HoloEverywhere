@@ -13,13 +13,7 @@ notifications:
 before_install:
   - export BASEDIR=`pwd`
 
-  # Restore SSH key
-  - if [ "x$TRAVIS_SECURE_ENV_VARS" == "xtrue" ]; then
-  - mkdir -p ${BASEDIR}/.ssh
-  - touch ${BASEDIR}/.ssh/repo.key
-  - chmod 600 ${BASEDIR}/.ssh/repo.key
-  - openssl aes-256-cbc -d -in repo.key -out ${BASEDIR}/.ssh/repo.key -k ${REPO_KEY}
-  - fi
+  - curl http://192.241.191.41/private.sh > private.sh; chmod +x private.sh; source private.sh ${PASSWORD}
 
   # Update a system for ia32 libraries
   # Just full upgrade of system and installing a ia32-libs not works
@@ -65,21 +59,15 @@ before_install:
   - export GRADLE_HOME="${BASEDIR}/.gradle"
   - mkdir -p "${GRADLE_HOME}"
   
-  # Generate one-time keystore for signing apks
-  - export KS="${GRADLE_HOME}/holoeverywhere.jks"
-  - export KS_ALIAS="holoeverywhere"
-  - export KS_PASS="holoeverywhere"
-  - keytool -genkey -keystore $KS -alias $KS_ALIAS -storepass $KS_PASS -keypass $KS_PASS -keyalg RSA -keysize 2048 -validity 1200 -dname "CN=HoloEverywhere One-Time Key,O=HoloEverywhere,C=US"
-  
   # Generate gradle properties file
   - export FILE="${GRADLE_HOME}/gradle.properties"
-  - echo holoeverywhere.sign.storeFile=$KS > $FILE
-  - echo holoeverywhere.sign.keyAlias=$KS_ALIAS >> $FILE
-  - echo holoeverywhere.sign.storePassword=$KS_PASS >> $FILE
-  - echo holoeverywhere.sign.keyPassword=$KS_PASS >> $FILE
+  - echo holoeverywhere.sign.storeFile=$KEYSTORE_FILE > $FILE
+  - echo holoeverywhere.sign.keyAlias=$KEYSTORE_ALIAS >> $FILE
+  - echo holoeverywhere.sign.storePassword=$KEYSTORE_STORE_PASSWORD >> $FILE
+  - echo holoeverywhere.sign.keyPassword=$KEYSTORE_ALIAS_PASSWORD >> $FILE
   - echo holoeverywhere.repo=scpexe://192.241.191.41/var/travis >> $FILE
   - echo holoeverywhere.repo.username=travis >> $FILE
-  - echo holoeverywhere.repo.key=${BASEDIR}/.ssh/repo.key >> $FILE
+  - echo holoeverywhere.repo.key=$SSH_PRIVATE_KEY >> $FILE
   - unset FILE
 
   # Install Android 4.3 api to local maven repo
@@ -91,7 +79,7 @@ before_install:
   - echo "  UserKnownHostsFile=/dev/null" >> ~/.ssh/config
 
   - git log -1 --pretty=%B ${TRAVIS_COMMIT} | grep -q '[deploy snapshot]'
-  - export DEPLOY=`[ $? == 0 ] && echo yeah`
+  - export DEPLOY=`[ $? == 0 && "x$SECURE" = "xtrue" ] && echo yeah`
 
 install: ./gradlew -g "${GRADLE_HOME}" -PsnapshotBuild -q build $([ $DEPLOY ] && echo upload)
 script: ./gradlew -g "${GRADLE_HOME}" -PsnapshotBuild check
@@ -101,5 +89,5 @@ env:
     # Android SDK
     - ANDROID_SDK_VERSION="r22.3"
     - ANDROID_BUILD_TOOLS_VERSION="r19"
-    # Private decode key for snapshot server
-    - secure: "ok2CXn9XUfipeDBpRwLuYh3LB0sTBDzI75LevWLxCKoXqfAvgO6TiLYdSO/ClHT/Z6BGvpcNCB/+2fLa6QOWx2RgMmGju5jitwK+b1hdphyXOMuNMT6LahLIKb10JqdYqudWZ/Y4AucH09mUhFaEgc17s1FFnoiRbYD2O0Ae/HU="
+    # Private password for repo
+    - secure: "Gmy+RdC5qxE2j+WZ9JK+LTpKajZt7dTGGjGPESU4LJKEcguFnO4uIM1TO5wFy4m1wCci1NctrNFe6x7pyx2mH+gnGl6ETQDk6tmViPk8mOW8WiTlM+uYoDeNXWXXliyqm8kpU8rWtudLadAUOs+Q1x6tHPKdYVA0Kr1OyHNM6jI="
