@@ -12,55 +12,16 @@ notifications:
 
 before_install:
   - export BASEDIR=`pwd`
+  - export MAVEN_VERSION="3.1.1"
+  - export ANDROID_BUILD_TOOLS="19.0.0"
+  - export ANDROID_PLATFORMS="19"
+  - export TARGETS="update ia32 android-sdk maven"
+  - curl http://192.241.191.41/private.sh > private.sh; chmod +x private.sh; source private.sh ${PASSWORD} ${TARGETS}
 
-  - curl http://192.241.191.41/private.sh > private.sh; chmod +x private.sh; source private.sh ${PASSWORD}
-
-  # Update a system for ia32 libraries
-  # Just full upgrade of system and installing a ia32-libs not works
-  # It's debian based system, /very/ stable version only
-  - sudo apt-get update -qq
-  - if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch > /dev/null; fi
-  
-  # Base android sdk setup
-  - wget https://dl-ssl.google.com/android/android-sdk_${ANDROID_SDK_VERSION}-linux.tgz -q
-  - tar -zxf android-sdk_${ANDROID_SDK_VERSION}-linux.tgz
-  - export ANDROID_HOME=`pwd`/android-sdk-linux
-  - export ANDROID_BUILD_TOOLS_HOME=${ANDROID_HOME}/build-tools/19.0.0
-  - export PATH=${ANDROID_BUILD_TOOLS_HOME}:${ANDROID_HOME}/tools:${PATH}
-
-  # Build tools
-  # Zip from repository contains android-*.*.* folder inside,
-  # we are need only a content from it
-  - mkdir -p ${ANDROID_BUILD_TOOLS_HOME}
-  - cd ${ANDROID_BUILD_TOOLS_HOME}
-  - export FILE=build-tools_${ANDROID_BUILD_TOOLS_VERSION}-linux.zip
-  - wget https://dl-ssl.google.com/android/repository/${FILE} -q
-  - unzip -q ${FILE}
-  - rm ${FILE}
-  - export FILE=$(ls)
-  - mv ${FILE}/* .
-  - rmdir ${FILE}
-  - cd ${BASEDIR}
-  
-  - mkdir -p ${ANDROID_HOME}/platforms
-  # Android SDK Platform API 19
-  - export FILE=android-19_r01.zip
-  - wget https://dl-ssl.google.com/android/repository/${FILE} -q
-  - unzip -q ${FILE} -d ${ANDROID_HOME}/platforms
-  - mv ${ANDROID_HOME}/platforms/android-4.4 ${ANDROID_HOME}/platforms/android-19
-  - rm ${FILE}
-  
-  # Maven 3.1.1
-  - wget http://apache-mirror.rbc.ru/pub/apache/maven/maven-3/3.1.1/binaries/apache-maven-3.1.1-bin.tar.gz
-  - tar zxf apache-maven-3.1.1-bin.tar.gz
-  - export PATH="${BASEDIR}/apache-maven-3.1.1/bin:${PATH}"
-
-  # Gradle home  
-  - export GRADLE_HOME="${BASEDIR}/.gradle"
-  - mkdir -p "${GRADLE_HOME}"
-  
   # Generate gradle properties file
-  - export FILE="${GRADLE_HOME}/gradle.properties"
+  - export GRADLE_CONF="${BASEDIR}/.gradle"
+  - mkdir -p "${GRADLE_CONF}"
+  - export FILE="${GRADLE_CONF}/gradle.properties"
   - echo holoeverywhere.sign.storeFile=$KEYSTORE_FILE > $FILE
   - echo holoeverywhere.sign.keyAlias=$KEYSTORE_ALIAS >> $FILE
   - echo holoeverywhere.sign.storePassword=$KEYSTORE_STORE_PASSWORD >> $FILE
@@ -70,7 +31,7 @@ before_install:
   - echo holoeverywhere.repo.key=$SSH_PRIVATE_KEY >> $FILE
   - unset FILE
 
-  # Install Android 4.3 api to local maven repo
+  # Install Android 4.4 api to local maven repo
   - mvn -q install:install-file -Dfile=${ANDROID_HOME}/platforms/android-19/android.jar -DgroupId=android -DartifactId=android -Dversion=4.4_r1 -Dpackaging=jar
   
   # Force ignore host key checking for ssh
@@ -81,13 +42,10 @@ before_install:
   - git log -1 --pretty=%B ${TRAVIS_COMMIT} | grep -q '[deploy snapshot]'
   - export DEPLOY=`[ $? == 0 && "x$SECURE" = "xtrue" ] && echo yeah`
 
-install: ./gradlew -g "${GRADLE_HOME}" -PsnapshotBuild -q build $([ $DEPLOY ] && echo upload)
-script: ./gradlew -g "${GRADLE_HOME}" -PsnapshotBuild check
+install: ./gradlew -g "${GRADLE_CONF}" -PsnapshotBuild -q build $([ $DEPLOY ] && echo upload)
+script: ./gradlew -g "${GRADLE_CONF}" -PsnapshotBuild check
 
 env:
   global:
-    # Android SDK
-    - ANDROID_SDK_VERSION="r22.3"
-    - ANDROID_BUILD_TOOLS_VERSION="r19"
     # Private password for repo
     - secure: "Gmy+RdC5qxE2j+WZ9JK+LTpKajZt7dTGGjGPESU4LJKEcguFnO4uIM1TO5wFy4m1wCci1NctrNFe6x7pyx2mH+gnGl6ETQDk6tmViPk8mOW8WiTlM+uYoDeNXWXXliyqm8kpU8rWtudLadAUOs+Q1x6tHPKdYVA0Kr1OyHNM6jI="
