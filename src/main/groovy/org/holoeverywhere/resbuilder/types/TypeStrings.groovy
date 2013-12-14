@@ -104,11 +104,7 @@ class TypeStrings extends AndroidXmlType {
 
     @Override
     void bind(ResbuilderDefaultTask task) {
-        this.project = task.project
-        def BasePlugin androidPlugin = task.project.plugins.find { BasePlugin.class.isAssignableFrom(it.class) } as BasePlugin
-        if (androidPlugin == null) {
-            throw new RuntimeException("Could not find android plugin/extension")
-        }
-        resourcesDir = new File(androidPlugin.loadedSdkParser.target.getPath(IAndroidTarget.RESOURCES))
+        project = task.project
+        resourcesDir = task.obtainResourcesDir()
     }
 }

@@ -4,6 +4,7 @@ import org.gradle.api.tasks.TaskAction
 import org.holoeverywhere.resbuilder.api.Type
 import org.holoeverywhere.resbuilder.dsl.ResbuilderSourceSet
 import org.holoeverywhere.resbuilder.types.TypeAttrs
+import org.holoeverywhere.resbuilder.types.TypeDrawable
 import org.holoeverywhere.resbuilder.types.TypeStrings
 import org.holoeverywhere.resbuilder.types.TypeStyles
 import org.yaml.snakeyaml.Yaml
@@ -22,25 +23,23 @@ class ResbuilderProcesserTask extends ResbuilderDefaultTask {
             container.type = type
             return add(container)
         }
-
-        @Override
-        def boolean add(TypeContainer container) {
-            container.type.bind(ResbuilderProcesserTask.this)
-            return super.add(container)
-        }
     }
 
     final TypeSet types = new TypeSet()
 
     ResbuilderProcesserTask() {
-        types.add(new TypeStyles())
         types.add(new TypeAttrs())
+        types.add(new TypeDrawable())
+        types.add(new TypeStyles())
         types.add(new TypeStrings())
     }
 
     @TaskAction
     def process() {
         if (source == null) return
+
+        types*.type*.bind(this)
+
         Yaml yaml = new Yaml()
         source.each { ResbuilderSourceSet set ->
             final File outputDir = set.output.resourcesDir
