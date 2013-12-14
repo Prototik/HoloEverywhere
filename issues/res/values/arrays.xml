@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="nirvana">
+        <item>Kurt Donald Cobain</item>
+        <item>Krist Anthony Novoselic</item>
+        <item>David Eric Grohl</item>
+        <item>Aaron Burckhard</item>
+        <item>Chad Channing</item>
+        <item>Daniel Joe Peters</item>
+        <item>Dave Foster</item>
+    </string-array>
+</resources>

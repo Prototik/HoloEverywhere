@@ -12,7 +12,7 @@ blocks:
     android:scrollbarSize: 10dp
     android:scrollbarTrackHorizontal: :null
     android:scrollbarTrackVertical: :null
-    android:spinnerItemStyle: :style/Holo.TextView.SpinnerItem
+    android:spinnerItemStyle: ?spinnerItemStyle
   BackportBarDark:
     actionBarWidgetTheme: :style/Holo.Theme
   BackportBarLight:

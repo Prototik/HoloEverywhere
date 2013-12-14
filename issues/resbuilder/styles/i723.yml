@@ -1,0 +1,11 @@
+styles:
+  Holo.Issues.I723.SpinnerItem < Holo.TextView.SpinnerItem:
+    android:textAppearance: :style/Holo.Issues.I723.SpinnerItem.TextAppearance
+  Holo.Issues.I723.SpinnerItem.DropDown < Holo.TextView.SpinnerItem.DropDown:
+    android:textAppearance: :style/Holo.Issues.I723.SpinnerItem.TextAppearance
+  Holo.Issues.I723.SpinnerItem.TextAppearance < Holo.TextAppearance.TextView.SpinnerItem:
+    android:textColor: :color/holo_blue_dark
+    android:textSize: 30sp
+  Holo.Issues.I723.Theme < Holo.Theme:
+    spinnerDropDownItemStyle: :style/Holo.Issues.I723.SpinnerItem.DropDown
+    spinnerItemStyle: :style/Holo.Issues.I723.SpinnerItem

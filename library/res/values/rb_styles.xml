@@ -804,7 +804,7 @@
     <item name="android:scrollbarTrackHorizontal">@null</item>
     <item name="android:scrollbarTrackVertical">@null</item>
     <item name="android:seekBarStyle">@style/Holo.SeekBar</item>
-    <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
+    <item name="android:spinnerItemStyle">?spinnerItemStyle</item>
   </style>
   <style name="Holo.Theme.Dialog" parent="Holo.Base.Theme.Dialog" />
   <style name="Holo.Theme.Dialog.Alert" parent="Holo.Theme.Dialog">
@@ -898,7 +898,7 @@
     <item name="android:scrollbarTrackHorizontal">@null</item>
     <item name="android:scrollbarTrackVertical">@null</item>
     <item name="android:seekBarStyle">@style/Holo.SeekBar.Light</item>
-    <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
+    <item name="android:spinnerItemStyle">?spinnerItemStyle</item>
   </style>
   <style name="Holo.Theme.Light.DarkActionBar" parent="Holo.Base.Theme.Light.DarkActionBar">
     <item name="actionBarWidgetTheme">@style/Holo.Theme</item>
@@ -935,7 +935,7 @@
     <item name="android:scrollbarTrackHorizontal">@null</item>
     <item name="android:scrollbarTrackVertical">@null</item>
     <item name="android:seekBarStyle">@style/Holo.SeekBar.Light</item>
-    <item name="android:spinnerItemStyle">@style/Holo.TextView.SpinnerItem</item>
+    <item name="android:spinnerItemStyle">?spinnerItemStyle</item>
   </style>
   <style name="Holo.Theme.Light.DarkActionBar.Fullscreen" parent="Holo.Theme.Light.DarkActionBar">
     <item name="android:windowContentOverlay">@null</item>
