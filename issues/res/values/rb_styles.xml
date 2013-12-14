@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="Holo.Issues.I723.SpinnerItem" parent="Holo.TextView.SpinnerItem">
+    <item name="android:textAppearance">@style/Holo.Issues.I723.SpinnerItem.TextAppearance</item>
+  </style>
+  <style name="Holo.Issues.I723.SpinnerItem.DropDown" parent="Holo.TextView.SpinnerItem.DropDown">
+    <item name="android:textAppearance">@style/Holo.Issues.I723.SpinnerItem.TextAppearance</item>
+  </style>
+  <style name="Holo.Issues.I723.SpinnerItem.TextAppearance" parent="Holo.TextAppearance.TextView.SpinnerItem">
+    <item name="android:textColor">@color/holo_blue_dark</item>
+    <item name="android:textSize">30sp</item>
+  </style>
+  <style name="Holo.Issues.I723.Theme" parent="Holo.Theme">
+    <item name="spinnerDropDownItemStyle">@style/Holo.Issues.I723.SpinnerItem.DropDown</item>
+    <item name="spinnerItemStyle">@style/Holo.Issues.I723.SpinnerItem</item>
+  </style>
+</resources>
