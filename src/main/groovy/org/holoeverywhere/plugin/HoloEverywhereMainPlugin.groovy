@@ -1,33 +1,34 @@
 package org.holoeverywhere.plugin
 
 import com.android.build.gradle.BasePlugin
+import com.android.build.gradle.LibraryPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
 import org.gradle.internal.reflect.Instantiator
 import org.gradle.tooling.provider.model.ToolingModelBuilderRegistry
+import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
 import org.holoeverywhere.resbuilder.dsl.ResbuilderSourceSet
 import org.holoeverywhere.resbuilder.tasks.ResbuilderFormatTask
 import org.holoeverywhere.resbuilder.tasks.ResbuilderProcesserTask
 
 import javax.inject.Inject
 
-class HoloEverywhereMainPlugin implements Plugin<Project> {
+class HoloEverywhereMainPlugin extends HoloEverywhereBasePlugin {
     private static final String APPCOMPAT_V7_GROUP = 'com.android.support'
     private static final String APPCOMPAT_V7_NAME = 'appcompat-v4'
 
-    private final Instantiator instantiator
     private HoloEverywhereExtension holoeverywhere
 
     @Inject
-    public HoloEverywhereMainPlugin(Instantiator instantiator, ToolingModelBuilderRegistry registry) {
-        this.instantiator = instantiator
+    HoloEverywhereMainPlugin(Instantiator instantiator, ToolingModelBuilderRegistry registry) {
+        super(instantiator, registry)
     }
 
     @Override
     void apply(Project project) {
-        holoeverywhere = HoloEverywhereExtension.getOrCreateExtension(project, instantiator)
+        holoeverywhere = extension(project)
         project.afterEvaluate { afterEvaluate(project) }
     }
 
@@ -85,6 +86,10 @@ class HoloEverywhereMainPlugin implements Plugin<Project> {
                 task.source = [sourceSet] as Set
                 project.tasks.getByName('preBuild').dependsOn task
             }
+        }
+
+        if (holoeverywhere.library.applyPlugin && project.plugins.hasPlugin(LibraryPlugin)) {
+            project.plugins.apply(HoloEverywhereLibraryPlugin)
         }
     }
 }

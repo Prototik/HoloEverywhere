@@ -1,20 +1,19 @@
 package org.holoeverywhere.plugin
 
-import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.internal.reflect.Instantiator
 import org.gradle.tooling.provider.model.ToolingModelBuilderRegistry
+import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
 
 import javax.inject.Inject
 
-class HoloEverywhereRepoPlugin implements Plugin<Project> {
+class HoloEverywhereRepoPlugin extends HoloEverywhereBasePlugin {
     private static final String REPO_NAME = 'holoeverywhere'
     private static final String SNAPSHOT_REPO_NAME = 'holoeverywhere-snapshot'
-    private final Instantiator instantiator
 
     @Inject
-    public HoloEverywhereRepoPlugin(Instantiator instantiator, ToolingModelBuilderRegistry registry) {
-        this.instantiator = instantiator
+    HoloEverywhereRepoPlugin(Instantiator instantiator, ToolingModelBuilderRegistry registry) {
+        super(instantiator, registry)
     }
 
     @Override
