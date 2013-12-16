@@ -29,6 +29,7 @@ Issues: [Stable][APKIssuesStable] | [Latest][APKIssuesLatest]
 ## Featured implementations
  * [Project Euler](https://play.google.com/store/apps/details?id=ie.cathalcoffey.android.projecteuler)
  * [TimeAct To-Do](https://play.google.com/store/apps/details?id=timeact.app.task.manager)
+ * [Day by Day](https://play.google.com/store/apps/details?id=ru.infteh.organizer.trial)
  * [UnixAdmin](https://play.google.com/store/apps/details?id=org.kidinov.unixadmin)
  * [AppSales. Best Apps on Sale](https://play.google.com/store/apps/details?id=net.tsapps.appsales)
  * [Meditation Assistant](https://play.google.com/store/apps/details?id=sh.ftp.rocketninelabs.meditationassistant)
