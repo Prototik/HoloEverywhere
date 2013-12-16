@@ -57,12 +57,25 @@ class HoloEverywhereUploadPlugin extends HoloEverywhereBasePlugin {
             mavenDeployer.snapshotRepository = repository
         }
 
-        mavenDeployer.pom.licenses {
-            license {
-                name upload.license.name
-                url upload.license.url
-                distribution upload.license.distribution
-                comments upload.license.comments
+        mavenDeployer.pom.project {
+            groupId = upload.group ?: project.group ?: project.rootProject.group ?: 'default'
+            artifactId = upload.artifact ?: project.name
+            version = upload.version ?: project.version
+            if (upload.description != null) description upload.description
+
+            scm {
+                url upload.scm.url
+                connection upload.scm.connection
+                developerConnection upload.scm.developerConnection
+            }
+
+            licenses {
+                license {
+                    name upload.license.name
+                    url upload.license.url
+                    distribution upload.license.distribution
+                    comments upload.license.comments
+                }
             }
         }
 
