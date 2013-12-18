@@ -1,0 +1,13 @@
+styles:
+  Holo.Issues.I701.Theme < Holo.Theme:
+    alertDialogTheme: :style/Holo.Issues.I701.AlertDialogTheme
+  Holo.Issues.I701.AlertDialogTheme < Holo.Theme.Dialog.Alert:
+    alertDialogTitleDividerColor: :color/holo_green_light
+    android:windowTitleStyle: :style/Holo.Issues.I701.AlertDialogWindowTitle
+    buttonBarButtonStyle: :style/Holo.Issues.I701.AlertDialogButton
+  Holo.Issues.I701.AlertDialogWindowTitle < Holo.DialogWindowTitle:
+    android:textAppearance: :style/Holo.Issues.I701.AlertDialogWindowTitle.TextAppearance
+  Holo.Issues.I701.AlertDialogWindowTitle.TextAppearance < Holo.TextAppearance.DialogWindowTitle:
+    android:textColor: :color/holo_green_light
+  Holo.Issues.I701.AlertDialogButton < Holo.Button.Borderless.Small:
+    android:background: :drawable/i701_button

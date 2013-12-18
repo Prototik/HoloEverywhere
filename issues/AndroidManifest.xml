@@ -150,6 +150,15 @@
         </activity>
 
         <activity
+            android:name=".i701.MainActivity"
+            android:label="Issue #701">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="org.holoeverywhere.category.ISSUE_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".i720.MainActivity"
             android:label="Issue #720">
             <intent-filter>
