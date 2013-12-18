@@ -418,6 +418,14 @@ public class DayPickerView extends ListView implements OnScrollListener, OnDateC
         return true;
     }
 
+    private void supportSmoothScrollBy(int distance, int duration) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+            smoothScrollBy(distance, duration);
+        } else {
+            scrollBy(0, distance);
+        }
+    }
+
     protected class ScrollStateRunnable implements Runnable {
         private int mNewState;
 
@@ -463,9 +471,9 @@ public class DayPickerView extends ListView implements OnScrollListener, OnDateC
                 final int midpoint = getHeight() / 2;
                 if (scroll && top < LIST_TOP_OFFSET) {
                     if (bottom > midpoint) {
-                        smoothScrollBy(top, GOTO_SCROLL_DURATION);
+                        supportSmoothScrollBy(top, GOTO_SCROLL_DURATION);
                     } else {
-                        smoothScrollBy(bottom, GOTO_SCROLL_DURATION);
+                        supportSmoothScrollBy(bottom, GOTO_SCROLL_DURATION);
                     }
                 }
             } else {
