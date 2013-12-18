@@ -62,7 +62,7 @@ class HoloEverywhereMainPlugin extends HoloEverywhereBasePlugin {
 
         // Addons
         holoeverywhere.addons.each { HoloEverywhereExtension.Addon addon ->
-            project.dependencies.add(holoeverywhere.configuration, "${addon.group}:${addon.name}:${addon.version || holoeverywhereDependency.version}@aar")
+            project.dependencies.add(holoeverywhere.configuration, "${addon.group}:${addon.name}:${addon.version ?: holoeverywhereDependency.version}@aar")
         }
 
         // Checkout that pure AppCompat was not added to dependencies

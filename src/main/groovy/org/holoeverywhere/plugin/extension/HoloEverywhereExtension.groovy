@@ -4,6 +4,7 @@ import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectFactory
 import org.gradle.api.Project
 import org.gradle.internal.reflect.Instantiator
+import org.gradle.util.ConfigureUtil
 
 class HoloEverywhereExtension {
     public static final String HOLO_EVERYWHERE_GROUP = 'org.holoeverywhere'
@@ -54,6 +55,7 @@ class HoloEverywhereExtension {
         this.addons = project.container(Addon, new NamedDomainObjectFactory<Addon>() {
             @Override
             Addon create(String name) {
+                println(name)
                 String[] parts = name.split(':')
                 return parts.length > 1 ? new Addon(parts[0], parts[1], parts.length == 3 ? parts[2] : null) : new Addon("addon-${name}")
             }
@@ -76,34 +78,27 @@ class HoloEverywhereExtension {
     }
 
     def LibraryContainer library(Closure<?> closure) {
-        return call(closure, library);
+        return ConfigureUtil.configure(closure, library);
     }
 
     def SupportV4Container supportV4(Closure<?> closure) {
-        return call(closure, supportV4);
+        return ConfigureUtil.configure(closure, supportV4);
     }
 
     def RepositoryContainer repository(Closure<?> closure) {
-        return call(closure, repository);
+        return ConfigureUtil.configure(closure, repository);
     }
 
     def ResbuilderContainer resbuilder(Closure<?> closure) {
-        return call(closure, resbuilder);
+        return ConfigureUtil.configure(closure, resbuilder);
     }
 
     def UploadContainer upload(Closure<?> closure) {
-        return call(closure, upload);
+        return ConfigureUtil.configure(closure, upload);
     }
 
     def void include(String name) {
         this.include = IncludeContainer.Include.find(name, IncludeContainer.Include.Inhert)
-    }
-
-    public static <T> T call(Closure<?> closure, T t) {
-        if (closure == null) return t
-        closure.delegate = t
-        closure.call(t)
-        return t
     }
 
     private static final String EXTENSION_NAME = 'holoeverywhere'

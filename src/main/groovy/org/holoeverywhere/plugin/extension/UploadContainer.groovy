@@ -1,6 +1,7 @@
 package org.holoeverywhere.plugin.extension
 
 import org.gradle.api.Project
+import org.gradle.util.ConfigureUtil
 import org.holoeverywhere.plugin.extension.upload.LicenseContainer
 import org.holoeverywhere.plugin.extension.upload.RepositoryContainer
 import org.holoeverywhere.plugin.extension.upload.ScmContainer
@@ -27,15 +28,15 @@ class UploadContainer {
     def String description
 
     def RepositoryContainer repository(Closure<?> closure) {
-        return HoloEverywhereExtension.call(closure, repository)
+        return ConfigureUtil.configure(closure, repository)
     }
 
     def LicenseContainer license(Closure<?> closure) {
-        return HoloEverywhereExtension.call(closure, license)
+        return ConfigureUtil.configure(closure, license)
     }
 
     def ScmContainer scm(Closure<?> closure) {
-        return HoloEverywhereExtension.call(closure, scm)
+        return ConfigureUtil.configure(closure, scm)
     }
 
     def void github(String username, String repo) {
