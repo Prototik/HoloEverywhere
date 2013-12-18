@@ -1,5 +1,6 @@
 package org.holoeverywhere.plugin
 
+import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.BasePlugin
 import com.android.build.gradle.LibraryPlugin
 import org.gradle.api.Plugin
@@ -28,6 +29,9 @@ class HoloEverywhereMainPlugin extends HoloEverywhereBasePlugin {
 
     @Override
     void apply(Project project) {
+        if (project.plugins.any { Plugin i -> BasePlugin.class.isAssignableFrom(i.class) }) {
+            project.logger.warn("HoloEverywhere plugin should be applied before any android plugin, please correct your build.gradle")
+        }
         holoeverywhere = extension(project)
         project.afterEvaluate { afterEvaluate(project) }
     }
@@ -37,7 +41,7 @@ class HoloEverywhereMainPlugin extends HoloEverywhereBasePlugin {
 
         // Android plugin
         if (!project.plugins.any { Plugin i -> BasePlugin.class.isAssignableFrom(i.class) }) {
-            project.plugins.apply('android')
+            project.plugins.apply(AppPlugin)
         }
 
         Configuration configuration = project.configurations.getByName(holoeverywhere.configuration);

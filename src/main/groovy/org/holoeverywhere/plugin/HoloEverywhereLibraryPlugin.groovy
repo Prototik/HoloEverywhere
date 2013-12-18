@@ -1,5 +1,6 @@
 package org.holoeverywhere.plugin
 
+import com.android.build.gradle.LibraryPlugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.SourceSet
@@ -7,6 +8,7 @@ import org.gradle.api.tasks.bundling.Jar
 import org.gradle.internal.reflect.Instantiator
 import org.gradle.tooling.provider.model.ToolingModelBuilderRegistry
 import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
+import org.holoeverywhere.plugin.task.AndroidClassesJar
 import org.holoeverywhere.plugin.task.AndroidJavadoc
 import org.holoeverywhere.plugin.task.AndroidJavadocJar
 import org.holoeverywhere.plugin.task.AndroidSourceJar
@@ -17,6 +19,7 @@ class HoloEverywhereLibraryPlugin extends HoloEverywhereBasePlugin {
     public static final String GENERATE_JAVADOC_TASK_NAME = 'javadoc'
     public static final String JAVADOC_JAR_TASK_NAME = 'javadocJar'
     public static final String SOURCES_JAR_TASK_NAME = 'sourcesJar'
+    public static final String CLASSES_JAR_TASK_NAME = 'classesJar'
 
     private HoloEverywhereExtension extension
 
@@ -29,12 +32,13 @@ class HoloEverywhereLibraryPlugin extends HoloEverywhereBasePlugin {
     void apply(Project project) {
         extension = extension(project)
 
-        def List<Jar> artifacts = new ArrayList<>()
+        project.plugins.apply(LibraryPlugin)
+
+        final List<Jar> artifacts = new ArrayList<>()
         if (extension.library.javadoc) artifacts.add(configureJavadoc(project))
         if (extension.library.sources) artifacts.add(configureSources(project))
-        if (extension.library.attachArchives(project)) {
-            artifacts.each { Jar packageTask -> project.artifacts.add('archives', packageTask) }
-        }
+        if (extension.library.classes) artifacts.add(configureClasses(project))
+        artifacts.each { Jar packageTask -> project.artifacts.add('archives', packageTask) }
     }
 
     static Jar configureJavadoc(Project project) {
@@ -62,5 +66,14 @@ class HoloEverywhereLibraryPlugin extends HoloEverywhereBasePlugin {
         }
 
         return packageSourcesTask
+    }
+
+    static Jar configureClasses(Project project) {
+        AndroidClassesJar packageClassesTask = project.tasks.create(CLASSES_JAR_TASK_NAME, AndroidClassesJar)
+        packageClassesTask.configure {
+            description = "Package compiled classes into jar archive."
+        }
+
+        return packageClassesTask
     }
 }

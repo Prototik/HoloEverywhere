@@ -45,7 +45,6 @@ class HoloEverywhereExtension {
     HoloEverywhereExtension(Project project, Instantiator instantiator) {
         this.project = project
         this.instantiator = instantiator
-
         this.library = new LibraryContainer(this)
         this.supportV4 = new SupportV4Container(this)
         this.repository = new RepositoryContainer(this)
@@ -69,7 +68,7 @@ class HoloEverywhereExtension {
     def final RepositoryContainer repository
     def final ResbuilderContainer resbuilder
     def final UploadContainer upload
-    def IncludeContainer.Include include = Include.Yes
+    def IncludeContainer.Include include = IncludeContainer.Include.Yes
     def String configuration = 'compile'
 
     def void addons(Closure<?> closure) {

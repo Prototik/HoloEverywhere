@@ -23,9 +23,9 @@ public class AndroidJavadoc extends Javadoc {
         if (sourceSet != null) {
             SourceDirectorySet androidSource = project.extensions.getByType(LibraryExtension).sourceSets.getByName(sourceSet).allJava
             if (source != null) {
-                source = project.files(source, androidSource)
+                setSource(project.files(source, androidSource))
             } else {
-                source = androidSource
+                setSource(androidSource)
             }
         }
         if (configuration != null) {
@@ -43,9 +43,9 @@ public class AndroidJavadoc extends Javadoc {
                     project.plugins.getPlugin(LibraryPlugin).loadedSdkParser.target.getPath(IAndroidTarget.ANDROID_JAR)
             )
             if (classpath != null) {
-                classpath = project.files(classpath, androidClasspath)
+                setClasspath(project.files(classpath, androidClasspath))
             } else {
-                classpath = androidClasspath
+                setClasspath(androidClasspath)
             }
         }
         super.generate()

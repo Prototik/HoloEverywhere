@@ -2,6 +2,7 @@ package org.holoeverywhere.plugin.extension.upload
 
 import org.apache.maven.artifact.ant.Authentication
 import org.gradle.api.Project
+import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
 
 class RepositoryContainer {
     private final Project project
@@ -24,14 +25,23 @@ class RepositoryContainer {
     }
 
     def void holoeverywhere() {
-        url = ''
+        url = HoloEverywhereExtension.HOLO_EVERYWHERE_REPO
+        snapshotUrl = HoloEverywhereExtension.HOLO_EVERYWHERE_SNAPSHOT_REPO
+        obtainCredentials('holoeverywhere')
+    }
+
+    def void local() {
+        snapshotUrl = url = "file://${new File(System.getProperty("user.home"), "/.m2/repository").absolutePath}"
+        obtainCredentials('')
     }
 
     def void obtainCredentials(String key) {
-        userName = project.properties.get("${key}UserName", null)
-        password = project.properties.get("${key}Password", null)
-        passphrase = project.properties.get("${key}Passphrase", null)
-        privateKey = project.properties.get("${key}PrivateKey", null)
+        if (key.length() > 0) {
+            userName = project.properties.get("${key}UserName", null)
+            password = project.properties.get("${key}Password", null)
+            passphrase = project.properties.get("${key}Passphrase", null)
+            privateKey = project.properties.get("${key}PrivateKey", null)
+        }
 
         final String name = project.rootProject.name
         if (name != null) {
