@@ -7,7 +7,7 @@ dependencies {
     compile localGroovy()
 
     compile 'org.yaml:snakeyaml:1.13@jar'
-    compile 'com.android.tools.build:gradle:0.6.3'
+    compile 'com.android.tools.build:gradle:0.7.0'
 }
 
 repositories {
