@@ -6,10 +6,12 @@ import org.gradle.api.Project
 import org.gradle.api.internal.project.ProjectInternal
 import org.gradle.api.tasks.SourceSet
 import org.gradle.internal.reflect.Instantiator
+import org.gradle.util.Configurable
+import org.gradle.util.ConfigureUtil
 import org.holoeverywhere.resbuilder.dsl.ResbuilderSourceSet
 import org.holoeverywhere.resbuilder.dsl.ResbuilderSourceSetFactory
 
-class ResbuilderContainer {
+class ResbuilderContainer implements Configurable<ResbuilderContainer> {
     ResbuilderContainer(Project project, Instantiator instantiator) {
         String resourcesDir = null;
         try {
@@ -29,5 +31,11 @@ class ResbuilderContainer {
 
     def sourceSets(Closure<?> closure) {
         sourceSets.configure closure
+    }
+
+    @Override
+    ResbuilderContainer configure(Closure closure) {
+        ConfigureUtil.configure(closure, this)
+        return this
     }
 }

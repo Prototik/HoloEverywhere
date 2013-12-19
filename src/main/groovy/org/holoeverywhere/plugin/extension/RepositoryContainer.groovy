@@ -1,6 +1,8 @@
 package org.holoeverywhere.plugin.extension
 
-class RepositoryContainer extends IncludeContainer {
+import org.gradle.util.Configurable
+
+class RepositoryContainer extends IncludeContainer implements Configurable<RepositoryContainer> {
     RepositoryContainer(HoloEverywhereExtension extension) {
         super(extension)
     }
@@ -15,5 +17,11 @@ class RepositoryContainer extends IncludeContainer {
 
     def boolean snapshot() {
         return snapshot == Include.Yes
+    }
+
+    @Override
+    RepositoryContainer configure(Closure closure) {
+        super.configure(closure)
+        return this
     }
 }

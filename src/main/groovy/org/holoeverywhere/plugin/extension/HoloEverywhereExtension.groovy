@@ -3,8 +3,8 @@ package org.holoeverywhere.plugin.extension
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectFactory
 import org.gradle.api.Project
+import org.gradle.api.internal.project.DefaultProject
 import org.gradle.internal.reflect.Instantiator
-import org.gradle.util.ConfigureUtil
 
 class HoloEverywhereExtension {
     public static final String HOLO_EVERYWHERE_GROUP = 'org.holoeverywhere'
@@ -46,11 +46,15 @@ class HoloEverywhereExtension {
     HoloEverywhereExtension(Project project, Instantiator instantiator) {
         this.project = project
         this.instantiator = instantiator
+        this.app = new AppContainer(project)
         this.library = new LibraryContainer(this)
         this.supportV4 = new SupportV4Container(this)
         this.repository = new RepositoryContainer(this)
         this.resbuilder = new ResbuilderContainer(project, instantiator)
         this.upload = new UploadContainer(project)
+        this.signing = new SigningContainer(project)
+
+        DefaultProject
 
         this.addons = project.container(Addon, new NamedDomainObjectFactory<Addon>() {
             @Override
@@ -65,36 +69,48 @@ class HoloEverywhereExtension {
     private final Project project
     private final Instantiator instantiator
     def final NamedDomainObjectContainer<Addon> addons
+    def final AppContainer app
     def final LibraryContainer library
     def final SupportV4Container supportV4
     def final RepositoryContainer repository
     def final ResbuilderContainer resbuilder
     def final UploadContainer upload
+    def final SigningContainer signing
+    def boolean applyLibraryPlugin = true
+    def boolean applyAppPlugin = true
     def IncludeContainer.Include include = IncludeContainer.Include.Yes
     def String configuration = 'compile'
 
-    def void addons(Closure<?> closure) {
-        addons.configure(closure)
+    def NamedDomainObjectContainer<Addon> addons(Closure<?> closure) {
+        return addons.configure(closure)
+    }
+
+    def AppContainer app(Closure<?> closure) {
+        return app.configure(closure);
     }
 
     def LibraryContainer library(Closure<?> closure) {
-        return ConfigureUtil.configure(closure, library);
+        return library.configure(closure);
     }
 
     def SupportV4Container supportV4(Closure<?> closure) {
-        return ConfigureUtil.configure(closure, supportV4);
+        return supportV4.configure(closure);
     }
 
     def RepositoryContainer repository(Closure<?> closure) {
-        return ConfigureUtil.configure(closure, repository);
+        return repository.configure(closure);
     }
 
     def ResbuilderContainer resbuilder(Closure<?> closure) {
-        return ConfigureUtil.configure(closure, resbuilder);
+        return resbuilder.configure(closure)
     }
 
     def UploadContainer upload(Closure<?> closure) {
-        return ConfigureUtil.configure(closure, upload);
+        return upload.configure(closure);
+    }
+
+    def SigningContainer signing(Closure<?> closure) {
+        return signing.configure(closure)
     }
 
     def void include(String name) {

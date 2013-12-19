@@ -1,12 +1,13 @@
 package org.holoeverywhere.plugin.extension
 
 import org.gradle.api.Project
+import org.gradle.util.Configurable
 import org.gradle.util.ConfigureUtil
 import org.holoeverywhere.plugin.extension.upload.LicenseContainer
 import org.holoeverywhere.plugin.extension.upload.RepositoryContainer
 import org.holoeverywhere.plugin.extension.upload.ScmContainer
 
-class UploadContainer {
+class UploadContainer implements Configurable<UploadContainer> {
     UploadContainer(Project project) {
         this.project = project
 
@@ -44,6 +45,12 @@ class UploadContainer {
         scm.url = "https://github.com/${username}/${repo}"
         scm.connection = "scm:git@github.com:${username}/${repo}.git"
         scm.developerConnection = "scm:git@github.com:${username}/${repo}.git"
+    }
+
+    @Override
+    UploadContainer configure(Closure closure) {
+        ConfigureUtil.configure(closure, this)
+        return this
     }
 }
 

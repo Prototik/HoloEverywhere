@@ -1,6 +1,9 @@
 package org.holoeverywhere.plugin.extension
 
-abstract class IncludeContainer {
+import org.gradle.util.Configurable
+import org.gradle.util.ConfigureUtil
+
+abstract class IncludeContainer implements Configurable<IncludeContainer> {
     public static enum Include {
         Inhert('inhert'), Yes('yes'), No('no');
 
@@ -28,6 +31,12 @@ abstract class IncludeContainer {
 
     def boolean include() {
         return include == Include.Yes || (include == Include.Inhert && extension.include == Include.Yes)
+    }
+
+    @Override
+    IncludeContainer configure(Closure closure) {
+        ConfigureUtil.configure(closure, this)
+        return this
     }
 }
 

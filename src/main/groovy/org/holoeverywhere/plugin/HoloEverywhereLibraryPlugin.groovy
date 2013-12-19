@@ -2,7 +2,11 @@ package org.holoeverywhere.plugin
 
 import com.android.build.gradle.LibraryPlugin
 import org.gradle.api.Project
+import org.gradle.api.internal.artifacts.publish.DefaultPublishArtifact
+import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.plugins.JavaPlugin
+import org.gradle.api.tasks.Copy
+import org.gradle.api.tasks.Exec
 import org.gradle.api.tasks.SourceSet
 import org.gradle.api.tasks.bundling.Jar
 import org.gradle.internal.reflect.Instantiator
@@ -16,6 +20,8 @@ import org.holoeverywhere.plugin.task.AndroidSourceJar
 import javax.inject.Inject
 
 class HoloEverywhereLibraryPlugin extends HoloEverywhereBasePlugin {
+    public static final String EXTERNAL_APKLIB_ASSEMBLE_TASK_NAME = 'mavenBuild'
+    public static final String EXTERNAL_APKLIB_TASK_NAME = 'apklib'
     public static final String GENERATE_JAVADOC_TASK_NAME = 'javadoc'
     public static final String JAVADOC_JAR_TASK_NAME = 'javadocJar'
     public static final String SOURCES_JAR_TASK_NAME = 'sourcesJar'
@@ -34,10 +40,39 @@ class HoloEverywhereLibraryPlugin extends HoloEverywhereBasePlugin {
 
         project.plugins.apply(LibraryPlugin)
 
-        final List<Jar> artifacts = new ArrayList<>()
+        final List<Object> artifacts = new ArrayList<>()
         if (extension.library.javadoc) artifacts.add(configureJavadoc(project))
         if (extension.library.sources) artifacts.add(configureSources(project))
         if (extension.library.classes) artifacts.add(configureClasses(project))
+
+        if (extension.library.apklibExternalCreation) {
+            Exec apklibAssembleTask = project.rootProject.tasks.findByName(EXTERNAL_APKLIB_ASSEMBLE_TASK_NAME) as Exec
+            if (apklibAssembleTask == null) {
+                apklibAssembleTask = project.rootProject.tasks.create(EXTERNAL_APKLIB_ASSEMBLE_TASK_NAME, Exec)
+                apklibAssembleTask.configure {
+                    executable = 'mvn'
+                    args = ['--batch-mode', '--quiet', 'clean', 'package']
+                    workingDir = project.rootProject.projectDir
+
+                    group = BasePlugin.BUILD_GROUP
+                    description = 'Assemble apklib artifacts with Maven'
+                }
+            }
+
+            final String finalFilename = "${project.name}-${project.version}.apklib"
+
+            Copy apklibTask = project.tasks.create(EXTERNAL_APKLIB_TASK_NAME, Copy)
+            apklibTask.configure {
+                dependsOn apklibAssembleTask
+
+                from project.fileTree("${project.projectDir}/target") { include "*.apklib" }
+                into project.file("${project.buildDir}/libs")
+                rename '(.*)', finalFilename
+            }
+
+            artifacts.add(new DefaultPublishArtifact(project.name, 'apklib', 'apklib', '', new Date(), project.file(finalFilename), apklibTask))
+        }
+
         artifacts.each { Jar packageTask -> project.artifacts.add('archives', packageTask) }
     }
 

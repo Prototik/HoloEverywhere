@@ -7,6 +7,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
+import org.gradle.api.plugins.JavaBasePlugin
 import org.gradle.internal.reflect.Instantiator
 import org.gradle.tooling.provider.model.ToolingModelBuilderRegistry
 import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
@@ -76,10 +77,14 @@ class HoloEverywhereMainPlugin extends HoloEverywhereBasePlugin {
             if (holoeverywhere.resbuilder.formatTask) {
                 ResbuilderFormatTask task = project.tasks.create("resbuilderFormat", ResbuilderFormatTask)
                 task.source = holoeverywhere.resbuilder.sourceSets as Set
+                task.group = JavaBasePlugin.VERIFICATION_GROUP
+                task.description = 'Reformat all resbuilder layouts for clean view'
 
                 task = project.tasks.create("resbuilderFormatCheck", ResbuilderFormatTask)
                 task.check = true
                 task.source = holoeverywhere.resbuilder.sourceSets as Set
+                task.group = JavaBasePlugin.VERIFICATION_GROUP
+                task.description = 'Check out format of all resbuilder layouts'
             }
 
             // Resbuilder processer tasks
@@ -88,12 +93,17 @@ class HoloEverywhereMainPlugin extends HoloEverywhereBasePlugin {
                 chars[0] = chars[0].toUpperCase()
                 ResbuilderProcesserTask task = project.tasks.create("resbuilder${new String(chars)}", ResbuilderProcesserTask)
                 task.source = [sourceSet] as Set
+                task.group = org.gradle.api.plugins.BasePlugin.BUILD_GROUP
+                task.description = "Build resbuilder layouts in \"${name}\" source set"
                 project.tasks.getByName('preBuild').dependsOn task
             }
         }
 
-        if (holoeverywhere.library.applyPlugin && project.plugins.hasPlugin(LibraryPlugin)) {
+        if (holoeverywhere.applyLibraryPlugin && project.plugins.hasPlugin(LibraryPlugin)) {
             project.plugins.apply(HoloEverywhereLibraryPlugin)
+        }
+        if (holoeverywhere.applyAppPlugin && project.plugins.hasPlugin(AppPlugin)) {
+            project.plugins.apply(HoloEverywhereAppPlugin)
         }
     }
 }

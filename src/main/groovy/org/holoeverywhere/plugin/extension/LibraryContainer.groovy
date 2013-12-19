@@ -1,6 +1,8 @@
 package org.holoeverywhere.plugin.extension
 
-class LibraryContainer extends IncludeContainer {
+import org.gradle.util.Configurable
+
+class LibraryContainer extends IncludeContainer implements Configurable<LibraryContainer> {
     LibraryContainer(HoloEverywhereExtension extension) {
         super(extension)
     }
@@ -11,6 +13,12 @@ class LibraryContainer extends IncludeContainer {
     def boolean javadoc = true
     def boolean sources = true
     def boolean classes = true
-    def boolean applyPlugin = true
+    def boolean apklibExternalCreation = false
+
+    @Override
+    LibraryContainer configure(Closure closure) {
+        super.configure(closure)
+        return this
+    }
 }
 
