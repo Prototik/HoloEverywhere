@@ -1,14 +1,14 @@
 
 package org.holoeverywhere;
 
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
+import android.util.Log;
 
 public class HoloEverywhere {
     /**
      * Main package of HoloEverywhere
      */
     public static final String PACKAGE;
+    private static final String LOG_TAG = "HoloEverywhere";
     /**
      * When you call new activity it will be has parent activity theme
      */
@@ -53,6 +53,18 @@ public class HoloEverywhere {
     }
 
     private HoloEverywhere() {
+    }
+
+    public static void warn(String message, Throwable throwable) {
+        Log.w(LOG_TAG, message, throwable);
+    }
+
+    public static void warn(String message, Object... args) {
+        warn(String.format(message, args), (Throwable) null);
+    }
+
+    public static void warn(Throwable throwable) {
+        warn(null, throwable);
     }
 
     public static enum PreferenceImpl {

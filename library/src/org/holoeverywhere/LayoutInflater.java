@@ -4,6 +4,7 @@ package org.holoeverywhere;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
 import android.graphics.Canvas;
@@ -29,6 +30,7 @@ import org.holoeverywhere.SystemServiceManager.SystemServiceCreator.SystemServic
 import org.holoeverywhere.app.ContextThemeWrapperPlus;
 import org.holoeverywhere.app.Dialog;
 import org.holoeverywhere.app.Fragment;
+import org.holoeverywhere.util.SparseIntArray;
 import org.holoeverywhere.widget.FrameLayout;
 import org.holoeverywhere.widget.NumberPicker;
 import org.xmlpull.v1.XmlPullParser;
@@ -54,6 +56,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
     private static final Map<Context, LayoutInflater> sInstances = new WeakHashMap<Context, LayoutInflater>();
     private static final List<String> sPackages = new ArrayList<String>();
     private static final Map<String, String> sRemaps = new HashMap<String, String>();
+    private static final SparseIntArray sLayoutRemap = new SparseIntArray();
     private static final String TAG_1995 = "blink";
     private static final String TAG_INCLUDE = "include";
     private static final String TAG_MERGE = "merge";
@@ -173,6 +176,46 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
      */
     public static void register(String from, String to) {
         LayoutInflater.sRemaps.put(from, to);
+    }
+
+    /**
+     * Hack for overriding android default layouts for custom.<br />
+     * For example, if some parts of android framework try to inflate layout {@link android.R.layout#simple_list_item_1}
+     * you can override this behavior and replace system layout by custom<br />
+     * Just call register(android.R.layout.simple_list_item_1, R.layout.my_simple_list_item)<br />
+     * <br />
+     * Be sure that you need for it before using. You are warned.
+     */
+    public static void register(int fromId, int toId) {
+        if (toId == 0) {
+            sLayoutRemap.delete(fromId);
+        } else {
+            sLayoutRemap.put(fromId, toId);
+        }
+    }
+
+    /**
+     * Resolve ids for given name in each package (android and application) and then call {@link #register(int, int)}
+     */
+    public static void register(Context context, String name) {
+        final Resources res = context.getResources();
+        int androidId = res.getIdentifier(name, "layout", "android");
+        int appId = res.getIdentifier(name, "layout", context.getPackageName());
+        if (androidId != 0 && appId != 0) {
+            register(androidId, appId);
+        } else {
+            HoloEverywhere.warn("Failed to register layout remapping:\n" +
+                    "  Android ID: 0x%8x\n" +
+                    "  Application ID: 0x%8x",
+                    androidId, appId);
+        }
+    }
+
+    /**
+     * Resolve ids for given id in each package (android and application) and then call {@link #register(int, int)}
+     */
+    public static void register(Context context, int id) {
+        register(context, context.getResources().getResourceName(id));
     }
 
     public static void registerPackage(String packageName) {
@@ -369,7 +412,7 @@ public class LayoutInflater extends android.view.LayoutInflater implements Clone
 
     @Override
     public View inflate(int resource, ViewGroup root, boolean attachToRoot) {
-        return inflate(getContext().getResources().getLayout(resource), root, attachToRoot);
+        return inflate(getContext().getResources().getLayout(sLayoutRemap.get(resource, resource)), root, attachToRoot);
     }
 
     public View inflate(XmlPullParser parser) {

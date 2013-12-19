@@ -1,25 +1,25 @@
 buildscript {
-  repositories {
-    mavenCentral()
-  }
+    repositories {
+        mavenCentral()
+    }
 
-  dependencies {
-    classpath 'com.android.tools.build:gradle:0.6.3'
-    classpath 'org.holoeverywhere:plugin:0.2.2'
-  }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.7.0'
+        classpath 'org.holoeverywhere:plugin:0.2.2'
+    }
 }
 
 allprojects {
-  group = 'org.holoeverywhere'
-  version = '2.1.1-SNAPSHOT'
+    group = 'org.holoeverywhere'
+    version = '2.1.1-SNAPSHOT'
 
-  repositories {
-    mavenCentral()
-  }
+    repositories {
+        mavenCentral()
+    }
 
-  tasks.withType(Compile) {
-    options.encoding = "UTF-8"
-  }
+    tasks.withType(Compile) {
+        options.encoding = "UTF-8"
+    }
 }
 
 task buildMaven(type: Exec) {

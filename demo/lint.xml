@@ -5,4 +5,5 @@
         <ignore path="res/layout/number_picker_demo.xml" />
         <ignore path="res/layout/main.xml" />
     </issue>
+    <issue id="MissingPrefix" severity="warning" />
 </lint>

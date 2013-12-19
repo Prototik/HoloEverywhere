@@ -1,13 +1,12 @@
-![HoloEverywhere](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/github-res/logo.png "HoloEverywhere")
-
-[![Build Status](https://travis-ci.org/Prototik/HoloEverywhere.png?branch=master)](https://travis-ci.org/Prototik/HoloEverywhere)
+![HoloEverywhere](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/github-res/logo.png "HoloEverywhere")  
+[![Build Status](https://travis-ci.org/Prototik/HoloEverywhere.png?branch=master)](https://travis-ci.org/Prototik/HoloEverywhere)  
+Latest stable version: [2.1.0 Darkest Sunrise](https://github.com/Prototik/HoloEverywhere/releases/tag/v2.1.0)  
+Demo: [Stable][APKDemoStable] | [Latest][APKDemoLatest]  
+Issues: [Stable][APKIssuesStable] | [Latest][APKIssuesLatest]
 
 ## What is it?
 Bringing Holo Theme from Android 4.1 to 2.1 and above.  
 [![Donate](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/github-res/donate_button.png)][Donate]
-### APK's:
-Demo: [Stable][APKDemoStable] | [Latest][APKDemoLatest]  
-Issues: [Stable][APKIssuesStable] | [Latest][APKIssuesLatest]
 
 ## How to use?
 ### [Eclipse](https://github.com/Prototik/HoloEverywhere/wiki/Import-in-IDE#eclipse)

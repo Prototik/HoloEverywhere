@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="NewApi">
+        <ignore path="res/layout/preference_widget_switch.xml" />
+        <ignore path="res/layout/preference_widget_switch.xml" />
+        <ignore path="res/layout/preference_dialog_numberpicker.xml" />
+    </issue>
+</lint>

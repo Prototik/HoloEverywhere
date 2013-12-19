@@ -56,6 +56,10 @@ if (android.class.name.startsWith('com.android.build.gradle.AppExtension') && pr
                 signingConfig signingConfigs.release
             }
         }
+
+        lintOptions {
+            abortOnError = false
+        }
     }
     artifacts {
         archives file: file("${buildDir}/apk/${project.name}-release.apk"), type: 'apk'
@@ -97,10 +101,19 @@ if (android.class.name.startsWith('com.android.build.gradle.LibraryExtension')) 
             archives new DefaultPublishArtifact(project.name, 'apklib', 'apklib', '', new Date(), file("${project.buildDir}/libs/${project.name}-${project.version}.apklib"), tasks.apklib)
         }
     }
+
+    android.lintOptions {
+        abortOnError = false
+    }
 }
 
 apply plugin: 'holoeverywhere-main'
-holoeverywhere.include 'no'
+holoeverywhere {
+    include 'no'
+    resbuilder {
+        include 'no'
+    }
+}
 
 // Deploy to maven repo (local)
 afterEvaluate { project ->
@@ -111,11 +124,9 @@ afterEvaluate { project ->
 
     uploadArchives {
         repositories {
-            mavenDeployer {                
+            mavenDeployer {
                 configuration = configurations.deployerJars
                 beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-                pom.artifactId = ARTIFACT_ID
 
                 def String repoUrl = project.properties.get('holoeverywhere.repo', 'file:///invalid_path')
                 if (repoUrl.startsWith('scpexe://')) {
@@ -127,6 +138,7 @@ afterEvaluate { project ->
                 }
 
                 pom.project {
+                    artifactId ARTIFACT_ID
                     name NAME
                     packaging PACKAGING
                     description DESCRIPTION
