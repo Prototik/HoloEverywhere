@@ -59,7 +59,6 @@ class HoloEverywhereExtension {
         this.addons = project.container(Addon, new NamedDomainObjectFactory<Addon>() {
             @Override
             Addon create(String name) {
-                println(name)
                 String[] parts = name.split(':')
                 return parts.length > 1 ? new Addon(parts[0], parts[1], parts.length == 3 ? parts[2] : null) : new Addon("addon-${name}")
             }

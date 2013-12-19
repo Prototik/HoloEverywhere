@@ -1,7 +1,7 @@
 package org.holoeverywhere.plugin.extension.signing
 
+import com.android.build.gradle.internal.dsl.SigningConfigDsl
 import com.android.builder.model.SigningConfig
-import com.android.builder.signing.DefaultSigningConfig
 import org.gradle.api.Project
 import org.gradle.util.Configurable
 import org.gradle.util.ConfigureUtil
@@ -45,7 +45,7 @@ class SignConfiguration implements Configurable {
     }
 
     def SigningConfig obtainConfig(String name) {
-        SigningConfig config = new DefaultSigningConfig(name)
+        SigningConfig config = new SigningConfigDsl(name)
         config.storeFile = new File(storeFile)
         config.keyAlias = keyAlias
         config.storePassword = storePassword
@@ -54,7 +54,7 @@ class SignConfiguration implements Configurable {
     }
 
     def SigningConfig obtainDebugConfig(String name = 'debug') {
-        SigningConfig config = new DefaultSigningConfig(name)
+        SigningConfig config = new SigningConfigDsl(name)
         config.initDebug()
         return config
     }

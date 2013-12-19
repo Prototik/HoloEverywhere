@@ -73,7 +73,7 @@ class HoloEverywhereLibraryPlugin extends HoloEverywhereBasePlugin {
             artifacts.add(new DefaultPublishArtifact(project.name, 'apklib', 'apklib', '', new Date(), project.file(finalFilename), apklibTask))
         }
 
-        artifacts.each { Jar packageTask -> project.artifacts.add('archives', packageTask) }
+        artifacts.each { artifact -> project.artifacts.add('archives', artifact) }
     }
 
     static Jar configureJavadoc(Project project) {

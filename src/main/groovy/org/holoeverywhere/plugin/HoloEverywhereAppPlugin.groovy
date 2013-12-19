@@ -36,7 +36,7 @@ class HoloEverywhereAppPlugin extends HoloEverywhereBasePlugin {
 
         final List<Object> artifacts = new ArrayList<>()
         if (extension.app.attachReleaseApk) artifacts.add(configureApk(project))
-        artifacts.each { Jar packageTask -> project.artifacts.add('archives', packageTask) }
+        artifacts.each { artifact -> project.artifacts.add('archives', artifact) }
     }
 
     def static PublishArtifact configureApk(Project project) {
