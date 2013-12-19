@@ -12,7 +12,7 @@ blocks:
     android:textCheckMark: ?android:checkMark
     android:textCheckMarkInverse: ?android:checkMark
     android:textColorLink: :color/holo_blue_light
-  TextDark | Text:
+  TextDark < Text:
     android:textAppearance: :style/Holo.TextAppearance
     android:textAppearanceInverse: :style/Holo.TextAppearance.Inverse
     android:textAppearanceLarge: :style/Holo.TextAppearance.Large
@@ -36,7 +36,7 @@ blocks:
     android:textColorSecondaryNoDisable: :color/secondary_text_nodisable_holo_dark
     android:textColorTertiary: :color/tertiary_text_holo_dark
     android:textColorTertiaryInverse: :color/tertiary_text_holo_light
-  TextLight | Text:
+  TextLight < Text:
     android:textAppearance: :style/Holo.TextAppearance.Light
     android:textAppearanceInverse: :style/Holo.TextAppearance.Inverse.Light
     android:textAppearanceLarge: :style/Holo.TextAppearance.Large.Light

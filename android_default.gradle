@@ -62,7 +62,7 @@ if (android.class.name.startsWith('com.android.build.gradle.AppExtension') && pr
         }
     }
     artifacts {
-        archives file: file("${buildDir}/apk/${project.name}-release.apk"), type: 'apk'
+        archives new DefaultPublishArtifact(project.name, 'apk', 'apk', '', new Date(), file("${buildDir}/apk/${project.name}-release.apk"), tasks.assembleRelease)
     }
 }
 

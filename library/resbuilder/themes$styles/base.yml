@@ -20,7 +20,7 @@ blocks:
     textAppearanceListItem: ?android:textAppearanceLarge
     textAppearanceListItemSmall: ?android:textAppearanceMedium
     toastFrameBackground: :drawable/toast_frame
-  BaseDark < Base:
+  BaseDark < Base TextDark:
     alertDialogTheme: :style/Holo.Theme.Dialog.Alert
     android:windowBackground: :drawable/background_holo_dark
     autoCompleteTextViewStyle: :style/Holo.AutoCompleteTextView
@@ -47,7 +47,7 @@ blocks:
     switchStyleOld: :style/Holo.Switch.Old
     textColorAlertDialogListItem: :color/primary_text_holo_dark
   BaseDarkBar: null
-  BaseLight < Base:
+  BaseLight < Base TextLight:
     alertDialogTheme: :style/Holo.Theme.Dialog.Alert.Light
     android:windowBackground: :drawable/background_holo_light
     autoCompleteTextViewStyle: :style/Holo.AutoCompleteTextView.Light
