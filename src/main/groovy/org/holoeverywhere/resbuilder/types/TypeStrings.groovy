@@ -1,7 +1,5 @@
 package org.holoeverywhere.resbuilder.types
 
-import com.android.build.gradle.BasePlugin
-import com.android.sdklib.IAndroidTarget
 import groovy.xml.MarkupBuilder
 import org.gradle.api.Project
 import org.holoeverywhere.resbuilder.api.AndroidXmlType

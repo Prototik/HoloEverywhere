@@ -1,7 +1,6 @@
 package org.holoeverywhere.plugin.extension.upload
 
 import org.gradle.util.ConfigureUtil
-import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
 
 class LicenseContainer {
     def String name

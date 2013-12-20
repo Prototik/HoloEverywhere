@@ -22,7 +22,7 @@ class ResbuilderFormatTask extends ResbuilderDefaultTask {
                 data = sort(data)
                 String sortedData = yaml.dump(data)
                 if (check) {
-                    if(!sortedData.equals(sourceData)) {
+                    if (!sortedData.equals(sourceData)) {
                         project.logger.error("File \"${source.absolutePath}\" has an incorrect format")
                     }
                 } else {

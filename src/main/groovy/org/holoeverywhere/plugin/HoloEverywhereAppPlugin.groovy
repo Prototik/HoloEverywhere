@@ -6,7 +6,6 @@ import com.android.builder.model.SigningConfig
 import org.gradle.api.Project
 import org.gradle.api.artifacts.PublishArtifact
 import org.gradle.api.internal.artifacts.publish.DefaultPublishArtifact
-import org.gradle.api.tasks.bundling.Jar
 import org.gradle.internal.reflect.Instantiator
 import org.gradle.tooling.provider.model.ToolingModelBuilderRegistry
 import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
