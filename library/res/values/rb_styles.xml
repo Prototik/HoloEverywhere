@@ -480,7 +480,7 @@
     <item name="android:focusable">true</item>
     <item name="android:focusableInTouchMode">true</item>
     <item name="android:gravity">center_vertical</item>
-    <item name="android:textAppearance">?android:textAppearanceMediumInverse</item>
+    <item name="android:textAppearance">?android:textAppearanceMedium</item>
   </style>
   <style name="Holo.EditText.Light" parent="Holo.EditText">
     <item name="android:background">@drawable/edit_text_holo_light</item>

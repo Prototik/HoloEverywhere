@@ -128,7 +128,7 @@ styles:
     android:focusable: true
     android:focusableInTouchMode: true
     android:gravity: center_vertical
-    android:textAppearance: ?android:textAppearanceMediumInverse
+    android:textAppearance: ?android:textAppearanceMedium
   Holo.EditText.Light:
     android:background: :drawable/edit_text_holo_light
   Holo.EditText.NumberPickerInputText:
