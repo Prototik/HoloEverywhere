@@ -176,6 +176,15 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="org.holoeverywhere.issues.i741.MainActivity"
+            android:label="Issue #741">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="org.holoeverywhere.category.ISSUE_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:name=".i695.SuggestionProvider"
             android:authorities="org.holoeverywhere.issues.i695.SuggestionProvider" />
