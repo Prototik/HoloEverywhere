@@ -168,13 +168,12 @@ uploadArchives {
             pom.groupId = 'com.android.support'
             pom.artifactId = 'support-v4'
 
-            def String repoUrl = project.properties.get('holoeverywhere.repo', 'file:///invalid_path')
-            if (repoUrl.startsWith('scpexe://')) {
-                repository(url: repoUrl) {
+            repository(url: project.properties.get('holoeverywhere.repo', 'file:///invalid_path')) {
+                if (project.properties.containsKey('holoeverywhere.repo.username') && project.properties.containsKey('holoeverywhere.repo.key')) {
                     authentication(userName: project.properties.get('holoeverywhere.repo.username'), privateKey: project.properties.get('holoeverywhere.repo.key'))
+                } else if (project.properties.containsKey('holoeverywhere.repo.username') && project.properties.containsKey('holoeverywhere.repo.password')) {
+                    authentication(userName: project.properties.get('holoeverywhere.repo.username'), password: project.properties.get('holoeverywhere.repo.password'))
                 }
-            } else {
-                repository(url: repoUrl)
             }
 
             pom.whenConfigured { pom ->
