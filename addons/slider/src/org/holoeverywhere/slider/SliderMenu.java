@@ -4,6 +4,7 @@ package org.holoeverywhere.slider;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.BadParcelableException;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -19,6 +20,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.LayoutInflater;
@@ -27,6 +29,7 @@ import org.holoeverywhere.addon.AddonSlider;
 import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
 import org.holoeverywhere.addon.IAddonThemes;
 import org.holoeverywhere.app.Fragment;
+import org.holoeverywhere.drawable.DrawableCompat;
 import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.TextView;
 
@@ -238,6 +241,9 @@ public class SliderMenu implements OnBackStackChangedListener {
         setTextAppearance(labelView,
                 mInverseTextColorWhenSelected ? selected ? textAppereanceInverse
                         : textAppereance : textAppereance);
+        ImageView iconView = (ImageView) view.findViewById(android.R.id.icon1);
+        iconView.setImageDrawable(item.mIcon);
+        iconView.setVisibility(item.mIcon == null ? View.GONE : View.VISIBLE);
         if (mSelectionBehavior == null) {
             return view;
         }
@@ -423,8 +429,7 @@ public class SliderMenu implements OnBackStackChangedListener {
     @Override
     public void onBackStackChanged() {
         if (mHandleHomeKey) {
-            mActionBar.setDisplayHomeAsUpEnabled(mAddon.isAddonEnabled() ? true :
-                    mFragmentManager.getBackStackEntryCount() > 0);
+            mActionBar.setDisplayHomeAsUpEnabled(mAddon.isAddonEnabled() || mFragmentManager.getBackStackEntryCount() > 0);
         }
         if (mIgnoreBackStack || mCurrentPage < 0 || mCurrentPage >= mItems.size()) {
             return;
@@ -605,6 +610,7 @@ public class SliderMenu implements OnBackStackChangedListener {
         private int mTextAppereance = 0;
         private int mTextAppereanceInverse = 0;
         private List<SliderSubItem> mSubItems;
+        private Drawable mIcon;
 
         public SliderItem() {
         }
@@ -673,6 +679,22 @@ public class SliderMenu implements OnBackStackChangedListener {
         public void setLabel(CharSequence label) {
             mLabel = label;
             invalidate();
+        }
+
+        public Drawable getIcon() {
+            return mIcon;
+        }
+
+        public void setIcon(Drawable icon) {
+            mIcon = icon;
+            invalidate();
+        }
+
+        public void setIcon(int resId) {
+            if (mSliderMenu == null) {
+                throw new IllegalStateException("You cannot provide icon before adding item to SliderMenu");
+            }
+            setIcon(DrawableCompat.getDrawable(mSliderMenu.mAddon.get().getResources(), resId));
         }
 
         public int getSelectionHandlerColor() {

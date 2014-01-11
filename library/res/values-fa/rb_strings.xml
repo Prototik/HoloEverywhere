@@ -7,7 +7,7 @@
   <string name="capital_on">"روشن"</string>
   <string name="chooseActivity">"انتخاب عملکرد"</string>
   <string name="loading">"در حال بارگیری..."</string>
-  <string name="noApplications">"هیچ برنامه‌ای نمی‎تواند این کار را انجام دهد."</string>
+  <string name="noApplications">"‏هیچ برنامه‌ای نمی‎تواند این کار را انجام دهد."</string>
   <string name="number_picker_decrement_button">"کاهش"</string>
   <string name="number_picker_increment_button">"افزایش"</string>
   <string name="number_picker_increment_scroll_action">"برای افزایش به بالا بلغزانید و برای کاهش به پایین بلغزانید."</string>
