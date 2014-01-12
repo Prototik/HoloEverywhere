@@ -1,4 +1,3 @@
-
 package org.holoeverywhere.slider;
 
 import android.content.Context;
@@ -685,17 +684,21 @@ public class SliderMenu implements OnBackStackChangedListener {
             return mIcon;
         }
 
-        public void setIcon(Drawable icon) {
-            mIcon = icon;
-            invalidate();
-        }
+        	public SliderItem setIcon(Drawable icon) {
+			mIcon = icon;
+			invalidate();
+			return this;
+		}
 
-        public void setIcon(int resId) {
-            if (mSliderMenu == null) {
-                throw new IllegalStateException("You cannot provide icon before adding item to SliderMenu");
-            }
-            setIcon(DrawableCompat.getDrawable(mSliderMenu.mAddon.get().getResources(), resId));
-        }
+		public SliderItem setIcon(int resId) {
+			if (mSliderMenu == null) {
+				throw new IllegalStateException(
+						"You cannot provide icon before adding item to SliderMenu");
+			}
+			setIcon(DrawableCompat.getDrawable(mSliderMenu.mAddon.get()
+					.getResources(), resId));
+			return this;
+		}
 
         public int getSelectionHandlerColor() {
             return mSelectionHandlerColor;
