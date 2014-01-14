@@ -28,7 +28,20 @@ import android.widget.FrameLayout;
  * so instead we insert this between the view and its parent.
  */
 class NoSaveStateFrameLayout extends FrameLayout {
+    static interface NoSaveStateFrameLayoutCreator {
+        public ViewGroup create(Fragment fragment, View child);
+    }
+	
+    static NoSaveStateFrameLayoutCreator sNoSaveStateFrameLayoutCreator;
+
     static ViewGroup wrap(View child) {
+        return wrap(null, child);
+    }
+
+    static ViewGroup wrap(Fragment fragment, View child) {
+        if (sNoSaveStateFrameLayoutCreator != null) {
+            return sNoSaveStateFrameLayoutCreator.create(fragment, child);
+        }
         NoSaveStateFrameLayout wrapper = new NoSaveStateFrameLayout(child.getContext());
         ViewGroup.LayoutParams childParams = child.getLayoutParams();
         if (childParams != null) {
