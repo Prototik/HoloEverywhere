@@ -35,7 +35,6 @@ class ResbuilderContainer implements Configurable<ResbuilderContainer> {
 
     @Override
     ResbuilderContainer configure(Closure closure) {
-        ConfigureUtil.configure(closure, this)
-        return this
+        ConfigureUtil.configure(closure, this, false)
     }
 }

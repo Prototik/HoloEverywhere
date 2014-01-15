@@ -35,8 +35,7 @@ abstract class IncludeContainer implements Configurable<IncludeContainer> {
 
     @Override
     IncludeContainer configure(Closure closure) {
-        ConfigureUtil.configure(closure, this)
-        return this
+        ConfigureUtil.configure(closure, this, false)
     }
 }
 

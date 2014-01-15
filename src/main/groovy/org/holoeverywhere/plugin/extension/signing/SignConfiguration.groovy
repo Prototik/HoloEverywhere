@@ -6,7 +6,7 @@ import org.gradle.api.Project
 import org.gradle.util.Configurable
 import org.gradle.util.ConfigureUtil
 
-class SignConfiguration implements Configurable {
+class SignConfiguration implements Configurable<SignConfiguration> {
     SignConfiguration(Project project) {
         this.project = project
     }
@@ -19,8 +19,7 @@ class SignConfiguration implements Configurable {
 
     @Override
     SignConfiguration configure(Closure closure) {
-        ConfigureUtil.configure(closure, this)
-        return this
+        ConfigureUtil.configure(closure, this, false)
     }
 
     public boolean valid() {

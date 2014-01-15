@@ -21,7 +21,6 @@ class RepositoryContainer extends IncludeContainer implements Configurable<Repos
 
     @Override
     RepositoryContainer configure(Closure closure) {
-        super.configure(closure)
-        return this
+        super.configure(closure) as RepositoryContainer
     }
 }

@@ -3,7 +3,6 @@ package org.holoeverywhere.plugin.extension
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectFactory
 import org.gradle.api.Project
-import org.gradle.api.internal.project.DefaultProject
 import org.gradle.internal.reflect.Instantiator
 
 class HoloEverywhereExtension {
@@ -54,15 +53,17 @@ class HoloEverywhereExtension {
         this.upload = new UploadContainer(project)
         this.signing = new SigningContainer(project)
 
-        DefaultProject
-
         this.addons = project.container(Addon, new NamedDomainObjectFactory<Addon>() {
             @Override
-            Addon create(String name) {
+            def Addon create(String name) {
                 String[] parts = name.split(':')
-                return parts.length > 1 ? new Addon(parts[0], parts[1], parts.length == 3 ? parts[2] : null) : new Addon("addon-${name}")
+                return parts.length == 1 ? new Addon("addon-${name}") :
+                        new Addon(parts[0], parts[1], parts.length == 3 ? parts[2] : null)
             }
         })
+        this.addons.metaClass.propertyMissing = { String name ->
+            this.addons.maybeCreate(name)
+        }
     }
 
     private final Project project

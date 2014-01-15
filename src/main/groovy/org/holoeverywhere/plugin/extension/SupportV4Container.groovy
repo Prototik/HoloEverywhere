@@ -13,7 +13,6 @@ class SupportV4Container extends IncludeContainer implements Configurable<Suppor
 
     @Override
     SupportV4Container configure(Closure closure) {
-        super.configure(closure)
-        return this
+        super.configure(closure) as SupportV4Container
     }
 }

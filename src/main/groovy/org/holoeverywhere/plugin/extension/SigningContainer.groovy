@@ -28,8 +28,7 @@ class SigningContainer implements Configurable<SigningContainer> {
 
     @Override
     SigningContainer configure(Closure closure) {
-        ConfigureUtil.configure(closure, this)
-        return this
+        ConfigureUtil.configure(closure, this, false)
     }
 }
 

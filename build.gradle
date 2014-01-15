@@ -7,14 +7,14 @@ dependencies {
     compile localGroovy()
 
     compile 'org.yaml:snakeyaml:1.13@jar'
-    compile 'com.android.tools.build:gradle:0.7.0'
+    compile 'com.android.tools.build:gradle:0.7.3'
 }
 
 repositories {
     mavenCentral()
 }
 
-version = '0.2.6-SNAPSHOT'
+version = '0.2.6'
 
 apply plugin: 'maven'
 apply plugin: 'signing'

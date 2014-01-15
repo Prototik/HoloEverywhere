@@ -49,8 +49,7 @@ class UploadContainer implements Configurable<UploadContainer> {
 
     @Override
     UploadContainer configure(Closure closure) {
-        ConfigureUtil.configure(closure, this)
-        return this
+        ConfigureUtil.configure(closure, this, false)
     }
 }
 

@@ -21,6 +21,7 @@ class HoloEverywhereRepoPlugin extends HoloEverywhereBasePlugin {
         HoloEverywhereExtension holoeverywhere = HoloEverywhereExtension.getOrCreateExtension(project, instantiator)
         // HoloEverywhere repository
         if (holoeverywhere.repository.include()) {
+            final boolean snapshot = holoeverywhere.repository.snapshot();
             project.rootProject.allprojects.each { Project p ->
                 if (!p.repositories.any { it.name == REPO_NAME }) {
                     p.repositories.maven {
@@ -28,11 +29,7 @@ class HoloEverywhereRepoPlugin extends HoloEverywhereBasePlugin {
                         url holoeverywhere.repository.url
                     }
                 }
-            }
-        }
-        if (holoeverywhere.repository.snapshot()) {
-            project.rootProject.allprojects.each { Project p ->
-                if (!p.repositories.any { it.name == SNAPSHOT_REPO_NAME }) {
+                if (snapshot && !p.repositories.any { it.name == SNAPSHOT_REPO_NAME }) {
                     p.repositories.maven {
                         name SNAPSHOT_REPO_NAME
                         url holoeverywhere.repository.snapshotUrl

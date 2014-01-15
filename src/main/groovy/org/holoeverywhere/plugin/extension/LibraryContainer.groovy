@@ -17,8 +17,7 @@ class LibraryContainer extends IncludeContainer implements Configurable<LibraryC
 
     @Override
     LibraryContainer configure(Closure closure) {
-        super.configure(closure)
-        return this
+        super.configure(closure) as LibraryContainer
     }
 }
 
