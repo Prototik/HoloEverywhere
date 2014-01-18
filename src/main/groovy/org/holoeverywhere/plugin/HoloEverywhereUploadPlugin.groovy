@@ -4,10 +4,12 @@ import org.apache.maven.artifact.ant.Authentication
 import org.apache.maven.artifact.ant.RemoteRepository
 import org.gradle.api.Project
 import org.gradle.api.artifacts.maven.MavenDeployment
+import org.gradle.api.plugins.MavenPlugin
 import org.gradle.api.publication.maven.internal.ant.BaseMavenDeployer
 import org.gradle.api.tasks.Upload
 import org.gradle.internal.reflect.Instantiator
 import org.gradle.plugins.signing.SigningExtension
+import org.gradle.plugins.signing.SigningPlugin
 import org.gradle.tooling.provider.model.ToolingModelBuilderRegistry
 import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
 import org.holoeverywhere.plugin.extension.UploadContainer
@@ -33,6 +35,9 @@ class HoloEverywhereUploadPlugin extends HoloEverywhereBasePlugin {
         DEGAULT_WAGON_PROVIDERS.each { String protocol ->
             project.dependencies.add(DEPLOYER_JARS_CONFIGURATION_NAME, "org.apache.maven.wagon:wagon-${protocol}:${WAGON_VERSION}")
         }
+
+        project.plugins.apply(MavenPlugin)
+        project.plugins.apply(SigningPlugin)
 
         project.afterEvaluate { afterEvaluate(project) }
     }
@@ -79,7 +84,9 @@ class HoloEverywhereUploadPlugin extends HoloEverywhereBasePlugin {
             }
         }
 
-        final SigningExtension signingExtension = project.extensions.getByType(SigningExtension)
-        mavenDeployer.beforeDeployment { MavenDeployment md -> signingExtension.signPom(md) }
+        final SigningExtension signingExtension = project.extensions.findByType(SigningExtension)
+        if (signingExtension != null) {
+            mavenDeployer.beforeDeployment { MavenDeployment md -> signingExtension.signPom(md) }
+        }
     }
 }

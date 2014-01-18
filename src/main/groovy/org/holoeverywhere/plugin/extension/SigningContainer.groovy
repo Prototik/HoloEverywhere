@@ -26,6 +26,11 @@ class SigningContainer implements Configurable<SigningContainer> {
         return debug.configure(closure)
     }
 
+    def void all(Closure<?> closure) {
+        debug.configure(closure)
+        release.configure(closure)
+    }
+
     @Override
     SigningContainer configure(Closure closure) {
         ConfigureUtil.configure(closure, this, false)

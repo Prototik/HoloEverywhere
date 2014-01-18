@@ -14,7 +14,7 @@ repositories {
     mavenCentral()
 }
 
-version = '0.2.7-SNAPSHOT'
+version = '0.2.7'
 
 apply plugin: 'maven'
 apply plugin: 'signing'

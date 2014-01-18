@@ -57,6 +57,14 @@ class LicenseContainer implements Configurable<LicenseContainer> {
         configure(closure)
     }
 
+    def propertyMissing(String name) {
+        try {
+            this."$name"()
+        } catch (MissingMethodException e) {
+            throw new MissingPropertyException(name, LicenseContainer)
+        }
+    }
+
     @Override
     LicenseContainer configure(Closure closure) {
         ConfigureUtil.configure(closure, this, false)
