@@ -31,6 +31,10 @@ class SigningContainer implements Configurable<SigningContainer> {
         release.configure(closure)
     }
 
+    def void key(String key) {
+        all { SignConfiguration configuration -> configuration.key(key) }
+    }
+
     @Override
     SigningContainer configure(Closure closure) {
         ConfigureUtil.configure(closure, this, false)

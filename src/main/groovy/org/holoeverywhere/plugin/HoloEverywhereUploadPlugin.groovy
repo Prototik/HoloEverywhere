@@ -1,11 +1,12 @@
 package org.holoeverywhere.plugin
 
-import org.apache.maven.artifact.ant.Authentication
-import org.apache.maven.artifact.ant.RemoteRepository
 import org.gradle.api.Project
 import org.gradle.api.artifacts.maven.MavenDeployment
+import org.gradle.api.internal.plugins.DslObject
 import org.gradle.api.plugins.MavenPlugin
+import org.gradle.api.plugins.MavenRepositoryHandlerConvention
 import org.gradle.api.publication.maven.internal.ant.BaseMavenDeployer
+import org.gradle.api.publication.maven.internal.ant.RepositoryBuilder
 import org.gradle.api.tasks.Upload
 import org.gradle.internal.reflect.Instantiator
 import org.gradle.plugins.signing.SigningExtension
@@ -31,6 +32,7 @@ class HoloEverywhereUploadPlugin extends HoloEverywhereBasePlugin {
     void apply(Project project) {
         extension = extension(project)
 
+        project.repositories.mavenCentral()
         project.configurations.create(DEPLOYER_JARS_CONFIGURATION_NAME)
         DEGAULT_WAGON_PROVIDERS.each { String protocol ->
             project.dependencies.add(DEPLOYER_JARS_CONFIGURATION_NAME, "org.apache.maven.wagon:wagon-${protocol}:${WAGON_VERSION}")
@@ -46,27 +48,31 @@ class HoloEverywhereUploadPlugin extends HoloEverywhereBasePlugin {
         UploadContainer upload = extension.upload
 
         Upload uploadTask = project.tasks.getByName('uploadArchives') as Upload
-        BaseMavenDeployer mavenDeployer = uploadTask.repositories.getByName('mavenDeployer') as BaseMavenDeployer
+
+        // Fucked conventions
+        BaseMavenDeployer mavenDeployer = (new DslObject(uploadTask.repositories).convention.plugins.get('maven') as MavenRepositoryHandlerConvention).mavenDeployer() as BaseMavenDeployer
 
         mavenDeployer.configuration = project.configurations.getByName(DEPLOYER_JARS_CONFIGURATION_NAME)
 
-        RemoteRepository repository = new RemoteRepository()
-        repository.url = upload.repository.url
-        repository.addAuthentication(upload.repository as Authentication)
-        mavenDeployer.repository = repository
+        // I'd already tell you about fucked conventions?
+        mavenDeployer.repository = new RepositoryBuilder().repository {
+            url = upload.repository.url
+            authentication = upload.repository
+        }
 
         if (upload.repository.snapshotUrl != null) {
-            repository = new RemoteRepository()
-            repository.url = upload.repository.snapshotUrl
-            repository.addAuthentication(upload.repository as Authentication)
-            mavenDeployer.snapshotRepository = repository
+            // Well... You know.
+            mavenDeployer.snapshotRepository = mavenDeployer.snapshotRepository = new RepositoryBuilder().repository {
+                url = upload.repository.snapshotUrl
+                authentication = upload.repository
+            }
         }
 
         mavenDeployer.pom.project {
             groupId = upload.group ?: project.group ?: project.rootProject.group ?: 'default'
             artifactId = upload.artifact ?: project.name
             version = upload.version ?: project.version
-            if (upload.description != null) description upload.description
+            if (upload.description != null) description = upload.description
 
             scm {
                 url upload.scm.url

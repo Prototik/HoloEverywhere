@@ -5,6 +5,7 @@ import com.android.builder.model.SigningConfig
 import org.gradle.api.Project
 import org.gradle.util.Configurable
 import org.gradle.util.ConfigureUtil
+import org.holoeverywhere.plugin.extension.ExProperties
 
 class SignConfiguration implements Configurable<SignConfiguration> {
     SignConfiguration(Project project) {
@@ -27,19 +28,11 @@ class SignConfiguration implements Configurable<SignConfiguration> {
     }
 
     public SignConfiguration key(String key) {
-        if (key.length() > 0) {
-            storeFile = project.properties.get("${key}StoreFile", null)
-            keyAlias = project.properties.get("${key}KeyAlias", null)
-            storePassword = project.properties.get("${key}StorePassword", null)
-            keyPassword = project.properties.get("${key}KeyPassword", null)
-        }
-        final String name = project.rootProject.name
-        if (name.length() > 0) {
-            storeFile = project.properties.get("${name}_${key}StoreFile", storeFile)
-            keyAlias = project.properties.get("${name}_${key}KeyAlias", keyAlias)
-            storePassword = project.properties.get("${name}_${key}StorePassword", storePassword)
-            keyPassword = project.properties.get("${name}_${key}KeyPassword", keyPassword)
-        }
+        ExProperties props = new ExProperties(project)
+        storeFile = props.property(key, 'StoreFile')
+        keyAlias = props.property(key, 'KeyAlias')
+        storePassword = props.property(key, 'StorePassword')
+        keyPassword = props.property(key, 'KeyPassword')
         return this
     }
 
