@@ -1,6 +1,5 @@
 package org.holoeverywhere.plugin.extension.upload
 
-import org.apache.maven.artifact.ant.Authentication
 import org.gradle.api.Project
 import org.gradle.util.Configurable
 import org.gradle.util.ConfigureUtil
@@ -47,8 +46,8 @@ class RepositoryContainer implements Configurable<RepositoryContainer> {
         password = props.property(key, 'Password')
         passphrase = props.property(key, 'Passphrase')
         privateKey = props.property(key, 'PrivateKey')
-        url = props.get(key, 'URL') ?: url
-        snapshotUrl = props.get(key, 'SnapshotURL') ?: snapshotUrl
+        url = url ?: props.get(key, 'URL')
+        snapshotUrl = snapshotUrl ?: props.get(key, 'SnapshotURL')
     }
 
     def boolean isSnapshot() {
@@ -57,19 +56,6 @@ class RepositoryContainer implements Configurable<RepositoryContainer> {
 
     def String resolveUrl() {
         return isSnapshot() && snapshotUrl != null ? snapshotUrl : url
-    }
-
-    @Override
-    def Object asType(Class clazz) {
-        if (clazz == Authentication) {
-            Authentication authentication = new Authentication()
-            authentication.userName = userName
-            authentication.password = password
-            authentication.passphrase = passphrase
-            authentication.privateKey = privateKey
-            return authentication
-        }
-        return super.asType(clazz)
     }
 
     @Override

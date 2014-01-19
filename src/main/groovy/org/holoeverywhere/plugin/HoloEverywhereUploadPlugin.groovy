@@ -12,8 +12,10 @@ import org.gradle.internal.reflect.Instantiator
 import org.gradle.plugins.signing.SigningExtension
 import org.gradle.plugins.signing.SigningPlugin
 import org.gradle.tooling.provider.model.ToolingModelBuilderRegistry
+import org.gradle.util.ConfigureUtil
 import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
 import org.holoeverywhere.plugin.extension.UploadContainer
+import org.holoeverywhere.plugin.extension.upload.RepositoryContainer
 
 import javax.inject.Inject
 
@@ -49,23 +51,16 @@ class HoloEverywhereUploadPlugin extends HoloEverywhereBasePlugin {
 
         Upload uploadTask = project.tasks.getByName('uploadArchives') as Upload
 
-        // Fucked conventions
         BaseMavenDeployer mavenDeployer = (new DslObject(uploadTask.repositories).convention.plugins.get('maven') as MavenRepositoryHandlerConvention).mavenDeployer() as BaseMavenDeployer
 
         mavenDeployer.configuration = project.configurations.getByName(DEPLOYER_JARS_CONFIGURATION_NAME)
 
         // I'd already tell you about fucked conventions?
-        mavenDeployer.repository = new RepositoryBuilder().repository {
-            url = upload.repository.url
-            authentication = upload.repository
-        }
+        mavenDeployer.repository = buildRepository(upload.repository.url, upload.repository)
 
         if (upload.repository.snapshotUrl != null) {
             // Well... You know.
-            mavenDeployer.snapshotRepository = mavenDeployer.snapshotRepository = new RepositoryBuilder().repository {
-                url = upload.repository.snapshotUrl
-                authentication = upload.repository
-            }
+            mavenDeployer.snapshotRepository = buildRepository(upload.repository.snapshotUrl, upload.repository)
         }
 
         mavenDeployer.pom.project {
@@ -94,5 +89,16 @@ class HoloEverywhereUploadPlugin extends HoloEverywhereBasePlugin {
         if (signingExtension != null) {
             mavenDeployer.beforeDeployment { MavenDeployment md -> signingExtension.signPom(md) }
         }
+    }
+
+    def Object buildRepository(String repositoryUrl, RepositoryContainer repositoryContainer) {
+        return ConfigureUtil.configure({ url = repositoryUrl }, new RepositoryBuilder().repository {
+            authentication(
+                    userName: repositoryContainer.userName,
+                    password: repositoryContainer.password,
+                    passphrase: repositoryContainer.passphrase,
+                    privateKey: repositoryContainer.privateKey
+            )
+        }, false);
     }
 }

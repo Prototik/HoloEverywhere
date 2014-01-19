@@ -9,10 +9,10 @@ class RepositoryContainer extends IncludeContainer implements Configurable<Repos
 
     def String url = HoloEverywhereExtension.HOLO_EVERYWHERE_REPO
     def String snapshotUrl = HoloEverywhereExtension.HOLO_EVERYWHERE_SNAPSHOT_REPO
-    def Include snapshot = Include.No
+    def Include snapshot = Include.Yes
 
     def void snapshot(String snapshot) {
-        snapshot = Include.find(snapshot, Include.No)
+        this.snapshot = Include.find(snapshot, Include.Yes)
     }
 
     def boolean snapshot() {
