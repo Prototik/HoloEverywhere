@@ -36,10 +36,13 @@ class HoloEverywhereLibraryPlugin extends HoloEverywhereBasePlugin {
 
     @Override
     void apply(Project project) {
+        checkPluginOrder(project)
         extension = extension(project)
-
+        project.afterEvaluate { afterEvaluate(project) }
         project.plugins.apply(LibraryPlugin)
+    }
 
+    def void afterEvaluate(Project project) {
         final List<Object> artifacts = new ArrayList<>()
         if (extension.library.javadoc) artifacts.add(configureJavadoc(project))
         if (extension.library.sources) artifacts.add(configureSources(project))
@@ -80,7 +83,7 @@ class HoloEverywhereLibraryPlugin extends HoloEverywhereBasePlugin {
         AndroidJavadoc generateJavadocTask = project.tasks.create(GENERATE_JAVADOC_TASK_NAME, AndroidJavadoc)
         generateJavadocTask.configure {
             description = "Generates Javadoc API documentation for the main source code."
-            configuration = JavaPlugin.COMPILE_CONFIGURATION_NAME
+            configuration = project.configurations.getByName(JavaPlugin.COMPILE_CONFIGURATION_NAME)
             sourceSet = SourceSet.MAIN_SOURCE_SET_NAME
         }
 

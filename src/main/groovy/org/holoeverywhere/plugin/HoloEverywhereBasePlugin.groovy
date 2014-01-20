@@ -1,5 +1,6 @@
 package org.holoeverywhere.plugin
 
+import com.android.build.gradle.BasePlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.internal.reflect.Instantiator
@@ -19,5 +20,11 @@ abstract class HoloEverywhereBasePlugin implements Plugin<Project> {
 
     public HoloEverywhereExtension extension(Project project) {
         return HoloEverywhereExtension.getOrCreateExtension(project, instantiator)
+    }
+
+    def void checkPluginOrder(Project project) {
+        if (project.plugins.any { Plugin i -> BasePlugin.class.isAssignableFrom(i.class) }) {
+            throw new IllegalStateException("HoloEverywhere plugin should be applied before any android plugin, please correct your build.gradle")
+        }
     }
 }

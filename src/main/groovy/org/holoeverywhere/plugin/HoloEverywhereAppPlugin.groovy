@@ -23,9 +23,13 @@ class HoloEverywhereAppPlugin extends HoloEverywhereBasePlugin {
 
     @Override
     void apply(Project project) {
+        checkPluginOrder(project)
         extension = extension(project)
+        project.afterEvaluate { afterEvaluate(project) }
         androidExtension = project.plugins.apply(AppPlugin).extension
+    }
 
+    def void afterEvaluate(Project project) {
         if (extension.signing.enable) {
             if (extension.signing.release.valid()) {
                 createSigningConfig(extension.signing.release.obtainConfig('release'), 'release')
