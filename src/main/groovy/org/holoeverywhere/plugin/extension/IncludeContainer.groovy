@@ -18,6 +18,10 @@ abstract class IncludeContainer implements Configurable<IncludeContainer> {
         }
     }
 
+    IncludeContainer() {
+        this(null)
+    }
+
     IncludeContainer(HoloEverywhereExtension extension) {
         this.extension = extension
     }
@@ -30,7 +34,7 @@ abstract class IncludeContainer implements Configurable<IncludeContainer> {
     }
 
     def boolean include() {
-        return include == Include.Yes || (include == Include.Inhert && extension.include == Include.Yes)
+        return include == Include.Yes || (include == Include.Inhert && extension?.include == Include.Yes)
     }
 
     @Override

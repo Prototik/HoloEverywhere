@@ -37,7 +37,9 @@ class HoloEverywhereLibraryPlugin extends HoloEverywhereBasePlugin {
     @Override
     void apply(Project project) {
         checkPluginOrder(project)
+        loadMainPlugin(project)
         extension = extension(project)
+        extension.upload.packaging = 'aar'
         project.afterEvaluate { afterEvaluate(project) }
         project.plugins.apply(LibraryPlugin)
     }

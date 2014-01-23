@@ -24,7 +24,9 @@ class HoloEverywhereAppPlugin extends HoloEverywhereBasePlugin {
     @Override
     void apply(Project project) {
         checkPluginOrder(project)
+        loadMainPlugin(project)
         extension = extension(project)
+        extension.upload.packaging = 'apk'
         project.afterEvaluate { afterEvaluate(project) }
         androidExtension = project.plugins.apply(AppPlugin).extension
     }
@@ -38,13 +40,13 @@ class HoloEverywhereAppPlugin extends HoloEverywhereBasePlugin {
         }
 
         final List<Object> artifacts = new ArrayList<>()
-        if (extension.app.attachReleaseApk) artifacts.add(configureApk(project))
+        if (extension.app.attachReleaseApk && extension.signing.release.valid()) artifacts.add(configureApk(project, 'release'))
         artifacts.each { artifact -> project.artifacts.add('archives', artifact) }
     }
 
-    def static PublishArtifact configureApk(Project project) {
+    def static PublishArtifact configureApk(Project project, String type) {
         return new DefaultPublishArtifact(project.name, 'apk', 'apk',
-                '', new Date(), project.file("${project.buildDir}/apk/${project.name}-release.apk"),
+                '', new Date(), project.file("${project.buildDir}/apk/${project.name}-${type}.apk"),
                 project.tasks.getByName('assembleRelease'))
     }
 

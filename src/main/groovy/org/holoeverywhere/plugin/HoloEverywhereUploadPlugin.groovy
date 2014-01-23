@@ -43,10 +43,6 @@ class HoloEverywhereUploadPlugin extends HoloEverywhereBasePlugin {
         project.plugins.apply(MavenPlugin)
         project.plugins.apply(SigningPlugin)
 
-        project.afterEvaluate { afterEvaluate(project) }
-    }
-
-    def void afterEvaluate(Project project) {
         UploadContainer upload = extension.upload
 
         Upload uploadTask = project.tasks.getByName('uploadArchives') as Upload
@@ -68,6 +64,7 @@ class HoloEverywhereUploadPlugin extends HoloEverywhereBasePlugin {
             artifactId = upload.artifact ?: project.name
             version = upload.version ?: project.version
             if (upload.description != null) description = upload.description
+            if (upload.packaging != null) packaging = upload.packaging
 
             scm {
                 url upload.scm.url

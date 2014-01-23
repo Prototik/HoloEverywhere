@@ -35,7 +35,11 @@ class RepositoryContainer implements Configurable<RepositoryContainer> {
     }
 
     def void local(Closure<?> closure = null) {
-        snapshotUrl = url = new File(System.getProperty("user.home"), "/.m2/repository").absoluteFile.toURI().toURL()
+        local(new File(System.getProperty("user.home"), "/.m2/repository").absolutePath, closure)
+    }
+
+    def void local(String path, Closure<?> closure = null) {
+        snapshotUrl = url = new File(path).toURI().toURL()
         obtainCredentials('')
         configure(closure)
     }
@@ -46,8 +50,8 @@ class RepositoryContainer implements Configurable<RepositoryContainer> {
         password = props.property(key, 'Password')
         passphrase = props.property(key, 'Passphrase')
         privateKey = props.property(key, 'PrivateKey')
-        url = url ?: props.get(key, 'URL')
-        snapshotUrl = snapshotUrl ?: props.get(key, 'SnapshotURL')
+        url = props.property(key, 'URL') ?: url
+        snapshotUrl = props.property(key, 'SnapshotURL') ?: snapshotUrl
     }
 
     def boolean isSnapshot() {

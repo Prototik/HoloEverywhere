@@ -7,8 +7,9 @@ import org.holoeverywhere.plugin.extension.upload.LicenseContainer
 import org.holoeverywhere.plugin.extension.upload.RepositoryContainer
 import org.holoeverywhere.plugin.extension.upload.ScmContainer
 
-class UploadContainer implements Configurable<UploadContainer> {
-    UploadContainer(Project project) {
+class UploadContainer extends IncludeContainer implements Configurable<UploadContainer> {
+    UploadContainer(HoloEverywhereExtension extension, Project project) {
+        super(extension)
         this.project = project
 
         this.repository = new RepositoryContainer(project)
@@ -21,7 +22,6 @@ class UploadContainer implements Configurable<UploadContainer> {
     def final LicenseContainer license
     def final ScmContainer scm
     def String url
-
     def String group
     def String artifact
     def String version

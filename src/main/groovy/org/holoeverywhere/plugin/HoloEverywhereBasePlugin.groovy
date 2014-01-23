@@ -22,6 +22,14 @@ abstract class HoloEverywhereBasePlugin implements Plugin<Project> {
         return HoloEverywhereExtension.getOrCreateExtension(project, instantiator)
     }
 
+    def void loadRepoPlugin(Project project) {
+        project.plugins.apply(HoloEverywhereRepoPlugin)
+    }
+
+    def void loadMainPlugin(Project project) {
+        project.plugins.apply(HoloEverywhereMainPlugin)
+    }
+
     def void checkPluginOrder(Project project) {
         if (project.plugins.any { Plugin i -> BasePlugin.class.isAssignableFrom(i.class) }) {
             throw new IllegalStateException("HoloEverywhere plugin should be applied before any android plugin, please correct your build.gradle")

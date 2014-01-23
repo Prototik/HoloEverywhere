@@ -4,17 +4,14 @@ import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectFactory
 import org.gradle.api.Project
 import org.gradle.internal.reflect.Instantiator
+import org.gradle.util.Configurable
+import org.gradle.util.ConfigureUtil
 
-class HoloEverywhereExtension {
+class HoloEverywhereExtension extends IncludeContainer implements Configurable<HoloEverywhereExtension> {
     public static final String HOLO_EVERYWHERE_GROUP = 'org.holoeverywhere'
     public static final String HOLO_EVERYWHERE_NAME = 'library'
-    public static final String HOLO_EVERYWHERE_VERSION = '2.1.0'
-    public static final String HOLO_EVERYWHERE_REPO = 'http://192.241.191.41/repo'
-    public static final String HOLO_EVERYWHERE_SNAPSHOT_REPO = 'http://192.241.191.41/snapshot'
-
-    public static final String SUPPORT_V4_GROUP = 'com.android.support'
-    public static final String SUPPORT_V4_NAME = 'support-v4'
-    public static final String SUPPORT_V4_VERSION = '18.0.4'
+    public static final String HOLO_EVERYWHERE_REPO = 'http://192.241.191.41/repo/'
+    public static final String HOLO_EVERYWHERE_SNAPSHOT_REPO = 'http://192.241.191.41/snapshot/'
 
     public static class Addon {
         def String group, name, version
@@ -43,6 +40,8 @@ class HoloEverywhereExtension {
     }
 
     HoloEverywhereExtension(Project project, Instantiator instantiator) {
+        include 'yes'
+
         this.project = project
         this.instantiator = instantiator
         this.app = new AppContainer(project)
@@ -50,7 +49,7 @@ class HoloEverywhereExtension {
         this.supportV4 = new SupportV4Container(this)
         this.repository = new RepositoryContainer(this)
         this.resbuilder = new ResbuilderContainer(project, instantiator)
-        this.upload = new UploadContainer(project)
+        this.upload = new UploadContainer(this, project)
         this.signing = new SigningContainer(project)
 
         this.addons = project.container(Addon, new NamedDomainObjectFactory<Addon>() {
@@ -76,9 +75,6 @@ class HoloEverywhereExtension {
     def final ResbuilderContainer resbuilder
     def final UploadContainer upload
     def final SigningContainer signing
-    def boolean applyLibraryPlugin = true
-    def boolean applyAppPlugin = true
-    def IncludeContainer.Include include = IncludeContainer.Include.Yes
     def String configuration = 'compile'
 
     def NamedDomainObjectContainer<Addon> addons(Closure<?> closure) {
@@ -113,13 +109,18 @@ class HoloEverywhereExtension {
         return signing.configure(closure)
     }
 
-    def void include(String name) {
-        this.include = IncludeContainer.Include.find(name, IncludeContainer.Include.Inhert)
+    @Override
+    HoloEverywhereExtension configure(Closure closure) {
+        ConfigureUtil.configure(closure, this, false)
     }
 
     private static final String EXTENSION_NAME = 'holoeverywhere'
 
     public static HoloEverywhereExtension getOrCreateExtension(Project project, Instantiator instantiator) {
         project.extensions.findByName(EXTENSION_NAME) as HoloEverywhereExtension ?: project.extensions.create(EXTENSION_NAME, HoloEverywhereExtension, project, instantiator)
+    }
+
+    def void apply(String path) {
+        project.apply from: new File(project.rootProject.projectDir, path).absolutePath
     }
 }

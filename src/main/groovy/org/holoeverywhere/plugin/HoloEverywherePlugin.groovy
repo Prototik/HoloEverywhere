@@ -6,7 +6,7 @@ import org.gradle.api.Project
 class HoloEverywherePlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
-        project.plugins.apply(HoloEverywhereRepoPlugin)
-        project.plugins.apply(HoloEverywhereMainPlugin)
+        project.logger.warn("'holoeverywhere' plugin deprecated. Use a 'holoeverywhere-app' or `holoeverywhere-library`")
+        project.plugins.apply(HoloEverywhereAppPlugin)
     }
 }
