@@ -1,5 +1,5 @@
-apply plugin: 'android'
-apply from: '../android_default.gradle'
+apply plugin: 'holoeverywhere-app'
+holoeverywhere.apply 'android_default.gradle'
 
 dependencies {
     compile project(':library')
@@ -8,8 +8,4 @@ dependencies {
     compile 'com.google.android.gms:play-services:3.2.25@aar'
 }
 
-android {
-    defaultConfig {
-        minSdkVersion 8
-    }
-}
+android.defaultConfig.minSdkVersion 8

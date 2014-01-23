@@ -1,20 +1,3 @@
-import org.gradle.api.internal.artifacts.publish.DefaultPublishArtifact;
-
-apply plugin: 'maven'
-apply plugin: 'signing'
-
-configurations {
-    deployerJars
-}
-
-dependencies {
-    deployerJars "org.apache.maven.wagon:wagon-ssh-external:2.2"
-}
-
-repositories {
-    mavenCentral()
-}
-
 android {
     compileSdkVersion 19
     buildToolsVersion '19.0.1'
@@ -34,144 +17,28 @@ android {
             res.srcDirs = ['res']
         }
     }
-}
 
-boolean officialBuild = rootProject.hasProperty('officialBuild')
-boolean snapshotBuild = rootProject.hasProperty('snapshotBuild')
-
-// Sign and attach apks
-if (android.class.name.startsWith('com.android.build.gradle.AppExtension') && project.hasProperty('holoeverywhere.sign.storeFile')) {
-    android {
-        signingConfigs {
-            release {
-                storeFile = file(project.getProperty('holoeverywhere.sign.storeFile'))
-                keyAlias = project.getProperty('holoeverywhere.sign.keyAlias')
-                storePassword = project.getProperty('holoeverywhere.sign.storePassword')
-                keyPassword = project.getProperty('holoeverywhere.sign.keyPassword')
-            }
-        }
-
-        buildTypes {
-            release {
-                signingConfig signingConfigs.release
-            }
-        }
-
-        lintOptions {
-            abortOnError = false
-        }
-    }
-    artifacts {
-        archives new DefaultPublishArtifact(project.name, 'apk', 'apk', '', new Date(), file("${buildDir}/apk/${project.name}-release.apk"), tasks.assembleRelease)
-    }
-}
-
-// Attach apklib (builded by maven), generate javadoc and sources (only for libraries)
-if (android.class.name.startsWith('com.android.build.gradle.LibraryExtension')) {
-    task apklib(type: Copy, dependsOn: rootProject.tasks.buildMaven) {
-        from fileTree("${project.projectDir}/target") { include "*.apklib" }
-        into file("${project.buildDir}/libs")
-        rename '(.*)', "${project.name}-${project.version}.apklib"
-    }
-
-    task generateJavadoc(type: Javadoc) {
-        source = android.sourceSets.main.allJava
-        classpath = project.files(
-                configurations.compile,
-                "${buildDir}/classes/release",
-                project.fileTree("${buildDir}/exploded-bundles") { include '*/classes.jar' },
-                new File(android.plugin.sdkDirectory, 'platforms/android-19/android.jar')
-        )
-    }
-
-    task javadoc(type: Jar, dependsOn: generateJavadoc) {
-        from generateJavadoc.destinationDir
-        classifier = 'javadoc'
-    }
-
-    task sources(type: Jar) {
-        from android.sourceSets.main.allSource
-        classifier = 'sources'
-    }
-
-    if (officialBuild || snapshotBuild) {
-        artifacts {
-            archives tasks.sources
-            archives tasks.javadoc
-            archives new DefaultPublishArtifact(project.name, 'apklib', 'apklib', '', new Date(), file("${project.buildDir}/libs/${project.name}-${project.version}.apklib"), tasks.apklib)
-        }
-    }
-
-    android.lintOptions {
+    lintOptions {
         abortOnError = false
     }
 }
 
-apply plugin: 'holoeverywhere-main'
 holoeverywhere {
     include 'no'
-    resbuilder {
-        include 'no'
-    }
-}
 
-// Deploy to maven repo (local)
-afterEvaluate { project ->
-    signing {
-        required officialBuild
-        sign configurations.archives
+    resbuilder.enable = false
+
+    library {
+        apklibExternalCreation = rootProject.hasProperty('officialBuild')
     }
 
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                configuration = configurations.deployerJars
-                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+    upload {
+        include 'yes'
 
-                def String repoUrl = project.properties.get('holoeverywhere.repo', 'file:///invalid_path')
-                if (repoUrl.startsWith('scpexe://')) {
-                    repository(url: repoUrl) {
-                        authentication(userName: project.properties.get('holoeverywhere.repo.username'), privateKey: project.properties.get('holoeverywhere.repo.key'))
-                    }
-                } else {
-                    repository(url: repoUrl)
-                }
-
-                pom.project {
-                    artifactId ARTIFACT_ID
-                    name NAME
-                    packaging PACKAGING
-                    description DESCRIPTION
-                    url 'https://github.com/Prototik/HoloEverywhere'
-
-                    scm {
-                        url 'https://github.com/Prototik/HoloEverywhere'
-                        connection 'scm:git@github.com:Prototik/HoloEverywhere.git'
-                        developerConnection 'scm:git@github.com:Prototik/HoloEverywhere.git'
-                    }
-
-                    licenses {
-                        license {
-                            name 'MIT License'
-                            url 'https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE'
-                            distribution 'repo'
-                            comments 'Copyright (c) 2013 Sergey Shatunov'
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id 'Prototik'
-                            name 'Sergey Shatunov'
-                            email 'prototypegamez@gmail.com'
-                            timezone '+8'
-                            roles {
-                                role "developer"
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        github 'Prototik', 'HoloEverywhere'
+        repository { holoeverywhere {} }
+        license { mit {} }
     }
+
+    signing.key 'holoeverywhere'
 }

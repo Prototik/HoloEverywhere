@@ -4,8 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.7.0'
-        classpath 'org.holoeverywhere:plugin:0.2.2'
+        classpath 'org.holoeverywhere:plugin:0.2.10'
     }
 }
 
@@ -20,12 +19,6 @@ allprojects {
     tasks.withType(Compile) {
         options.encoding = "UTF-8"
     }
-}
-
-task buildMaven(type: Exec) {
-    executable = 'mvn'
-    args = ['--batch-mode', '--quiet', 'clean', 'package']
-    workingDir = projectDir
 }
 
 apply plugin: 'holoeverywhere-repo'

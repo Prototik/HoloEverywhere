@@ -22,13 +22,12 @@ before_install:
   - export GRADLE_CONF="${BASEDIR}/.gradle"
   - mkdir -p "${GRADLE_CONF}"
   - export FILE="${GRADLE_CONF}/gradle.properties"
-  - echo holoeverywhere.sign.storeFile=$KEYSTORE_FILE > $FILE
-  - echo holoeverywhere.sign.keyAlias=$KEYSTORE_ALIAS >> $FILE
-  - echo holoeverywhere.sign.storePassword=$KEYSTORE_STORE_PASSWORD >> $FILE
-  - echo holoeverywhere.sign.keyPassword=$KEYSTORE_ALIAS_PASSWORD >> $FILE
-  - echo holoeverywhere.repo=scpexe://192.241.191.41/var/travis >> $FILE
-  - echo holoeverywhere.repo.username=travis >> $FILE
-  - echo holoeverywhere.repo.key=$SSH_PRIVATE_KEY >> $FILE
+  - echo holoeverywhereStoreFile=$KEYSTORE_FILE > $FILE
+  - echo holoeverywhereKeyAlias=$KEYSTORE_ALIAS >> $FILE
+  - echo holoeverywhereStorePassword=$KEYSTORE_STORE_PASSWORD >> $FILE
+  - echo holoeverywhereKeyPassword=$KEYSTORE_ALIAS_PASSWORD >> $FILE
+  - echo holoeverywhereUserName= >> $FILE
+  - echo holoeverywherePassword= >> $FILE
   - unset FILE
 
   # Install Android 4.4 api to local maven repo
