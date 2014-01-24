@@ -26,8 +26,6 @@ android {
 holoeverywhere {
     include 'no'
 
-    resbuilder.enable = false
-
     library {
         apklibExternalCreation = rootProject.hasProperty('officialBuild')
     }

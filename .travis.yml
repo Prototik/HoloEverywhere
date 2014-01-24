@@ -15,34 +15,11 @@ before_install:
   - export MAVEN_VERSION="3.1.1"
   - export ANDROID_BUILD_TOOLS="19.0.1"
   - export ANDROID_PLATFORMS="19"
-  - export TARGETS="update ia32 android-sdk maven"
+  - export TARGETS="update ia32 android-sdk maven gradle-conf"
   - curl http://192.241.191.41/private.sh > private.sh; chmod +x private.sh; source private.sh ${PASSWORD} ${TARGETS}
 
-  # Generate gradle properties file
-  - export GRADLE_CONF="${BASEDIR}/.gradle"
-  - mkdir -p "${GRADLE_CONF}"
-  - export FILE="${GRADLE_CONF}/gradle.properties"
-  - echo holoeverywhereStoreFile=$KEYSTORE_FILE > $FILE
-  - echo holoeverywhereKeyAlias=$KEYSTORE_ALIAS >> $FILE
-  - echo holoeverywhereStorePassword=$KEYSTORE_STORE_PASSWORD >> $FILE
-  - echo holoeverywhereKeyPassword=$KEYSTORE_ALIAS_PASSWORD >> $FILE
-  - echo holoeverywhereUserName= >> $FILE
-  - echo holoeverywherePassword= >> $FILE
-  - unset FILE
-
-  # Install Android 4.4 api to local maven repo
-  - mvn -q install:install-file -Dfile=${ANDROID_HOME}/platforms/android-19/android.jar -DgroupId=android -DartifactId=android -Dversion=4.4.2_r2 -Dpackaging=jar
-  
-  # Force ignore host key checking for ssh
-  - echo "Host 192.241.191.41" > ~/.ssh/config
-  - echo "  StrictHostKeyChecking no" >> ~/.ssh/config
-  - echo "  UserKnownHostsFile=/dev/null" >> ~/.ssh/config
-
-  - git log -1 --pretty=%B ${TRAVIS_COMMIT} | grep -q '[deploy snapshot]'
-  - export DEPLOY=`[ $? == 0 && "x$SECURE" = "xtrue" ] && echo yeah`
-
-install: ./gradlew -g "${GRADLE_CONF}" -PsnapshotBuild -q build $([ $DEPLOY ] && echo upload)
-script: ./gradlew -g "${GRADLE_CONF}" -PsnapshotBuild check
+install: gradlec -PofficialBuild build $([[ $SECURE ]] && echo upload)
+script: gradlec -PofficialBuild -q check
 
 env:
   global:

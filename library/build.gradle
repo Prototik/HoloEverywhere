@@ -10,4 +10,3 @@ afterEvaluate {
     javadoc.include "**/org/holoeverywhere/**"
     javadoc.title "HoloEverywhere ${project.version} JavaDoc"
 }
-
