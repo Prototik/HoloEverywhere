@@ -1,10 +1,11 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven { url = 'http://oss.sonatype.org/content/repositories/releases/' }
     }
 
     dependencies {
-        classpath 'org.holoeverywhere:plugin:0.2.10'
+        classpath 'org.holoeverywhere:plugin:0.2.11'
     }
 }
 
