@@ -4,7 +4,7 @@ dependencies {
     compile gradleApi()
     compile localGroovy()
 
-    compile 'com.android.tools.build:gradle:0.7.3'
+    compile 'com.android.tools.build:gradle:0.8.0'
     compile 'org.yaml:snakeyaml:1.13'
 
     ['aether-api', 'aether-spi', 'aether-util', 'aether-impl', 'aether-connector-basic', 'aether-transport-http'].each {
@@ -17,7 +17,7 @@ repositories {
     mavenCentral()
 }
 
-version = '0.2.11-SNAPSHOT'
+version = '0.2.11'
 
 apply plugin: 'maven'
 apply plugin: 'signing'
