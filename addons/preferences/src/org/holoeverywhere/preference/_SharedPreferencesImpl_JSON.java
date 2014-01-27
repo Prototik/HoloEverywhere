@@ -201,13 +201,9 @@ public class _SharedPreferencesImpl_JSON extends _SharedPreferencesBase {
 
         @Override
         public boolean onJSONManipulate(JSONObject object) {
-            if (object.has(key)) {
-                object.remove(key);
-                notifyOnChange(key);
-                return true;
-            } else {
-                return false;
-            }
+            object.remove(key);
+            notifyOnChange(key);
+            return true;
         }
     }
 
