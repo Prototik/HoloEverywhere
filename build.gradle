@@ -13,7 +13,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'holoeverywhere-repo'
 
-version = '19.0.3'
+version = '19.1.0'
 def baseVersion = '19.0.1'
 
 repositories {
@@ -106,8 +106,8 @@ tasks.withType(Compile) {
     options.encoding = "UTF-8"
 }
 
-tasks.compileJava.sourceCompatibility = '1.6'
-tasks.compileJava.targetCompatibility = '1.6'
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
 
 jar {
     manifest.attributes('BaseVersion': "${baseVersion}", 'Version': "${project.version} by HoloEverywhere project")
