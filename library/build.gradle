@@ -2,8 +2,8 @@ apply plugin: 'holoeverywhere-library'
 holoeverywhere.apply 'android_default.gradle'
 
 dependencies {
-    compile 'com.android.support:support-v4:19.0.3@jar'
-    compile 'com.nineoldandroids:library:2.4.0@jar'
+    compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.nineoldandroids:library:2.4.0'
 }
 
 afterEvaluate {

@@ -3,7 +3,7 @@
     <settings defaultResolver="holoEverywhere"/>
     <resolvers>
         <chain name="holoEverywhere">
-            <ibiblio name="holoEverywhereRepo" m2compatible="true" root="https://raw.github.com/Prototik/HoloEverywhere/repo/"/>
+            <ibiblio name="holoEverywhereRepo" m2compatible="true" root="https://192.241.192.41/repo/"/>
             <ibiblio name="central" m2compatible="true"/>
         </chain>
     </resolvers>

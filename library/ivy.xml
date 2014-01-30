@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ivy-module version="2.0">
-    <info module="holoeverywhere" organisation="org.holoeverywhere" />
+    <info module="library" organisation="org.holoeverywhere" />
     <dependencies>
-        <dependency name="support-v4" org="com.android.support" rev="19.0.1" />
+        <dependency name="support-v4" org="com.android.support" rev="19.1.0" />
         <dependency name="library" org="com.nineoldandroids" rev="2.4.0" />
 
         <exclude conf="*" ext="*" type="source" />
