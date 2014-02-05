@@ -1048,6 +1048,11 @@
     <item name="android:windowBackground">@android:color/transparent</item>
     <item name="android:windowShowWallpaper">true</item>
   </style>
+  <style name="Holo.Theme.Light.DarkActionBar.Translucent" parent="Holo.Theme.Light.DarkActionBar">
+    <item name="android:colorBackgroundCacheHint">@null</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowIsTranslucent">true</item>
+  </style>
   <style name="Holo.Theme.Light.DarkActionBar.Wallpaper" parent="Holo.Theme.Light.DarkActionBar">
     <item name="android:colorBackgroundCacheHint">@null</item>
     <item name="android:windowBackground">@android:color/transparent</item>
@@ -1084,6 +1089,11 @@
     <item name="android:windowBackground">@android:color/transparent</item>
     <item name="android:windowShowWallpaper">true</item>
   </style>
+  <style name="Holo.Theme.Light.Translucent" parent="Holo.Theme.Light">
+    <item name="android:colorBackgroundCacheHint">@null</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowIsTranslucent">true</item>
+  </style>
   <style name="Holo.Theme.Light.Wallpaper" parent="Holo.Theme.Light">
     <item name="android:colorBackgroundCacheHint">@null</item>
     <item name="android:windowBackground">@android:color/transparent</item>
@@ -1115,6 +1125,11 @@
     <item name="android:windowAnimationStyle">@style/Holo.Animation.Toast</item>
     <item name="android:windowBackground">@drawable/toast_frame</item>
     <item name="android:windowCloseOnTouchOutside">false</item>
+  </style>
+  <style name="Holo.Theme.Translucent" parent="Holo.Theme">
+    <item name="android:colorBackgroundCacheHint">@null</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowIsTranslucent">true</item>
   </style>
   <style name="Holo.Theme.Wallpaper" parent="Holo.Theme">
     <item name="android:colorBackgroundCacheHint">@null</item>

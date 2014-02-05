@@ -443,16 +443,12 @@ public abstract class _HoloActivity extends ActionBarActivity implements SuperSt
             }
         } else {
             if ((resid & ThemeManager.COLOR_SCHEME_MASK) == 0) {
-                int theme = ThemeManager.getTheme(getIntent(), false);
-                if (theme == 0) {
-                    final android.app.Activity activity = getParent();
-                    if (activity != null) {
-                        theme = ThemeManager.getTheme(activity.getIntent(), false);
-                    }
-                }
-                theme &= ThemeManager.COLOR_SCHEME_MASK;
-                if (theme != 0) {
-                    resid |= theme;
+                resid &= ~ThemeManager.COLOR_SCHEME_MASK;
+                final int parentColorScheme = ThemeManager.getParentColorScheme(getIntent());
+                if (parentColorScheme != ThemeManager.INVALID) {
+                    resid |= parentColorScheme;
+                } else {
+                    resid |= ThemeManager.getDefaultTheme() & ThemeManager.COLOR_SCHEME_MASK;
                 }
             }
             setTheme(ThemeManager.getThemeResource(resid, modifyGlobal));

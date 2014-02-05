@@ -26,6 +26,8 @@ import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_Light_DarkAc
 import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_Light_DarkActionBar_NoActionBar;
 import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_Light_NoActionBar;
 import static org.holoeverywhere.R.style.Holo_Theme_DialogWhenLarge_NoActionBar;
+import static org.holoeverywhere.R.style.Holo_Theme_Dialog_Alert;
+import static org.holoeverywhere.R.style.Holo_Theme_Dialog_Alert_Light;
 import static org.holoeverywhere.R.style.Holo_Theme_Dialog_Light;
 import static org.holoeverywhere.R.style.Holo_Theme_Fullscreen;
 import static org.holoeverywhere.R.style.Holo_Theme_Fullscreen_Wallpaper;
@@ -145,6 +147,10 @@ public final class ThemeManager {
     public static final int _START_RESOURCES_ID = 0x01000000;
     public static final int COLOR_SCHEME_MASK;
     /**
+     * Flag indicates on the alert dialog theme
+     */
+    public static final int ALERT_DIALOG;
+    /**
      * Flag indicates on the dark theme
      */
     public static final int DARK;
@@ -190,6 +196,7 @@ public final class ThemeManager {
      */
     public static final int WALLPAPER;
     private static final String _THEME_TAG = ":holoeverywhere:theme";
+    private static final String _PARENT_SCHEME_TAG = ":holoeverywhere:parent_color_scheme";
     private static final SparseIntArray _THEMES_MAP = new SparseIntArray();
     private static int _DEFAULT_THEME;
     private static List<ThemeGetter> sThemeGetters;
@@ -207,6 +214,7 @@ public final class ThemeManager {
         WALLPAPER = makeNewFlag();
         DIALOG = makeNewFlag();
         DIALOG_WHEN_LARGE = makeNewFlag();
+        ALERT_DIALOG = makeNewFlag();
 
         COLOR_SCHEME_MASK = DARK | LIGHT | MIXED;
 
@@ -228,7 +236,7 @@ public final class ThemeManager {
      */
     public static void applyTheme(Activity activity, boolean force) {
         if (force || ThemeManager.hasSpecifiedTheme(activity)) {
-            activity.setTheme(ThemeManager.getThemeResource(activity));
+            activity.setTheme(ThemeManager.getTheme(activity));
         }
     }
 
@@ -428,6 +436,18 @@ public final class ThemeManager {
 
     private static boolean is(int config, int key) {
         return (config & key) == key;
+    }
+
+    public static boolean isAlertDialog(Activity activity) {
+        return ThemeManager.isAlertDialog(ThemeManager.getTheme(activity));
+    }
+
+    public static boolean isAlertDialog(int i) {
+        return ThemeManager.is(i, ThemeManager.ALERT_DIALOG);
+    }
+
+    public static boolean isAlertDialog(Intent intent) {
+        return ThemeManager.isAlertDialog(ThemeManager.getTheme(intent));
     }
 
     public static boolean isDark(Activity activity) {
@@ -632,6 +652,11 @@ public final class ThemeManager {
         ThemeManager._DEFAULT_THEME ^= mod;
     }
 
+    public static Intent withTheme(Intent intent, int theme) {
+        intent.putExtra(_THEME_TAG, theme);
+        return intent;
+    }
+
     private static int prepareFlags(int i, boolean applyModifier) {
         if (i >= _START_RESOURCES_ID) {
             return i;
@@ -676,12 +701,15 @@ public final class ThemeManager {
                 Holo_Theme_NoActionBar);
         map(DARK | NO_ACTION_BAR | FULLSCREEN,
                 Holo_Theme_NoActionBar_Fullscreen);
+
         map(DARK | DIALOG,
                 Holo_Theme_Dialog);
         map(DARK | DIALOG_WHEN_LARGE,
                 Holo_Theme_DialogWhenLarge);
         map(DARK | DIALOG_WHEN_LARGE | NO_ACTION_BAR,
                 Holo_Theme_DialogWhenLarge_NoActionBar);
+        map(DARK | ALERT_DIALOG,
+                Holo_Theme_Dialog_Alert);
 
         map(DARK | WALLPAPER,
                 Holo_Theme_Wallpaper);
@@ -700,12 +728,15 @@ public final class ThemeManager {
                 Holo_Theme_Light_NoActionBar);
         map(LIGHT | NO_ACTION_BAR | FULLSCREEN,
                 Holo_Theme_Light_NoActionBar_Fullscreen);
+
         map(LIGHT | DIALOG,
                 Holo_Theme_Dialog_Light);
         map(LIGHT | DIALOG_WHEN_LARGE,
                 Holo_Theme_DialogWhenLarge_Light);
         map(LIGHT | DIALOG_WHEN_LARGE | NO_ACTION_BAR,
                 Holo_Theme_DialogWhenLarge_Light_NoActionBar);
+        map(LIGHT | ALERT_DIALOG,
+                Holo_Theme_Dialog_Alert_Light);
 
         map(LIGHT | WALLPAPER,
                 Holo_Theme_Light_Wallpaper);
@@ -724,12 +755,15 @@ public final class ThemeManager {
                 Holo_Theme_Light_DarkActionBar_NoActionBar);
         map(MIXED | NO_ACTION_BAR | FULLSCREEN,
                 Holo_Theme_Light_DarkActionBar_NoActionBar_Fullscreen);
+
         map(MIXED | DIALOG,
                 Holo_Theme_Dialog_Light);
         map(MIXED | DIALOG_WHEN_LARGE,
                 Holo_Theme_DialogWhenLarge_Light_DarkActionBar);
         map(MIXED | DIALOG_WHEN_LARGE | NO_ACTION_BAR,
                 Holo_Theme_DialogWhenLarge_Light_DarkActionBar_NoActionBar);
+        map(MIXED | ALERT_DIALOG,
+                Holo_Theme_Dialog_Alert_Light);
 
         map(MIXED | WALLPAPER,
                 Holo_Theme_Light_DarkActionBar_Wallpaper);
@@ -835,11 +869,8 @@ public final class ThemeManager {
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
                 }
-                if (activity instanceof SuperStartActivity) {
-                    ((SuperStartActivity) activity).superStartActivity(intent,
-                            -1, null);
-                } else {
-                    activity.startActivity(intent);
+                if (activity != null) {
+                    activity.superStartActivity(intent, -1, null);
                 }
             }
         }
@@ -906,27 +937,20 @@ public final class ThemeManager {
                                      int requestCode, Bundle options) {
         final Activity activity = context instanceof Activity ? (Activity) context
                 : null;
-        if (activity != null) {
+        if (activity != null && HoloEverywhere.ALWAYS_USE_PARENT_THEME) {
             ThemeManager.cloneTheme(activity.getIntent(), intent, true);
+        }
+        final int parentColorScheme = ThemeManager.getThemeType(activity);
+        if (parentColorScheme != INVALID) {
+            intent.putExtra(_PARENT_SCHEME_TAG, parentColorScheme);
         }
         if (context instanceof SuperStartActivity) {
             ((SuperStartActivity) context).superStartActivity(intent,
                     requestCode, options);
+        } else if (VERSION.SDK_INT >= 16) {
+            context.startActivity(intent, options);
         } else {
-            if (activity != null) {
-                if (VERSION.SDK_INT >= 16) {
-                    activity.startActivityForResult(intent, requestCode,
-                            options);
-                } else {
-                    activity.startActivityForResult(intent, requestCode);
-                }
-            } else {
-                if (VERSION.SDK_INT >= 16) {
-                    context.startActivity(intent, options);
-                } else {
-                    context.startActivity(intent);
-                }
-            }
+            context.startActivity(intent);
         }
     }
 
@@ -938,6 +962,10 @@ public final class ThemeManager {
         if (sThemeSetters.size() == 0) {
             sThemeSetters = null;
         }
+    }
+
+    public static int getParentColorScheme(Intent intent) {
+        return intent != null ? intent.getIntExtra(_PARENT_SCHEME_TAG, INVALID) : INVALID;
     }
 
     /**
@@ -973,7 +1001,7 @@ public final class ThemeManager {
          */
         public static final class ThemeTag {
             public final boolean dark, fullscreen, light, mixed, noActionBar, wallpaper, dialog,
-                    dialogWhenLarge;
+                    dialogWhenLarge, alertDialog;
             public final int flags;
 
             private ThemeTag(int flags) {
@@ -986,6 +1014,7 @@ public final class ThemeManager {
                 wallpaper = isWallpaper(flags);
                 dialog = isDialog(flags);
                 dialogWhenLarge = isDialogWhenLarge(flags);
+                alertDialog = isAlertDialog(flags);
             }
         }
     }

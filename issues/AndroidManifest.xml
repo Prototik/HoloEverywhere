@@ -185,8 +185,21 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="org.holoeverywhere.issues.i780.MainActivity"
+            android:label="Issue #780"
+            android:theme="@style/Holo.Theme.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="org.holoeverywhere.category.ISSUE_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="org.holoeverywhere.issues.i780.DialogActivity" />
+
         <provider
             android:name=".i695.SuggestionProvider"
+            android:exported="false"
             android:authorities="org.holoeverywhere.issues.i695.SuggestionProvider" />
 
         <meta-data

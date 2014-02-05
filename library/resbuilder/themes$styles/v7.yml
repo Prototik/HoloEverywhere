@@ -70,6 +70,10 @@ blocks:
     android:windowNoTitle: true
     windowActionBar: false
     windowNoTitle: true
+  Translucent:
+    android:colorBackgroundCacheHint: :null
+    android:windowBackground: :android:color/transparent
+    android:windowIsTranslucent: true
   Wallpaper:
     android:colorBackgroundCacheHint: :null
     android:windowBackground: :android:color/transparent
@@ -95,6 +99,7 @@ styles:
   Holo.Theme.Light.DarkActionBar.NoActionBar.Fullscreen | Fullscreen: null
   Holo.Theme.Light.DarkActionBar.NoActionBar.Fullscreen.Wallpaper | Wallpaper: null
   Holo.Theme.Light.DarkActionBar.NoActionBar.Wallpaper | Wallpaper: null
+  Holo.Theme.Light.DarkActionBar.Translucent | Translucent: null
   Holo.Theme.Light.DarkActionBar.Wallpaper | Wallpaper: null
   Holo.Theme.Light.Fullscreen | Fullscreen: null
   Holo.Theme.Light.Fullscreen.Wallpaper | Wallpaper: null
@@ -102,6 +107,7 @@ styles:
   Holo.Theme.Light.NoActionBar.Fullscreen | Fullscreen: null
   Holo.Theme.Light.NoActionBar.Fullscreen.Wallpaper | Wallpaper: null
   Holo.Theme.Light.NoActionBar.Wallpaper | Wallpaper: null
+  Holo.Theme.Light.Translucent | Translucent: null
   Holo.Theme.Light.Wallpaper | Wallpaper: null
   Holo.Theme.NoActionBar | NoActionBar: null
   Holo.Theme.NoActionBar.Fullscreen | Fullscreen: null
@@ -112,4 +118,5 @@ styles:
     android:windowAnimationStyle: :style/Holo.Animation.Toast
     android:windowBackground: :drawable/toast_frame
     android:windowCloseOnTouchOutside: false
+  Holo.Theme.Translucent | Translucent: null
   Holo.Theme.Wallpaper | Wallpaper: null
