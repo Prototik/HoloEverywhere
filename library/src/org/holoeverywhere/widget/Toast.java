@@ -2,10 +2,13 @@
 package org.holoeverywhere.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.view.View;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.R;
+import org.holoeverywhere.ThemeManager;
+import org.holoeverywhere.app.ContextThemeWrapperPlus;
 
 public class Toast extends android.widget.Toast {
     public static final int LENGTH_LONG = android.widget.Toast.LENGTH_LONG;
@@ -16,6 +19,13 @@ public class Toast extends android.widget.Toast {
     }
 
     public static Toast makeText(Context context, CharSequence s, int duration) {
+        // Fallback mode
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.holoTheme});
+        if (a.getInt(0, ThemeManager.INVALID) == ThemeManager.INVALID) {
+            context = new ContextThemeWrapperPlus(context, ThemeManager.getThemeResource(ThemeManager.getDefaultTheme()));
+        }
+        a.recycle();
+
         final View view = LayoutInflater.inflate(context, R.layout.transient_notification);
         ((TextView) view.findViewById(android.R.id.message)).setText(s);
 
