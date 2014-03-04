@@ -37,7 +37,8 @@ Bringing Holo Theme from Android 4.1 to 2.1 and above.
  * [otoMoto](https://play.google.com/store/apps/details?id=pl.otomoto)
  * [AndroidPIT](https://play.google.com/store/apps/details?id=de.androidpit.app)
  * [Tabata Trainer, Workout/HIIT](https://play.google.com/store/apps/details?id=igordcard.tabatatrainer)
- 
+ * [Schedule](https://play.google.com/store/apps/details?id=pl.project.schedule)
+
 Write to [Sergey](mailto:prototypegamez@gmail.com) for add your application to this list.
 
 ## Contact
