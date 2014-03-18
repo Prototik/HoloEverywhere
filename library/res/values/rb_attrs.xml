@@ -333,6 +333,10 @@
   <declare-styleable name="TextView">
     <attr name="android:textAppearance" />
   </declare-styleable>
+  <declare-styleable name="ViewStub">
+    <attr name="android:inflatedId" />
+    <attr name="android:layout" />
+  </declare-styleable>
   <declare-styleable name="WindowSizes">
     <attr name="windowFixedHeightMajor" />
     <attr name="windowFixedHeightMinor" />

@@ -1,4 +1,3 @@
-
 package org.holoeverywhere.addon;
 
 import android.annotation.SuppressLint;
@@ -199,16 +198,15 @@ public class AddonSlider extends IAddon {
                 return mSliderMenu;
             }
             mMenuLayout = menuLayout;
-            mMenuContext = obtainMenuContext(true);
             setDrawerLayout(R.layout.slider_default_layout);
             setOverlayActionBar(true);
             mSliderMenu = new SliderMenu(this);
             mSliderMenu.setHandleHomeKey(true);
-            mSliderMenu.makeDefaultMenu(mMenuContext);
+            mSliderMenu.makeDefaultMenu(obtainMenuContext(mSliderMenu, true));
             return mSliderMenu;
         }
 
-        public Context obtainMenuContext(boolean useActionBarStyle) {
+        public Context obtainMenuContext(SliderMenu sliderMenu, boolean useActionBarStyle) {
             if (mMenuContext != null) {
                 return mMenuContext;
             }
@@ -217,7 +215,7 @@ public class AddonSlider extends IAddon {
             if (themeType == ThemeManager.MIXED && useActionBarStyle) {
                 themeType = ThemeManager.DARK;
             }
-            return mMenuContext = new ContextThemeWrapperPlus(activity, SliderMenu.getThemeForType(themeType));
+            return mMenuContext = new ContextThemeWrapperPlus(activity, sliderMenu.getThemeForType(themeType));
         }
 
         public SliderMenu obtainSliderMenu() {

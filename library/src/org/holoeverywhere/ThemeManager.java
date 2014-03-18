@@ -173,7 +173,7 @@ public final class ThemeManager {
     /**
      * Boolean flag indicates that activity was be created by theme manager
      */
-    public static final String KEY_CREATED_BY_THEME_MANAGER = ":holoeverywhere:createbythememanager";
+    public static final String KEY_CREATED_BY_THEME_MANAGER = ":holoeverywhere:createdbythememanager";
     /**
      * Key for saving activity instance state. Only for system use
      */

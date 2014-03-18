@@ -16,6 +16,6 @@
 
 	<modules>
 		<module>slider</module>
-		<module>preferences</module>
+        <module>preferences</module>
 	</modules>
 </project>

@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         final AddonSlider.AddonSliderA slider = addon(AddonSlider.class);
         final SliderMenu menu = slider.obtainDefaultSliderMenu();
-        menu.setSelectionBehavior(SliderMenu.SelectionBehavior.Disabled);
+        menu.setAppearanceFlags(0);
         menu.add("Item #1", DummyFragment.class).setCustomLayout(R.layout.i632_item_layout);
         menu.add("Item #2", DummyFragment.class).setCustomLayout(R.layout.i632_item_layout);
         menu.add("Item #3", DummyFragment.class).setCustomLayout(R.layout.i632_item_layout);

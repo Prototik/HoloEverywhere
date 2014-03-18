@@ -9,8 +9,10 @@ blocks:
     textAppearanceSliderItemInverse: ?android:textAppearanceMediumInverse
   Dark < Base:
     sliderMenuPanelBackground: :color/slider_menu_panel_background_holo_dark
+    sliderMenuGroupIndicator: :drawable/slider_menu_expander_holo_dark
   Light < Base:
     sliderMenuPanelBackground: :color/slider_menu_panel_background_holo_light
+    sliderMenuGroupIndicator: :drawable/slider_menu_expander_holo_light
 styles:
   Holo.Internal.SliderTheme < Holo.Theme.Slider: null
   Holo.Internal.SliderTheme.Light < Holo.Theme.Slider.Light: null
