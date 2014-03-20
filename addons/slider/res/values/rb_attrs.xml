@@ -2,6 +2,7 @@
 <resources>
   <attr name="sliderMenuGroupIndicator" format="reference" />
   <attr name="sliderMenuPanelBackground" format="reference|color" />
+  <attr name="sliderMenuTheme" format="reference" />
   <attr name="textAppearanceSliderItem" format="reference" />
   <attr name="textAppearanceSliderItemInverse" format="reference" />
   <declare-styleable name="SliderMenu">

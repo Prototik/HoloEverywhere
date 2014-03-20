@@ -1,6 +1,7 @@
 package org.holoeverywhere.slider;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
@@ -15,6 +16,7 @@ import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
 import org.holoeverywhere.addon.IAddonThemes;
 import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.ContextThemeWrapperPlus;
 import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.drawable.ColorDrawable;
 import org.holoeverywhere.widget.ExpandableListView;
@@ -92,6 +94,7 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
     private boolean mExpandableMenu;
     private IAddonThemes mThemes;
     private OnPageChangeListener mOnPageChangeListener;
+    private boolean mPageWasChanged = false;
 
     final List<SliderItem> mItems;
     int mCurrentPage = 0;
@@ -286,14 +289,9 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
             throw new IllegalStateException("No more than one view allowed");
         }
         mExpandableMenu = false;
-        SliderMenuAdapter adapter = new SliderMenuAdapter(sThemes.context(context == null ? listView.getContext() : context), this);
+        SliderMenuAdapter adapter = new SliderMenuAdapter(obtainMenuContext(context == null ? listView.getContext() : context), this);
         mAdapter = adapter;
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(adapter);
-        if (mFuturePosition != 0) {
-            setCurrentPage(mFuturePosition, true, true);
-            mFuturePosition = 0;
-        }
+        adapter.bind(listView);
     }
 
     public void bind(ExpandableListView listView, Context context) {
@@ -301,13 +299,9 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
             throw new IllegalStateException("No more than one view allowed");
         }
         mExpandableMenu = true;
-        SliderMenuExpandableAdapter adapter = new SliderMenuExpandableAdapter(sThemes.context(context == null ? listView.getContext() : context), this);
+        SliderMenuExpandableAdapter adapter = new SliderMenuExpandableAdapter(obtainMenuContext(context == null ? listView.getContext() : context), this);
         mAdapter = adapter;
         adapter.bind(listView);
-        if (mFuturePosition != 0) {
-            setCurrentPage(mFuturePosition, true, true);
-            mFuturePosition = 0;
-        }
     }
 
     public void bindOnLeftPanel() {
@@ -434,6 +428,7 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
     }
 
     public void setCurrentPage(int position) {
+        mPageWasChanged = true;
         setCurrentPage(position, true, true);
     }
 
@@ -464,11 +459,7 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
     }
 
     public void makeDefaultMenu() {
-        makeDefaultMenu(false);
-    }
-
-    public void makeDefaultMenu(boolean useActionBarStyle) {
-        makeDefaultMenu(mAddon.obtainMenuContext(this, useActionBarStyle));
+        makeDefaultMenu(mAddon.obtainMenuContext(this));
     }
 
     public void makeDefaultMenu(Context context) {
@@ -502,7 +493,7 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
         if (mHandleHomeKey) {
             mActionBar.setDisplayHomeAsUpEnabled(mAddon.isAddonEnabled() || mFragmentManager.getBackStackEntryCount() > 0);
         }
-        if (mIgnoreBackStack || mCurrentPage < 0 || mCurrentPage >= mItems.size()) {
+        if (mIgnoreBackStack) {
             return;
         }
         BaseSliderItem<?> item = getItemFromPosition(mCurrentPage);
@@ -552,6 +543,10 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
         mAddon.get().getSupportFragmentManager().addOnBackStackChangedListener(this);
         onBackStackChanged();
         mIgnoreBackStack = false;
+
+        if (!mPageWasChanged && mItems.size() > 0) {
+            setCurrentPage(mFuturePosition, true, true);
+        }
     }
 
     public void onResume() {
@@ -607,12 +602,9 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
     void setCurrentPage(int position, boolean force, boolean openContentView) {
         if (mAdapter == null) {
             mFuturePosition = position;
+            return;
         }
-        if (position < 0 || (!mExpandableMenu && position >= mItems.size())) {
-            throw new IndexOutOfBoundsException();
-        }
-        if (force || mCurrentPage != position
-                || mAddon.get().getSupportFragmentManager().getBackStackEntryCount() > 0) {
+        if (force || mCurrentPage != position || mAddon.get().getSupportFragmentManager().getBackStackEntryCount() > 0) {
             changePage(position, getItemFromPosition(position));
             if (mOnPageChangeListener != null) {
                 mOnPageChangeListener.onPageChange(mCurrentPage, position);
@@ -659,6 +651,14 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
 
     void internalSetOnPageChangeListener(OnPageChangeListener listener) {
         mOnPageChangeListener = listener;
+    }
+
+    public Context obtainMenuContext(Context context) {
+        context = sThemes.context(context);
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.sliderMenuTheme});
+        final int themeRes = a.getResourceId(0, 0);
+        a.recycle();
+        return themeRes == 0 ? context : new ContextThemeWrapperPlus(context, themeRes);
     }
 
     interface OnPageChangeListener {

@@ -18,4 +18,5 @@ styles:
   Holo.Internal.SliderTheme.Light < Holo.Theme.Slider.Light: null
   Holo.Theme.Slider | Dark BarDark < Holo.Theme: null
   Holo.Theme.Slider.Light | Light BarLight < Holo.Theme.Light: null
-  Holo.Theme.Slider.Light.DarkActionBar | Light BarDark < Holo.Theme.Light.DarkActionBar: null
+  Holo.Theme.Slider.Light.DarkActionBar | Dark BarDark < Holo.Theme.Light.DarkActionBar:
+    sliderMenuTheme: :style/Holo.Theme.Slider
