@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/expander_open_holo_light" android:state_expanded="true" />
+    <!-- TODO Fix shadows -->
+    <item>
+        <rotate android:drawable="@drawable/expander_close_holo_light" android:fromDegrees="90" android:toDegrees="90" android:pivotX="50%" android:pivotY="50%" />
+    </item>
+</selector>

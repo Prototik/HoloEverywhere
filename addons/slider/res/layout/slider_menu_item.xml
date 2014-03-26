@@ -9,23 +9,23 @@
     <View
         android:id="@+id/selectionHandler"
         android:layout_width="6dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginRight="6dp" />
 
     <ImageView
         android:id="@android:id/icon1"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:maxHeight="52dp"
         android:maxWidth="52dp" />
 
     <TextView
+        android:layout_marginLeft="8dp"
         android:id="@android:id/text1"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:paddingLeft="16dp"
         android:textAppearance="?android:textAppearanceMedium" />
 </LinearLayout>

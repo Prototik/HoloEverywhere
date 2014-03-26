@@ -219,6 +219,9 @@ styleable:
   - thumb|reference
   - toggleWhenClick|boolean
   - track|reference
+  ViewStub:
+  - android:inflatedId
+  - android:layout
   TextAppearance:
   - android:fontFamily
   - android:textAllCaps

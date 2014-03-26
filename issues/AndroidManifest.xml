@@ -207,6 +207,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="org.holoeverywhere.issues.i796.MainActivity"
+            android:label="Issue #796"
+            android:theme="@style/Holo.Issues.I796.Theme">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="org.holoeverywhere.category.ISSUE_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:name=".i695.SuggestionProvider"
             android:exported="false"

@@ -1,0 +1,13 @@
+blocks:
+  Dark:
+    i796Icon1: :drawable/i796_icon_1_holo_dark
+    i796Icon2: :drawable/i796_icon_2_holo_dark
+    i796Icon3: :drawable/i796_icon_3_holo_dark
+  Light:
+    i796Icon1: :drawable/i796_icon_1_holo_light
+    i796Icon2: :drawable/i796_icon_2_holo_light
+    i796Icon3: :drawable/i796_icon_3_holo_light
+styles:
+  Holo.Issues.I796.Theme | Dark < Holo.Theme:
+  Holo.Issues.I796.Theme.Light | Light < Holo.Theme.Light:
+  Holo.Issues.I796.Theme.Light.DarkActionBar | Dark < Holo.Theme.Light.DarkActionBar:

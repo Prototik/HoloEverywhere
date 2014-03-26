@@ -29,6 +29,7 @@ public class IAddonThemes implements ThemeSetter {
         }
     };
     private final int mThemeFlag;
+    private final boolean mFlagOwner;
     private Map<Context, AddonThemeWrapper> mContexts;
     private int mDarkTheme = -1;
     private int mLightTheme = -1;
@@ -38,9 +39,25 @@ public class IAddonThemes implements ThemeSetter {
         this(true);
     }
 
-    public IAddonThemes(boolean createFlag) {
-        mThemeFlag = createFlag ? ThemeManager.makeNewFlag() : -1;
-        ThemeManager.registerThemeSetter(this);
+    public IAddonThemes(final boolean createFlag) {
+        this(createFlag ? ThemeManager.makeNewFlag() : -1, createFlag);
+        if (createFlag) {
+            ThemeManager.registerThemeSetter(this);
+        }
+    }
+
+    public IAddonThemes(final int themeFlag) {
+        this(themeFlag, false);
+    }
+
+    public IAddonThemes(final int themeFlag, final boolean flagOwner) {
+        mThemeFlag = themeFlag;
+        mFlagOwner = flagOwner;
+    }
+
+    public IAddonThemes(final IAddonThemes addonThemes) {
+        this(addonThemes.getThemeFlag(), false);
+        map(addonThemes.getDarkTheme(), addonThemes.getLightTheme(), addonThemes.getMixedTheme());
     }
 
     public int getTheme(int themeType) {
@@ -125,9 +142,11 @@ public class IAddonThemes implements ThemeSetter {
 
     @Override
     public void setupThemes() {
-        ThemeManager.map(mThemeFlag | ThemeManager.DARK, mDarkTheme);
-        ThemeManager.map(mThemeFlag | ThemeManager.LIGHT, mLightTheme);
-        ThemeManager.map(mThemeFlag | ThemeManager.MIXED, mMixedTheme);
+        if (mFlagOwner) {
+            ThemeManager.map(mThemeFlag | ThemeManager.DARK, mDarkTheme);
+            ThemeManager.map(mThemeFlag | ThemeManager.LIGHT, mLightTheme);
+            ThemeManager.map(mThemeFlag | ThemeManager.MIXED, mMixedTheme);
+        }
     }
 
     public Context unwrap(Context context) {

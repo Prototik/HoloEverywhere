@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@id/leftView"
-        android:name="org.holoeverywhere.slider.SliderMenu$SliderMenuFragment"
+        android:name="org.holoeverywhere.slider.SliderMenuFragment"
         android:layout_width="@dimen/menu_width"
         android:layout_height="match_parent" />
 

@@ -1,4 +1,3 @@
-
 package org.holoeverywhere.addon;
 
 import android.annotation.SuppressLint;
@@ -13,10 +12,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
 
-import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.IAddon.Addon;
-import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.ContextThemeWrapperPlus;
 import org.holoeverywhere.slider.R;
 import org.holoeverywhere.slider.SliderMenu;
 import org.holoeverywhere.widget.DrawerLayout;
@@ -198,26 +194,25 @@ public class AddonSlider extends IAddon {
             if (mSliderMenu != null) {
                 return mSliderMenu;
             }
+
             mMenuLayout = menuLayout;
-            mMenuContext = obtainMenuContext(true);
-            setDrawerLayout(R.layout.slider_default_layout);
-            setOverlayActionBar(true);
             mSliderMenu = new SliderMenu(this);
             mSliderMenu.setHandleHomeKey(true);
-            mSliderMenu.makeDefaultMenu(mMenuContext);
+
+            final Context menuContext = obtainMenuContext(mSliderMenu);
+            setDrawerLayout(R.layout.slider_default_layout);
+            setOverlayActionBar(true);
+
+            mSliderMenu.makeDefaultMenu(menuContext);
+
             return mSliderMenu;
         }
 
-        public Context obtainMenuContext(boolean useActionBarStyle) {
+        public Context obtainMenuContext(SliderMenu sliderMenu) {
             if (mMenuContext != null) {
                 return mMenuContext;
             }
-            final Activity activity = get();
-            int themeType = ThemeManager.getThemeType(activity);
-            if (themeType == ThemeManager.MIXED && useActionBarStyle) {
-                themeType = ThemeManager.DARK;
-            }
-            return mMenuContext = new ContextThemeWrapperPlus(activity, SliderMenu.getThemeForType(themeType));
+            return mMenuContext = sliderMenu.obtainMenuContext(get());
         }
 
         public SliderMenu obtainSliderMenu() {

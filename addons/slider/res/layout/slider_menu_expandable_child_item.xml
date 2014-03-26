@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?listPreferredItemHeightSmall"
+    android:background="?selectableItemBackground"
+    android:minHeight="?listPreferredItemHeightSmall"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/groupIndicator"
+        android:layout_width="6dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="6dp" />
+
+    <ImageView
+        android:id="@android:id/icon1"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_vertical"
+        android:maxHeight="52dp"
+        android:maxWidth="52dp" />
+
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:gravity="center_vertical"
+        android:textAppearance="?android:textAppearanceMedium" />
+</LinearLayout>

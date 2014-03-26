@@ -31,4 +31,19 @@
     <item name="spinnerDropDownItemStyle">@style/Holo.Issues.I723.SpinnerItem.DropDown</item>
     <item name="spinnerItemStyle">@style/Holo.Issues.I723.SpinnerItem</item>
   </style>
+  <style name="Holo.Issues.I796.Theme" parent="Holo.Theme">
+    <item name="i796Icon1">@drawable/i796_icon_1_holo_dark</item>
+    <item name="i796Icon2">@drawable/i796_icon_2_holo_dark</item>
+    <item name="i796Icon3">@drawable/i796_icon_3_holo_dark</item>
+  </style>
+  <style name="Holo.Issues.I796.Theme.Light" parent="Holo.Theme.Light">
+    <item name="i796Icon1">@drawable/i796_icon_1_holo_light</item>
+    <item name="i796Icon2">@drawable/i796_icon_2_holo_light</item>
+    <item name="i796Icon3">@drawable/i796_icon_3_holo_light</item>
+  </style>
+  <style name="Holo.Issues.I796.Theme.Light.DarkActionBar" parent="Holo.Theme.Light.DarkActionBar">
+    <item name="i796Icon1">@drawable/i796_icon_1_holo_dark</item>
+    <item name="i796Icon2">@drawable/i796_icon_2_holo_dark</item>
+    <item name="i796Icon3">@drawable/i796_icon_3_holo_dark</item>
+  </style>
 </resources>

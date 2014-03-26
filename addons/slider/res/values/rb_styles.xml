@@ -5,6 +5,7 @@
   <style name="Holo.Theme.Slider" parent="Holo.Theme">
     <item name="android:homeAsUpIndicator">?homeAsUpIndicator</item>
     <item name="homeAsUpIndicator">@drawable/ic_drawer_dark</item>
+    <item name="sliderMenuGroupIndicator">@drawable/slider_menu_expander_holo_dark</item>
     <item name="sliderMenuPanelBackground">@color/slider_menu_panel_background_holo_dark</item>
     <item name="textAppearanceSliderItem">?android:textAppearanceMedium</item>
     <item name="textAppearanceSliderItemInverse">?android:textAppearanceMediumInverse</item>
@@ -12,6 +13,7 @@
   <style name="Holo.Theme.Slider.Light" parent="Holo.Theme.Light">
     <item name="android:homeAsUpIndicator">?homeAsUpIndicator</item>
     <item name="homeAsUpIndicator">@drawable/ic_drawer_light</item>
+    <item name="sliderMenuGroupIndicator">@drawable/slider_menu_expander_holo_light</item>
     <item name="sliderMenuPanelBackground">@color/slider_menu_panel_background_holo_light</item>
     <item name="textAppearanceSliderItem">?android:textAppearanceMedium</item>
     <item name="textAppearanceSliderItemInverse">?android:textAppearanceMediumInverse</item>
@@ -19,7 +21,9 @@
   <style name="Holo.Theme.Slider.Light.DarkActionBar" parent="Holo.Theme.Light.DarkActionBar">
     <item name="android:homeAsUpIndicator">?homeAsUpIndicator</item>
     <item name="homeAsUpIndicator">@drawable/ic_drawer_dark</item>
-    <item name="sliderMenuPanelBackground">@color/slider_menu_panel_background_holo_light</item>
+    <item name="sliderMenuGroupIndicator">@drawable/slider_menu_expander_holo_dark</item>
+    <item name="sliderMenuPanelBackground">@color/slider_menu_panel_background_holo_dark</item>
+    <item name="sliderMenuTheme">@style/Holo.Theme.Slider</item>
     <item name="textAppearanceSliderItem">?android:textAppearanceMedium</item>
     <item name="textAppearanceSliderItemInverse">?android:textAppearanceMediumInverse</item>
   </style>
