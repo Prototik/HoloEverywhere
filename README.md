@@ -38,6 +38,7 @@ Bringing Holo Theme from Android 4.1 to 2.1 and above.
  * [AndroidPIT](https://play.google.com/store/apps/details?id=de.androidpit.app)
  * [Wrkout](https://play.google.com/store/apps/details?id=igordcard.tabatatrainer)
  * [Schedule](https://play.google.com/store/apps/details?id=pl.project.schedule)
+ * [Extreme Fitness Tracker Free](https://play.google.com/store/apps/details?id=com.unifylog.droid90free)
 
 Write to [Sergey](mailto:prototypegamez@gmail.com) for add your application to this list.
 
