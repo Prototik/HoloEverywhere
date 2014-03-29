@@ -21,6 +21,10 @@ android {
     lintOptions {
         abortOnError = false
     }
+    
+    aaptOptions {
+		useAaptPngCruncher = true
+	}
 }
 
 holoeverywhere {
