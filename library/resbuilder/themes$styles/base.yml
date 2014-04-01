@@ -20,6 +20,7 @@ blocks:
     textAppearanceListItem: ?android:textAppearanceLarge
     textAppearanceListItemSmall: ?android:textAppearanceMedium
     toastFrameBackground: :drawable/toast_frame
+    android:measureWithLargestChild: false
   BaseDark < Base TextDark:
     alertDialogTheme: :style/Holo.Theme.Dialog.Alert
     android:windowBackground: :drawable/background_holo_dark
