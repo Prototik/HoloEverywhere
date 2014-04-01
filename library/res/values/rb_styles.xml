@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
   <style name="Holo" parent="" />
   <style name="Holo.AlertDialog" parent="Holo">
     <item name="bottomBright">@drawable/dialog_bottom_holo_dark</item>
@@ -72,6 +72,7 @@
     <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
     <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert</item>
     <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
+    <item name="android:measureWithLargestChild">false</item>
     <item name="android:textAppearance">@style/Holo.TextAppearance</item>
     <item name="android:textAppearanceInverse">@style/Holo.TextAppearance.Inverse</item>
     <item name="android:textAppearanceLarge">@style/Holo.TextAppearance.Large</item>
@@ -142,7 +143,6 @@
     <item name="textAppearanceListItemSmall">?android:textAppearanceMedium</item>
     <item name="textColorAlertDialogListItem">@color/primary_text_holo_dark</item>
     <item name="toastFrameBackground">@drawable/toast_frame</item>
-    <item name="android:measureWithLargestChild" tools:ignore="NewApi">false</item>
   </style>
   <style name="Holo.Base.Theme.Dialog" parent="Holo.Theme">
     <item name="android:colorBackgroundCacheHint">@null</item>
@@ -208,6 +208,7 @@
     <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
     <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
     <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
+    <item name="android:measureWithLargestChild">false</item>
     <item name="android:textAppearance">@style/Holo.TextAppearance.Light</item>
     <item name="android:textAppearanceInverse">@style/Holo.TextAppearance.Inverse.Light</item>
     <item name="android:textAppearanceLarge">@style/Holo.TextAppearance.Large.Light</item>
@@ -278,12 +279,12 @@
     <item name="textAppearanceListItemSmall">?android:textAppearanceMedium</item>
     <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
     <item name="toastFrameBackground">@drawable/toast_frame</item>
-    <item name="android:measureWithLargestChild" tools:ignore="NewApi">false</item>
   </style>
   <style name="Holo.Base.Theme.Light.DarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
     <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
     <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
     <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
+    <item name="android:measureWithLargestChild">false</item>
     <item name="android:textAppearance">@style/Holo.TextAppearance.Light</item>
     <item name="android:textAppearanceInverse">@style/Holo.TextAppearance.Inverse.Light</item>
     <item name="android:textAppearanceLarge">@style/Holo.TextAppearance.Large.Light</item>
@@ -354,7 +355,6 @@
     <item name="textAppearanceListItemSmall">?android:textAppearanceMedium</item>
     <item name="textColorAlertDialogListItem">@color/primary_text_holo_light</item>
     <item name="toastFrameBackground">@drawable/toast_frame</item>
-    <item name="android:measureWithLargestChild" tools:ignore="NewApi">false</item>
   </style>
   <style name="Holo.Button" parent="Holo">
     <item name="android:background">@drawable/btn_default_holo_dark</item>

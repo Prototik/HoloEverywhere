@@ -703,7 +703,7 @@ public class LinearLayout extends android.widget.LinearLayout implements Drawabl
         }
         maxHeight += getPaddingTop() + getPaddingBottom();
         maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight());
-        setMeasuredDimensionsCompat(widthSizeAndState | childState & MEASURED_STATE_MASK, 
+        setMeasuredDimensionCompat(widthSizeAndState | childState & MEASURED_STATE_MASK,
         		ViewCompat.resolveSizeAndState(maxHeight, heightMeasureSpec,
         				childState << MEASURED_HEIGHT_STATE_SHIFT));
         if (matchHeight) {
@@ -925,14 +925,14 @@ public class LinearLayout extends android.widget.LinearLayout implements Drawabl
         maxWidth += getPaddingLeft() + getPaddingRight();
         maxWidth = Math.max(maxWidth, getSuggestedMinimumWidth());
         
-        setMeasuredDimensionsCompat(ViewCompat.resolveSizeAndState(maxWidth, widthMeasureSpec, childState),
+        setMeasuredDimensionCompat(ViewCompat.resolveSizeAndState(maxWidth, widthMeasureSpec, childState),
         		heightSizeAndState);
         if (matchWidth) {
             forceUniformWidth(count, heightMeasureSpec);
         }
     }
 
-	private void setMeasuredDimensionsCompat(int measuredWidth,
+	private void setMeasuredDimensionCompat(int measuredWidth,
 			int measuredHeight) {
 		if (VERSION.SDK_INT < VERSION_CODES.HONEYCOMB) {
 			measuredWidth &= MEASURED_SIZE_MASK;
