@@ -72,6 +72,7 @@
     <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
     <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert</item>
     <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
+    <item name="android:measureWithLargestChild">false</item>
     <item name="android:textAppearance">@style/Holo.TextAppearance</item>
     <item name="android:textAppearanceInverse">@style/Holo.TextAppearance.Inverse</item>
     <item name="android:textAppearanceLarge">@style/Holo.TextAppearance.Large</item>
@@ -207,6 +208,7 @@
     <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
     <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
     <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
+    <item name="android:measureWithLargestChild">false</item>
     <item name="android:textAppearance">@style/Holo.TextAppearance.Light</item>
     <item name="android:textAppearanceInverse">@style/Holo.TextAppearance.Inverse.Light</item>
     <item name="android:textAppearanceLarge">@style/Holo.TextAppearance.Large.Light</item>
@@ -282,6 +284,7 @@
     <item name="activatedBackgroundIndicator">@drawable/activated_background_holo</item>
     <item name="alertDialogTheme">@style/Holo.Theme.Dialog.Alert.Light</item>
     <item name="android:candidatesTextStyleSpans">@string/candidates_style</item>
+    <item name="android:measureWithLargestChild">false</item>
     <item name="android:textAppearance">@style/Holo.TextAppearance.Light</item>
     <item name="android:textAppearanceInverse">@style/Holo.TextAppearance.Inverse.Light</item>
     <item name="android:textAppearanceLarge">@style/Holo.TextAppearance.Large.Light</item>
