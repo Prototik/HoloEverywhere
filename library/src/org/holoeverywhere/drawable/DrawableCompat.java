@@ -1,4 +1,3 @@
-
 package org.holoeverywhere.drawable;
 
 import android.content.Context;
@@ -132,7 +131,7 @@ public final class DrawableCompat {
 
     public static Drawable loadDrawable(Resources res, TypedValue value)
             throws NotFoundException {
-        if (value == null || value.resourceId <= 0) {
+        if (value == null || value.resourceId == 0) {
             return null;
         }
         final long key = (long) value.assetCookie << 32 | value.data;
@@ -186,8 +185,6 @@ public final class DrawableCompat {
     public static interface IStateOverlay extends StateStub {
         public void refreshDrawableState();
 
-        public void invalidate();
-
         public int[] superOnCreateDrawableState(int extraSpace);
     }
 
@@ -220,9 +217,8 @@ public final class DrawableCompat {
 
         @Override
         public void setActivated(boolean activated) {
-            if (isActivated() != activated) {
+            if (getFlag(FLAG_ACTIVATED) != activated) {
                 setFlag(FLAG_ACTIVATED, activated);
-                mOverlayInterface.invalidate();
                 mOverlayInterface.refreshDrawableState();
             }
         }
@@ -239,7 +235,7 @@ public final class DrawableCompat {
             extraSpace += 1;
             int[] state = mOverlayInterface.superOnCreateDrawableState(extraSpace);
             state = ViewCompat.mergeDrawableStates(state, new int[]{
-                    mOverlayInterface.isActivated() ? android.R.attr.state_activated : -android.R.attr.state_activated
+                    getFlag(FLAG_ACTIVATED) ? android.R.attr.state_activated : -android.R.attr.state_activated
             });
             return state;
         }

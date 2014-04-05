@@ -1,4 +1,3 @@
-
 package org.holoeverywhere.drawable;
 
 import android.content.res.Resources;
@@ -14,7 +13,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 
 public class StateListDrawable extends DrawableContainer {
-    static final class StateListState extends DrawableContainerState {
+    static final class StateListState extends DrawableContainer.DrawableContainerState {
         int[][] mStateSets;
 
         StateListState(StateListState orig, StateListDrawable owner, Resources res) {
@@ -199,7 +198,8 @@ public class StateListDrawable extends DrawableContainer {
                     throw new XmlPullParserException(
                             parser.getPositionDescription()
                                     + ": <item> tag requires a 'drawable' attribute or "
-                                    + "child tag defining a drawable");
+                                    + "child tag defining a drawable"
+                    );
                 }
                 dr = DrawableCompat.createFromXmlInner(r, parser, attrs);
             }
