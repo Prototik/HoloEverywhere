@@ -1,4 +1,4 @@
-package org.holoeverywhere.plugin.extension.upload
+package org.holoeverywhere.plugin.extension.publish
 
 import org.gradle.util.Configurable
 import org.gradle.util.ConfigureUtil

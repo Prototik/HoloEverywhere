@@ -1,32 +1,42 @@
 package org.holoeverywhere.plugin.extension
 
 import org.gradle.api.Project
+import org.gradle.api.publish.maven.internal.publisher.MavenProjectIdentity
 import org.gradle.util.Configurable
 import org.gradle.util.ConfigureUtil
-import org.holoeverywhere.plugin.extension.upload.LicenseContainer
-import org.holoeverywhere.plugin.extension.upload.RepositoryContainer
-import org.holoeverywhere.plugin.extension.upload.ScmContainer
+import org.holoeverywhere.plugin.extension.publish.LicenseContainer
+import org.holoeverywhere.plugin.extension.publish.ScmContainer
 
-class UploadContainer extends IncludeContainer implements Configurable<UploadContainer> {
-    UploadContainer(HoloEverywhereExtension extension, Project project) {
-        super(extension)
+class PublishContainer implements Configurable<PublishContainer>, MavenProjectIdentity {
+    PublishContainer(HoloEverywhereExtension extension, Project project) {
         this.project = project
 
-        this.repository = new RepositoryContainer(project)
+        this.repository = new RepositoryContainer(extension, project)
         this.license = new LicenseContainer()
         this.scm = new ScmContainer()
+
+        this.artifacts = new LinkedHashSet<>()
     }
 
     private final Project project
     def final RepositoryContainer repository
     def final LicenseContainer license
     def final ScmContainer scm
+    def final Set artifacts
     def String url
-    def String group
-    def String artifact
+    def String groupId
+    def String artifactId
     def String version
     def String packaging
-    def String description
+
+    def void artifact(Object object) {
+        artifacts.add(object)
+    }
+
+    def void setArtifacts(Collection artifacts) {
+        this.artifacts.clear();
+        this.artifacts.addAll(artifacts)
+    }
 
     def RepositoryContainer repository(Closure<?> closure) {
         return ConfigureUtil.configure(closure, repository)
@@ -48,7 +58,7 @@ class UploadContainer extends IncludeContainer implements Configurable<UploadCon
     }
 
     @Override
-    UploadContainer configure(Closure closure) {
+    PublishContainer configure(Closure closure) {
         ConfigureUtil.configure(closure, this, false)
     }
 }

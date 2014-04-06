@@ -3,6 +3,7 @@ package org.holoeverywhere.plugin.extension
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectFactory
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Dependency
 import org.gradle.internal.reflect.Instantiator
 import org.gradle.util.Configurable
 import org.gradle.util.ConfigureUtil
@@ -44,12 +45,13 @@ class HoloEverywhereExtension extends IncludeContainer implements Configurable<H
 
         this.project = project
         this.instantiator = instantiator
+
         this.app = new AppContainer(project)
         this.library = new LibraryContainer(this)
         this.supportV4 = new SupportV4Container(this)
-        this.repository = new RepositoryContainer(this)
+        this.repository = new RepositoryContainer(this, project).defaultRepo()
         this.resbuilder = new ResbuilderContainer(project, instantiator)
-        this.upload = new UploadContainer(this, project)
+        this.publish = new PublishContainer(this, project)
         this.signing = new SigningContainer(project)
 
         this.addons = project.container(Addon, new NamedDomainObjectFactory<Addon>() {
@@ -67,13 +69,14 @@ class HoloEverywhereExtension extends IncludeContainer implements Configurable<H
 
     private final Project project
     private final Instantiator instantiator
+
     def final NamedDomainObjectContainer<Addon> addons
     def final AppContainer app
     def final LibraryContainer library
     def final SupportV4Container supportV4
     def final RepositoryContainer repository
     def final ResbuilderContainer resbuilder
-    def final UploadContainer upload
+    def final PublishContainer publish
     def final SigningContainer signing
     def String configuration = 'compile'
 
@@ -101,12 +104,22 @@ class HoloEverywhereExtension extends IncludeContainer implements Configurable<H
         return resbuilder.configure(closure)
     }
 
-    def UploadContainer upload(Closure<?> closure) {
-        return upload.configure(closure);
+    def PublishContainer publish(Closure<?> closure) {
+        return publish.configure(closure);
     }
 
     def SigningContainer signing(Closure<?> closure) {
         return signing.configure(closure)
+    }
+
+    def Dependency aar(String... libraries) {
+        final Project project = this.project;
+        Dependency lastDependency = null
+        libraries.each { String libraryName ->
+            project.dependencies.add(this.configuration, libraryName + "@aar")
+            lastDependency = project.dependencies.add(this.configuration, libraryName)
+        }
+        return lastDependency
     }
 
     @Override

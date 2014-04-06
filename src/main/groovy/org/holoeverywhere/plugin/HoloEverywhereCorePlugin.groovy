@@ -7,7 +7,6 @@ import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.plugins.JavaBasePlugin
 import org.gradle.internal.reflect.Instantiator
-import org.gradle.tooling.provider.model.ToolingModelBuilderRegistry
 import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
 import org.holoeverywhere.resbuilder.dsl.ResbuilderSourceSet
 import org.holoeverywhere.resbuilder.tasks.ResbuilderFormatTask
@@ -16,15 +15,15 @@ import org.holoeverywhere.resbuilder.tasks.ResbuilderProcesserTask
 
 import javax.inject.Inject
 
-class HoloEverywhereMainPlugin extends HoloEverywhereBasePlugin {
+class HoloEverywhereCorePlugin extends HoloEverywhereAbstractPlugin {
     private static final String APPCOMPAT_V7_GROUP = 'com.android.support'
     private static final String APPCOMPAT_V7_NAME = 'appcompat-v4'
 
     private HoloEverywhereExtension holoeverywhere
 
     @Inject
-    HoloEverywhereMainPlugin(Instantiator instantiator, ToolingModelBuilderRegistry registry) {
-        super(instantiator, registry)
+    HoloEverywhereCorePlugin(Instantiator instantiator) {
+        super(instantiator)
     }
 
     @Override
@@ -54,12 +53,12 @@ class HoloEverywhereMainPlugin extends HoloEverywhereBasePlugin {
         // HoloEverywhere's AAR
         Dependency holoeverywhereDependency = configuration.dependencies.find { Dependency i -> i.group == holoeverywhere.library.group && i.name == holoeverywhere.library.name }
         if (holoeverywhere.library.include() && holoeverywhereDependency == null) {
-            holoeverywhereDependency = attachAar("${holoeverywhere.library.group}:${holoeverywhere.library.name}:${holoeverywhere.library.resolveVersion(project)}", project, holoeverywhere.configuration)
+            holoeverywhereDependency = holoeverywhere.aar("${holoeverywhere.library.group}:${holoeverywhere.library.name}:${holoeverywhere.library.resolveVersion(project)}")
         }
 
         // Addons
         holoeverywhere.addons.each { HoloEverywhereExtension.Addon addon ->
-            attachAar("${addon.group}:${addon.name}:${addon.version ?: holoeverywhereDependency.version}", project, holoeverywhere.configuration)
+            holoeverywhere.aar("${addon.group}:${addon.name}:${addon.version ?: holoeverywhereDependency.version}")
         }
 
         // Checkout that pure AppCompat was not added to dependencies
@@ -101,14 +100,5 @@ class HoloEverywhereMainPlugin extends HoloEverywhereBasePlugin {
                 grabTask.description = "Grab android resources in \"${name}\" source set"
             }
         }
-
-        if (holoeverywhere.upload.include()) {
-            project.plugins.apply(HoloEverywhereUploadPlugin)
-        }
-    }
-
-    def Dependency attachAar(String artifact, Project project, String configuration) {
-        project.dependencies.add(configuration, "${artifact}@aar")
-        return project.dependencies.add(configuration, "${artifact}")
     }
 }

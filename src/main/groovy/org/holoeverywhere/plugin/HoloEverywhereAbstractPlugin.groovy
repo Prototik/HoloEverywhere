@@ -4,17 +4,12 @@ import com.android.build.gradle.BasePlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.internal.reflect.Instantiator
-import org.gradle.tooling.provider.model.ToolingModelBuilderRegistry
 import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
 
-import javax.inject.Inject
-
-
-abstract class HoloEverywhereBasePlugin implements Plugin<Project> {
+abstract class HoloEverywhereAbstractPlugin implements Plugin<Project> {
     protected final Instantiator instantiator
 
-    @Inject
-    public HoloEverywhereBasePlugin(Instantiator instantiator, ToolingModelBuilderRegistry registry) {
+    public HoloEverywhereAbstractPlugin(Instantiator instantiator) {
         this.instantiator = instantiator
     }
 
@@ -26,8 +21,8 @@ abstract class HoloEverywhereBasePlugin implements Plugin<Project> {
         project.plugins.apply(HoloEverywhereRepoPlugin)
     }
 
-    def void loadMainPlugin(Project project) {
-        project.plugins.apply(HoloEverywhereMainPlugin)
+    def void loadCorePlugin(Project project) {
+        project.plugins.apply(HoloEverywhereCorePlugin)
     }
 
     def void checkPluginOrder(Project project) {
