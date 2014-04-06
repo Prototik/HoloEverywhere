@@ -327,6 +327,12 @@ public abstract class FragmentManager {
     public abstract Fragment.SavedState saveFragmentInstanceState(Fragment f);
 
     /**
+     * Returns true if the final {@link android.app.Activity#onDestroy() Activity.onDestroy()}
+     * call has been made on the FragmentManager's Activity, so this instance is now dead.
+     */
+    public abstract boolean isDestroyed();
+
+    /**
      * Print the FragmentManager's state into the given stream.
      *
      * @param prefix Text to print at the front of each line.
@@ -597,6 +603,11 @@ final class FragmentManagerImpl extends FragmentManager {
     }
 
     @Override
+    public boolean isDestroyed() {
+        return mDestroyed;
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(128);
         sb.append("FragmentManager{");
@@ -858,7 +869,6 @@ final class FragmentManagerImpl extends FragmentManager {
                 case Fragment.INITIALIZING:
                     if (DEBUG) Log.v(TAG, "moveto CREATED: " + f);
                     if (f.mSavedFragmentState != null) {
-                        f.mSavedFragmentState.setClassLoader(mActivity.getClassLoader());
                         f.mSavedViewState = f.mSavedFragmentState.getSparseParcelableArray(
                                 FragmentManagerImpl.VIEW_STATE_TAG);
                         f.mTarget = getFragment(f.mSavedFragmentState,
@@ -902,7 +912,7 @@ final class FragmentManagerImpl extends FragmentManager {
                                 f.mSavedFragmentState), null, f.mSavedFragmentState);
                         if (f.mView != null) {
                             f.mInnerView = f.mView;
-                            f.mView = NoSaveStateFrameLayout.wrap(f, f.mView);
+                            f.mView = NoSaveStateFrameLayout.wrap(f.mView);
                             if (f.mHidden) f.mView.setVisibility(View.GONE);
                             f.onViewCreated(f.mView, f.mSavedFragmentState);
                         } else {
@@ -929,7 +939,7 @@ final class FragmentManagerImpl extends FragmentManager {
                                     f.mSavedFragmentState), container, f.mSavedFragmentState);
                             if (f.mView != null) {
                                 f.mInnerView = f.mView;
-                                f.mView = NoSaveStateFrameLayout.wrap(f, f.mView);
+                                f.mView = NoSaveStateFrameLayout.wrap(f.mView);
                                 if (container != null) {
                                     Animation anim = loadAnimation(f, transit, true,
                                             transitionStyle);
