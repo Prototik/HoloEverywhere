@@ -4,6 +4,7 @@ import org.gradle.api.Project
 import org.gradle.api.publish.maven.internal.publisher.MavenProjectIdentity
 import org.gradle.util.Configurable
 import org.gradle.util.ConfigureUtil
+import org.holoeverywhere.plugin.HoloEverywherePublishPlugin
 import org.holoeverywhere.plugin.extension.publish.LicenseContainer
 import org.holoeverywhere.plugin.extension.publish.ScmContainer
 
@@ -55,6 +56,10 @@ class PublishContainer implements Configurable<PublishContainer>, MavenProjectId
         scm.url = "https://github.com/${username}/${repo}"
         scm.connection = "scm:git@github.com:${username}/${repo}.git"
         scm.developerConnection = "scm:git@github.com:${username}/${repo}.git"
+    }
+
+    def void apply() {
+        project.plugins.apply(HoloEverywherePublishPlugin)
     }
 
     @Override
