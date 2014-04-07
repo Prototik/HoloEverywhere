@@ -41,16 +41,15 @@ class HoloEverywhereLibraryPlugin extends HoloEverywhereAbstractPlugin {
         checkPluginOrder(project)
         loadCorePlugin(project)
 
+        project.afterEvaluate { afterEvaluate(project) }
+        project.plugins.apply(LibraryPlugin)
+
         extension = extension(project)
         extension.publish.packaging = 'aar'
         extension.publish.artifact(configureSources(project))
         extension.publish.artifact(configureJavadoc(project))
         extension.publish.artifact(configureClasses(project))
         extension.publish.artifact(configureExternalApklib(project))
-
-        project.afterEvaluate { afterEvaluate(project) }
-
-        project.plugins.apply(LibraryPlugin)
     }
 
     def void afterEvaluate(Project project) {

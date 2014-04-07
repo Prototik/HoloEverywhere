@@ -29,13 +29,12 @@ class HoloEverywhereAppPlugin extends HoloEverywhereAbstractPlugin {
         checkPluginOrder(project)
         loadCorePlugin(project)
 
+        project.afterEvaluate { afterEvaluate(project) }
+        androidExtension = project.plugins.apply(AppPlugin).extension as AppExtension
+
         extension = extension(project)
         extension.publish.packaging = 'apk'
         extension.publish.artifact(configureApk(project, 'release'))
-
-        project.afterEvaluate { afterEvaluate(project) }
-
-        androidExtension = project.plugins.apply(AppPlugin).extension as AppExtension
     }
 
     def void afterEvaluate(Project project) {
