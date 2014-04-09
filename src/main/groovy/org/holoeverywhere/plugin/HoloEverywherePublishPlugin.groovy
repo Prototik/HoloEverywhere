@@ -122,7 +122,6 @@ public class HoloEverywherePublishPlugin extends HoloEverywhereAbstractPlugin {
 
 
             private void overrideTask(TaskContainer tasks, PublishToMavenRepository task) {
-                println(task.publication.artifacts)
                 if (task instanceof HoloEverywherePublishToMavenRepository) {
                     return;
                 }
