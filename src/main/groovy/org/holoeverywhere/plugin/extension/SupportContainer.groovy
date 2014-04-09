@@ -2,12 +2,12 @@ package org.holoeverywhere.plugin.extension
 
 import org.gradle.util.Configurable
 
-class SupportV4Container extends IncludeContainer implements Configurable<SupportV4Container> {
+class SupportContainer extends IncludeContainer implements Configurable<SupportContainer> {
     private static final String INHERIT = 'inherit'
     private static final String DEFAULT_GROUP = 'com.android.support'
     private static final String DEFAULT_NAME = 'support-v4'
 
-    SupportV4Container(HoloEverywhereExtension extension) {
+    SupportContainer(HoloEverywhereExtension extension) {
         super(extension)
     }
 
@@ -16,8 +16,8 @@ class SupportV4Container extends IncludeContainer implements Configurable<Suppor
     def String version = INHERIT
 
     @Override
-    SupportV4Container configure(Closure closure) {
-        super.configure(closure) as SupportV4Container
+    SupportContainer configure(Closure closure) {
+        super.configure(closure) as SupportContainer
     }
 
     public boolean artifactOverride() {

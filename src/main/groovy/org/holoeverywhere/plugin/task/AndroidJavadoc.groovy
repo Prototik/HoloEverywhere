@@ -25,7 +25,17 @@ public class AndroidJavadoc extends Javadoc {
     }
 
     public void setConfiguration(Configuration configuration) {
+        setConfiguration(configuration, true)
+    }
+
+    public void setConfiguration(Configuration configuration, boolean updateClasspath) {
         this.configuration = configuration
+        if (updateClasspath) {
+            updateConfigurationClasspath()
+        }
+    }
+
+    public void updateConfigurationClasspath() {
         if (configuration != null) {
             setClasspath(project.files(
                     // Compiled source code

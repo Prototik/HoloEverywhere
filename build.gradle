@@ -6,11 +6,6 @@ dependencies {
 
     compile 'com.android.tools.build:gradle:0.9.+'
     compile 'org.yaml:snakeyaml:1.13'
-
-    ['aether-api', 'aether-spi', 'aether-util', 'aether-impl', 'aether-connector-basic', 'aether-transport-http'].each {
-        compile "org.eclipse.aether:${it}:0.9.0.M4"
-    }
-    compile 'org.apache.maven:maven-aether-provider:3.1.1'
 }
 
 repositories {

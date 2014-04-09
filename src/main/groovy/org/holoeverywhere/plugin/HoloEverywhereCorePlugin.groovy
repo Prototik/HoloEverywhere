@@ -5,6 +5,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
+import org.gradle.api.internal.artifacts.BaseRepositoryFactory
 import org.gradle.api.plugins.JavaBasePlugin
 import org.gradle.internal.reflect.Instantiator
 import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
@@ -22,8 +23,8 @@ class HoloEverywhereCorePlugin extends HoloEverywhereAbstractPlugin {
     private HoloEverywhereExtension holoeverywhere
 
     @Inject
-    HoloEverywhereCorePlugin(Instantiator instantiator) {
-        super(instantiator)
+    HoloEverywhereCorePlugin(Instantiator instantiator, BaseRepositoryFactory repositoryFactory) {
+        super(instantiator, repositoryFactory)
     }
 
     @Override
@@ -46,8 +47,8 @@ class HoloEverywhereCorePlugin extends HoloEverywhereAbstractPlugin {
         }
 
         // Support library v4
-        if (holoeverywhere.supportV4.include() && holoeverywhere.supportV4.artifactOverride()) {
-            project.dependencies.add(holoeverywhere.configuration, holoeverywhere.supportV4.resolveArtifactName())
+        if (holoeverywhere.support.include() && holoeverywhere.support.artifactOverride()) {
+            project.dependencies.add(holoeverywhere.configuration, holoeverywhere.support.resolveArtifactName())
         }
 
         // HoloEverywhere's AAR

@@ -3,18 +3,23 @@ package org.holoeverywhere.plugin
 import com.android.build.gradle.BasePlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
+import org.gradle.api.artifacts.PublishArtifact
+import org.gradle.api.internal.artifacts.BaseRepositoryFactory
 import org.gradle.internal.reflect.Instantiator
 import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
 
 abstract class HoloEverywhereAbstractPlugin implements Plugin<Project> {
     protected final Instantiator instantiator
+    protected final BaseRepositoryFactory repositoryFactory
 
-    public HoloEverywhereAbstractPlugin(Instantiator instantiator) {
+    public HoloEverywhereAbstractPlugin(Instantiator instantiator, BaseRepositoryFactory repositoryFactory) {
         this.instantiator = instantiator
+        this.repositoryFactory = repositoryFactory
     }
 
     public HoloEverywhereExtension extension(Project project) {
-        return HoloEverywhereExtension.getOrCreateExtension(project, instantiator)
+        return HoloEverywhereExtension.getOrCreateExtension(project, instantiator, repositoryFactory)
     }
 
     def void loadRepoPlugin(Project project) {
@@ -29,5 +34,15 @@ abstract class HoloEverywhereAbstractPlugin implements Plugin<Project> {
         if (project.plugins.any { Plugin i -> BasePlugin.class.isAssignableFrom(i.class) }) {
             throw new IllegalStateException("HoloEverywhere plugin should be applied before any android plugin, please correct your build.gradle")
         }
+    }
+
+    def void publish(HoloEverywhereExtension extension, Task task, boolean enable) {
+        if ((task.enabled = enable)) {
+            extension.publish.artifact(task)
+        }
+    }
+
+    def void publish(HoloEverywhereExtension extension, PublishArtifact artifact) {
+        extension.publish.artifact(artifact)
     }
 }

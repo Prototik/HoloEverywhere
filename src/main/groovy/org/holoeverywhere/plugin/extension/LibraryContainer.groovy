@@ -24,10 +24,10 @@ class LibraryContainer extends IncludeContainer implements Configurable<LibraryC
 
     public String resolveVersion(Project project) {
         if (version == 'snapshot') {
-            return VersionHelper.get(project).resolveVersion("${group}:${name}", VersionHelper.VersionType.Snapshot)
+            return VersionHelper.resolveVersion(project.gradle, group, name, VersionHelper.VersionType.Snapshot)
         }
         if (version == 'latest') {
-            return VersionHelper.get(project).resolveVersion("${group}:${name}", VersionHelper.VersionType.Stable)
+            return VersionHelper.resolveVersion(project.gradle, group, name, VersionHelper.VersionType.Stable)
         }
         return version
     }

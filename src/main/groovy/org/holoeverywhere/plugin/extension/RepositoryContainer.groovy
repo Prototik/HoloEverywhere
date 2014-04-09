@@ -4,15 +4,18 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.artifacts.repositories.PasswordCredentials
+import org.gradle.api.internal.artifacts.BaseRepositoryFactory
 import org.gradle.util.Configurable
 import org.gradle.util.ConfigureUtil
 
 class RepositoryContainer extends IncludeContainer implements Configurable<RepositoryContainer> {
     private final Project project
+    private final BaseRepositoryFactory repositoryFactory
 
-    RepositoryContainer(HoloEverywhereExtension extension, Project project) {
+    RepositoryContainer(HoloEverywhereExtension extension, Project project, BaseRepositoryFactory repositoryFactory) {
         super(extension)
         this.project = project
+        this.repositoryFactory = repositoryFactory
     }
 
     def String url
@@ -56,6 +59,13 @@ class RepositoryContainer extends IncludeContainer implements Configurable<Repos
         snapshotUrl = url = new File(path).toURI().toURL()
         name = 'local'
         obtainCredentials('')
+        configure(closure)
+    }
+
+    def void mavenLocal(Closure<?> closure = null) {
+        snapshotUrl = url = repositoryFactory.createMavenLocalRepository().url as String
+        name = 'Maven Local'
+        obtainCredentials('mavenLocal')
         configure(closure)
     }
 

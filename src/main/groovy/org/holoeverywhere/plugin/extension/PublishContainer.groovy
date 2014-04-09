@@ -1,6 +1,7 @@
 package org.holoeverywhere.plugin.extension
 
 import org.gradle.api.Project
+import org.gradle.api.internal.artifacts.BaseRepositoryFactory
 import org.gradle.api.publish.maven.internal.publisher.MavenProjectIdentity
 import org.gradle.util.Configurable
 import org.gradle.util.ConfigureUtil
@@ -9,10 +10,10 @@ import org.holoeverywhere.plugin.extension.publish.LicenseContainer
 import org.holoeverywhere.plugin.extension.publish.ScmContainer
 
 class PublishContainer implements Configurable<PublishContainer>, MavenProjectIdentity {
-    PublishContainer(HoloEverywhereExtension extension, Project project) {
+    PublishContainer(HoloEverywhereExtension extension, Project project, BaseRepositoryFactory repositoryFactory) {
         this.project = project
 
-        this.repository = new RepositoryContainer(extension, project)
+        this.repository = new RepositoryContainer(extension, project, repositoryFactory)
         this.license = new LicenseContainer()
         this.scm = new ScmContainer()
 

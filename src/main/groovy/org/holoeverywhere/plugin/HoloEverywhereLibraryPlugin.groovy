@@ -3,6 +3,7 @@ package org.holoeverywhere.plugin
 import com.android.build.gradle.LibraryPlugin
 import org.gradle.api.Project
 import org.gradle.api.Task
+import org.gradle.api.internal.artifacts.BaseRepositoryFactory
 import org.gradle.api.internal.artifacts.publish.DefaultPublishArtifact
 import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.plugins.JavaPlugin
@@ -19,7 +20,7 @@ import org.holoeverywhere.plugin.task.AndroidSourceJar
 
 import javax.inject.Inject
 
-class HoloEverywhereLibraryPlugin extends HoloEverywhereAbstractPlugin {
+public class HoloEverywhereLibraryPlugin extends HoloEverywhereAbstractPlugin implements HoloEverywherePublishPlugin.PublishInjector {
     public static final String EXTERNAL_APKLIB_ASSEMBLE_TASK_NAME = 'mavenBuild'
     public static final String EXTERNAL_APKLIB_TASK_NAME = 'apklib'
     public static final String GENERATE_JAVADOC_TASK_NAME = 'javadoc'
@@ -29,11 +30,13 @@ class HoloEverywhereLibraryPlugin extends HoloEverywhereAbstractPlugin {
 
     private HoloEverywhereExtension extension
     private Jar taskSources, taskJavadoc, taskClasses
-    private Task taskApklib
+    private Task taskApklib, taskAar
+    private AndroidJavadoc taskGenerateJavadoc
+    private DefaultPublishArtifact artifactAar
 
     @Inject
-    HoloEverywhereLibraryPlugin(Instantiator instantiator) {
-        super(instantiator)
+    HoloEverywhereLibraryPlugin(Instantiator instantiator, BaseRepositoryFactory repositoryFactory) {
+        super(instantiator, repositoryFactory)
     }
 
     @Override
@@ -46,28 +49,54 @@ class HoloEverywhereLibraryPlugin extends HoloEverywhereAbstractPlugin {
 
         extension = extension(project)
         extension.publish.packaging = 'aar'
-        extension.publish.artifact(configureSources(project))
-        extension.publish.artifact(configureJavadoc(project))
-        extension.publish.artifact(configureClasses(project))
-        extension.publish.artifact(configureExternalApklib(project))
+        configureAar(project)
+        configureSources(project)
+        configureJavadoc(project)
+        configureClasses(project)
+        configureExternalApklib(project)
+    }
+
+    DefaultPublishArtifact configureAar(Project project) {
+        taskAar = project.tasks.getByName('assembleRelease')
+        String aarPath = String.format("%s/libs/%s%s.aar", project.buildDir, project.name, project.version != null ? "-${project.version}" : '')
+        return artifactAar = new DefaultPublishArtifact(project.name, 'aar', 'aar', '', new Date(), project.file(aarPath), taskAar)
     }
 
     def void afterEvaluate(Project project) {
-        taskSources.enabled = extension.library.sources
-        taskJavadoc.enabled = extension.library.javadoc
-        taskClasses.enabled = extension.library.classes
-        if (extension.library.apklibExternalCreation) {
-            taskApklib.enabled = true
+        taskGenerateJavadoc.updateConfigurationClasspath()
+
+        if (!artifactsPrepared) {
+            prepareArtifactsForPublication()
         }
     }
 
+    private boolean artifactsPrepared = false
+
+    @Override
+    void prepareArtifactsForPublication() {
+        if (artifactsPrepared) {
+            throw new RuntimeException("Artifacts already prepared for publication")
+        }
+        artifactsPrepared = true
+
+        publish(extension, artifactAar)
+        publish(extension, taskSources, extension.library.sources)
+        publish(extension, taskJavadoc, extension.library.javadoc)
+        publish(extension, taskClasses, extension.library.classes)
+
+        if (extension.library.apklibExternalCreation) {
+            publish(extension, taskApklib, true)
+        }
+    }
+
+
     Jar configureJavadoc(Project project) {
-        AndroidJavadoc generateJavadocTask = project.tasks.create(GENERATE_JAVADOC_TASK_NAME, AndroidJavadoc)
+        AndroidJavadoc generateJavadocTask = taskGenerateJavadoc = project.tasks.create(GENERATE_JAVADOC_TASK_NAME, AndroidJavadoc)
         generateJavadocTask.configure {
             description = "Generates Javadoc API documentation for the main source code."
-            configuration = project.configurations.getByName(JavaPlugin.COMPILE_CONFIGURATION_NAME)
             sourceSet = SourceSet.MAIN_SOURCE_SET_NAME
         }
+        generateJavadocTask.setConfiguration(project.configurations.getByName(JavaPlugin.COMPILE_CONFIGURATION_NAME), false)
 
         AndroidJavadocJar packageJavadocTask = project.tasks.create(JAVADOC_JAR_TASK_NAME, AndroidJavadocJar)
         packageJavadocTask.configure {
@@ -106,7 +135,7 @@ class HoloEverywhereLibraryPlugin extends HoloEverywhereAbstractPlugin {
                 workingDir = project.rootProject.projectDir
 
                 group = BasePlugin.BUILD_GROUP
-                description = 'Assemble apklib artifacts with Maven'
+                description = 'Assemble all apklib artifacts with Maven'
             }
         }
         taskApklib = apklibAssembleTask
@@ -120,6 +149,9 @@ class HoloEverywhereLibraryPlugin extends HoloEverywhereAbstractPlugin {
             from project.fileTree("${project.projectDir}/target") { include "*.apklib" }
             into project.file("${project.buildDir}/libs")
             rename '(.*)', finalFilename
+
+            group = BasePlugin.BUILD_GROUP
+            description = 'Package library into apklib'
         }
 
         return new DefaultPublishArtifact(project.name, 'apklib', 'apklib', '', new Date(), project.file(finalFilename), apklibTask)

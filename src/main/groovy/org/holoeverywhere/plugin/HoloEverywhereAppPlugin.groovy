@@ -6,13 +6,14 @@ import com.android.builder.model.SigningConfig
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.artifacts.PublishArtifact
+import org.gradle.api.internal.artifacts.BaseRepositoryFactory
 import org.gradle.api.internal.artifacts.publish.DefaultPublishArtifact
 import org.gradle.internal.reflect.Instantiator
 import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
 
 import javax.inject.Inject
 
-class HoloEverywhereAppPlugin extends HoloEverywhereAbstractPlugin {
+public class HoloEverywhereAppPlugin extends HoloEverywhereAbstractPlugin implements HoloEverywherePublishPlugin.PublishInjector {
     private HoloEverywhereExtension extension
     private AppExtension androidExtension
 
@@ -20,8 +21,8 @@ class HoloEverywhereAppPlugin extends HoloEverywhereAbstractPlugin {
     private DefaultPublishArtifact artifactApk
 
     @Inject
-    HoloEverywhereAppPlugin(Instantiator instantiator) {
-        super(instantiator)
+    HoloEverywhereAppPlugin(Instantiator instantiator, BaseRepositoryFactory repositoryFactory) {
+        super(instantiator, repositoryFactory)
     }
 
     @Override
@@ -34,13 +35,13 @@ class HoloEverywhereAppPlugin extends HoloEverywhereAbstractPlugin {
 
         extension = extension(project)
         extension.publish.packaging = 'apk'
-        extension.publish.artifact(configureApk(project, 'release'))
+        configureApk(project, 'release')
     }
 
     def void afterEvaluate(Project project) {
-        taskApk = project.tasks.getByName('assembleRelease')
-        taskApk.enabled = extension.app.attachReleaseApk && extension.signing.release.valid()
-        artifactApk.builtBy(taskApk)
+        if (!artifactsPrepared) {
+            prepareArtifactsForPublication()
+        }
 
         if (extension.signing.enable) {
             if (extension.signing.release.valid()) {
@@ -48,16 +49,28 @@ class HoloEverywhereAppPlugin extends HoloEverywhereAbstractPlugin {
             }
             createSigningConfig(extension.signing.debug.obtainMaybeDebugConfig('debug'), 'debug')
         }
-
     }
 
     PublishArtifact configureApk(Project project, String type) {
+        taskApk = project.tasks.getByName('assembleRelease')
         return artifactApk = new DefaultPublishArtifact(project.name, 'apk', 'apk',
-                '', new Date(), project.file("${project.buildDir}/apk/${project.name}-${type}.apk"))
+                '', new Date(), project.file("${project.buildDir}/apk/${project.name}-${type}.apk"), taskApk)
     }
 
     def void createSigningConfig(SigningConfig signingConfig, String name) {
         androidExtension.signingConfigs.add(signingConfig)
         androidExtension.buildTypes.getByName(name).setSigningConfig(signingConfig)
+    }
+
+    private boolean artifactsPrepared = false
+
+    @Override
+    void prepareArtifactsForPublication() {
+        if (artifactsPrepared) {
+            throw new RuntimeException("Artifacts already prepared for publication")
+        }
+        artifactsPrepared = true
+
+        publish(extension, taskApk, extension.app.attachReleaseApk && extension.signing.release.valid())
     }
 }

@@ -4,6 +4,7 @@ import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectFactory
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
+import org.gradle.api.internal.artifacts.BaseRepositoryFactory
 import org.gradle.internal.reflect.Instantiator
 import org.gradle.util.Configurable
 import org.gradle.util.ConfigureUtil
@@ -40,7 +41,7 @@ class HoloEverywhereExtension extends IncludeContainer implements Configurable<H
         }
     }
 
-    HoloEverywhereExtension(Project project, Instantiator instantiator) {
+    HoloEverywhereExtension(Project project, Instantiator instantiator, BaseRepositoryFactory repositoryFactory) {
         include 'yes'
 
         this.project = project
@@ -48,10 +49,10 @@ class HoloEverywhereExtension extends IncludeContainer implements Configurable<H
 
         this.app = new AppContainer(project)
         this.library = new LibraryContainer(this)
-        this.supportV4 = new SupportV4Container(this)
-        this.repository = new RepositoryContainer(this, project).defaultRepo()
+        this.support = new SupportContainer(this)
+        this.repository = new RepositoryContainer(this, project, repositoryFactory).defaultRepo()
         this.resbuilder = new ResbuilderContainer(project, instantiator)
-        this.publish = new PublishContainer(this, project)
+        this.publish = new PublishContainer(this, project, repositoryFactory)
         this.signing = new SigningContainer(project)
 
         this.addons = project.container(Addon, new NamedDomainObjectFactory<Addon>() {
@@ -73,7 +74,7 @@ class HoloEverywhereExtension extends IncludeContainer implements Configurable<H
     def final NamedDomainObjectContainer<Addon> addons
     def final AppContainer app
     def final LibraryContainer library
-    def final SupportV4Container supportV4
+    def final SupportContainer support
     def final RepositoryContainer repository
     def final ResbuilderContainer resbuilder
     def final PublishContainer publish
@@ -92,8 +93,13 @@ class HoloEverywhereExtension extends IncludeContainer implements Configurable<H
         return library.configure(closure);
     }
 
-    def SupportV4Container supportV4(Closure<?> closure) {
-        return supportV4.configure(closure);
+    def SupportContainer support(Closure<?> closure) {
+        return support.configure(closure);
+    }
+
+    def SupportContainer supportV4(Closure<?> closure) {
+        project.logger.warn("holoeverywhere.supportV4 is deprecated, use holoeverywhere.support instead")
+        return support(closure)
     }
 
     def RepositoryContainer repository(Closure<?> closure) {
@@ -129,8 +135,8 @@ class HoloEverywhereExtension extends IncludeContainer implements Configurable<H
 
     private static final String EXTENSION_NAME = 'holoeverywhere'
 
-    public static HoloEverywhereExtension getOrCreateExtension(Project project, Instantiator instantiator) {
-        project.extensions.findByName(EXTENSION_NAME) as HoloEverywhereExtension ?: project.extensions.create(EXTENSION_NAME, HoloEverywhereExtension, project, instantiator)
+    public static HoloEverywhereExtension getOrCreateExtension(Project project, Instantiator instantiator, BaseRepositoryFactory repositoryFactory) {
+        project.extensions.findByName(EXTENSION_NAME) as HoloEverywhereExtension ?: project.extensions.create(EXTENSION_NAME, HoloEverywhereExtension, project, instantiator, repositoryFactory)
     }
 
     def void apply(String path) {
