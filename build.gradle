@@ -12,7 +12,7 @@ repositories {
     mavenCentral()
 }
 
-version = '0.2.14-SNAPSHOT'
+version = '0.2.14'
 
 apply plugin: 'maven'
 apply plugin: 'signing'
