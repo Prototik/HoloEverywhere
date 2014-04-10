@@ -71,6 +71,8 @@ public class HoloEverywhereAppPlugin extends HoloEverywhereAbstractPlugin implem
         }
         artifactsPrepared = true
 
-        publish(extension, taskApk, extension.app.attachReleaseApk && extension.signing.release.valid())
+        if (extension.app.publishReleaseApk) {
+            publish(extension, artifactApk)
+        }
     }
 }

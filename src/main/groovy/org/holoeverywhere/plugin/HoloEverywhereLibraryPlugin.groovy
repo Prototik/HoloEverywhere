@@ -32,7 +32,7 @@ public class HoloEverywhereLibraryPlugin extends HoloEverywhereAbstractPlugin im
     private Jar taskSources, taskJavadoc, taskClasses
     private Task taskApklib, taskAar
     private AndroidJavadoc taskGenerateJavadoc
-    private DefaultPublishArtifact artifactAar
+    private DefaultPublishArtifact artifactAar, artifactApklib
 
     @Inject
     HoloEverywhereLibraryPlugin(Instantiator instantiator, BaseRepositoryFactory repositoryFactory) {
@@ -85,7 +85,7 @@ public class HoloEverywhereLibraryPlugin extends HoloEverywhereAbstractPlugin im
         publish(extension, taskClasses, extension.library.classes)
 
         if (extension.library.apklibExternalCreation) {
-            publish(extension, taskApklib, true)
+            publish(extension, artifactApklib)
         }
     }
 
@@ -154,6 +154,6 @@ public class HoloEverywhereLibraryPlugin extends HoloEverywhereAbstractPlugin im
             description = 'Package library into apklib'
         }
 
-        return new DefaultPublishArtifact(project.name, 'apklib', 'apklib', '', new Date(), project.file(finalFilename), apklibTask)
+        return artifactApklib = new DefaultPublishArtifact(project.name, 'apklib', 'apklib', '', new Date(), project.file(finalFilename), apklibTask)
     }
 }

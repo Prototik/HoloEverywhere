@@ -10,7 +10,7 @@ class AppContainer implements Configurable<AppContainer> {
     }
 
     private final Project project
-    def boolean attachReleaseApk = true
+    def boolean publishReleaseApk = true
 
     @Override
     AppContainer configure(Closure closure) {
