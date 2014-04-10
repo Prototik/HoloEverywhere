@@ -42,6 +42,10 @@ abstract class HoloEverywhereAbstractPlugin implements Plugin<Project> {
         }
     }
 
+    def void publish(HoloEverywhereExtension extension, Task task) {
+        extension.publish.artifact(task)
+    }
+
     def void publish(HoloEverywhereExtension extension, PublishArtifact artifact) {
         extension.publish.artifact(artifact)
     }

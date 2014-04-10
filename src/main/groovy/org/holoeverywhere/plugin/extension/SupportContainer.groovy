@@ -1,6 +1,8 @@
 package org.holoeverywhere.plugin.extension
 
+import org.gradle.api.Project
 import org.gradle.util.Configurable
+import org.holoeverywhere.plugin.util.VersionHelper
 
 class SupportContainer extends IncludeContainer implements Configurable<SupportContainer> {
     private static final String INHERIT = 'inherit'
@@ -24,10 +26,13 @@ class SupportContainer extends IncludeContainer implements Configurable<SupportC
         return (group != INHERIT && name != INHERIT && version != INHERIT) || version != INHERIT
     }
 
-    public String resolveArtifactName() {
+    public String resolveArtifactName(Project project) {
         if (group == INHERIT && name == INHERIT) {
             group = DEFAULT_GROUP
             name = DEFAULT_NAME
+        }
+        if (version == 'latest') {
+            version = VersionHelper.resolveVersion(project.gradle, group, name, VersionHelper.VersionType.Stable)
         }
         return "${group}:${name}:${version}"
     }

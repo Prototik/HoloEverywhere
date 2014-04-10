@@ -1,7 +1,5 @@
 package org.holoeverywhere.plugin
 
-import com.android.build.gradle.BasePlugin
-import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
@@ -17,6 +15,7 @@ import org.holoeverywhere.resbuilder.tasks.ResbuilderProcesserTask
 import javax.inject.Inject
 
 class HoloEverywhereCorePlugin extends HoloEverywhereAbstractPlugin {
+    public static final LIBRARIES_CONFIGURATION = 'compile'
     private static final String APPCOMPAT_V7_GROUP = 'com.android.support'
     private static final String APPCOMPAT_V7_NAME = 'appcompat-v4'
 
@@ -36,19 +35,11 @@ class HoloEverywhereCorePlugin extends HoloEverywhereAbstractPlugin {
     }
 
     void afterEvaluate(Project project) {
-        // Android plugin
-        if (!project.plugins.any { Plugin i -> BasePlugin.class.isAssignableFrom(i.class) }) {
-            project.plugins.apply(HoloEverywhereAppPlugin)
-        }
-
-        Configuration configuration = project.configurations.getByName(holoeverywhere.configuration);
-        if (configuration == null) {
-            throw new RuntimeException("Couldn't find configuration for HoloEverywhere library: " + holoeverywhere.defaultConfiguration)
-        }
+        Configuration configuration = project.configurations.getByName(LIBRARIES_CONFIGURATION);
 
         // Support library v4
         if (holoeverywhere.support.include() && holoeverywhere.support.artifactOverride()) {
-            project.dependencies.add(holoeverywhere.configuration, holoeverywhere.support.resolveArtifactName())
+            project.dependencies.add(LIBRARIES_CONFIGURATION, holoeverywhere.support.resolveArtifactName(project))
         }
 
         // HoloEverywhere's AAR

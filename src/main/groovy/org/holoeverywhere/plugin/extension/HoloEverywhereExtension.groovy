@@ -79,7 +79,7 @@ class HoloEverywhereExtension extends IncludeContainer implements Configurable<H
     def final ResbuilderContainer resbuilder
     def final PublishContainer publish
     def final SigningContainer signing
-    def String configuration = 'compile'
+    def boolean forceJarInsteadAar = false
 
     def NamedDomainObjectContainer<Addon> addons(Closure<?> closure) {
         return addons.configure(closure)
@@ -122,7 +122,7 @@ class HoloEverywhereExtension extends IncludeContainer implements Configurable<H
         final Project project = this.project;
         Dependency lastDependency = null
         libraries.each { String libraryName ->
-            project.dependencies.add(this.configuration, libraryName + "@aar")
+            project.dependencies.add(this.configuration, libraryName + (forceJarInsteadAar ? '@jar' : '@aar'))
             lastDependency = project.dependencies.add(this.configuration, libraryName)
         }
         return lastDependency
@@ -135,7 +135,8 @@ class HoloEverywhereExtension extends IncludeContainer implements Configurable<H
 
     private static final String EXTENSION_NAME = 'holoeverywhere'
 
-    public static HoloEverywhereExtension getOrCreateExtension(Project project, Instantiator instantiator, BaseRepositoryFactory repositoryFactory) {
+    public
+    static HoloEverywhereExtension getOrCreateExtension(Project project, Instantiator instantiator, BaseRepositoryFactory repositoryFactory) {
         project.extensions.findByName(EXTENSION_NAME) as HoloEverywhereExtension ?: project.extensions.create(EXTENSION_NAME, HoloEverywhereExtension, project, instantiator, repositoryFactory)
     }
 

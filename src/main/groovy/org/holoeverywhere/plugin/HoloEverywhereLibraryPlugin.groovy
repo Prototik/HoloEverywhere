@@ -23,7 +23,7 @@ import javax.inject.Inject
 public class HoloEverywhereLibraryPlugin extends HoloEverywhereAbstractPlugin implements HoloEverywherePublishPlugin.PublishInjector {
     public static final String EXTERNAL_APKLIB_ASSEMBLE_TASK_NAME = 'mavenBuild'
     public static final String EXTERNAL_APKLIB_TASK_NAME = 'apklib'
-    public static final String GENERATE_JAVADOC_TASK_NAME = 'javadoc'
+    public static final String GENERATE_JAVADOC_TASK_NAME = JavaPlugin.JAVADOC_TASK_NAME
     public static final String JAVADOC_JAR_TASK_NAME = 'javadocJar'
     public static final String SOURCES_JAR_TASK_NAME = 'sourcesJar'
     public static final String CLASSES_JAR_TASK_NAME = 'classesJar'
