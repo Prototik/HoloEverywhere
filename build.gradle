@@ -6,13 +6,15 @@ dependencies {
 
     compile 'com.android.tools.build:gradle:0.9.+'
     compile 'org.yaml:snakeyaml:1.13'
+    compile 'org.apache.maven:maven-ant-tasks:2.1.3'
+    compile 'commons-io:commons-io:2.4'
 }
 
 repositories {
     mavenCentral()
 }
 
-version = '0.2.15-SNAPSHOT'
+version = '0.2.15'
 
 apply plugin: 'maven'
 apply plugin: 'signing'
