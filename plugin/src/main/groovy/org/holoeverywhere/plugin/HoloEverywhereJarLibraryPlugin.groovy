@@ -44,7 +44,7 @@ public class HoloEverywhereJarLibraryPlugin extends HoloEverywhereAbstractPlugin
         configureJavadoc(project)
         configureSources(project)
 
-        project.afterEvaluate { afterEvaluate(project) }
+        project.afterEvaluate { afterEvaluate() }
     }
 
     def Task configureJavadoc(Project project) {
@@ -75,7 +75,7 @@ public class HoloEverywhereJarLibraryPlugin extends HoloEverywhereAbstractPlugin
         return taskSourcesJar = sourcesJarTask
     }
 
-    void afterEvaluate(Project project) {
+    void afterEvaluate() {
         if (!artifactsPrepared) {
             prepareArtifactsForPublication()
         }

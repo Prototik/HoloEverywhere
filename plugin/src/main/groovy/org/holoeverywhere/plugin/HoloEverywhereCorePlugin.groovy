@@ -4,6 +4,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.internal.artifacts.BaseRepositoryFactory
+import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.plugins.JavaBasePlugin
 import org.gradle.internal.reflect.Instantiator
 import org.holoeverywhere.plugin.extension.HoloEverywhereExtension
@@ -82,13 +83,13 @@ class HoloEverywhereCorePlugin extends HoloEverywhereAbstractPlugin {
 
                 ResbuilderProcesserTask processTask = project.tasks.create("resbuilder${name}", ResbuilderProcesserTask)
                 processTask.source = [sourceSet] as Set
-                processTask.group = org.gradle.api.plugins.BasePlugin.BUILD_GROUP
+                processTask.group = BasePlugin.BUILD_GROUP
                 processTask.description = "Build resbuilder layouts in \"${name}\" source set"
                 project.tasks.getByName('preBuild').dependsOn processTask
 
                 ResbuilderGrabTask grabTask = project.tasks.create("resbuilder${name}Grab", ResbuilderGrabTask)
                 grabTask.source = [sourceSet] as Set
-                grabTask.group = org.gradle.api.plugins.BasePlugin.BUILD_GROUP
+                grabTask.group = BasePlugin.BUILD_GROUP
                 grabTask.description = "Grab android resources in \"${name}\" source set"
             }
         }

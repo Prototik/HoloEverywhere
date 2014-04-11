@@ -8,6 +8,7 @@ import org.gradle.api.internal.artifacts.BaseRepositoryFactory
 import org.gradle.internal.reflect.Instantiator
 import org.gradle.util.Configurable
 import org.gradle.util.ConfigureUtil
+import org.holoeverywhere.plugin.HoloEverywhereCorePlugin
 
 class HoloEverywhereExtension extends IncludeContainer implements Configurable<HoloEverywhereExtension> {
     public static final String HOLO_EVERYWHERE_GROUP = 'org.holoeverywhere'
@@ -122,8 +123,8 @@ class HoloEverywhereExtension extends IncludeContainer implements Configurable<H
         final Project project = this.project;
         Dependency lastDependency = null
         libraries.each { String libraryName ->
-            project.dependencies.add(this.configuration, libraryName + (forceJarInsteadAar ? '@jar' : '@aar'))
-            lastDependency = project.dependencies.add(this.configuration, libraryName)
+            project.dependencies.add(HoloEverywhereCorePlugin.LIBRARIES_CONFIGURATION, libraryName + (forceJarInsteadAar ? '@jar' : '@aar'))
+            lastDependency = project.dependencies.add(HoloEverywhereCorePlugin.LIBRARIES_CONFIGURATION, libraryName)
         }
         return lastDependency
     }

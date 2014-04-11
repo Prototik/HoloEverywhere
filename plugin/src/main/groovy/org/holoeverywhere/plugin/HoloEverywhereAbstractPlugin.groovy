@@ -22,31 +22,31 @@ abstract class HoloEverywhereAbstractPlugin implements Plugin<Project> {
         return HoloEverywhereExtension.getOrCreateExtension(project, instantiator, repositoryFactory)
     }
 
-    def void loadRepoPlugin(Project project) {
+    public static void loadRepoPlugin(Project project) {
         project.plugins.apply(HoloEverywhereRepoPlugin)
     }
 
-    def void loadCorePlugin(Project project) {
+    public static void loadCorePlugin(Project project) {
         project.plugins.apply(HoloEverywhereCorePlugin)
     }
 
-    def void checkPluginOrder(Project project) {
+    public static void checkPluginOrder(Project project) {
         if (project.plugins.any { Plugin i -> BasePlugin.class.isAssignableFrom(i.class) }) {
             throw new IllegalStateException("HoloEverywhere plugin should be applied before any android plugin, please correct your build.gradle")
         }
     }
 
-    def void publish(HoloEverywhereExtension extension, Task task, boolean enable) {
+    public static void publish(HoloEverywhereExtension extension, Task task, boolean enable) {
         if ((task.enabled = enable)) {
             extension.publish.artifact(task)
         }
     }
 
-    def void publish(HoloEverywhereExtension extension, Task task) {
+    public static void publish(HoloEverywhereExtension extension, Task task) {
         extension.publish.artifact(task)
     }
 
-    def void publish(HoloEverywhereExtension extension, PublishArtifact artifact) {
+    public static void publish(HoloEverywhereExtension extension, PublishArtifact artifact) {
         extension.publish.artifact(artifact)
     }
 }

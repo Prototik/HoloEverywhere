@@ -30,7 +30,7 @@ public class HoloEverywhereAppPlugin extends HoloEverywhereAbstractPlugin implem
         checkPluginOrder(project)
         loadCorePlugin(project)
 
-        project.afterEvaluate { afterEvaluate(project) }
+        project.afterEvaluate { afterEvaluate() }
         androidExtension = project.plugins.apply(AppPlugin).extension as AppExtension
 
         extension = extension(project)
@@ -38,7 +38,7 @@ public class HoloEverywhereAppPlugin extends HoloEverywhereAbstractPlugin implem
         configureApk(project, 'release')
     }
 
-    def void afterEvaluate(Project project) {
+    def void afterEvaluate() {
         if (!artifactsPrepared) {
             prepareArtifactsForPublication()
         }

@@ -1,0 +1,23 @@
+apply plugin: 'holoeverywhere-library'
+
+holoeverywhere {
+    addons {
+        preferences
+        slider
+    }
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion '19.0.3'
+
+    defaultConfig {
+        minSdkVersion 7
+        targetSdkVersion 19
+
+        versionName '1.0.0-SNAPSHOT'
+        versionCode 1
+    }
+}
+
+apply plugin: 'holoeverywhere-publish'

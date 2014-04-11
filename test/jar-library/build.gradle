@@ -1,0 +1,13 @@
+apply plugin: 'holoeverywhere-jar-library'
+
+holoeverywhere {
+    library {
+        include 'no'
+    }
+}
+
+android {
+    compileSdkVersion 19
+}
+
+apply plugin: 'holoeverywhere-publish'

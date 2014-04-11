@@ -1,0 +1,22 @@
+buildscript {
+    repositories {
+        maven {
+            url = new File(rootProject.rootDir, '../repo').toURI().toString()
+        }
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.holoeverywhere:plugin:0.2.16-SNAPSHOT'
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            cacheChangingModulesFor 0, 'seconds'
+            cacheDynamicVersionsFor 0, 'seconds'
+        }
+    }
+}
+
+subprojects {
+}
