@@ -33,7 +33,7 @@ public class VersionHelper {
             if (properties.hasProperty(cacheId)) {
                 return properties.getProperty(cacheId)
             }
-            throw new RuntimeException('Couldn\'t determine a final version')
+            throw new RuntimeException('Couldn\'t determine a final version', e)
         }
     }
 
