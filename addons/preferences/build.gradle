@@ -2,13 +2,13 @@ apply plugin: 'holoeverywhere-library'
 
 holoeverywhere {
     apply 'android_default.gradle'
-    upload.artifact = "addon-${project.name}"
+    publish.artifactId = "addon-${project.name}"
 }
 
 dependencies {
     compile project(':library')
 }
 
-afterEvaluate {
-    javadoc.exclude "**/_*.java"
-}
+javadoc.exclude "**/_*.java"
+
+apply plugin: 'holoeverywhere-publish'

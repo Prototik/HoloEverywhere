@@ -1,8 +1,14 @@
 apply plugin: 'holoeverywhere-app'
-holoeverywhere.apply 'android_default.gradle'
+
+holoeverywhere {
+    apply 'android_default.gradle'
+    publish.artifactId = 'demo'
+}
 
 dependencies {
     compile project(':library')
     compile project(':addons:preferences')
     compile project(':addons:slider')
 }
+
+apply plugin: 'holoeverywhere-publish'

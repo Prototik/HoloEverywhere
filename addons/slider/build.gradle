@@ -2,9 +2,11 @@ apply plugin: 'holoeverywhere-library'
 
 holoeverywhere {
     apply 'android_default.gradle'
-    upload.artifact = "addon-${project.name}"
+    publish.artifactId = "addon-${project.name}"
 }
 
 dependencies {
     compile project(':library')
 }
+
+apply plugin: 'holoeverywhere-publish'

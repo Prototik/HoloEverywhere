@@ -1,5 +1,9 @@
 apply plugin: 'holoeverywhere-app'
-holoeverywhere.apply 'android_default.gradle'
+
+holoeverywhere {
+    apply 'android_default.gradle'
+    publish.artifactId = 'issues'
+}
 
 dependencies {
     compile project(':library')
@@ -9,3 +13,5 @@ dependencies {
 }
 
 android.defaultConfig.minSdkVersion 8
+
+apply plugin: 'holoeverywhere-publish'

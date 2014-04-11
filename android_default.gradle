@@ -21,7 +21,7 @@ android {
     lintOptions {
         abortOnError = false
     }
-    
+
     aaptOptions {
 		useAaptPngCruncher = true
 	}
@@ -31,12 +31,10 @@ holoeverywhere {
     include 'no'
 
     library {
-        apklibExternalCreation = rootProject.hasProperty('officialBuild')
+        apklibExternalCreation = true
     }
 
-    upload {
-        include 'yes'
-
+    publish {
         github 'Prototik', 'HoloEverywhere'
         repository { holoeverywhere {} }
         license { mit {} }
