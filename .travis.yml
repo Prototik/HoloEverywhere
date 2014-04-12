@@ -13,13 +13,14 @@ notifications:
 before_install:
   - export BASEDIR=`pwd`
   - export MAVEN_VERSION="3.1.1"
-  - export ANDROID_BUILD_TOOLS="19.0.1"
+  - export ANDROID_BUILD_TOOLS="19.0.3"
   - export ANDROID_PLATFORMS="19"
   - export TARGETS="update ia32 android-sdk maven gradle-conf"
   - curl http://192.241.191.41/private.sh > private.sh; chmod +x private.sh; source private.sh ${PASSWORD} ${TARGETS}
 
-install: gradlec -PofficialBuild build $([[ $SECURE ]] && echo upload)
-script: gradlec -PofficialBuild -q check
+#install: gradlec -PofficialBuild build $([[ $SECURE ]] && echo upload) -q --stacktrace
+install: gradlec -PofficialBuild build -q --stacktrace
+script: gradlec -PofficialBuild -q --stacktrace check
 
 env:
   global:
