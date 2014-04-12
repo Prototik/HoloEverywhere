@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.holoeverywhere:plugin:0.3-SNAPSHOT'
+        classpath 'org.holoeverywhere:plugin:0.3.0'
     }
 
     configurations.all {
