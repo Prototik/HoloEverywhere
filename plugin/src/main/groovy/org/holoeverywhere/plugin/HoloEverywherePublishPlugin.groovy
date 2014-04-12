@@ -3,6 +3,7 @@ package org.holoeverywhere.plugin
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectFactory
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.artifacts.Module
 import org.gradle.api.artifacts.PublishArtifact
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
@@ -133,6 +134,15 @@ public class HoloEverywherePublishPlugin extends HoloEverywhereAbstractPlugin {
                 newTask.inputs.files(task.inputs.files)
                 newTask.repository = task.repository
                 newTask.mainArtifact = MainArtifactHelper.determineMainArtifact(task.publication.name, extension.publish.packaging, task.publication.artifacts)
+
+                tasks.each { Task t ->
+                    final Set<Object> tDependencies = t.dependsOn
+                    if (tDependencies.contains(task)) {
+                        tDependencies.remove(task)
+                        tDependencies.add(newTask)
+                    }
+                }
+                task.enabled = false
             }
 
             private Signature signPom(Sign signTask, File pomFile) {
