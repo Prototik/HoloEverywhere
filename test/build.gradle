@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.holoeverywhere:plugin:0.2.16-SNAPSHOT'
+        classpath 'org.holoeverywhere:plugin:0.3-SNAPSHOT'
     }
 
     configurations.all {
@@ -16,7 +16,4 @@ buildscript {
             cacheDynamicVersionsFor 0, 'seconds'
         }
     }
-}
-
-subprojects {
 }

@@ -7,7 +7,7 @@ allprojects {
 }
 
 task('test', type: GradleBuild) {
-    dependsOn ':plugin:upload'
+    dependsOn ':plugin:uploadArchives'
 
     dir = new File(rootProject.rootDir, 'test')
     buildFile = new File(dir, 'build.gradle')
