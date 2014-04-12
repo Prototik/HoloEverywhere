@@ -17,3 +17,9 @@ buildscript {
         }
     }
 }
+
+allprojects {
+    version = '1.0.0'
+}
+
+ext.tempRepoUrl = new File(rootProject.rootDir, '../repo').absolutePath

@@ -9,6 +9,7 @@ holoeverywhere {
     support {
         version = 'latest'
     }
+    publish.repository.local rootProject.ext.tempRepoUrl
 }
 
 android {

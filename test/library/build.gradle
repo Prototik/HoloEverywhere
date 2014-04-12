@@ -5,6 +5,7 @@ holoeverywhere {
         preferences
         slider
     }
+    publish.repository.local rootProject.ext.tempRepoUrl
 }
 
 android {

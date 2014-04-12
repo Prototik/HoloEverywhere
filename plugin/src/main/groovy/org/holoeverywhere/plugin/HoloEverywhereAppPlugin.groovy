@@ -4,7 +4,6 @@ import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
 import com.android.builder.model.SigningConfig
 import org.gradle.api.Project
-import org.gradle.api.Task
 import org.gradle.api.artifacts.PublishArtifact
 import org.gradle.api.internal.artifacts.BaseRepositoryFactory
 import org.gradle.api.internal.artifacts.publish.DefaultPublishArtifact
@@ -17,7 +16,6 @@ public class HoloEverywhereAppPlugin extends HoloEverywhereAbstractPlugin implem
     private HoloEverywhereExtension extension
     private AppExtension androidExtension
 
-    private Task taskApk
     private DefaultPublishArtifact artifactApk
 
     @Inject
@@ -52,9 +50,8 @@ public class HoloEverywhereAppPlugin extends HoloEverywhereAbstractPlugin implem
     }
 
     PublishArtifact configureApk(Project project, String type) {
-        taskApk = project.tasks.getByName('assembleRelease')
-        return artifactApk = new DefaultPublishArtifact(project.name, 'apk', 'apk',
-                '', new Date(), project.file("${project.buildDir}/apk/${project.name}-${type}.apk"), taskApk)
+        File apkFile = new File("${project.buildDir}/apk/${project.name}-${type}${androidExtension.defaultConfig.signingConfig?.isSigningReady() ? '' : '-unsigned'}.apk")
+        return artifactApk = new DefaultPublishArtifact(project.name, 'apk', 'apk', '', new Date(), apkFile, project.tasks.getByName("assemble${type.capitalize()}"))
     }
 
     def void createSigningConfig(SigningConfig signingConfig, String name) {

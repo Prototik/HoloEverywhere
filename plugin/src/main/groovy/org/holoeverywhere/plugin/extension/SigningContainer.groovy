@@ -17,6 +17,7 @@ class SigningContainer implements Configurable<SigningContainer> {
     def final SignConfiguration release
     def final SignConfiguration debug
     def boolean enable = true
+    def boolean required = false
 
     def SignConfiguration release(Closure<?> closure) {
         return release.configure(closure)

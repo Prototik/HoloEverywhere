@@ -1,3 +1,5 @@
+import org.gradle.internal.os.OperatingSystem
+
 allprojects {
     version = '0.3-SNAPSHOT'
 
@@ -6,10 +8,10 @@ allprojects {
     }
 }
 
-task('test', type: GradleBuild) {
+task('test', type: Exec) {
     dependsOn ':plugin:uploadArchives'
 
-    dir = new File(rootProject.rootDir, 'test')
-    buildFile = new File(dir, 'build.gradle')
-    tasks = ['clean', 'build'] as List<String>
+    workingDir = new File(rootProject.rootDir, 'test')
+    executable = new File(gradle.gradleHomeDir, "bin/gradle${OperatingSystem.current().windows ? '.exe' : ''}")
+    args = ['clean', 'build', 'publish']
 }

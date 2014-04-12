@@ -58,7 +58,7 @@ public class HoloEverywhereLibraryPlugin extends HoloEverywhereAbstractPlugin im
 
     DefaultPublishArtifact configureAar(Project project) {
         taskAar = project.tasks.getByName('assembleRelease')
-        String aarPath = String.format("%s/libs/%s%s.aar", project.buildDir, project.name, project.version != null ? "-${project.version}" : '')
+        String aarPath = String.format("%s/libs/%s%s.aar", project.buildDir, project.name, project.version != Project.DEFAULT_VERSION ? "-${project.version}" : '')
         return artifactAar = new DefaultPublishArtifact(project.name, 'aar', 'aar', '', new Date(), project.file(aarPath), taskAar)
     }
 

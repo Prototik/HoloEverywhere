@@ -4,6 +4,7 @@ holoeverywhere {
     library {
         include 'no'
     }
+    publish.repository.local rootProject.ext.tempRepoUrl
 }
 
 android {

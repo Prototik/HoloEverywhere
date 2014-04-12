@@ -82,12 +82,12 @@ public class HoloEverywherePublishPlugin extends HoloEverywhereAbstractPlugin {
             @SuppressWarnings("UnusedDeclaration")
             public void realizePublishingTasks(TaskContainer tasks, PublishingExtension extension) {
                 extension.publications.withType(MavenPublicationInternal).each { publication ->
-                    createSignTaskForEachMavenRepo(tasks, extension, publication, publication.name)
+                    createSignTaskForEachMavenRepo(tasks, extension, publication.name)
                 }
             }
 
-            private void createSignTaskForEachMavenRepo(TaskContainer tasks, PublishingExtension extension, MavenPublicationInternal mavenPublicationInternal, String publicationName) {
-                extension.repositories.withType(MavenArtifactRepository).each { repository ->
+            private void createSignTaskForEachMavenRepo(TaskContainer tasks, PublishingExtension publishingExtension, String publicationName) {
+                publishingExtension.repositories.withType(MavenArtifactRepository).each { repository ->
                     String repositoryName = repository.name
 
                     String signTaskName = "sign${publicationName.capitalize()}PublicationTo${repositoryName.capitalize()}Repository"
@@ -106,6 +106,7 @@ public class HoloEverywherePublishPlugin extends HoloEverywhereAbstractPlugin {
                     publication.artifacts.each { MavenArtifact mavenArtifact ->
                         signTask.sign new MavenizedPublishArtifact(mavenArtifact)
                         Signature signature = signTask.signatures.find { it.toSign == mavenArtifact.file };
+                        signature.signatureSpec.required = extension.signing.required
                         signature.extension = "${mavenArtifact.extension}.${signature.extension}"
                     }
 
@@ -114,7 +115,7 @@ public class HoloEverywherePublishPlugin extends HoloEverywhereAbstractPlugin {
                     publishTask.dependsOn(signTask)
 
                     signTask.signatures.each {
-                        publication.artifact(it)
+                        publication.artifact(it).classifier = HoloEverywherePublishToMavenRepository.SIGN_CLASSIFIER
                     }
 
                     publication.artifact(signPom(signTask, pomFile))
@@ -148,7 +149,8 @@ public class HoloEverywherePublishPlugin extends HoloEverywhereAbstractPlugin {
             private Signature signPom(Sign signTask, File pomFile) {
                 signTask.sign(pomFile)
                 def Signature signature = signTask.signatures.find { it.toSign == pomFile }
-                signature.classifier = null
+                signature.signatureSpec.required = extension.signing.required
+                signature.classifier = HoloEverywherePublishToMavenRepository.SIGN_CLASSIFIER
                 signature.type = signature.extension = "pom.${signature.extension}"
                 return signature
             }
