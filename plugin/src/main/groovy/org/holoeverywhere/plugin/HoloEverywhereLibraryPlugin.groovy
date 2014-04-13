@@ -129,7 +129,6 @@ public class HoloEverywhereLibraryPlugin extends HoloEverywhereAbstractPlugin im
         if (apklibAssembleTask == null) {
             apklibAssembleTask = project.rootProject.tasks.create(EXTERNAL_APKLIB_ASSEMBLE_TASK_NAME, Exec)
             apklibAssembleTask.configure {
-                enabled = false
                 executable = 'mvn'
                 args = ['--batch-mode', '--quiet', 'clean', 'package']
                 workingDir = project.rootProject.projectDir
@@ -154,6 +153,6 @@ public class HoloEverywhereLibraryPlugin extends HoloEverywhereAbstractPlugin im
             description = 'Package library into apklib'
         }
 
-        return artifactApklib = new DefaultPublishArtifact(project.name, 'apklib', 'apklib', '', new Date(), project.file(finalFilename), apklibTask)
+        return artifactApklib = new DefaultPublishArtifact(project.name, 'apklib', 'apklib', '', new Date(), project.file("${project.buildDir}/libs/${finalFilename}"), apklibTask)
     }
 }

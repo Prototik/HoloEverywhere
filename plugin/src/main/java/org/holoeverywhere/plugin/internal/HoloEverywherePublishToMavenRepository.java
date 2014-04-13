@@ -19,6 +19,7 @@ import java.util.Set;
 
 public class HoloEverywherePublishToMavenRepository extends PublishToMavenRepository {
     public static final String SIGN_CLASSIFIER = "sign";
+    public static final String POST_SIGN_CLASSIFIER = ".sign";
 
     private final Factory<LoggingManagerInternal> loggingManagerFactory;
     public MavenArtifact mainArtifact;
@@ -53,12 +54,21 @@ public class HoloEverywherePublishToMavenRepository extends PublishToMavenReposi
         artifacts.removeAll(CollectionUtils.filter(artifacts, new Spec<MavenArtifact>() {
             @Override
             public boolean isSatisfiedBy(MavenArtifact element) {
-                return SIGN_CLASSIFIER.equals(element.getClassifier()) && !element.getFile().exists();
+                final String classifier = element.getClassifier();
+                return (classifier != null && (classifier.equals(SIGN_CLASSIFIER) || classifier.endsWith(POST_SIGN_CLASSIFIER)))
+                        && !element.getFile().exists();
             }
         }));
         for (MavenArtifact artifact : artifacts) {
-            if (SIGN_CLASSIFIER.equals(artifact.getClassifier())) {
+            final String classifier = artifact.getClassifier();
+            if (classifier == null) {
+                continue;
+            }
+            if (classifier.equals(SIGN_CLASSIFIER)) {
                 artifact.setClassifier(null);
+            }
+            if (classifier.endsWith(POST_SIGN_CLASSIFIER)) {
+                artifact.setClassifier(classifier.substring(0, classifier.length() - POST_SIGN_CLASSIFIER.length()));
             }
         }
         return publication;
