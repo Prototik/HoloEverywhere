@@ -121,6 +121,10 @@ public class PreferenceScreen extends PreferenceGroup implements
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
+        if (state == null || !state.getClass().equals(SavedState.class)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
         SavedState myState = (SavedState) state;
         super.onRestoreInstanceState(myState.getSuperState());
         if (myState.isShowing) {
