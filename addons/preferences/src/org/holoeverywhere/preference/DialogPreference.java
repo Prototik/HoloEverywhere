@@ -261,6 +261,7 @@ public abstract class DialogPreference extends Preference implements
         SavedState myState = (SavedState) state;
         super.onRestoreInstanceState(myState.getSuperState());
         if (myState.isDialogShowing) {
+            myState.dialogBundle.setClassLoader(getContext().getClassLoader());
             showDialog(myState.dialogBundle);
         }
     }
@@ -305,6 +306,19 @@ public abstract class DialogPreference extends Preference implements
     }
 
     private static class SavedState extends BaseSavedState {
+
+        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+
         Bundle dialogBundle;
         boolean isDialogShowing;
 
