@@ -18,7 +18,7 @@ public class AndroidJavadoc extends Javadoc {
     public void setSourceSet(String sourceSet) {
         this.sourceSet = sourceSet
         if (sourceSet != null) {
-            setSource(project.extensions.getByType(LibraryExtension).sourceSets.findByName(sourceSet)?.allJava)
+            setSource(project.extensions.getByType(LibraryExtension).sourceSets.findByName(sourceSet)?.java)
         } else {
             setSource(null)
         }
@@ -37,6 +37,7 @@ public class AndroidJavadoc extends Javadoc {
 
     public void updateConfigurationClasspath() {
         if (configuration != null) {
+            project.plugins.getPlugin(LibraryPlugin).ensureTargetSetup()
             setClasspath(project.files(
                     // Compiled source code
                     "${project.buildDir}/classes/release",
@@ -48,7 +49,7 @@ public class AndroidJavadoc extends Javadoc {
                     project.fileTree("${project.buildDir}/exploded-bundles") { include '*/classes.jar' },
 
                     // Android framework
-                    project.plugins.getPlugin(LibraryPlugin).loadedSdkParser.target.getPath(IAndroidTarget.ANDROID_JAR)
+                    project.plugins.getPlugin(LibraryPlugin).androidBuilder.target.getPath(IAndroidTarget.ANDROID_JAR)
             ))
         } else {
             setClasspath(null)
