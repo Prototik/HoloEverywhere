@@ -128,6 +128,7 @@ public class PreferenceScreen extends PreferenceGroup implements
         SavedState myState = (SavedState) state;
         super.onRestoreInstanceState(myState.getSuperState());
         if (myState.isShowing) {
+            myState.dialogBundle.setClassLoader(getContext().getClassLoader());
             showDialog(myState.dialogBundle);
         }
     }
