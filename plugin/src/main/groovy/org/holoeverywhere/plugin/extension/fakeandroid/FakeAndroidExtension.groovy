@@ -1,7 +1,7 @@
 package org.holoeverywhere.plugin.extension.fakeandroid
 
 import com.android.build.gradle.internal.LoggerWrapper
-import com.android.build.gradle.internal.Sdk
+import com.android.build.gradle.internal.SdkHandler
 import org.gradle.api.Project
 import org.gradle.api.file.FileCollection
 
@@ -10,7 +10,7 @@ public class FakeAndroidExtension {
 
     public FakeAndroidExtension(Project project) {
         this.project = project
-        androidSdkDir = new Sdk(project, new LoggerWrapper(project.logger)).sdkDirectory
+        androidSdkDir = new SdkHandler(project, new LoggerWrapper(project.logger)).getSdkFolder()
     }
 
     public int compileSdkVersion = 0

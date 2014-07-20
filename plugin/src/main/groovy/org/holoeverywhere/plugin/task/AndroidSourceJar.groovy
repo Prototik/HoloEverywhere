@@ -15,7 +15,7 @@ public class AndroidSourceJar extends Jar {
     public void setSourceSet(String sourceSet) {
         this.sourceSet = sourceSet
         if (sourceSet != null) {
-            from(project.extensions.getByType(LibraryExtension).sourceSets.getByName(sourceSet).allSource)
+            from(project.extensions.getByType(LibraryExtension).sourceSets.getByName(sourceSet).java)
         }
     }
 }

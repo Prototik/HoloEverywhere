@@ -21,7 +21,8 @@ abstract class ResbuilderDefaultTask extends DefaultTask {
                 if (androidPlugin == null) {
                     throw new RuntimeException("Could not find android plugin/extension")
                 }
-                resourcesDir = new File(androidPlugin.loadedSdkParser.target.getPath(IAndroidTarget.RESOURCES))
+                androidPlugin.ensureTargetSetup()
+                resourcesDir = new File(androidPlugin.androidBuilder.target.getPath(IAndroidTarget.RESOURCES))
             } catch (Exception e) {
                 project.logger.error("Cannot retrieve resource directory", e)
             }
