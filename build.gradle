@@ -147,6 +147,7 @@ android.libraryVariants.all { variant ->
         sourcesJarTask.from ss.allSource
     }
 
+	artifacts.add('archives', jarTask);
     artifacts.add('archives', javadocJarTask);
     artifacts.add('archives', sourcesJarTask);
 }
