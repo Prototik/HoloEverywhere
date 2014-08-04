@@ -1,8 +1,8 @@
 diff --git java/android/support/v4/app/FragmentActivity.java java/android/support/v4/app/FragmentActivity.java
-index 596653a..199e926 100644
+index ad57bb8..896493b 100644
 --- java/android/support/v4/app/FragmentActivity.java
 +++ java/android/support/v4/app/FragmentActivity.java
-@@ -163,7 +163,7 @@ public class FragmentActivity extends Activity {
+@@ -164,7 +164,7 @@ public class FragmentActivity extends Activity {
                  Log.w(TAG, "Activity result no fragment exists for index: 0x"
                          + Integer.toHexString(requestCode));
              } else {
@@ -11,7 +11,7 @@ index 596653a..199e926 100644
              }
              return;
          }
-@@ -171,6 +171,17 @@ public class FragmentActivity extends Activity {
+@@ -172,6 +172,17 @@ public class FragmentActivity extends Activity {
          super.onActivityResult(requestCode, resultCode, data);
      }
  
@@ -30,10 +30,10 @@ index 596653a..199e926 100644
       * Take care of popping the fragment back stack or finishing the activity
       * as appropriate.
 diff --git java/android/support/v4/app/FragmentManager.java java/android/support/v4/app/FragmentManager.java
-index 37b37d2..aba36be 100644
+index 60a6367..5319c69 100644
 --- java/android/support/v4/app/FragmentManager.java
 +++ java/android/support/v4/app/FragmentManager.java
-@@ -869,6 +869,7 @@ final class FragmentManagerImpl extends FragmentManager {
+@@ -873,6 +873,7 @@ final class FragmentManagerImpl extends FragmentManager {
                  case Fragment.INITIALIZING:
                      if (DEBUG) Log.v(TAG, "moveto CREATED: " + f);
                      if (f.mSavedFragmentState != null) {
@@ -41,7 +41,7 @@ index 37b37d2..aba36be 100644
                          f.mSavedViewState = f.mSavedFragmentState.getSparseParcelableArray(
                                  FragmentManagerImpl.VIEW_STATE_TAG);
                          f.mTarget = getFragment(f.mSavedFragmentState,
-@@ -912,7 +913,7 @@ final class FragmentManagerImpl extends FragmentManager {
+@@ -916,7 +917,7 @@ final class FragmentManagerImpl extends FragmentManager {
                                  f.mSavedFragmentState), null, f.mSavedFragmentState);
                          if (f.mView != null) {
                              f.mInnerView = f.mView;
@@ -50,7 +50,7 @@ index 37b37d2..aba36be 100644
                              if (f.mHidden) f.mView.setVisibility(View.GONE);
                              f.onViewCreated(f.mView, f.mSavedFragmentState);
                          } else {
-@@ -939,7 +940,7 @@ final class FragmentManagerImpl extends FragmentManager {
+@@ -943,7 +944,7 @@ final class FragmentManagerImpl extends FragmentManager {
                                      f.mSavedFragmentState), container, f.mSavedFragmentState);
                              if (f.mView != null) {
                                  f.mInnerView = f.mView;
@@ -85,18 +85,18 @@ index d0ebb96..c9f9480 100644
          ViewGroup.LayoutParams childParams = child.getLayoutParams();
          if (childParams != null) {
 diff --git java/android/support/v4/view/ViewCompat.java java/android/support/v4/view/ViewCompat.java
-index bb64afc..c62ef55 100644
+index 84455a0..ef84f72 100644
 --- java/android/support/v4/view/ViewCompat.java
 +++ java/android/support/v4/view/ViewCompat.java
-@@ -229,6 +229,7 @@ public class ViewCompat {
+@@ -286,6 +286,7 @@ public class ViewCompat {
          public int getMeasuredState(View view);
          public int getAccessibilityLiveRegion(View view);
          public void setAccessibilityLiveRegion(View view, int mode);
 +        public int[] mergeDrawableStates(int[] baseState, int[] additionalState);
-     }
- 
-     static class BaseViewCompatImpl implements ViewCompatImpl {
-@@ -334,7 +335,25 @@ public class ViewCompat {
+         public int getPaddingStart(View view);
+         public int getPaddingEnd(View view);
+         public void setPaddingRelative(View view, int start, int top, int end, int bottom);
+@@ -428,7 +429,25 @@ public class ViewCompat {
          }
  
          public int resolveSizeAndState(int size, int measureSpec, int childMeasuredState) {
@@ -123,9 +123,9 @@ index bb64afc..c62ef55 100644
          }
  
          @Override
-@@ -361,6 +380,17 @@ public class ViewCompat {
-         public void setAccessibilityLiveRegion(View view, int mode) {
-             // No-op
+@@ -646,6 +665,17 @@ public class ViewCompat {
+         public float getPivotY(View view) {
+             return 0;
          }
 +
 +        @Override
@@ -141,17 +141,19 @@ index bb64afc..c62ef55 100644
      }
  
      static class EclairMr1ViewCompatImpl extends BaseViewCompatImpl {
-@@ -1187,4 +1217,8 @@ public class ViewCompat {
-     public void setAccessibilityLiveRegion(View view, int mode) {
+@@ -1633,6 +1663,10 @@ public class ViewCompat {
          IMPL.setAccessibilityLiveRegion(view, mode);
      }
-+
+     
 +    public static int[] mergeDrawableStates(int[] baseState, int[] additionalState) {
 +        return IMPL.mergeDrawableStates(baseState, additionalState);
 +    }
- }
++
+     /**
+      * Returns the start padding of the specified view depending on its resolved layout direction.
+      * If there are inset and enabled scrollbars, this value may include the space
 diff --git kitkat/android/support/v4/print/PrintHelperKitkat.java kitkat/android/support/v4/print/PrintHelperKitkat.java
-index 89cc9e7..e343fea 100644
+index 89cc9e7..77d7ce6 100644
 --- kitkat/android/support/v4/print/PrintHelperKitkat.java
 +++ kitkat/android/support/v4/print/PrintHelperKitkat.java
 @@ -45,7 +45,7 @@ import java.io.InputStream;

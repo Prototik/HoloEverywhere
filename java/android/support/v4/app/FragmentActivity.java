@@ -164,12 +164,23 @@ public class FragmentActivity extends Activity {
                 Log.w(TAG, "Activity result no fragment exists for index: 0x"
                         + Integer.toHexString(requestCode));
             } else {
-                frag.onActivityResult(requestCode&0xffff, resultCode, data);
+                rOnActivityResult(frag, requestCode & 0xffff, resultCode, data);
             }
             return;
         }
         
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void rOnActivityResult(Fragment fragment, int requestCode, int resultCode, Intent data) {
+        fragment.onActivityResult(requestCode, resultCode, data);
+        if(fragment.mChildFragmentManager != null && fragment.mChildFragmentManager.mActive != null) {
+            for(Fragment childFragment : fragment.mChildFragmentManager.mActive) {
+                if(childFragment != null) {
+                    rOnActivityResult(childFragment, requestCode, resultCode, data);
+                }
+            }
+        }
     }
 
     /**

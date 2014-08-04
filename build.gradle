@@ -8,103 +8,18 @@ buildscript {
   }
 }
 
-apply plugin: 'java'
+apply plugin: 'holoeverywhere-repo'
+apply plugin: 'android-library'
 apply plugin: 'maven'
 apply plugin: 'signing'
-apply plugin: 'holoeverywhere-repo'
 
+archivesBaseName = 'support-v4'
 version = '20.1.0'
 def baseVersion = '20.0.0'
 
 repositories {
     mavenLocal()
     mavenCentral()
-}
-
-def FileCollection getAndroidPrebuilt(String apiLevel) {
-    files("${System.env.ANDROID_HOME}/platforms/android-$apiLevel/android.jar")
-}
-
-configurations {
-    deployerJars
-
-    eclairCompile
-    froyoCompile
-    gingerbreadCompile
-    honeycombCompile
-    honeycombmr2Compile
-    icsCompile
-    icsmr1Compile
-    jellybeanCompile
-    jellybeanmr1Compile
-    jellybeanmr2Compile
-    kitkatCompile
-    api20Compile
-}
-
-sourceSets {
-    main.java.srcDir 'java'
-    eclair.java.srcDir 'eclair'
-    eclairmr1.java.srcDir 'eclair-mr1'
-    froyo.java.srcDir 'froyo'
-    gingerbread.java.srcDir 'gingerbread'
-    honeycomb.java.srcDir 'honeycomb'
-    honeycombmr2.java.srcDir 'honeycomb_mr2'
-    ics.java.srcDir 'ics'
-    icsmr1.java.srcDir 'ics-mr1'
-    jellybean.java.srcDir 'jellybean'
-    jellybeanmr1.java.srcDir 'jellybean-mr1'
-    jellybeanmr2.java.srcDir 'jellybean-mr2'
-    kitkat.java.srcDir 'kitkat'
-    api20Compile.java.srcDir 'api20'
-}
-
-dependencies {
-    deployerJars "org.apache.maven.wagon:wagon-ssh-external:2.2"
-
-    eclairCompile getAndroidPrebuilt('7')
-    eclairmr1Compile getAndroidPrebuilt('7')
-    froyoCompile getAndroidPrebuilt('8')
-    gingerbreadCompile getAndroidPrebuilt('10')
-    honeycombCompile getAndroidPrebuilt('11')
-    honeycombmr2Compile getAndroidPrebuilt('13')
-    icsCompile getAndroidPrebuilt('14')
-    icsmr1Compile getAndroidPrebuilt('15')
-    jellybeanCompile getAndroidPrebuilt('16')
-    jellybeanmr1Compile getAndroidPrebuilt('17')
-    jellybeanmr2Compile getAndroidPrebuilt('18')
-    kitkatCompile getAndroidPrebuilt('19')
-    api20Compile getAndroidPrebuilt('20')
-
-    compile getAndroidPrebuilt('4')
-    compile sourceSets.eclair.output
-    compile sourceSets.eclairmr1.output
-    compile sourceSets.froyo.output
-    compile sourceSets.gingerbread.output
-    compile sourceSets.honeycomb.output
-    compile sourceSets.honeycombmr2.output
-    compile sourceSets.ics.output
-    compile sourceSets.icsmr1.output
-    compile sourceSets.jellybean.output
-    compile sourceSets.jellybeanmr1.output
-    compile sourceSets.jellybeanmr2.output
-    compile sourceSets.kitkat.output
-    compile sourceSets.api20Compile.output
-}
-
-jar {
-    from sourceSets.eclair.output
-    from sourceSets.froyo.output
-    from sourceSets.gingerbread.output
-    from sourceSets.honeycomb.output
-    from sourceSets.honeycombmr2.output
-    from sourceSets.ics.output
-    from sourceSets.icsmr1.output
-    from sourceSets.jellybean.output
-    from sourceSets.jellybeanmr1.output
-    from sourceSets.jellybeanmr2.output
-    from sourceSets.kitkat.output
-    from sourceSets.api20Compile.output
 }
 
 tasks.withType(JavaCompile) {
@@ -114,52 +29,126 @@ tasks.withType(JavaCompile) {
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
-jar {
+ext.allSS = []
+
+def baseSS         = createApiSourceset('donut',         'donut',          '4',       null)
+def eclairSS       = createApiSourceset('eclair',       'eclair',        '7',       baseSS)
+def eclairMr1SS    = createApiSourceset('eclairmr1',    'eclair-mr1',    '7',       eclairSS)
+def froyoSS        = createApiSourceset('froyo',        'froyo',         '8',       eclairMr1SS)
+def gingerbreadSS  = createApiSourceset('gingerbread',  'gingerbread',   '10',       froyoSS)
+def honeycombSS    = createApiSourceset('honeycomb',    'honeycomb',     '11',      gingerbreadSS)
+def honeycombMr2SS = createApiSourceset('honeycombmr2', 'honeycomb_mr2', '13',      honeycombSS)
+def icsSS          = createApiSourceset('ics',          'ics',           '14',      honeycombMr2SS)
+def icsMr1SS       = createApiSourceset('icsmr1',       'ics-mr1',       '15',      icsSS)
+def jbSS           = createApiSourceset('jellybean',    'jellybean',     '16',      icsMr1SS)
+def jbMr1SS        = createApiSourceset('jellybeanmr1', 'jellybean-mr1', '17',      jbSS)
+def jbMr2SS        = createApiSourceset('jellybeanmr2', 'jellybean-mr2', '18',      jbMr1SS)
+def kitkatSS       = createApiSourceset('kitkat',       'kitkat',        '19',      jbMr2SS)
+def api20SS        = createApiSourceset('api20',        'api20',         '20', kitkatSS)
+
+def FileCollection getAndroidPrebuilt(String apiLevel) {
+    files("${android.plugin.sdkFolder}/platforms/android-${apiLevel}/android.jar")
+}
+
+def createApiSourceset(String name, String folder, String apiLevel, SourceSet previousSource) {
+    def sourceSet = sourceSets.create(name)
+    sourceSet.java.srcDirs = [folder]
+
+    def configName = sourceSet.getCompileConfigurationName()
+
+    project.getDependencies().add(configName, getAndroidPrebuilt(apiLevel))
+    if (previousSource != null) {
+        setupDependencies(configName, previousSource)
+    }
+    ext.allSS.add(sourceSet)
+    return sourceSet
+}
+
+def setupDependencies(String configName, SourceSet previousSourceSet) {
+    project.getDependencies().add(configName, previousSourceSet.output)
+    project.getDependencies().add(configName, previousSourceSet.compileClasspath)
+}
+
+// create a jar task for the code above
+tasks.create(name: "internalJar", type: Jar) {
+    baseName "${archivesBaseName}"
     manifest.attributes('BaseVersion': "${baseVersion}", 'Version': "${project.version} by HoloEverywhere project")
 }
 
-task generateJavadoc(type: Javadoc) {
-    source    sourceSets.main.allJava
-    source    sourceSets.eclair.allJava
-    source    sourceSets.froyo.allJava
-    source    sourceSets.gingerbread.allJava
-    source    sourceSets.honeycomb.allJava
-    source    sourceSets.honeycombmr2.allJava
-    source    sourceSets.ics.allJava
-    source    sourceSets.icsmr1.allJava
-    source    sourceSets.jellybean.allJava
-    source    sourceSets.jellybeanmr1.allJava
-    source    sourceSets.jellybeanmr2.allJava
-    source    sourceSets.kitkat.allJava
-    source    sourceSets.api20Compile.allJava
-    classpath = project.files(configurations.compile)
+ext.allSS.each { ss ->
+    internalJar.from ss.output
 }
 
-task javadoc(type: Jar, dependsOn: generateJavadoc, overwrite: true) {
-    from generateJavadoc.destinationDir
-    classifier = 'javadoc'
+configurations {
+    deployerJars
 }
 
-task sources(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-    from sourceSets.eclair.allSource
-    from sourceSets.froyo.allSource
-    from sourceSets.gingerbread.allSource
-    from sourceSets.honeycomb.allSource
-    from sourceSets.honeycombmr2.allSource
-    from sourceSets.ics.allSource
-    from sourceSets.icsmr1.allSource
-    from sourceSets.jellybean.allSource
-    from sourceSets.jellybeanmr1.allSource
-    from sourceSets.jellybeanmr2.allSource
-    from sourceSets.kitkat.allSource
-    from sourceSets.api20Compile.allSource
+dependencies {
+    deployerJars "org.apache.maven.wagon:wagon-ssh-external:2.2"
+    compile files('android-support-annotations.jar')
+    compile files(internalJar.archivePath)
 }
 
-artifacts {
-    archives tasks.sources
-    archives tasks.javadoc
+android {
+    compileSdkVersion 4
+    buildToolsVersion "20.0.0"
+
+    defaultConfig {
+        minSdkVersion 4
+        targetSdkVersion 20
+    }
+
+    sourceSets {
+        main.manifest.srcFile 'AndroidManifest.xml'
+        main.java.srcDirs = ['java']
+        main.aidl.srcDirs = ['java']
+
+        androidTest.setRoot('tests')
+        androidTest.java.srcDir 'tests/java'
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+android.libraryVariants.all { variant ->
+    variant.javaCompile.dependsOn internalJar
+
+    def name = variant.buildType.name
+
+    if (name.equals("debug")) {
+        return; // Skip debug builds.
+    }
+    def suffix = name.capitalize()
+
+    def jarTask = project.tasks.create(name: "jar${suffix}", type: Jar){
+        dependsOn variant.javaCompile
+        from variant.javaCompile.destinationDir
+        from 'LICENSE.txt'
+    }
+    def javadocTask = project.tasks.create(name: "javadoc${suffix}", type: Javadoc) {
+        source android.sourceSets.main.java.sourceFiles
+        classpath = files(variant.javaCompile.classpath.files) + getAndroidPrebuilt(android.compileSdkVersion)
+    }
+
+    def javadocJarTask = project.tasks.create(name: "javadocJar${suffix}", type: Jar) {
+        classifier = 'javadoc'
+        from 'build/docs/javadoc'
+    }
+
+    def sourcesJarTask = project.tasks.create(name: "sourceJar${suffix}", type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.sourceFiles
+    }
+
+    project.ext.allSS.each { ss ->
+        javadocTask.source ss.allJava
+        sourcesJarTask.from ss.allSource
+    }
+
+    artifacts.add('archives', javadocJarTask);
+    artifacts.add('archives', sourcesJarTask);
 }
 
 signing {

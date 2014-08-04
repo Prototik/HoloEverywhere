@@ -24,3 +24,6 @@ local.properties
 # Other
 .DS_Store
 tmp
+
+*.orig
+*.rej

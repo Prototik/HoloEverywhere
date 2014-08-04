@@ -6,5 +6,5 @@ if [ "x$git_path" = "x" ]; then
   exit 1
 fi
 
-git diff --no-prefix --ignore-space-change $git_path froyo honeycomb_mr2 jellybean gingerbread ics jellybean-mr1 eclair ics-mr1 jellybean-mr2 eclair-mr1 honeycomb java kitkat > holoeverywhere.patch
+git diff --no-prefix --ignore-space-change $git_path donut froyo honeycomb_mr2 jellybean gingerbread ics jellybean-mr1 eclair ics-mr1 jellybean-mr2 eclair-mr1 honeycomb java kitkat api20 > holoeverywhere.patch
 
