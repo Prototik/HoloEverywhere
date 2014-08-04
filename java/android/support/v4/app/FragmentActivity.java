@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.util.SimpleArrayMap;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -163,23 +164,12 @@ public class FragmentActivity extends Activity {
                 Log.w(TAG, "Activity result no fragment exists for index: 0x"
                         + Integer.toHexString(requestCode));
             } else {
-                rOnActivityResult(frag, requestCode & 0xffff, resultCode, data);
+                frag.onActivityResult(requestCode&0xffff, resultCode, data);
             }
             return;
         }
         
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void rOnActivityResult(Fragment fragment, int requestCode, int resultCode, Intent data) {
-        fragment.onActivityResult(requestCode, resultCode, data);
-        if(fragment.mChildFragmentManager != null && fragment.mChildFragmentManager.mActive != null) {
-            for(Fragment childFragment : fragment.mChildFragmentManager.mActive) {
-                if(childFragment != null) {
-                    rOnActivityResult(childFragment, requestCode, resultCode, data);
-                }
-            }
-        }
     }
 
     /**
@@ -249,7 +239,7 @@ public class FragmentActivity extends Activity {
      * Add support for inflating the &lt;fragment> tag.
      */
     @Override
-    public View onCreateView(String name, Context context, AttributeSet attrs) {
+    public View onCreateView(String name, @NonNull Context context, @NonNull AttributeSet attrs) {
         if (!"fragment".equals(name)) {
             return super.onCreateView(name, context, attrs);
         }

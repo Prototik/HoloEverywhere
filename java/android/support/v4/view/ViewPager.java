@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
+import android.support.annotation.DrawableRes;
 import android.support.v4.os.ParcelableCompat;
 import android.support.v4.os.ParcelableCompatCreatorCallbacks;
 import android.support.v4.view.accessibility.AccessibilityEventCompat;
@@ -74,7 +75,11 @@ import java.util.Comparator;
  * classes have simple code showing how to build a full user interface
  * with them.
  *
- * <p>Here is a more complicated example of ViewPager, using it in conjuction
+ * <p>For more information about how to use ViewPager, read <a
+ * href="{@docRoot}training/implementing-navigation/lateral.html">Creating Swipe Views with
+ * Tabs</a>.</p>
+ *
+ * <p>Below is a more complicated example of ViewPager, using it in conjunction
  * with {@link android.app.ActionBar} tabs.  You can find other examples of using
  * ViewPager in the API 4+ Support Demos and API 13+ Support Demos sample code.
  *
@@ -740,7 +745,7 @@ public class ViewPager extends ViewGroup {
      *
      * @param resId Resource ID of a drawable to display between pages
      */
-    public void setPageMarginDrawable(int resId) {
+    public void setPageMarginDrawable(@DrawableRes int resId) {
         setPageMarginDrawable(getContext().getResources().getDrawable(resId));
     }
 

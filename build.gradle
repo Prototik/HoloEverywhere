@@ -4,7 +4,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'org.holoeverywhere:plugin:0.2.+'
+    classpath 'org.holoeverywhere:plugin:0.3.+'
   }
 }
 
@@ -13,8 +13,8 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'holoeverywhere-repo'
 
-version = '19.2.0'
-def baseVersion = '19.1.0'
+version = '20.1.0'
+def baseVersion = '20.0.0'
 
 repositories {
     mavenLocal()
@@ -39,6 +39,7 @@ configurations {
     jellybeanmr1Compile
     jellybeanmr2Compile
     kitkatCompile
+    api20Compile
 }
 
 sourceSets {
@@ -55,6 +56,7 @@ sourceSets {
     jellybeanmr1.java.srcDir 'jellybean-mr1'
     jellybeanmr2.java.srcDir 'jellybean-mr2'
     kitkat.java.srcDir 'kitkat'
+    api20Compile.java.srcDir 'api20'
 }
 
 dependencies {
@@ -72,6 +74,7 @@ dependencies {
     jellybeanmr1Compile getAndroidPrebuilt('17')
     jellybeanmr2Compile getAndroidPrebuilt('18')
     kitkatCompile getAndroidPrebuilt('19')
+    api20Compile getAndroidPrebuilt('20')
 
     compile getAndroidPrebuilt('4')
     compile sourceSets.eclair.output
@@ -86,6 +89,7 @@ dependencies {
     compile sourceSets.jellybeanmr1.output
     compile sourceSets.jellybeanmr2.output
     compile sourceSets.kitkat.output
+    compile sourceSets.api20Compile.output
 }
 
 jar {
@@ -100,9 +104,10 @@ jar {
     from sourceSets.jellybeanmr1.output
     from sourceSets.jellybeanmr2.output
     from sourceSets.kitkat.output
+    from sourceSets.api20Compile.output
 }
 
-tasks.withType(Compile) {
+tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
 
@@ -126,6 +131,7 @@ task generateJavadoc(type: Javadoc) {
     source    sourceSets.jellybeanmr1.allJava
     source    sourceSets.jellybeanmr2.allJava
     source    sourceSets.kitkat.allJava
+    source    sourceSets.api20Compile.allJava
     classpath = project.files(configurations.compile)
 }
 
@@ -148,6 +154,7 @@ task sources(type: Jar) {
     from sourceSets.jellybeanmr1.allSource
     from sourceSets.jellybeanmr2.allSource
     from sourceSets.kitkat.allSource
+    from sourceSets.api20Compile.allSource
 }
 
 artifacts {

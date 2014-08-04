@@ -18,6 +18,7 @@ package android.support.v4.widget;
 
 import android.content.Context;
 import android.os.Build;
+import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
@@ -29,7 +30,10 @@ import android.widget.Scroller;
  * the APIs from Scroller or OverScroller.</p>
  */
 public class ScrollerCompat {
+    private static final String TAG = "ScrollerCompat";
+
     Object mScroller;
+    ScrollerCompatImpl mImpl;
 
     interface ScrollerCompatImpl {
         Object createScroller(Context context, Interpolator interpolator);
@@ -51,6 +55,8 @@ public class ScrollerCompat {
         int getFinalX(Object scroller);
         int getFinalY(Object scroller);
     }
+
+    static final int CHASE_FRAME_TIME = 16; // ms per target frame
 
     static class ScrollerCompatImplBase implements ScrollerCompatImpl {
         @Override
@@ -81,7 +87,8 @@ public class ScrollerCompat {
 
         @Override
         public boolean computeScrollOffset(Object scroller) {
-            return ((Scroller) scroller).computeScrollOffset();
+            final Scroller s = (Scroller) scroller;
+            return s.computeScrollOffset();
         }
 
         @Override
@@ -235,18 +242,6 @@ public class ScrollerCompat {
         }
     }
 
-    static final ScrollerCompatImpl IMPL;
-    static {
-        final int version = Build.VERSION.SDK_INT;
-        if (version >= 14) { // ICS
-            IMPL = new ScrollerCompatImplIcs();
-        } else if (version >= 9) { // Gingerbread
-            IMPL = new ScrollerCompatImplGingerbread();
-        } else {
-            IMPL = new ScrollerCompatImplBase();
-        }
-    }
-
     public static ScrollerCompat create(Context context) {
         return create(context, null);
     }
@@ -256,7 +251,23 @@ public class ScrollerCompat {
     }
 
     ScrollerCompat(Context context, Interpolator interpolator) {
-        mScroller = IMPL.createScroller(context, interpolator);
+        this(Build.VERSION.SDK_INT, context, interpolator);
+
+    }
+
+    /**
+     * Private constructer where API version can be provided.
+     * Useful for unit testing.
+     */
+    private ScrollerCompat(int apiVersion, Context context, Interpolator interpolator) {
+        if (apiVersion >= 14) { // ICS
+            mImpl = new ScrollerCompatImplIcs();
+        } else if (apiVersion>= 9) { // Gingerbread
+            mImpl = new ScrollerCompatImplGingerbread();
+        } else {
+            mImpl = new ScrollerCompatImplBase();
+        }
+        mScroller = mImpl.createScroller(context, interpolator);
     }
 
     /**
@@ -265,7 +276,7 @@ public class ScrollerCompat {
      * @return True if the scroller has finished scrolling, false otherwise.
      */
     public boolean isFinished() {
-        return IMPL.isFinished(mScroller);
+        return mImpl.isFinished(mScroller);
     }
 
     /**
@@ -274,7 +285,7 @@ public class ScrollerCompat {
      * @return The new X offset as an absolute distance from the origin.
      */
     public int getCurrX() {
-        return IMPL.getCurrX(mScroller);
+        return mImpl.getCurrX(mScroller);
     }
 
     /**
@@ -283,21 +294,21 @@ public class ScrollerCompat {
      * @return The new Y offset as an absolute distance from the origin.
      */
     public int getCurrY() {
-        return IMPL.getCurrY(mScroller);
+        return mImpl.getCurrY(mScroller);
     }
 
     /**
      * @return The final X position for the scroll in progress, if known.
      */
     public int getFinalX() {
-        return IMPL.getFinalX(mScroller);
+        return mImpl.getFinalX(mScroller);
     }
 
     /**
      * @return The final Y position for the scroll in progress, if known.
      */
     public int getFinalY() {
-        return IMPL.getFinalY(mScroller);
+        return mImpl.getFinalY(mScroller);
     }
 
     /**
@@ -311,7 +322,7 @@ public class ScrollerCompat {
      * negative.
      */
     public float getCurrVelocity() {
-        return IMPL.getCurrVelocity(mScroller);
+        return mImpl.getCurrVelocity(mScroller);
     }
 
     /**
@@ -320,7 +331,7 @@ public class ScrollerCompat {
      * new location.
      */
     public boolean computeScrollOffset() {
-        return IMPL.computeScrollOffset(mScroller);
+        return mImpl.computeScrollOffset(mScroller);
     }
 
     /**
@@ -338,7 +349,7 @@ public class ScrollerCompat {
      *        content up.
      */
     public void startScroll(int startX, int startY, int dx, int dy) {
-        IMPL.startScroll(mScroller, startX, startY, dx, dy);
+        mImpl.startScroll(mScroller, startX, startY, dx, dy);
     }
 
     /**
@@ -355,7 +366,7 @@ public class ScrollerCompat {
      * @param duration Duration of the scroll in milliseconds.
      */
     public void startScroll(int startX, int startY, int dx, int dy, int duration) {
-        IMPL.startScroll(mScroller, startX, startY, dx, dy, duration);
+        mImpl.startScroll(mScroller, startX, startY, dx, dy, duration);
     }
 
     /**
@@ -379,7 +390,7 @@ public class ScrollerCompat {
      */
     public void fling(int startX, int startY, int velocityX, int velocityY,
             int minX, int maxX, int minY, int maxY) {
-        IMPL.fling(mScroller, startX, startY, velocityX, velocityY, minX, maxX, minY, maxY);
+        mImpl.fling(mScroller, startX, startY, velocityX, velocityY, minX, maxX, minY, maxY);
     }
 
     /**
@@ -407,7 +418,7 @@ public class ScrollerCompat {
      */
     public void fling(int startX, int startY, int velocityX, int velocityY,
             int minX, int maxX, int minY, int maxY, int overX, int overY) {
-        IMPL.fling(mScroller, startX, startY, velocityX, velocityY,
+        mImpl.fling(mScroller, startX, startY, velocityX, velocityY,
                 minX, maxX, minY, maxY, overX, overY);
     }
 
@@ -416,7 +427,7 @@ public class ScrollerCompat {
      * position.
      */
     public void abortAnimation() {
-        IMPL.abortAnimation(mScroller);
+        mImpl.abortAnimation(mScroller);
     }
 
 
@@ -434,7 +445,7 @@ public class ScrollerCompat {
      *              desired distance from finalX. Absolute value - must be positive.
      */
     public void notifyHorizontalEdgeReached(int startX, int finalX, int overX) {
-        IMPL.notifyHorizontalEdgeReached(mScroller, startX, finalX, overX);
+        mImpl.notifyHorizontalEdgeReached(mScroller, startX, finalX, overX);
     }
 
     /**
@@ -451,7 +462,7 @@ public class ScrollerCompat {
      *              desired distance from finalY. Absolute value - must be positive.
      */
     public void notifyVerticalEdgeReached(int startY, int finalY, int overY) {
-        IMPL.notifyVerticalEdgeReached(mScroller, startY, finalY, overY);
+        mImpl.notifyVerticalEdgeReached(mScroller, startY, finalY, overY);
     }
 
     /**
@@ -468,6 +479,6 @@ public class ScrollerCompat {
      *         interpolating back to a valid value.
      */
     public boolean isOverScrolled() {
-        return IMPL.isOverScrolled(mScroller);
+        return mImpl.isOverScrolled(mScroller);
     }
 }

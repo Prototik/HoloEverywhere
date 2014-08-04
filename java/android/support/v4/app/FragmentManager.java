@@ -23,6 +23,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.IdRes;
+import android.support.annotation.StringRes;
 import android.support.v4.util.DebugUtils;
 import android.support.v4.util.LogWriter;
 import android.util.Log;
@@ -90,12 +92,14 @@ public abstract class FragmentManager {
          * Return the full bread crumb title resource identifier for the entry,
          * or 0 if it does not have one.
          */
+        @StringRes
         public int getBreadCrumbTitleRes();
 
         /**
          * Return the short bread crumb title resource identifier for the entry,
          * or 0 if it does not have one.
          */
+        @StringRes
         public int getBreadCrumbShortTitleRes();
 
         /**
@@ -164,7 +168,7 @@ public abstract class FragmentManager {
      * on the back stack associated with this ID are searched.
      * @return The fragment if found or null otherwise.
      */
-    public abstract Fragment findFragmentById(int id);
+    public abstract Fragment findFragmentById(@IdRes int id);
 
     /**
      * Finds a fragment that was identified by the given tag either when inflated
@@ -392,7 +396,7 @@ final class FragmentManagerState implements Parcelable {
  * Callbacks from FragmentManagerImpl to its container.
  */
 interface FragmentContainer {
-    public View findViewById(int id);
+    public View findViewById(@IdRes int id);
 }
 
 /**
@@ -573,12 +577,12 @@ final class FragmentManagerImpl extends FragmentManager {
             return null;
         }
         if (index >= mActive.size()) {
-            throwException(new IllegalStateException("Fragement no longer exists for key "
+            throwException(new IllegalStateException("Fragment no longer exists for key "
                     + key + ": index " + index));
         }
         Fragment f = mActive.get(index);
         if (f == null) {
-            throwException(new IllegalStateException("Fragement no longer exists for key "
+            throwException(new IllegalStateException("Fragment no longer exists for key "
                     + key + ": index " + index));
         }
         return f;
@@ -869,7 +873,6 @@ final class FragmentManagerImpl extends FragmentManager {
                 case Fragment.INITIALIZING:
                     if (DEBUG) Log.v(TAG, "moveto CREATED: " + f);
                     if (f.mSavedFragmentState != null) {
-                        f.mSavedFragmentState.setClassLoader(mActivity.getClassLoader());
                         f.mSavedViewState = f.mSavedFragmentState.getSparseParcelableArray(
                                 FragmentManagerImpl.VIEW_STATE_TAG);
                         f.mTarget = getFragment(f.mSavedFragmentState,
@@ -913,7 +916,7 @@ final class FragmentManagerImpl extends FragmentManager {
                                 f.mSavedFragmentState), null, f.mSavedFragmentState);
                         if (f.mView != null) {
                             f.mInnerView = f.mView;
-                            f.mView = NoSaveStateFrameLayout.wrap(f, f.mView);
+                            f.mView = NoSaveStateFrameLayout.wrap(f.mView);
                             if (f.mHidden) f.mView.setVisibility(View.GONE);
                             f.onViewCreated(f.mView, f.mSavedFragmentState);
                         } else {
@@ -940,7 +943,7 @@ final class FragmentManagerImpl extends FragmentManager {
                                     f.mSavedFragmentState), container, f.mSavedFragmentState);
                             if (f.mView != null) {
                                 f.mInnerView = f.mView;
-                                f.mView = NoSaveStateFrameLayout.wrap(f, f.mView);
+                                f.mView = NoSaveStateFrameLayout.wrap(f.mView);
                                 if (container != null) {
                                     Animation anim = loadAnimation(f, transit, true,
                                             transitionStyle);
@@ -1079,7 +1082,9 @@ final class FragmentManagerImpl extends FragmentManager {
                                     makeInactive(f);
                                 } else {
                                     f.mActivity = null;
+                                    f.mParentFragment = null;
                                     f.mFragmentManager = null;
+                                    f.mChildFragmentManager = null;
                                 }
                             }
                         }
