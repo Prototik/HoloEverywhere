@@ -14,7 +14,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 archivesBaseName = 'support-v4'
-version = '20.1.0'
+version = '20.1.1'
 def baseVersion = '20.0.0'
 
 repositories {
@@ -127,6 +127,9 @@ android.libraryVariants.all { variant ->
         from variant.javaCompile.destinationDir
         from 'LICENSE.txt'
     }
+	project.ext.allSS.each { ss ->
+		jarTask.from ss.output
+	}
     def javadocTask = project.tasks.create(name: "javadoc${suffix}", type: Javadoc) {
         source android.sourceSets.main.java.sourceFiles
         classpath = files(variant.javaCompile.classpath.files) + getAndroidPrebuilt(android.compileSdkVersion)
