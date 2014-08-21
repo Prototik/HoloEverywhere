@@ -13,8 +13,8 @@ import org.holoeverywhere.plugin.HoloEverywhereCorePlugin
 class HoloEverywhereExtension extends IncludeContainer implements Configurable<HoloEverywhereExtension> {
     public static final String HOLO_EVERYWHERE_GROUP = 'org.holoeverywhere'
     public static final String HOLO_EVERYWHERE_NAME = 'library'
-    public static final String HOLO_EVERYWHERE_REPO = 'http://192.241.191.41/repo/'
-    public static final String HOLO_EVERYWHERE_SNAPSHOT_REPO = 'http://192.241.191.41/snapshot/'
+    public static final String HOLO_EVERYWHERE_REPO = 'http://holoeverywhere.cf/repo/'
+    public static final String HOLO_EVERYWHERE_SNAPSHOT_REPO = 'http://holoeverywhere.cf/snapshot/'
 
     public static class Addon {
         def String group, name, version
