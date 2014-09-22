@@ -55,10 +55,10 @@ Christophe:
 ## License
 MIT License, full text of license see [here][License]
 
-[APKDemoStable]: http://192.241.191.41/demo-stable.apk
-[APKDemoLatest]: http://192.241.191.41/demo-latest.apk
-[APKIssuesStable]: http://192.241.191.41/issues-stable.apk
-[APKIssuesLatest]: http://192.241.191.41/issues-latest.apk
+[APKDemoStable]: http://holoeverywhere.cf/demo-stable.apk
+[APKDemoLatest]: http://holoeverywhere.cf/demo-latest.apk
+[APKIssuesStable]: http://holoeverywhere.cf/issues-stable.apk
+[APKIssuesLatest]: http://holoeverywhere.cf/issues-latest.apk
 [Donate]: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=X7E7U7HNR36YN&lc=US&item_name=HoloEverywhere&currency_code=USD&bn=PP%2dDonationsBF%3adonate_button%2epng%3aNonHosted "Donate"
 [Build with Maven]: https://github.com/Prototik/HoloEverywhere/wiki/Maven "Build with maven"
 [License]: https://raw.github.com/Prototik/HoloEverywhere/master/LICENSE "MIT License"
