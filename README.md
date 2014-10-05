@@ -1,4 +1,4 @@
-![HoloEverywhere](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/github-res/logo.png "HoloEverywhere")  
+![HoloEverywhere](https://github.com/Prototik/HoloEverywhere/raw/gh-pages/github-res/logo.png "HoloEverywhere")   [![codecov.io](https://codecov.io/github/Prototik/HoloEverywhere/coverage.svg?branch=master)](https://codecov.io/github/Prototik/HoloEverywhere?branch=master)
 [![Build Status](https://travis-ci.org/Prototik/HoloEverywhere.png?branch=master)](https://travis-ci.org/Prototik/HoloEverywhere)  
 Latest stable version: [2.1.0 Darkest Sunrise](https://github.com/Prototik/HoloEverywhere/releases/tag/v2.1.0)  
 Demo: [Stable][APKDemoStable] | [Latest][APKDemoLatest]  
