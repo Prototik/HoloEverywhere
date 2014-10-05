@@ -1,4 +1,5 @@
 language: java
+after_success: codecov
 jdk: openjdk7
 
 branches:
@@ -11,6 +12,7 @@ notifications:
     - prototypegamez@gmail.com
 
 before_install:
+  - sudo pip install codecov
   - export BASEDIR=`pwd`
   - export MAVEN_VERSION="3.1.1"
   - export ANDROID_BUILD_TOOLS="19.0.3"
