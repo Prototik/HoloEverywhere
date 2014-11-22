@@ -18,6 +18,7 @@
 package android.support.v4.app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -27,6 +28,7 @@ import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -34,6 +36,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 /**
+ * @deprecated Please use ActionBarDrawerToggle in support-v7-appcompat.
+ *
+ * <p>
  * This class provides a handy way to tie together the functionality of
  * {@link DrawerLayout} and the framework <code>ActionBar</code> to implement the recommended
  * design for navigation drawers.
@@ -54,7 +59,9 @@ import android.view.View;
  * <p><code>ActionBarDrawerToggle</code> can be used directly as a
  * {@link DrawerLayout.DrawerListener}, or if you are already providing your own listener,
  * call through to each of the listener methods from your own.</p>
+ *
  */
+@Deprecated
 public class ActionBarDrawerToggle implements DrawerLayout.DrawerListener {
 
     /**
@@ -186,8 +193,9 @@ public class ActionBarDrawerToggle implements DrawerLayout.DrawerListener {
     private final Delegate mActivityImpl;
     private final DrawerLayout mDrawerLayout;
     private boolean mDrawerIndicatorEnabled = true;
+    private boolean mHasCustomUpIndicator;
 
-    private Drawable mThemeImage;
+    private Drawable mHomeAsUpIndicator;
     private Drawable mDrawerImage;
     private SlideDrawable mSlider;
     private final int mDrawerImageResource;
@@ -218,6 +226,39 @@ public class ActionBarDrawerToggle implements DrawerLayout.DrawerListener {
     public ActionBarDrawerToggle(Activity activity, DrawerLayout drawerLayout,
             @DrawableRes int drawerImageRes, @StringRes int openDrawerContentDescRes,
             @StringRes int closeDrawerContentDescRes) {
+        this(activity, drawerLayout, !assumeMaterial(activity), drawerImageRes,
+                openDrawerContentDescRes, closeDrawerContentDescRes);
+    }
+
+    private static boolean assumeMaterial(Context context) {
+        return context.getApplicationInfo().targetSdkVersion >= 21 &&
+                (Build.VERSION.SDK_INT >= 21);
+    }
+
+    /**
+     * Construct a new ActionBarDrawerToggle.
+     *
+     * <p>The given {@link Activity} will be linked to the specified {@link DrawerLayout}.
+     * The provided drawer indicator drawable will animate slightly off-screen as the drawer
+     * is opened, indicating that in the open state the drawer will move off-screen when pressed
+     * and in the closed state the drawer will move on-screen when pressed.</p>
+     *
+     * <p>String resources must be provided to describe the open/close drawer actions for
+     * accessibility services.</p>
+     *
+     * @param activity The Activity hosting the drawer
+     * @param drawerLayout The DrawerLayout to link to the given Activity's ActionBar
+     * @param animate True to animate the drawer indicator along with the drawer's position.
+     *                Material apps should set this to false.
+     * @param drawerImageRes A Drawable resource to use as the drawer indicator
+     * @param openDrawerContentDescRes A String resource to describe the "open drawer" action
+     *                                 for accessibility
+     * @param closeDrawerContentDescRes A String resource to describe the "close drawer" action
+     *                                  for accessibility
+     */
+    public ActionBarDrawerToggle(Activity activity, DrawerLayout drawerLayout, boolean animate,
+            @DrawableRes int drawerImageRes, @StringRes int openDrawerContentDescRes,
+            @StringRes int closeDrawerContentDescRes) {
         mActivity = activity;
 
         // Allow the Activity to provide an impl
@@ -232,10 +273,10 @@ public class ActionBarDrawerToggle implements DrawerLayout.DrawerListener {
         mOpenDrawerContentDescRes = openDrawerContentDescRes;
         mCloseDrawerContentDescRes = closeDrawerContentDescRes;
 
-        mThemeImage = getThemeUpIndicator();
-        mDrawerImage = activity.getResources().getDrawable(drawerImageRes);
+        mHomeAsUpIndicator = getThemeUpIndicator();
+        mDrawerImage = ContextCompat.getDrawable(activity, drawerImageRes);
         mSlider = new SlideDrawable(mDrawerImage);
-        mSlider.setOffset(TOGGLE_DRAWABLE_OFFSET);
+        mSlider.setOffset(animate ? TOGGLE_DRAWABLE_OFFSET : 0);
     }
 
     /**
@@ -261,6 +302,51 @@ public class ActionBarDrawerToggle implements DrawerLayout.DrawerListener {
     }
 
     /**
+     * Set the up indicator to display when the drawer indicator is not
+     * enabled.
+     * <p>
+     * If you pass <code>null</code> to this method, the default drawable from
+     * the theme will be used.
+     *
+     * @param indicator A drawable to use for the up indicator, or null to use
+     *                  the theme's default
+     * @see #setDrawerIndicatorEnabled(boolean)
+     */
+    public void setHomeAsUpIndicator(Drawable indicator) {
+        if (indicator == null) {
+            mHomeAsUpIndicator = getThemeUpIndicator();
+            mHasCustomUpIndicator = false;
+        } else {
+            mHomeAsUpIndicator = indicator;
+            mHasCustomUpIndicator = true;
+        }
+
+        if (!mDrawerIndicatorEnabled) {
+            setActionBarUpIndicator(mHomeAsUpIndicator, 0);
+        }
+    }
+
+    /**
+     * Set the up indicator to display when the drawer indicator is not
+     * enabled.
+     * <p>
+     * If you pass 0 to this method, the default drawable from the theme will
+     * be used.
+     *
+     * @param resId Resource ID of a drawable to use for the up indicator, or 0
+     *              to use the theme's default
+     * @see #setDrawerIndicatorEnabled(boolean)
+     */
+    public void setHomeAsUpIndicator(int resId) {
+        Drawable indicator = null;
+        if (resId != 0) {
+            indicator = ContextCompat.getDrawable(mActivity, resId);
+        }
+
+        setHomeAsUpIndicator(indicator);
+    }
+
+    /**
      * Enable or disable the drawer indicator. The indicator defaults to enabled.
      *
      * <p>When the indicator is disabled, the <code>ActionBar</code> will revert to displaying
@@ -276,7 +362,7 @@ public class ActionBarDrawerToggle implements DrawerLayout.DrawerListener {
                 setActionBarUpIndicator(mSlider, mDrawerLayout.isDrawerOpen(GravityCompat.START) ?
                         mCloseDrawerContentDescRes : mOpenDrawerContentDescRes);
             } else {
-                setActionBarUpIndicator(mThemeImage, 0);
+                setActionBarUpIndicator(mHomeAsUpIndicator, 0);
             }
             mDrawerIndicatorEnabled = enable;
         }
@@ -299,8 +385,10 @@ public class ActionBarDrawerToggle implements DrawerLayout.DrawerListener {
      */
     public void onConfigurationChanged(Configuration newConfig) {
         // Reload drawables that can change with configuration
-        mThemeImage = getThemeUpIndicator();
-        mDrawerImage = mActivity.getResources().getDrawable(mDrawerImageResource);
+        if (!mHasCustomUpIndicator) {
+            mHomeAsUpIndicator = getThemeUpIndicator();
+        }
+        mDrawerImage = ContextCompat.getDrawable(mActivity, mDrawerImageResource);
         syncState();
     }
 

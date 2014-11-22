@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -109,6 +108,12 @@ public class FragmentActivity extends Activity {
         public View findViewById(int id) {
             return FragmentActivity.this.findViewById(id);
         }
+
+        @Override
+        public boolean hasView() {
+            Window window = FragmentActivity.this.getWindow();
+            return (window != null && window.peekDecorView() != null);
+        }
     };
     
     boolean mCreated;
@@ -130,15 +135,6 @@ public class FragmentActivity extends Activity {
         SimpleArrayMap<String, Object> children;
         ArrayList<Fragment> fragments;
         SimpleArrayMap<String, LoaderManagerImpl> loaders;
-    }
-    
-    static class FragmentTag {
-        public static final int[] Fragment = {
-            0x01010003, 0x010100d0, 0x010100d1
-        };
-        public static final int Fragment_id = 1;
-        public static final int Fragment_name = 0;
-        public static final int Fragment_tag = 2;
     }
     
     // ------------------------------------------------------------------------
@@ -164,23 +160,12 @@ public class FragmentActivity extends Activity {
                 Log.w(TAG, "Activity result no fragment exists for index: 0x"
                         + Integer.toHexString(requestCode));
             } else {
-                rOnActivityResult(frag, requestCode & 0xffff, resultCode, data);
+                frag.onActivityResult(requestCode&0xffff, resultCode, data);
             }
             return;
         }
         
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void rOnActivityResult(Fragment fragment, int requestCode, int resultCode, Intent data) {
-        fragment.onActivityResult(requestCode, resultCode, data);
-        if(fragment.mChildFragmentManager != null && fragment.mChildFragmentManager.mActive != null) {
-            for(Fragment childFragment : fragment.mChildFragmentManager.mActive) {
-                if(childFragment != null) {
-                    rOnActivityResult(childFragment, requestCode, resultCode, data);
-                }
-            }
-        }
     }
 
     /**
@@ -189,8 +174,62 @@ public class FragmentActivity extends Activity {
      */
     public void onBackPressed() {
         if (!mFragments.popBackStackImmediate()) {
-            finish();
+            supportFinishAfterTransition();
         }
+    }
+
+    /**
+     * Reverses the Activity Scene entry Transition and triggers the calling Activity
+     * to reverse its exit Transition. When the exit Transition completes,
+     * {@link #finish()} is called. If no entry Transition was used, finish() is called
+     * immediately and the Activity exit Transition is run.
+     *
+     * <p>On Android 4.4 or lower, this method only finishes the Activity with no
+     * special exit transition.</p>
+     */
+    public void supportFinishAfterTransition() {
+        ActivityCompat.finishAfterTransition(this);
+    }
+
+    /**
+     * When {@link android.app.ActivityOptions#makeSceneTransitionAnimation(Activity,
+     * android.view.View, String)} was used to start an Activity, <var>callback</var>
+     * will be called to handle shared elements on the <i>launched</i> Activity. This requires
+     * {@link Window#FEATURE_CONTENT_TRANSITIONS}.
+     *
+     * @param callback Used to manipulate shared element transitions on the launched Activity.
+     */
+    public void setEnterSharedElementCallback(SharedElementCallback callback) {
+        ActivityCompat.setEnterSharedElementCallback(this, callback);
+    }
+
+    /**
+     * When {@link android.app.ActivityOptions#makeSceneTransitionAnimation(Activity,
+     * android.view.View, String)} was used to start an Activity, <var>listener</var>
+     * will be called to handle shared elements on the <i>launching</i> Activity. Most
+     * calls will only come when returning from the started Activity.
+     * This requires {@link Window#FEATURE_CONTENT_TRANSITIONS}.
+     *
+     * @param listener Used to manipulate shared element transitions on the launching Activity.
+     */
+    public void setExitSharedElementCallback(SharedElementCallback listener) {
+        ActivityCompat.setExitSharedElementCallback(this, listener);
+    }
+
+    /**
+     * Support library version of {@link android.app.Activity#postponeEnterTransition()} that works
+     * only on API 21 and later.
+     */
+    public void supportPostponeEnterTransition() {
+        ActivityCompat.postponeEnterTransition(this);
+    }
+
+    /**
+     * Support library version of {@link android.app.Activity#startPostponedEnterTransition()}
+     * that only works with API 21 and later.
+     */
+    public void supportStartPostponedEnterTransition() {
+        ActivityCompat.startPostponedEnterTransition(this);
     }
 
     /**
@@ -254,85 +293,12 @@ public class FragmentActivity extends Activity {
         if (!"fragment".equals(name)) {
             return super.onCreateView(name, context, attrs);
         }
-        
-        String fname = attrs.getAttributeValue(null, "class");
-        TypedArray a =  context.obtainStyledAttributes(attrs, FragmentTag.Fragment);
-        if (fname == null) {
-            fname = a.getString(FragmentTag.Fragment_name);
-        }
-        int id = a.getResourceId(FragmentTag.Fragment_id, View.NO_ID);
-        String tag = a.getString(FragmentTag.Fragment_tag);
-        a.recycle();
 
-        if (!Fragment.isSupportFragmentClass(this, fname)) {
-            // Invalid support lib fragment; let the device's framework handle it.
-            // This will allow android.app.Fragments to do the right thing.
+        final View v = mFragments.onCreateView(name, context, attrs);
+        if (v == null) {
             return super.onCreateView(name, context, attrs);
         }
-        
-        View parent = null; // NOTE: no way to get parent pre-Honeycomb.
-        int containerId = parent != null ? parent.getId() : 0;
-        if (containerId == View.NO_ID && id == View.NO_ID && tag == null) {
-            throw new IllegalArgumentException(attrs.getPositionDescription()
-                    + ": Must specify unique android:id, android:tag, or have a parent with an id for " + fname);
-        }
-
-        // If we restored from a previous state, we may already have
-        // instantiated this fragment from the state and should use
-        // that instance instead of making a new one.
-        Fragment fragment = id != View.NO_ID ? mFragments.findFragmentById(id) : null;
-        if (fragment == null && tag != null) {
-            fragment = mFragments.findFragmentByTag(tag);
-        }
-        if (fragment == null && containerId != View.NO_ID) {
-            fragment = mFragments.findFragmentById(containerId);
-        }
-
-        if (FragmentManagerImpl.DEBUG) Log.v(TAG, "onCreateView: id=0x"
-                + Integer.toHexString(id) + " fname=" + fname
-                + " existing=" + fragment);
-        if (fragment == null) {
-            fragment = Fragment.instantiate(this, fname);
-            fragment.mFromLayout = true;
-            fragment.mFragmentId = id != 0 ? id : containerId;
-            fragment.mContainerId = containerId;
-            fragment.mTag = tag;
-            fragment.mInLayout = true;
-            fragment.mFragmentManager = mFragments;
-            fragment.onInflate(this, attrs, fragment.mSavedFragmentState);
-            mFragments.addFragment(fragment, true);
-
-        } else if (fragment.mInLayout) {
-            // A fragment already exists and it is not one we restored from
-            // previous state.
-            throw new IllegalArgumentException(attrs.getPositionDescription()
-                    + ": Duplicate id 0x" + Integer.toHexString(id)
-                    + ", tag " + tag + ", or parent id 0x" + Integer.toHexString(containerId)
-                    + " with another fragment for " + fname);
-        } else {
-            // This fragment was retained from a previous instance; get it
-            // going now.
-            fragment.mInLayout = true;
-            // If this fragment is newly instantiated (either right now, or
-            // from last saved state), then give it the attributes to
-            // initialize itself.
-            if (!fragment.mRetaining) {
-                fragment.onInflate(this, attrs, fragment.mSavedFragmentState);
-            }
-            mFragments.moveToState(fragment);
-        }
-
-        if (fragment.mView == null) {
-            throw new IllegalStateException("Fragment " + fname
-                    + " did not create a view.");
-        }
-        if (id != 0) {
-            fragment.mView.setId(id);
-        }
-        if (fragment.mView.getTag() == null) {
-            fragment.mView.setTag(tag);
-        }
-        return fragment.mView;
+        return v;
     }
 
     /**

@@ -45,7 +45,7 @@ import java.io.InputStream;
  */
 class PrintHelperKitkat {
     private static final String LOG_TAG = "PrintHelperKitkat";
-    // will be <= 300 dpi on A4 (8.3x11.7) paper (worst case of 150 dpi)
+    // will be <= 300 dpi on A4 (8.3×11.7) paper (worst case of 150 dpi)
     private final static int MAX_PRINT_SIZE = 3500;
     final Context mContext;
     BitmapFactory.Options mDecodeOptions = null;
@@ -77,6 +77,10 @@ class PrintHelperKitkat {
      * this is a color image (default)
      */
     public static final int COLOR_MODE_COLOR = 2;
+
+    public interface OnPrintFinishCallback {
+        public void onFinish();
+    }
 
     int mScaleMode = SCALE_MODE_FILL;
 
@@ -159,8 +163,10 @@ class PrintHelperKitkat {
      *
      * @param jobName The print job name.
      * @param bitmap  The bitmap to print.
+     * @param callback Optional callback to observe when printing is finished.
      */
-    public void printBitmap(final String jobName, final Bitmap bitmap) {
+    public void printBitmap(final String jobName, final Bitmap bitmap,
+            final OnPrintFinishCallback callback) {
         if (bitmap == null) {
             return;
         }
@@ -241,6 +247,13 @@ class PrintHelperKitkat {
                             }
                         }
                     }
+
+                    @Override
+                    public void onFinish() {
+                        if (callback != null) {
+                            callback.onFinish();
+                        }
+                    }
                 }, attr);
     }
 
@@ -280,10 +293,11 @@ class PrintHelperKitkat {
      *
      * @param jobName   The print job name.
      * @param imageFile The <code>Uri</code> pointing to an image to print.
+     * @param callback Optional callback to observe when printing is finished.
      * @throws FileNotFoundException if <code>Uri</code> is not pointing to a valid image.
      */
-    public void printBitmap(final String jobName, final Uri imageFile)
-            throws FileNotFoundException {
+    public void printBitmap(final String jobName, final Uri imageFile,
+            final OnPrintFinishCallback callback) throws FileNotFoundException {
         final int fittingMode = mScaleMode;
 
         PrintDocumentAdapter printDocumentAdapter = new PrintDocumentAdapter() {
@@ -381,6 +395,9 @@ class PrintHelperKitkat {
                 super.onFinish();
                 cancelLoad();
                 loadBitmap.cancel(true);
+                if (callback != null) {
+                    callback.onFinish();
+                }
             }
 
             @Override

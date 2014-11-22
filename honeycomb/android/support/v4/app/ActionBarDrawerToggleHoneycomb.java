@@ -20,6 +20,7 @@ package android.support.v4.app;
 import android.R;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;

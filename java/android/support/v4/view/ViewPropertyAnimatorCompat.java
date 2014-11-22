@@ -19,430 +19,559 @@ import android.view.View;
 import android.view.animation.Interpolator;
 
 import java.lang.ref.WeakReference;
+import java.util.WeakHashMap;
 
 public class ViewPropertyAnimatorCompat {
     private static final String TAG = "ViewAnimatorCompat";
     private WeakReference<View> mView;
+    private Runnable mStartAction = null;
+    private Runnable mEndAction = null;
+    private int mOldLayerType = -1;
+    // HACK ALERT! Choosing this id knowing that the framework does not use it anywhere
+    // internally and apps should use ids higher than it
+    static final int LISTENER_TAG_ID = 0x7e000000;
+
 
     ViewPropertyAnimatorCompat(View view) {
         mView = new WeakReference<View>(view);
     }
 
     interface ViewPropertyAnimatorCompatImpl {
-        public void setDuration(View view, long value);
-        public long getDuration(View view);
-        public void setInterpolator(View view, Interpolator value);
-        public Interpolator getInterpolator(View view);
-        public void setStartDelay(View view, long value);
-        public long getStartDelay(View view);
-        public void alpha(View view, float value);
-        public void alphaBy(View view, float value);
-        public void rotation(View view, float value);
-        public void rotationBy(View view, float value);
-        public void rotationX(View view, float value);
-        public void rotationXBy(View view, float value);
-        public void rotationY(View view, float value);
-        public void rotationYBy(View view, float value);
-        public void scaleX(View view, float value);
-        public void scaleXBy(View view, float value);
-        public void scaleY(View view, float value);
-        public void scaleYBy(View view, float value);
-        public void cancel(View view);
-        public void x(View view, float value);
-        public void xBy(View view, float value);
-        public void y(View view, float value);
-        public void yBy(View view, float value);
-        public void translationX(View view, float value);
-        public void translationXBy(View view, float value);
-        public void translationY(View view, float value);
-        public void translationYBy(View view, float value);
-        public void start(View view);
-        public void withLayer(View view);
-        public void withStartAction(View view, Runnable runnable);
-        public void withEndAction(View view, Runnable runnable);
-        public void setListener(View view, ViewPropertyAnimatorListener listener);
+        public void setDuration(ViewPropertyAnimatorCompat vpa, View view, long value);
+        public long getDuration(ViewPropertyAnimatorCompat vpa, View view);
+        public void setInterpolator(ViewPropertyAnimatorCompat vpa, View view, Interpolator value);
+        public Interpolator getInterpolator(ViewPropertyAnimatorCompat vpa, View view);
+        public void setStartDelay(ViewPropertyAnimatorCompat vpa, View view, long value);
+        public long getStartDelay(ViewPropertyAnimatorCompat vpa, View view);
+        public void alpha(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void alphaBy(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void rotation(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void rotationBy(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void rotationX(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void rotationXBy(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void rotationY(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void rotationYBy(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void scaleX(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void scaleXBy(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void scaleY(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void scaleYBy(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void cancel(ViewPropertyAnimatorCompat vpa, View view);
+        public void x(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void xBy(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void y(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void yBy(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void translationX(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void translationXBy(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void translationY(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void translationYBy(ViewPropertyAnimatorCompat vpa, View view, float value);
+        public void start(ViewPropertyAnimatorCompat vpa, View view);
+        public void withLayer(ViewPropertyAnimatorCompat vpa, View view);
+        public void withStartAction(ViewPropertyAnimatorCompat vpa, View view, Runnable runnable);
+        public void withEndAction(ViewPropertyAnimatorCompat vpa, View view, Runnable runnable);
+        public void setListener(ViewPropertyAnimatorCompat vpa, View view,
+                ViewPropertyAnimatorListener listener);
+        public void setUpdateListener(ViewPropertyAnimatorCompat vpa, View view,
+                ViewPropertyAnimatorUpdateListener listener);
     };
 
     static class BaseViewPropertyAnimatorCompatImpl implements ViewPropertyAnimatorCompatImpl {
+        WeakHashMap<View, Runnable> mStarterMap = null;
 
         @Override
-        public void setDuration(View view, long value) {
+        public void setDuration(ViewPropertyAnimatorCompat vpa, View view, long value) {
             // noop on versions prior to ICS
         }
 
         @Override
-        public void alpha(View view, float value) {
+        public void alpha(ViewPropertyAnimatorCompat vpa, View view, float value) {
             // noop on versions prior to ICS
+            postStartMessage(vpa, view);
         }
 
         @Override
-        public void translationX(View view, float value) {
+        public void translationX(ViewPropertyAnimatorCompat vpa, View view, float value) {
             // noop on versions prior to ICS
+            postStartMessage(vpa, view);
         }
 
         @Override
-        public void translationY(View view, float value) {
+        public void translationY(ViewPropertyAnimatorCompat vpa, View view, float value) {
             // noop on versions prior to ICS
+            postStartMessage(vpa, view);
         }
 
         @Override
-        public void withEndAction(View view, Runnable runnable) {
-            // Other VPA calls are noops pre-ICS; just run the runnable immediately
-            runnable.run();
+        public void withEndAction(ViewPropertyAnimatorCompat vpa, View view, Runnable runnable) {
+            vpa.mEndAction = runnable;
+            postStartMessage(vpa, view);
         }
 
         @Override
-        public long getDuration(View view) {
+        public long getDuration(ViewPropertyAnimatorCompat vpa, View view) {
             return 0;
         }
 
         @Override
-        public void setInterpolator(View view, Interpolator value) {
+        public void setInterpolator(ViewPropertyAnimatorCompat vpa, View view, Interpolator value) {
             // noop on versions prior to ICS
         }
 
         @Override
-        public Interpolator getInterpolator(View view) {
+        public Interpolator getInterpolator(ViewPropertyAnimatorCompat vpa, View view) {
             return null;
         }
 
         @Override
-        public void setStartDelay(View view, long value) {
+        public void setStartDelay(ViewPropertyAnimatorCompat vpa, View view, long value) {
             // noop on versions prior to ICS
         }
 
         @Override
-        public long getStartDelay(View view) {
+        public long getStartDelay(ViewPropertyAnimatorCompat vpa, View view) {
             return 0;
         }
 
         @Override
-        public void alphaBy(View view, float value) {
+        public void alphaBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void rotation(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void rotationBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void rotationX(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void rotationXBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void rotationY(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void rotationYBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void scaleX(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void scaleXBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void scaleY(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void scaleYBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void cancel(ViewPropertyAnimatorCompat vpa, View view) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void x(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void xBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void y(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void yBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void translationXBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void translationYBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
+            // noop on versions prior to ICS
+            postStartMessage(vpa, view);
+        }
+
+        @Override
+        public void start(ViewPropertyAnimatorCompat vpa, View view) {
+            removeStartMessage(view);
+            startAnimation(vpa, view);
+        }
+
+        @Override
+        public void withLayer(ViewPropertyAnimatorCompat vpa, View view) {
             // noop on versions prior to ICS
         }
 
         @Override
-        public void rotation(View view, float value) {
-            // noop on versions prior to ICS
+        public void withStartAction(ViewPropertyAnimatorCompat vpa, View view, Runnable runnable) {
+            vpa.mStartAction = runnable;
+            postStartMessage(vpa, view);
         }
 
         @Override
-        public void rotationBy(View view, float value) {
-            // noop on versions prior to ICS
+        public void setListener(ViewPropertyAnimatorCompat vpa, View view, ViewPropertyAnimatorListener listener) {
+            view.setTag(LISTENER_TAG_ID, listener);
         }
 
         @Override
-        public void rotationX(View view, float value) {
-            // noop on versions prior to ICS
+        public void setUpdateListener(ViewPropertyAnimatorCompat vpa, View view, ViewPropertyAnimatorUpdateListener listener) {
+            // noop
         }
 
-        @Override
-        public void rotationXBy(View view, float value) {
-            // noop on versions prior to ICS
+        private void startAnimation(ViewPropertyAnimatorCompat vpa, View view) {
+            Object listenerTag = view.getTag(LISTENER_TAG_ID);
+            ViewPropertyAnimatorListener listener = null;
+            if (listenerTag instanceof ViewPropertyAnimatorListener) {
+                listener = (ViewPropertyAnimatorListener) listenerTag;
+            }
+            Runnable startAction = vpa.mStartAction;
+            Runnable endAction = vpa.mEndAction;
+            if (startAction != null) {
+                startAction.run();
+            }
+            if (listener != null) {
+                listener.onAnimationStart(view);
+                listener.onAnimationEnd(view);
+            }
+            if (endAction != null) {
+                endAction.run();
+            }
+            if (mStarterMap != null) {
+                mStarterMap.remove(view);
+            }
         }
 
-        @Override
-        public void rotationY(View view, float value) {
-            // noop on versions prior to ICS
+        class Starter implements Runnable {
+            WeakReference<View> mViewRef;
+            ViewPropertyAnimatorCompat mVpa;
+
+            private Starter(ViewPropertyAnimatorCompat vpa, View view) {
+                mViewRef = new WeakReference<View>(view);
+                mVpa = vpa;
+            }
+
+            @Override
+            public void run() {
+                startAnimation(mVpa, mViewRef.get());
+            }
+        };
+
+        private void removeStartMessage(View view) {
+            Runnable starter = null;
+            if (mStarterMap != null) {
+                starter = mStarterMap.get(view);
+                if (starter != null) {
+                    view.removeCallbacks(starter);
+                }
+            }
         }
 
-        @Override
-        public void rotationYBy(View view, float value) {
-            // noop on versions prior to ICS
+        private void postStartMessage(ViewPropertyAnimatorCompat vpa, View view) {
+            Runnable starter = null;
+            if (mStarterMap != null) {
+                starter = mStarterMap.get(view);
+            }
+            if (starter == null) {
+                starter = new Starter(vpa, view);
+                if (mStarterMap == null) {
+                    mStarterMap = new WeakHashMap<View, Runnable>();
+                }
+                mStarterMap.put(view, starter);
+            }
+            view.removeCallbacks(starter);
+            view.post(starter);
         }
 
-        @Override
-        public void scaleX(View view, float value) {
-            // noop on versions prior to ICS
-        }
-
-        @Override
-        public void scaleXBy(View view, float value) {
-            // noop on versions prior to ICS
-        }
-
-        @Override
-        public void scaleY(View view, float value) {
-            // noop on versions prior to ICS
-        }
-
-        @Override
-        public void scaleYBy(View view, float value) {
-            // noop on versions prior to ICS
-        }
-
-        @Override
-        public void cancel(View view) {
-            // noop on versions prior to ICS
-        }
-
-        @Override
-        public void x(View view, float value) {
-            // noop on versions prior to ICS
-        }
-
-        @Override
-        public void xBy(View view, float value) {
-            // noop on versions prior to ICS
-        }
-
-        @Override
-        public void y(View view, float value) {
-            // noop on versions prior to ICS
-        }
-
-        @Override
-        public void yBy(View view, float value) {
-            // noop on versions prior to ICS
-        }
-
-        @Override
-        public void translationXBy(View view, float value) {
-            // noop on versions prior to ICS
-        }
-
-        @Override
-        public void translationYBy(View view, float value) {
-            // noop on versions prior to ICS
-        }
-
-        @Override
-        public void start(View view) {
-            // noop on versions prior to ICS
-        }
-
-        @Override
-        public void withLayer(View view) {
-            // noop on versions prior to ICS
-        }
-
-        @Override
-        public void withStartAction(View view, Runnable runnable) {
-            // Other VPA calls are noops pre-ICS; just run the runnable immediately
-            runnable.run();
-        }
-
-        @Override
-        public void setListener(View view, ViewPropertyAnimatorListener listener) {
-            // Noop
-        }
     }
 
     static class ICSViewPropertyAnimatorCompatImpl extends BaseViewPropertyAnimatorCompatImpl {
+        WeakHashMap<View, Integer> mLayerMap = null;
 
         @Override
-        public void setDuration(View view, long value) {
+        public void setDuration(ViewPropertyAnimatorCompat vpa, View view, long value) {
             ViewPropertyAnimatorCompatICS.setDuration(view, value);
         }
 
         @Override
-        public void alpha(View view, float value) {
+        public void alpha(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.alpha(view, value);
         }
 
         @Override
-        public void translationX(View view, float value) {
+        public void translationX(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.translationX(view, value);
         }
 
         @Override
-        public void translationY(View view, float value) {
+        public void translationY(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.translationY(view, value);
         }
 
         @Override
-        public long getDuration(View view) {
+        public long getDuration(ViewPropertyAnimatorCompat vpa, View view) {
             return ViewPropertyAnimatorCompatICS.getDuration(view);
         }
 
         @Override
-        public void setInterpolator(View view, Interpolator value) {
+        public void setInterpolator(ViewPropertyAnimatorCompat vpa, View view, Interpolator value) {
             ViewPropertyAnimatorCompatICS.setInterpolator(view, value);
         }
 
         @Override
-        public void setStartDelay(View view, long value) {
+        public void setStartDelay(ViewPropertyAnimatorCompat vpa, View view, long value) {
             ViewPropertyAnimatorCompatICS.setStartDelay(view, value);
         }
 
         @Override
-        public long getStartDelay(View view) {
+        public long getStartDelay(ViewPropertyAnimatorCompat vpa, View view) {
             return ViewPropertyAnimatorCompatICS.getStartDelay(view);
         }
 
         @Override
-        public void alphaBy(View view, float value) {
+        public void alphaBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.alphaBy(view, value);
         }
 
         @Override
-        public void rotation(View view, float value) {
+        public void rotation(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.rotation(view, value);
         }
 
         @Override
-        public void rotationBy(View view, float value) {
+        public void rotationBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.rotationBy(view, value);
         }
 
         @Override
-        public void rotationX(View view, float value) {
+        public void rotationX(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.rotationX(view, value);
         }
 
         @Override
-        public void rotationXBy(View view, float value) {
+        public void rotationXBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.rotationXBy(view, value);
         }
 
         @Override
-        public void rotationY(View view, float value) {
+        public void rotationY(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.rotationY(view, value);
         }
 
         @Override
-        public void rotationYBy(View view, float value) {
+        public void rotationYBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.rotationYBy(view, value);
         }
 
         @Override
-        public void scaleX(View view, float value) {
+        public void scaleX(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.scaleX(view, value);
         }
 
         @Override
-        public void scaleXBy(View view, float value) {
+        public void scaleXBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.scaleXBy(view, value);
         }
 
         @Override
-        public void scaleY(View view, float value) {
+        public void scaleY(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.scaleY(view, value);
         }
 
         @Override
-        public void scaleYBy(View view, float value) {
+        public void scaleYBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.scaleYBy(view, value);
         }
 
         @Override
-        public void cancel(View view) {
+        public void cancel(ViewPropertyAnimatorCompat vpa, View view) {
             ViewPropertyAnimatorCompatICS.cancel(view);
         }
 
         @Override
-        public void x(View view, float value) {
+        public void x(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.x(view, value);
         }
 
         @Override
-        public void xBy(View view, float value) {
+        public void xBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.xBy(view, value);
         }
 
         @Override
-        public void y(View view, float value) {
+        public void y(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.y(view, value);
         }
 
         @Override
-        public void yBy(View view, float value) {
+        public void yBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.yBy(view, value);
         }
 
         @Override
-        public void translationXBy(View view, float value) {
+        public void translationXBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.translationXBy(view, value);
         }
 
         @Override
-        public void translationYBy(View view, float value) {
+        public void translationYBy(ViewPropertyAnimatorCompat vpa, View view, float value) {
             ViewPropertyAnimatorCompatICS.translationYBy(view, value);
         }
 
         @Override
-        public void start(View view) {
+        public void start(ViewPropertyAnimatorCompat vpa, View view) {
             ViewPropertyAnimatorCompatICS.start(view);
         }
 
         @Override
-        public void setListener(View view, ViewPropertyAnimatorListener listener) {
-            ViewPropertyAnimatorCompatICS.setListener(view, listener);
+        public void setListener(ViewPropertyAnimatorCompat vpa, View view, ViewPropertyAnimatorListener listener) {
+            view.setTag(LISTENER_TAG_ID, listener);
+            ViewPropertyAnimatorCompatICS.setListener(view, new MyVpaListener(vpa));
         }
 
         @Override
-        public void withEndAction(View view, final Runnable runnable) {
-            setListener(view, new ViewPropertyAnimatorListener() {
-                @Override
-                public void onAnimationStart(View view) {
-                }
-
-                @Override
-                public void onAnimationEnd(View view) {
-                    runnable.run();
-                    setListener(view, null);
-                }
-
-                @Override
-                public void onAnimationCancel(View view) {
-                }
-            });
+        public void withEndAction(ViewPropertyAnimatorCompat vpa, View view, final Runnable runnable) {
+            ViewPropertyAnimatorCompatICS.setListener(view, new MyVpaListener(vpa));
+            vpa.mEndAction = runnable;
         }
 
         @Override
-        public void withStartAction(View view, final Runnable runnable) {
-            setListener(view, new ViewPropertyAnimatorListener() {
-                @Override
-                public void onAnimationStart(View view) {
-                    runnable.run();
-                    setListener(view, null);
-                }
-
-                @Override
-                public void onAnimationEnd(View view) {
-                }
-
-                @Override
-                public void onAnimationCancel(View view) {
-                }
-            });
+        public void withStartAction(ViewPropertyAnimatorCompat vpa, View view, final Runnable runnable) {
+            ViewPropertyAnimatorCompatICS.setListener(view, new MyVpaListener(vpa));
+            vpa.mStartAction = runnable;
         }
 
         @Override
-        public void withLayer(View view) {
-            final int currentLayerType = ViewCompat.getLayerType(view);
-            setListener(view, new ViewPropertyAnimatorListener() {
-                @Override
-                public void onAnimationStart(View view) {
+        public void withLayer(ViewPropertyAnimatorCompat vpa, View view) {
+            vpa.mOldLayerType = ViewCompat.getLayerType(view);
+            ViewPropertyAnimatorCompatICS.setListener(view, new MyVpaListener(vpa));
+        }
+
+        static class MyVpaListener implements ViewPropertyAnimatorListener {
+
+            ViewPropertyAnimatorCompat mVpa;
+
+            MyVpaListener(ViewPropertyAnimatorCompat vpa) {
+                mVpa = vpa;
+            }
+
+            @Override
+            public void onAnimationStart(View view) {
+                if (mVpa.mOldLayerType >= 0) {
                     ViewCompat.setLayerType(view, ViewCompat.LAYER_TYPE_HARDWARE, null);
                 }
-                @Override
-                public void onAnimationEnd(View view) {
-                    ViewCompat.setLayerType(view, currentLayerType, null);
-                    setListener(view, null);
+                if (mVpa.mStartAction != null) {
+                    mVpa.mStartAction.run();
                 }
+                Object listenerTag = view.getTag(LISTENER_TAG_ID);
+                ViewPropertyAnimatorListener listener = null;
+                if (listenerTag instanceof ViewPropertyAnimatorListener) {
+                    listener = (ViewPropertyAnimatorListener) listenerTag;
+                }
+                if (listener != null) {
+                    listener.onAnimationStart(view);
+                }
+            }
 
-                @Override
-                public void onAnimationCancel(View view) {
+            @Override
+            public void onAnimationEnd(View view) {
+                if (mVpa.mOldLayerType >= 0) {
+                    ViewCompat.setLayerType(view, mVpa.mOldLayerType, null);
+                    mVpa.mOldLayerType = -1;
                 }
-            });
-        }
+                if (mVpa.mEndAction != null) {
+                    mVpa.mEndAction.run();
+                }
+                Object listenerTag = view.getTag(LISTENER_TAG_ID);
+                ViewPropertyAnimatorListener listener = null;
+                if (listenerTag instanceof ViewPropertyAnimatorListener) {
+                    listener = (ViewPropertyAnimatorListener) listenerTag;
+                }
+                if (listener != null) {
+                    listener.onAnimationEnd(view);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(View view) {
+                Object listenerTag = view.getTag(LISTENER_TAG_ID);
+                ViewPropertyAnimatorListener listener = null;
+                if (listenerTag instanceof ViewPropertyAnimatorListener) {
+                    listener = (ViewPropertyAnimatorListener) listenerTag;
+                }
+                if (listener != null) {
+                    listener.onAnimationCancel(view);
+                }
+            }
+        };
     }
 
     static class JBViewPropertyAnimatorCompatImpl extends ICSViewPropertyAnimatorCompatImpl {
 
         @Override
-        public void withStartAction(View view, Runnable runnable) {
+        public void setListener(ViewPropertyAnimatorCompat vpa, View view, ViewPropertyAnimatorListener listener) {
+            ViewPropertyAnimatorCompatJB.setListener(view, listener);
+        }
+
+        @Override
+        public void withStartAction(ViewPropertyAnimatorCompat vpa, View view, Runnable runnable) {
             ViewPropertyAnimatorCompatJB.withStartAction(view, runnable);
         }
 
         @Override
-        public void withEndAction(View view, Runnable runnable) {
+        public void withEndAction(ViewPropertyAnimatorCompat vpa, View view, Runnable runnable) {
             ViewPropertyAnimatorCompatJB.withEndAction(view, runnable);
         }
 
         @Override
-        public void withLayer(View view) {
+        public void withLayer(ViewPropertyAnimatorCompat vpa, View view) {
             ViewPropertyAnimatorCompatJB.withLayer(view);
         }
     }
@@ -450,15 +579,24 @@ public class ViewPropertyAnimatorCompat {
     static class JBMr2ViewPropertyAnimatorCompatImpl extends JBViewPropertyAnimatorCompatImpl {
 
         @Override
-        public Interpolator getInterpolator(View view) {
+        public Interpolator getInterpolator(ViewPropertyAnimatorCompat vpa, View view) {
             return (Interpolator) ViewPropertyAnimatorCompatJellybeanMr2.getInterpolator(view);
+        }
+    }
+
+    static class KitKatViewPropertyAnimatorCompatImpl extends JBMr2ViewPropertyAnimatorCompatImpl {
+        @Override
+        public void setUpdateListener(ViewPropertyAnimatorCompat vpa, View view, ViewPropertyAnimatorUpdateListener listener) {
+            ViewPropertyAnimatorCompatKK.setUpdateListener(view, listener);
         }
     }
 
     static final ViewPropertyAnimatorCompatImpl IMPL;
     static {
         final int version = android.os.Build.VERSION.SDK_INT;
-        if (version >= 18) {
+        if (version >= 19) {
+            IMPL = new KitKatViewPropertyAnimatorCompatImpl();
+        } else if (version >= 18) {
             IMPL = new JBMr2ViewPropertyAnimatorCompatImpl();
         } else if (version >= 16) {
             IMPL = new JBViewPropertyAnimatorCompatImpl();
@@ -483,7 +621,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat setDuration(long value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.setDuration(view, value);
+            IMPL.setDuration(this, view, value);
         }
         return this;
     }
@@ -500,7 +638,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat alpha(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.alpha(view, value);
+            IMPL.alpha(this, view, value);
         }
         return this;
     }
@@ -517,7 +655,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat alphaBy(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.alphaBy(view, value);
+            IMPL.alphaBy(this, view, value);
         }
         return this;
     }
@@ -534,7 +672,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat translationX(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.translationX(view, value);
+            IMPL.translationX(this, view, value);
         }
         return this;
     }
@@ -551,7 +689,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat translationY(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.translationY(view, value);
+            IMPL.translationY(this, view, value);
         }
         return this;
     }
@@ -586,7 +724,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat withEndAction(Runnable runnable) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.withEndAction(view, runnable);
+            IMPL.withEndAction(this, view, runnable);
         }
         return this;
     }
@@ -604,7 +742,7 @@ public class ViewPropertyAnimatorCompat {
     public long getDuration() {
         View view;
         if ((view = mView.get()) != null) {
-            return IMPL.getDuration(view);
+            return IMPL.getDuration(this, view);
         } else {
             return 0;
         }
@@ -623,7 +761,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat setInterpolator(Interpolator value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.setInterpolator(view, value);
+            IMPL.setInterpolator(this, view, value);
         }
         return this;
     }
@@ -638,7 +776,7 @@ public class ViewPropertyAnimatorCompat {
     public Interpolator getInterpolator() {
         View view;
         if ((view = mView.get()) != null) {
-            return IMPL.getInterpolator(view);
+            return IMPL.getInterpolator(this, view);
         }
         else return null;
     }
@@ -657,7 +795,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat setStartDelay(long value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.setStartDelay(view, value);
+            IMPL.setStartDelay(this, view, value);
         }
         return this;
     }
@@ -675,7 +813,7 @@ public class ViewPropertyAnimatorCompat {
     public long getStartDelay() {
         View view;
         if ((view = mView.get()) != null) {
-            return IMPL.getStartDelay(view);
+            return IMPL.getStartDelay(this, view);
         } else {
             return 0;
         }
@@ -693,7 +831,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat rotation(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.rotation(view, value);
+            IMPL.rotation(this, view, value);
         }
         return this;
     }
@@ -710,7 +848,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat rotationBy(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.rotationBy(view, value);
+            IMPL.rotationBy(this, view, value);
         }
         return this;
     }
@@ -727,7 +865,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat rotationX(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.rotationX(view, value);
+            IMPL.rotationX(this, view, value);
         }
         return this;
     }
@@ -744,7 +882,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat rotationXBy(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.rotationXBy(view, value);
+            IMPL.rotationXBy(this, view, value);
         }
         return this;
     }
@@ -761,7 +899,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat rotationY(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.rotationY(view, value);
+            IMPL.rotationY(this, view, value);
         }
         return this;
     }
@@ -778,7 +916,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat rotationYBy(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.rotationYBy(view, value);
+            IMPL.rotationYBy(this, view, value);
         }
         return this;
     }
@@ -795,7 +933,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat scaleX(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.scaleX(view, value);
+            IMPL.scaleX(this, view, value);
         }
         return this;
     }
@@ -812,7 +950,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat scaleXBy(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.scaleXBy(view, value);
+            IMPL.scaleXBy(this, view, value);
         }
         return this;
     }
@@ -829,7 +967,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat scaleY(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.scaleY(view, value);
+            IMPL.scaleY(this, view, value);
         }
         return this;
     }
@@ -846,7 +984,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat scaleYBy(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.scaleYBy(view, value);
+            IMPL.scaleYBy(this, view, value);
         }
         return this;
     }
@@ -857,7 +995,7 @@ public class ViewPropertyAnimatorCompat {
     public void cancel() {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.cancel(view);
+            IMPL.cancel(this, view);
         }
     }
 
@@ -873,7 +1011,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat x(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.x(view, value);
+            IMPL.x(this, view, value);
         }
         return this;
     }
@@ -890,7 +1028,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat xBy(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.xBy(view, value);
+            IMPL.xBy(this, view, value);
         }
         return this;
     }
@@ -907,7 +1045,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat y(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.y(view, value);
+            IMPL.y(this, view, value);
         }
         return this;
     }
@@ -924,7 +1062,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat yBy(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.yBy(view, value);
+            IMPL.yBy(this, view, value);
         }
         return this;
     }
@@ -941,7 +1079,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat translationXBy(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.translationXBy(view, value);
+            IMPL.translationXBy(this, view, value);
         }
         return this;
     }
@@ -958,7 +1096,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat translationYBy(float value) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.translationYBy(view, value);
+            IMPL.translationYBy(this, view, value);
         }
         return this;
     }
@@ -975,7 +1113,7 @@ public class ViewPropertyAnimatorCompat {
     public void start() {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.start(view);
+            IMPL.start(this, view);
         }
     }
 
@@ -1012,7 +1150,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat withLayer() {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.withLayer(view);
+            IMPL.withLayer(this, view);
         }
         return this;
     }
@@ -1037,7 +1175,7 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat withStartAction(Runnable runnable) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.withStartAction(view, runnable);
+            IMPL.withStartAction(this, view, runnable);
         }
         return this;
     }
@@ -1055,7 +1193,26 @@ public class ViewPropertyAnimatorCompat {
     public ViewPropertyAnimatorCompat setListener(ViewPropertyAnimatorListener listener) {
         View view;
         if ((view = mView.get()) != null) {
-            IMPL.setListener(view, listener);
+            IMPL.setListener(this, view, listener);
+        }
+        return this;
+    }
+
+    /**
+     * Sets a listener for update events in the underlying Animator that runs
+     * the property animations.
+     *
+     * <p>Prior to API 19, this method will do nothing.</p>
+     *
+     * @param listener The listener to be called with update events. A value of
+     * <code>null</code> removes any existing listener.
+     * @return This object, allowing calls to methods in this class to be chained.
+     */
+    public ViewPropertyAnimatorCompat setUpdateListener(
+            ViewPropertyAnimatorUpdateListener listener) {
+        View view;
+        if ((view = mView.get()) != null) {
+            IMPL.setUpdateListener(this, view, listener);
         }
         return this;
     }

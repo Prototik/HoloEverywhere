@@ -22,6 +22,8 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
+import android.support.v4.util.Pair;
+import android.view.View;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -192,7 +194,21 @@ public abstract class FragmentTransaction {
      */
     public abstract FragmentTransaction setCustomAnimations(@AnimRes int enter,
             @AnimRes int exit, @AnimRes int popEnter, @AnimRes int popExit);
-    
+
+    /**
+     * Used with custom Transitions to map a View from a removed or hidden
+     * Fragment to a View from a shown or added Fragment.
+     * <var>sharedElement</var> must have a unique transitionName in the View hierarchy.
+     *
+     * @param sharedElement A View in a disappearing Fragment to match with a View in an
+     *                      appearing Fragment.
+     * @param name The transitionName for a View in an appearing Fragment to match to the shared
+     *             element.
+     * @see Fragment#setSharedElementReturnTransition(Object)
+     * @see Fragment#setSharedElementEnterTransition(Object)
+     */
+    public abstract FragmentTransaction addSharedElement(View sharedElement, String name);
+
     /**
      * Select a standard transition animation for this transaction.  May be
      * one of {@link #TRANSIT_NONE}, {@link #TRANSIT_FRAGMENT_OPEN},

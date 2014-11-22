@@ -16,7 +16,10 @@
 
 package android.support.v4.graphics.drawable;
 
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 
 /**
  * Helper for accessing features in {@link android.graphics.drawable.Drawable}
@@ -30,6 +33,11 @@ public class DrawableCompat {
         void jumpToCurrentState(Drawable drawable);
         void setAutoMirrored(Drawable drawable, boolean mirrored);
         boolean isAutoMirrored(Drawable drawable);
+        void setHotspot(Drawable drawable, float x, float y);
+        void setHotspotBounds(Drawable drawable, int left, int top, int right, int bottom);
+        void setTint(Drawable drawable, int tint);
+        void setTintList(Drawable drawable, ColorStateList tint);
+        void setTintMode(Drawable drawable, PorterDuff.Mode tintMode);
     }
 
     /**
@@ -48,6 +56,26 @@ public class DrawableCompat {
         public boolean isAutoMirrored(Drawable drawable) {
             return false;
         }
+
+        @Override
+        public void setHotspot(Drawable drawable, float x, float y) {
+        }
+
+        @Override
+        public void setHotspotBounds(Drawable drawable, int left, int top, int right, int bottom) {
+        }
+
+        @Override
+        public void setTint(Drawable drawable, int tint) {
+        }
+
+        @Override
+        public void setTintList(Drawable drawable, ColorStateList tint) {
+        }
+
+        @Override
+        public void setTintMode(Drawable drawable, PorterDuff.Mode tintMode) {
+        }
     }
 
     /**
@@ -61,7 +89,7 @@ public class DrawableCompat {
     }
 
     /**
-     * Interface implementation for devices with at least v11 APIs.
+     * Interface implementation for devices with at least KitKat APIs.
      */
     static class KitKatDrawableImpl extends HoneycombDrawableImpl {
         @Override
@@ -76,12 +104,44 @@ public class DrawableCompat {
     }
 
     /**
+     * Interface implementation for devices with at least L APIs.
+     */
+    static class LDrawableImpl extends KitKatDrawableImpl {
+        @Override
+        public void setHotspot(Drawable drawable, float x, float y) {
+            DrawableCompatL.setHotspot(drawable, x, y);
+        }
+
+        @Override
+        public void setHotspotBounds(Drawable drawable, int left, int top, int right, int bottom) {
+            DrawableCompatL.setHotspotBounds(drawable, left, top, right, bottom);
+        }
+
+        @Override
+        public void setTint(Drawable drawable, int tint) {
+            DrawableCompatL.setTint(drawable, tint);
+        }
+
+        @Override
+        public void setTintList(Drawable drawable, ColorStateList tint) {
+            DrawableCompatL.setTintList(drawable, tint);
+        }
+
+        @Override
+        public void setTintMode(Drawable drawable, PorterDuff.Mode tintMode) {
+            DrawableCompatL.setTintMode(drawable, tintMode);
+        }
+    }
+
+    /**
      * Select the correct implementation to use for the current platform.
      */
     static final DrawableImpl IMPL;
     static {
         final int version = android.os.Build.VERSION.SDK_INT;
-        if (version >= 19) {
+        if (version >= 21) {
+            IMPL = new LDrawableImpl();
+        } else if (version >= 19) {
             IMPL = new KitKatDrawableImpl();
         } else if (version >= 11) {
             IMPL = new HoneycombDrawableImpl();
@@ -131,5 +191,60 @@ public class DrawableCompat {
      */
     public static boolean isAutoMirrored(Drawable drawable) {
         return IMPL.isAutoMirrored(drawable);
+    }
+
+    /**
+     * Specifies the hotspot's location within the drawable.
+     *
+     * @param drawable The Drawable against which to invoke the method.
+     * @param x The X coordinate of the center of the hotspot
+     * @param y The Y coordinate of the center of the hotspot
+     */
+    public static void setHotspot(Drawable drawable, float x, float y) {
+        IMPL.setHotspot(drawable, x, y);
+    }
+
+    /**
+     * Sets the bounds to which the hotspot is constrained, if they should be
+     * different from the drawable bounds.
+     *
+     * @param drawable The Drawable against which to invoke the method.
+     */
+    public static void setHotspotBounds(Drawable drawable, int left, int top,
+            int right, int bottom) {
+        IMPL.setHotspotBounds(drawable, left, top, right, bottom);
+    }
+
+    /**
+     * Specifies a tint for {@code drawable}.
+     *
+     * @param drawable The Drawable against which to invoke the method.
+     * @param tint Color to use for tinting this drawable
+     */
+    public static void setTint(Drawable drawable, int tint) {
+        IMPL.setTint(drawable, tint);
+    }
+
+    /**
+     * Specifies a tint for {@code drawable} as a color state list.
+     *
+     * @param drawable The Drawable against which to invoke the method.
+     * @param tint Color state list to use for tinting this drawable, or null to
+     *            clear the tint
+     */
+    public static void setTintList(Drawable drawable, ColorStateList tint) {
+        IMPL.setTintList(drawable, tint);
+    }
+
+    /**
+     * Specifies a tint blending mode for {@code drawable}.
+     *
+     * @param drawable The Drawable against which to invoke the method.
+     * @param tintMode Color state list to use for tinting this drawable, or null to
+     *            clear the tint
+     * @param tintMode A Porter-Duff blending mode
+     */
+    public static void setTintMode(Drawable drawable, PorterDuff.Mode tintMode) {
+        IMPL.setTintMode(drawable, tintMode);
     }
 }

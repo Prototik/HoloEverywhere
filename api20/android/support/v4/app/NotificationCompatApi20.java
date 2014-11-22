@@ -31,16 +31,19 @@ class NotificationCompatApi20 {
     public static class Builder implements NotificationBuilderWithBuilderAccessor,
             NotificationBuilderWithActions {
         private Notification.Builder b;
+        private Bundle mExtras;
 
         public Builder(Context context, Notification n,
                 CharSequence contentTitle, CharSequence contentText, CharSequence contentInfo,
                 RemoteViews tickerView, int number,
                 PendingIntent contentIntent, PendingIntent fullScreenIntent, Bitmap largeIcon,
-                int mProgressMax, int mProgress, boolean mProgressIndeterminate,
+                int progressMax, int progress, boolean progressIndeterminate, boolean showWhen,
                 boolean useChronometer, int priority, CharSequence subText, boolean localOnly,
-                Bundle extras, String groupKey, boolean groupSummary, String sortKey) {
+                ArrayList<String> people, Bundle extras, String groupKey, boolean groupSummary,
+                String sortKey) {
             b = new Notification.Builder(context)
                 .setWhen(n.when)
+                .setShowWhen(showWhen)
                 .setSmallIcon(n.icon, n.iconLevel)
                 .setContent(n.contentView)
                 .setTicker(n.tickerText, tickerView)
@@ -63,28 +66,24 @@ class NotificationCompatApi20 {
                 .setNumber(number)
                 .setUsesChronometer(useChronometer)
                 .setPriority(priority)
-                .setProgress(mProgressMax, mProgress, mProgressIndeterminate)
+                .setProgress(progressMax, progress, progressIndeterminate)
                 .setLocalOnly(localOnly)
-                .setExtras(extras)
                 .setGroup(groupKey)
                 .setGroupSummary(groupSummary)
                 .setSortKey(sortKey);
+            mExtras = new Bundle();
+            if (extras != null) {
+                mExtras.putAll(extras);
+            }
+            if (people != null && !people.isEmpty()) {
+                mExtras.putStringArray(Notification.EXTRA_PEOPLE,
+                        people.toArray(new String[people.size()]));
+            }
         }
 
         @Override
         public void addAction(NotificationCompatBase.Action action) {
-            Notification.Action.Builder actionBuilder = new Notification.Action.Builder(
-                    action.getIcon(), action.getTitle(), action.getActionIntent());
-            if (action.getRemoteInputs() != null) {
-                for (RemoteInput remoteInput : RemoteInputCompatApi20.fromCompat(
-                        action.getRemoteInputs())) {
-                    actionBuilder.addRemoteInput(remoteInput);
-                }
-            }
-            if (action.getExtras() != null) {
-                actionBuilder.addExtras(action.getExtras());
-            }
-            b.addAction(actionBuilder.build());
+            NotificationCompatApi20.addAction(b, action);
         }
 
         @Override
@@ -93,8 +92,24 @@ class NotificationCompatApi20 {
         }
 
         public Notification build() {
+            b.setExtras(mExtras);
             return b.build();
         }
+    }
+
+    public static void addAction(Notification.Builder b, NotificationCompatBase.Action action) {
+        Notification.Action.Builder actionBuilder = new Notification.Action.Builder(
+                action.getIcon(), action.getTitle(), action.getActionIntent());
+        if (action.getRemoteInputs() != null) {
+            for (RemoteInput remoteInput : RemoteInputCompatApi20.fromCompat(
+                    action.getRemoteInputs())) {
+                actionBuilder.addRemoteInput(remoteInput);
+            }
+        }
+        if (action.getExtras() != null) {
+            actionBuilder.addExtras(action.getExtras());
+        }
+        b.addAction(actionBuilder.build());
     }
 
     public static NotificationCompatBase.Action getAction(Notification notif,

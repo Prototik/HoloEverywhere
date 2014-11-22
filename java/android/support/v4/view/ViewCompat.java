@@ -27,12 +27,13 @@ import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v4.view.accessibility.AccessibilityNodeProviderCompat;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewDebug;
+import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.WeakHashMap;
 
@@ -42,6 +43,7 @@ import java.util.WeakHashMap;
  */
 public class ViewCompat {
     private static final String TAG = "ViewCompat";
+
 
     /** @hide */
     @IntDef({OVER_SCROLL_ALWAYS, OVER_SCROLL_IF_CONTENT_SCROLLS, OVER_SCROLL_IF_CONTENT_SCROLLS})
@@ -260,6 +262,7 @@ public class ViewCompat {
         public void onPopulateAccessibilityEvent(View v, AccessibilityEvent event);
         public void onInitializeAccessibilityNodeInfo(View v, AccessibilityNodeInfoCompat info);
         public void setAccessibilityDelegate(View v, AccessibilityDelegateCompat delegate);
+        public boolean hasAccessibilityDelegate(View v);
         public boolean hasTransientState(View view);
         public void setHasTransientState(View view, boolean hasTransientState);
         public void postInvalidateOnAnimation(View view);
@@ -286,7 +289,6 @@ public class ViewCompat {
         public int getMeasuredState(View view);
         public int getAccessibilityLiveRegion(View view);
         public void setAccessibilityLiveRegion(View view, int mode);
-        public int[] mergeDrawableStates(int[] baseState, int[] additionalState);
         public int getPaddingStart(View view);
         public int getPaddingEnd(View view);
         public void setPaddingRelative(View view, int start, int top, int end, int bottom);
@@ -318,6 +320,18 @@ public class ViewCompat {
         public void setPivotY(View view, float value);
         public float getPivotX(View view);
         public float getPivotY(View view);
+        public void setElevation(View view, float elevation);
+        public float getElevation(View view);
+        public void setTranslationZ(View view, float translationZ);
+        public float getTranslationZ(View view);
+        public void setTransitionName(View view, String transitionName);
+        public String getTransitionName(View view);
+        public int getWindowSystemUiVisibility(View view);
+        public void requestApplyInsets(View view);
+        public void setChildrenDrawingOrderEnabled(ViewGroup viewGroup, boolean enabled);
+        public boolean getFitsSystemWindows(View view);
+        void jumpDrawablesToCurrentState(View v);
+        void setOnApplyWindowInsetsListener(View view, OnApplyWindowInsetsListener listener);
     }
 
     static class BaseViewCompatImpl implements ViewCompatImpl {
@@ -342,6 +356,12 @@ public class ViewCompat {
         public void setAccessibilityDelegate(View v, AccessibilityDelegateCompat delegate) {
             // Do nothing; API doesn't exist
         }
+
+        @Override
+        public boolean hasAccessibilityDelegate(View v) {
+            return false;
+        }
+
         public void onPopulateAccessibilityEvent(View v, AccessibilityEvent event) {
             // Do nothing; API doesn't exist
         }
@@ -429,25 +449,7 @@ public class ViewCompat {
         }
 
         public int resolveSizeAndState(int size, int measureSpec, int childMeasuredState) {
-            int result = size;
-            int specMode = View.MeasureSpec.getMode(measureSpec);
-            int specSize = View.MeasureSpec.getSize(measureSpec);
-            switch (specMode) {
-                case View.MeasureSpec.UNSPECIFIED:
-                    result = size;
-                    break;
-                case View.MeasureSpec.AT_MOST:
-                    if (specSize < size) {
-                        result = specSize | MEASURED_STATE_TOO_SMALL;
-                    } else {
-                        result = size;
-                    }
-                    break;
-                case View.MeasureSpec.EXACTLY:
-                    result = specSize;
-                    break;
-            }
-            return result | childMeasuredState & MEASURED_STATE_MASK;
+            return View.resolveSize(size, measureSpec);
         }
 
         @Override
@@ -667,14 +669,60 @@ public class ViewCompat {
         }
 
         @Override
-        public int[] mergeDrawableStates(int[] baseState, int[] additionalState) {
-            final int N = baseState.length;
-            int i = N - 1;
-            while (i >= 0 && baseState[i] == 0) {
-                i--;
-            }
-            System.arraycopy(additionalState, 0, baseState, i + 1, additionalState.length);
-            return baseState;
+        public void setTransitionName(View view, String transitionName) {
+        }
+
+        @Override
+        public String getTransitionName(View view) {
+            return null;
+        }
+
+        @Override
+        public int getWindowSystemUiVisibility(View view) {
+            return 0;
+        }
+
+        @Override
+        public void requestApplyInsets(View view) {
+        }
+
+        @Override
+        public void setElevation(View view, float elevation) {
+        }
+
+        @Override
+        public float getElevation(View view) {
+            return 0f;
+        }
+
+        @Override
+        public void setTranslationZ(View view, float translationZ) {
+        }
+
+        @Override
+        public float getTranslationZ(View view) {
+            return 0f;
+        }
+
+        @Override
+        public void setChildrenDrawingOrderEnabled(ViewGroup viewGroup, boolean enabled) {
+            // noop
+        }
+
+        @Override
+        public boolean getFitsSystemWindows(View view) {
+            return false;
+        }
+
+        @Override
+        public void jumpDrawablesToCurrentState(View view) {
+            // Do nothing; API didn't exist.
+        }
+
+        @Override
+        public void setOnApplyWindowInsetsListener(View view,
+                OnApplyWindowInsetsListener listener) {
+            // noop
         }
     }
 
@@ -682,6 +730,11 @@ public class ViewCompat {
         @Override
         public boolean isOpaque(View view) {
             return ViewCompatEclairMr1.isOpaque(view);
+        }
+
+        @Override
+        public void setChildrenDrawingOrderEnabled(ViewGroup viewGroup, boolean enabled) {
+            ViewCompatEclairMr1.setChildrenDrawingOrderEnabled(viewGroup, enabled);
         }
     }
 
@@ -836,9 +889,15 @@ public class ViewCompat {
         public float getPivotY(View view) {
             return ViewCompatHC.getPivotY(view);
         }
+        @Override
+        public void jumpDrawablesToCurrentState(View view) {
+            ViewCompatHC.jumpDrawablesToCurrentState(view);
+        }
     }
 
     static class ICSViewCompatImpl extends HCViewCompatImpl {
+        static Field mAccessibilityDelegateField;
+        static boolean accessibilityDelegateCheckFailed = false;
         @Override
         public boolean canScrollHorizontally(View v, int direction) {
             return ViewCompatICS.canScrollHorizontally(v, direction);
@@ -863,6 +922,30 @@ public class ViewCompat {
         public void setAccessibilityDelegate(View v, AccessibilityDelegateCompat delegate) {
             ViewCompatICS.setAccessibilityDelegate(v, delegate.getBridge());
         }
+
+        @Override
+        public boolean hasAccessibilityDelegate(View v) {
+            if (accessibilityDelegateCheckFailed) {
+                return false; // View implementation might have changed.
+            }
+            if (mAccessibilityDelegateField == null) {
+                try {
+                    mAccessibilityDelegateField = View.class
+                            .getDeclaredField("mAccessibilityDelegate");
+                    mAccessibilityDelegateField.setAccessible(true);
+                } catch (Throwable t) {
+                    accessibilityDelegateCheckFailed = true;
+                    return false;
+                }
+            }
+            try {
+                return mAccessibilityDelegateField.get(v) != null;
+            } catch (Throwable t) {
+                accessibilityDelegateCheckFailed = true;
+                return false;
+            }
+        }
+
         @Override
         public ViewPropertyAnimatorCompat animate(View view) {
             if (mViewPropertyAnimatorCompatMap == null) {
@@ -944,6 +1027,16 @@ public class ViewCompat {
         public int getMinimumHeight(View view) {
             return ViewCompatJB.getMinimumHeight(view);
         }
+
+        @Override
+        public void requestApplyInsets(View view) {
+            ViewCompatJB.requestApplyInsets(view);
+        }
+
+        @Override
+        public boolean getFitsSystemWindows(View view) {
+            return ViewCompatJB.getFitsSystemWindows(view);
+        }
     }
 
     static class JbMr1ViewCompatImpl extends JBViewCompatImpl {
@@ -987,6 +1080,11 @@ public class ViewCompat {
         public void setPaddingRelative(View view, int start, int top, int end, int bottom) {
             ViewCompatJellybeanMr1.setPaddingRelative(view, start, top, end, bottom);
         }
+
+        @Override
+        public int getWindowSystemUiVisibility(View view) {
+            return ViewCompatJellybeanMr1.getWindowSystemUiVisibility(view);
+        }
     }
 
     static class KitKatViewCompatImpl extends JbMr1ViewCompatImpl {
@@ -1006,10 +1104,54 @@ public class ViewCompat {
         }
     }
 
+    static class Api21ViewCompatImpl extends KitKatViewCompatImpl {
+        @Override
+        public void setTransitionName(View view, String transitionName) {
+            ViewCompatApi21.setTransitionName(view, transitionName);
+        }
+
+        @Override
+        public String getTransitionName(View view) {
+            return ViewCompatApi21.getTransitionName(view);
+        }
+
+        @Override
+        public void requestApplyInsets(View view) {
+            ViewCompatApi21.requestApplyInsets(view);
+        }
+
+        @Override
+        public void setElevation(View view, float elevation) {
+            ViewCompatApi21.setElevation(view, elevation);
+        }
+
+        @Override
+        public float getElevation(View view) {
+            return ViewCompatApi21.getElevation(view);
+        }
+
+        @Override
+        public void setTranslationZ(View view, float translationZ) {
+            ViewCompatApi21.setTranslationZ(view, translationZ);
+        }
+
+        @Override
+        public float getTranslationZ(View view) {
+            return ViewCompatApi21.getTranslationZ(view);
+        }
+
+        @Override
+        public void setOnApplyWindowInsetsListener(View view, OnApplyWindowInsetsListener listener) {
+            ViewCompatApi21.setOnApplyWindowInsetsListener(view, listener);
+        }
+    }
+
     static final ViewCompatImpl IMPL;
     static {
         final int version = android.os.Build.VERSION.SDK_INT;
-        if (version >= 19) {
+        if (version >= 21) {
+            IMPL = new Api21ViewCompatImpl();
+        } else if (version >= 19) {
             IMPL = new KitKatViewCompatImpl();
         } else if (version >= 17) {
             IMPL = new JbMr1ViewCompatImpl();
@@ -1021,6 +1163,8 @@ public class ViewCompat {
             IMPL = new HCViewCompatImpl();
         } else if (version >= 9) {
             IMPL = new GBViewCompatImpl();
+        } else if (version >= 7) {
+            IMPL = new EclairMr1ViewCompatImpl();
         } else {
             IMPL = new BaseViewCompatImpl();
         }
@@ -1197,6 +1341,16 @@ public class ViewCompat {
      */
     public static void setAccessibilityDelegate(View v, AccessibilityDelegateCompat delegate) {
         IMPL.setAccessibilityDelegate(v, delegate);
+    }
+
+    /**
+     * Checks whether provided View has an accessibility delegate attached to it.
+     *
+     * @param v The View instance to check
+     * @return True if the View has an accessibility delegate
+     */
+    public static boolean hasAccessibilityDelegate(View v) {
+        return IMPL.hasAccessibilityDelegate(v);
     }
 
     /**
@@ -1662,10 +1816,6 @@ public class ViewCompat {
     public static void setAccessibilityLiveRegion(View view, @AccessibilityLiveRegion int mode) {
         IMPL.setAccessibilityLiveRegion(view, mode);
     }
-    
-    public static int[] mergeDrawableStates(int[] baseState, int[] additionalState) {
-        return IMPL.mergeDrawableStates(baseState, additionalState);
-    }
 
     /**
      * Returns the start padding of the specified view depending on its resolved layout direction.
@@ -1925,7 +2075,7 @@ public class ViewCompat {
      * <p>Prior to API 11 this will have no effect.</p>
      *
      */
-    public float getPivotX(View view) {
+    public static float getPivotX(View view) {
         return IMPL.getPivotX(view);
     }
 
@@ -1940,7 +2090,7 @@ public class ViewCompat {
      *
      * @param value The x location of the pivot point.
      */
-    public void setPivotX(View view, float value) {
+    public static void setPivotX(View view, float value) {
         IMPL.setPivotX(view, value);
     }
 
@@ -1952,7 +2102,7 @@ public class ViewCompat {
      *
      * @return The y location of the pivot point.
      */
-    public float getPivotY(View view) {
+    public static float getPivotY(View view) {
         return IMPL.getPivotY(view);
     }
 
@@ -1967,36 +2117,149 @@ public class ViewCompat {
      *
      * @param value The y location of the pivot point.
      */
-    public void setPivotY(View view, float value) {
+    public static void setPivotY(View view, float value) {
         IMPL.setPivotX(view, value);
     }
 
-    public float getRotation(View view) {
+    public static float getRotation(View view) {
         return IMPL.getRotation(view);
     }
 
-    public float getRotationX(View view) {
+    public static float getRotationX(View view) {
         return IMPL.getRotationX(view);
     }
 
-    public float getRotationY(View view) {
+    public static float getRotationY(View view) {
         return IMPL.getRotationY(view);
     }
 
-    public float getScaleX(View view) {
+    public static float getScaleX(View view) {
         return IMPL.getScaleX(view);
     }
 
-    public float getScaleY(View view) {
+    public static float getScaleY(View view) {
         return IMPL.getScaleY(view);
     }
 
-    public float getX(View view) {
+    public static float getX(View view) {
         return IMPL.getX(view);
     }
 
-    public float getY(View view) {
+    public static float getY(View view) {
         return IMPL.getY(view);
+    }
+
+    /**
+     * Sets the base elevation of this view, in pixels.
+     */
+    public static void setElevation(View view, float elevation) {
+        IMPL.setElevation(view, elevation);
+    }
+
+    /**
+     * The base elevation of this view relative to its parent, in pixels.
+     *
+     * @return The base depth position of the view, in pixels.
+     */
+    public static float getElevation(View view) {
+        return IMPL.getElevation(view);
+    }
+
+    /**
+     * Sets the depth location of this view relative to its {@link #getElevation(View) elevation}.
+     */
+    public static void setTranslationZ(View view, float translationZ) {
+        IMPL.setTranslationZ(view, translationZ);
+    }
+
+    /**
+     * The depth location of this view relative to its {@link #getElevation(View) elevation}.
+     *
+     * @return The depth of this view relative to its elevation.
+     */
+    public static float getTranslationZ(View view) {
+        return IMPL.getTranslationZ(view);
+    }
+
+    /**
+     * Sets the name of the View to be used to identify Views in Transitions.
+     * Names should be unique in the View hierarchy.
+     *
+     * @param view The View against which to invoke the method.
+     * @param transitionName The name of the View to uniquely identify it for Transitions.
+     */
+    public static void setTransitionName(View view, String transitionName) {
+        IMPL.setTransitionName(view, transitionName);
+    }
+
+    /**
+     * Returns the name of the View to be used to identify Views in Transitions.
+     * Names should be unique in the View hierarchy.
+     *
+     * <p>This returns null if the View has not been given a name.</p>
+     *
+     * @param view The View against which to invoke the method.
+     * @return The name used of the View to be used to identify Views in Transitions or null
+     * if no name has been given.
+     */
+    public static String getTransitionName(View view) {
+        return IMPL.getTransitionName(view);
+    }
+
+    /**
+     * Returns the current system UI visibility that is currently set for the entire window.
+     */
+    public static int getWindowSystemUiVisibility(View view) {
+        return IMPL.getWindowSystemUiVisibility(view);
+    }
+
+    /**
+     * Ask that a new dispatch of {@code View.onApplyWindowInsets(WindowInsets)} be performed. This
+     * falls back to {@code View.requestFitSystemWindows()} where available.
+     */
+    public static void requestApplyInsets(View view) {
+        IMPL.requestApplyInsets(view);
+    }
+
+    /**
+     * Tells the ViewGroup whether to draw its children in the order defined by the method
+     * {@code ViewGroup.getChildDrawingOrder(int, int)}.
+     *
+     * @param enabled true if the order of the children when drawing is determined by
+     *        {@link ViewGroup#getChildDrawingOrder(int, int)}, false otherwise
+     *
+     * <p>Prior to API 7 this will have no effect.</p>
+     */
+    public static void setChildrenDrawingOrderEnabled(ViewGroup viewGroup, boolean enabled) {
+       IMPL.setChildrenDrawingOrderEnabled(viewGroup, enabled);
+    }
+
+    /**
+     * Returns true if this view should adapt to fit system window insets. This method will always
+     * return false before API 16 (Jellybean).
+     */
+    public static boolean getFitsSystemWindows(View v) {
+        return IMPL.getFitsSystemWindows(v);
+    }
+
+    /**
+     * On API 11 devices and above, call <code>Drawable.jumpToCurrentState()</code>
+     * on all Drawable objects associated with this view.
+     * <p>
+     * On API 21 and above, also calls <code>StateListAnimator#jumpToCurrentState()</code>
+     * if there is a StateListAnimator attached to this view.
+     */
+    public static void jumpDrawablesToCurrentState(View v) {
+        IMPL.jumpDrawablesToCurrentState(v);
+    }
+
+    /**
+     * Set an {@link OnApplyWindowInsetsListener} to take over the policy for applying
+     * window insets to this view. This will only take effect on devices with API 21 or above.
+     */
+    public static void setOnApplyWindowInsetsListener(View v,
+            OnApplyWindowInsetsListener listener) {
+        IMPL.setOnApplyWindowInsetsListener(v, listener);
     }
 
     // TODO: getters for various view properties (rotation, etc)

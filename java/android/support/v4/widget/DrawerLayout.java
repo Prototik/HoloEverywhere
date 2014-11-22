@@ -23,13 +23,16 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.AccessibilityDelegateCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.KeyEventCompat;
@@ -43,7 +46,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
 
@@ -81,10 +83,9 @@ import java.util.List;
  * href="{@docRoot}training/implementing-navigation/nav-drawer.html">Creating a Navigation
  * Drawer</a>.</p>
  */
-public class DrawerLayout extends ViewGroup {
+public class DrawerLayout extends ViewGroup implements DrawerLayoutImpl {
     private static final String TAG = "DrawerLayout";
 
-    /** @hide */
     @IntDef({STATE_IDLE, STATE_DRAGGING, STATE_SETTLING})
     @Retention(RetentionPolicy.SOURCE)
     private @interface State {}
@@ -159,6 +160,9 @@ public class DrawerLayout extends ViewGroup {
             android.R.attr.layout_gravity
     };
 
+    /** Whether we can use NO_HIDE_DESCENDANTS accessibility importance. */
+    private static final boolean CAN_HIDE_DESCENDANTS = Build.VERSION.SDK_INT >= 19;
+
     private final ChildAccessibilityDelegate mChildAccessibilityDelegate =
             new ChildAccessibilityDelegate();
 
@@ -187,9 +191,13 @@ public class DrawerLayout extends ViewGroup {
 
     private Drawable mShadowLeft;
     private Drawable mShadowRight;
+    private Drawable mStatusBarBackground;
 
     private CharSequence mTitleLeft;
     private CharSequence mTitleRight;
+
+    private Object mLastInsets;
+    private boolean mDrawStatusBarBackground;
 
     /**
      * Listener for monitoring events about drawers.
@@ -248,6 +256,60 @@ public class DrawerLayout extends ViewGroup {
         }
     }
 
+    interface DrawerLayoutCompatImpl {
+        void configureApplyInsets(View drawerLayout);
+        void dispatchChildInsets(View child, Object insets, int drawerGravity);
+        void applyMarginInsets(MarginLayoutParams lp, Object insets, int drawerGravity);
+        int getTopInset(Object lastInsets);
+    }
+
+    static class DrawerLayoutCompatImplBase implements DrawerLayoutCompatImpl {
+        public void configureApplyInsets(View drawerLayout) {
+            // This space for rent
+        }
+
+        public void dispatchChildInsets(View child, Object insets, int drawerGravity) {
+            // This space for rent
+        }
+
+        public void applyMarginInsets(MarginLayoutParams lp, Object insets, int drawerGravity) {
+            // This space for rent
+        }
+
+        public int getTopInset(Object insets) {
+            return 0;
+        }
+    }
+
+    static class DrawerLayoutCompatImplApi21 implements DrawerLayoutCompatImpl {
+        public void configureApplyInsets(View drawerLayout) {
+            DrawerLayoutCompatApi21.configureApplyInsets(drawerLayout);
+        }
+
+        public void dispatchChildInsets(View child, Object insets, int drawerGravity) {
+            DrawerLayoutCompatApi21.dispatchChildInsets(child, insets, drawerGravity);
+        }
+
+        public void applyMarginInsets(MarginLayoutParams lp, Object insets, int drawerGravity) {
+            DrawerLayoutCompatApi21.applyMarginInsets(lp, insets, drawerGravity);
+        }
+
+        public int getTopInset(Object insets) {
+            return DrawerLayoutCompatApi21.getTopInset(insets);
+        }
+    }
+
+    static {
+        final int version = Build.VERSION.SDK_INT;
+        if (version >= 21) {
+            IMPL = new DrawerLayoutCompatImplApi21();
+        } else {
+            IMPL = new DrawerLayoutCompatImplBase();
+        }
+    }
+
+    static final DrawerLayoutCompatImpl IMPL;
+
     public DrawerLayout(Context context) {
         this(context, null);
     }
@@ -258,7 +320,7 @@ public class DrawerLayout extends ViewGroup {
 
     public DrawerLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-
+        setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
         final float density = getResources().getDisplayMetrics().density;
         mMinDrawerMargin = (int) (MIN_DRAWER_MARGIN * density + 0.5f);
         final float minVel = MIN_FLING_VELOCITY * density;
@@ -284,6 +346,21 @@ public class DrawerLayout extends ViewGroup {
 
         ViewCompat.setAccessibilityDelegate(this, new AccessibilityDelegate());
         ViewGroupCompat.setMotionEventSplittingEnabled(this, false);
+        if (ViewCompat.getFitsSystemWindows(this)) {
+            IMPL.configureApplyInsets(this);
+        }
+    }
+
+    /**
+     * @hide Internal use only; called to apply window insets when configured
+     * with fitsSystemWindows="true"
+     */
+    @Override
+    public void setChildInsets(Object insets, boolean draw) {
+        mLastInsets = insets;
+        mDrawStatusBarBackground = draw;
+        setWillNotDraw(!draw && getBackground() == null);
+        requestLayout();
     }
 
     /**
@@ -557,15 +634,7 @@ public class DrawerLayout extends ViewGroup {
                 mListener.onDrawerClosed(drawerView);
             }
 
-            // If no drawer is opened, all drawers are not shown
-            // for accessibility and the content is shown.
-            View content = getChildAt(0);
-            if (content != null) {
-                ViewCompat.setImportantForAccessibility(content,
-                        ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
-            }
-            ViewCompat.setImportantForAccessibility(drawerView,
-                            ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
+            updateChildrenImportantForAccessibility(drawerView, false);
 
             // Only send WINDOW_STATE_CHANGE if the host has window focus. This
             // may change if support for multiple foreground windows (e.g. IME)
@@ -587,18 +656,26 @@ public class DrawerLayout extends ViewGroup {
                 mListener.onDrawerOpened(drawerView);
             }
 
-            // If a drawer is opened, only it is shown for
-            // accessibility and the content is not shown.
-            View content = getChildAt(0);
-            if (content != null) {
-                ViewCompat.setImportantForAccessibility(content,
+            updateChildrenImportantForAccessibility(drawerView, true);
+
+            drawerView.requestFocus();
+        }
+    }
+
+    private void updateChildrenImportantForAccessibility(View drawerView, boolean isDrawerOpen) {
+        final int childCount = getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View child = getChildAt(i);
+            if (!isDrawerOpen && !isDrawerView(child)
+                    || isDrawerOpen && child == drawerView) {
+                // Drawer is closed and this is a content view or this is an
+                // open drawer view, so it should be visible.
+                ViewCompat.setImportantForAccessibility(child,
+                        ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
+            } else {
+                ViewCompat.setImportantForAccessibility(child,
                         ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
             }
-            ViewCompat.setImportantForAccessibility(drawerView,
-                    ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
-
-            sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
-            drawerView.requestFocus();
         }
     }
 
@@ -741,6 +818,9 @@ public class DrawerLayout extends ViewGroup {
 
         setMeasuredDimension(widthSize, heightSize);
 
+        final boolean applyInsets = mLastInsets != null && ViewCompat.getFitsSystemWindows(this);
+        final int layoutDirection = ViewCompat.getLayoutDirection(this);
+
         // Gravity value for each drawer we've seen. Only one of each permitted.
         int foundDrawers = 0;
         final int childCount = getChildCount();
@@ -752,6 +832,15 @@ public class DrawerLayout extends ViewGroup {
             }
 
             final LayoutParams lp = (LayoutParams) child.getLayoutParams();
+
+            if (applyInsets) {
+                final int cgrav = GravityCompat.getAbsoluteGravity(lp.gravity, layoutDirection);
+                if (ViewCompat.getFitsSystemWindows(child)) {
+                    IMPL.dispatchChildInsets(child, mLastInsets, cgrav);
+                } else {
+                    IMPL.applyMarginInsets(lp, mLastInsets, cgrav);
+                }
+            }
 
             if (isContentView(child)) {
                 // Content views get measured at exactly the layout's size.
@@ -898,6 +987,49 @@ public class DrawerLayout extends ViewGroup {
         return false;
     }
 
+    /**
+     * Set a drawable to draw in the insets area for the status bar.
+     * Note that this will only be activated if this DrawerLayout fitsSystemWindows.
+     *
+     * @param bg Background drawable to draw behind the status bar
+     */
+    public void setStatusBarBackground(Drawable bg) {
+        mStatusBarBackground = bg;
+    }
+
+    /**
+     * Set a drawable to draw in the insets area for the status bar.
+     * Note that this will only be activated if this DrawerLayout fitsSystemWindows.
+     *
+     * @param resId Resource id of a background drawable to draw behind the status bar
+     */
+    public void setStatusBarBackground(int resId) {
+        mStatusBarBackground = resId != 0 ? ContextCompat.getDrawable(getContext(), resId) : null;
+    }
+
+    /**
+     * Set a drawable to draw in the insets area for the status bar.
+     * Note that this will only be activated if this DrawerLayout fitsSystemWindows.
+     *
+     * @param color Color to use as a background drawable to draw behind the status bar
+     *              in 0xAARRGGBB format.
+     */
+    public void setStatusBarBackgroundColor(int color) {
+        mStatusBarBackground = new ColorDrawable(color);
+    }
+
+    @Override
+    public void onDraw(Canvas c) {
+        super.onDraw(c);
+        if (mDrawStatusBarBackground && mStatusBarBackground != null) {
+            final int inset = IMPL.getTopInset(mLastInsets);
+            if (inset > 0) {
+                mStatusBarBackground.setBounds(0, 0, getWidth(), inset);
+                mStatusBarBackground.draw(c);
+            }
+        }
+    }
+
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
         final int height = getHeight();
@@ -987,9 +1119,11 @@ public class DrawerLayout extends ViewGroup {
                 final float y = ev.getY();
                 mInitialMotionX = x;
                 mInitialMotionY = y;
-                if (mScrimOpacity > 0 &&
-                        isContentView(mLeftDragger.findTopChildUnder((int) x, (int) y))) {
-                    interceptForTap = true;
+                if (mScrimOpacity > 0) {
+                    final View child = mLeftDragger.findTopChildUnder((int) x, (int) y);
+                    if (child != null && isContentView(child)) {
+                        interceptForTap = true;
+                    }
                 }
                 mDisallowInterceptRequested = false;
                 mChildrenCanceledTouch = false;
@@ -1134,6 +1268,8 @@ public class DrawerLayout extends ViewGroup {
             final LayoutParams lp = (LayoutParams) drawerView.getLayoutParams();
             lp.onScreen = 1.f;
             lp.knownOpen = true;
+
+            updateChildrenImportantForAccessibility(drawerView, true);
         } else {
             if (checkDrawerViewAbsoluteGravity(drawerView, Gravity.LEFT)) {
                 mLeftDragger.smoothSlideViewTo(drawerView, 0, drawerView.getTop());
@@ -1370,22 +1506,11 @@ public class DrawerLayout extends ViewGroup {
     @Override
     protected Parcelable onSaveInstanceState() {
         final Parcelable superState = super.onSaveInstanceState();
-
         final SavedState ss = new SavedState(superState);
 
-        final int childCount = getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            final View child = getChildAt(i);
-            if (!isDrawerView(child)) {
-                continue;
-            }
-
-            final LayoutParams lp = (LayoutParams) child.getLayoutParams();
-            if (lp.knownOpen) {
-                ss.openDrawerGravity = lp.gravity;
-                // Only one drawer can be open at a time.
-                break;
-            }
+        final View openDrawer = findOpenDrawer();
+        if (openDrawer != null) {
+            ss.openDrawerGravity = ((LayoutParams) openDrawer.getLayoutParams()).gravity;
         }
 
         ss.lockModeLeft = mLockModeLeft;
@@ -1396,22 +1521,29 @@ public class DrawerLayout extends ViewGroup {
 
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        // Until a drawer is open, it is hidden from accessibility.
-        if (index > 0 || (index < 0 && getChildCount() > 0)) {
+        super.addView(child, index, params);
+
+        final View openDrawer = findOpenDrawer();
+        if (openDrawer != null || isDrawerView(child)) {
+            // A drawer is already open or the new view is a drawer, so the
+            // new view should start out hidden.
             ViewCompat.setImportantForAccessibility(child,
                     ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
-            // Also set a delegate to break the child-parent relation if the
-            // child is hidden. For details (see incluceChildForAccessibility).
-            ViewCompat.setAccessibilityDelegate(child, mChildAccessibilityDelegate);
-        } else  {
-            // Initially, the content is shown for accessibility.
+        } else {
+            // Otherwise this is a content view and no drawer is open, so the
+            // new view should start out visible.
             ViewCompat.setImportantForAccessibility(child,
                     ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
         }
-        super.addView(child, index, params);
+
+        // We only need a delegate here if the framework doesn't understand
+        // NO_HIDE_DESCENDANTS importance.
+        if (!CAN_HIDE_DESCENDANTS) {
+            ViewCompat.setAccessibilityDelegate(child, mChildAccessibilityDelegate);
+        }
     }
 
-    private static boolean includeChildForAccessibilitiy(View child) {
+    private static boolean includeChildForAccessibility(View child) {
         // If the child is not important for accessibility we make
         // sure this hides the entire subtree rooted at it as the
         // IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDATS is not
@@ -1607,7 +1739,7 @@ public class DrawerLayout extends ViewGroup {
 
         @Override
         public int getViewHorizontalDragRange(View child) {
-            return child.getWidth();
+            return isDrawerView(child) ? child.getWidth() : 0;
         }
 
         @Override
@@ -1669,20 +1801,27 @@ public class DrawerLayout extends ViewGroup {
 
         @Override
         public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfoCompat info) {
-            final AccessibilityNodeInfoCompat superNode = AccessibilityNodeInfoCompat.obtain(info);
-            super.onInitializeAccessibilityNodeInfo(host, superNode);
+            if (CAN_HIDE_DESCENDANTS) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+            } else {
+                // Obtain a node for the host, then manually generate the list
+                // of children to only include non-obscured views.
+                final AccessibilityNodeInfoCompat superNode =
+                        AccessibilityNodeInfoCompat.obtain(info);
+                super.onInitializeAccessibilityNodeInfo(host, superNode);
+
+                info.setSource(host);
+                final ViewParent parent = ViewCompat.getParentForAccessibility(host);
+                if (parent instanceof View) {
+                    info.setParent((View) parent);
+                }
+                copyNodeInfoNoChildren(info, superNode);
+                superNode.recycle();
+
+                addChildrenForAccessibility(info, (ViewGroup) host);
+            }
 
             info.setClassName(DrawerLayout.class.getName());
-            info.setSource(host);
-            final ViewParent parent = ViewCompat.getParentForAccessibility(host);
-            if (parent instanceof View) {
-                info.setParent((View) parent);
-            }
-            copyNodeInfoNoChildren(info, superNode);
-
-            superNode.recycle();
-
-            addChildrenForAccessibility(info, (ViewGroup) host);
         }
 
         @Override
@@ -1716,23 +1855,23 @@ public class DrawerLayout extends ViewGroup {
             return super.dispatchPopulateAccessibilityEvent(host, event);
         }
 
+        @Override
+        public boolean onRequestSendAccessibilityEvent(ViewGroup host, View child,
+                AccessibilityEvent event) {
+            if (CAN_HIDE_DESCENDANTS || includeChildForAccessibility(child)) {
+                return super.onRequestSendAccessibilityEvent(host, child, event);
+            }
+            return false;
+        }
+
         private void addChildrenForAccessibility(AccessibilityNodeInfoCompat info, ViewGroup v) {
             final int childCount = v.getChildCount();
             for (int i = 0; i < childCount; i++) {
                 final View child = v.getChildAt(i);
-                if (includeChildForAccessibilitiy(child)) {
+                if (includeChildForAccessibility(child)) {
                     info.addChild(child);
                 }
             }
-        }
-
-        @Override
-        public boolean onRequestSendAccessibilityEvent(ViewGroup host, View child,
-                AccessibilityEvent event) {
-            if (includeChildForAccessibilitiy(child)) {
-                return super.onRequestSendAccessibilityEvent(host, child, event);
-            }
-            return false;
         }
 
         /**
@@ -1772,10 +1911,11 @@ public class DrawerLayout extends ViewGroup {
         public void onInitializeAccessibilityNodeInfo(View child,
                 AccessibilityNodeInfoCompat info) {
             super.onInitializeAccessibilityNodeInfo(child, info);
-            if (!includeChildForAccessibilitiy(child)) {
+
+            if (!includeChildForAccessibility(child)) {
                 // If we are ignoring the sub-tree rooted at the child,
                 // break the connection to the rest of the node tree.
-                // For details refer to includeChildForAccessibilitiy.
+                // For details refer to includeChildForAccessibility.
                 info.setParent(null);
             }
         }
