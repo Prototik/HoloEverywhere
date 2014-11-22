@@ -45,7 +45,7 @@ import java.io.InputStream;
  */
 class PrintHelperKitkat {
     private static final String LOG_TAG = "PrintHelperKitkat";
-    // will be <= 300 dpi on A4 (8.3×11.7) paper (worst case of 150 dpi)
+    // will be <= 300 dpi on A4 (8.3x11.7) paper (worst case of 150 dpi)
     private final static int MAX_PRINT_SIZE = 3500;
     final Context mContext;
     BitmapFactory.Options mDecodeOptions = null;
