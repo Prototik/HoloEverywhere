@@ -1,7 +1,7 @@
 import org.gradle.internal.os.OperatingSystem
 
 allprojects {
-    version = '0.3.4-SNAPSHOT'
+    version = '0.3.4'
 
     repositories {
         mavenCentral()
