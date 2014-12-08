@@ -54,10 +54,8 @@ final class SliderMenuAdapter extends BaseAdapter implements IAdapter<ListView>,
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final SliderItem item = getItem(position);
-        if (convertView == null) {
             convertView = mLayoutInflater.inflate(item.mCustomLayout != 0 ? item.mCustomLayout
                     : R.layout.slider_menu_item, parent, false);
-        }
         return mMenu.bindView(item, convertView, position == mMenu.mCurrentPage, mDefaultTextAppearance, mDefaultTextAppearanceInverse);
     }
 
