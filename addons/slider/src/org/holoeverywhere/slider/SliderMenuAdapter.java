@@ -63,6 +63,7 @@ final class SliderMenuAdapter extends BaseAdapter implements IAdapter<ListView>,
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (getItem(position).mClickable)
         mMenu.setCurrentPage(position, false, true);
     }
 
