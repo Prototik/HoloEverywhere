@@ -538,6 +538,7 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
 
         if (savedInstanceState != null) {
             mCurrentPage = savedInstanceState.getInt(KEY_CURRENT_PAGE, 0);
+            setCurrentPage(mCurrentPage, true, true);
         }
         mIgnoreBackStack = true;
         mAddon.get().getSupportFragmentManager().addOnBackStackChangedListener(this);
