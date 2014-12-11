@@ -77,6 +77,7 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
     }
 
     private static final String KEY_CURRENT_PAGE = ":slider:currentPage";
+    private static final String KEY_PAGE_WAS_CHANGED = ":slider:pageWasChanged";
     private static final int MENU_VIEW_ID = R.id.slider_menu;
     private final AddonSliderA mAddon;
     private final FragmentManager mFragmentManager;
@@ -538,7 +539,7 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
 
         if (savedInstanceState != null) {
             mCurrentPage = savedInstanceState.getInt(KEY_CURRENT_PAGE, 0);
-            setCurrentPage(mCurrentPage, true, true);
+            mPageWasChanged = savedInstanceState.getBoolean(KEY_PAGE_WAS_CHANGED, false);
         }
         mIgnoreBackStack = true;
         mAddon.get().getSupportFragmentManager().addOnBackStackChangedListener(this);
@@ -558,6 +559,7 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
 
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt(KEY_CURRENT_PAGE, mCurrentPage);
+        outState.putBoolean(KEY_PAGE_WAS_CHANGED, mPageWasChanged);
     }
 
     public boolean flag(int flag) {
