@@ -30,6 +30,10 @@ public class DemoActivity extends Activity {
         sliderMenu.add(R.string.settings, SettingsFragment.class, SliderMenu.GREEN);
         sliderMenu.add(R.string.other, OtherFragment.class, SliderMenu.ORANGE);
         sliderMenu.add(R.string.about, AboutFragment.class, SliderMenu.PURPLE);
+		
+		//set curent page to mainFragment only if fisrt launch Activity
+		if((savedInstanceState == null))
+		sliderMenu.setCurrentPage(0);
 
         getSupportActionBar().setTitle(R.string.library_name);
 
