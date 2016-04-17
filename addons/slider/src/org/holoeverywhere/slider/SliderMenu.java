@@ -635,7 +635,7 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
         }
     }
 
-    void setCurrentPage(int position, boolean force, boolean openContentView) {
+    public void setCurrentPage(int position, boolean force, boolean openContentView) {
         if (mAdapter == null) {
             mFuturePosition = position;
             return;
