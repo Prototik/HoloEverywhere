@@ -1,14 +1,8 @@
 package org.holoeverywhere.slider;
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.view.View;
-import android.widget.ImageView;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.LayoutInflater;
@@ -24,9 +18,17 @@ import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.TextView;
 import org.holoeverywhere.widget.ViewStubHolo;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 
 public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<SliderItem> {
     public static final int[] BLUE = new int[]{
@@ -245,6 +247,16 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
         notifyChanged();
         return item;
     }
+    
+    @Override
+    public SliderItem getItem(int position) {
+        if (position > mItems.size() || position < 0) {
+            throw new IllegalArgumentException("No such item, with id: "
+                    + position + " (" + "blah, blah" + ")");
+        }
+        notifyChanged();
+        return mItems.get(position);
+    }
 
     public void bind(Fragment listFragment) {
         bind(listFragment, null);
@@ -284,6 +296,26 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
         }
         return false;
     }
+    
+    /**
+     * Register a callback to be invoked when an item in this AdapterView has
+     * been clicked.
+     *
+     * @param AdapterView.OnItemClickListener  for simple list, The callback that will be invoked.
+     */
+    public void setOnItemClickListener(AdapterView.OnItemClickListener listener){
+    	mAdapter.setOnItemChildClickListener(listener);
+    };
+    
+    /**
+     * Register a callback to be invoked when an item in this AdapterView has
+     * been clicked.
+     *
+     * @param ExpandableListView.OnChildClickListener for expandable list The callback that will be invoked.
+     */
+    public void setOnChildClickListener(ExpandableListView.OnChildClickListener listener){
+    	mAdapter.setOnItemChildClickListener(listener);
+    };
 
     public void bind(ListView listView, Context context) {
         if (mAdapter != null) {
@@ -292,6 +324,7 @@ public class SliderMenu implements OnBackStackChangedListener, IMenuAdder<Slider
         mExpandableMenu = false;
         SliderMenuAdapter adapter = new SliderMenuAdapter(obtainMenuContext(context == null ? listView.getContext() : context), this);
         mAdapter = adapter;
+        
         adapter.bind(listView);
     }
 

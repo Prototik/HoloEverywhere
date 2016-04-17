@@ -189,6 +189,10 @@ class BaseSliderItem<T extends BaseSliderItem<T>> implements Parcelable {
         mClickable = clickable;
         return (T) this;
     }
+    
+    public boolean isClickable() {
+        return mClickable;
+    }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
