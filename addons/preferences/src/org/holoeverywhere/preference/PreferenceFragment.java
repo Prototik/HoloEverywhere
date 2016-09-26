@@ -1,4 +1,3 @@
-
 package org.holoeverywhere.preference;
 
 import android.content.Intent;
@@ -104,6 +103,7 @@ public abstract class PreferenceFragment extends Fragment implements
                             + "that is not a ListView class");
         }
         mList = (ListView) rawListView;
+        mList.setPadding(0, 0, 0, 0);
         if (mList == null) {
             throw new RuntimeException(
                     "Your content must have a ListView whose id attribute is "
