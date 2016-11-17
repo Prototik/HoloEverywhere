@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 
+import com.BBsRs.SFUIFontsEverywhere.SFUIFonts;
+
 final class SliderMenuAdapter extends BaseAdapter implements IAdapter<ListView, OnItemClickListener>, AdapterView.OnItemClickListener {
     private final int mDefaultTextAppearance;
     private final int mDefaultTextAppearanceInverse;
@@ -62,7 +64,7 @@ final class SliderMenuAdapter extends BaseAdapter implements IAdapter<ListView, 
             convertView = mLayoutInflater.inflate(item.mCustomLayout != 0 ? item.mCustomLayout
                     : R.layout.slider_menu_item, parent, false);
             //set fonts
-            SFUIDisplayFont.ULTRALIGHT.apply(context, ((TextView)convertView.findViewById(android.R.id.text1)));
+            SFUIFonts.ULTRALIGHT.apply(context, ((TextView)convertView.findViewById(android.R.id.text1)));
         return mMenu.bindView(item, convertView, position == mMenu.mCurrentPage, mDefaultTextAppearance, mDefaultTextAppearanceInverse);
     }
     

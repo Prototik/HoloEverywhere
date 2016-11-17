@@ -1,17 +1,19 @@
-package org.holoeverywhere.slider;
+package com.BBsRs.SFUIFontsEverywhere;
+
+import com.BBsRs.SFUIFontsEverywhere.SFUIFontsPath;
 
 import android.content.Context;
 import android.graphics.Typeface;
 import android.widget.TextView;
 
-public class SFUIDisplayFont {
-	public static final SFUIDisplayFont ULTRALIGHT = new SFUIDisplayFont(SFUIDisplayFontPath.ULTRALIGHT);
-	public static final SFUIDisplayFont LIGHT = new SFUIDisplayFont(SFUIDisplayFontPath.LIGHT);
-	public static final SFUIDisplayFont MEDIUM = new SFUIDisplayFont(SFUIDisplayFontPath.MEDIUM);
+public class SFUIFonts {
+	public static final SFUIFonts ULTRALIGHT = new SFUIFonts(SFUIFontsPath.ULTRALIGHT);
+	public static final SFUIFonts LIGHT = new SFUIFonts(SFUIFontsPath.LIGHT);
+	public static final SFUIFonts MEDIUM = new SFUIFonts(SFUIFontsPath.MEDIUM);
 	private final String assetName;
 	private volatile Typeface typeface;
 
-	public SFUIDisplayFont(String assetName) {
+	public SFUIFonts(String assetName) {
 		this.assetName = assetName;
 	}
 
