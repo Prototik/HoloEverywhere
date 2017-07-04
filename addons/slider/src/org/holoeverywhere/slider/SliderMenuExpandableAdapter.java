@@ -1,15 +1,16 @@
 package org.holoeverywhere.slider;
 
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.widget.BaseExpandableListAdapter;
+import org.holoeverywhere.widget.ExpandableListView;
+import org.holoeverywhere.widget.ExpandableListView.OnChildClickListener;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.widget.BaseExpandableListAdapter;
-import org.holoeverywhere.widget.ExpandableListView;
-
-final class SliderMenuExpandableAdapter extends BaseExpandableListAdapter implements IAdapter<ExpandableListView>,
+final class SliderMenuExpandableAdapter extends BaseExpandableListAdapter implements IAdapter<ExpandableListView, OnChildClickListener>,
         SliderMenu.OnPageChangeListener,
         ExpandableListView.OnGroupClickListener,
         ExpandableListView.OnChildClickListener,
@@ -130,10 +131,16 @@ final class SliderMenuExpandableAdapter extends BaseExpandableListAdapter implem
         }
         mLastExpandedGroup = groupPosition;
     }
+    
+    @Override
+    public void setOnItemChildClickListener(OnChildClickListener listener) {
+    	mListView.setOnChildClickListener(listener);
+    }
 
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-        mMenu.setCurrentPage(mMenu.encodePage(groupPosition, childPosition), false, true);
+    	if (getChild(groupPosition, childPosition).mClickable)
+    		mMenu.setCurrentPage(mMenu.encodePage(groupPosition, childPosition), false, true);
         return true;
     }
 

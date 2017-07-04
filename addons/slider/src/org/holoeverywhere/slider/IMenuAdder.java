@@ -32,4 +32,6 @@ interface IMenuAdder<T extends BaseSliderItem<T>> {
     public T add(T item);
 
     public T add(T item, int position);
+
+	public T getItem(int position);
 }

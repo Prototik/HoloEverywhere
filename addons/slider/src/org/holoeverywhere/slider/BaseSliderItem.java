@@ -19,6 +19,7 @@ class BaseSliderItem<T extends BaseSliderItem<T>> implements Parcelable {
     SliderMenu mSliderMenu;
     WeakReference<Fragment> mLastFragment;
     boolean mSaveState = true;
+    boolean mClickable = true;
     int mBackgroundColor = 0;
     Bundle mFragmentArguments;
     Class<? extends Fragment> mFragmentClass;
@@ -39,6 +40,7 @@ class BaseSliderItem<T extends BaseSliderItem<T>> implements Parcelable {
         }
         mSavedState = source.readParcelable(Fragment.SavedState.class.getClassLoader());
         mSaveState = source.readInt() == 1;
+        mClickable = source.readInt() == 1;
         mCustomLayout = source.readInt();
         mBackgroundColor = source.readInt();
         mSelectionHandlerColor = source.readInt();
@@ -181,6 +183,15 @@ class BaseSliderItem<T extends BaseSliderItem<T>> implements Parcelable {
             mSavedState = null;
         }
         return (T) this;
+    }
+    
+    public T clickable(boolean clickable) {
+        mClickable = clickable;
+        return (T) this;
+    }
+    
+    public boolean isClickable() {
+        return mClickable;
     }
 
     @Override

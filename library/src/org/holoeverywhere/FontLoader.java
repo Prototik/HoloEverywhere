@@ -58,39 +58,40 @@ public class FontLoader {
         TEXT_STYLE_MEDIUM = registerTextStyle("medium");
         TEXT_STYLE_THIN = registerTextStyle("thin");
 
-        ROBOTO_REGULAR = new RobotoRawFont(R.raw.roboto_regular)
-                .setFontStyle(TEXT_STYLE_NORMAL);
-        ROBOTO_BOLD = new RobotoRawFont(R.raw.roboto_bold)
-                .setFontStyle(TEXT_STYLE_BOLD);
-        ROBOTO_ITALIC = new RobotoRawFont(R.raw.roboto_italic)
-                .setFontStyle(TEXT_STYLE_ITALIC);
-        ROBOTO_BOLDITALIC = new RobotoRawFont(R.raw.roboto_bolditalic)
-                .setFontStyle(TEXT_STYLE_BOLD | TEXT_STYLE_ITALIC);
-        ROBOTO_CONDENSED = new RobotoRawFont(R.raw.roboto_condensed)
-                .setFontStyle(TEXT_STYLE_CONDENDSED);
+		ROBOTO_REGULAR = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+		ROBOTO_BOLD = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+		ROBOTO_ITALIC = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+		ROBOTO_BOLDITALIC = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+		ROBOTO_CONDENSED = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
 
-        ROBOTO_BLACK = new RobotoRawLazyFont("roboto_black")
-                .setFontStyle(TEXT_STYLE_BLACK);
-        ROBOTO_BLACKITALIC = new RobotoRawLazyFont("roboto_blackitalic")
-                .setFontStyle(TEXT_STYLE_BLACK | TEXT_STYLE_ITALIC);
-        ROBOTO_BOLDCONDENSED = new RobotoRawLazyFont("roboto_boldcondensed")
-                .setFontStyle(TEXT_STYLE_BOLD | TEXT_STYLE_CONDENDSED);
-        ROBOTO_BOLDCONDENSEDITALIC = new RobotoRawLazyFont("roboto_boldcondenseditalic")
-                .setFontStyle(TEXT_STYLE_BOLD | TEXT_STYLE_CONDENDSED | TEXT_STYLE_ITALIC);
-        ROBOTO_CONDENSEDITALIC = new RobotoRawLazyFont("roboto_condenseditalic")
-                .setFontStyle(TEXT_STYLE_CONDENDSED | TEXT_STYLE_ITALIC);
-        ROBOTO_LIGHT = new RobotoRawLazyFont("roboto_light")
-                .setFontStyle(TEXT_STYLE_LIGHT);
-        ROBOTO_LIGHTITALIC = new RobotoRawLazyFont("roboto_lightitalic")
-                .setFontStyle(TEXT_STYLE_LIGHT | TEXT_STYLE_ITALIC);
-        ROBOTO_MEDIUM = new RobotoRawLazyFont("roboto_medium")
-                .setFontStyle(TEXT_STYLE_MEDIUM);
-        ROBOTO_MEDIUMITALIC = new RobotoRawLazyFont("roboto_mediumitalic")
-                .setFontStyle(TEXT_STYLE_MEDIUM | TEXT_STYLE_ITALIC);
-        ROBOTO_THIN = new RobotoRawLazyFont("roboto_thin")
-                .setFontStyle(TEXT_STYLE_THIN);
-        ROBOTO_THINITALIC = new RobotoRawLazyFont("roboto_thinitalic")
-                .setFontStyle(TEXT_STYLE_THIN | TEXT_STYLE_ITALIC);
+		ROBOTO_BLACK = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+		ROBOTO_BLACKITALIC = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+		ROBOTO_BOLDCONDENSED = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+		ROBOTO_BOLDCONDENSEDITALIC = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+		ROBOTO_CONDENSEDITALIC = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+		ROBOTO_LIGHT = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+		ROBOTO_LIGHTITALIC = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+		ROBOTO_MEDIUM = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+		ROBOTO_MEDIUMITALIC = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+		ROBOTO_THIN = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+		ROBOTO_THINITALIC = new RobotoRawFont(R.raw.roboto_regular)
+				.setFontStyle(TEXT_STYLE_NORMAL);
+
 
         sDefaultFont = ROBOTO = new FontCollector().allowAnyFontFamily();
         ROBOTO.register(ROBOTO_REGULAR).asDefaultFont();

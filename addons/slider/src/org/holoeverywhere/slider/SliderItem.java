@@ -155,4 +155,14 @@ public class SliderItem extends BaseSliderItem<SliderItem> implements Parcelable
     public boolean hasSubItems() {
         return mSubItems != null && mSubItems.size() > 0;
     }
+
+	@Override
+	public SliderSubItem getItem(int position) {
+        if (position > obtainSubItemsList().size() || position < 0) {
+            throw new IllegalArgumentException("No such item, with id: "
+                    + position + " (" + "blah, blah" + ")");
+        }
+        mSliderMenu.notifyChanged();
+        return obtainSubItemsList().get(position);
+	}
 }

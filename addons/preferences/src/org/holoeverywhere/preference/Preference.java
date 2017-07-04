@@ -24,6 +24,8 @@ import org.holoeverywhere.util.SparseArray;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.BBsRs.SFUIFontsEverywhere.SFUIFonts;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -612,6 +614,7 @@ public class Preference implements Comparable<Preference>,
         if (titleView != null) {
             final CharSequence title = getTitle();
             if (!TextUtils.isEmpty(title)) {
+            	SFUIFonts.LIGHT.apply(getContext(), titleView);
                 titleView.setText(title);
                 titleView.setVisibility(View.VISIBLE);
             } else {
@@ -622,6 +625,7 @@ public class Preference implements Comparable<Preference>,
         if (summaryView != null) {
             final CharSequence summary = getSummary();
             if (!TextUtils.isEmpty(summary)) {
+            	SFUIFonts.LIGHT.apply(getContext(), summaryView);
                 summaryView.setText(summary);
                 summaryView.setVisibility(View.VISIBLE);
             } else {
